@@ -1,338 +1,412 @@
 {
-  "date": "2026-04-02",
-  "calendar_tier": "TIER 3 — Regular offseason news cycle. NFL league meetings wrapped up Tuesday, some draft news, but no major calendar events happening.",
+  "date": "2026-04-04",
+  "calendar_tier": "TIER 1 — March Madness Final Four weekend. This dominates the issue.",
   "tweet_volume_check": {
     "top_topics": [
       {
-        "topic": "NFL Draft/Pro Days (Mendoza)",
-        "approx_tweets": 12,
-        "accounts_tweeting": 4
+        "topic": "March Madness / Final Four",
+        "approx_tweets": 25,
+        "accounts_tweeting": 8
       },
       {
-        "topic": "Puka Nacua rehab/legal issues",
-        "approx_tweets": 8,
-        "accounts_tweeting": 2
-      },
-      {
-        "topic": "NBA regular season games",
+        "topic": "NBA / Giannis investigation",
         "approx_tweets": 15,
         "accounts_tweeting": 4
+      },
+      {
+        "topic": "NFL news/transactions",
+        "approx_tweets": 20,
+        "accounts_tweeting": 6
       }
     ],
-    "dominant_topic": "Mixed day — no single topic dominates. NFL draft content vs NBA games vs Nacua situation. NFL gets hierarchy advantage."
+    "dominant_topic": "March Madness — Tier 1 event confirmed by strong tweet volume and calendar. Final Four today leads."
   },
   "editorial_reasoning": {
-    "lead_choice": "Puka Nacua rehab story — shocking development for 2024 OROY, legal allegations, multiple Schefter tweets with details. Has the most juice and surprise factor.",
+    "lead_choice": "March Madness Final Four — Arizona first Final Four since 2001, Illinois 21-year drought, UConn 35-foot game winner over Duke. Tier 1 event, solid tweet volume, historic droughts ending.",
     "stories_considered_and_demoted": [
       {
-        "story": "OBJ meeting with Giants",
-        "reason": "Interesting but just a meeting. No commitment, no deal. Promote to medium story."
+        "story": "Travon Walker $110M extension",
+        "reason": "Big money but Tier 3 NFL transaction on Final Four weekend. Around the League item."
       },
       {
-        "story": "18-game season discussion",
-        "reason": "Recurring topic from meetings. No new developments. Timeline item."
-      },
-      {
-        "story": "Todd Monken missed photo for haircut",
-        "reason": "Funny but thin. Perfect Timeline tweet."
+        "story": "Stephon Gilmore retirement",
+        "reason": "Respectful but brief — Around the League honors a veteran without taking space from March Madness."
       }
     ],
     "stories_promoted": [
       {
-        "story": "Fernando Mendoza pro day",
-        "reason": "Expected #1 pick throwing perfect passes to all 32 teams. Draft season heating up. Strong medium story."
+        "story": "Giannis vs Bucks investigation",
+        "reason": "NBA investigating franchise — dysfunction angle with BigCat demanding trade tweet is strong content."
       },
       {
-        "story": "Paul George historic game",
-        "reason": "39 points, oldest player ever with those numbers on 0 TOV. StatMuse has the receipts."
+        "story": "Cooper Flagg 51 points",
+        "reason": "Historic rookie record — first teenager to drop 50+ in NBA history. HaterReport stat tweet is perfect."
       }
     ],
-    "tweet_gaps": "Need more reaction tweets for most stories — lots of news-breaker content but lighter on comedy/memes today."
+    "tweet_gaps": "Good reaction content available — HaterReport Dawn Staley coverage, BigCat Giannis take, StatMuse rookie stats all strong."
   },
   "stories": [
     {
-      "headline": "Puka Nacua Checks Into Rehab Amid Legal Troubles",
+      "headline": "Arizona and Illinois End Historic Final Four Droughts",
       "level": "lead",
       "hooks": [
-        "2024 OROY in rehab before allegations broke",
-        "Attorney timeline revelations",
-        "Rams' offensive weapon sidelined"
+        "Arizona first Final Four since 2001",
+        "Illinois 21-year drought",
+        "UConn 35-foot buzzer beater vs Duke"
       ],
       "sub_angles": {
-        "statistically_interesting": "Nacua broke multiple rookie receiving records in 2024",
-        "running_joke": null,
-        "who_else_affected": "Rams offense already dealt with Kupp injuries, now Nacua issues",
-        "cross_connection": "Young NFL star following troubled path of other high-profile athletes",
-        "where_it_goes": "Criminal case pending, potential suspension, Rams' 2026 season in jeopardy"
+        "statistically_interesting": "Arizona 25-year drought, Illinois 21-year drought, both #1 seeds vs #2/#3",
+        "running_joke": "Tommy Lloyd finally gets Arizona there, Brad Underwood's breakthrough",
+        "who_else_affected": "Duke eliminated by miracle shot, Michigan as other #1 seed",
+        "cross_connection": "Indianapolis 120 miles from Illinois campus — home crowd advantage",
+        "where_it_goes": "Championship Monday — can UConn threepeat or will drought end?"
       },
       "research": {
         "key_stats": [
-          "2024 OROY",
-          "Broke rookie receiving records",
-          "Key Rams weapon"
+          "Arizona last Final Four 2001",
+          "Illinois last 2005",
+          "UConn 3rd Final Four in 4 years"
         ],
-        "context": "Antisemitic statement allegation, biting incident, substantial time in rehab",
-        "connections": "Pattern of young NFL stars facing legal troubles"
+        "context": "Final Four in Indianapolis, Illinois home court advantage",
+        "connections": "Braylon Mullins 35-footer to beat Duke, historical droughts"
       },
       "blocks": [
         {
           "type": "commentary",
-          "hint": "Hook — Rams WR Puka Nacua, the 2024 Offensive Rookie of the Year, has checked into rehab. Frame as shocking fall from rookie hero to legal trouble in one offseason."
+          "hint": "Hook — Arizona in Final Four for first time since 2001, Illinois since 2005. Frame as teams that waited a generation to get back. This is what March Madness does — it resurrects programs."
         },
         {
           "type": "tweet",
-          "url": "https://twitter.com/AdamSchefter/status/2039485945020318113#m",
-          "account": "@AdamSchefter",
-          "why": "Breaking news announcement"
+          "url": "https://twitter.com/JonRothstein/status/2040414088292159997#m",
+          "account": "@JonRothstein",
+          "why": "Rothstein Final Four coverage"
         },
         {
           "type": "commentary",
-          "hint": "Timeline twist — his attorney says Nacua was in rehab BEFORE any allegations broke. 'Substantial period of time' before the antisemitic statement and biting allegations surfaced. Frame as either good planning or bad coincidence."
-        },
-        {
-          "type": "tweet",
-          "url": "https://twitter.com/AdamSchefter/status/2039486746023333956#m",
-          "account": "@AdamSchefter",
-          "why": "Attorney quote about timeline"
+          "hint": "Illinois gets home court advantage — campus is 120 miles from Indianapolis. Frame as destiny. The Illini faithful can drive to watch their team chase history."
         },
         {
           "type": "gif",
-          "emotion": "this timeline makes no sense",
-          "context": "Nacua was already in rehab before allegations",
-          "avoid": "Do NOT search 'football' — search 'confused timeline conspiracy'"
+          "emotion": "building excitement",
+          "context": "Historic droughts ending",
+          "avoid": "Do NOT search basketball — search 'progressive excitement Vince McMahon'"
         },
         {
           "type": "commentary",
-          "hint": "Kicker — From OROY breaking rookie records to legal allegations in one year. The Rams went from having Cooper Kupp injury issues to this. Sometimes the NFL humbles you fast."
+          "hint": "Kicker — UConn got there with a 35-foot prayer. Braylon Mullins from Greenfield, Indiana — 40 minutes from Lucas Oil Stadium. A local kid sent Duke home. Poetry."
         }
       ]
     },
     {
-      "headline": "OBJ-Giants Reunion Talks at NFL Meetings",
+      "headline": "NBA Investigating Giannis-Bucks Medical Drama",
       "level": "medium",
       "hooks": [
-        "Harbaugh meeting at Arizona Biltmore",
-        "Return to his original team",
-        "Timing during NFL meetings"
+        "League office investigating franchise",
+        "Giannis says he's healthy, team won't clear him",
+        "BigCat demanding trade"
       ],
       "sub_angles": {
-        "statistically_interesting": "OBJ's Giants career: 2014-2018, trade was controversial",
-        "running_joke": "OBJ always finds a way back into headlines",
-        "who_else_affected": "Giants WR room, other free agent WRs still available",
+        "statistically_interesting": "Failed trade talks in August and February deadline",
+        "running_joke": "Giannis-Bucks dysfunction, Doc Rivers examining players",
+        "who_else_affected": "Bucks fans tired of drama, other stars watching",
         "cross_connection": null,
-        "where_it_goes": "Giants need veteran presence, OBJ needs to prove he's still got it"
+        "where_it_goes": "Trade demand incoming, franchise implosion"
       },
       "research": {
         "key_stats": [
-          "2014-2018 with Giants",
-          "Trade to Browns was messy"
+          "Year of dysfunction",
+          "Both sides telling different stories"
         ],
-        "context": "Meeting with Harbaugh at league meetings, exploring reunion",
-        "connections": "Full circle moment if it happens"
+        "context": "Player vs team medical clearance dispute",
+        "connections": "BigCat trade demand tweet captures fan sentiment"
       },
       "blocks": [
         {
           "type": "commentary",
-          "hint": "Hook — OBJ showed up to the NFL meetings and sat down with Giants coach John Harbaugh about a return. Eight years after the messy breakup, they're talking reunion."
+          "hint": "Hook — NBA is investigating the Bucks for their handling of Giannis. He says he's healthy, they won't clear him. The league office is now refereeing a medical dispute."
         },
         {
           "type": "tweet",
-          "url": "https://twitter.com/AdamSchefter/status/2039116188597502279#m",
-          "account": "@AdamSchefter",
-          "why": "Meeting confirmation at Arizona Biltmore"
+          "url": "https://twitter.com/ShamsCharania/status/2040239021062815844#m",
+          "account": "@ShamsCharania",
+          "why": "Official NBA investigation announcement"
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/TheNBACentel/status/2040245265102254136#m",
+          "account": "@TheNBACentel",
+          "why": "Doc Rivers examining Giannis detail"
         },
         {
           "type": "commentary",
-          "hint": "Circle of life — OBJ was drafted by the Giants, became a star, got traded in drama, bounced around the league, and now might come home. Frame as 'everything comes full circle in the NFL.'"
+          "hint": "Both sides telling different stories to investigators. Milwaukee says Giannis wants to play but isn't ready. Giannis says he's ready but they won't clear him. Somebody's lying."
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/BarstoolBigCat/status/2040413841977200901#m",
+          "account": "@BarstoolBigCat",
+          "why": "Perfect fan sentiment — demand the trade"
         },
         {
           "type": "gif",
-          "emotion": "nostalgia and reunion vibes",
-          "context": "Former star potentially returning home",
-          "avoid": "Do NOT search 'Giants' — search 'prodigal son returns home'"
+          "emotion": "relationship dysfunction",
+          "context": "Franchise civil war",
+          "avoid": "Do NOT search Giannis — search 'this is fine dog fire'"
         }
       ]
     },
     {
-      "headline": "Fernando Mendoza's Perfect Pro Day Show",
-      "level": "medium",
-      "hooks": [
-        "Expected #1 pick hasn't missed a throw",
-        "All 32 teams watching",
-        "Heisman winner proving the hype"
-      ],
-      "sub_angles": {
-        "statistically_interesting": "56 passes, zero misses reported at time of tweet",
-        "running_joke": null,
-        "who_else_affected": "Other QB prospects, Raiders with #1 pick",
-        "cross_connection": null,
-        "where_it_goes": "Cementing his status as QB1 in the draft"
-      },
-      "research": {
-        "key_stats": [
-          "Expected #1 pick",
-          "Heisman winner",
-          "56 passes thrown"
-        ],
-        "context": "Pro day at Indiana with all 32 teams present",
-        "connections": "Draft season ramping up"
-      },
-      "blocks": [
-        {
-          "type": "commentary",
-          "hint": "Hook — Fernando Mendoza put on a clinic at his pro day today. The expected #1 pick was reportedly perfect through 56 passes with all 32 teams watching. Frame as 'this is how you lock up being the first pick.'"
-        },
-        {
-          "type": "tweet",
-          "url": "https://twitter.com/ACwishtv/status/2039411795622780943#m",
-          "account": "@ACwishtv",
-          "why": "Perfect throwing performance report"
-        },
-        {
-          "type": "gif",
-          "emotion": "flawless execution",
-          "context": "Perfect performance under pressure",
-          "avoid": "Do NOT search 'quarterback' — search 'chef's kiss perfection'"
-        },
-        {
-          "type": "commentary",
-          "hint": "Kicker — The Raiders have the #1 pick and just watched their future franchise QB throw 56 straight dimes. Sometimes the draft process actually works exactly as planned."
-        }
-      ]
-    },
-    {
-      "headline": "Paul George Makes History at 37",
+      "headline": "Cooper Flagg Makes History with 51-Point Night",
       "level": "small",
       "hooks": [
-        "39 points with 0 turnovers",
-        "Oldest player ever with those numbers",
-        "Sixers winning since his return"
+        "First teenager in NBA history to score 50+",
+        "Beat LeBron, Jennings, Booker records"
       ],
       "sub_angles": {
-        "statistically_interesting": "First player in NBA history 37+ with 39/5/6/3 on 0 TOV",
+        "statistically_interesting": "19 years, 103 days old — younger than any 50-point scorer",
         "running_joke": null,
-        "who_else_affected": "Sixers playoff push, other aging stars",
-        "cross_connection": null,
-        "where_it_goes": "Proving he's still elite despite age concerns"
+        "who_else_affected": "LeBron, Jennings, Booker all older when they did it",
+        "cross_connection": "College recruit turned NBA instant star",
+        "where_it_goes": "ROY race, generational talent arrival"
       },
       "research": {
         "key_stats": [
-          "39 PTS, 5 REB, 6 AST, 3 STL, 0 TOV",
-          "Oldest ever with those numbers"
+          "19-103 days old",
+          "Previous record holders all 20+"
         ],
-        "context": "Part of strong return from injury, Sixers 3-1 since return",
-        "connections": "Age-defying performance"
+        "context": "Historic rookie achievement",
+        "connections": "Age comparison to other legends"
       },
       "blocks": [
         {
           "type": "commentary",
-          "hint": "Paul George went nuclear against Washington: 39 points, 6 assists, 3 steals, ZERO turnovers. At 37, he's the oldest player in NBA history to put up those numbers without a single turnover."
+          "hint": "Cooper Flagg dropped 51 points and became the first teenager in NBA history to score 50+. Not just a rookie record — an age record."
         },
         {
           "type": "tweet",
-          "url": "https://twitter.com/statmuse/status/2039510425478336636#m",
-          "account": "@StatMuse",
-          "why": "Historic stat line confirmation"
+          "url": "https://twitter.com/HaterReport/status/2040282809537851886#m",
+          "account": "@HaterReport",
+          "why": "Perfect age breakdown showing he beat LeBron, Jennings, Booker"
         },
         {
-          "type": "gif",
-          "emotion": "age-defying excellence",
-          "context": "37-year-old making history",
-          "avoid": "Do NOT search 'basketball' — search 'fine wine gets better with age'"
+          "type": "commentary",
+          "hint": "Kicker — 19 years, 103 days old. LeBron didn't do it until he was 20. Neither did Jennings or Booker. Kid's already rewriting history."
+        }
+      ]
+    },
+    {
+      "headline": "Luka Dončić Done for Season with Hamstring Injury",
+      "level": "small",
+      "hooks": [
+        "MVP candidate out indefinitely",
+        "Agent applying for 65-game rule exception",
+        "Scoring leader's season over"
+      ],
+      "sub_angles": {
+        "statistically_interesting": "Led NBA in scoring, missed time for child's birth",
+        "running_joke": null,
+        "who_else_affected": "Lakers playoff hopes, MVP voters",
+        "cross_connection": "Birth in Slovenia, back two days later shows dedication",
+        "where_it_goes": "MVP vote controversy, Lakers playoff push without star"
+      },
+      "research": {
+        "key_stats": [
+          "33.5 PPG league leader",
+          "64 games played"
+        ],
+        "context": "Agent fighting for MVP eligibility despite injury",
+        "connections": "Extraordinary circumstances for child birth"
+      },
+      "blocks": [
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/ShamsCharania/status/2040187516754518125#m",
+          "account": "@ShamsCharania",
+          "why": "Breaking news of injury"
+        },
+        {
+          "type": "commentary",
+          "hint": "His agent is applying for an exception to the 65-game rule. The argument: Luka missed two games for his daughter's birth in Slovenia, was back competing two days later. Extraordinary circumstances."
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/statmuse/status/2040190709391630408#m",
+          "account": "@StatMuse",
+          "why": "Season stats — scoring leader done"
+        },
+        {
+          "type": "commentary",
+          "hint": "Kicker — 33.5 points per game, leading the league. Now voters have to decide: does the best scorer deserve MVP even if his season's over?"
+        }
+      ]
+    },
+    {
+      "headline": "Dawn Staley vs Geno Auriemma Final Four Drama",
+      "level": "small",
+      "hooks": [
+        "Handshake controversy postgame",
+        "Geno claimed she didn't shake hands pregame",
+        "Video proves he lied"
+      ],
+      "sub_angles": {
+        "statistically_interesting": "UConn's 53-game win streak ended",
+        "running_joke": "Geno being petty in defeat vs gracious Dawn",
+        "who_else_affected": "Women's basketball getting attention for drama",
+        "cross_connection": "Men's and women's Final Four same weekend",
+        "where_it_goes": "South Carolina championship push continues"
+      },
+      "research": {
+        "key_stats": [
+          "53-game UConn win streak snapped"
+        ],
+        "context": "Handshake controversy, video evidence",
+        "connections": "Competitive rivalry between legendary coaches"
+      },
+      "blocks": [
+        {
+          "type": "commentary",
+          "hint": "Geno Auriemma accused Dawn Staley of not shaking his hand before the game. Problem: there's video of her shaking his hand. He lied for no reason."
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/HaterReport/status/2040239867968258238#m",
+          "account": "@HaterReport",
+          "why": "Video evidence destroying Geno's claim"
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/HaterReport/status/2040273969371046251#m",
+          "account": "@HaterReport",
+          "why": "Contrast showing how different Geno acts when he wins vs loses"
+        }
+      ]
+    },
+    {
+      "headline": "Trump Signs College Sports Executive Order",
+      "level": "small",
+      "hooks": [
+        "5 years to play, one transfer rule",
+        "Goes into effect August 1",
+        "Will face legal challenges"
+      ],
+      "sub_angles": {
+        "statistically_interesting": "74-page executive order",
+        "running_joke": null,
+        "who_else_affected": "Current college athletes, transfer portal",
+        "cross_connection": "Politics meets sports policy",
+        "where_it_goes": "Court challenges, implementation battles"
+      },
+      "research": {
+        "key_stats": [
+          "74 pages",
+          "August 1 effective date"
+        ],
+        "context": "Limits eligibility and transfers",
+        "connections": "Political intervention in college sports"
+      },
+      "blocks": [
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/AdamSchefter/status/2040179404966342921#m",
+          "account": "@AdamSchefter",
+          "why": "News breaking tweet"
+        },
+        {
+          "type": "commentary",
+          "hint": "74-page executive order. Five years to play five seasons, one free transfer. Takes effect August 1 but will face legal challenges on multiple fronts. Play it straight — politics meets sports policy."
         }
       ]
     }
   ],
   "timeline": [
     {
-      "tweet_url": "https://twitter.com/Super70sSports/status/2039511225147551919#m",
-      "account": "@Super70sSports",
-      "why": "Classic Super70s baseball swing commentary"
+      "tweet_url": "https://twitter.com/AdamSchefter/status/2040160701428191625#m",
+      "account": "@AdamSchefter",
+      "why": "Travon Walker $110M extension news"
     },
     {
-      "tweet_url": "https://twitter.com/Super70sSports/status/2039500231734174137#m",
-      "account": "@Super70sSports",
-      "why": "1979 radio/cassette nostalgia with sports connection"
+      "tweet_url": "https://twitter.com/ShamsCharania/status/2040147364841677291#m",
+      "account": "@ShamsCharania",
+      "why": "Steph Curry return news"
     },
     {
-      "tweet_url": "https://twitter.com/TheNBACentel/status/2039362201253724580#m",
-      "account": "@TheNBACentel",
-      "why": "Jaden Ivey born-again Christian story"
-    },
-    {
-      "tweet_url": "https://twitter.com/TheNBACentel/status/2039079952486629879#m",
-      "account": "@TheNBACentel",
-      "why": "Jaden Ivey holy water Gatorade replacement"
-    },
-    {
-      "tweet_url": "https://twitter.com/BallsackSports/status/2039438430136881607#m",
-      "account": "@BallsackSports",
-      "why": "Elon Musk follow button April Fools"
-    },
-    {
-      "tweet_url": "https://twitter.com/HaterReport/status/2039194081004298261#m",
-      "account": "@HaterReport",
-      "why": "Giannis celebrating his brother's first NBA points"
-    },
-    {
-      "tweet_url": "https://twitter.com/Super70sSports/status/2039168558765158598#m",
-      "account": "@Super70sSports",
-      "why": "CB Bucknor umpire roasting"
-    },
-    {
-      "tweet_url": "https://twitter.com/PFTCommenter/status/2039173177792708783#m",
-      "account": "@PFTCommenter",
-      "why": "CB Bucknor conspiracy theory"
-    },
-    {
-      "tweet_url": "https://twitter.com/StatMuse/status/2039515444193747323#m",
+      "tweet_url": "https://twitter.com/statmuse/status/2040241864788369685#m",
       "account": "@StatMuse",
-      "why": "NAW career-high game stats"
+      "why": "76ers trio vs Wolves stat line"
     },
     {
-      "tweet_url": "https://twitter.com/StatMuse/status/2039429908640727539#m",
+      "tweet_url": "https://twitter.com/statmuse/status/2040235890023260533#m",
       "account": "@StatMuse",
-      "why": "Sandy Alcantara dominant pitching line"
+      "why": "Kon Knueppel 36th 20-point game"
+    },
+    {
+      "tweet_url": "https://twitter.com/statmuse/status/2040202536846577697#m",
+      "account": "@StatMuse",
+      "why": "Chase DeLauter MLB hot start"
+    },
+    {
+      "tweet_url": "https://twitter.com/statmuse/status/2040163439419469961#m",
+      "account": "@StatMuse",
+      "why": "Aaron Judge home opener homer"
+    },
+    {
+      "tweet_url": "https://twitter.com/statmuse/status/2040156456477958631#m",
+      "account": "@StatMuse",
+      "why": "Ohtani and Tucker first homers"
+    },
+    {
+      "tweet_url": "https://twitter.com/statmuse/status/2040155138665390344#m",
+      "account": "@StatMuse",
+      "why": "Hornets hot streak since January 1st"
+    },
+    {
+      "tweet_url": "https://twitter.com/Super70sSports/status/2040075775198548127#m",
+      "account": "@Super70sSports",
+      "why": "Bracket of Randomness Elite Eight matchup"
+    },
+    {
+      "tweet_url": "https://twitter.com/AdamSchefter/status/2040170010627227717#m",
+      "account": "@AdamSchefter",
+      "why": "Rashee Rice cleared by NFL investigation"
     }
   ],
   "closer": {
-    "hook": "Jerry O'Connell tried to prank PMT by impersonating Geno Smith",
+    "hook": "Josh Allen and Hailee Steinfeld baby announcement",
     "blocks": [
       {
         "type": "commentary",
-        "hint": "Jerry O'Connell wanted to prank call PMT as Geno Smith for April Fools but they told the hosts about it because they just wanted to hear Jerry try to do a Geno Smith impression. Peak Jerry O energy."
+        "hint": "Josh Allen and Hailee Steinfeld announced the birth of their first child. Bills Mafia just got its newest member."
       },
       {
         "type": "tweet",
-        "url": "https://twitter.com/PFTCommenter/status/2039340558800331154#m",
-        "account": "@PFTCommenter",
-        "why": "Jerry O'Connell Geno Smith impression explanation"
+        "url": "https://twitter.com/Super70sSports/status/2040233173028626910#m",
+        "account": "@Super70sSports",
+        "why": "Classic Super70s randomness to close"
       }
     ]
   },
   "source_check": {
     "reaction_accounts": {
-      "@HaterReport": 1,
-      "@PFTCommenter": 1,
-      "@TheNBACentel": 2,
-      "@BallsackSports": 1
+      "@HaterReport": 3,
+      "@BarstoolBigCat": 1
     },
     "stat_accounts": {
-      "@StatMuse": 3,
-      "@ACwishtv": 1
-    },
-    "news_breaker_accounts": {
+      "@StatMuse": 7,
       "@AdamSchefter": 2
     },
-    "max_reaction_from_single": 2,
-    "max_stat_from_single": 3,
-    "max_newsbreaker_from_single": 2,
+    "news_breaker_accounts": {
+      "@AdamSchefter": 2,
+      "@ShamsCharania": 3
+    },
+    "max_reaction_from_single": 3,
+    "max_stat_from_single": 7,
+    "max_newsbreaker_from_single": 3,
     "stephen_a_smith_used": false
   },
   "quality_check": {
-    "total_headlines": 4,
-    "total_tweets": 18,
-    "total_gif_slots": 4,
+    "total_headlines": 6,
+    "total_tweets": 19,
+    "total_gif_slots": 3,
     "consecutive_commentary_violations": 0,
     "stories_without_hooks": []
   }

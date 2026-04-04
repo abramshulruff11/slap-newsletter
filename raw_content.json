@@ -1,4 +1,2748 @@
 {
-  "news_headlines": [],
-  "tweets": []
+  "news_headlines": [
+    {
+      "title": "'Frustrated' Geno, Staley have fiery sideline dustup",
+      "description": "UConn's Geno Auriemma ripped into the officiating crew during a live TV interview and then got into a heated argument with Dawn Staley in the final seconds of the Huskies' 62-48 loss to South Carolina in the women's Final Four.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:52:34+00:00"
+    },
+    {
+      "title": "UCLA grinds out sloppy win, reaches 1st title game",
+      "description": "It wasn't pretty, but UCLA survived 23 turnovers and held off a late surge from Texas to pull out a 51-44 win and reach the NCAA title game for the first time in program history.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:52:34+00:00"
+    },
+    {
+      "title": "Mavs' Flagg, 19, is youngest with 50-point game",
+      "description": "Mavericks forward Cooper Flagg became the youngest player in NBA history to have a 50-point game, as the rookie scored 51 in a 138-127 home loss to the Magic.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:52:35+00:00"
+    },
+    {
+      "title": "Sources: NBA investigating Bucks, Giannis' health",
+      "description": "The NBA is investigating the Bucks' handling of Giannis Antetokounmpo, sources told ESPN's Shams Charania, after the star forward told reporters that he is being held out despite being healthy enough to play.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:52:34+00:00"
+    },
+    {
+      "title": "Doncic set to miss at least rest of regular season",
+      "description": "Luka Doncic has a Grade 2 hamstring strain and will be out at least through the end of the regular season, the Lakers announced.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:52:34+00:00"
+    },
+    {
+      "title": "Coaches push back on LeBron's Memphis remark",
+      "description": "A pair of NBA head coaches defended Memphis and its culture following criticism by Lakers star LeBron James that the Grizzlies should relocate.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:52:35+00:00"
+    },
+    {
+      "title": "'Difference-maker': Griffin dazzles in Pirates debut",
+      "description": "Pittsburgh Pirates shortstop Konnor Griffin made his major league debut and hit an RBI double as Pittsburgh beat the Baltimore Orioles 5-4 in its home opener at PNC Park.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:52:34+00:00"
+    },
+    {
+      "title": "Fire make Carleton top WNBA expansion draft pick",
+      "description": "Unrestricted free agent Bridget Carleton was selected by the Portland Fire as the No. 1 pick in the 2026 WNBA expansion draft.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:52:35+00:00"
+    },
+    {
+      "title": "💰 How to bet the men's basketball semifinals",
+      "description": "Will the Illini get revenge for the loss to UConn back in November? Is the total too high in the late game?",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:53:52+00:00"
+    },
+    {
+      "title": "Latest NBA buzz: What we know about Luka's hamstring injury",
+      "description": "Here's what league insiders are talking about behind the scenes, including when Doncic might be to return from his latest injury.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T12:41:00+00:00"
+    },
+    {
+      "title": "NBA playoff watch: Can Spurs stay red hot?",
+      "description": "Wemby & Co. head to Denver. Plus, updated playoff projections, draft lottery standings after Friday.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T12:41:00+00:00"
+    },
+    {
+      "title": "ESPN experts predict men's Final Four winners, national champion",
+      "description": "We surveyed 46 reporters and analysts, and there is one clear favorite to cut down the nets in Indianapolis.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T14:12:55+00:00"
+    },
+    {
+      "title": "How UConn-Illinois, Arizona-Michigan will be decided in men's Final Four",
+      "description": "ESPN's college basketball experts break down keys to the national semifinals.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T14:10:00+00:00"
+    },
+    {
+      "title": "Welcome to Mullins Drive: How a small Indiana town is embracing its new March legend",
+      "description": "The UConn freshman inked his name in Indiana basketball history. His hometown added it to street signs, too.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T14:00:28+00:00"
+    },
+    {
+      "title": "NHL playoff watch: Guide to all 15 games on Statement Saturday",
+      "description": "More playoff spots (and eliminations) can be clinched around the league. Here's what to watch in each contest.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:10:15+00:00"
+    },
+    {
+      "title": "NHL Power Rankings: New 1-32 poll, most important remaining games",
+      "description": "With fewer than 10 games left for all teams, here's what matchups matter the most.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:10:15+00:00"
+    },
+    {
+      "title": "Who will be the best RBs in the NFL draft class? We gave projections and comps for top prospects",
+      "description": "We have stat projections for the top running back prospects in the 2026 NFL draft class, from Jeremiyah Love to late-round sleepers.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T12:22:01+00:00"
+    },
+    {
+      "title": "Latest NFL draft buzz: What we're hearing on Jermod McCoy's pro day",
+      "description": "How did the Tennessee CB perform at his pro day? Who is the third-best QB in this class?",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T12:22:02+00:00"
+    },
+    {
+      "title": "End of the feature back? What the rise of running back tandems means for the NFL draft",
+      "description": "Splitting time used to be a mark against rushers. With top NFL draft prospects coming from the same backfield, that might be changing.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T12:35:21+00:00"
+    },
+    {
+      "title": "Tracking fifth-year options for 2023 first-rounders: Who will return in 2027?",
+      "description": "The deadline for teams to pick up the fifth-year option on rookie contracts is May 1.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T12:35:21+00:00"
+    },
+    {
+      "title": "Who are the 39 best men's U21 players in the world?",
+      "description": "For the eighth straight year, ESPN brings you our list of the game's next young stars aged 21 or under. Who is good enough to make it?",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:11:55+00:00"
+    },
+    {
+      "title": "The best 21 women's players, aged 21 or under",
+      "description": "Welcome to the next generation, with representatives from the NWSL, WSL and across Europe.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:11:54+00:00"
+    },
+    {
+      "title": "Three big trends from Portland, Toronto picks",
+      "description": "The biggest (and, in some cases, surprising) picks for the Fire and Tempo had a few things in common.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T14:10:47+00:00"
+    },
+    {
+      "title": "Final NBA MVP (and ROY) straw poll: Here's who voters are picking to win",
+      "description": "Can Wemby's late push unseat SGA? Tim Bontemps polls 100 NBA insiders for the latest MVP snapshot. Plus, a look at the race for top rookie.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:08:56+00:00"
+    },
+    {
+      "title": "The incredibly rare thing you probably missed during the Cubs' 2016 curse-breaking World Series win",
+      "description": "While the Cubs were making history in Cleveland 10 years ago, one unique accomplishment flew well under the radar.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-03T15:28:44+00:00"
+    },
+    {
+      "title": "117 wins? 40 different pitchers? Four themes that will dominate the Dodgers' regular season",
+      "description": "L.A. is all about October. So what happens over the next six months? We separate fact from fiction.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:08:35+00:00"
+    },
+    {
+      "title": "Power Rankings: Who are the top teams one week into the season?",
+      "description": "With baseball now underway, how much has changed since our preseason rankings?",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:08:35+00:00"
+    },
+    {
+      "title": "Final Four has a Carolina blue backdrop",
+      "description": "As UNC looks for its next coach, the Final Four has taken on a Carolina blue backdrop.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-03T19:40:19+00:00"
+    },
+    {
+      "title": "UConn on brink of dual title appearance brings 2014 to mind",
+      "description": "UConn men's and women's basketball are both in the Final Four. Could the school make its first dual national championship appearance since 2014? The world was quite different back then.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-03T15:00:34+00:00"
+    },
+    {
+      "title": "'Let her play': Chiefs launch petition for high school girls' flag football in Kansas",
+      "description": "The Kansas State High School Activities Association will have a vote on April 23.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-03T15:00:34+00:00"
+    },
+    {
+      "title": "Betting buzz: Men's Final Four features tightest spreads on record",
+      "description": "As of Friday morning, both UConn-Illinois and Arizona-Michigan have point spreads of less than 2.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-03T20:21:59+00:00"
+    },
+    {
+      "title": "Transfer rumors, news: Arsenal eye Bayer Leverkusen forward",
+      "description": "Arsenal are keeping an eye on Bayer Leverkusen striker Christian Kofane. Transfer Talk has the latest.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T13:23:15+00:00"
+    },
+    {
+      "title": "Alvarez a top-10 bat? Ohtani wins Cy Young? Perdomo for real? Don't be surprised",
+      "description": "Eric Karabell looks into the crystal ball to tell fantasy baseball managers what might come to pass in the not-too-distant future.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-04T03:05:27+00:00"
+    },
+    {
+      "title": "Keepers, sleepers and more: Top 10 notes for next season",
+      "description": "As the NHL season nears its end, here are the keepers, sleepers and bouncebacks to know for next season.",
+      "source": "ESPN Top Headlines",
+      "pubDate": "2026-04-03T18:03:15+00:00"
+    },
+    {
+      "title": "End of the feature back? What the rise of running back tandems means for the NFL draft",
+      "description": "Splitting time used to be a mark against rushers. With top NFL draft prospects coming from the same backfield, that might be changing.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:12:33+00:00"
+    },
+    {
+      "title": "Latest NFL draft buzz: What we're hearing on Jermod McCoy's pro day, the QB3 debate",
+      "description": "How did Jermod McCoy perform at his pro day? Our NFL draft experts weigh in with new intel three weeks out.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:12:33+00:00"
+    },
+    {
+      "title": "NFL probe finds no reason to discipline Chiefs' Rice",
+      "description": "The NFL announced Friday that it concluded its own investigation into Chiefs receiver Rashee Rice, stating that he \"has not engaged in conduct that violates the personal conduct policy.\"",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:32:41+00:00"
+    },
+    {
+      "title": "Jags sign DE Walker to 4-year, $110M extension",
+      "description": "The Jaguars signed defensive end Travon Walker to a four-year, $110 million contract extension, his agency announced Friday.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:32:41+00:00"
+    },
+    {
+      "title": "Source: Nunez-Roches rejoins TB on 1-year deal",
+      "description": "The Buccaneers are re-signing defensive tackle Rakeem Nunez-Roches on a one-year deal, a source confirmed Friday.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:32:41+00:00"
+    },
+    {
+      "title": "Two-time All-Pro, 2019 DPOY Gilmore retiring",
+      "description": "Two-time All-Pro cornerback Stephon Gilmore announced his retirement from the NFL.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:32:41+00:00"
+    },
+    {
+      "title": "Raiders add Cousins as possible Mendoza mentor",
+      "description": "Kirk Cousins has agreed to a contract with the Raiders, the veteran quarterback's agent announced.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:32:41+00:00"
+    },
+    {
+      "title": "Ex-Steelers safety Dugger signs with Bengals",
+      "description": "Safety Kyle Dugger will remain in the AFC North in 2026, signing a one-year contract with the Bengals.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:32:41+00:00"
+    },
+    {
+      "title": "Rams receiver Nacua is in rehab, attorney says",
+      "description": "Rams wide receiver Puka Nacua has checked in to rehab, his attorney told The California Post. Last month, a woman in Los Angeles filed a lawsuit against Nacua alleging he made an \"unprovoked antisemitic statement\" and later bit her on the shoulder.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:32:41+00:00"
+    },
+    {
+      "title": "'Thank you football': LB Walker retires from NFL",
+      "description": "Linebacker Anthony Walker Jr. announced his retirement from the NFL on Thursday.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:32:41+00:00"
+    },
+    {
+      "title": "🏈 Inside the friction between Hurts, Eagles",
+      "description": "ESPN pulls back the curtain on what's ailing a star-studded Eagles offense, one in which its QB must evolve.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:32:41+00:00"
+    },
+    {
+      "title": "Did Malik Willis feel 'tricked' by Dolphins after Jaylen Waddle trade?",
+      "description": "Top takeaways from what the Dolphins said in Arizona, including Willis' fit and plans for Chop Robinson.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:12:48+00:00"
+    },
+    {
+      "title": "Safety 'savant' Caleb Downs to test NFL's thirst for his position",
+      "description": "Since 2000, only eight safeties have been drafted in the top 10. Downs could challenge conventional wisdom.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-03T16:32:05+00:00"
+    },
+    {
+      "title": "Who will be the best RBs in the NFL draft class? We gave projections and comps for top prospects",
+      "description": "We have stat projections for the top running back prospects in the 2026 NFL draft class, from Jeremiyah Love to late-round sleepers.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:18:38+00:00"
+    },
+    {
+      "title": "Solak's favorite draft prospects to watch at every position",
+      "description": "Which underrated players jump off the screen? Ben Solak fills out his All-Film team.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:18:38+00:00"
+    },
+    {
+      "title": "Texans coach DeMeco Ryans 'excited' to see C.J. Stroud's growth next season",
+      "description": "After a rough end to the 2025 season, Houston's coach is happy with where his QB is at heading into Year 4.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-04T12:13:15+00:00"
+    },
+    {
+      "title": "Tracking fifth-year options for 2023 first-rounders: Who will return in 2027?",
+      "description": "The deadline for teams to pick up the fifth-year option on rookie contracts is May 1. Which players have had their options picked up?",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-03T20:02:10+00:00"
+    },
+    {
+      "title": "2026 NFL offseason OTA, minicamp dates for all 32 teams",
+      "description": "Here are dates for the NFL's offseason workout programs in 2026, with mandatory minicamps starting in June.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-03T20:02:10+00:00"
+    },
+    {
+      "title": "'Let her play': Chiefs launch petition for high school girls' flag football in Kansas",
+      "description": "The Kansas State High School Activities Association will have a vote on April 23 to determine if girls' high school flag football will be sanctioned.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-03T22:15:49+00:00"
+    },
+    {
+      "title": "Josh Allen, Hailee Steinfeld announce birth of first child",
+      "description": "The Bills quarterback and the \"Sinners\" actress did not share the date of birth or the name of their daughter.",
+      "source": "ESPN NFL",
+      "pubDate": "2026-04-03T22:15:49+00:00"
+    },
+    {
+      "title": "Latest NBA buzz: What we know about Luka's hamstring injury",
+      "description": "Here's what league insiders are talking about behind the scenes, including when Doncic might be to return from his latest injury.",
+      "source": "ESPN NBA",
+      "pubDate": "2026-04-04T00:41:55+00:00"
+    },
+    {
+      "title": "Mavs' Flagg, 19, is youngest with 50-point game",
+      "description": "Mavericks forward Cooper Flagg became the youngest player in NBA history to have a 50-point game, as the rookie scored 51 in a 138-127 home loss to the Magic.",
+      "source": "ESPN NBA",
+      "pubDate": "2026-04-04T04:47:47+00:00"
+    },
+    {
+      "title": "Sources: NBA investigating Bucks, Giannis' health",
+      "description": "The NBA is investigating the Bucks' handling of Giannis Antetokounmpo, sources told ESPN's Shams Charania, after the star forward told reporters that he is being held out despite being healthy enough to play.",
+      "source": "ESPN NBA",
+      "pubDate": "2026-04-04T04:47:47+00:00"
+    },
+    {
+      "title": "Doncic set to miss at least rest of regular season",
+      "description": "Luka Doncic has a Grade 2 hamstring strain and will be out at least through the end of the regular season, the Lakers announced.",
+      "source": "ESPN NBA",
+      "pubDate": "2026-04-04T04:47:47+00:00"
+    },
+    {
+      "title": "Coaches push back on LeBron's Memphis remark",
+      "description": "A pair of NBA head coaches defended Memphis and its culture following criticism by Lakers star LeBron James that the Grizzlies should relocate.",
+      "source": "ESPN NBA",
+      "pubDate": "2026-04-04T04:47:47+00:00"
+    },
+    {
+      "title": "Sources: Curry expected to return vs. Rockets",
+      "description": "Following two successful scrimmages, Warriors star Stephen Curry is expected to get official clearance for a Sunday return to the lineup after missing the previous 27 games with a persistent right knee issue, league sources told ESPN.",
+      "source": "ESPN NBA",
+      "pubDate": "2026-04-04T04:47:47+00:00"
+    },
+    {
+      "title": "Towns held out with elbow injury; Knicks rout Bulls",
+      "description": "Karl-Anthony Towns took part in the Knicks' pregame warmups but was ultimately held out of Friday's game against the Bulls because of a right elbow impingement.",
+      "source": "ESPN NBA",
+      "pubDate": "2026-04-04T04:47:47+00:00"
+    },
+    {
+      "title": "🏀 Scouts on draft: Is Peterson or Dybantsa No. 1?",
+      "description": "Fit over talent? Versatility over production? NBA scouts and execs break down the conversations happening at the top of the draft.",
+      "source": "ESPN NBA",
+      "pubDate": "2026-04-04T04:47:47+00:00"
+    },
+    {
+      "title": "NBA playoff watch: Can Spurs stay red hot?",
+      "description": "Wemby & Co. head to Denver. Plus, updated playoff projections, draft lottery standings after Friday.",
+      "source": "ESPN NBA",
+      "pubDate": "2026-04-04T12:16:20+00:00"
+    },
+    {
+      "title": "Final NBA MVP (and ROY) straw poll: Here's who voters are picking to win",
+      "description": "Can Wemby's late push unseat SGA? Tim Bontemps polls 100 NBA insiders for the latest MVP snapshot. Plus, a look at the race for top rookie.",
+      "source": "ESPN NBA",
+      "pubDate": "2026-04-03T17:57:10+00:00"
+    },
+    {
+      "title": "The latest on Kawhi Leonard, Steve Ballmer and the NBA's investigation into the LA Clippers",
+      "description": "What was actually in Leonard's contract? What do league insiders think of it? Here's what we know about the allegations -- and where the investigation stands.",
+      "source": "ESPN NBA",
+      "pubDate": "2026-04-03T21:14:31+00:00"
+    },
+    {
+      "title": "'Difference-maker': Griffin dazzles in Pirates debut",
+      "description": "Pittsburgh Pirates shortstop Konnor Griffin made his major league debut and hit an RBI double as Pittsburgh beat the Baltimore Orioles 5-4 in its home opener at PNC Park.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-04T05:16:09+00:00"
+    },
+    {
+      "title": "Mets' Soto exits early, will have MRI on right calf",
+      "description": "Mets slugger Juan Soto will undergo an MRI after leaving Friday night's win over the Giants in the first inning because of right calf tightness.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-04T05:16:09+00:00"
+    },
+    {
+      "title": "Judge's text, HR set tone in Yankees' home opener",
+      "description": "Aaron Judge's pregame text, home run set the tone for the Yankees in their home opener, an 8-2 win over the Marlins.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-04T05:16:09+00:00"
+    },
+    {
+      "title": "Twins OF Buxton exits with forearm contusion",
+      "description": "Twins All-Star outfielder Byron Buxton exited Friday's 10-4 home-opener win over the Rays because of a right forearm contusion.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-04T05:16:09+00:00"
+    },
+    {
+      "title": "Jays' Kirk (thumb) hurt by foul tip, set for X-rays",
+      "description": "Blue Jays catcher Alejandro Kirk was struck on the thumb of his glove hand on a foul tip off the bat of Chicago's Austin Hays in the 10th inning on Friday and left the game. Kirk, a two-time All-Star, was going for X-rays after the game.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-04T05:16:09+00:00"
+    },
+    {
+      "title": "Ohtani ends early plate slump with 1st HR, RBIs",
+      "description": "Shohei Ohtani hit a three-run homer in the third inning against the Nationals for his first RBIs of the season.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-04T05:16:09+00:00"
+    },
+    {
+      "title": "D-backs OF Lawlar suffers fractured right wrist",
+      "description": "Diamondbacks outfielder Jordan Lawlar was placed on the injured list Friday with a fractured right wrist after getting hit with a pitch against the Braves.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-04T05:16:09+00:00"
+    },
+    {
+      "title": "White Sox will retire 'surprised' Guillén's No. 13",
+      "description": "Former White Sox shortstop and manager Ozzie Guillén will get his No. 13 jersey retired by the club at a ceremony in August.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-04T05:16:09+00:00"
+    },
+    {
+      "title": "🍗 Top new ballpark foods for 2026 MLB season",
+      "description": "Teams across Major League Baseball continue to raise their game when it comes to concession items.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-04T05:16:09+00:00"
+    },
+    {
+      "title": "What you need to know about Pirates' 19-year-old phenom",
+      "description": "Pittsburgh is calling up MLB's No. 1 overall prospect. Here is what makes the shortstop so special.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-04T13:07:50+00:00"
+    },
+    {
+      "title": "117 wins? 40 different pitchers? Four themes that will dominate the Dodgers' regular season",
+      "description": "L.A. is all about October. So what happens over the next six months? We separate fact from fiction.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-04T00:48:57+00:00"
+    },
+    {
+      "title": "MLB Power Rankings: Who are the top teams one week into the season?",
+      "description": "With baseball now underway, how much has changed since our preseason rankings? Our Week 1 rankings tell the story.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-03T18:09:26+00:00"
+    },
+    {
+      "title": "Starting pitcher rankings: Who are baseball's 11 true aces -- and who just misses the cut?",
+      "description": "Who is the sport's most dominant pitcher right now? We rank the elite.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-03T18:09:26+00:00"
+    },
+    {
+      "title": "'Nobody would've believed it if there wasn't a video': Remembering Randy Johnson's bird pitch",
+      "description": "In 2001, one of baseball's first viral moments played out on a spring training field. Those who were there relive the \"Sea of Feathers\" game.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-03T21:05:59+00:00"
+    },
+    {
+      "title": "Alvarez a top-10 bat? Ohtani wins Cy Young? Perdomo for real? Don't be surprised",
+      "description": "Eric Karabell looks into the crystal ball to tell fantasy baseball managers what might come to pass in the not-too-distant future.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-03T21:19:31+00:00"
+    },
+    {
+      "title": "Konnor Griffin to make debut for Pirates",
+      "description": "All of the important fantasy spin and actionable takeaways resulting from the latest baseball news.",
+      "source": "ESPN MLB",
+      "pubDate": "2026-04-03T21:19:32+00:00"
+    },
+    {
+      "title": "Safety 'savant' Caleb Downs to test NFL's thirst for his position",
+      "description": "Since 2000, only eight safeties have been drafted in the top 10. Downs could challenge conventional wisdom.",
+      "source": "ESPN College Football",
+      "pubDate": "2026-04-03T16:32:05+00:00"
+    },
+    {
+      "title": "Executive order: Athletes get 5 years, 1 transfer",
+      "description": "An executive order signed by President Donald Trump on Friday aims to limit NCAA athletes to a five-year playing window and how often they can transfer between schools.",
+      "source": "ESPN College Football",
+      "pubDate": "2026-04-03T22:20:00+00:00"
+    },
+    {
+      "title": "TCU, coach Dykes agree to multiyear extension",
+      "description": "Sonny Dykes, who has gone 36-17 in four seasons as TCU coach, has agreed to a multiyear extension.",
+      "source": "ESPN College Football",
+      "pubDate": "2026-04-03T22:20:00+00:00"
+    },
+    {
+      "title": "Judge denies UVA QB Morris' request for 7th year",
+      "description": "A Virginia circuit court judge denied Virginia quarterback Chandler Morris' request for a preliminary injunction to play a seventh season on Thursday.",
+      "source": "ESPN College Football",
+      "pubDate": "2026-04-03T22:20:00+00:00"
+    },
+    {
+      "title": "Big 12's Yormark, TT booster bicker over schedule",
+      "description": "Big 12 commissioner Brett Yormark and Texas Tech booster Cody Campbell traded barbs this week over a scheduled Friday night game between the Red Raiders and Houston next season.",
+      "source": "ESPN College Football",
+      "pubDate": "2026-04-03T22:20:00+00:00"
+    },
+    {
+      "title": "Cignetti backs Hoover after turnover dig by Dykes",
+      "description": "Indiana coach Curt Cignetti reiterated his support for transfer quarterback Josh Hoover while responding to recent comments from TCU coach Sonny Dykes about Hoover's high turnovers total.",
+      "source": "ESPN College Football",
+      "pubDate": "2026-04-03T22:20:00+00:00"
+    },
+    {
+      "title": "QB Mendoza puts on show at Indiana pro day",
+      "description": "Expected No. 1 pick Fernando Mendoza threw roughly 56 passes in front of scouts from all 32 NFL teams and more than 100 members of the media Wednesday.",
+      "source": "ESPN College Football",
+      "pubDate": "2026-04-03T22:20:00+00:00"
+    },
+    {
+      "title": "Golding rebuts Dabo's accusation: 'Two sides'",
+      "description": "Two months after Clemson's Dabo Swinney accused Pete Golding of tampering, the Ole Miss coach recounted the acquisition of LB Luke Ferrelli from his perspective.",
+      "source": "ESPN College Football",
+      "pubDate": "2026-04-03T22:20:00+00:00"
+    },
+    {
+      "title": "'Swamp' makeover won't affect capacity, AD says",
+      "description": "The Gators' makeover for \"The Swamp\" won't affect attendance or ambiance inside one of the SEC's rowdiest venues, athletic director Scott Stricklin said.",
+      "source": "ESPN College Football",
+      "pubDate": "2026-04-03T22:20:00+00:00"
+    },
+    {
+      "title": "🏈 Inside CFB's unique tampering etiquette",
+      "description": "Tampering 101, 201 and 301: What is considered OK, and what crosses the line in college football?",
+      "source": "ESPN College Football",
+      "pubDate": "2026-04-03T22:20:00+00:00"
+    },
+    {
+      "title": "Your men's Final Four guide: Illinois-UConn, Arizona-Michigan (with predictions!)",
+      "description": "We run through every team's keys to advancing to the championship game -- and their potential fatal flaws.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T14:08:39+00:00"
+    },
+    {
+      "title": "How UConn-Illinois, Arizona-Michigan will be decided in men's Final Four",
+      "description": "The road ends in Indianapolis. ESPN's college basketball experts break down keys to the national semifinals.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T14:08:40+00:00"
+    },
+    {
+      "title": "Executive order: Athletes get 5 years, 1 transfer",
+      "description": "An executive order signed by President Donald Trump on Friday aims to limit NCAA athletes to a five-year playing window and how often they can transfer between schools.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T03:02:34+00:00"
+    },
+    {
+      "title": "Amid UNC talk, Lloyd agrees to new deal at Zona",
+      "description": "Coach Tommy Lloyd has agreed to a new deal with Arizona, he announced Friday.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T03:02:34+00:00"
+    },
+    {
+      "title": "UConn's Hurley owns up to antics: 'Not a victim'",
+      "description": "UConn coach Dan Hurley says he is not looking for any sympathy regarding the perception of his coaching style.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T03:02:34+00:00"
+    },
+    {
+      "title": "Tide's Holloway to enroll in fall, aims to play again",
+      "description": "Following Friday's reversal of his campus ban after his recent arrest, Alabama's Aden Holloway is planning to enroll in fall classes and hoping to rejoin the team next season pending the outcome of his legal case, his attorney told ESPN.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T03:02:34+00:00"
+    },
+    {
+      "title": "Boozer fifth freshman to win AP Player of Year",
+      "description": "Cameron Boozer is The Associated Press men's college basketball national Player of the Year, becoming only the fifth freshman to earn the honor and the second in a row for a Duke program that keeps adding to the longest list of winners in the country.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T03:02:34+00:00"
+    },
+    {
+      "title": "Nebraska's Hoiberg named AP Coach of the Year",
+      "description": "Nebraska's Fred Hoiberg edged out Duke's Jon Scheyer and Arizona's Tommy Lloyd for Associated Press men's basketball coach of the year honors Friday.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T03:02:34+00:00"
+    },
+    {
+      "title": "May happy at Michigan, won't talk about UNC job",
+      "description": "Dusty May says he's happy at Michigan and has a policy to not talk about other openings, like at North Carolina.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T03:02:34+00:00"
+    },
+    {
+      "title": "👀 Coaching carousel tracker: All the latest intel",
+      "description": "Will Wade left the Wolfpack to return to LSU in dramatic fashion. Here are coaches they could target next.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T03:02:34+00:00"
+    },
+    {
+      "title": "'We want to pinch ourselves': Dusty May's full-circle return to the Final Four",
+      "description": "Three years after helming FAU's Cinderella run to the national semifinals, May returns with Michigan.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T03:06:18+00:00"
+    },
+    {
+      "title": "Chasing history, Arizona is staying present in run to Final Four",
+      "description": "The Wildcats are back in the national semifinals for the first time in 25 years.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T03:06:18+00:00"
+    },
+    {
+      "title": "'There's not one path': The unexpected rise of Keaton Wagler at Illinois",
+      "description": "The Fighting Illini star has ascended toward the top of a historically talented freshman class.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-04T14:06:29+00:00"
+    },
+    {
+      "title": "Tournament picks: How to bet Saturday's national semifinal games",
+      "description": "Will the Illini get revenge for the loss to UConn back in November? Is the total too high in the late game?",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-03T18:22:51+00:00"
+    },
+    {
+      "title": "Men's Final Four has a Carolina blue backdrop",
+      "description": "As UNC looks for its next coach, the Final Four has taken on a Carolina blue backdrop.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-03T14:31:51+00:00"
+    },
+    {
+      "title": "Big Ten men's hoops dominance might be here to stay",
+      "description": "A title would not put the sport on par with football in the conference, but it would be a big step.",
+      "source": "ESPN College Basketball",
+      "pubDate": "2026-04-03T14:31:51+00:00"
+    },
+    {
+      "title": "2026 NCAA Tournament schedule: March Madness bracket, game dates, locations, tip times and TV channels",
+      "description": "Check out the master schedule for the NCAA Tournament so you can watch all the March Madness 2026 action",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T13:01:45+00:00"
+    },
+    {
+      "title": "2026 NCAA Tournament bracket: March Madness schedule and scores by region, TV channels and tip times",
+      "description": "Follow the Road to the Final Four all month long with an updating bracket and TV schedule",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T13:00:11+00:00"
+    },
+    {
+      "title": "Deontay Wilder vs. Derek Chisora fight predictions, odds, expert picks and undercard for heavyweight battle",
+      "description": "The pair of veteran heavyweights square off in London on Saturday",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T13:00:48+00:00"
+    },
+    {
+      "title": "UFC Fight Night predictions: Renato Moicano vs. Chris Duncan fight card, odds and expert picks for Las Vegas",
+      "description": "The pair of lightweights square off in the main event from the Meta Apex on Saturday",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T13:00:56+00:00"
+    },
+    {
+      "title": "2026 Final Four TV schedule, announcers: Where to watch NCAA Tournament, tip times for March Madness",
+      "description": "The complete television and streaming schedule for how to watch March Madness 2026 through the Final Four",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T12:57:58+00:00"
+    },
+    {
+      "title": "Michigan vs. Arizona odds, March Madness predictions: 2026 NCAA Tournament Final Four picks by proven model",
+      "description": "SportsLine's model simulated Michigan Wolverines vs. Arizona Wildcats and revealed its college basketball picks for this NCAA Tournament 2026 Final Four matchup on Saturday",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T12:53:13+00:00"
+    },
+    {
+      "title": "Bucks under investigation as Giannis speaks out, but the messaging doesn't add up",
+      "description": "The NBA is investigating Milwaukee's handling of Giannis Antetokounmpo's status, but his public push to return doesn't fully align with the reality of the Bucks' position or his own long-term leverage.",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T12:52:35+00:00"
+    },
+    {
+      "title": "2026 Final Four live stream: March Madness TV schedule, where to watch NCAA Tournament streaming online",
+      "description": "Everything you need to know and how to watch Saturday's Final Four national semifinals",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T12:45:31+00:00"
+    },
+    {
+      "title": "UConn vs. Illinois odds, March Madness predictions: 2026 Final Four picks from proven model",
+      "description": "SportsLine's model simulated Illinois Fighting Illini vs. Connecticut Huskies and revealed its NCAA Tournament 2026 Final Four picks for Saturday",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T12:40:26+00:00"
+    },
+    {
+      "title": "2026 ANWA TV schedule, times, format, where to watch Augusta National Women's Amateur coverage",
+      "description": "The first of consecutive weekends of golf at Augusta National concludes with the seventh annual ANWA",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T12:00:52+00:00"
+    },
+    {
+      "title": "Where to watch Serie A, live stream, schedule: Antonio Conte and Napoli's last chance vs. AC Milan",
+      "description": "The Azzurri will host AC Milan for a crucial match ahead of the last weeks of action",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T11:57:37+00:00"
+    },
+    {
+      "title": "UFC Fight Night odds, lines, predictions, time: Moicano vs. Duncan picks from proven MMA expert",
+      "description": "SportsLine's Kyle Marley reveals his picks for the UFC Fight Night fight card from the Meta APEX in Las Vegas in the UFC event on Paramount+, featuring 10th-ranked Renato Moicano and Chris Duncan in a lightweight matchup",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T11:53:57+00:00"
+    },
+    {
+      "title": "The 5 Final Four players who wouldn't be eligible under Trump's 'Save College Sports' order",
+      "description": "Friday's executive order -- if retroactively applied would -- have an impact on how this season's best teams looked",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T11:52:17+00:00"
+    },
+    {
+      "title": "Cardinals vs. Tigers prediction, odds, time: 2026 MLB picks for Saturday, April 4, from proven model",
+      "description": "SportsLine's model simulated St. Louis Cardinals vs. Detroit Tigers 10,000 times and revealed its MLB picks for Saturday's matchup",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T11:42:02+00:00"
+    },
+    {
+      "title": "Spurs vs. Nuggets odds, prediction, time: 2026 NBA picks for Saturday, April 4 from proven model",
+      "description": "SportsLine's model reveals its Denver Nuggets vs. San Antonio Spurs predictions and NBA picks today",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T11:38:23+00:00"
+    },
+    {
+      "title": "Madison Booker's worst night comes at the worst time for Texas' title run",
+      "description": "The All-American struggled through the toughest shooting performance of her career as Texas fell one win short of the national championship.",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T11:28:02+00:00"
+    },
+    {
+      "title": "Can Ademola Lookman and Atletico Madrid survive three matches with Barcelona in a 10 day stretch?",
+      "description": "Lookman joined Atleti in January in the midst of a unique season which sees Diego Simeone's men face Barcelona six times across three competitions",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T11:04:26+00:00"
+    },
+    {
+      "title": "Oklahoma vs. Baylor odds, prediction, time: 2026 Crown tournament semifinal picks by proven model",
+      "description": "SportsLine's model simulated Oklahoma Sooners vs. Baylor Bears and revealed its college basketball picks for this Crown tournament 2026 semifinal matchup on Saturday in Las Vegas",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T10:51:02+00:00"
+    },
+    {
+      "title": "2026 Blue Grass Stakes odds, predictions, horses, time: Picks from expert who called last year's winner",
+      "description": "Horse racing guru Gene Menez, who called last year's winner and trifecta in this event, reveals his 2026 Blue Grass Stakes best bets for the race on Saturday, April 4, at Keeneland",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T10:37:14+00:00"
+    },
+    {
+      "title": "Women's March Madness 2026 schedule: NCAA Tournament bracket, national championship game time",
+      "description": "It's South Carolina vs. UCLA for the title on Sunday",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T05:31:11+00:00"
+    },
+    {
+      "title": "Geno Auriemma loses it: UConn's previously perfect season ends with coach's legacy-damaging meltdown",
+      "description": "Geno Auriemma's actions were inexcusable after a Final Four loss to Dawn Staley and South Carolina on Friday",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T05:11:41+00:00"
+    },
+    {
+      "title": "Geno Auriemma, Dawn Staley get into heated exchange after UConn's Final Four loss: What we know",
+      "description": "Geno Auriemma's team lost for the first time in 55 games on Friday, and he lost his cool at the buzzer",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T03:55:45+00:00"
+    },
+    {
+      "title": "Three ripple effects of Luka Dončić's injury: Lakers have lingering questions as playoff picture muddies",
+      "description": "Luka Dončić is unlikely to play again this season unless the Lakers can make a deep playoff run without him",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T02:35:00+00:00"
+    },
+    {
+      "title": "2026 Kentucky Derby horses, odds, futures, preview, date: Expert who hit 12 Derby-Oaks Doubles unveils picks",
+      "description": "When is the Kentucky Derby 2026? Jody Demling revealed his 2026 Kentucky Derby picks for the Run for the Roses on Saturday, May 2 at Churchill Downs",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T02:33:39+00:00"
+    },
+    {
+      "title": "Robert MacIntyre builds 4-shot lead at the 2026 Texas Open heading into the weekend",
+      "description": "MacIntyre finished his second round strong on Friday with four birdies in his final five holes",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T01:35:23+00:00"
+    },
+    {
+      "title": "Masters 2026 odds, picks, predictions, props: Expert fading Tyrrell Hatton in best bets at Augusta National",
+      "description": "SportsLine golf expert Brady Kannon just locked in his best bets for the 2026 Masters at Augusta National Golf Club in Augusta, Ga.",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-03T23:55:16+00:00"
+    },
+    {
+      "title": "Cubs righty Cade Horton exits with forearm discomfort in potential major blow to Chicago's rotation",
+      "description": "Horton, last year's NL Rookie of the Year runner-up, is one of Chicago's most important players",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-03T23:31:42+00:00"
+    },
+    {
+      "title": "UCLA vs. Texas odds, prediction: 2026 Women's Final Four picks from experts on 209-128 run",
+      "description": "SportsLine's experts Calvin Wetzel and Aaron Barzilai reveal their Texas Longhorns vs. UCLA Bruins NCAA Women's Tournament Final Four 2026 picks for Friday",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-03T23:06:28+00:00"
+    },
+    {
+      "title": "Michigan star Yaxel Lendeborg opens up about his basketball journey in Made for March docuseries on Paramount+",
+      "description": "Lendeborg opened up on his basketball journey in the Made for March docuseries on Paramount+",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-03T23:04:24+00:00"
+    },
+    {
+      "title": "Chiefs' Rashee Rice does not receive NFL discipline over abuse allegations",
+      "description": "Kansas City and Rice got good news on Friday",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-03T23:04:36+00:00"
+    },
+    {
+      "title": "WNBA expansion draft results, winners and losers: Tempo, Fire select initial rosters ahead of 2026 season",
+      "description": "The 14th and 15th WNBA franchises finally have rosters, and the implications are far-reaching",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-03T22:57:04+00:00"
+    },
+    {
+      "title": "President Trump signs executive order aimed at college sports, targeting transfers and eligibility",
+      "description": "The Commander-in-Chief is advocating for limiting transfers, capping eligibility and NIL reform",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-03T22:39:26+00:00"
+    },
+    {
+      "title": "Luka Dončić still has path to All-NBA eligibility, but the league will make him jump through hoops to get it",
+      "description": "It shouldn't take an arbitrator to ensure that Luka Dončić is picked among the best 15 players in the NBA this season",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-03T22:20:25+00:00"
+    },
+    {
+      "title": "Lakers' Luka Dončić to miss rest of regular season with hamstring injury; MVP, All-NBA hopes in jeopardy",
+      "description": "Dončić is one game away from the 65-game threshold for awards eligibility",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-04T00:00:48+00:00"
+    },
+    {
+      "title": "White Sox to retire World Series-winning manager Ozzie Guillén's No. 13: 'I was dreaming about this'",
+      "description": "Guillén played 13 seasons as a shortstop in Chicago before guiding the club to the World Series as manager in 2005",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-03T21:23:57+00:00"
+    },
+    {
+      "title": "UConn vs. South Carolina odds, prediction: 2026 Women's Final Four picks from experts on 209-128 run",
+      "description": "SportsLine's experts Calvin Wetzel and Aaron Barzilai reveal their South Carolina vs. UConn NCAA Women's Tournament Final Four 2026 picks for Friday",
+      "source": "CBS Sports",
+      "pubDate": "2026-04-03T21:03:24+00:00"
+    }
+  ],
+  "tweets": [
+    {
+      "account": "SharpFootball",
+      "text": "Geno’s interview after the 3rd quarter \n\nprobably rolled right into his postgame kerfuffle vs Dawn Staley\n\ndude was HOT at the refs and Dawn 🤬",
+      "link": "https://twitter.com/SharpFootball/status/2040237089145372740#m",
+      "pubDate": "2026-04-04T01:16:42+00:00"
+    },
+    {
+      "account": "SharpFootball",
+      "text": "R to @SharpFootball: the last 2 years, Hunt has converted 49-of-58 attempts in short yardage on 3rd/4th down\n\nThat’s 84.5%\n\nThe next closest RB with 30+ attempts is 70% (Kyren Williams)\n\nOver the same 2 year span, Isiah Pacheco has converted just 54.5% behind the same OL\n\nKareem Hunt is a free agent",
+      "link": "https://twitter.com/SharpFootball/status/2040147973313613879#m",
+      "pubDate": "2026-04-03T19:22:35+00:00"
+    },
+    {
+      "account": "SharpFootball",
+      "text": "last year Kareem Hunt converted 34-of-40 short yardage situations on 3rd/4th down\n\nthe season avg for RBs was 65.9%\n\nHunt was at 85.0%\n\nthat’s the #1 best rate since at least 2000 for any RB with 30+ attempts",
+      "link": "https://twitter.com/SharpFootball/status/2040147494684803425#m",
+      "pubDate": "2026-04-03T19:20:41+00:00"
+    },
+    {
+      "account": "SharpFootball",
+      "text": "RT by @SharpFootball: I will not miss having a QB incapable of doing a QB sneak.",
+      "link": "https://twitter.com/lit_phins/status/2040094655082049817#m",
+      "pubDate": "2026-04-03T15:50:43+00:00"
+    },
+    {
+      "account": "SharpFootball",
+      "text": "4th & 1 conversion rate last 3 years:\n\n88% - KC\n85% - PHI\n83% - DEN\n82% - TB\n76% - LAR\n75% - SF\n74% - WAS, BAL, NO\n73% - MIN\n72% - CLE, DET\n71% - DAL, CAR, GB\n70% - ATL\n69% - JAX\n68% - TEN, NE, PIT, LV, NYG\n64% - BUF\n63% - IND, LAC\n62% - CIN\n59% - HOU\n58% - NYJ\n57% - SEA\n56% - CHI\n52% - ARI\n46% - MIA",
+      "link": "https://twitter.com/SharpFootball/status/2040088582715535788#m",
+      "pubDate": "2026-04-03T15:26:35+00:00"
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "RT by @AdamSchefter: \"I'm super proud of our kids and I'm not going to let any of this take anything away from the performance on the floor.\"\n\nDawn Staley shared her thoughts on the interaction with Geno Auriemma postgame.",
+      "link": "https://twitter.com/SportsCenter/status/2040238211247571408#m",
+      "pubDate": "2026-04-04T01:21:10+00:00"
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "RT by @AdamSchefter: Geno Auriemma exchanged words with Dawn Staley in the final seconds of South Carolina and UConn’s Final Four matchup.",
+      "link": "https://twitter.com/SportsCenter/status/2040235702223286734#m",
+      "pubDate": "2026-04-04T01:11:11+00:00"
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "More about the NFL concluding its own investigation into Chiefs receiver Rashee Rice, stating that he “has not engaged in conduct that violates the personal conduct policy,” via @ByNateTaylor:\n\nhttps://www.espn.com/nfl/story/_/id/48389126/chiefs-wr-rashee-rice-faces-no-nfl-discipline-abuse-allegations",
+      "link": "https://twitter.com/AdamSchefter/status/2040185747072835647#m",
+      "pubDate": "2026-04-03T21:52:41+00:00"
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "NFL spokesman @NFLprguy on the Rahsee Rice investigation: “There was insufficient evidence to support a finding that he violated the personal conduct policy.”",
+      "link": "https://twitter.com/AdamSchefter/status/2040181120579367118#m",
+      "pubDate": "2026-04-03T21:34:18+00:00"
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "President Donald Trump signed an executive order Friday designed to limit how long athletes can play college sports and how often they can transfer between schools.\n\nMore via ESPN’s Dan Murphy:\n\nhttps://www.espn.com/college-sports/story/_/id/48387866/executive-order-limits-ncaa-athletes-five-years-one-transfer",
+      "link": "https://twitter.com/AdamSchefter/status/2040179404966342921#m",
+      "pubDate": "2026-04-03T21:27:29+00:00"
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "RT by @AdamSchefter: President Trump has signed a 74-page executive order dealing with college sports. \n\nIt doesn’t go into effect until August 1. Should spur continued debate, but will be legally challenged on multiple fronts. Key parts:",
+      "link": "https://twitter.com/DanWetzel/status/2040176463551324571#m",
+      "pubDate": "2026-04-03T21:15:48+00:00"
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "More about the Jacksonville Jaguars signing defensive end Travon Walker to a four-year, $110 million contract extension, via @ESPNdirocco:\n\nhttps://www.espn.com/nfl/story/_/id/48388833/jaguars-sign-travon-walker-4-year-110-million-extension",
+      "link": "https://twitter.com/AdamSchefter/status/2040177875907658055#m",
+      "pubDate": "2026-04-03T21:21:24+00:00"
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "NFL concluded today that Chiefs WR Rashee Rice “has not engaged in conduct that violates the personal conduct policy” and the investigation into accusations from his former girlfriend is now closed; there will be no discipline at this time.\n\nStatement from his attorney Sean Lindsey: “Mr. Rice wants to thank the NFL for their thorough investigation, and looks forward to the start of the 2026-27 NFL season.”",
+      "link": "https://twitter.com/AdamSchefter/status/2040170010627227717#m",
+      "pubDate": "2026-04-03T20:50:09+00:00"
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Jaguars signed Travon Walker to a four-year, $110 million extension that includes $77M guaranteed and $50M fully guaranteed at signing, per @eliteloyaltysp.",
+      "link": "https://twitter.com/AdamSchefter/status/2040160701428191625#m",
+      "pubDate": "2026-04-03T20:13:10+00:00"
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Raiders signed safety Tristin McCollum to his exclusive rights tender.",
+      "link": "https://twitter.com/AdamSchefter/status/2040130100503482587#m",
+      "pubDate": "2026-04-03T18:11:34+00:00"
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Dusty May’s full-circle return to the Final Four:",
+      "link": "https://twitter.com/AdamSchefter/status/2040091605114228993#m",
+      "pubDate": "2026-04-03T15:38:36+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Giannis needs to just demand a trade. He doesn’t want to be the one to break up but clearly wants to break up. Man up and rip the bandaid off. You’re in the one league where the players have the most power. \n\nEven Bucks fans have to be tired of this right?",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040413841977200901#m",
+      "pubDate": "2026-04-04T12:59:03+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "#BelieveInBosco",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040266617221783613#m",
+      "pubDate": "2026-04-04T03:14:02+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Bosco crushed today. He’s trending towards an A+ Final Four",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040260154399035515#m",
+      "pubDate": "2026-04-04T02:48:21+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "R to @BarstoolBigCat: Also no one loved this more than Bosco. All heat off him for a minute",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040256403974070362#m",
+      "pubDate": "2026-04-04T02:33:27+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Disaster",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040255193049108547#m",
+      "pubDate": "2026-04-04T02:28:38+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Love this! Rivalry!",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040235242649206941#m",
+      "pubDate": "2026-04-04T01:09:22+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Dave thinking this guy was a “house magician” was a hell of a read",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040230640713388037#m",
+      "pubDate": "2026-04-04T00:51:05+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Gif",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040212510146527557#m",
+      "pubDate": "2026-04-03T23:39:02+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "RT by @BarstoolBigCat: WELCOME TO THE SHOW, JOHN CALIPARI @CoachCalArk",
+      "link": "https://twitter.com/barstoolsports/status/2040179402126795010#m",
+      "pubDate": "2026-04-03T21:27:28+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "R to @BarstoolBigCat: Dead. She doesn’t have it tonight",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040207774840135716#m",
+      "pubDate": "2026-04-03T23:20:13+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "I did not expect the ball to bounce that far holy shit",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040202141319516212#m",
+      "pubDate": "2026-04-03T22:57:50+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Azzi Fudd ladder to 6 threes",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040199949812453597#m",
+      "pubDate": "2026-04-03T22:49:07+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Soon. I don’t even get it. They’re just making more play in games?",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040194445203702091#m",
+      "pubDate": "2026-04-03T22:27:15+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Well, fuck everything",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040192247761674570#m",
+      "pubDate": "2026-04-03T22:18:31+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Is Cade Horton ok? I’m just catching up after the live show",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040191346732871907#m",
+      "pubDate": "2026-04-03T22:14:56+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "#BelieveInBosco.",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040189482796822710#m",
+      "pubDate": "2026-04-03T22:07:32+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Great work @Return_Of_RB. Delivered the whale. All time moment.",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040179905611043307#m",
+      "pubDate": "2026-04-03T21:29:28+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Barstool Live from Indy!\nhttps://www.youtube.com/live/pI9X4VRNaSc?si=wbpEPstCcncSG7C4",
+      "link": "https://twitter.com/BarstoolBigCat/status/2040173243953242358#m",
+      "pubDate": "2026-04-03T21:03:00+00:00"
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "RT by @BarstoolBigCat: Dave Portnoy, Big Cat, Titus, and Rico Live From Indianapolis - Day 1 https://x.com/i/broadcasts/1MKgNgMkYZlxL",
+      "link": "https://twitter.com/barstoolsports/status/2040172232073261176#m",
+      "pubDate": "2026-04-03T20:58:59+00:00"
+    },
+    {
+      "account": "PFTCommenter",
+      "text": "Nobody:\nDrew Brees:",
+      "link": "https://twitter.com/PFTCommenter/status/2040062931803476415#m",
+      "pubDate": "2026-04-03T13:44:40+00:00"
+    },
+    {
+      "account": "TheNBACentel",
+      "text": "RT by @TheNBACentel: Winner ✅ (took it on DK too)\n\nI’ll send another Courtside play tomorrow.  Get your accounts set up ✅",
+      "link": "https://twitter.com/JDGoldboys/status/2040332711236169807#m",
+      "pubDate": "2026-04-04T07:36:40+00:00"
+    },
+    {
+      "account": "TheNBACentel",
+      "text": "Giannis Antetokounmpo says Doc Rivers was examining him instead of Bucks medical staff, per @SharmsCharania",
+      "link": "https://twitter.com/TheNBACentel/status/2040245265102254136#m",
+      "pubDate": "2026-04-04T01:49:11+00:00"
+    },
+    {
+      "account": "TheNBACentel",
+      "text": "Clyde Frazier on Josh Giddey:\n\n“He was a sex symbol in OKC.” 💀😭",
+      "link": "https://twitter.com/TheNBACentel/status/2040230499939958808#m",
+      "pubDate": "2026-04-04T00:50:31+00:00"
+    },
+    {
+      "account": "TheNBACentel",
+      "text": "Clyde Frazier is WILD for this 😭😭😭",
+      "link": "https://twitter.com/TheNBACentel/status/2040219630963130549#m",
+      "pubDate": "2026-04-04T00:07:20+00:00"
+    },
+    {
+      "account": "BallsackSports",
+      "text": "Americans will gleefully support this administration getting away with genocide, pedophilia, and running the country into the ground as long as 3 trans athletes can’t compete in sports and NBA players can’t paint nails.\n\nIt’s beyond parody.",
+      "link": "https://twitter.com/BallsackSports/status/2040285167000957036#m",
+      "pubDate": "2026-04-04T04:27:45+00:00"
+    },
+    {
+      "account": "BallsackSports",
+      "text": "This isn’t it, man. I really miss when Twitter didn’t have monetization. We used to have more genuine and fun interactions.",
+      "link": "https://twitter.com/BallsackSports/status/2040211084729000144#m",
+      "pubDate": "2026-04-03T23:33:22+00:00"
+    },
+    {
+      "account": "BallsackSports",
+      "text": "By FAR the worst 10 seconds of LeBron’s career. Gave up 9 points in 10 seconds, including the halfcourt game winner by Josh Giddey",
+      "link": "https://twitter.com/BallsackSports/status/2040127334389276889#m",
+      "pubDate": "2026-04-03T18:00:34+00:00"
+    },
+    {
+      "account": "BallsackSports",
+      "text": "The best pics I’ve taken in Akron, Ohio.\n\nBefore you come at us for Bron’s Memphis comments, just remember this what you’re up against.",
+      "link": "https://twitter.com/BallsackSports/status/2040123870225616913#m",
+      "pubDate": "2026-04-03T17:46:48+00:00"
+    },
+    {
+      "account": "BallsackSports",
+      "text": "RT by @BallsackSports: Listening to my boy call the play on Thanksgiving after drinking in the parking lot",
+      "link": "https://twitter.com/MattTalkToEm/status/2040110181619515775#m",
+      "pubDate": "2026-04-03T16:52:25+00:00"
+    },
+    {
+      "account": "Ihartitz",
+      "text": "Catch radius of an elephant per sports science",
+      "link": "https://twitter.com/Ihartitz/status/2040253207423631591#m",
+      "pubDate": "2026-04-04T02:20:45+00:00"
+    },
+    {
+      "account": "Ihartitz",
+      "text": "Would you rather build a baseball team around prime Barry Bonds or Chase DeLauter?",
+      "link": "https://twitter.com/Ihartitz/status/2040192212600865279#m",
+      "pubDate": "2026-04-03T22:18:23+00:00"
+    },
+    {
+      "account": "Ihartitz",
+      "text": "Michael Pittman:\n\n-2021: 14.04 PPR points per game (WR24)\n-2022: 13.53 (WR22)\n-2023: 15.64 (WR14)\n-2024: 10.36 (WR45, played through broken back like Mike Tyson)\n-2025: 11.91 (WR27, 14.1 points–WR16–in Weeks 1-14 before a literal Grandpa took over)",
+      "link": "https://twitter.com/Ihartitz/status/2040149123609829615#m",
+      "pubDate": "2026-04-03T19:27:09+00:00"
+    },
+    {
+      "account": "Ihartitz",
+      "text": "Gonna need to buy more peanut butter soon this is probably only enough for another 10-15 sandwiches",
+      "link": "https://twitter.com/Ihartitz/status/2040128833735495957#m",
+      "pubDate": "2026-04-03T18:06:32+00:00"
+    },
+    {
+      "account": "Ihartitz",
+      "text": "R to @Ihartitz: embarrassed by how long this took. stared down the barrel of trying to see what it would take to overlay this with the actual chicken dancing around. can't do it. not today. maybe another time.",
+      "link": "https://twitter.com/Ihartitz/status/2040124570800152735#m",
+      "pubDate": "2026-04-03T17:49:36+00:00"
+    },
+    {
+      "account": "Ihartitz",
+      "text": "Time to come up with a comp for a wide receiver I didn't know existed 15 minutes ago",
+      "link": "https://twitter.com/Ihartitz/status/2040124279539249391#m",
+      "pubDate": "2026-04-03T17:48:26+00:00"
+    },
+    {
+      "account": "Ihartitz",
+      "text": "Ted Hurst comp:\n\nTraining camp Bryan Edwards",
+      "link": "https://twitter.com/Ihartitz/status/2040100800924381593#m",
+      "pubDate": "2026-04-03T16:15:08+00:00"
+    },
+    {
+      "account": "Ihartitz",
+      "text": "4 things on Omar Cooper!\n\n-Role changed in a major way from 2024 to 2025\n-Superpower: Hot, nasty, badass YAC\n-A LOT of screens and RPOs in 2025\n-Don't love some of the numbers vs. top competition\n-Comp: Rashee Rice with a clean record\n\n✍️ https://www.fantasylife.com/articles/nfl-draft/omar-cooper-nfl-draft-scouting-report-three-star-recruit-to-home",
+      "link": "https://twitter.com/Ihartitz/status/2040095922827280592#m",
+      "pubDate": "2026-04-03T15:55:45+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "RT by @HaterReport: Might as well get this out of the way now.\n\nThe Los Angeles Lakers have been eliminated from the 2026 NBA playoffs.",
+      "link": "https://twitter.com/HaterReport/status/2040189621414289540#m",
+      "pubDate": "2026-04-03T22:08:05+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "RT by @HaterReport: The MVP 🔥🔥",
+      "link": "https://twitter.com/HaterReport/status/2040102565132521757#m",
+      "pubDate": "2026-04-03T16:22:09+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "RT by @HaterReport: Geno said Dawn Staley didn’t shake his hand at the beginning of the game 😭\n\nBro lied for NO REASON AT ALL LMAOOO\n\nDawn Staley shaking his hand:",
+      "link": "https://twitter.com/HaterReport/status/2040239867968258238#m",
+      "pubDate": "2026-04-04T01:27:45+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "RT by @HaterReport: Geno Smith lost his 53-game winning streak and IMMEDIATELY crashed out \n\nREAL TEARS 😂🤣",
+      "link": "https://twitter.com/HaterReport/status/2040238751096397915#m",
+      "pubDate": "2026-04-04T01:23:18+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "MADISON BOOKER WAS IN HER BAG \n\n6 Points\n3-23 FG \n0-4 3P",
+      "link": "https://twitter.com/HaterReport/status/2040319307935085033#m",
+      "pubDate": "2026-04-04T06:43:24+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "She missed a WIDE OPEN layup and started CRYING \n\nHer teammate lifted her chin up",
+      "link": "https://twitter.com/HaterReport/status/2040318286802354612#m",
+      "pubDate": "2026-04-04T06:39:21+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "Cooper Flagg dropped 51 Points and became the first teenager in HISTORY to drop 50 in the NBA\n\n• Flagg (19-103): 51\n• Jennings (20-052): 55\n• LeBron (20-080): 56\n• Booker (20-145): 70\n• Wemby (20-314): 50",
+      "link": "https://twitter.com/HaterReport/status/2040282809537851886#m",
+      "pubDate": "2026-04-04T04:18:23+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "A’ja Wilson trolling Paige Bueckers on IG after South Carolina beat UConn 😂",
+      "link": "https://twitter.com/HaterReport/status/2040277259936834046#m",
+      "pubDate": "2026-04-04T03:56:19+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "“Azzi Fudd had the worst Final Four performance of 2026”\n\nMadison Booker:",
+      "link": "https://twitter.com/HaterReport/status/2040276357733642338#m",
+      "pubDate": "2026-04-04T03:52:44+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "Madison Booker with the season on the line",
+      "link": "https://twitter.com/HaterReport/status/2040275595322364090#m",
+      "pubDate": "2026-04-04T03:49:43+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "Look how different Geno Auriemma acted with Dawn Staley last year when UConn won LMFAOO \n\nAin’t no fun when the rabbit got the gun 😂🤣",
+      "link": "https://twitter.com/HaterReport/status/2040273969371046251#m",
+      "pubDate": "2026-04-04T03:43:15+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "Caitlin Clark still got Dawn Staley traumatized from 2023 😭\n\nWhen asked about playing in 4 out of the last 5 Championship Games:\n\n“I’m haunted by 2023…we won it the following year but that particular group was pretty special. I’m still haunted by it.”",
+      "link": "https://twitter.com/HaterReport/status/2040260204319715362#m",
+      "pubDate": "2026-04-04T02:48:33+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "Dawn Staley after her altercation with Geno Auriemma: \n\n“I WOULD BEAT GENO’S ASS” 😭😭",
+      "link": "https://twitter.com/HaterReport/status/2040251370792497251#m",
+      "pubDate": "2026-04-04T02:13:27+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "Geno saying Dawn Staley didn’t shake his hand at the beginning of the game 😭💀",
+      "link": "https://twitter.com/HaterReport/status/2040239323207860617#m",
+      "pubDate": "2026-04-04T01:25:35+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "Dawn Staley said she has absolutely NO IDEA why Geno was crashing out on her",
+      "link": "https://twitter.com/HaterReport/status/2040238270496305360#m",
+      "pubDate": "2026-04-04T01:21:24+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "Geno is a sore loser man I’M CRYING \n\nGot that Dawn Staley belt and lost his mind 😂😂",
+      "link": "https://twitter.com/HaterReport/status/2040236402508533765#m",
+      "pubDate": "2026-04-04T01:13:58+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "Dawn Staley and Geno Auriemma out here GOING OFF on each other on the court 😳\n\nITS GETTING HEATED 🍿",
+      "link": "https://twitter.com/HaterReport/status/2040235536053370915#m",
+      "pubDate": "2026-04-04T01:10:32+00:00"
+    },
+    {
+      "account": "HaterReport",
+      "text": "LaMelo Ball invited Pascal Siakam to his dance party lmaooo 😂😂",
+      "link": "https://twitter.com/HaterReport/status/2040233146793316792#m",
+      "pubDate": "2026-04-04T01:01:02+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "\"Get rid of whatever awards you got if [Rori] ain't good enough to get one of them.\"\n\nVic Schaefer spoke passionately about how Rori Harmon is not recognized enough 👏",
+      "link": "https://twitter.com/espn/status/2040296141208658402#m",
+      "pubDate": "2026-04-04T05:11:21+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "A legend in burnt orange 🟠 \n\nRori Harmon left her mark on the Texas program 👏",
+      "link": "https://twitter.com/espn/status/2040284282879463800#m",
+      "pubDate": "2026-04-04T04:24:14+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "They knew 🔮 \n\nUCLA is heading to the natty 🐻",
+      "link": "https://twitter.com/espn/status/2040282826717766128#m",
+      "pubDate": "2026-04-04T04:18:27+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "RT by @espn: \"WE'RE PLAYING IN THE NATIONAL CHAMPIONSHIP.\"\n\nLook at what it means to Lauren Betts and @UCLAWBB 🥹",
+      "link": "https://twitter.com/espnW/status/2040279450269438178#m",
+      "pubDate": "2026-04-04T04:05:02+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "THE NATTY IS SET 🔥 \n\nSOUTH CAROLINA. UCLA. SUNDAY ON ABC 🍿",
+      "link": "https://twitter.com/espn/status/2040282251468943802#m",
+      "pubDate": "2026-04-04T04:16:10+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "UCLA ADVANCES TO ITS FIRST NCAA NATIONAL CHAMPIONSHIP 🐻 \n\nTHE BRUINS TAKE DOWN THE LONGHORNS IN A WIRE-TO-WIRE WIN🔥",
+      "link": "https://twitter.com/espn/status/2040276754623824267#m",
+      "pubDate": "2026-04-04T03:54:19+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "RT by @espn: Cooper Flagg (19 years, 103 days old) is the first teenager in NBA history with a 50-point game 😳",
+      "link": "https://twitter.com/ESPNInsights/status/2040271627573776886#m",
+      "pubDate": "2026-04-04T03:33:57+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "UCLA with the steal and bucket to take a double-digit 4th quarter lead‼️",
+      "link": "https://twitter.com/espn/status/2040269908617920672#m",
+      "pubDate": "2026-04-04T03:27:07+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "RT by @espn: DOWN GOES NO. 1 TEXAS 🤯\n\nAlabama gets its first win over a No. 1 ranked team since 2020!",
+      "link": "https://twitter.com/SECNetwork/status/2040268316468490376#m",
+      "pubDate": "2026-04-04T03:20:47+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "RT by @espn: \"Ripped it by accident.\"\n\nSarah Strong on tearing her jersey and switching to No. 55.",
+      "link": "https://twitter.com/SportsCenter/status/2040263487616639058#m",
+      "pubDate": "2026-04-04T03:01:36+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "RT by @espn: The NBA is investigating the Bucks' handling of Giannis Antetokounmpo after he told reporters Friday that he is being held out despite being healthy enough to play, sources told @ShamsCharania. http://spr.ly/6012B6qb9e",
+      "link": "https://twitter.com/ESPNNBA/status/2040261879960932488#m",
+      "pubDate": "2026-04-04T02:55:13+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "A'ja Wilson and Paige Bueckers after South Carolina's win over UConn in the Final Four 😂",
+      "link": "https://twitter.com/espn/status/2040258558999064933#m",
+      "pubDate": "2026-04-04T02:42:01+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "THE WINNER PLAYS FOR A NATIONAL CHAMPIONSHIP 🔥 \n\nWatch the second half of Texas-UCLA on ESPN and the ESPN App 🏀",
+      "link": "https://twitter.com/espn/status/2040256187900272999#m",
+      "pubDate": "2026-04-04T02:32:35+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "RT by @espn: Crazy moment between Geno and Dawn.",
+      "link": "https://twitter.com/kareemcopeland/status/2040237108280123742#m",
+      "pubDate": "2026-04-04T01:16:47+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "Azzi Fudd after her last game at UConn 🥺",
+      "link": "https://twitter.com/espn/status/2040253413854683409#m",
+      "pubDate": "2026-04-04T02:21:34+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "Only ONE TEAM will advance to the national championship 👀 \n\nWatch Texas vs. UCLA now on ESPN and the ESPN App 🏀",
+      "link": "https://twitter.com/espn/status/2040244297337876921#m",
+      "pubDate": "2026-04-04T01:45:21+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "RT by @espn: THE VIBES ARE HIGH IN THE SOUTH CAROLINA LOCKER ROOM 🤙",
+      "link": "https://twitter.com/espnW/status/2040242402791731706#m",
+      "pubDate": "2026-04-04T01:37:49+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "RT by @espn: The NBA is investigating the Milwaukee Bucks for their handling of the player participating policy and potential inconsistent statements regarding the health of Giannis Antetokounmpo, sources tell ESPN. The league has interviewed Antetokounmpo's side, the Bucks and team doctors.",
+      "link": "https://twitter.com/ShamsCharania/status/2040239021062815844#m",
+      "pubDate": "2026-04-04T01:24:23+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "DOWN GOES UNDEFEATED UCONN 😲 \n\nSOUTH CAROLINA ADVANCES TO THE NATIONAL CHAMPIONSHIP! 🏆",
+      "link": "https://twitter.com/espn/status/2040240674759385242#m",
+      "pubDate": "2026-04-04T01:30:57+00:00"
+    },
+    {
+      "account": "ESPN",
+      "text": "RT by @espn: UConn couldn't recover from Raven Johnson's defense 🔒 \n \nThe Huskies shot 7-24 for 17 points and 3 turnovers on 28 halfcourt plays when Johnson was the final defender. Azzi Fudd went 1-5 with 1 turnover on those plays.",
+      "link": "https://twitter.com/ESPNInsights/status/2040237594139639874#m",
+      "pubDate": "2026-04-04T01:18:42+00:00"
+    },
+    {
+      "account": "Super70sSports",
+      "text": "RT by @Super70sSports: This photo could’ve literally been taken at any time between 1972 and this morning …",
+      "link": "https://twitter.com/Super70sSports/status/2040069445603733980#m",
+      "pubDate": "2026-04-03T14:10:33+00:00"
+    },
+    {
+      "account": "Super70sSports",
+      "text": "“You didn’t … you didn’t put that in the coffee?”\n\n“I thought it was the sweetener!”\n\n👉 http://super70ssportsstore.com/products/rid-o-rat-tee",
+      "link": "https://twitter.com/Super70sSports/status/2040233173028626910#m",
+      "pubDate": "2026-04-04T01:01:08+00:00"
+    },
+    {
+      "account": "Super70sSports",
+      "text": "On a scale of 1-10, I give this logo a 98.",
+      "link": "https://twitter.com/Super70sSports/status/2040210214964670803#m",
+      "pubDate": "2026-04-03T23:29:55+00:00"
+    },
+    {
+      "account": "Super70sSports",
+      "text": "The NFL will always look like this in my heart.",
+      "link": "https://twitter.com/Super70sSports/status/2040083756044648653#m",
+      "pubDate": "2026-04-03T15:07:25+00:00"
+    },
+    {
+      "account": "Super70sSports",
+      "text": "Spectacular Bracket of Randomness\n\nElite Eight\nMatchup #4\n\n(1)  Mall Arcades\nvs.\n(5) Playoff Baseball",
+      "link": "https://twitter.com/Super70sSports/status/2040075775198548127#m",
+      "pubDate": "2026-04-03T14:35:42+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "I have taken 5 differnt pictures of the giant bracket and zero of the stadium for the game \n\nThe bracket has motion",
+      "link": "https://twitter.com/coleadamss/status/2040269649938383335#m",
+      "pubDate": "2026-04-04T03:26:05+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "It really is the coolest thing in the world how the entire college basketball community gathers at the final four",
+      "link": "https://twitter.com/coleadamss/status/2040232150088179847#m",
+      "pubDate": "2026-04-04T00:57:04+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "One of the seven wonders of the world",
+      "link": "https://twitter.com/coleadamss/status/2040225997203640831#m",
+      "pubDate": "2026-04-04T00:32:37+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "MY GOAT",
+      "link": "https://twitter.com/coleadamss/status/2040220069863498056#m",
+      "pubDate": "2026-04-04T00:09:04+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "Standing and watching @BlueBloodedPod",
+      "link": "https://twitter.com/coleadamss/status/2040190911062184199#m",
+      "pubDate": "2026-04-03T22:13:12+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "Watch and learn #Nebrasketball",
+      "link": "https://twitter.com/coleadamss/status/2040184115509497904#m",
+      "pubDate": "2026-04-03T21:46:12+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "RT by @coleadamss: The haters are sitting. Not us tho @coleadamss",
+      "link": "https://twitter.com/SmashHitsSports/status/2040182569631658158#m",
+      "pubDate": "2026-04-03T21:40:04+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "RT by @coleadamss: Exclusive with Anthony Dell'Orso🎙️\n\nA really key piece of this Arizona team who's impacted winning at a high level this season\n\nTalked to him about his mindset coming off the bench, his adjustment from being a leading scorer at Campbell to a winning role player at AZ, and more",
+      "link": "https://twitter.com/OdjHoops/status/2040172913756610838#m",
+      "pubDate": "2026-04-03T21:01:41+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "RT by @coleadamss: You watched. You learned.",
+      "link": "https://twitter.com/TonyPatelis/status/2040124601158582360#m",
+      "pubDate": "2026-04-03T17:49:43+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "Looks like Tommy Lloyd won’t have his last game again at Lucas Oil Stadium",
+      "link": "https://twitter.com/coleadamss/status/2040128534572650602#m",
+      "pubDate": "2026-04-03T18:05:21+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "RT by @coleadamss: Successful networking event at Final Four practice #thankyoucbb #getthewhale @coleadamss @OhioTate",
+      "link": "https://twitter.com/shootdarockttv/status/2040122590052720794#m",
+      "pubDate": "2026-04-03T17:41:43+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "The Portal Report. Buy stock now.",
+      "link": "https://twitter.com/coleadamss/status/2040119745911934994#m",
+      "pubDate": "2026-04-03T17:30:25+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "RT by @coleadamss: WE STAND.",
+      "link": "https://twitter.com/vincewolfram15/status/2040114943748444183#m",
+      "pubDate": "2026-04-03T17:11:20+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "We stand and watch college basketball practice @vincewolfram15",
+      "link": "https://twitter.com/coleadamss/status/2040113132052283604#m",
+      "pubDate": "2026-04-03T17:04:08+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "We stand for managers!",
+      "link": "https://twitter.com/coleadamss/status/2040112243661058331#m",
+      "pubDate": "2026-04-03T17:00:36+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "RT by @coleadamss: Open practice in Indy!!",
+      "link": "https://twitter.com/vincewolfram15/status/2040102573672206847#m",
+      "pubDate": "2026-04-03T16:22:11+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "5 years later I’m back at the Final Four",
+      "link": "https://twitter.com/coleadamss/status/2040098858865152065#m",
+      "pubDate": "2026-04-03T16:07:25+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "There is a massive army of kids at the final four practices that are having a rave 😭 \n\nAND THEY KEEP FILING IN 💀",
+      "link": "https://twitter.com/coleadamss/status/2040081347318874356#m",
+      "pubDate": "2026-04-03T14:57:50+00:00"
+    },
+    {
+      "account": "coleadamss",
+      "text": "Standing.",
+      "link": "https://twitter.com/coleadamss/status/2040078447888769142#m",
+      "pubDate": "2026-04-03T14:46:19+00:00"
+    },
+    {
+      "account": "OldTakesExposed",
+      "text": "RT by @OldTakesExposed: UConn is 38-0 for a reason and Azzi Fudd is absolutely clinical when the lights get bright. This Final Four rematch was over before it started because Dawn Staley has no answer for a healthy Fudd. If you thought last year was a fluke then you clearly skipped the film.\nAzzi Fudd is a walking bucket and UConn is officially back on the throne. Best believe the championship belongs in Storrs.",
+      "link": "https://twitter.com/KingZahyd/status/2040186442274525238#m",
+      "pubDate": "2026-04-03T21:55:27+00:00"
+    },
+    {
+      "account": "OldTakesExposed",
+      "text": "RT by @OldTakesExposed: 🤣🤣🤣",
+      "link": "https://twitter.com/revengeofJJ/status/2040187932779180257#m",
+      "pubDate": "2026-04-03T22:01:22+00:00"
+    },
+    {
+      "account": "OldTakesExposed",
+      "text": "Image",
+      "link": "https://twitter.com/OldTakesExposed/status/2040161453378781250#m",
+      "pubDate": "2026-04-03T20:16:09+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Only players to record\n\n50+ points\n3+ steals\n5+ threes\n\nin a game in 2026.",
+      "link": "https://twitter.com/statmuse/status/2040266586964009303#m",
+      "pubDate": "2026-04-04T03:13:55+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Cooper Flagg vs Magic:\n\n51 PTS\n6 REB\n3 STL\n19-30 FG\n6-9 3P\n\nOne of one.",
+      "link": "https://twitter.com/statmuse/status/2040265865581486465#m",
+      "pubDate": "2026-04-04T03:11:03+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "The first teenager in NBA history with a 50-point game.",
+      "link": "https://twitter.com/statmuse/status/2040264799599104004#m",
+      "pubDate": "2026-04-04T03:06:49+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "45-point games by a teen:\n\n2 — Cooper Flagg\n1 — Everyone else in NBA history combined",
+      "link": "https://twitter.com/statmuse/status/2040264347046252695#m",
+      "pubDate": "2026-04-04T03:05:01+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "The only rookies with multiple 45-point games since the merger.",
+      "link": "https://twitter.com/statmuse/status/2040263825220329481#m",
+      "pubDate": "2026-04-04T03:02:56+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Jayson Tatum vs Bucks:\n\n23 PTS\n11 REB\n9 AST\n3 STL\n+30\n\nAveraging 27/12/8 over the last four games.",
+      "link": "https://twitter.com/statmuse/status/2040253461430665699#m",
+      "pubDate": "2026-04-04T02:21:45+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "OG Anunoby vs Bulls:\n\n31 PTS\n8 REB\n7-10 3P\n\n+32 in just 31 minutes.",
+      "link": "https://twitter.com/statmuse/status/2040242114206785794#m",
+      "pubDate": "2026-04-04T01:36:40+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "76ers trio vs Wolves:\n\n19 PTS                       23 PTS                    21 PTS\n13 REB                       6 REB                      6 REB\n7 AST                         6 AST                      8 AST",
+      "link": "https://twitter.com/statmuse/status/2040241864788369685#m",
+      "pubDate": "2026-04-04T01:35:41+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Kon Knueppel vs Pacers:\n\n20 PTS\n2 STL\n3 3P\n\nHis 36th game with 20+ points — the only rookie with more than 30.",
+      "link": "https://twitter.com/statmuse/status/2040235890023260533#m",
+      "pubDate": "2026-04-04T01:11:56+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Most 20-point games by a rookie in the 2020s:\n\n41 — 1st overall pick\n40 — 1st overall pick\n36 — Kon Knueppel\n36 — 1st overall pick\n30 — 1st overall pick",
+      "link": "https://twitter.com/statmuse/status/2040235792367333512#m",
+      "pubDate": "2026-04-04T01:11:33+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Chase DeLauter vs Cubs:\n\n3-4\n1 HR\n3 RBI\n\nHe has 5 HR (T-1st in MLB) and 8 RBI (T-4th in MLB) this season.",
+      "link": "https://twitter.com/statmuse/status/2040202536846577697#m",
+      "pubDate": "2026-04-03T22:59:24+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Trea Turner vs Rockies:\n\n3-4\n1 2B\n1 RBI\n\nHad two hits in the first inning.",
+      "link": "https://twitter.com/statmuse/status/2040202192305410273#m",
+      "pubDate": "2026-04-03T22:58:02+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Luka this season:\n\nMore PTS than\n— Shai\n— KD\n— Ant\n— Brown\n\nMore REB than \n— Allen\n— Claxton\n— Naz\n— Hartenstein\n\nMore AST than\n— LaMelo\n— Murray\n— Brunson\n— Giddey\n\nMore STL than\n— Anunoby\n— NAW\n— Suggs\n— White\n\nMore 3P than\n— LaMelo\n— Mitchell\n— Murray\n— Maxey",
+      "link": "https://twitter.com/statmuse/status/2040193021795340769#m",
+      "pubDate": "2026-04-03T22:21:36+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "32/7/7 seasons:\n\n3 — Luka Doncic\n1 — Everyone else in NBA history combined",
+      "link": "https://twitter.com/statmuse/status/2040192024238813380#m",
+      "pubDate": "2026-04-03T22:17:38+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Luka Doncic in 64 games this season:\n\n— 33.5 PPG (1st in NBA)\n— 7.7 RPG\n— 8.3 APG (3rd in NBA)\n— 1.6 SPG\n\nDone for the season.",
+      "link": "https://twitter.com/statmuse/status/2040190709391630408#m",
+      "pubDate": "2026-04-03T22:12:24+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Aaron Judge vs Marlins:\n\n2-3\n1 HR\n3 RBI\n1 BB\n1 HBP\n\nHomered in his first at-bat of the season at Yankee Stadium.",
+      "link": "https://twitter.com/statmuse/status/2040163439419469961#m",
+      "pubDate": "2026-04-03T20:24:03+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Dodgers duo vs Nats\n\nOhtani —               Tucker —\n2-5                            3-6\n1 HR                          1 HR\n4 RBI                        2 RBI \n\nBoth hit their first home run of the season.",
+      "link": "https://twitter.com/statmuse/status/2040156456477958631#m",
+      "pubDate": "2026-04-03T19:56:18+00:00"
+    },
+    {
+      "account": "StatMuse",
+      "text": "Charlotte since January 1st:\n\n— 1st in net rating \n— 1st in offense \n— 4th in defense\n\nThe Hornets have a 56% chance to make the playoffs on @Novig",
+      "link": "https://twitter.com/statmuse/status/2040155138665390344#m",
+      "pubDate": "2026-04-03T19:51:03+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "Indianapolis should host every Final Four and every major event for the rest of time",
+      "link": "https://twitter.com/W_B_Rick/status/2040259879219142829#m",
+      "pubDate": "2026-04-04T02:47:16+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "Kilroy’s waterlongs are hitting much harder than they did at 22.\n\n#McQueenIsFading",
+      "link": "https://twitter.com/W_B_Rick/status/2040218905327583638#m",
+      "pubDate": "2026-04-04T00:04:27+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "The Economy™️",
+      "link": "https://twitter.com/W_B_Rick/status/2040201146669707688#m",
+      "pubDate": "2026-04-03T22:53:53+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "Unreal stuff happening in Indy",
+      "link": "https://twitter.com/W_B_Rick/status/2040193915777634676#m",
+      "pubDate": "2026-04-03T22:25:09+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "Child please!",
+      "link": "https://twitter.com/W_B_Rick/status/2040190848550191139#m",
+      "pubDate": "2026-04-03T22:12:57+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "What a privilege to listen to 3 titans of the sport talk basketball",
+      "link": "https://twitter.com/W_B_Rick/status/2040180597931339805#m",
+      "pubDate": "2026-04-03T21:32:13+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "RT by @W_B_Rick: Bosco has taken control of the Uber",
+      "link": "https://twitter.com/ChuckTamato2/status/2040145387227373763#m",
+      "pubDate": "2026-04-03T19:12:19+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "RT by @W_B_Rick: Sadly, there's another tough situation for another Chicago Fireman. I've heard nothing but great things about Dan and his family could really use our support. Please help if you're able to here:\nhttps://www.theyardfoundation.org/mayday/lenihan",
+      "link": "https://twitter.com/EddieBarstool/status/2040095710645715439#m",
+      "pubDate": "2026-04-03T15:54:55+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "RT by @W_B_Rick: Anyone ask Sonny Dykes who the quarterback of his team was for the last 3 years that led to his extension? Or does he just want to talk shit about the kid who helped get him paid?",
+      "link": "https://twitter.com/AlecKeezer/status/2040103644037628290#m",
+      "pubDate": "2026-04-03T16:26:26+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "Driving into Indy reminds me of when Fernando Mendoza and Indiana beat Ohio State to clinch the Big 10, 1 seed, and Heisman. This is probably because the last time I was in Indy was to watch Fernando Mendoza and Indiana beat Ohio State to clinch the Big 10, 1 seed, and Heisman.",
+      "link": "https://twitter.com/W_B_Rick/status/2040132240500199881#m",
+      "pubDate": "2026-04-03T18:20:04+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "RT by @W_B_Rick: Oh no..",
+      "link": "https://twitter.com/RonnyDoitche/status/2040100578957594645#m",
+      "pubDate": "2026-04-03T16:14:15+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "That meatball sub was so fucking good",
+      "link": "https://twitter.com/W_B_Rick/status/2040098159527948504#m",
+      "pubDate": "2026-04-03T16:04:39+00:00"
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "RT by @W_B_Rick: Exclusive footage of Italy as they are dealing with their failure to qualify for the World Cup again:",
+      "link": "https://twitter.com/VivaLaStool/status/2040068005309387094#m",
+      "pubDate": "2026-04-03T14:04:49+00:00"
+    },
+    {
+      "account": "ArtButSports",
+      "text": "The Denial of Saint Peter, by Caravaggio, 1610",
+      "link": "https://twitter.com/ArtButSports/status/2040267778792292495#m",
+      "pubDate": "2026-04-04T03:18:39+00:00"
+    },
+    {
+      "account": "ArtButSports",
+      "text": "R to @ArtButSports: for those not fully picking up what I’m putting down, the Denial of Saint Peter happens on Good Friday (today)",
+      "link": "https://twitter.com/ArtButSports/status/2040271037758083367#m",
+      "pubDate": "2026-04-04T03:31:36+00:00"
+    },
+    {
+      "account": "ArtButSports",
+      "text": "The Death of Bara, by Jean-Joseph Weerts, 1883",
+      "link": "https://twitter.com/ArtButSports/status/2040155016908910884#m",
+      "pubDate": "2026-04-03T19:50:34+00:00"
+    },
+    {
+      "account": "JayCuda",
+      "text": "Image",
+      "link": "https://twitter.com/JayCuda/status/2040118755464785947#m",
+      "pubDate": "2026-04-03T17:26:29+00:00"
+    },
+    {
+      "account": "JayCuda",
+      "text": "R to @JayCuda: starters*",
+      "link": "https://twitter.com/JayCuda/status/2040117257976557974#m",
+      "pubDate": "2026-04-03T17:20:32+00:00"
+    },
+    {
+      "account": "JayCuda",
+      "text": "bullpen ERA vs. staters ERA",
+      "link": "https://twitter.com/JayCuda/status/2040116318066688467#m",
+      "pubDate": "2026-04-03T17:16:48+00:00"
+    },
+    {
+      "account": "NFLMemes",
+      "text": "Shannon Sharpe, Ochocino, and Joe Johnson and trying to figure out who AR15 is has me rolling 😭",
+      "link": "https://twitter.com/NFLMemes/status/2040259701800124584#m",
+      "pubDate": "2026-04-04T02:46:33+00:00"
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "RT by @SleeperHQ: Cooper Flagg’s ROY odds jumped to 35% after his 51 point performance 👀",
+      "link": "https://twitter.com/SleeperPicksHQ/status/2040280488233820669#m",
+      "pubDate": "2026-04-04T04:09:09+00:00"
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Cooper Flagg is the first teenager to score 50 pts in NBA HISTORY 🤯\n\nMaybe Nico was right 😭",
+      "link": "https://twitter.com/SleeperHQ/status/2040268194984743400#m",
+      "pubDate": "2026-04-04T03:20:18+00:00"
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "UConn coaches are built different 😭",
+      "link": "https://twitter.com/SleeperHQ/status/2040238430458626174#m",
+      "pubDate": "2026-04-04T01:22:02+00:00"
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Image",
+      "link": "https://twitter.com/SleeperHQ/status/2040177366694007164#m",
+      "pubDate": "2026-04-03T21:19:23+00:00"
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "THE KONNOR GRIFFIN HYPE IS REAL 🔥",
+      "link": "https://twitter.com/SleeperHQ/status/2040169288515158218#m",
+      "pubDate": "2026-04-03T20:47:17+00:00"
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Can you name the passing leader from every NFL draft since 2001? 🧐",
+      "link": "https://twitter.com/SleeperHQ/status/2040139986658292031#m",
+      "pubDate": "2026-04-03T18:50:51+00:00"
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Image",
+      "link": "https://twitter.com/SleeperHQ/status/2040136507499954274#m",
+      "pubDate": "2026-04-03T18:37:01+00:00"
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "On this day in 2025: \n\nPodz nearly released bro from the shackles of silence 😭",
+      "link": "https://twitter.com/SleeperHQ/status/2040115391255703871#m",
+      "pubDate": "2026-04-03T17:13:07+00:00"
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Shohei Ohtani thru 6 games:\n\n.167 AVG\n0 RBI\n0 HR\n0 XBH\n0 SB",
+      "link": "https://twitter.com/SleeperHQ/status/2040074399085219916#m",
+      "pubDate": "2026-04-03T14:30:14+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Josh Naylor knocks in two more runs for the Mariners!",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040290598515613997#m",
+      "pubDate": "2026-04-04T04:49:20+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "COLE YOUNG RBI TRIPLE TO BREAK THE SCORELESS GAME IN THE TENTH",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040289271647441161#m",
+      "pubDate": "2026-04-04T04:44:03+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "RT by @TalkinBaseball_: “This shirtless fool just jumped over the left field wall”",
+      "link": "https://twitter.com/JomboyMedia/status/2040284264000790762#m",
+      "pubDate": "2026-04-04T04:24:09+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Great night for Bryan Woo as he threw seven scoreless innings",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040282337821241581#m",
+      "pubDate": "2026-04-04T04:16:30+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Francisco Alvarez homers for his second time tonight!",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040278647026626560#m",
+      "pubDate": "2026-04-04T04:01:50+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "MATT OLSON GOES BACK-TO-BACK",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040275525151687051#m",
+      "pubDate": "2026-04-04T03:49:26+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "OZZIE ALBIES FOR THE LEAD IN THE NINTH",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040275254589657091#m",
+      "pubDate": "2026-04-04T03:48:21+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Alek Thomas WHAT A CATCH",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040273897614885179#m",
+      "pubDate": "2026-04-04T03:42:58+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "RT by @TalkinBaseball_: \"Come on Giants wake up! The Yankees left town last week. This is the B team. Wake up!\"",
+      "link": "https://twitter.com/JomboyMedia/status/2040268540389839084#m",
+      "pubDate": "2026-04-04T03:21:41+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Jacob Wilson WOW",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040268055549276195#m",
+      "pubDate": "2026-04-04T03:19:45+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "MARCUS SEMIEN’S FIRST HOME RUN AS A MET IS A TWO-RUN SHOT",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040264446514282987#m",
+      "pubDate": "2026-04-04T03:05:24+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "It's right calf tightness for Juan Soto, per @WillSammon",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040258320422904005#m",
+      "pubDate": "2026-04-04T02:41:04+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Juan Soto left the game after running the bases in the first inning",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040256643833753871#m",
+      "pubDate": "2026-04-04T02:34:24+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Grant Holmes made it look easy",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040255781887430772#m",
+      "pubDate": "2026-04-04T02:30:59+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Mike Trout got hit by a pitch from Bryan Woo in his first at-bat and gave him a quick glance from the box",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040252342025502778#m",
+      "pubDate": "2026-04-04T02:17:19+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "What a snag by Corbin Carroll!",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040246619157700861#m",
+      "pubDate": "2026-04-04T01:54:34+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Joey Luchessi did the 67 dance when getting announced during Angels Opening Day ceremony",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040245652777574616#m",
+      "pubDate": "2026-04-04T01:50:44+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "RT by @TalkinBaseball_: Ball 1",
+      "link": "https://twitter.com/JomboyMedia/status/2040241890834923531#m",
+      "pubDate": "2026-04-04T01:35:47+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "A bloop single for the win is how baseball works sometimes\n\nPresented by @MLBTheShow",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040233508019335517#m",
+      "pubDate": "2026-04-04T01:02:28+00:00"
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "TRISTAN GRAY GRAND SLAM AND THE TWINS BREAK IT OPEN",
+      "link": "https://twitter.com/TalkinBaseball_/status/2040215709939069219#m",
+      "pubDate": "2026-04-03T23:51:45+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "THE WORLD STRONGEST MAN UNDERSTANDS\n\nThe bums will never be able to see it but.. \n@RandyOrton is gonna become 15 TIME WORLD CHAMPION and in doing so, SAVE THE BUSINESS",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040413177423257909#m",
+      "pubDate": "2026-04-04T12:56:25+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "RT by @PatMcAfeeShow: COOP DROPPED HIS FIRST 50-PIECE 🔥 \n\nDespite the loss to the Magic, Cooper Flagg is the 9th rookie all-time to record a 50-point game 🪣\n\n@dallasmavs",
+      "link": "https://twitter.com/SportsCenter/status/2040268792190599372#m",
+      "pubDate": "2026-04-04T03:22:41+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "RT by @PatMcAfeeShow: HERE TO SAVE THE BUSINESS.\n\n@PatMcAfeeShow @RandyOrton",
+      "link": "https://twitter.com/DerekMurphy32/status/2040257123200708680#m",
+      "pubDate": "2026-04-04T02:36:18+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "R to @PatMcAfeeShow: Come watch history LIVE in Las Vegas\n\nhttps://www.ticketmaster.com/wwe-wrestlemania-tickets/artist/853853?venueId=189482",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040241551176077692#m",
+      "pubDate": "2026-04-04T01:34:26+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "I will make a deal with the IWC now..\n\nIf @RandyOrton doesn’t win at Mania.. I will NEVER be seen OR HEARD on wrestling television AGAIN.\n\n@BustedOpenRadio @WrestleOps @WrestleTalk_TV @twcworldwide @Fightful @BehindTheBuckle @EliteClubS0B",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040240450091553203#m",
+      "pubDate": "2026-04-04T01:30:03+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "This Wrestling Specimen will be the most important person in the history of the business when the story is told 100 yrs from now\n\n@RandyOrton WILL SAVE THE BUSINESS for future generations at WrestleMania\n\nCome watch the monumentally HISTORIC match for future centuries LIVE IN VEGAS ~> https://www.ticketmaster.com/wwe-wrestlemania-tickets/artist/853853?venueId=189482\n\nBecause WHEN RANDY ORTON IS AROUND.. tickets should not be available",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040233095261995380#m",
+      "pubDate": "2026-04-04T01:00:50+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "WE’RE OFFICIALLY ON THE ROAD TO WRESTLEMANIA…\n\nTO SAVE THE BUSINESS #WrestleMania",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040224333612601408#m",
+      "pubDate": "2026-04-04T00:26:01+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "RANDY ORTON IS GONNA SAVE THE BUSINESS\n\n#SmackDown",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040223713220542948#m",
+      "pubDate": "2026-04-04T00:23:33+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "WHY IS ALL THIS IS HAPPENING…\n\nWHEN RANDY ORTON IS AROUND\n\n#SmackDown",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040222940172595607#m",
+      "pubDate": "2026-04-04T00:20:29+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "YOU MIGHT WONDER WHY I’M HERE…\n\nTHAT WAS ME ON THE PHONE #SmackDown",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040222243746103324#m",
+      "pubDate": "2026-04-04T00:17:43+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "This 19 year old is aiming line drives in his first at bat on the Big Leagues…\n\nUhhh YEAH",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040199488300560656#m",
+      "pubDate": "2026-04-03T22:47:17+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "RT by @PatMcAfeeShow: WELCOME TO THE SHOW, KONNOR GRIFFIN 😤\n\nThe 19-year-old phenom mashes an RBI double in his first MLB at-bat!",
+      "link": "https://twitter.com/MLB/status/2040168667137090036#m",
+      "pubDate": "2026-04-03T20:44:49+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "RT by @PatMcAfeeShow: Hey @PatMcAfeeShow",
+      "link": "https://twitter.com/CMONEYMAKER/status/2040124807811866636#m",
+      "pubDate": "2026-04-03T17:50:32+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "RT by @PatMcAfeeShow: \"This place runs on positive anger, man. That energy, that fuel burns clean and it's never-ending.\"\n\nMario Cristobal joins the @PatMcAfeeShow to talk about Miami's culture 🏈",
+      "link": "https://twitter.com/SportsCenter/status/2040132969759740285#m",
+      "pubDate": "2026-04-03T18:22:58+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "RT by @PatMcAfeeShow: 4-star QB recruit Israel Abrams announced he'll be committing to the University of Miami on the @PatMcAfeeShow 🙌",
+      "link": "https://twitter.com/SportsCenter/status/2040119259775324626#m",
+      "pubDate": "2026-04-03T17:28:29+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "Triple platinum @ToneDigz",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040156958397698260#m",
+      "pubDate": "2026-04-03T19:58:17+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "Tommy Lloyd has agreed to a new deal with Arizona..\n\nIt's a five-year deal that will make him one of the five highest paid coaches in college basketball\n\n#PMSLive",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040129674521526492#m",
+      "pubDate": "2026-04-03T18:09:52+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "LET'S HEAD OVER TO THE LEAGUE MEETINGS\n\nOH NO 😂😂 #PMSLive",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040127313031921688#m",
+      "pubDate": "2026-04-03T18:00:29+00:00"
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "This one is TOUGH\n\nA THREE RUN ERROR #PMSLive",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2040126954267869198#m",
+      "pubDate": "2026-04-03T17:59:04+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "HIGHEST PAID ATHLETES OF ALL TIME, per @Sportico  💰 \n\n48) Drew Brees - $600M\n37) Westbrook - $695M\n21) Brady - $890M\n10) Mayweather - $1.57B\n3) Ronaldo - $2.52B\n\nALL 50 HERE: https://bleacherreport.com/articles/25413590-michael-jordan-tiger-woods-top-sportico-list-50-highest-paid-athletes-all-time",
+      "link": "https://twitter.com/BleacherReport/status/2040417854927859813#m",
+      "pubDate": "2026-04-04T13:15:00+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "HAPPY MEN'S FINAL FOUR DAY.\n\n#MFinalFour\n\n📺 TBS",
+      "link": "https://twitter.com/BleacherReport/status/2040416596460720431#m",
+      "pubDate": "2026-04-04T13:10:00+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "What REALLY happened between Geno and Dawn Staley 👀\n\nComments from both: https://bleacherreport.com/articles/25414485-dawn-staley-geno-auriemma-react-heated-confrontation-video-after-south-carolina-beats-uconn",
+      "link": "https://twitter.com/BleacherReport/status/2040302091655078387#m",
+      "pubDate": "2026-04-04T05:35:00+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "COOPER FLAGG DROPS CAREER-HIGH 51 POINTS 🔥🔥🔥\n\nYOUNGEST PLAYER EVER TO SCORE 50 IN NBA HISTORY 🙌",
+      "link": "https://twitter.com/BleacherReport/status/2040269833506598978#m",
+      "pubDate": "2026-04-04T03:26:49+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "RT by @BleacherReport: Soto was removed from the game with right calf tightness",
+      "link": "https://twitter.com/BRWalkoff/status/2040258495040172387#m",
+      "pubDate": "2026-04-04T02:41:46+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "RT by @BleacherReport: Juan Soto left tonight's game after running the bases in the 1st inning\n\nHope he's okay 🙏\n\n(via @SNY_Mets)",
+      "link": "https://twitter.com/BRWalkoff/status/2040256950387003754#m",
+      "pubDate": "2026-04-04T02:35:37+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "Dawn Staley and Geno Auriemma get heated after the game 😳",
+      "link": "https://twitter.com/BleacherReport/status/2040240601904693640#m",
+      "pubDate": "2026-04-04T01:30:39+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "SOUTH CAROLINA BEATS UCONN TO ADVANCE TO THE NATIONAL CHAMPIONSHIP GAME 👏",
+      "link": "https://twitter.com/BleacherReport/status/2040239986415727036#m",
+      "pubDate": "2026-04-04T01:28:13+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "Breaking: Luka will miss the remainder of the regular season with a left hamstring injury, per @ShamsCharania\n\nHe is out indefinitely and his status for the playoffs is uncertain.",
+      "link": "https://twitter.com/BleacherReport/status/2040190918863819146#m",
+      "pubDate": "2026-04-03T22:13:14+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "RT by @BleacherReport: KONNOR GRIFFIN RBI DOUBLE IN HIS FIRST MLB AT-BAT 🏴‍☠️\n\n(via @MLB)",
+      "link": "https://twitter.com/BRWalkoff/status/2040168962495828347#m",
+      "pubDate": "2026-04-03T20:45:59+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "Stephen Curry is expected to be cleared to return on Sunday against the Rockets 🔥\n\nHe's missed over two months and 27 consecutive games due to a persistent knee injury, per @ShamsCharania",
+      "link": "https://twitter.com/BleacherReport/status/2040149667170709547#m",
+      "pubDate": "2026-04-03T19:29:19+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "Mac McClung has been named the 2025-26 Kia NBA G League MVP 🏆🔥",
+      "link": "https://twitter.com/BleacherReport/status/2040121988451115119#m",
+      "pubDate": "2026-04-03T17:39:20+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "RT by @BleacherReport: AP PLAYER OF THE YEAR 🚨\n\nCAMERON BOOZER 👏",
+      "link": "https://twitter.com/MarchMadnessMBB/status/2040112123863355777#m",
+      "pubDate": "2026-04-03T17:00:08+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "Who Is Uar Bernard and how is he getting compared to Wembanyama? 🤔\n \n🔗 https://bleacherreport.com/articles/25414335-who-uar-bernard-everything-know-about-nfl-draft-prospect-drawing-victor-wembanyama-comps",
+      "link": "https://twitter.com/BleacherReport/status/2040112586067251474#m",
+      "pubDate": "2026-04-03T17:01:58+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "NBA MVP Straw Poll Voting Revealed 👀\n\n(Via @TimBontemps)\n \n 🔗 https://bleacherreport.com/articles/25414282-sga-vs-wemby-nba-mvp-race-gets-big-update-espn-straw-poll-voting-ahead-awards-season",
+      "link": "https://twitter.com/BleacherReport/status/2040108375111852383#m",
+      "pubDate": "2026-04-03T16:45:14+00:00"
+    },
+    {
+      "account": "BleacherReport",
+      "text": "NBA Power Rankings With 2 Weeks To Go💪\n\n25. Mavericks (24-52)\n19. Heat (40-37)\n12. Timberwolves (46-30)\n6. Hornets (41-36)\n\nFull list 🔗: https://bleacherreport.com/articles/25413798-fresh-nba-power-rankings-see-los-angeles-lakers-minnesota-timberwolves-stumble",
+      "link": "https://twitter.com/BleacherReport/status/2040066909396181355#m",
+      "pubDate": "2026-04-03T14:00:28+00:00"
+    },
+    {
+      "account": "FieldYates",
+      "text": "RT by @FieldYates: 4 Years.\n$110M Contract. \n$77M Total Guarantees. \n&50M Fully Guaranteed At Signing. \n\n@44Ytw is here to stay. 🐆",
+      "link": "https://twitter.com/eliteloyaltysp/status/2040158034853576868#m",
+      "pubDate": "2026-04-03T20:02:34+00:00"
+    },
+    {
+      "account": "FieldYates",
+      "text": "The Bills made a big move to address a top need at WR, but still have work to do. Using an assist from @awscloud & @nextgenstats, @minakimes & I broke down which positions and players we think they should target in the draft. http://NFL.com/iq",
+      "link": "https://twitter.com/FieldYates/status/2040098567520489474#m",
+      "pubDate": "2026-04-03T16:06:16+00:00"
+    },
+    {
+      "account": "TimBontemps",
+      "text": "RT by @TimBontemps: Statement from Luka Doncic’s agent Bill Duffy of WME Basketball: \"This season, Luka Dončić has performed at a historic level, leading the league in scoring, carrying the Lakers to third place in the Western Conference and placing himself in the middle of one of the most tightly contested MVP races in memory. To ensure that Luka’s incredible accomplishments this season are rightly honored and he can be considered for the league’s end-of-season awards, we intend to apply for an “Extraordinary Circumstances Challenge” to the 65-game rule. Luka missed two games this season for the birth of his second child in Slovenia. His daughter was born on Dec. 4 on another continent, and yet he was back in the United States competing with his team on Dec. 6. Luka has gone to great lengths to show up for his team and this league this season. His record-breaking season deserves to be noted in the history books, despite last night’s unfortunate injury and other extraordinary circumstances. We look forward to working with the NBAPA and the league office to ensure a fair outcome in this matter.\"",
+      "link": "https://twitter.com/ShamsCharania/status/2040188592723521697#m",
+      "pubDate": "2026-04-03T22:04:00+00:00"
+    },
+    {
+      "account": "TimBontemps",
+      "text": "RT by @TimBontemps: It is a Grade 2 hamstring strain, per the Lakers",
+      "link": "https://twitter.com/mcten/status/2040188181354561712#m",
+      "pubDate": "2026-04-03T22:02:21+00:00"
+    },
+    {
+      "account": "TimBontemps",
+      "text": "RT by @TimBontemps: Where does Victor Wembanyama stand in the NBA MVP race? The final ESPN straw poll, conducted by our man @TimBontemps, has your answers. \n\n* -- full disclosure, yours truly is a participant in said straw poll\n\nhttps://www.expressnews.com/sports/spurs/article/little-late-wembanyama-mvp-race-22187863.php",
+      "link": "https://twitter.com/JMcDonald_SAEN/status/2040141064829272191#m",
+      "pubDate": "2026-04-03T18:55:08+00:00"
+    },
+    {
+      "account": "TimBontemps",
+      "text": "RT by @TimBontemps: Here’s the language",
+      "link": "https://twitter.com/BobbyMarks42/status/2040136354890166281#m",
+      "pubDate": "2026-04-03T18:36:25+00:00"
+    },
+    {
+      "account": "TimBontemps",
+      "text": "As I just reported on @SportsCenter, there is one way Luka Doncic can be eligible for end-of-season awards: by filing an extraordinary circumstances grievance over missing two games in December over the birth of his child. An arbitrator would rule on it after the regular season.",
+      "link": "https://twitter.com/TimBontemps/status/2040134529474597381#m",
+      "pubDate": "2026-04-03T18:29:10+00:00"
+    },
+    {
+      "account": "TimBontemps",
+      "text": "RT by @TimBontemps: The final NBA MVP straw poll is here 👀\n\nFull results from @TimBontemps and more than 100 NBA media members ⬇️\n\nhttp://spr.ly/6011B6UfiP",
+      "link": "https://twitter.com/espn/status/2040087961400696955#m",
+      "pubDate": "2026-04-03T15:24:07+00:00"
+    },
+    {
+      "account": "TimBontemps",
+      "text": "RT by @TimBontemps: The Hoop Collective with @WindhorstESPN and @TimBontemps (recorded before the Lakers’ disastrous night in Bricktown): The BS Poll results (with a ROY bonus!) https://youtu.be/f2EnfYv-x8s?si=_x3EPzCklsZQ8Cqr",
+      "link": "https://twitter.com/BannedMacMahon/status/2040057583021482327#m",
+      "pubDate": "2026-04-03T13:23:24+00:00"
+    },
+    {
+      "account": "TimBontemps",
+      "text": "New ESPN story: The final MVP straw poll of the season has arrived — with a twist!\n\nIn a first, I broke down where a fascinating Rookie of the Year race stands, as well as to seeing whether anyone was able to catch SGA for MVP.\n\nHere’s where things stand.\n\nhttps://www.espn.com/nba/story/_/id/48380547/nba-mvp-award-straw-poll-sga-wemby-luka-jokic-lead-final-2025-26-update",
+      "link": "https://twitter.com/TimBontemps/status/2040058426101837937#m",
+      "pubDate": "2026-04-03T13:26:45+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "THE BREAKFAST BUFFET.\n\n*Keaton Wagler\n*Tommy Lloyd\n*North Carolina\n*Other things to nosh on\n\nhttps://bit.ly/4cnePIi",
+      "link": "https://twitter.com/JonRothstein/status/2040414088292159997#m",
+      "pubDate": "2026-04-04T13:00:02+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "This episode of INSIDE COLLEGE BASKETBALL NOW looks at the following topics:\n\n*North Carolina\n*UConn/Illinois\n*Arizona/Michigan\n*And much more\n\nhttp://bit.ly/4lmjETP (Apple)\n\nhttp://bit.ly/443aDt9 (Spotify)\n\nhttps://bit.ly/4bV4DW4 (YouTube)",
+      "link": "https://twitter.com/JonRothstein/status/2040406531309793486#m",
+      "pubDate": "2026-04-04T12:30:00+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Brad Underwood on INSIDE COLLEGE BASKETBALL NOW.\n\n*Reaching the Final Four\n*Illinois' improved defense\n*Andrej Stojakovic\n*UConn\n*And much more\n\nhttp://bit.ly/4lmjETP (Apple)\n\nhttp://bit.ly/443aDt9 (Spotify)\n\nhttps://bit.ly/48hT0aB (YouTube)",
+      "link": "https://twitter.com/JonRothstein/status/2040398980022927424#m",
+      "pubDate": "2026-04-04T12:00:00+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Hopping on @CBSMornings to talk Final Four.",
+      "link": "https://twitter.com/JonRothstein/status/2040395673019838945#m",
+      "pubDate": "2026-04-04T11:46:51+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "30% Boost on any wager for today’s games! \n\nVia @FDSportsbook.\n\nThis is FanDuel! \n\n#fdpartner",
+      "link": "https://twitter.com/JonRothstein/status/2040392475982864430#m",
+      "pubDate": "2026-04-04T11:34:09+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "TODAY'S FINAL FOUR GAMES:\n\nUConn/Illinois\nArizona/Michigan",
+      "link": "https://twitter.com/JonRothstein/status/2040371298145017876#m",
+      "pubDate": "2026-04-04T10:10:00+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "\"No man is rich enough to buy back his past.\" - Oscar Wilde",
+      "link": "https://twitter.com/JonRothstein/status/2040369284568813594#m",
+      "pubDate": "2026-04-04T10:02:00+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "\"Every day is a gift.\" - Art Loveley",
+      "link": "https://twitter.com/JonRothstein/status/2040369033216688139#m",
+      "pubDate": "2026-04-04T10:01:00+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "\"Stay hungry, Stay humble\"",
+      "link": "https://twitter.com/JonRothstein/status/2040368786348654947#m",
+      "pubDate": "2026-04-04T10:00:01+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Sources: Georgia State will hire Vanderbilt's Jon Cremins as its next head basketball coach.",
+      "link": "https://twitter.com/JonRothstein/status/2040208321899061465#m",
+      "pubDate": "2026-04-03T23:22:23+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Source: UTRGV’s Brandon Chambers will hire former VCU point guard Joey Rodriguez as an assistant coach.",
+      "link": "https://twitter.com/JonRothstein/status/2040201121147330877#m",
+      "pubDate": "2026-04-03T22:53:47+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "RT by @JonRothstein: \"I have been told that Billy Donovan will not entertain a conversation with UNC until after the Chicago Bulls season is over...\n\nI would expect names like Texas Tech's Grant McCasland, Vanderbilt's Mark Byington, and also Iowa's Ben McCollum to be on (UNC's) list.\" - @JonRothstein",
+      "link": "https://twitter.com/CBSSportsCBB/status/2040191400201896176#m",
+      "pubDate": "2026-04-03T22:15:09+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "BRACKET BREAKDOWN at 6:30 PM ET on @CBSSportsNet with me, Brent Stover, @GaryParrishCBS, @Roy_Meets_World, and @IceYoung23.\n\nFYI: Stover is NOT on Twitter.",
+      "link": "https://twitter.com/JonRothstein/status/2040178529501868269#m",
+      "pubDate": "2026-04-03T21:24:00+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "RT by @JonRothstein: BREAKING: President Trump's executive order on college sports is expected as early as this afternoon, sources tell @CBSSports.\n\nKey directives on player eligibility and movement: 5 years to play 5 seasons and one free undergraduate transfer.\n\nStory: https://www.cbssports.com/college-football/news/donald-trump-president-executive-order-college-sports-transfers-eligibility-nil/",
+      "link": "https://twitter.com/bmarcello/status/2040140152597569612#m",
+      "pubDate": "2026-04-03T18:51:31+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Nebraska’s Fred Hoiberg has been named AP National Coach of the Year, per release.",
+      "link": "https://twitter.com/JonRothstein/status/2040143254528659829#m",
+      "pubDate": "2026-04-03T19:03:50+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "RT by @JonRothstein: \"When I think about him, I think about the clutch gene.\"\n\n@IceYoung23, @GaryParrishCBS, and @JonRothstein break down what Jaden Bradley means for @ArizonaMBB",
+      "link": "https://twitter.com/CBSSportsCBB/status/2040133745806651401#m",
+      "pubDate": "2026-04-03T18:26:03+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Akron’s Sharron Young will enter the transfer portal, per his agent KJ Smith of Range Sports.\n\nAveraged 7.2 PPG.",
+      "link": "https://twitter.com/JonRothstein/status/2040129964226273465#m",
+      "pubDate": "2026-04-03T18:11:01+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "RT by @JonRothstein: With Tommy Lloyd staying with Arizona, where does UNC look next in its head coaching search?\n\n\"(Michigan AD Warde Manuel) told me 'we're prepared when all this is over to do anything we have to do to keep our head coach.'\"\n\n-- @JonRothstein on Dusty May's candidacy at UNC",
+      "link": "https://twitter.com/CBSSportsCBB/status/2040128988027240755#m",
+      "pubDate": "2026-04-03T18:07:09+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "RT by @JonRothstein: .@JonRothstein on Dusty May's rise to becoming one of the best coaches in college basketball",
+      "link": "https://twitter.com/CBSSportsCBB/status/2040122935784984745#m",
+      "pubDate": "2026-04-03T17:43:06+00:00"
+    },
+    {
+      "account": "JonRothstein",
+      "text": "RT by @JonRothstein: \"He is essentially another starter.\"\n\n@JonRothstein on Trey McKenney's impact for @umichbball",
+      "link": "https://twitter.com/CBSSportsCBB/status/2040119478789288395#m",
+      "pubDate": "2026-04-03T17:29:21+00:00"
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "RT by @AlbertBreer: NFL announced the #Bears will not receive compensatory draft picks.\n\n\"The matter is now closed following the club’s appeal. The NFL informed the Bears today they will not receive compensatory picks. \n\n(1 of 2)",
+      "link": "https://twitter.com/BradBiggs/status/2040094889719820349#m",
+      "pubDate": "2026-04-03T15:51:39+00:00"
+    },
+    {
+      "account": "ShamsCharania",
+      "text": "Sources: NBA investigating Bucks after Giannis says he's healthy - via @ESPN App https://www.espn.com/nba/story/_/id/48391034/nba-investigating-bucks-giannis-says-healthy",
+      "link": "https://twitter.com/ShamsCharania/status/2040258199987630113#m",
+      "pubDate": "2026-04-04T02:40:35+00:00"
+    },
+    {
+      "account": "ShamsCharania",
+      "text": "A year full of dysfunction between a franchise and its cornerstone played out with the Bucks' failed trade talks last August and at the February trade deadline for Giannis -- and now the league office is an audience for the latest squabble about whether he can play or not.",
+      "link": "https://twitter.com/ShamsCharania/status/2040242344092438979#m",
+      "pubDate": "2026-04-04T01:37:35+00:00"
+    },
+    {
+      "account": "ShamsCharania",
+      "text": "Both Antetokounmpo and the Bucks have told league investigators different stories: Milwaukee informed the NBA that it doesn't believe Giannis is ready and actually wants to play; Giannis informed the NBA he wants to play but the team will not medically clear him, sources said.",
+      "link": "https://twitter.com/ShamsCharania/status/2040239570457931940#m",
+      "pubDate": "2026-04-04T01:26:34+00:00"
+    },
+    {
+      "account": "ShamsCharania",
+      "text": "The NBA is investigating the Milwaukee Bucks for their handling of the player participating policy and potential inconsistent statements regarding the health of Giannis Antetokounmpo, sources tell ESPN. The league has interviewed Antetokounmpo's side, the Bucks and team doctors.",
+      "link": "https://twitter.com/ShamsCharania/status/2040239021062815844#m",
+      "pubDate": "2026-04-04T01:24:23+00:00"
+    },
+    {
+      "account": "ShamsCharania",
+      "text": "Pinned: Just in on @SportsCenter – Lakers’ Luka Doncic will be sidelined indefinitely heading into the playoffs with a Grade 2 left hamstring strain:",
+      "link": "https://twitter.com/ShamsCharania/status/2040197010238660644#m",
+      "pubDate": "2026-04-03T22:37:26+00:00"
+    },
+    {
+      "account": "ShamsCharania",
+      "text": "Statement from Luka Doncic’s agent Bill Duffy of WME Basketball: \"This season, Luka Dončić has performed at a historic level, leading the league in scoring, carrying the Lakers to third place in the Western Conference and placing himself in the middle of one of the most tightly contested MVP races in memory. To ensure that Luka’s incredible accomplishments this season are rightly honored and he can be considered for the league’s end-of-season awards, we intend to apply for an “Extraordinary Circumstances Challenge” to the 65-game rule. Luka missed two games this season for the birth of his second child in Slovenia. His daughter was born on Dec. 4 on another continent, and yet he was back in the United States competing with his team on Dec. 6. Luka has gone to great lengths to show up for his team and this league this season. His record-breaking season deserves to be noted in the history books, despite last night’s unfortunate injury and other extraordinary circumstances. We look forward to working with the NBAPA and the league office to ensure a fair outcome in this matter.\"",
+      "link": "https://twitter.com/ShamsCharania/status/2040188592723521697#m",
+      "pubDate": "2026-04-03T22:04:00+00:00"
+    },
+    {
+      "account": "ShamsCharania",
+      "text": "Los Angeles Lakers star Luka Doncic is out indefinitely due to a left hamstring injury, sources tell me and @mcten. He will miss the remainder of the regular season and his status is uncertain beyond that.",
+      "link": "https://twitter.com/ShamsCharania/status/2040187516754518125#m",
+      "pubDate": "2026-04-03T21:59:43+00:00"
+    },
+    {
+      "account": "ShamsCharania",
+      "text": "RT by @ShamsCharania: .@ShamsCharania joins NBA Today to discuss the return of Steph Curry 👀",
+      "link": "https://twitter.com/ESPNNBA/status/2040151275396792783#m",
+      "pubDate": "2026-04-03T19:35:42+00:00"
+    },
+    {
+      "account": "ShamsCharania",
+      "text": "Golden State Warriors star Stephen Curry is expected to be cleared to return on Sunday against the Houston Rockets after missing over two months and 27 consecutive games due to a persistent knee injury, sources tell me and @anthonyVslater.",
+      "link": "https://twitter.com/ShamsCharania/status/2040147364841677291#m",
+      "pubDate": "2026-04-03T19:20:10+00:00"
+    },
+    {
+      "account": "JeffPassan",
+      "text": "The first at-bat of Konnor Griffin’s big league career went rather well.",
+      "link": "https://twitter.com/JeffPassan/status/2040168754819072419#m",
+      "pubDate": "2026-04-03T20:45:10+00:00"
+    },
+    {
+      "account": "ChrisBHaynes",
+      "text": "Los Angeles Lakers star Luka Dončić has been diagnosed with a Grade 2 left hamstring strain and will be out for the remainder of the regular season.",
+      "link": "https://twitter.com/ChrisBHaynes/status/2040187923841363984#m",
+      "pubDate": "2026-04-03T22:01:20+00:00"
+    },
+    {
+      "account": "ChrisBHaynes",
+      "text": "Congratulations to Kaleb Canales for landing the head coaching job at Weber State. Canales coached Damian Lillard — who is the program’s general manager — in Portland. He was the first Mexican-American to serve as NBA interim head coach in 2012.",
+      "link": "https://twitter.com/ChrisBHaynes/status/2040097538465050852#m",
+      "pubDate": "2026-04-03T16:02:11+00:00"
+    },
+    {
+      "account": "overtime",
+      "text": "Call it now: \n\nWho’s your NBA Rookie of the year?",
+      "link": "https://twitter.com/overtime/status/2040264340155293711#m",
+      "pubDate": "2026-04-04T03:04:59+00:00"
+    },
+    {
+      "account": "overtime",
+      "text": "AMEN THOMPSON DOING IT ALL 🔥 (via @NBA)",
+      "link": "https://twitter.com/overtime/status/2040251498861605192#m",
+      "pubDate": "2026-04-04T02:13:58+00:00"
+    },
+    {
+      "account": "overtime",
+      "text": "This was pregame 👀\n\n(Ben Solomon/Getty Images)",
+      "link": "https://twitter.com/overtime/status/2040239103720272020#m",
+      "pubDate": "2026-04-04T01:24:42+00:00"
+    },
+    {
+      "account": "overtime",
+      "text": "😳😳😳😳\n\n(via @SportsCenter)",
+      "link": "https://twitter.com/overtime/status/2040238751214092624#m",
+      "pubDate": "2026-04-04T01:23:18+00:00"
+    },
+    {
+      "account": "overtime",
+      "text": "DOWN GOES UCONN 🚨🚨🚨🚨 (via @MarchMadnessWBB)",
+      "link": "https://twitter.com/overtime/status/2040235102547185876#m",
+      "pubDate": "2026-04-04T01:08:48+00:00"
+    },
+    {
+      "account": "overtime",
+      "text": "Brunson couldn’t believe it 🤣 (via @nba)",
+      "link": "https://twitter.com/overtime/status/2040219618779046347#m",
+      "pubDate": "2026-04-04T00:07:17+00:00"
+    },
+    {
+      "account": "overtime",
+      "text": "MAC MCCLUNG IS A TWO TIME NBA G-LEAGUE MVP 🏆🏆",
+      "link": "https://twitter.com/overtime/status/2040130482650653014#m",
+      "pubDate": "2026-04-03T18:13:05+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "\"Banners hang in gyms and rings collect dust. But who you become and who you impact you get to keep forever.\"\n\n@CoachCoriClose joins @notthefakeSVP to discuss what coaching this @UCLAWBB team means 💙",
+      "link": "https://twitter.com/SportsCenter/status/2040293932756550141#m",
+      "pubDate": "2026-04-04T05:02:35+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": ".@dawnstaley joins @notthefakesvp to discuss the defensive effort and intensity it took to for @GamecockWBB to beat UConn and advance to the National Championship game 😤",
+      "link": "https://twitter.com/SportsCenter/status/2040282099484078446#m",
+      "pubDate": "2026-04-04T04:15:33+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "\"My instincts ... It's just what I do.\"\n\nLauren Betts joins @sportsiren to discuss her clutch block and what this @UCLAWBB team means to her 💙",
+      "link": "https://twitter.com/SportsCenter/status/2040279191992582245#m",
+      "pubDate": "2026-04-04T04:04:00+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "RT by @SportsCenter: UCLA ADVANCES TO ITS FIRST NCAA NATIONAL CHAMPIONSHIP 🐻 \n\nTHE BRUINS TAKE DOWN THE LONGHORNS IN A WIRE-TO-WIRE WIN🔥",
+      "link": "https://twitter.com/espn/status/2040276754623824267#m",
+      "pubDate": "2026-04-04T03:54:19+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "COOP DROPPED HIS FIRST 50-PIECE 🔥 \n\nDespite the loss to the Magic, Cooper Flagg is the 9th rookie all-time to record a 50-point game 🪣\n\n@dallasmavs",
+      "link": "https://twitter.com/SportsCenter/status/2040268792190599372#m",
+      "pubDate": "2026-04-04T03:22:41+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "\"Ripped it by accident.\"\n\nSarah Strong on tearing her jersey and switching to No. 55.",
+      "link": "https://twitter.com/SportsCenter/status/2040263487616639058#m",
+      "pubDate": "2026-04-04T03:01:36+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "\"ILONAAAAAA!\"\n\n@FlavorFlav and @Ilona_Maher are besties 😂❤️",
+      "link": "https://twitter.com/SportsCenter/status/2040253611813306773#m",
+      "pubDate": "2026-04-04T02:22:21+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "\"[Geno] is the one that initiated the conversation.\"\n\nDawn Staley spoke on her heated exchange with Geno Auriemma after South Carolina's win vs. UConn.",
+      "link": "https://twitter.com/SportsCenter/status/2040248668385653086#m",
+      "pubDate": "2026-04-04T02:02:43+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "Tap in if you called South Carolina's win over UConn 💪 \n\n12.4% of brackets picked the Gamecocks to win it all 👀",
+      "link": "https://twitter.com/SportsCenter/status/2040244674389061665#m",
+      "pubDate": "2026-04-04T01:46:50+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "Nearly half of all brackets are busted after South Carolina's win over UConn 😳",
+      "link": "https://twitter.com/SportsCenter/status/2040240093521199542#m",
+      "pubDate": "2026-04-04T01:28:38+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "\"I'm super proud of our kids and I'm not going to let any of this take anything away from the performance on the floor.\"\n\nDawn Staley shared her thoughts on the interaction with Geno Auriemma postgame.",
+      "link": "https://twitter.com/SportsCenter/status/2040238211247571408#m",
+      "pubDate": "2026-04-04T01:21:10+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "RT by @SportsCenter: Geno Auriemma went back to the locker room before the handshake line after South Carolina's win over UConn.",
+      "link": "https://twitter.com/espn/status/2040236568221253694#m",
+      "pubDate": "2026-04-04T01:14:38+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "Geno Auriemma exchanged words with Dawn Staley in the final seconds of South Carolina and UConn’s Final Four matchup.",
+      "link": "https://twitter.com/SportsCenter/status/2040235702223286734#m",
+      "pubDate": "2026-04-04T01:11:11+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "RT @espn: DOWN DOES UNDEFEATED UCONN 😲 \n\nSOUTH CAROLINA ADVANCES TO THE NATIONAL CHAMPIONSHIP! 🏆",
+      "link": "https://twitter.com/SportsCenter/status/2040235439257211348#m",
+      "pubDate": "2026-04-04T01:10:09+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "Sarah Strong had to switch to #55 after tearing her jersey 😳",
+      "link": "https://twitter.com/SportsCenter/status/2040228904879690192#m",
+      "pubDate": "2026-04-04T00:44:11+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "Diana Taurasi crowned Paige Bueckers 👑\n\nThe UConn bond stays strong 💙",
+      "link": "https://twitter.com/SportsCenter/status/2040216509159469141#m",
+      "pubDate": "2026-04-03T23:54:55+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "RT by @SportsCenter: 5'9\" Raven Johnson face-guarding 6'2\" Sarah Strong 🍿",
+      "link": "https://twitter.com/espn/status/2040212573723697219#m",
+      "pubDate": "2026-04-03T23:39:17+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "Former Gamecock Deebo Samuel supporting Dawn and the team at the Final Four 👏 \n\nWatch South Carolina-UConn NOW on ESPN and the ESPN App 🏀",
+      "link": "https://twitter.com/SportsCenter/status/2040203049096839657#m",
+      "pubDate": "2026-04-03T23:01:26+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "RT by @SportsCenter: Just in on @SportsCenter – Lakers’ Luka Doncic will be sidelined indefinitely heading into the playoffs with a Grade 2 left hamstring strain:",
+      "link": "https://twitter.com/ShamsCharania/status/2040197010238660644#m",
+      "pubDate": "2026-04-03T22:37:26+00:00"
+    },
+    {
+      "account": "SportsCenter",
+      "text": "RT by @SportsCenter: Los Angeles Lakers star Luka Doncic is out indefinitely due to a left hamstring injury, sources tell me and @mcten. He will miss the remainder of the regular season and his status is uncertain beyond that.",
+      "link": "https://twitter.com/ShamsCharania/status/2040187516754518125#m",
+      "pubDate": "2026-04-03T21:59:43+00:00"
+    },
+    {
+      "account": "ContextFreeCBB",
+      "text": "RT by @ContextFreeCBB: Geno a ho",
+      "link": "https://twitter.com/LilTunechi/status/2040234442619605057#m",
+      "pubDate": "2026-04-04T01:06:11+00:00"
+    },
+    {
+      "account": "ContextFreeCBB",
+      "text": "Image",
+      "link": "https://twitter.com/ContextFreeCBB/status/2040237620417163379#m",
+      "pubDate": "2026-04-04T01:18:49+00:00"
+    },
+    {
+      "account": "ContextFreeCBB",
+      "text": "Image",
+      "link": "https://twitter.com/ContextFreeCBB/status/2040236896048279859#m",
+      "pubDate": "2026-04-04T01:15:56+00:00"
+    },
+    {
+      "account": "BackAftaThis",
+      "text": "'The Gambler' (1974). Terrific movie about a compulsive sports gambler. In this scene, James Caan's character has $50,000 ($330,000 in 2026 dollars) on the Lakers at a pick 'em. He already owes roughly the same amount to a different bookie, played by Paul Sorvino.\n\nNot ideal.",
+      "link": "https://twitter.com/BackAftaThis/status/2040221015540695351#m",
+      "pubDate": "2026-04-04T00:12:50+00:00"
+    },
+    {
+      "account": "BackAftaThis",
+      "text": "Nobody cares, Mike. \n\nLiterally not one person on earth cares.",
+      "link": "https://twitter.com/BackAftaThis/status/2040214607147458792#m",
+      "pubDate": "2026-04-03T23:47:22+00:00"
+    },
+    {
+      "account": "BackAftaThis",
+      "text": "Mad Dog mentions it was 42 years ago that Georgetown and Patrick Ewing beat Olajuwon's University of Houston team. But it's okay... Olajuwon got his \"comeuppance\" by beating Ewing's Knicks in '94. \n\nAfter the first comeuppance, could a producer maybe tell him what the word means?",
+      "link": "https://twitter.com/BackAftaThis/status/2040207998480466254#m",
+      "pubDate": "2026-04-03T23:21:06+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "RT by @LeBatardShow: 19-year-old Konnor Griffin laces a double in first MLB at-bat, bringing his mom to tears 🥹\n\nESPN is now the home of http://MLB.tv, watch on the ESPN App: https://plus.espn.com/mlbtv\n\n(via @mlb, @SNPittsburgh)",
+      "link": "https://twitter.com/SportsCenter/status/2040174197402480890#m",
+      "pubDate": "2026-04-03T21:06:47+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "RT by @LeBatardShow: \"Ripped it by accident.\"\n\nSarah Strong on tearing her jersey and switching to No. 55.",
+      "link": "https://twitter.com/SportsCenter/status/2040263487616639058#m",
+      "pubDate": "2026-04-04T03:01:36+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "RT by @LeBatardShow: Coaches should get fined for lying.\n\nSitting up there telling BOLD face lies in an attempt to assassinate a woman’s character simply because his team lost a game. Weirdo Cornball Behavior.\n\nPack Geno up and everybody like him",
+      "link": "https://twitter.com/JuJuGotti/status/2040297843890466891#m",
+      "pubDate": "2026-04-04T05:18:07+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "RT by @LeBatardShow: Chiney Ogwumike, Andraya Carter rip Geno Auriemma for ESPN interview, Dawn Staley interaction. \n\nRead more: https://bit.ly/3O7qXDX",
+      "link": "https://twitter.com/awfulannouncing/status/2040283482086383941#m",
+      "pubDate": "2026-04-04T04:21:03+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "RT by @LeBatardShow: Geno Auriemma exchanged words with Dawn Staley in the final seconds of South Carolina and UConn’s Final Four matchup.",
+      "link": "https://twitter.com/SportsCenter/status/2040235702223286734#m",
+      "pubDate": "2026-04-04T01:11:11+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "RT by @LeBatardShow: Crazy moment between Geno and Dawn.",
+      "link": "https://twitter.com/kareemcopeland/status/2040237108280123742#m",
+      "pubDate": "2026-04-04T01:16:47+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "RT by @LeBatardShow: Walt \"Clyde\" Frazier: \"Mike, I was talking to my friends, man. And I was talking about eradicated, obliterated, devastated. They thought I was talking about Iran. But I was talking about the Bulls.\"  \n\nMike Breen: \"That's how you start a telecast?\" #NBA",
+      "link": "https://twitter.com/awfulannouncing/status/2040220354401239361#m",
+      "pubDate": "2026-04-04T00:10:12+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "RT by @LeBatardShow: Golden State Warriors star Stephen Curry is expected to be cleared to return on Sunday against the Houston Rockets after missing over two months and 27 consecutive games due to a persistent knee injury, sources tell me and @anthonyVslater.",
+      "link": "https://twitter.com/ShamsCharania/status/2040147364841677291#m",
+      "pubDate": "2026-04-03T19:20:10+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "RT by @LeBatardShow: Los Angeles Lakers star Luka Doncic is out indefinitely due to a left hamstring injury, sources tell me and @mcten. He will miss the remainder of the regular season and his status is uncertain beyond that.",
+      "link": "https://twitter.com/ShamsCharania/status/2040187516754518125#m",
+      "pubDate": "2026-04-03T21:59:43+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "RT by @LeBatardShow: \"F*** out of here. Y'all stop.\"\n\n@elleduncantv reacts to criticism of the Netflix broadcast missing the first-ever ABS challenge in MLB history",
+      "link": "https://twitter.com/pablofindsout/status/2040172504589721617#m",
+      "pubDate": "2026-04-03T21:00:04+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "❄️Puck Luck ❄️\n🏒 Porter Martone o2.5 SOG \n🏒 Dylan Holloway o2.5 SOG \n🏒 Anaheim ML \nParlay odds: +442\nPresented by @DKSportsbook #DKPartner\n📺: http://youtu.be/CTTg7vG2BhU",
+      "link": "https://twitter.com/LeBatardShow/status/2040161558995619988#m",
+      "pubDate": "2026-04-03T20:16:34+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "If UConn Women’s Basketball wins the championship… is it boring or just inevitable? @jessica_smetana",
+      "link": "https://twitter.com/LeBatardShow/status/2040127197495898462#m",
+      "pubDate": "2026-04-03T18:00:02+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "You Betcha 👑 Final Four Picks:\n🏀UConn\n🏀Michigan\nPresented by @DKSportsbook #DKPartner \n📺: https://youtu.be/Kdvt3EBHp88",
+      "link": "https://twitter.com/LeBatardShow/status/2040116763535233390#m",
+      "pubDate": "2026-04-03T17:18:34+00:00"
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "The Washington Wizards April Fools “$10K shot” prank had everyone outraged… did they miss the mark or did we? 👀",
+      "link": "https://twitter.com/LeBatardShow/status/2040093631231492526#m",
+      "pubDate": "2026-04-03T15:46:39+00:00"
+    },
+    {
+      "account": "BarstoolReags",
+      "text": "The dumbest decision in sports, America, life and the world. Can’t stress how much of a loser you are if you want this",
+      "link": "https://twitter.com/BarstoolReags/status/2040183252690878478#m",
+      "pubDate": "2026-04-03T21:42:46+00:00"
+    },
+    {
+      "account": "BarstoolReags",
+      "text": "My dear God",
+      "link": "https://twitter.com/BarstoolReags/status/2040180782417776675#m",
+      "pubDate": "2026-04-03T21:32:57+00:00"
+    },
+    {
+      "account": "BarstoolReags",
+      "text": "smartest decision he made",
+      "link": "https://twitter.com/BarstoolReags/status/2040116821290828031#m",
+      "pubDate": "2026-04-03T17:18:48+00:00"
+    },
+    {
+      "account": "BarstoolReags",
+      "text": "This is the new version of: Walking on the beach this morning, doing a little thinking when I saw footprints in the sand. Reminded me of the poem Footprints in the Sand",
+      "link": "https://twitter.com/BarstoolReags/status/2040070692394160298#m",
+      "pubDate": "2026-04-03T14:15:30+00:00"
+    }
+  ]
 }
