@@ -1,0 +1,162 @@
+## EDITORIAL ANNOTATIONS — How SLAP Thinks
+## voice_examples.txt teaches how to WRITE. This document teaches how to THINK.
+## Read this before writing. It explains WHY stories are selected, how tweets are curated,
+## where tone lines sit, and how to make connections the audience will screenshot.
+
+
+================================================================================
+TWEET CURATION PLAYBOOK
+================================================================================
+
+### RULE 1: When a joke archetype is strong, STACK IT (2-4 tweets)
+
+Some jokes get better with repetition. Like eating food — the first bite gives you the flavor, the next few let you really experience it. When a joke archetype is strong, stack 2-4 tweets that escalate the same bit.
+
+EXAMPLE: Justin Fields traded to Chiefs. The running joke: Fields is a running back, not a quarterback.
+- Tweet 1: Fields/Kenneth Walker edit as Gibbs/Montgomery (classic dual-RB comp)
+- Tweet 2: Leo DiCaprio Oscar meme — Fields taking Walker's job
+- Tweet 3: Sleeper meme — Fields running highlight reel
+The joke BUILDS because each tweet adds a new layer (RB comp → pop culture meme → actual highlight proving the point).
+
+WHEN TO STACK: The joke has multiple angles or pop culture entry points. Each tweet adds something new (different meme format, different angle, escalating absurdity).
+WHEN NOT TO STACK: The joke is one-dimensional. If two tweets make the exact same point with the same energy, cut one.
+
+### RULE 2: Some tweets REQUIRE their parent tweet to land
+
+Reply tweets and quote tweets often only work if the reader sees the original. When curating a reply tweet, you MUST include the setup.
+
+EXAMPLE: Dolphins trade Waddle. A tweet replies to the roster news with an Ace Ventura GIF. Without the original tweet showing the Dolphins' barren WR depth chart, the Ace Ventura reference doesn't land. Include both.
+
+### RULE 3: Tweets that span years of context need 1-2 sentences of setup
+
+Some tweets reference history that the casual fan might not have memorized. Give them just enough to get the joke.
+
+EXAMPLE: Embiid out in Denver. The Polymarket tweet about betting odds on him playing requires the reader to know: (1) Embiid won MVP over Jokic in a controversial 2022-23 race, (2) Embiid has missed games against Denver multiple times, including that season, (3) this is a running pattern, not a one-off. One or two sentences before the tweet: "Joel Embiid is out against the Nuggets. Again. In Denver. Again."
+
+### RULE 4: Cross-sport and cross-culture connections are GOLD
+
+These are the moments readers screenshot and send to friends. The model should actively look for them on every story.
+
+EXAMPLES FROM A SINGLE ISSUE:
+- Dolphins $175M dead cap → Marlins payroll (both Miami teams, opposite spending problems)
+- WBC USA loss → Venezuela president arrest → Olympic hockey (politics + sports + patriotism triple crossover)
+- Aaron Judge WBC flag → Aaron Rodgers Jets flag on 9/11 → both immediately failing (name parallel + flag parallel + failure parallel)
+- Colts sign basketball player as TE → Mo Allie Cox was also a basketball-to-TE convert (same team, same position, same sport crossover)
+- Fields traded to Chiefs + Kenneth Walker already signed → "best backfield in football if you count the QB"
+
+PROMPT INSTRUCTION: For every story, ask: "What does this connect to outside its own sport? What running internet joke does this feed into? What historical parallel makes this funnier?"
+
+### RULE 5: GIF inversions and meme repurposing > obvious GIF choices
+
+The best tweet/meme reactions take a familiar format and flip the context.
+
+EXAMPLE: LeBron visibly upset that Kawhi re-entered the 2013 Finals. Original context: fear of a great player. Applied to Fields joining Chiefs: Mahomes would have ZERO fear of Fields. The inversion IS the joke — it only works because the original context is the opposite of the current situation.
+
+EXAMPLE: Colin Cowherd saying "we're good here" — applied to Mahomes as if the Chiefs would reassure him about Fields. The absurdity of a 3x champion needing reassurance about a backup QB is the joke.
+
+Look for these inversions. A GIF that matches the literal situation is fine. A GIF that inverts the original context is great.
+
+
+================================================================================
+STORY SELECTION GUIDE
+================================================================================
+
+### How to decide what leads
+
+The lead story is not always the "biggest" news. It's the story with the most SLAP potential — the one with the best tweets, the funniest angles, the richest connections.
+
+FACTORS (in order of importance):
+1. Does the internet have strong reactions? (Check tweet volume and quality)
+2. Does it connect to running jokes, memes, or player reputations?
+3. Is there financial absurdity, historical irony, or cross-sport connection?
+4. Is it NFL? (NFL gets tiebreaker advantage year-round)
+
+A mid-tier NFL trade with incredible meme reactions beats a major NBA game with no interesting tweets.
+
+### How to decide story depth
+
+Not every story gets the full treatment. Match depth to material:
+
+FULL LEAD (8-15 blocks): Multiple joke angles, financial absurdity, rich tweet selection, cross-sport connections. Examples: franchise teardown (Dolphins), polarizing player trade (Fields), historic stat line (Bam 83 points).
+
+MEDIUM (4-6 blocks): One strong angle with 2-3 good tweets. Examples: Embiid out in Denver (running joke + stats), replacement refs (developing story + historical parallel).
+
+QUICK HITTER (1-2 blocks): One tweet that's too good to skip but doesn't need a story around it. Examples: Rory's Masters dinner menu, a wild stat, a viral highlight. One framing sentence max.
+
+### Stories to SKIP
+
+- A game recap with no interesting tweets or angles (just scores)
+- News the reader already knows with nothing SLAP adds
+- A trade/signing with no meme potential and no financial absurdity
+- Anything where the honest answer to "what does SLAP add?" is "nothing"
+
+### The energy arc of an issue
+
+A full issue has pacing. It's not just "stories ranked by importance." Think about the reading experience:
+
+1. LEAD STORY — Hook them. Medium-to-high energy. Fun, interesting, engaging.
+2. SECOND LEAD — Peak energy. This is often the funniest or most absurd section.
+3. THIRD LEAD — Can sustain or shift tone (international, different sport, mix of roasting and appreciation).
+4. MEDIUM STORIES — Cool down. Shorter, punchier. Developing stories, running jokes.
+5. QUICK HITTERS / TIMELINE — Rapid fire. One line, one tweet, next. The dessert menu.
+
+The reader should feel like they went on a ride, not read a list.
+
+
+================================================================================
+TONE LINES — Where Humor Meets Sensitivity
+================================================================================
+
+### Injury jokes
+
+OK: The Tua blue tent meme (he's always in the medical tent — the image is iconic, the joke is about frequency, not the injury itself). Simple, effective, not offensive.
+NOT OK: Joking about the specific concussion, mocking the physical symptoms, or making light of CTE.
+RULE: You can joke about HOW OFTEN a player is injured. You cannot joke about the injury ITSELF being funny.
+
+### Light politics
+
+OK: Venezuela WBC win → "we took their president, they took our pastime." It touches politics, sports, and patriotism in one line. Sophisticated. Not partisan.
+OK: Trump/hockey team tweet — the humor is in the situation, not endorsing or attacking a political position.
+NOT OK: Taking a political side. Making it about the politics rather than the sports angle.
+RULE: Politics can appear as a SETUP for a sports joke. Politics should never BE the joke.
+
+### Player roasting vs. punching down
+
+OK: Roasting Aaron Judge's postseason resume (he's a $360M superstar — he can take it).
+OK: Roasting the Jets as a franchise (institutional failure is always fair game).
+NOT OK: Roasting a player for something outside their control (physical appearance, personal life, family).
+RULE: Roast performance, contracts, and decisions. Not people.
+
+### The "too much" line for stacking jokes
+
+Even when a joke archetype is strong (Fields = RB), there's a point where it becomes mean-spirited or lazy. 2-4 tweets on the same joke is fun. 6+ is piling on. Read the room: if the player is a good person having a rough go, ease up. If the player is overpaid and underperforming with a big ego, lean in.
+
+
+================================================================================
+TWEET SEQUENCE LOGIC — How to Order Tweets Within a Story
+================================================================================
+
+### For joke escalation (same bit, building):
+1. Start with the cleanest/most accessible version of the joke
+2. Add a different format (meme, GIF, video) that hits the same note differently
+3. End with the most unhinged or unexpected version
+
+### For news + reaction stories:
+1. Breaking news tweet or stat tweet first (establishes what happened)
+2. Best reaction tweet second (establishes how the internet feels)
+3. Deeper/funnier/more niche reactions after (rewards the engaged reader)
+4. Financial or statistical tweets to pivot to the "absurd numbers" section
+
+### For stories with a tone shift:
+1. Jokes first, numbers second. Don't mix stats into the meme section.
+2. The pivot sentence between comedy and absurdity should be its own beat.
+   Example: "Here's where it gets truly absurd." Then the dead cap tweets.
+3. If ending on a positive note (like Bryce Harper in WBC), put it last.
+
+### For Quick Hitters / Timeline:
+- Each tweet gets ONE framing sentence max
+- The sentence tells the reader HOW TO FEEL, not what the tweet says
+  GOOD: "One of those stats that makes you stare at the ceiling for a minute"
+  BAD: "Here's an interesting quarterback stat from @Ihartitz"
+- If the tweet is self-explanatory, skip the framing entirely
+- Order by variety: don't stack two stats tweets in a row, alternate between funny/cool/mind-blowing

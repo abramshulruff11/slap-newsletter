@@ -1,0 +1,82 @@
+name: Daily SLAP Newsletter
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # 12:00 UTC = 8:00 AM ET
+  workflow_dispatch:
+    inputs:
+      skip_editor:
+        description: 'Skip the editor pass'
+        type: boolean
+        default: false
+      skip_gifs:
+        description: 'Skip GIF lookup'
+        type: boolean
+        default: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch content
+        run: python fetch_content.py
+
+      - name: Validate raw content
+        run: |
+          python -c "
+          import json, sys
+          data = json.load(open('raw_content.json'))
+          headlines = data.get('headlines', [])
+          tweets = data.get('tweets', [])
+          if not headlines and not tweets:
+              print('ERROR: Both headlines and tweets are empty')
+              sys.exit(1)
+          print(f'Found {len(headlines)} headlines and {len(tweets)} tweets')
+          "
+
+      - name: Generate newsletter
+        run: |
+          FLAGS=""
+          if [ "${{ inputs.skip_editor }}" = "true" ]; then
+            FLAGS="$FLAGS --no-editor"
+          fi
+          if [ "${{ inputs.skip_gifs }}" = "true" ]; then
+            FLAGS="$FLAGS --no-gifs"
+          fi
+          python generate_newsletter.py $FLAGS
+
+      - name: Verify outputs
+        run: |
+          for f in newsletter_skeleton.json newsletter_draft.html newsletter_substack.html; do
+            if [ ! -f "$f" ]; then
+              echo "ERROR: Missing output file: $f"
+              exit 1
+            fi
+          done
+          echo "All output files present"
+
+      - name: Commit and push outputs
+        run: |
+          git config user.name "SLAP Bot"
+          git config user.email "slap-bot@users.noreply.github.com"
+          git add raw_content.json newsletter_skeleton.json newsletter_draft.html newsletter_substack.html
+          DATE=$(date -u +"%Y-%m-%d")
+          git commit -m "SLAP newsletter output for $DATE" || echo "No changes to commit"
+          git push

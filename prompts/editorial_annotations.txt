@@ -1,0 +1,277 @@
+## EDITORIAL ANNOTATIONS — How SLAP Thinks
+## voice_examples.txt teaches how to WRITE. This document teaches how to THINK.
+## Read this before writing. It explains WHY stories are selected, how tweets are curated,
+## where tone lines sit, and how to make connections the audience will screenshot.
+
+
+================================================================================
+TWEET CURATION PLAYBOOK
+================================================================================
+
+### RULE 1: When a joke archetype is strong, STACK IT (2-4 tweets)
+
+Some jokes get better with repetition. Like eating food — the first bite gives you the flavor, the next few let you really experience it. When a joke archetype is strong, stack 2-4 tweets that escalate the same bit.
+
+EXAMPLE: Justin Fields traded to Chiefs. The running joke: Fields is a running back, not a quarterback.
+- Tweet 1: Fields/Kenneth Walker edit as Gibbs/Montgomery (classic dual-RB comp)
+- Tweet 2: Leo DiCaprio Oscar meme — Fields taking Walker's job
+- Tweet 3: Sleeper meme — Fields running highlight reel
+The joke BUILDS because each tweet adds a new layer (RB comp → pop culture meme → actual highlight proving the point).
+
+WHEN TO STACK: The joke has multiple angles or pop culture entry points. Each tweet adds something new (different meme format, different angle, escalating absurdity).
+WHEN NOT TO STACK: The joke is one-dimensional. If two tweets make the exact same point with the same energy, cut one.
+
+### RULE 2: Some tweets REQUIRE their parent tweet to land
+
+Reply tweets and quote tweets often only work if the reader sees the original. When curating a reply tweet, you MUST include the setup.
+
+EXAMPLE: Dolphins trade Waddle. A tweet replies to the roster news with an Ace Ventura GIF. Without the original tweet showing the Dolphins' barren WR depth chart, the Ace Ventura reference doesn't land. Include both.
+
+### RULE 3: Tweets that span years of context need 1-2 sentences of setup
+
+Some tweets reference history that the casual fan might not have memorized. Give them just enough to get the joke.
+
+EXAMPLE: Embiid out in Denver. The Polymarket tweet about betting odds on him playing requires the reader to know: (1) Embiid won MVP over Jokic in a controversial 2022-23 race, (2) Embiid has missed games against Denver multiple times, including that season, (3) this is a running pattern, not a one-off. One or two sentences before the tweet: "Joel Embiid is out against the Nuggets. Again. In Denver. Again."
+
+### RULE 4: Cross-sport and cross-culture connections are GOLD
+
+These are the moments readers screenshot and send to friends. The model should actively look for them on every story.
+
+EXAMPLES FROM A SINGLE ISSUE:
+- Dolphins $175M dead cap → Marlins payroll (both Miami teams, opposite spending problems)
+- WBC USA loss → Venezuela president arrest → Olympic hockey (politics + sports + patriotism triple crossover)
+- Aaron Judge WBC flag → Aaron Rodgers Jets flag on 9/11 → both immediately failing (name parallel + flag parallel + failure parallel)
+- Colts sign basketball player as TE → Mo Allie Cox was also a basketball-to-TE convert (same team, same position, same sport crossover)
+- Fields traded to Chiefs + Kenneth Walker already signed → "best backfield in football if you count the QB"
+
+PROMPT INSTRUCTION: For every story, ask: "What does this connect to outside its own sport? What running internet joke does this feed into? What historical parallel makes this funnier?"
+
+### RULE 5: GIF inversions and meme repurposing > obvious GIF choices
+
+The best tweet/meme reactions take a familiar format and flip the context.
+
+EXAMPLE: LeBron visibly upset that Kawhi re-entered the 2013 Finals. Original context: fear of a great player. Applied to Fields joining Chiefs: Mahomes would have ZERO fear of Fields. The inversion IS the joke — it only works because the original context is the opposite of the current situation.
+
+EXAMPLE: Colin Cowherd saying "we're good here" — applied to Mahomes as if the Chiefs would reassure him about Fields. The absurdity of a 3x champion needing reassurance about a backup QB is the joke.
+
+Look for these inversions. A GIF that matches the literal situation is fine. A GIF that inverts the original context is great.
+
+### RULE 6: Every tweet must clear a quality bar
+
+Not every tweet about a topic is worth including. Before adding a tweet, ask:
+- Is this tweet actually funny, insightful, or adding a unique angle? Or is it just "about" the topic?
+- Does this tweet have real engagement? Very low-view tweets are a signal that the internet didn't think it was worth sharing. If the internet didn't care, neither should SLAP.
+- Is this tweet from a random account just stating a fact? SLAP uses tweets for REACTIONS, JOKES, and STATS — not for restating the news.
+
+BAD tweet selection: A generic betting line tweet with 64 views. It's about the topic but adds nothing.
+GOOD tweet selection: A meme tweet with thousands of likes that reframes the story in a funny way.
+
+### RULE 7: One story per section — NO topic bleeding
+
+Every tweet under a section header must be about THAT section's topic. Not the same team. Not the same sport. Not "related." The SAME story.
+
+BAD: Andy Dalton trade section → tweet about a completely different Eagles trade (Sydney Brown). They're both Eagles transactions, but they're different stories.
+BAD: Replacement refs section → tweet about a college basketball coach firing his staff. Both involve officials/coaching, but they're unrelated stories.
+GOOD: If Kevin Willard's quote is great content, give it its own Quick Hitter or its own section. Don't shove it under an unrelated header.
+
+If a tweet doesn't fit the section it's in, it either needs its own section, belongs in The Timeline, or gets cut.
+
+### RULE 8: Diversify tweet sources
+
+If you notice 3+ tweets from the same account in a single issue, actively seek alternatives from different accounts. The newsletter should feel like a curated view of the ENTIRE sports internet, not one account's feed. Variety of sources = variety of perspectives and joke styles.
+
+### RULE 9: Tone filter — SLAP is fun, not sentimental
+
+SLAP's energy is group-chat humor, not a feelings journal. Before including a tweet, ask: does this match the newsletter's energy?
+
+INCLUDE: Funny, absurd, insightful, mind-blowing stats, great highlights, perfect memes.
+EXCLUDE: Sentimental posts, mental health reflections, heartfelt personal messages, earnest emotional content.
+
+This isn't a judgment on the content — a touching PFT Commenter tweet about mental health is genuinely good. It's just not SLAP content. Wrong venue.
+
+Exception: If a major sports figure passes away or a genuinely significant emotional moment happens (retirement, comeback from serious injury), brief respectful coverage is appropriate. But the default energy is FUN.
+
+### RULE 10: GIF INTELLIGENCE — The Secret Sauce
+
+GIFs are not decoration. They are PUNCHLINES. A great GIF is like a great condiment — it makes the whole sandwich better. A wrong GIF is like ketchup on sushi. The newsletter lives and dies on GIF quality.
+
+**THE GIF DECOMPOSITION PROCESS:**
+
+Before selecting ANY GIF, complete these three steps:
+
+STEP 1 — What is the EMOTION or JOKE I'm going for?
+Not "what is this section about" but "what specific feeling or punchline do I want the reader to experience RIGHT HERE?"
+- Is it disbelief? Approval? Resignation? Smugness? Panic? Celebration? Disgust?
+- Is the joke irony? Absurdity? Comeuppance? Dramatic overreaction?
+
+STEP 2 — What GIF delivers that SPECIFIC emotion/joke?
+- The GIF should match the TONE, not the TOPIC.
+- Don't search for "Kobe" because the section mentions Kobe. Search for the EMOTION you want.
+- A section about Luka dominating doesn't need a "basketball" GIF. It might need a "respect nod" or "bowing down" or "we're not worthy" GIF.
+
+STEP 3 — Does the GIF's ORIGINAL CONTEXT add a layer?
+- The best GIFs bring their own context that adds meaning.
+- Tiger King "I will never financially recover" — the original context (a broke zoo owner) adds a layer to a team overpaying.
+- Kobe "Soft" — the original context is Kobe calling someone soft. If Luka is DOMINATING, this is the WRONG Kobe GIF because "soft" contradicts the story. The right Kobe GIF would be Kobe's killer stare (respect) or Kobe nodding (approval).
+
+**BAD GIF SELECTION PROCESS (what the model currently does):**
+1. Section is about Luka + Kobe → search "Kobe"
+2. First result is Kobe "Soft" → use it
+3. Problem: "Soft" contradicts the story. Luka is the OPPOSITE of soft.
+
+**GOOD GIF SELECTION PROCESS (what we want):**
+1. Section is about Luka matching Kobe's 60-point legacy → the emotion is AWE and RESPECT
+2. What GIF captures "this man is carrying on a legend's legacy"? → Kobe nodding approvingly, or "I see you" reaction, or passing-the-torch moment
+3. Does the original context add meaning? → Kobe approving of someone carries the implicit message that Luka has earned Kobe's respect. That's the joke AND the emotion.
+
+**GIF TONE MATCHING GUIDE:**
+
+When the story emotion is DOMINANCE/GREATNESS:
+- GOOD: Vince McMahon progressive excitement, "he's him" energy, respectful nod
+- BAD: Generic "basketball" GIF, anything that undermines the dominance
+
+When the story emotion is FRANCHISE PAIN/DISASTER:
+- GOOD: Tiger King financial recovery, dumpster fire, "this is fine" dog
+- BAD: Generic sad face, crying GIF without specific cultural reference
+
+When the story emotion is IRONY/COMEUPPANCE:
+- GOOD: Curb Your Enthusiasm theme, "ah shit here we go again" CJ, surprised Pikachu
+- BAD: Generic "shocked" reaction without a specific character
+
+When the story emotion is OVERREACTION/ABSURDITY:
+- GOOD: Vince McMahon escalating chair fall, Nick Young confused question marks, blinking white guy
+- BAD: Generic "wow" or "OMG" text GIFs
+
+When the story emotion is AWKWARD RETURN/REUNION:
+- GOOD: Steve Buscemi "how do you do fellow kids", Carmelo Anthony Bulls jersey, Ben Affleck smoking
+- BAD: Generic "awkward" or "cringe"
+
+**THE KOBE TEST:** Before using ANY GIF, ask: "If I showed this GIF to someone who just read this section, would they immediately get the joke?" If the answer is no — if they'd say "why is this here?" — find a different GIF.
+
+**GIPHY SEARCH TIPS:**
+- Search for the EMOTION or CULTURAL REFERENCE, not the topic
+- "Kobe nod approval" not "Kobe" — be specific about what you want
+- "this is fine dog fire" not "disaster" — reference the specific meme
+- "Vince McMahon excited chair" not "excited reaction" — name the character
+- If the first search doesn't return the right GIF, try the character name + the specific moment
+- Progressive shortening: start specific, then broaden. "Tiger King financially recover" → "Tiger King money" → "financially recover"
+
+
+================================================================================
+STORY SELECTION GUIDE
+================================================================================
+
+### How to decide what leads
+
+The lead story is not always the "biggest" news. It's the story with the most SLAP potential — the one with the best tweets, the funniest angles, the richest connections.
+
+FACTORS (in order of importance):
+1. Does the internet have strong reactions? (Check tweet volume and quality)
+2. Does it connect to running jokes, memes, or player reputations?
+3. Is there financial absurdity, historical irony, or cross-sport connection?
+4. Is it NFL? (NFL gets tiebreaker advantage year-round)
+
+A mid-tier NFL trade with incredible meme reactions beats a major NBA game with no interesting tweets.
+
+### How to decide story depth
+
+Not every story gets the full treatment. Match depth to material:
+
+FULL LEAD (8-15 blocks): Multiple joke angles, financial absurdity, rich tweet selection, cross-sport connections. Go DEEP on the actual event — stats, highlights, game arc, not just the narrative frame. Examples: franchise teardown (Dolphins), polarizing player trade (Fields), historic stat line (Bam 83 points).
+
+MEDIUM (4-6 blocks): One strong angle with 2-3 good tweets. Examples: Embiid out in Denver (running joke + stats), replacement refs (developing story + historical parallel).
+
+QUICK HITTER (1-2 blocks): One tweet that's too good to skip but doesn't need a story around it. Examples: Rory's Masters dinner menu, a wild stat, a viral highlight. One framing sentence max.
+
+### The Headline vs. Timeline Filter
+
+THIS IS CRITICAL. Not every story deserves a headline section. A headline must have a HOOK — a joke, a narrative, or a surprising stat. If a story is just a transaction with no hook, it belongs in the Timeline as a one-liner.
+
+EXAMPLES OF STORIES THAT EARN HEADLINES:
+- Luka scores 60 → Hook: Kobe parallel (same score, same free throw, same clock), MVP chants in enemy territory, Wilt/Baylor historic comparison. MULTIPLE hooks. Easy headline.
+- Kyler Murray to Vikings → Hook: "Let a Super Bowl champion walk to sign a guy who got benched." Plus short jokes, 9 nickname crossover. Has punchlines.
+- Dolphins $175M dead cap → Hook: The number itself is absurd. Financial comedy writes itself.
+
+EXAMPLES OF STORIES THAT DON'T EARN HEADLINES:
+- Andy Dalton traded for a 7th rounder → No hook. It's a 37-year-old backup changing teams. Calling the pick "monopoly money" isn't a joke — every late-round trade gets that line. Demote to Timeline: "Andy Dalton got traded to the Eagles for a 2027 7th. The Panthers are now basically a YMCA team."
+- A mid-tier free agent signing with no meme angle → Timeline one-liner or skip entirely.
+
+Target 4-6 headlines per issue. If you can only find 2-3, look harder — there's almost always more juice in the day's news. If a story genuinely doesn't have a hook after decomposition, don't force it into a headline to hit the target.
+
+### Stories to SKIP
+
+- A game recap with no interesting tweets or angles (just scores)
+- News the reader already knows with nothing SLAP adds
+- A trade/signing with no meme potential and no financial absurdity
+- Anything where the honest answer to "what does SLAP add?" is "nothing"
+
+### The energy arc of an issue
+
+A full issue has pacing. It's not just "stories ranked by importance." Think about the reading experience:
+
+1. LEAD STORY — Hook them. Medium-to-high energy. Fun, interesting, engaging.
+2. SECOND LEAD — Peak energy. This is often the funniest or most absurd section.
+3. THIRD LEAD — Can sustain or shift tone (international, different sport, mix of roasting and appreciation).
+4. MEDIUM STORIES — Cool down. Shorter, punchier. Developing stories, running jokes.
+5. QUICK HITTERS / TIMELINE — Rapid fire. One line, one tweet, next. The dessert menu.
+
+The reader should feel like they went on a ride, not read a list.
+
+
+================================================================================
+TONE LINES — Where Humor Meets Sensitivity
+================================================================================
+
+### Injury jokes
+
+OK: The Tua blue tent meme (he's always in the medical tent — the image is iconic, the joke is about frequency, not the injury itself). Simple, effective, not offensive.
+NOT OK: Joking about the specific concussion, mocking the physical symptoms, or making light of CTE.
+RULE: You can joke about HOW OFTEN a player is injured. You cannot joke about the injury ITSELF being funny.
+
+### Light politics
+
+OK: Venezuela WBC win → "we took their president, they took our pastime." It touches politics, sports, and patriotism in one line. Sophisticated. Not partisan.
+OK: Trump/hockey team tweet — the humor is in the situation, not endorsing or attacking a political position.
+NOT OK: Taking a political side. Making it about the politics rather than the sports angle.
+RULE: Politics can appear as a SETUP for a sports joke. Politics should never BE the joke.
+
+### Player roasting vs. punching down
+
+OK: Roasting Aaron Judge's postseason resume (he's a $360M superstar — he can take it).
+OK: Roasting the Jets as a franchise (institutional failure is always fair game).
+NOT OK: Roasting a player for something outside their control (physical appearance, personal life, family).
+RULE: Roast performance, contracts, and decisions. Not people.
+
+### The "too much" line for stacking jokes
+
+Even when a joke archetype is strong (Fields = RB), there's a point where it becomes mean-spirited or lazy. 2-4 tweets on the same joke is fun. 6+ is piling on. Read the room: if the player is a good person having a rough go, ease up. If the player is overpaid and underperforming with a big ego, lean in.
+
+
+================================================================================
+TWEET SEQUENCE LOGIC — How to Order Tweets Within a Story
+================================================================================
+
+### For joke escalation (same bit, building):
+1. Start with the cleanest/most accessible version of the joke
+2. Add a different format (meme, GIF, video) that hits the same note differently
+3. End with the most unhinged or unexpected version
+
+### For news + reaction stories:
+1. Breaking news tweet or stat tweet first (establishes what happened)
+2. Best reaction tweet second (establishes how the internet feels)
+3. Deeper/funnier/more niche reactions after (rewards the engaged reader)
+4. Financial or statistical tweets to pivot to the "absurd numbers" section
+
+### For stories with a tone shift:
+1. Jokes first, numbers second. Don't mix stats into the meme section.
+2. The pivot sentence between comedy and absurdity should be its own beat.
+   Example: "Here's where it gets truly absurd." Then the dead cap tweets.
+3. If ending on a positive note (like Bryce Harper in WBC), put it last.
+
+### For Quick Hitters / Timeline:
+- Each tweet gets ONE framing sentence max
+- The sentence tells the reader HOW TO FEEL, not what the tweet says
+  GOOD: "One of those stats that makes you stare at the ceiling for a minute"
+  BAD: "Here's an interesting quarterback stat from @Ihartitz"
+- If the tweet is self-explanatory, skip the framing entirely
+- Order by variety: don't stack two stats tweets in a row, alternate between funny/cool/mind-blowing

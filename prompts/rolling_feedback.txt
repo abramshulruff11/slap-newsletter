@@ -1,0 +1,46 @@
+## Rolling Feedback — Last Updated 3/31/2026
+
+### From 3/31/2026 issue:
+
+- GIF REUSE ACROSS DAYS: Used the same Vince McMahon GIF in back-to-back issues (3/30 and 3/31). GIF selection quality was good but we cannot reuse the same GIF in consecutive issues. Check yesterday's output before selecting GIFs. (See `recent_output.json` for yesterday's GIF references.)
+- LEAD STORY OVERLAP: Back-to-back lead stories about replacement refs. 3/30 was about hiring replacement refs, 3/31 was about the rule changes. Both makes sense individually, but the writing had overlap and felt repetitive. When a story continues from the previous day, acknowledge that readers already know the setup and go straight to the new development. Don't re-explain the Fail Mary or re-establish context already covered.
+- AJ BROWN STORY TOO THIN: The AJ Brown / Patriots section didn't include the juice — the Eagles drama, the sideline incidents, the history with Hurts. When a story has backstory that makes it interesting, the skeleton must include enough blocks and tweets to tell the full story. One Schefter tweet is not enough for a trade rumor with this much context.
+- REPEATED METAPHOR IN SGA SECTION: "That's not basketball officiating — that's performance art" and "weaponized drawing contact into an art form" in the same section. Both use "art" as the core metaphor. Pick one, kill the other. Never repeat the same metaphor or analogy within a section.
+- AROUND THE LEAGUE COMMENTARY (AGAIN): Commentary keeps appearing between Around the League tweets despite rules against it. This is now addressed in the writer prompt, editor prompt, and base prompt. Zero text between Around the League tweets. If the writer adds framing, the editor must delete it.
+
+### From 3/30/2026 issue:
+
+- CONTROVERSIAL PLAYER COMMENTARY: The Jaden Ivey section included "Sometimes the trash takes itself out." SLAP does not editorialize on controversial player behavior. Report the fact, include the tweet, move on. No moral commentary. No clever put-downs. No "right call" / "wrong call." SLAP stays down the fairway. This is tweet-worthy because it's interesting, but it CANNOT show negativity or take sides.
+- ANTHONY EDWARDS MISATTRIBUTION: The commentary on the Anthony Edwards stat tweet was not about Anthony Edwards — it was about the wrong topic entirely. When writing commentary for a tweet block, READ the tweet_text field in the skeleton and react to THAT specific content. Do not write commentary about what you imagine the tweet says.
+- SUPER70S NON-SPORTS CONTENT: The Johnny Cash / Columbo tweet has no sports connection and should not have been included. Super70sSports tweets must connect to sports — pop culture nostalgia without a sports tie is not SLAP content. No fake wrestling either; college wrestling is fine.
+- MISSING TWEET EMBED: The final tweet in the 3/30 issue did not display. Likely caused by a missing or malformed URL in the blockquote. Every tweet must have a valid `<a href="https://twitter.com/...">View tweet</a>` link.
+
+### From 3/29/2026 issue:
+
+- CRITICAL FACT ERROR: The issue claimed "The Big Ten is the only conference with a Final Four team" in the same newsletter that featured Arizona (Big 12) making the Final Four. The model parroted a BigCat tweet that was true at the time of tweeting but was no longer true by the time the newsletter was assembled. RULE: Never state conference exclusivity claims without checking all stories in the issue. If you write "only conference to..." make sure no other story in your own newsletter contradicts it.
+- DUPLICATE CONTENT: Two tweets (HaterReport and BallsackSports) showed the same Bronny video. When two accounts post the same highlight or clip, pick the one with the better caption or angle. Do not include both.
+- RHYTHM: Too many consecutive sentence fragments. Mix short punches with flowing sentences. Not every sentence needs to be a standalone fragment. Open with punches, then let a sentence flow and carry momentum.
+- WORD CHOICE: "Ancient" was used to describe a 20-year drought. Wrong word, wrong tone. The moment was celebratory — don't frame it as an insult. Don't reach for dramatic words that don't fit.
+- CORNINESS: "The math is doing math" is too corny for SLAP. If the numbers are devastating, just state the numbers. Cut lines that sound like someone trying too hard on Twitter.
+- GIF MATCHING: When a subject uses exact words from a famous meme ("I'm not f*cking leaving" = Wolf of Wall Street), use THAT specific meme, not a generic mood match. Quote-matching beats mood-matching every time.
+- TIMELINE: Remove all framing text from timeline items. Just show the tweets. If a tweet needs a framing sentence to make sense, it's not a good enough tweet for the timeline.
+- STORY SELECTION: March Madness Elite Eight was correctly identified as the lead. Calendar override is working. Good.
+
+### From 3/22/2026 issue:
+
+- NOT ENOUGH HEADLINES: The issue only had 2 headline stories (Luka 60, Dalton trade). Target 4-6 headlines per issue. Even when the lead is big, find more stories worth covering. A 2-headline newsletter feels thin.
+- LEAD STORY DEPTH: The Luka 60-point game hit the right narrative beats (Kobe parallel, MVP chants, Wilt/Baylor comparison) but needed MORE. A 60-point game gives you tons of material — shooting splits, quarter-by-quarter scoring, specific highlight plays, how the defense adjusted and failed, the full game arc. The lead should feel like the reader watched the game through SLAP's lens.
+- HEADLINE TWEET RELEVANCE: Tweets in headline sections must directly relate to THAT story. The Luka section included a tweet about LeBron officiating vs. KD officiating — that has nothing to do with Luka scoring 60. Apply the same relevance filter to tweets that we apply to GIFs. If a tweet isn't about the story in the headline, it goes to the Timeline or gets cut.
+- WEAK HEADLINE STORIES — DEMOTE THEM: The Andy Dalton trade was not interesting enough for a headline. "A 37-year-old backup traded for a 7th rounder" is just a transaction. The commentary tried to make it interesting ("monopoly money") but there was no real joke, no surprising stat, no narrative hook. Stories without hooks should be demoted to Timeline one-liners. Headline sections need JUICE — a joke that lands, a narrative, or a surprising stat.
+- AVOID STEPHEN A. SMITH: Don't use his tweets or build around his takes. Noise, not signal.
+- TIMELINE/CLOSER WORKING WELL: The quick-hit format mixing stats, comedy, coach meltdowns, and random sports moments (Dennis Rodman WWE HOF, Villanova meltdown, Underdog Fantasy tweet) is exactly right. Keep that formula.
+
+### From 3/21/2026 issue:
+
+- TWEET QUALITY: Used a Hater Report tweet with only 64 views about gambling. Low-engagement tweets are almost never worth including. If a tweet has very low engagement, skip it — it probably wasn't good enough for the internet, so it's not good enough for SLAP.
+- GAMBLING CONTENT: The gambling tweet didn't add value. Avoid gambling-focused tweets unless the gambling angle IS the joke (e.g., absurd prop bets, odds that tell a story). Basic betting line tweets are not SLAP content.
+- GIF WITHOUT A PUNCHLINE: Used a Kobe GIF at the end of the Luka section that didn't make a clear joke. The GIF seemed to just illustrate "Kobe" because Kobe was mentioned. Every GIF must have an obvious punchline. If you can't explain the joke the GIF is making in one sentence, don't use it.
+- TOPIC BLEEDING: Put a Sydney Brown/Eagles trade tweet under the Andy Dalton section. Different transactions = different stories, even if they involve the same team. Never place a tweet under a section header if it's about a different topic than the header describes.
+- TOPIC BLEEDING (again): Put a Kevin Willard/Villanova tweet under the replacement refs section. These are completely unrelated stories. Willard's quote was actually great content — it deserved its own section or a Quick Hitter, not a confusing placement under refs.
+- SOURCE OVER-RELIANCE: Too many Hater Report tweets across the issue. Spread tweet sources across different accounts. If you notice 3+ tweets from the same account, actively look for alternatives from other accounts.
+- TONE MISMATCH: Included a sentimental PFT Commenter tweet about mental health. While the tweet is genuinely touching, it doesn't match SLAP's energy. SLAP is fun, punchy, and light. Sentimental, emotional, or somber tweets should not be included unless they're directly tied to a major sports story that requires respectful coverage.

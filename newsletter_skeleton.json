@@ -1,0 +1,339 @@
+{
+  "date": "2026-04-02",
+  "calendar_tier": "TIER 3 — Regular offseason news cycle. NFL league meetings wrapped up Tuesday, some draft news, but no major calendar events happening.",
+  "tweet_volume_check": {
+    "top_topics": [
+      {
+        "topic": "NFL Draft/Pro Days (Mendoza)",
+        "approx_tweets": 12,
+        "accounts_tweeting": 4
+      },
+      {
+        "topic": "Puka Nacua rehab/legal issues",
+        "approx_tweets": 8,
+        "accounts_tweeting": 2
+      },
+      {
+        "topic": "NBA regular season games",
+        "approx_tweets": 15,
+        "accounts_tweeting": 4
+      }
+    ],
+    "dominant_topic": "Mixed day — no single topic dominates. NFL draft content vs NBA games vs Nacua situation. NFL gets hierarchy advantage."
+  },
+  "editorial_reasoning": {
+    "lead_choice": "Puka Nacua rehab story — shocking development for 2024 OROY, legal allegations, multiple Schefter tweets with details. Has the most juice and surprise factor.",
+    "stories_considered_and_demoted": [
+      {
+        "story": "OBJ meeting with Giants",
+        "reason": "Interesting but just a meeting. No commitment, no deal. Promote to medium story."
+      },
+      {
+        "story": "18-game season discussion",
+        "reason": "Recurring topic from meetings. No new developments. Timeline item."
+      },
+      {
+        "story": "Todd Monken missed photo for haircut",
+        "reason": "Funny but thin. Perfect Timeline tweet."
+      }
+    ],
+    "stories_promoted": [
+      {
+        "story": "Fernando Mendoza pro day",
+        "reason": "Expected #1 pick throwing perfect passes to all 32 teams. Draft season heating up. Strong medium story."
+      },
+      {
+        "story": "Paul George historic game",
+        "reason": "39 points, oldest player ever with those numbers on 0 TOV. StatMuse has the receipts."
+      }
+    ],
+    "tweet_gaps": "Need more reaction tweets for most stories — lots of news-breaker content but lighter on comedy/memes today."
+  },
+  "stories": [
+    {
+      "headline": "Puka Nacua Checks Into Rehab Amid Legal Troubles",
+      "level": "lead",
+      "hooks": [
+        "2024 OROY in rehab before allegations broke",
+        "Attorney timeline revelations",
+        "Rams' offensive weapon sidelined"
+      ],
+      "sub_angles": {
+        "statistically_interesting": "Nacua broke multiple rookie receiving records in 2024",
+        "running_joke": null,
+        "who_else_affected": "Rams offense already dealt with Kupp injuries, now Nacua issues",
+        "cross_connection": "Young NFL star following troubled path of other high-profile athletes",
+        "where_it_goes": "Criminal case pending, potential suspension, Rams' 2026 season in jeopardy"
+      },
+      "research": {
+        "key_stats": [
+          "2024 OROY",
+          "Broke rookie receiving records",
+          "Key Rams weapon"
+        ],
+        "context": "Antisemitic statement allegation, biting incident, substantial time in rehab",
+        "connections": "Pattern of young NFL stars facing legal troubles"
+      },
+      "blocks": [
+        {
+          "type": "commentary",
+          "hint": "Hook — Rams WR Puka Nacua, the 2024 Offensive Rookie of the Year, has checked into rehab. Frame as shocking fall from rookie hero to legal trouble in one offseason."
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/AdamSchefter/status/2039485945020318113#m",
+          "account": "@AdamSchefter",
+          "why": "Breaking news announcement"
+        },
+        {
+          "type": "commentary",
+          "hint": "Timeline twist — his attorney says Nacua was in rehab BEFORE any allegations broke. 'Substantial period of time' before the antisemitic statement and biting allegations surfaced. Frame as either good planning or bad coincidence."
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/AdamSchefter/status/2039486746023333956#m",
+          "account": "@AdamSchefter",
+          "why": "Attorney quote about timeline"
+        },
+        {
+          "type": "gif",
+          "emotion": "this timeline makes no sense",
+          "context": "Nacua was already in rehab before allegations",
+          "avoid": "Do NOT search 'football' — search 'confused timeline conspiracy'"
+        },
+        {
+          "type": "commentary",
+          "hint": "Kicker — From OROY breaking rookie records to legal allegations in one year. The Rams went from having Cooper Kupp injury issues to this. Sometimes the NFL humbles you fast."
+        }
+      ]
+    },
+    {
+      "headline": "OBJ-Giants Reunion Talks at NFL Meetings",
+      "level": "medium",
+      "hooks": [
+        "Harbaugh meeting at Arizona Biltmore",
+        "Return to his original team",
+        "Timing during NFL meetings"
+      ],
+      "sub_angles": {
+        "statistically_interesting": "OBJ's Giants career: 2014-2018, trade was controversial",
+        "running_joke": "OBJ always finds a way back into headlines",
+        "who_else_affected": "Giants WR room, other free agent WRs still available",
+        "cross_connection": null,
+        "where_it_goes": "Giants need veteran presence, OBJ needs to prove he's still got it"
+      },
+      "research": {
+        "key_stats": [
+          "2014-2018 with Giants",
+          "Trade to Browns was messy"
+        ],
+        "context": "Meeting with Harbaugh at league meetings, exploring reunion",
+        "connections": "Full circle moment if it happens"
+      },
+      "blocks": [
+        {
+          "type": "commentary",
+          "hint": "Hook — OBJ showed up to the NFL meetings and sat down with Giants coach John Harbaugh about a return. Eight years after the messy breakup, they're talking reunion."
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/AdamSchefter/status/2039116188597502279#m",
+          "account": "@AdamSchefter",
+          "why": "Meeting confirmation at Arizona Biltmore"
+        },
+        {
+          "type": "commentary",
+          "hint": "Circle of life — OBJ was drafted by the Giants, became a star, got traded in drama, bounced around the league, and now might come home. Frame as 'everything comes full circle in the NFL.'"
+        },
+        {
+          "type": "gif",
+          "emotion": "nostalgia and reunion vibes",
+          "context": "Former star potentially returning home",
+          "avoid": "Do NOT search 'Giants' — search 'prodigal son returns home'"
+        }
+      ]
+    },
+    {
+      "headline": "Fernando Mendoza's Perfect Pro Day Show",
+      "level": "medium",
+      "hooks": [
+        "Expected #1 pick hasn't missed a throw",
+        "All 32 teams watching",
+        "Heisman winner proving the hype"
+      ],
+      "sub_angles": {
+        "statistically_interesting": "56 passes, zero misses reported at time of tweet",
+        "running_joke": null,
+        "who_else_affected": "Other QB prospects, Raiders with #1 pick",
+        "cross_connection": null,
+        "where_it_goes": "Cementing his status as QB1 in the draft"
+      },
+      "research": {
+        "key_stats": [
+          "Expected #1 pick",
+          "Heisman winner",
+          "56 passes thrown"
+        ],
+        "context": "Pro day at Indiana with all 32 teams present",
+        "connections": "Draft season ramping up"
+      },
+      "blocks": [
+        {
+          "type": "commentary",
+          "hint": "Hook — Fernando Mendoza put on a clinic at his pro day today. The expected #1 pick was reportedly perfect through 56 passes with all 32 teams watching. Frame as 'this is how you lock up being the first pick.'"
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/ACwishtv/status/2039411795622780943#m",
+          "account": "@ACwishtv",
+          "why": "Perfect throwing performance report"
+        },
+        {
+          "type": "gif",
+          "emotion": "flawless execution",
+          "context": "Perfect performance under pressure",
+          "avoid": "Do NOT search 'quarterback' — search 'chef's kiss perfection'"
+        },
+        {
+          "type": "commentary",
+          "hint": "Kicker — The Raiders have the #1 pick and just watched their future franchise QB throw 56 straight dimes. Sometimes the draft process actually works exactly as planned."
+        }
+      ]
+    },
+    {
+      "headline": "Paul George Makes History at 37",
+      "level": "small",
+      "hooks": [
+        "39 points with 0 turnovers",
+        "Oldest player ever with those numbers",
+        "Sixers winning since his return"
+      ],
+      "sub_angles": {
+        "statistically_interesting": "First player in NBA history 37+ with 39/5/6/3 on 0 TOV",
+        "running_joke": null,
+        "who_else_affected": "Sixers playoff push, other aging stars",
+        "cross_connection": null,
+        "where_it_goes": "Proving he's still elite despite age concerns"
+      },
+      "research": {
+        "key_stats": [
+          "39 PTS, 5 REB, 6 AST, 3 STL, 0 TOV",
+          "Oldest ever with those numbers"
+        ],
+        "context": "Part of strong return from injury, Sixers 3-1 since return",
+        "connections": "Age-defying performance"
+      },
+      "blocks": [
+        {
+          "type": "commentary",
+          "hint": "Paul George went nuclear against Washington: 39 points, 6 assists, 3 steals, ZERO turnovers. At 37, he's the oldest player in NBA history to put up those numbers without a single turnover."
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/statmuse/status/2039510425478336636#m",
+          "account": "@StatMuse",
+          "why": "Historic stat line confirmation"
+        },
+        {
+          "type": "gif",
+          "emotion": "age-defying excellence",
+          "context": "37-year-old making history",
+          "avoid": "Do NOT search 'basketball' — search 'fine wine gets better with age'"
+        }
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "tweet_url": "https://twitter.com/Super70sSports/status/2039511225147551919#m",
+      "account": "@Super70sSports",
+      "why": "Classic Super70s baseball swing commentary"
+    },
+    {
+      "tweet_url": "https://twitter.com/Super70sSports/status/2039500231734174137#m",
+      "account": "@Super70sSports",
+      "why": "1979 radio/cassette nostalgia with sports connection"
+    },
+    {
+      "tweet_url": "https://twitter.com/TheNBACentel/status/2039362201253724580#m",
+      "account": "@TheNBACentel",
+      "why": "Jaden Ivey born-again Christian story"
+    },
+    {
+      "tweet_url": "https://twitter.com/TheNBACentel/status/2039079952486629879#m",
+      "account": "@TheNBACentel",
+      "why": "Jaden Ivey holy water Gatorade replacement"
+    },
+    {
+      "tweet_url": "https://twitter.com/BallsackSports/status/2039438430136881607#m",
+      "account": "@BallsackSports",
+      "why": "Elon Musk follow button April Fools"
+    },
+    {
+      "tweet_url": "https://twitter.com/HaterReport/status/2039194081004298261#m",
+      "account": "@HaterReport",
+      "why": "Giannis celebrating his brother's first NBA points"
+    },
+    {
+      "tweet_url": "https://twitter.com/Super70sSports/status/2039168558765158598#m",
+      "account": "@Super70sSports",
+      "why": "CB Bucknor umpire roasting"
+    },
+    {
+      "tweet_url": "https://twitter.com/PFTCommenter/status/2039173177792708783#m",
+      "account": "@PFTCommenter",
+      "why": "CB Bucknor conspiracy theory"
+    },
+    {
+      "tweet_url": "https://twitter.com/StatMuse/status/2039515444193747323#m",
+      "account": "@StatMuse",
+      "why": "NAW career-high game stats"
+    },
+    {
+      "tweet_url": "https://twitter.com/StatMuse/status/2039429908640727539#m",
+      "account": "@StatMuse",
+      "why": "Sandy Alcantara dominant pitching line"
+    }
+  ],
+  "closer": {
+    "hook": "Jerry O'Connell tried to prank PMT by impersonating Geno Smith",
+    "blocks": [
+      {
+        "type": "commentary",
+        "hint": "Jerry O'Connell wanted to prank call PMT as Geno Smith for April Fools but they told the hosts about it because they just wanted to hear Jerry try to do a Geno Smith impression. Peak Jerry O energy."
+      },
+      {
+        "type": "tweet",
+        "url": "https://twitter.com/PFTCommenter/status/2039340558800331154#m",
+        "account": "@PFTCommenter",
+        "why": "Jerry O'Connell Geno Smith impression explanation"
+      }
+    ]
+  },
+  "source_check": {
+    "reaction_accounts": {
+      "@HaterReport": 1,
+      "@PFTCommenter": 1,
+      "@TheNBACentel": 2,
+      "@BallsackSports": 1
+    },
+    "stat_accounts": {
+      "@StatMuse": 3,
+      "@ACwishtv": 1
+    },
+    "news_breaker_accounts": {
+      "@AdamSchefter": 2
+    },
+    "max_reaction_from_single": 2,
+    "max_stat_from_single": 3,
+    "max_newsbreaker_from_single": 2,
+    "stephen_a_smith_used": false
+  },
+  "quality_check": {
+    "total_headlines": 4,
+    "total_tweets": 18,
+    "total_gif_slots": 4,
+    "consecutive_commentary_violations": 0,
+    "stories_without_hooks": []
+  }
+}

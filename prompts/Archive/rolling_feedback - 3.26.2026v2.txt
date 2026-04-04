@@ -1,0 +1,11 @@
+## Rolling Feedback — Last Updated 3/22/2026
+
+### From 3/21/2026 issue:
+
+- TWEET QUALITY: Used a Hater Report tweet with only 64 views about gambling. Low-engagement tweets are almost never worth including. If a tweet has very low engagement, skip it — it probably wasn't good enough for the internet, so it's not good enough for SLAP.
+- GAMBLING CONTENT: The gambling tweet didn't add value. Avoid gambling-focused tweets unless the gambling angle IS the joke (e.g., absurd prop bets, odds that tell a story). Basic betting line tweets are not SLAP content.
+- GIF WITHOUT A PUNCHLINE: Used a Kobe GIF at the end of the Luka section that didn't make a clear joke. The GIF seemed to just illustrate "Kobe" because Kobe was mentioned. Every GIF must have an obvious punchline. If you can't explain the joke the GIF is making in one sentence, don't use it.
+- TOPIC BLEEDING: Put a Sydney Brown/Eagles trade tweet under the Andy Dalton section. Different transactions = different stories, even if they involve the same team. Never place a tweet under a section header if it's about a different topic than the header describes.
+- TOPIC BLEEDING (again): Put a Kevin Willard/Villanova tweet under the replacement refs section. These are completely unrelated stories. Willard's quote was actually great content — it deserved its own section or a Quick Hitter, not a confusing placement under refs.
+- SOURCE OVER-RELIANCE: Too many Hater Report tweets across the issue. Spread tweet sources across different accounts. If you notice 3+ tweets from the same account, actively look for alternatives from other accounts.
+- TONE MISMATCH: Included a sentimental PFT Commenter tweet about mental health. While the tweet is genuinely touching, it doesn't match SLAP's energy. SLAP is fun, punchy, and light. Sentimental, emotional, or somber tweets should not be included unless they're directly tied to a major sports story that requires respectful coverage.

@@ -1,0 +1,20 @@
+## Rolling Feedback — Last Updated 3/23/2026
+
+### From 3/22/2026 issue:
+
+- NOT ENOUGH HEADLINES: The issue only had 2 headline stories (Luka 60, Dalton trade). Target 4-6 headlines per issue. Even when the lead is big, find more stories worth covering. A 2-headline newsletter feels thin.
+- LEAD STORY DEPTH: The Luka 60-point game hit the right narrative beats (Kobe parallel, MVP chants, Wilt/Baylor comparison) but needed MORE. A 60-point game gives you tons of material — shooting splits, quarter-by-quarter scoring, specific highlight plays, how the defense adjusted and failed, the full game arc. The lead should feel like the reader watched the game through SLAP's lens.
+- HEADLINE TWEET RELEVANCE: Tweets in headline sections must directly relate to THAT story. The Luka section included a tweet about LeBron officiating vs. KD officiating — that has nothing to do with Luka scoring 60. Apply the same relevance filter to tweets that we apply to GIFs. If a tweet isn't about the story in the headline, it goes to the Timeline or gets cut.
+- WEAK HEADLINE STORIES — DEMOTE THEM: The Andy Dalton trade was not interesting enough for a headline. "A 37-year-old backup traded for a 7th rounder" is just a transaction. The commentary tried to make it interesting ("monopoly money") but there was no real joke, no surprising stat, no narrative hook. Stories without hooks should be demoted to Timeline one-liners. Headline sections need JUICE — a joke that lands, a narrative, or a surprising stat.
+- AVOID STEPHEN A. SMITH: Don't use his tweets or build around his takes. Noise, not signal.
+- TIMELINE/CLOSER WORKING WELL: The quick-hit format mixing stats, comedy, coach meltdowns, and random sports moments (Dennis Rodman WWE HOF, Villanova meltdown, Underdog Fantasy tweet) is exactly right. Keep that formula.
+
+### From 3/21/2026 issue:
+
+- TWEET QUALITY: Used a Hater Report tweet with only 64 views about gambling. Low-engagement tweets are almost never worth including. If a tweet has very low engagement, skip it — it probably wasn't good enough for the internet, so it's not good enough for SLAP.
+- GAMBLING CONTENT: The gambling tweet didn't add value. Avoid gambling-focused tweets unless the gambling angle IS the joke (e.g., absurd prop bets, odds that tell a story). Basic betting line tweets are not SLAP content.
+- GIF WITHOUT A PUNCHLINE: Used a Kobe GIF at the end of the Luka section that didn't make a clear joke. The GIF seemed to just illustrate "Kobe" because Kobe was mentioned. Every GIF must have an obvious punchline. If you can't explain the joke the GIF is making in one sentence, don't use it.
+- TOPIC BLEEDING: Put a Sydney Brown/Eagles trade tweet under the Andy Dalton section. Different transactions = different stories, even if they involve the same team. Never place a tweet under a section header if it's about a different topic than the header describes.
+- TOPIC BLEEDING (again): Put a Kevin Willard/Villanova tweet under the replacement refs section. These are completely unrelated stories. Willard's quote was actually great content — it deserved its own section or a Quick Hitter, not a confusing placement under refs.
+- SOURCE OVER-RELIANCE: Too many Hater Report tweets across the issue. Spread tweet sources across different accounts. If you notice 3+ tweets from the same account, actively look for alternatives from other accounts.
+- TONE MISMATCH: Included a sentimental PFT Commenter tweet about mental health. While the tweet is genuinely touching, it doesn't match SLAP's energy. SLAP is fun, punchy, and light. Sentimental, emotional, or somber tweets should not be included unless they're directly tied to a major sports story that requires respectful coverage.

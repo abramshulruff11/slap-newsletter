@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.pyc
+pass1_debug.txt
+.claude/
+python
