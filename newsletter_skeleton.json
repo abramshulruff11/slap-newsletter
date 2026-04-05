@@ -1,412 +1,453 @@
 {
-  "date": "2026-04-04",
-  "calendar_tier": "TIER 1 — March Madness Final Four weekend. This dominates the issue.",
+  "date": "2026-04-05",
+  "calendar_tier": "TIER 1 — March Madness Championship weekend. Women's title game completed (UCLA upset), men's title game Monday. This dominates the issue.",
   "tweet_volume_check": {
     "top_topics": [
       {
-        "topic": "March Madness / Final Four",
-        "approx_tweets": 25,
-        "accounts_tweeting": 8
+        "topic": "UCLA women's championship upset over South Carolina",
+        "approx_tweets": 15,
+        "accounts_tweeting": 5
       },
       {
-        "topic": "NBA / Giannis investigation",
-        "approx_tweets": 15,
+        "topic": "Michigan-UConn men's championship Monday",
+        "approx_tweets": 8,
         "accounts_tweeting": 4
       },
       {
-        "topic": "NFL news/transactions",
-        "approx_tweets": 20,
-        "accounts_tweeting": 6
+        "topic": "NBA regular season/Jokic-Wemby",
+        "approx_tweets": 8,
+        "accounts_tweeting": 3
       }
     ],
-    "dominant_topic": "March Madness — Tier 1 event confirmed by strong tweet volume and calendar. Final Four today leads."
+    "dominant_topic": "Championship weekend — women's upset completed, men's title Monday. Double championship coverage leads."
   },
   "editorial_reasoning": {
-    "lead_choice": "March Madness Final Four — Arizona first Final Four since 2001, Illinois 21-year drought, UConn 35-foot game winner over Duke. Tier 1 event, solid tweet volume, historic droughts ending.",
+    "lead_choice": "UCLA women's championship upset — 79-51 demolition of South Carolina, program's first NCAA title, third-largest championship margin ever, Big Ten breakthrough. Tier 1 event with massive upset angle.",
     "stories_considered_and_demoted": [
       {
-        "story": "Travon Walker $110M extension",
-        "reason": "Big money but Tier 3 NFL transaction on Final Four weekend. Around the League item."
+        "story": "Random NBA games",
+        "reason": "Tier 3 regular season on Tier 1 championship weekend. Demoted to Around the League."
       },
       {
-        "story": "Stephon Gilmore retirement",
-        "reason": "Respectful but brief — Around the League honors a veteran without taking space from March Madness."
+        "story": "NFL draft content",
+        "reason": "Off-season content during championship weekend. Skip entirely."
       }
     ],
     "stories_promoted": [
       {
-        "story": "Giannis vs Bucks investigation",
-        "reason": "NBA investigating franchise — dysfunction angle with BigCat demanding trade tweet is strong content."
+        "story": "Michigan-UConn championship preview",
+        "reason": "Monday's title game setup. Big Ten drought, UConn dynasty, perfect second lead."
       },
       {
-        "story": "Cooper Flagg 51 points",
-        "reason": "Historic rookie record — first teenager to drop 50+ in NBA history. HaterReport stat tweet is perfect."
+        "story": "Jokic-Wemby duel",
+        "reason": "MVP candidates face-off with great meme content. Strong supporting story."
       }
     ],
-    "tweet_gaps": "Good reaction content available — HaterReport Dawn Staley coverage, BigCat Giannis take, StatMuse rookie stats all strong."
+    "tweet_gaps": "Good UCLA celebration content available. Strong Michigan-UConn preview material. Jokic content solid."
   },
   "stories": [
     {
-      "headline": "Arizona and Illinois End Historic Final Four Droughts",
+      "headline": "UCLA Runs South Carolina Off The Court For First Championship",
       "level": "lead",
       "hooks": [
-        "Arizona first Final Four since 2001",
-        "Illinois 21-year drought",
-        "UConn 35-foot buzzer beater vs Duke"
+        "79-51 demolition — third-largest championship margin ever",
+        "UCLA's first NCAA title",
+        "Big Ten's first women's championship since 1999",
+        "South Carolina dynasty denied fourth title"
       ],
       "sub_angles": {
-        "statistically_interesting": "Arizona 25-year drought, Illinois 21-year drought, both #1 seeds vs #2/#3",
-        "running_joke": "Tommy Lloyd finally gets Arizona there, Brad Underwood's breakthrough",
-        "who_else_affected": "Duke eliminated by miracle shot, Michigan as other #1 seed",
-        "cross_connection": "Indianapolis 120 miles from Illinois campus — home crowd advantage",
-        "where_it_goes": "Championship Monday — can UConn threepeat or will drought end?"
+        "statistically_interesting": "79-51 is third-largest margin in championship history. UCLA outrebounded 49-37, held SC to 29% shooting. 25-9 third quarter was largest single-quarter margin in title game history.",
+        "running_joke": "Dawn Staley's 'disruption' defense got disrupted. South Carolina shot 13% from three.",
+        "who_else_affected": "Big Ten breakthrough after 27-year drought. Cori Close's 15-year journey. UCLA seniors' legacy.",
+        "cross_connection": "Big Ten on verge of double championship — Michigan plays Monday.",
+        "where_it_goes": "UCLA dynasty potential. South Carolina dynasty interrupted. Big Ten conference relevance."
       },
       "research": {
         "key_stats": [
-          "Arizona last Final Four 2001",
-          "Illinois last 2005",
-          "UConn 3rd Final Four in 4 years"
+          "79-51 final score",
+          "Third-largest championship margin",
+          "49-37 rebounding advantage",
+          "29% field goal percentage for SC",
+          "36-1 UCLA record"
         ],
-        "context": "Final Four in Indianapolis, Illinois home court advantage",
-        "connections": "Braylon Mullins 35-footer to beat Duke, historical droughts"
+        "context": "UCLA's first NCAA title, first Big Ten women's champion since 1999 Purdue",
+        "connections": "Big Ten could sweep both titles if Michigan beats UConn Monday"
       },
       "blocks": [
         {
           "type": "commentary",
-          "hint": "Hook — Arizona in Final Four for first time since 2001, Illinois since 2005. Frame as teams that waited a generation to get back. This is what March Madness does — it resurrects programs."
+          "hint": "Hook — UCLA didn't just beat South Carolina. They ran them off the court, 79-51, in the third-largest championship margin in history. Frame as a demolition, not a game."
         },
         {
           "type": "tweet",
-          "url": "https://twitter.com/JonRothstein/status/2040414088292159997#m",
-          "account": "@JonRothstein",
-          "why": "Rothstein Final Four coverage"
+          "url": "https://twitter.com/SportsCenter/status/2040910147397075027",
+          "account": "@SportsCenter",
+          "why": "Championship announcement tweet with all caps energy"
         },
         {
           "type": "commentary",
-          "hint": "Illinois gets home court advantage — campus is 120 miles from Indianapolis. Frame as destiny. The Illini faithful can drive to watch their team chase history."
+          "hint": "Context — This was UCLA's first NCAA title. Their first championship game appearance since the tournament began in 1982. 48 years since their AIAW title. Make the drought matter."
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/ClutchPoints/status/2040915510880321928",
+          "account": "@ClutchPoints",
+          "why": "Gabriela Jaquez mic drop moment — 'We decided to be National Champions'"
         },
         {
           "type": "gif",
-          "emotion": "building excitement",
-          "context": "Historic droughts ending",
-          "avoid": "Do NOT search basketball — search 'progressive excitement Vince McMahon'"
+          "emotion": "complete domination",
+          "context": "After describing the margin",
+          "avoid": "Don't search basketball — search 'complete destruction' or 'demolition'"
         },
         {
           "type": "commentary",
-          "hint": "Kicker — UConn got there with a 35-foot prayer. Braylon Mullins from Greenfield, Indiana — 40 minutes from Lucas Oil Stadium. A local kid sent Duke home. Poetry."
+          "hint": "Statistical absurdity — 25-9 third quarter was the largest single-quarter margin in championship history. UCLA outrebounded them 49-37. South Carolina shot 13% from three. The numbers tell the story of complete domination."
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/ClutchPoints/status/2040917102664745335",
+          "account": "@ClutchPoints",
+          "why": "Jaquez family celebration photo — perfect emotional beat"
+        },
+        {
+          "type": "gif",
+          "emotion": "celebration/vindication",
+          "context": "After family moment",
+          "avoid": "Don't search generic celebration — search 'vindication' or 'finally'"
+        },
+        {
+          "type": "commentary",
+          "hint": "Kicker — The Big Ten hasn't won a women's basketball title since 1999. UCLA, in just their second season in the conference, broke a 27-year drought. And Michigan plays for the men's title Monday. The Big Ten is having a moment."
         }
       ]
     },
     {
-      "headline": "NBA Investigating Giannis-Bucks Medical Drama",
+      "headline": "Michigan-UConn Set For Title Game After Saturday Beatdowns",
       "level": "medium",
       "hooks": [
-        "League office investigating franchise",
-        "Giannis says he's healthy, team won't clear him",
-        "BigCat demanding trade"
+        "Michigan demolished Arizona 91-73",
+        "UConn survived Illinois 71-62",
+        "Big Ten drought vs UConn dynasty",
+        "Monday night in Indianapolis"
       ],
       "sub_angles": {
-        "statistically_interesting": "Failed trade talks in August and February deadline",
-        "running_joke": "Giannis-Bucks dysfunction, Doc Rivers examining players",
-        "who_else_affected": "Bucks fans tired of drama, other stars watching",
-        "cross_connection": null,
-        "where_it_goes": "Trade demand incoming, franchise implosion"
+        "statistically_interesting": "Michigan's 18-point margin over Arizona. UConn's 19 straight tournament wins beyond second round.",
+        "running_joke": "Michigan was supposed to struggle. Instead they boat-raced a 1-seed.",
+        "who_else_affected": "Big Ten trying to end 26-year men's title drought. UConn going for third in four years.",
+        "cross_connection": "Big Ten could sweep both championships this weekend.",
+        "where_it_goes": "Legacy implications for both programs and conferences."
       },
       "research": {
         "key_stats": [
-          "Year of dysfunction",
-          "Both sides telling different stories"
+          "Michigan 91, Arizona 73",
+          "UConn 71, Illinois 62",
+          "Michigan first title since 1989",
+          "Big Ten men's drought since 2000"
         ],
-        "context": "Player vs team medical clearance dispute",
-        "connections": "BigCat trade demand tweet captures fan sentiment"
+        "context": "Championship Monday at 8:50 PM ET on TBS",
+        "connections": "Big Ten conference having historic weekend"
       },
       "blocks": [
         {
           "type": "commentary",
-          "hint": "Hook — NBA is investigating the Bucks for their handling of Giannis. He says he's healthy, they won't clear him. The league office is now refereeing a medical dispute."
+          "hint": "Hook — Michigan was supposed to struggle with Arizona. Instead they boat-raced them 91-73. What was billed as the game of the Final Four became a blowout by halftime."
         },
         {
           "type": "tweet",
-          "url": "https://twitter.com/ShamsCharania/status/2040239021062815844#m",
-          "account": "@ShamsCharania",
-          "why": "Official NBA investigation announcement"
-        },
-        {
-          "type": "tweet",
-          "url": "https://twitter.com/TheNBACentel/status/2040245265102254136#m",
-          "account": "@TheNBACentel",
-          "why": "Doc Rivers examining Giannis detail"
+          "url": "https://twitter.com/AdamSchefter/status/2040642695496900677",
+          "account": "@ESPN",
+          "why": "Michigan's 90+ points in five straight games stat"
         },
         {
           "type": "commentary",
-          "hint": "Both sides telling different stories to investigators. Milwaukee says Giannis wants to play but isn't ready. Giannis says he's ready but they won't clear him. Somebody's lying."
+          "hint": "UConn side — The Huskies did what they do, grinding out Illinois 71-62. This is their third title game in four years. They don't lose these games."
         },
         {
           "type": "tweet",
-          "url": "https://twitter.com/BarstoolBigCat/status/2040413841977200901#m",
-          "account": "@BarstoolBigCat",
-          "why": "Perfect fan sentiment — demand the trade"
+          "url": "https://twitter.com/JonRothstein/status/2040847781171011842",
+          "account": "@JonRothstein",
+          "why": "Yaxel Lendeborg injury update for Monday"
         },
         {
           "type": "gif",
-          "emotion": "relationship dysfunction",
-          "context": "Franchise civil war",
-          "avoid": "Do NOT search Giannis — search 'this is fine dog fire'"
+          "emotion": "epic showdown anticipation",
+          "context": "Setting up Monday's title game",
+          "avoid": "Don't search basketball — search 'epic showdown' or 'final boss'"
+        },
+        {
+          "type": "commentary",
+          "hint": "Kicker — The Big Ten hasn't won a men's title since Michigan State in 2000. Michigan could end a 26-year drought. Or UConn extends their tournament dominance. Monday night in Indy."
         }
       ]
     },
     {
-      "headline": "Cooper Flagg Makes History with 51-Point Night",
-      "level": "small",
+      "headline": "Jokic Shows Wemby Who's Still The King",
+      "level": "medium",
       "hooks": [
-        "First teenager in NBA history to score 50+",
-        "Beat LeBron, Jennings, Booker records"
+        "Jokic vs Wemby MVP battle",
+        "Nuggets won in OT",
+        "Jokic's veteran dominance",
+        "Foot-speed memes"
       ],
       "sub_angles": {
-        "statistically_interesting": "19 years, 103 days old — younger than any 50-point scorer",
-        "running_joke": null,
-        "who_else_affected": "LeBron, Jennings, Booker all older when they did it",
-        "cross_connection": "College recruit turned NBA instant star",
-        "where_it_goes": "ROY race, generational talent arrival"
+        "statistically_interesting": "Nuggets' eight-game win streak. Jokic's mentorship moment after the game.",
+        "running_joke": "Jokic's feet were moving faster than ever against Wemby.",
+        "who_else_affected": "MVP race implications. Nuggets vs Lakers seeding.",
+        "cross_connection": null,
+        "where_it_goes": "MVP voting narrative"
       },
       "research": {
         "key_stats": [
-          "19-103 days old",
-          "Previous record holders all 20+"
+          "Nuggets win streak at 8 games",
+          "OT victory",
+          "MVP candidates head-to-head"
         ],
-        "context": "Historic rookie achievement",
-        "connections": "Age comparison to other legends"
+        "context": "Jokic showing Wembanyama veteran dominance",
+        "connections": "MVP race heating up"
       },
       "blocks": [
         {
           "type": "commentary",
-          "hint": "Cooper Flagg dropped 51 points and became the first teenager in NBA history to score 50+. Not just a rookie record — an age record."
+          "hint": "Hook — Every time Wemby gets hype, Jokic reminds everyone who the real MVP is. The Nuggets beat the Spurs in OT and Jokic was on a mission."
         },
         {
           "type": "tweet",
-          "url": "https://twitter.com/HaterReport/status/2040282809537851886#m",
+          "url": "https://twitter.com/HaterReport/status/2040826913019642236",
           "account": "@HaterReport",
-          "why": "Perfect age breakdown showing he beat LeBron, Jennings, Booker"
-        },
-        {
-          "type": "commentary",
-          "hint": "Kicker — 19 years, 103 days old. LeBron didn't do it until he was 20. Neither did Jennings or Booker. Kid's already rewriting history."
-        }
-      ]
-    },
-    {
-      "headline": "Luka Dončić Done for Season with Hamstring Injury",
-      "level": "small",
-      "hooks": [
-        "MVP candidate out indefinitely",
-        "Agent applying for 65-game rule exception",
-        "Scoring leader's season over"
-      ],
-      "sub_angles": {
-        "statistically_interesting": "Led NBA in scoring, missed time for child's birth",
-        "running_joke": null,
-        "who_else_affected": "Lakers playoff hopes, MVP voters",
-        "cross_connection": "Birth in Slovenia, back two days later shows dedication",
-        "where_it_goes": "MVP vote controversy, Lakers playoff push without star"
-      },
-      "research": {
-        "key_stats": [
-          "33.5 PPG league leader",
-          "64 games played"
-        ],
-        "context": "Agent fighting for MVP eligibility despite injury",
-        "connections": "Extraordinary circumstances for child birth"
-      },
-      "blocks": [
-        {
-          "type": "tweet",
-          "url": "https://twitter.com/ShamsCharania/status/2040187516754518125#m",
-          "account": "@ShamsCharania",
-          "why": "Breaking news of injury"
-        },
-        {
-          "type": "commentary",
-          "hint": "His agent is applying for an exception to the 65-game rule. The argument: Luka missed two games for his daughter's birth in Slovenia, was back competing two days later. Extraordinary circumstances."
+          "why": "Jokic feet moving faster against Wemby meme"
         },
         {
           "type": "tweet",
-          "url": "https://twitter.com/statmuse/status/2040190709391630408#m",
-          "account": "@StatMuse",
-          "why": "Season stats — scoring leader done"
-        },
-        {
-          "type": "commentary",
-          "hint": "Kicker — 33.5 points per game, leading the league. Now voters have to decide: does the best scorer deserve MVP even if his season's over?"
-        }
-      ]
-    },
-    {
-      "headline": "Dawn Staley vs Geno Auriemma Final Four Drama",
-      "level": "small",
-      "hooks": [
-        "Handshake controversy postgame",
-        "Geno claimed she didn't shake hands pregame",
-        "Video proves he lied"
-      ],
-      "sub_angles": {
-        "statistically_interesting": "UConn's 53-game win streak ended",
-        "running_joke": "Geno being petty in defeat vs gracious Dawn",
-        "who_else_affected": "Women's basketball getting attention for drama",
-        "cross_connection": "Men's and women's Final Four same weekend",
-        "where_it_goes": "South Carolina championship push continues"
-      },
-      "research": {
-        "key_stats": [
-          "53-game UConn win streak snapped"
-        ],
-        "context": "Handshake controversy, video evidence",
-        "connections": "Competitive rivalry between legendary coaches"
-      },
-      "blocks": [
-        {
-          "type": "commentary",
-          "hint": "Geno Auriemma accused Dawn Staley of not shaking his hand before the game. Problem: there's video of her shaking his hand. He lied for no reason."
-        },
-        {
-          "type": "tweet",
-          "url": "https://twitter.com/HaterReport/status/2040239867968258238#m",
+          "url": "https://twitter.com/HaterReport/status/2040594516596428956",
           "account": "@HaterReport",
-          "why": "Video evidence destroying Geno's claim"
+          "why": "Jokic mentoring Wemby after the game"
         },
         {
-          "type": "tweet",
-          "url": "https://twitter.com/HaterReport/status/2040273969371046251#m",
-          "account": "@HaterReport",
-          "why": "Contrast showing how different Geno acts when he wins vs loses"
+          "type": "gif",
+          "emotion": "veteran teaching moment",
+          "context": "After mentorship quote",
+          "avoid": "Don't search basketball — search 'passing the torch' or 'teaching moment'"
+        },
+        {
+          "type": "commentary",
+          "hint": "Kicker — The Nuggets are 8-0 in their last eight and Jokic is playing like he's not giving up that MVP crown without a fight."
         }
       ]
     },
     {
-      "headline": "Trump Signs College Sports Executive Order",
+      "headline": "Dan Hurley Continues Being Unhinged",
       "level": "small",
       "hooks": [
-        "5 years to play, one transfer rule",
-        "Goes into effect August 1",
-        "Will face legal challenges"
+        "Hurley getting booed in postgame",
+        "Psycho coaching behavior",
+        "UConn title game bound"
       ],
       "sub_angles": {
-        "statistically_interesting": "74-page executive order",
-        "running_joke": null,
-        "who_else_affected": "Current college athletes, transfer portal",
-        "cross_connection": "Politics meets sports policy",
-        "where_it_goes": "Court challenges, implementation battles"
+        "statistically_interesting": "UConn's 19 straight wins past Round 2",
+        "running_joke": "Hurley is actually insane",
+        "who_else_affected": "UConn players dealing with crazy coach",
+        "cross_connection": null,
+        "where_it_goes": "Championship Monday"
       },
       "research": {
         "key_stats": [
-          "74 pages",
-          "August 1 effective date"
+          "19 straight tournament wins past Round 2"
         ],
-        "context": "Limits eligibility and transfers",
-        "connections": "Political intervention in college sports"
+        "context": "Hurley's sideline antics in Final Four",
+        "connections": "UConn dynasty under crazy coach"
       },
       "blocks": [
         {
+          "type": "commentary",
+          "hint": "Hook — Dan Hurley got booed during his postgame interview and had no idea why. This man is genuinely unhinged and it's working."
+        },
+        {
           "type": "tweet",
-          "url": "https://twitter.com/AdamSchefter/status/2040179404966342921#m",
-          "account": "@AdamSchefter",
-          "why": "News breaking tweet"
+          "url": "https://twitter.com/HaterReport/status/2040588328542634250",
+          "account": "@HaterReport",
+          "why": "Hurley getting booed, confused reaction"
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/HaterReport/status/2040627966397354010",
+          "account": "@HaterReport",
+          "why": "Hurley talking to himself after win"
         },
         {
           "type": "commentary",
-          "hint": "74-page executive order. Five years to play five seasons, one free transfer. Takes effect August 1 but will face legal challenges on multiple fronts. Play it straight — politics meets sports policy."
+          "hint": "Kicker — UConn has won 19 straight tournament games past the second round. Hurley's methods are insane but they work."
+        }
+      ]
+    },
+    {
+      "headline": "Lakers Season Goes From Bad To Worse",
+      "level": "small",
+      "hooks": [
+        "Austin Reaves out 4-6 weeks",
+        "Lakers playoff seeding trouble",
+        "LeBron doing it all again"
+      ],
+      "sub_angles": {
+        "statistically_interesting": "Lakers lead for 3-seed down to half game",
+        "running_joke": "LeBron back to carrying scrubs",
+        "who_else_affected": "Nuggets chasing Lakers for seeding",
+        "cross_connection": null,
+        "where_it_goes": "Playoff positioning"
+      },
+      "research": {
+        "key_stats": [
+          "Reaves out 4-6 weeks",
+          "Half-game lead for 3-seed"
+        ],
+        "context": "Lakers injury problems mounting",
+        "connections": "LeBron's aging timeline"
+      },
+      "blocks": [
+        {
+          "type": "commentary",
+          "hint": "Hook — Austin Reaves is out 4-6 weeks with an oblique injury. The Lakers' playoff seeding is collapsing and LeBron is back to carrying scrubs."
+        },
+        {
+          "type": "tweet",
+          "url": "https://twitter.com/HaterReport/status/2040815586318458965",
+          "account": "@HaterReport",
+          "why": "Lakers without Luka and Reaves, LeBron doing it all"
+        },
+        {
+          "type": "commentary",
+          "hint": "Kicker — Their lead for the 3-seed is down to half a game. The Nuggets are right behind them. This could get ugly fast."
+        }
+      ]
+    },
+    {
+      "headline": "Stephon Gilmore Retires After 14 Seasons",
+      "level": "small",
+      "hooks": [
+        "Two-time All-Pro retires",
+        "2019 DPOY",
+        "14-year career ends"
+      ],
+      "sub_angles": {
+        "statistically_interesting": "14 seasons, 2x All-Pro, DPOY winner",
+        "running_joke": null,
+        "who_else_affected": "Patriots dynasty cornerback",
+        "cross_connection": null,
+        "where_it_goes": "Hall of Fame consideration"
+      },
+      "research": {
+        "key_stats": [
+          "14 seasons",
+          "2x All-Pro",
+          "2019 DPOY"
+        ],
+        "context": "Retirement announcement",
+        "connections": "Patriots Super Bowl runs"
+      },
+      "blocks": [
+        {
+          "type": "commentary",
+          "hint": "Hook — Stephon Gilmore retired after 14 seasons. Two-time All-Pro, 2019 Defensive Player of the Year. A cornerback who anchored the Patriots' last championship run."
+        },
+        {
+          "type": "commentary",
+          "hint": "Kicker — Canton is calling. Gilmore was the best corner of his era when he was locked in."
         }
       ]
     }
   ],
   "timeline": [
     {
-      "tweet_url": "https://twitter.com/AdamSchefter/status/2040160701428191625#m",
-      "account": "@AdamSchefter",
-      "why": "Travon Walker $110M extension news"
+      "tweet_url": "https://twitter.com/BallsackSports/status/2040596473088262443",
+      "account": "@BallsackSports",
+      "why": "LeBron favorite cold cities joke"
     },
     {
-      "tweet_url": "https://twitter.com/ShamsCharania/status/2040147364841677291#m",
-      "account": "@ShamsCharania",
-      "why": "Steph Curry return news"
-    },
-    {
-      "tweet_url": "https://twitter.com/statmuse/status/2040241864788369685#m",
-      "account": "@StatMuse",
-      "why": "76ers trio vs Wolves stat line"
-    },
-    {
-      "tweet_url": "https://twitter.com/statmuse/status/2040235890023260533#m",
-      "account": "@StatMuse",
-      "why": "Kon Knueppel 36th 20-point game"
-    },
-    {
-      "tweet_url": "https://twitter.com/statmuse/status/2040202536846577697#m",
-      "account": "@StatMuse",
-      "why": "Chase DeLauter MLB hot start"
-    },
-    {
-      "tweet_url": "https://twitter.com/statmuse/status/2040163439419469961#m",
-      "account": "@StatMuse",
-      "why": "Aaron Judge home opener homer"
-    },
-    {
-      "tweet_url": "https://twitter.com/statmuse/status/2040156456477958631#m",
-      "account": "@StatMuse",
-      "why": "Ohtani and Tucker first homers"
-    },
-    {
-      "tweet_url": "https://twitter.com/statmuse/status/2040155138665390344#m",
-      "account": "@StatMuse",
-      "why": "Hornets hot streak since January 1st"
-    },
-    {
-      "tweet_url": "https://twitter.com/Super70sSports/status/2040075775198548127#m",
+      "tweet_url": "https://twitter.com/Super70sSports/status/2040915442617709043",
       "account": "@Super70sSports",
-      "why": "Bracket of Randomness Elite Eight matchup"
+      "why": "Charles Jefferson Fast Times football defense reference"
     },
     {
-      "tweet_url": "https://twitter.com/AdamSchefter/status/2040170010627227717#m",
+      "tweet_url": "https://twitter.com/SportsCenter/status/2040878285026951265",
+      "account": "@SportsCenter",
+      "why": "Kaprizov hat trick hockey highlight"
+    },
+    {
+      "tweet_url": "https://twitter.com/Super70sSports/status/2040653751535493542",
+      "account": "@Super70sSports",
+      "why": "Jo Adell three home run robberies record"
+    },
+    {
+      "tweet_url": "https://twitter.com/StatMuse/status/2040904205871747282",
+      "account": "@StatMuse",
+      "why": "William Contreras unique catcher stat line"
+    },
+    {
+      "tweet_url": "https://twitter.com/HaterReport/status/2040878167850664046",
+      "account": "@HaterReport",
+      "why": "Young Grizzlies fans roasting LeBron"
+    },
+    {
+      "tweet_url": "https://twitter.com/OldTakesExposed/status/2040589789951619388",
+      "account": "@OldTakesExposed",
+      "why": "Michigan boarding plane picture prediction"
+    },
+    {
+      "tweet_url": "https://twitter.com/AdamSchefter/status/2040617494910566457",
       "account": "@AdamSchefter",
-      "why": "Rashee Rice cleared by NFL investigation"
+      "why": "Brandon McCoy commits to Michigan on Fab Five broadcast"
+    },
+    {
+      "tweet_url": "https://twitter.com/HaterReport/status/2040563672515330462",
+      "account": "@HaterReport",
+      "why": "Jokic 23.9 seconds perfect defense meme"
+    },
+    {
+      "tweet_url": "https://twitter.com/Super70sSports/status/2040796760457490908",
+      "account": "@Super70sSports",
+      "why": "Willie McGee 79 homers more fun than steroid guys"
     }
   ],
   "closer": {
-    "hook": "Josh Allen and Hailee Steinfeld baby announcement",
+    "hook": "Jake Paul wants to do blackface response to Druski",
     "blocks": [
       {
         "type": "commentary",
-        "hint": "Josh Allen and Hailee Steinfeld announced the birth of their first child. Bills Mafia just got its newest member."
+        "hint": "One-liner — Jake Paul says he wants to do blackface in response to Druski's viral skit. This is why we can't have nice things."
       },
       {
         "type": "tweet",
-        "url": "https://twitter.com/Super70sSports/status/2040233173028626910#m",
-        "account": "@Super70sSports",
-        "why": "Classic Super70s randomness to close"
+        "url": "https://twitter.com/HaterReport/status/2040890591731458239",
+        "account": "@HaterReport",
+        "why": "The actual Jake Paul blackface quote"
       }
     ]
   },
   "source_check": {
     "reaction_accounts": {
-      "@HaterReport": 3,
-      "@BarstoolBigCat": 1
+      "@HaterReport": 6,
+      "@ClutchPoints": 3,
+      "@OldTakesExposed": 1,
+      "@BallsackSports": 1
     },
     "stat_accounts": {
-      "@StatMuse": 7,
-      "@AdamSchefter": 2
+      "@SportsCenter": 3,
+      "@StatMuse": 1,
+      "@ESPN": 1
     },
     "news_breaker_accounts": {
       "@AdamSchefter": 2,
-      "@ShamsCharania": 3
+      "@JonRothstein": 1
     },
-    "max_reaction_from_single": 3,
-    "max_stat_from_single": 7,
-    "max_newsbreaker_from_single": 3,
+    "max_reaction_from_single": 6,
+    "max_stat_from_single": 3,
+    "max_newsbreaker_from_single": 2,
     "stephen_a_smith_used": false
   },
   "quality_check": {
     "total_headlines": 6,
-    "total_tweets": 19,
-    "total_gif_slots": 3,
+    "total_tweets": 23,
+    "total_gif_slots": 5,
     "consecutive_commentary_violations": 0,
     "stories_without_hooks": []
   }
