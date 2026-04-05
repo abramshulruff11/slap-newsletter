@@ -1,54 +1,70 @@
+# SLAP Newsletter — Daily Pipeline
+# Runs fetch_content.py → generate_newsletter.py on a cron schedule.
+# Commits output files back to the repo AND emails the newsletter HTML
+# so Cowork can pick it up from Gmail without needing git access.
+
 name: Daily SLAP Newsletter
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # 12:00 UTC = 8:00 AM ET
+    # 8:00 AM ET = 12:00 UTC (EST) or 13:00 UTC (EDT)
+    # Using 12:00 UTC — adjust if you want to account for daylight saving
+    - cron: "0 12 * * *"
+
+  # Manual trigger for testing or re-runs
   workflow_dispatch:
     inputs:
       skip_editor:
-        description: 'Skip the editor pass'
+        description: "Skip editor pass (faster, cheaper)"
         type: boolean
         default: false
       skip_gifs:
-        description: 'Skip GIF lookup'
+        description: "Skip GIF finder pass"
         type: boolean
         default: false
+
+env:
+  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+  GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
 
 jobs:
   generate:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
-    env:
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
+    timeout-minutes: 15  # Pipeline usually takes 2-5 min; 15 is a safety net
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.12
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install feedparser anthropic python-dotenv
 
-      - name: Fetch content
+      - name: Fetch content (RSS + Nitter)
         run: python fetch_content.py
 
-      - name: Validate raw content
+      - name: Check content was fetched
         run: |
+          if [ ! -f raw_content.json ]; then
+            echo "::error::raw_content.json not created"
+            exit 1
+          fi
+          # Show counts for the run log
           python -c "
-          import json, sys
-          data = json.load(open('raw_content.json'))
-          headlines = data.get('headlines', [])
-          tweets = data.get('tweets', [])
-          if not headlines and not tweets:
-              print('ERROR: Both headlines and tweets are empty')
-              sys.exit(1)
-          print(f'Found {len(headlines)} headlines and {len(tweets)} tweets')
+          import json
+          with open('raw_content.json') as f:
+              data = json.load(f)
+          h = len(data.get('news_headlines', []))
+          t = len(data.get('tweets', []))
+          print(f'Fetched {h} headlines + {t} tweets')
+          if h == 0 and t == 0:
+              print('::error::No content fetched — both headlines and tweets are empty')
+              exit(1)
           "
 
       - name: Generate newsletter
@@ -62,21 +78,46 @@ jobs:
           fi
           python generate_newsletter.py $FLAGS
 
-      - name: Verify outputs
+      - name: Verify output
         run: |
-          for f in newsletter_skeleton.json newsletter_draft.html newsletter_substack.html; do
-            if [ ! -f "$f" ]; then
-              echo "ERROR: Missing output file: $f"
-              exit 1
-            fi
-          done
-          echo "All output files present"
+          if [ ! -f newsletter_draft.html ]; then
+            echo "::error::newsletter_draft.html not created"
+            exit 1
+          fi
+          echo "Newsletter generated successfully"
+          wc -c newsletter_draft.html newsletter_substack.html newsletter_skeleton.json
 
-      - name: Commit and push outputs
+      - name: Email newsletter to Gmail
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_ADDRESS }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "SLAP Newsletter — ${{ github.run_id }}"
+          to: ${{ secrets.GMAIL_ADDRESS }}
+          from: ${{ secrets.GMAIL_ADDRESS }}
+          body: "Today's SLAP newsletter is attached. Cowork — post this to Substack as an unpublished draft."
+          attachments: newsletter_substack.html
+
+      - name: Commit outputs to repo
         run: |
           git config user.name "SLAP Bot"
           git config user.email "slap-bot@users.noreply.github.com"
-          git add raw_content.json newsletter_skeleton.json newsletter_draft.html newsletter_substack.html
-          DATE=$(date -u +"%Y-%m-%d")
-          git commit -m "SLAP newsletter output for $DATE" || echo "No changes to commit"
-          git push
+
+          # Add output files
+          git add -f \
+            raw_content.json \
+            newsletter_draft.html \
+            newsletter_substack.html \
+            newsletter_skeleton.json
+
+          # Only commit if there are changes
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            DATE=$(date -u +"%Y-%m-%d")
+            git commit -m "SLAP newsletter — $DATE"
+            git push
+          fi
