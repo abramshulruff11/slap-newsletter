@@ -45,10 +45,8 @@ TWITTER_HANDLES = [
     "NFLMemes",
     "SleeperHQ",
     "ghetto_gronk",
-    "CantALoupe_FF",
     "TalkinBaseball_",
     "PatMcAfeeShow",
-    "BleacherReport",
     "NotBillWalton",
 # --- NEW: Insiders with personality ---
     "KevinOConnorNBA",
@@ -63,7 +61,6 @@ TWITTER_HANDLES = [
     "ChrisBHaynes",
     # --- NEW: Comedy / Reaction / Clips ---
     "NOTSportsCenter",
-    "overtime",
     "SportsCenter",
     "ContextFreeCBB",
     "BackAftaThis",
@@ -77,6 +74,15 @@ TWITTER_HANDLES = [
     "TomPelissero",
     "BarstoolReags",
     "KenJac",
+    # --- NEW: Added batch ---
+    "NFL_Memes",
+    "OnionSports",
+    "FakeSportsCentr",
+    "WorldWideWob",
+    "RedditCFB",
+    "GoodGameCBB",
+    "JomboyMedia",
+    "CespedesBBQ",
 ]
 
 NITTER_BASE = "https://nitter.net"
