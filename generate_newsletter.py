@@ -1,33 +1,26 @@
 """
-SLAP Newsletter v5 — Multi-pass architecture.
+SLAP Newsletter v6 — Middle-ground architecture.
 
-Pass 1: Story Selector + Structural Outliner (editorial brain)
+Pass 1: Story Selector (editorial brain)
   - Reads raw_content.json
-  - Outputs structured JSON plan: stories, tweet assignments, GIF slots, block skeleton
+  - Outputs lightweight story plan: stories, depth targets, tweet assignments, research notes
+  - NO block-by-block skeleton — just editorial decisions and raw material
   - Uses: pass1_story_selector.txt + editorial_annotations.txt + rolling_feedback.txt
 
-Pass 2: Writer (prose only)
-  - Reads the skeleton from Pass 1
-  - Writes commentary blocks in SLAP voice
-  - Uses: pass2_writer.txt + voice_examples.txt
+Pass 2: Writer (full creative freedom)
+  - Reads the story plan from Pass 1
+  - Writes the complete newsletter with full structural control
+  - Decides block count, GIF placement, rhythm, and depth per story
+  - Uses: base_prompt.txt + pass2_writer.txt + voice_examples.txt + rolling_feedback.txt
 
-Pass 3: GIF Finder
-  - Reads GIF slots from the skeleton (emotion + context + avoid)
-  - Returns specific GIF references
-  - Uses: pass3_gif_finder.txt
-
-Pass 4: Assembler (code, not AI)
-  - Combines writer output + tweets + GIFs into final HTML
-
-Pass 5: Editor
+Pass 3: Editor
   - Rewrites for flow, cohesion, energy arc
   - Uses: editor_prompt.txt + voice_examples.txt + editorial_annotations.txt
 
 Prompt assembly:
   Pass 1: pass1_story_selector.txt + editorial_annotations.txt + rolling_feedback.txt
-  Pass 2: pass2_writer.txt + voice_examples.txt + rolling_feedback.txt
-  Pass 3: pass3_gif_finder.txt
-  Pass 5: editor_prompt.txt + voice_examples.txt + editorial_annotations.txt
+  Pass 2: base_prompt.txt + pass2_writer.txt + voice_examples.txt + rolling_feedback.txt
+  Pass 3: editor_prompt.txt + voice_examples.txt + editorial_annotations.txt
 """
 
 import os
@@ -53,12 +46,11 @@ RECENT_OUTPUT_PATH = SCRIPT_DIR / "recent_output.json"
 PROMPTS_DIR = SCRIPT_DIR / "prompts"
 
 MODEL = "claude-sonnet-4-20250514"
-SELECTOR_MODEL = "claude-sonnet-4-20250514"    # Pass 1: editorial judgment needs quality
-WRITER_MODEL = "claude-sonnet-4-20250514"      # Pass 2: voice quality matters
-GIF_MODEL = "claude-haiku-4-5-20251001"        # Pass 3: simple matching task
-EDITOR_MODEL = "claude-sonnet-4-20250514"      # Pass 5: quality polish
+SELECTOR_MODEL = "claude-sonnet-4-20250514"    # Pass 1: editorial judgment
+WRITER_MODEL = "claude-sonnet-4-20250514"      # Pass 2: voice + structure
+EDITOR_MODEL = "claude-sonnet-4-20250514"      # Pass 3: polish
 
-MAX_SEARCHES = 5          # Hard cap on web search calls per run
+MAX_SEARCHES = 8          # Hard cap on web search calls per run
 MAX_HEADLINES = 40         # Pre-filter: send only top N headlines
 MAX_TWEETS = 60            # Pre-filter: send only top N tweets
 MAX_OUTPUT_TOKENS = 8192
@@ -385,6 +377,96 @@ def extract_json(text: str) -> str:
     return text.strip()
 
 
+def repair_json(raw_text: str) -> dict | None:
+    """
+    Attempt to repair malformed JSON from LLM output.
+    Common issues: unescaped quotes in strings, trailing commas,
+    unescaped newlines, smart quotes, etc.
+    Returns parsed dict on success, None on failure.
+    """
+    text = raw_text
+
+    # 1. Replace smart quotes with straight quotes
+    text = text.replace('\u201c', '"').replace('\u201d', '"')
+    text = text.replace('\u2018', "'").replace('\u2019', "'")
+
+    # 2. Try parsing as-is first
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    # 3. Remove trailing commas before } or ]
+    text = re.sub(r',\s*([\]}])', r'\1', text)
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    # 4. Try fixing unescaped quotes inside string values
+    #    Strategy: use a line-by-line approach to escape interior quotes
+    def fix_string_values(t: str) -> str:
+        """Fix unescaped double quotes inside JSON string values."""
+        result = []
+        i = 0
+        in_string = False
+        escape_next = False
+
+        while i < len(t):
+            ch = t[i]
+
+            if escape_next:
+                result.append(ch)
+                escape_next = False
+                i += 1
+                continue
+
+            if ch == '\\':
+                result.append(ch)
+                escape_next = True
+                i += 1
+                continue
+
+            if ch == '"':
+                if not in_string:
+                    in_string = True
+                    result.append(ch)
+                else:
+                    # Look ahead to see if this quote ends the string value
+                    # A closing quote is followed by: , ] } : or whitespace+one of those
+                    rest = t[i+1:].lstrip()
+                    if not rest or rest[0] in ',]}:':
+                        # This is a real closing quote
+                        in_string = False
+                        result.append(ch)
+                    else:
+                        # This is an interior quote — escape it
+                        result.append('\\"')
+                        i += 1
+                        continue
+            else:
+                # Escape literal newlines inside strings
+                if in_string and ch == '\n':
+                    result.append('\\n')
+                    i += 1
+                    continue
+                result.append(ch)
+
+            i += 1
+
+        return ''.join(result)
+
+    fixed = fix_string_values(text)
+    try:
+        return json.loads(fixed)
+    except json.JSONDecodeError:
+        pass
+
+    # 5. Nuclear option: try to extract just the key fields with regex
+    #    (not implemented — return None to signal failure)
+    return None
+
+
 # ── API Call with Rate Limit Retry ───────────────────────────────────────────
 
 def api_call_with_retry(client, max_retries=2, **kwargs):
@@ -475,19 +557,20 @@ def load_recent_output() -> dict | None:
         return None
 
 
-def save_recent_output(skeleton: dict, gif_results: dict) -> None:
+def save_recent_output(plan: dict, newsletter_html: str) -> None:
     """Save today's output summary for tomorrow's continuity checks."""
-    stories = skeleton.get("stories", [])
-    lead = next((s for s in stories if s.get("level") == "lead"), {})
+    stories = plan.get("stories", [])
+    lead = next((s for s in stories if s.get("depth") == "deep"), {})
 
-    # Collect GIF search terms used
-    gif_refs = [g.get("search_term", "") for g in gif_results.values()] if gif_results else []
+    # Extract GIF references from the final HTML
+    gif_pattern = re.compile(r'GIF:\s*(.+?)\s*</div>', re.DOTALL)
+    gif_refs = gif_pattern.findall(newsletter_html)
 
     # Collect all headline topics
     headlines = [s.get("headline", "") for s in stories]
 
     recent = {
-        "date": skeleton.get("editorial_reasoning", {}).get("calendar_tier", "unknown"),
+        "date": plan.get("date", "unknown"),
         "lead_story": lead.get("headline", "unknown"),
         "all_headlines": headlines,
         "gif_references": gif_refs,
@@ -498,15 +581,15 @@ def save_recent_output(skeleton: dict, gif_results: dict) -> None:
     print(f"  [MEMORY] Saved recent_output.json for next run")
 
 
-# ── PASS 1: Story Selector + Structural Outliner ─────────────────────────────
+# ── PASS 1: Story Selector ────────────────────────────────────────────────────
 
 def pass1_story_selector(raw: dict, client: anthropic.Anthropic, tracker: CostTracker) -> dict:
     """
-    Editorial brain: selects stories, assigns tweets, builds block skeleton.
-    Returns structured JSON plan.
+    Editorial brain: selects stories, assigns tweets, provides research notes.
+    Returns lightweight story plan (no block skeleton).
     """
     print("\n" + "=" * 50)
-    print("PASS 1: Story Selector + Structural Outliner")
+    print("PASS 1: Story Selector")
     print("=" * 50)
 
     selector_prompt = load_prompt("pass1_story_selector.txt")
@@ -529,8 +612,7 @@ def pass1_story_selector(raw: dict, client: anthropic.Anthropic, tracker: CostTr
             "type": "text",
             "text": (
                 "## EDITORIAL ANNOTATIONS\n\n"
-                "Apply these rules to every story selection, tweet assignment, "
-                "and structural decision.\n\n"
+                "Apply these rules to every story selection and tweet assignment.\n\n"
                 + editorial_annotations
             ),
             "cache_control": {"type": "ephemeral"},
@@ -556,19 +638,16 @@ def pass1_story_selector(raw: dict, client: anthropic.Anthropic, tracker: CostTr
     recent_context = ""
     if recent:
         recent_context = (
-            "\n\n## YESTERDAY'S NEWSLETTER (for continuity — avoid overlap)\n"
+            "\n\n## YESTERDAY'S NEWSLETTER (avoid overlap)\n"
             f"Lead story: {recent.get('lead_story', 'unknown')}\n"
             f"All headlines: {json.dumps(recent.get('all_headlines', []))}\n"
             f"GIF references used: {json.dumps(recent.get('gif_references', []))}\n"
-            "RULE: If today's lead is the same topic as yesterday's lead, acknowledge "
-            "the reader already knows the setup. Go straight to what's NEW. "
-            "Do not re-explain context already covered.\n"
+            "RULE: Do not repeat yesterday's lead. Do not reuse yesterday's GIFs.\n"
         )
 
     raw_json = json.dumps(raw, ensure_ascii=False)
     user_message = (
-        "Here is today's raw content. Analyze it and output the structured "
-        "newsletter plan as JSON.\n\n"
+        "Here is today's raw content. Analyze it and output the story plan as JSON.\n\n"
         + raw_json
         + recent_context
     )
@@ -576,10 +655,10 @@ def pass1_story_selector(raw: dict, client: anthropic.Anthropic, tracker: CostTr
 
     messages = [{"role": "user", "content": user_message}]
 
-    print("\n  Selecting stories and building skeleton...")
+    print("\n  Selecting stories and building plan...")
     print("  " + "-" * 48)
 
-    # Pass 1 gets web search for context/verification
+    # Pass 1 gets web search for research
     search_count = 0
     total_input = 0
     total_output = 0
@@ -642,52 +721,58 @@ def pass1_story_selector(raw: dict, client: anthropic.Anthropic, tracker: CostTr
     tracker.record("Pass 1: Selector", SELECTOR_MODEL, response)
 
     try:
-        skeleton = json.loads(raw_text)
+        plan = json.loads(raw_text)
     except json.JSONDecodeError as e:
-        print(f"\n  [ERROR] Failed to parse Pass 1 JSON: {e}")
-        print(f"  [DEBUG] Raw output (first 500 chars): {raw_text[:500]}")
-        # Save raw output for debugging
-        debug_path = SCRIPT_DIR / "pass1_debug.txt"
-        with open(debug_path, "w", encoding="utf-8") as f:
-            f.write(raw_text)
-        print(f"  [DEBUG] Full output saved to {debug_path}")
-        raise SystemExit("Pass 1 failed to produce valid JSON.")
+        print(f"\n  [WARN] Initial JSON parse failed: {e}")
+        print(f"  [REPAIR] Attempting JSON repair...")
 
-    # Print skeleton summary
-    stories = skeleton.get("stories", [])
-    timeline = skeleton.get("timeline", [])
-    quality = skeleton.get("quality_check", {})
+        plan = repair_json(raw_text)
+
+        if plan is None:
+            print(f"  [ERROR] JSON repair also failed")
+            print(f"  [DEBUG] Raw output (first 500 chars): {raw_text[:500]}")
+            debug_path = SCRIPT_DIR / "pass1_debug.txt"
+            with open(debug_path, "w", encoding="utf-8") as f:
+                f.write(raw_text)
+            print(f"  [DEBUG] Full output saved to {debug_path}")
+            raise SystemExit("Pass 1 failed to produce valid JSON.")
+        else:
+            print(f"  [REPAIR] JSON repaired successfully")
+
+    # Print plan summary
+    stories = plan.get("stories", [])
+    atl = plan.get("around_the_league", plan.get("timeline", []))
+    quality = plan.get("quality_check", {})
 
     print(f"\n  [PLAN] Stories: {len(stories)} headlines")
     for s in stories:
-        block_count = len(s.get("blocks", []))
-        print(f"         {'->':>3} [{s.get('level', '?'):6s}] {s.get('headline', '?')[:60]} ({block_count} blocks)")
-    print(f"  [PLAN] Timeline: {len(timeline)} tweets")
-    print(f"  [PLAN] Total tweets: {quality.get('total_tweets', '?')}")
-    print(f"  [PLAN] GIF slots: {quality.get('total_gif_slots', '?')}")
+        tweet_count = len(s.get("tweets", []))
+        has_research = bool(s.get("research_notes"))
+        print(f"         {'->':>3} [{s.get('depth', '?'):6s}] {s.get('headline', '?')[:55]} "
+              f"({tweet_count} tweets{', +research' if has_research else ''})")
+    print(f"  [PLAN] Around the League: {len(atl)} tweets")
+    print(f"  [PLAN] Total tweets assigned: {quality.get('total_tweets_assigned', '?')}")
 
-    if quality.get("consecutive_commentary_violations", 0) > 0:
-        print(f"  [WARN] {quality['consecutive_commentary_violations']} consecutive commentary violations in skeleton!")
-
-    # Save skeleton for inspection
+    # Save plan for inspection
     with open(SKELETON_PATH, "w", encoding="utf-8") as f:
-        json.dump(skeleton, f, indent=2, ensure_ascii=False)
-    print(f"\n  [SAVED] Skeleton -> {SKELETON_PATH.name}")
+        json.dump(plan, f, indent=2, ensure_ascii=False)
+    print(f"\n  [SAVED] Plan -> {SKELETON_PATH.name}")
 
-    return skeleton
+    return plan
 
 
 # ── PASS 2: Writer ───────────────────────────────────────────────────────────
 
-def pass2_writer(skeleton: dict, raw: dict, client: anthropic.Anthropic, tracker: CostTracker) -> str:
+def pass2_writer(plan: dict, raw: dict, client: anthropic.Anthropic, tracker: CostTracker) -> str:
     """
-    Takes the skeleton and writes commentary blocks in SLAP voice.
+    Takes the story plan and writes the complete newsletter with full creative freedom.
     Returns complete HTML newsletter.
     """
     print("\n" + "=" * 50)
     print("PASS 2: Writer")
     print("=" * 50)
 
+    base_prompt = load_prompt("base_prompt.txt")
     writer_prompt = load_prompt("pass2_writer.txt")
     if not writer_prompt:
         raise SystemExit("Error: prompts/pass2_writer.txt not found.")
@@ -695,13 +780,21 @@ def pass2_writer(skeleton: dict, raw: dict, client: anthropic.Anthropic, tracker
     voice_examples = load_prompt("voice_examples.txt")
     rolling_feedback = load_prompt("rolling_feedback.txt")
 
-    system_blocks = [
-        {
+    system_blocks = []
+
+    if base_prompt:
+        system_blocks.append({
             "type": "text",
-            "text": writer_prompt,
+            "text": base_prompt,
             "cache_control": {"type": "ephemeral"},
-        },
-    ]
+        })
+        print("  [PROMPT] base_prompt.txt loaded")
+
+    system_blocks.append({
+        "type": "text",
+        "text": writer_prompt,
+        "cache_control": {"type": "ephemeral"},
+    })
 
     if voice_examples:
         system_blocks.append({
@@ -730,42 +823,15 @@ def pass2_writer(skeleton: dict, raw: dict, client: anthropic.Anthropic, tracker
     total_chars = sum(len(b["text"]) for b in system_blocks)
     print(f"  [PROMPT] Pass 2 system prompt: {total_chars:,} chars")
 
-    # Build tweet lookup from raw content so writer can see tweet text
-    raw_tweets = raw.get("tweets", [])
-    tweet_lookup = {}
-    for t in raw_tweets:
-        link = t.get("link", "")
-        if link:
-            tweet_lookup[link] = t.get("text", "")
-
-    # Add tweet text to skeleton for writer context
-    skeleton_with_text = json.loads(json.dumps(skeleton))  # deep copy
-    for story in skeleton_with_text.get("stories", []):
-        for block in story.get("blocks", []):
-            if block.get("type") == "tweet" and block.get("url"):
-                url = block["url"]
-                text = tweet_lookup.get(url, "")
-                if not text:
-                    twitter_url = url.replace("nitter.net", "twitter.com")
-                    text = tweet_lookup.get(twitter_url, "")
-                if text:
-                    block["tweet_text"] = text
-    for block in skeleton_with_text.get("closer", {}).get("blocks", []):
-        if block.get("type") == "tweet" and block.get("url"):
-            url = block["url"]
-            text = tweet_lookup.get(url, "")
-            if not text:
-                twitter_url = url.replace("nitter.net", "twitter.com")
-                text = tweet_lookup.get(twitter_url, "")
-            if text:
-                block["tweet_text"] = text
-
-    skeleton_json = json.dumps(skeleton_with_text, ensure_ascii=False)
+    # Send the plan directly — it already has tweet text included
+    plan_json = json.dumps(plan, ensure_ascii=False)
     user_message = (
-        "Here is the newsletter skeleton. Write the complete newsletter as HTML. "
-        "Fill in all commentary blocks, include all tweets and GIF placeholders "
-        "exactly as specified in the skeleton.\n\n"
-        + skeleton_json
+        "Here is the story plan for today's SLAP newsletter. "
+        "Write the complete newsletter as HTML. Use the depth targets, "
+        "assigned tweets, and research notes to guide your writing. "
+        "You have full creative freedom on structure, block count, "
+        "GIF/meme placement, and rhythm.\n\n"
+        + plan_json
     )
     print(f"  [INPUT] User message: {len(user_message):,} chars")
 
@@ -794,125 +860,14 @@ def pass2_writer(skeleton: dict, raw: dict, client: anthropic.Anthropic, tracker
     return newsletter_html
 
 
-# ── PASS 3: GIF Finder ───────────────────────────────────────────────────────
+# ── PASS 3: Editor ───────────────────────────────────────────────────────────
 
-def pass3_gif_finder(skeleton: dict, client: anthropic.Anthropic, tracker: CostTracker) -> dict:
-    """
-    Takes GIF slots from the skeleton and returns specific GIF search terms.
-    Returns a dict mapping slot index to GIF reference.
-    """
-    print("\n" + "=" * 50)
-    print("PASS 3: GIF Finder")
-    print("=" * 50)
-
-    gif_prompt = load_prompt("pass3_gif_finder.txt")
-    if not gif_prompt:
-        print("  [SKIP] prompts/pass3_gif_finder.txt not found — skipping GIF pass")
-        return {}
-
-    # Extract all GIF slots from skeleton
-    gif_slots = []
-    for i, story in enumerate(skeleton.get("stories", [])):
-        for j, block in enumerate(story.get("blocks", [])):
-            if block.get("type") == "gif":
-                gif_slots.append({
-                    "story_index": i,
-                    "block_index": j,
-                    "headline": story.get("headline", ""),
-                    "emotion": block.get("emotion", ""),
-                    "context": block.get("context", ""),
-                    "avoid": block.get("avoid", ""),
-                })
-
-    # Check closer too
-    closer = skeleton.get("closer", {})
-    for j, block in enumerate(closer.get("blocks", [])):
-        if block.get("type") == "gif":
-            gif_slots.append({
-                "story_index": "closer",
-                "block_index": j,
-                "headline": closer.get("hook", ""),
-                "emotion": block.get("emotion", ""),
-                "context": block.get("context", ""),
-                "avoid": block.get("avoid", ""),
-            })
-
-    if not gif_slots:
-        print("  [SKIP] No GIF slots in skeleton")
-        return {}
-
-    print(f"  [SLOTS] {len(gif_slots)} GIF slots to fill")
-
-    system_blocks = [
-        {
-            "type": "text",
-            "text": gif_prompt,
-            "cache_control": {"type": "ephemeral"},
-        },
-    ]
-
-    # Load yesterday's GIFs for reuse prevention
-    recent = load_recent_output()
-    recent_gifs_context = ""
-    if recent and recent.get("gif_references"):
-        recent_gifs_context = (
-            "\n\nYESTERDAY'S GIF REFERENCES (do NOT reuse these or close variants):\n"
-            + json.dumps(recent["gif_references"], indent=2)
-            + "\n"
-        )
-
-    user_message = (
-        "Here are the GIF slots that need specific references. "
-        "For each slot, return the exact search term to use on Giphy "
-        "and a brief explanation of why it works.\n\n"
-        "Output ONLY valid JSON — an array of objects with: "
-        "story_index, block_index, search_term, explanation.\n\n"
-        + json.dumps(gif_slots, indent=2)
-        + recent_gifs_context
-    )
-
-    response = api_call_with_retry(
-        client,
-        model=GIF_MODEL,
-        max_tokens=2048,
-        system=system_blocks,
-        messages=[{"role": "user", "content": user_message}],
-    )
-
-    raw_text = ""
-    for block in response.content:
-        if hasattr(block, "text"):
-            raw_text += block.text
-
-    raw_text = extract_json(raw_text)
-
-    tracker.record("Pass 3: GIF Finder", GIF_MODEL, response)
-
-    try:
-        gif_results = json.loads(raw_text)
-        print(f"  [FOUND] {len(gif_results)} GIF references")
-        for g in gif_results:
-            print(f"         -> [{g.get('story_index')}-{g.get('block_index')}] "
-                  f"{g.get('search_term', '?')[:50]}")
-        return {f"{g['story_index']}-{g['block_index']}": g for g in gif_results}
-    except json.JSONDecodeError:
-        print(f"  [ERROR] Failed to parse GIF JSON")
-        return {}
-
-
-# ── PASS 4: Assembler (no AI) ────────────────────────────────────────────────
-# The writer (Pass 2) handles assembly into HTML directly.
-# This could be expanded to merge GIF finder results into the HTML.
-
-
-# ── PASS 5: Editor ───────────────────────────────────────────────────────────
-
-def pass5_editor(draft_html: str, client: anthropic.Anthropic, tracker: CostTracker) -> str:
+def pass3_editor(draft_html: str, client: anthropic.Anthropic, tracker: CostTracker) -> str:
     """
     Rewrites the draft for flow, cohesion, and energy arc.
     """
     print("\n" + "=" * 50)
-    print("PASS 5: Editor")
+    print("PASS 3: Editor")
     print("=" * 50)
 
     editor_prompt = load_prompt("editor_prompt.txt")
@@ -976,7 +931,7 @@ def pass5_editor(draft_html: str, client: anthropic.Anthropic, tracker: CostTrac
 
     edited_html = strip_code_fences(edited_html)
 
-    tracker.record("Pass 5: Editor", EDITOR_MODEL, response)
+    tracker.record("Pass 3: Editor", EDITOR_MODEL, response)
 
     return edited_html
 
@@ -1050,7 +1005,7 @@ def main() -> None:
     skip_oembed = "--no-oembed" in sys.argv
     skip_editor = "--no-editor" in sys.argv
     skip_gifs = "--no-gifs" in sys.argv
-    only_skeleton = "--skeleton-only" in sys.argv
+    only_plan = "--plan-only" in sys.argv
 
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
@@ -1069,11 +1024,11 @@ def main() -> None:
         print("\nNo content to work with. Run fetch_content.py first.")
         return
 
-    # ── Pass 1: Story selection + skeleton ──
-    skeleton = pass1_story_selector(raw, client, tracker)
+    # ── Pass 1: Story selection + research ──
+    plan = pass1_story_selector(raw, client, tracker)
 
-    if only_skeleton:
-        print(f"\n[DONE] Skeleton-only mode. Review {SKELETON_PATH.name} and rerun without --skeleton-only.")
+    if only_plan:
+        print(f"\n[DONE] Plan-only mode. Review {SKELETON_PATH.name} and rerun without --plan-only.")
         tracker.summary()
         return
 
@@ -1081,34 +1036,25 @@ def main() -> None:
     print(f"\n  [PAUSE] Waiting {RATE_LIMIT_PAUSE}s for rate limit reset...")
     time.sleep(RATE_LIMIT_PAUSE)
 
-    # ── Pass 2: Writer ──
-    content = pass2_writer(skeleton, raw, client, tracker)
-
-    # ── Pass 3: GIF Finder ──
-    gif_results = {}
-    if not skip_gifs:
-        gif_results = pass3_gif_finder(skeleton, client, tracker)
-        # TODO: merge GIF results into HTML content
-        # For now, the writer handles GIF placeholders directly from the skeleton
-    else:
-        print("\n[GIF FINDER] Skipped (--no-gifs flag)")
+    # ── Pass 2: Writer (full creative freedom) ──
+    content = pass2_writer(plan, raw, client, tracker)
 
     # ── Pause for rate limits ──
     if not skip_editor:
         print(f"\n  [PAUSE] Waiting {RATE_LIMIT_PAUSE}s for rate limit reset...")
         time.sleep(RATE_LIMIT_PAUSE)
 
-    # ── Pass 5: Editor ──
+    # ── Pass 3: Editor ──
     if skip_editor:
         print("\n[EDITOR] Skipped (--no-editor flag)")
     else:
-        content = pass5_editor(content, client, tracker)
+        content = pass3_editor(content, client, tracker)
 
     # ── Save outputs ──
     save_newsletter(content, skip_oembed=skip_oembed)
 
     # ── Save recent output for next run's continuity checks ──
-    save_recent_output(skeleton, gif_results if not skip_gifs else {})
+    save_recent_output(plan, content)
 
     tracker.summary()
 
