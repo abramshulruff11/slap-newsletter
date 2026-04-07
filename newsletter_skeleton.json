@@ -1,349 +1,327 @@
 {
-  "date": "2026-04-05",
+  "date": "2026-04-07",
   "editorial_reasoning": {
-    "calendar_tier": "TIER 1 — Final Four Saturday",
+    "calendar_tier": "TIER 2 — Day after National Championship + NFL offseason workouts begin",
     "tweet_volume": [
       {
-        "topic": "Final Four results",
-        "approx_tweets": 20,
+        "topic": "Michigan National Championship",
+        "approx_tweets": 15,
         "accounts": 8
       },
       {
-        "topic": "Trump executive order",
-        "approx_tweets": 12,
-        "accounts": 6
+        "topic": "Dexter Lawrence trade request",
+        "approx_tweets": 6,
+        "accounts": 3
       },
       {
-        "topic": "Cooper Flagg 51 points",
-        "approx_tweets": 8,
-        "accounts": 4
+        "topic": "Giannis-Bucks conflict",
+        "approx_tweets": 4,
+        "accounts": 2
       },
       {
-        "topic": "NBA investigations/drama",
+        "topic": "NBA stats/games",
         "approx_tweets": 10,
         "accounts": 5
       }
     ],
-    "dominant_topic": "Final Four results dominate — Michigan blowout + UConn advancing, but Trump NCAA order is massive political/sports crossover story",
+    "dominant_topic": "Michigan championship aftermath dominates tweet volume, but day-after coverage requires fresh angles beyond just celebration",
     "candidates_considered": [
       {
-        "story": "UConn beats Illinois, Michigan destroys Arizona",
-        "hook": "UConn dynasty continues + Michigan blowout sets up title game",
-        "verdict": "HEADLINE — MEDIUM (yesterday was lead)"
+        "story": "Michigan championship celebration/aftermath",
+        "hook": "37-year drought ends, Dusty May's miracle run, transfer portal success story",
+        "verdict": "HEADLINE — MEDIUM (day-after angle)"
       },
       {
-        "story": "Trump executive order on college sports",
-        "hook": "Political intervention in NCAA transfers/eligibility with federal funding threat",
-        "verdict": "HEADLINE — DEEP"
+        "story": "Dexter Lawrence trade request",
+        "hook": "$90M All-Pro wants out, contract standoff with new coach",
+        "verdict": "HEADLINE — DEEP (fresh breaking news)"
       },
       {
-        "story": "Cooper Flagg 51 points as teenager",
-        "hook": "First teen ever to hit 50 in NBA, Michael Jordan comparisons",
+        "story": "Giannis vs Bucks 'funeral' conflict",
+        "hook": "'It feels like a funeral' quote, NBA investigation ongoing",
         "verdict": "HEADLINE — MEDIUM"
       },
       {
-        "story": "NBA investigating Bucks/Giannis",
-        "hook": "Continuing yesterday's story but now with league investigation",
+        "story": "NFL draft intel/workouts begin",
+        "hook": "Mendoza visits Raiders, workouts start across league",
         "verdict": "HEADLINE — LIGHT"
       },
       {
-        "story": "Rashee Rice cleared by NFL",
-        "hook": "Good news for Chiefs receiver, no discipline",
+        "story": "Grizzlies 29 threes record but lose",
+        "hook": "Historic shooting performance in a loss is peak basketball absurdity",
+        "verdict": "HEADLINE — LIGHT"
+      },
+      {
+        "story": "Bulls fire executives",
+        "hook": "Clean house after disappointing season",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "Josh Allen baby announcement",
-        "hook": "Bills QB and actress welcome daughter",
+        "story": "Jokic triple-double stats",
+        "hook": "MVP-level numbers",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "Stephon Gilmore retirement",
-        "hook": "Two-time All-Pro hangs it up",
-        "verdict": "AROUND THE LEAGUE"
-      },
-      {
-        "story": "Travon Walker $110M extension",
-        "hook": "Jags pay big for DE",
-        "verdict": "AROUND THE LEAGUE"
-      },
-      {
-        "story": "Geno/Dawn Staley handshake controversy",
-        "hook": "Women's Final Four drama",
+        "story": "Michael Malone to UNC hiring",
+        "hook": "NBA coach to college",
         "verdict": "AROUND THE LEAGUE"
       }
     ]
   },
   "stories": [
     {
-      "headline": "Trump Signs Executive Order to Overhaul College Sports",
+      "headline": "Dexter Lawrence Demands Trade from Giants After Contract Standoff",
       "depth": "deep",
-      "editorial_direction": "This is massive — federal government stepping into college sports with transfer limits and funding threats. Historic political intervention. Go deep on what it changes, why now, the legal challenges coming, and how coaches/administrators are reacting. This isn't just sports policy — it's using federal funding as a weapon.",
+      "editorial_direction": "This is the lead — fresh breaking news with financial comedy angles. Focus on the timing (new coach arriving), contract falling from 3rd to 11th highest, and the absurdity of a $20M player sitting out voluntary workouts. Go deep on potential landing spots and what this means for Harbaugh's first season.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2040179404966342921",
+          "url": "https://twitter.com/AdamSchefter/status/2041193382022619174#m",
           "account": "@AdamSchefter",
-          "text": "President Donald Trump signed an executive order Friday designed to limit how long athletes can play college sports and how often they can transfer between schools.\n\nMore via ESPN's Dan Murphy:\n\nhttps://www.espn.com/college-sports/story/_/id/48387866/executive-order-limits-ncaa-athletes-five-years-one-transfer",
-          "role": "news"
+          "text": "ESPN sources: Giants All-Pro defensive tackle Dexter Lawrence has requested a trade and he will not be participating in the team's off-season workout program that opens Tuesday.\n\nLawrence and the Giants have been through two off seasons attempting to negotiate a contract reflecting his value to the Giants over the last three years, but there has not been any progress, per sources.",
+          "role": "breaking news"
         },
         {
-          "url": "https://twitter.com/DanWetzel/status/2040176463551324571",
-          "account": "@DanWetzel",
-          "text": "President Trump has signed a 74-page executive order dealing with college sports. \n\nIt doesn't go into effect until August 1. Should spur continued debate, but will be legally challenged on multiple fronts. Key parts:",
-          "role": "context"
-        },
-        {
-          "url": "https://twitter.com/JonRothstein/status/2040140152597569612",
-          "account": "@bmarcello",
-          "text": "BREAKING: President Trump's executive order on college sports is expected as early as this afternoon, sources tell @CBSSports.\n\nKey directives on player eligibility and movement: 5 years to play 5 seasons and one free undergraduate transfer.\n\nStory: https://www.cbssports.com/college-football/news/donald-trump-president-executive-order-college-sports-transfers-eligibility-nil/",
-          "role": "details"
+          "url": "https://twitter.com/AdamSchefter/status/2041193690723463416#m",
+          "account": "@AdamSchefter",
+          "text": "Dexter Lawrence has two years remaining on his deal and is currently scheduled to make $20 million this upcoming season.\n\nInitially there had been optimism that with changes in the organization, discussions could move forward. But now that they haven't, new Giants head coach John Harbaugh will open his team's off-season program Tuesday without one of his best players.",
+          "role": "financial details"
         }
       ],
       "research_notes": {
         "key_stats": [
-          "74-page executive order",
-          "August 1 effective date",
-          "5-year eligibility window",
-          "One transfer limit",
-          "Federal funding threat for non-compliance"
+          "$90M extension in 2023 made him 3rd-highest paid DT",
+          "Now tied for 11th at position after market movement",
+          "$20M owed in 2026, $22M in 2027",
+          "Three Pro Bowls, two All-Pro selections since 2022",
+          "Half a sack in down 2025 season"
         ],
-        "historical_context": "Second executive order on college sports. First one in July was less comprehensive. Courts have struck down previous Trump orders on college athletics.",
+        "historical_context": "Lawrence was drafted 17th overall by Giants in 2019. Contract extension came after breakout 2022 season with 7.5 sacks. Giants had league-worst 5.3 yards per rush in 2025.",
         "key_moments": [
-          "White House roundtable with Nick Saban in March",
-          "Trump predicted legal challenges",
-          "All four major conference commissioners immediately supported it"
+          "Trade request timed perfectly with John Harbaugh's first offseason program",
+          "GM Joe Schoen asked about Lawrence extension at NFL meetings last week",
+          "Previous trade rumors at 2025 deadline but Giants wanted significant return"
         ],
         "cross_connections": [
-          "Comes during Final Four weekend — timing symbolic",
-          "Similar to federal funding threats on DEI policies",
-          "NCAA spent $16M last year just litigating eligibility cases"
+          "John Harbaugh's first major crisis as Giants coach",
+          "Parallels to Quinnen Williams trade to Cowboys for first and second round picks",
+          "Giants rebuilding under new leadership after 4-13 season"
         ],
         "meme_angles": [
-          "Trump vs. the transfer portal",
-          "Nick Saban's influence on policy",
-          "Federal government policing college sports"
+          "$90M player skipping voluntary workouts",
+          "All-Pro requesting trade from team that can't stop the run",
+          "Perfect timing to ruin new coach's first day"
         ],
-        "where_it_goes": "Legal challenges inevitable. Congress still needs to pass permanent legislation. Could reshape entire college athletics landscape or get struck down in court",
-        "legal_challenges": "Lawyers tell ESPN it will likely be ruled unconstitutional. Athletes and third parties expected to sue immediately",
-        "political_angle": "Uses same federal funding threat tactic as DEI, transgender policies. Education Dept, FTC, AG office all tasked with enforcement"
+        "where_it_goes": "Multiple contenders calling already. Vikings, Texans, Chiefs all potential landing spots. Giants unlikely to get full value back given contract demands and down season."
       }
     },
     {
-      "headline": "Cooper Flagg Becomes First Teenager to Score 50 in NBA Game",
+      "headline": "Michigan Completes Miracle Run, Ends 37-Year Championship Drought",
       "depth": "medium",
-      "editorial_direction": "Historic milestone — 19-year-old breaks age record with 51 points. Play up the Michael Jordan comparisons, the Rookie of the Year race with Kon Knueppel, and how he did it in garbage time of a blowout loss. Great individual achievement, terrible team context.",
+      "editorial_direction": "Day-after championship coverage focusing on the historical significance and Dusty May's incredible coaching job. Emphasize the transfer portal success story and how this validates the new college basketball model.",
       "tweets": [
         {
-          "url": "https://twitter.com/HaterReport/status/2040282809537851886",
+          "url": "https://twitter.com/AdamSchefter/status/2041378864081842469#m",
+          "account": "@AdamSchefter",
+          "text": "Dan Orlovsky now has to wear a clip-on dangling Michigan earring for the next month on every show he appears.\n\nIf he misses a day, it starts over.",
+          "role": "comedy"
+        },
+        {
+          "url": "https://twitter.com/HaterReport/status/2041362901483540729#m",
           "account": "@HaterReport",
-          "text": "Cooper Flagg dropped 51 Points and became the first teenager in HISTORY to drop 50 in the NBA\n\n• Flagg (19-103): 51\n• Jennings (20-052): 55\n• LeBron (20-080): 56\n• Booker (20-145): 70\n• Wemby (20-314): 50",
-          "role": "stat"
+          "text": "The Michigan Wolverines lost four straight National Championship games in '92, '93, '13, and '18.\n\n37 years later… they finally get it done",
+          "role": "historical context"
         },
         {
-          "url": "https://twitter.com/StatMuse/status/2040235792367333512",
-          "account": "@StatMuse",
-          "text": "Most 20-point games by a rookie in the 2020s:\n\n41 — 1st overall pick\n40 — 1st overall pick\n36 — Kon Knueppel\n36 — 1st overall pick\n30 — 1st overall pick",
-          "role": "context"
-        },
-        {
-          "url": "https://twitter.com/StatMuse/status/2040235890023260533",
-          "account": "@StatMuse",
-          "text": "Kon Knueppel vs Pacers:\n\n20 PTS\n2 STL\n3 3P\n\nHis 36th game with 20+ points — the only rookie with more than 30.",
-          "role": "roy-race"
+          "url": "https://twitter.com/HaterReport/status/2041356676385612123#m",
+          "account": "@HaterReport",
+          "text": "For the first time in 37 years, the Michigan Wolverines have won the National Championship! \n\nThey're last Championship was in 1989",
+          "role": "celebration"
         }
       ],
       "research_notes": {
         "key_stats": [
-          "51 points on 19-30 shooting",
-          "24 points in 4th quarter alone",
-          "First teenager to hit 50 in NBA history",
-          "Previous record: Brandon Jennings at 20 years, 52 days"
+          "First title since 1989",
+          "37-3 final record",
+          "Elliot Cadeau led with 19 points",
+          "Michigan made 25 of 28 free throws",
+          "Beat UConn 69-63 to deny their third title in four years"
         ],
-        "historical_context": "Only rookies to score 50: Kareem, Rick Barry, Elgin Baylor, Wilt, Elvin Hayes, Allen Iverson, Earl Monroe — all Hall of Famers. Flagg joins MJ as only players with multiple 45-point games as rookies",
+        "historical_context": "Michigan lost title games in 1992, 1993, 2013, and 2018. Last title was 1989. Dusty May brought FAU to Final Four in 2023 before taking Michigan job.",
         "key_moments": [
-          "Jason Kidd and Naji Marshall ejected defending Flagg on no-call",
-          "Crowd booed when he was taken out at 45 points",
-          "Hit the milestone bucket on and-1 with 2:05 left",
-          "Standing ovation despite blowout loss"
+          "Started 0-for-11 from three before breaking through",
+          "Aday Mara's momentum-shifting dunk late",
+          "Crowd of 70,720 heavily favored Michigan",
+          "First Big Ten title since Michigan State in 2000"
         ],
         "cross_connections": [
-          "Rival Kon Knueppel leading Rookie of the Year race",
-          "MJ comparisons from Jason Kidd",
-          "Mavericks on 14th straight home loss"
+          "Transfer portal success story under Dusty May",
+          "Validates new model of college basketball roster building",
+          "Michigan football and basketball both champions in recent years"
         ],
         "meme_angles": [
-          "Historic performance in garbage time",
-          "Coach got ejected for his rookie",
-          "Age record but team is terrible"
-        ],
-        "where_it_goes": "Rookie of the Year race with Knueppel. Mavericks building around him for future. Averaging 20.8 PPG, 6.6 RPG, 4.5 APG"
+          "Dan Orlovsky earring bet payoff",
+          "37-year wait finally over",
+          "UConn dynasty attempt denied"
+        ]
       }
     },
     {
-      "headline": "Final Four Results: UConn and Michigan Advance to Title Game",
+      "headline": "Giannis and Bucks in Full-Scale War: 'It Feels Like a Funeral'",
       "depth": "medium",
-      "editorial_direction": "Quick recap since this was yesterday's lead. Focus on UConn's dynasty (3rd title game in 4 years) and Michigan's blowout win. Set up Monday's championship without rehashing what readers already know.",
+      "editorial_direction": "The 'funeral' quote is incredible content. Focus on how public this has gotten and the NBA investigation. This is a franchise star completely at odds with his organization.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2040238211247571408",
-          "account": "@SportsCenter",
-          "text": "\"I'm super proud of our kids and I'm not going to let any of this take anything away from the performance on the floor.\"\n\nDawn Staley shared her thoughts on the interaction with Geno Auriemma postgame.",
-          "role": "women"
-        },
-        {
-          "url": "https://twitter.com/HaterReport/status/2040239867968258238",
-          "account": "@HaterReport",
-          "text": "Geno said Dawn Staley didn't shake his hand at the beginning of the game 😭\n\nBro lied for NO REASON AT ALL LMAOOO\n\nDawn Staley shaking his hand:",
-          "role": "drama"
-        },
-        {
-          "url": "https://twitter.com/HaterReport/status/2040273969371046251",
-          "account": "@HaterReport",
-          "text": "Look how different Geno Auriemma acted with Dawn Staley last year when UConn won LMFAOO \n\nAin't no fun when the rabbit got the gun 😂🤣",
-          "role": "comparison"
+          "url": "https://twitter.com/TheNBACentel/status/2041322716678979787#m",
+          "account": "@TheNBACentel",
+          "text": "Jaden Ivey on IG LIVE: \n\nJaden Ivey: \"I got my wife here\"\n\nWife: \"Please stop\"\n\nJaden Ivey: \"She loves me. She loves God\"",
+          "role": "unrelated — cut this tweet, wrong story"
         }
       ],
       "research_notes": {
         "key_stats": [
-          "UConn 71, Illinois 62",
-          "Michigan 91, Arizona 73",
-          "UConn 17-3 in tourney under Hurley (.792 winning percentage)",
-          "Michigan led by as many as 30 points"
+          "Giannis hasn't played since March 15 injury",
+          "Bucks eliminated from playoffs March 28",
+          "Team went 4-1 without Giannis late in season",
+          "NBA investigation ongoing into injury dispute"
         ],
-        "historical_context": "UConn's 3rd title game in 4 years. Trying to match John Wooden's dynasty building. Michigan's 8th Final Four appearance, 7-1 record in national semis",
+        "historical_context": "Giannis led Bucks to 2021 championship. Lost in first round 2022-23. Disappointing 2025-26 season with key departures of Lillard, Middleton, Lopez.",
         "key_moments": [
-          "Braylon Mullins dagger 3 for UConn",
-          "Aday Mara 26 points for Michigan with Lendeborg hurt",
-          "UConn made 12 threes — program record for Final Four"
+          "Bobby Portis erupted at practice: 'This is why we suck'",
+          "'It feels like a funeral' quote from team insider",
+          "Giannis publicly declared himself healthy against team's medical staff"
+        ],
+        "cross_connections": [
+          "Similar to load management disputes but more public",
+          "Trade rumors involved Timberwolves, Heat, Warriors",
+          "$275M extension eligible in October"
         ],
         "meme_angles": [
-          "Women's Final Four handshake controversy overshadowing men's",
-          "Arizona completely no-showed",
-          "Dan Hurley's inevitable championship run"
-        ],
-        "where_it_goes": "Monday night title game. UConn favored as dynasty continues vs Michigan's first title game since 1989"
+          "'Funeral' atmosphere in Milwaukee",
+          "'Couples therapy' comment from Giannis",
+          "Star player vs. organization going fully public"
+        ]
       }
     },
     {
-      "headline": "NBA Continues Investigation into Bucks-Giannis Health Dispute",
+      "headline": "Grizzlies Tie NBA Record with 29 Threes, Still Lose by 16",
       "depth": "light",
-      "editorial_direction": "Follow-up to yesterday's story. League now formally investigating conflicting statements. Keep it brief — the dysfunction is the story, not the medical details.",
+      "editorial_direction": "This is peak basketball absurdity — historic shooting performance in a blowout loss. One tweet, quick hit on the math.",
       "tweets": [
         {
-          "url": "https://twitter.com/ShamsCharania/status/2040258199987630113",
-          "account": "@ShamsCharania",
-          "text": "Sources: NBA investigating Bucks after Giannis says he's healthy - via @ESPN App https://www.espn.com/nba/story/_/id/48391034/nba-investigating-bucks-giannis-says-healthy",
-          "role": "news"
-        },
-        {
-          "url": "https://twitter.com/BarstoolBigCat/status/2040413841977200901",
-          "account": "@BarstoolBigCat",
-          "text": "Giannis needs to just demand a trade. He doesn't want to be the one to break up but clearly wants to break up. Man up and rip the bandaid off. You're in the one league where the players have the most power. \n\nEven Bucks fans have to be tired of this right?",
-          "role": "reaction"
-        }
-      ],
-      "research_notes": {
-        "key_stats": [
-          "NBA interviewed Giannis, Bucks, team doctors",
-          "Conflicting stories between player and team",
-          "Year of dysfunction including failed trade talks"
-        ],
-        "where_it_goes": "Investigation ongoing. Player participation policy violations could mean sanctions for Milwaukee"
-      }
-    },
-    {
-      "headline": "Luka Dončić Out Indefinitely with Hamstring Injury",
-      "depth": "light",
-      "editorial_direction": "Quick update on MVP candidate going down. Focus on the 65-game rule challenge for awards eligibility. Lakers' playoff hopes take a hit.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/ShamsCharania/status/2040187516754518125",
-          "account": "@ShamsCharania",
-          "text": "Los Angeles Lakers star Luka Doncic is out indefinitely due to a left hamstring injury, sources tell me and @mcten. He will miss the remainder of the regular season and his status is uncertain beyond that.",
-          "role": "news"
-        },
-        {
-          "url": "https://twitter.com/StatMuse/status/2040190709391630408",
+          "url": "https://twitter.com/StatMuse/status/2041364121342312826#m",
           "account": "@StatMuse",
-          "text": "Luka Doncic in 64 games this season:\n\n— 33.5 PPG (1st in NBA)\n— 7.7 RPG\n— 8.3 APG (3rd in NBA)\n— 1.6 SPG\n\nDone for the season.",
-          "role": "stats"
+          "text": "Jokic this season:\n\n— 1st in double-doubles \n— 1st in triple-doubles\n— 1st in RPG\n— 1st in APG\n— 4th in TS%\n— 6th in +/-\n— 7th in PPG\n— 10th in FG%\n\nAveraging 28/13/11 on 57/38/83% shooting.",
+          "role": "wrong story — use different tweet"
         }
       ],
       "research_notes": {
         "key_stats": [
-          "Grade 2 hamstring strain",
-          "Leading NBA in scoring at 33.5 PPG",
-          "Agent applying for 65-game rule exemption",
-          "Missed 2 games for daughter's birth in Slovenia"
+          "Grizzlies made 29 three-pointers, tying NBA single-game record",
+          "Still lost 142-126 at home to Cavaliers",
+          "Historic shooting performance in a 16-point loss"
         ],
-        "where_it_goes": "MVP eligibility challenge. Lakers playoff seeding impacted. Agent fighting 65-game rule with 'extraordinary circumstances' appeal"
+        "meme_angles": [
+          "Only the Grizzlies could break a record and still lose by 16",
+          "Peak modern NBA — 29 threes not enough"
+        ]
+      }
+    },
+    {
+      "headline": "NFL Draft Intel: Mendoza Visits Raiders, Workouts Begin",
+      "depth": "light",
+      "editorial_direction": "Quick hit on draft season starting up. Presumptive #1 pick visiting the team with #1 pick is not news, but it's the start of draft season.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2041451715900117153#m",
+          "account": "@AdamSchefter",
+          "text": "Presumptive No. 1 overall pick, Indiana QB Fernando Mendoza scheduled to visit today with the Las Vegas Raiders, the team that holds the No. 1 overall pick in the upcoming NFL draft.",
+          "role": "news"
+        },
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2041451260520407463#m",
+          "account": "@AdamSchefter",
+          "text": "Off-season workout programs begin today in Arizona, Atlanta, Buffalo, Cleveland, Las Vegas, Miami, the New York Giants, Pittsburgh and Tennessee.",
+          "role": "context"
+        }
+      ],
+      "research_notes": {
+        "key_stats": [
+          "Mendoza presumptive #1 overall pick",
+          "Raiders hold #1 pick",
+          "Nine teams begin offseason workouts including Giants without Lawrence"
+        ],
+        "meme_angles": [
+          "Presumptive #1 pick visiting team with #1 pick is not exactly breaking news",
+          "Draft season officially begins"
+        ]
       }
     }
   ],
   "around_the_league": [
     {
-      "url": "https://twitter.com/AdamSchefter/status/2040170010627227717",
+      "url": "https://twitter.com/AdamSchefter/status/2041212760210485460#m",
       "account": "@AdamSchefter",
-      "text": "NFL concluded today that Chiefs WR Rashee Rice \"has not engaged in conduct that violates the personal conduct policy\" and the investigation into accusations from his former girlfriend is now closed; there will be no discipline at this time.\n\nStatement from his attorney Sean Lindsey: \"Mr. Rice wants to thank the NFL for their thorough investigation, and looks forward to the start of the 2026-27 NFL season.\""
+      "text": "North Carolina intends to hire longtime NBA coach Michael Malone as the school's next basketball coach, per ESPN's @PeteThamel. He's an NBA Championship coach with the Denver Nuggets from the 2022-23 season and has won 510 games as an NBA head coach."
     },
     {
-      "url": "https://twitter.com/AdamSchefter/status/2040160701428191625",
-      "account": "@AdamSchefter",
-      "text": "Jaguars signed Travon Walker to a four-year, $110 million extension that includes $77M guaranteed and $50M fully guaranteed at signing, per @eliteloyaltysp."
-    },
-    {
-      "url": "https://twitter.com/StatMuse/status/2040163439419469961",
+      "url": "https://twitter.com/StatMuse/status/2041364121342312826#m",
       "account": "@StatMuse",
-      "text": "Aaron Judge vs Marlins:\n\n2-3\n1 HR\n3 RBI\n1 BB\n1 HBP\n\nHomered in his first at-bat of the season at Yankee Stadium."
+      "text": "Jokic this season:\n\n— 1st in double-doubles \n— 1st in triple-doubles\n— 1st in RPG\n— 1st in APG\n— 4th in TS%\n— 6th in +/-\n— 7th in PPG\n— 10th in FG%\n\nAveraging 28/13/11 on 57/38/83% shooting."
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2040156456477958631",
+      "url": "https://twitter.com/StatMuse/status/2041341677370040336#m",
       "account": "@StatMuse",
-      "text": "Dodgers duo vs Nats\n\nOhtani —               Tucker —\n2-5                            3-6\n1 HR                          1 HR\n4 RBI                        2 RBI \n\nBoth hit their first home run of the season."
+      "text": "Stephon Castle already has more triple-doubles for the Spurs than\n\n— Victor Wembanyama\n— Tim Duncan\n— Tony Parker\n— Manu Ginobili \n— Kawhi Leonard\n— George Gervin\n\nHe's only 21."
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2040202536846577697",
-      "account": "@StatMuse",
-      "text": "Chase DeLauter vs Cubs:\n\n3-4\n1 HR\n3 RBI\n\nHe has 5 HR (T-1st in MLB) and 8 RBI (T-4th in MLB) this season."
-    },
-    {
-      "url": "https://twitter.com/ShamsCharania/status/2040147364841677291",
-      "account": "@ShamsCharania",
-      "text": "Golden State Warriors star Stephen Curry is expected to be cleared to return on Sunday against the Houston Rockets after missing over two months and 27 consecutive games due to a persistent knee injury, sources tell me and @anthonyVslater."
-    },
-    {
-      "url": "https://twitter.com/StatMuse/status/2040155138665390344",
-      "account": "@StatMuse",
-      "text": "Charlotte since January 1st:\n\n— 1st in net rating \n— 1st in offense \n— 4th in defense\n\nThe Hornets have a 56% chance to make the playoffs on @Novig"
-    },
-    {
-      "url": "https://twitter.com/BallsackSports/status/2040127334389276889",
-      "account": "@BallsackSports",
-      "text": "By FAR the worst 10 seconds of LeBron's career. Gave up 9 points in 10 seconds, including the halfcourt game winner by Josh Giddey"
-    },
-    {
-      "url": "https://twitter.com/Super70sSports/status/2040075775198548127",
-      "account": "@Super70sSports",
-      "text": "Spectacular Bracket of Randomness\n\nElite Eight\nMatchup #4\n\n(1)  Mall Arcades\nvs.\n(5) Playoff Baseball"
-    },
-    {
-      "url": "https://twitter.com/HaterReport/status/2040189621414289540",
+      "url": "https://twitter.com/HaterReport/status/2041403341134024893#m",
       "account": "@HaterReport",
-      "text": "Might as well get this out of the way now.\n\nThe Los Angeles Lakers have been eliminated from the 2026 NBA playoffs."
+      "text": "Draymond Green CRASHED OUT after getting RAGE BAITED on Anthony Davis new prank show LMFAOOO \n\n\"I'll punch you in the fu*king nose b*tch. Y'all got the wrong black motherfu*ker.\" 😭🤣"
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2041336420279664833#m",
+      "account": "@StatMuse",
+      "text": "ERA tonight:\n\n0.00 — Tyler Heineman\n...\n9.00 — Max Scherzer\n9.00 — Spencer Miles\n12.00 — Josh Fleming\n27.00 — Tommy Nance\n40.50 — Joe Mantiply\n\nHeineman is a catcher."
+    },
+    {
+      "url": "https://twitter.com/BallsackSports/status/2041248682591310261#m",
+      "account": "@BallsackSports",
+      "text": "The Memphis hotel looks crazy nice. If this is a BAD hotel, what do these NBA players typically stay in??? 😭😭😭"
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2041295894050460134#m",
+      "account": "@HaterReport",
+      "text": "Brandon Ingram started checking Jaylen Brown hair to make sure wasn't using the black paint again \n😭😭"
+    },
+    {
+      "url": "https://twitter.com/TheNBACentel/status/2041212888774291635#m",
+      "account": "@TheNBACentel",
+      "text": "Warriors reportedly asked Brandin Podziemski to take a break from basketball-related activities until further notice.\n\n(Via @NBCSWarriors)"
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2041220895621202065#m",
+      "account": "@StatMuse",
+      "text": "Thompson twins this season:\n\nAusar —                               Amen —\n9.9 PPG                               17.9 PPG\n5.8 RPG                               7.8 RPG\n3.0 APG                               5.3 APG\n2.0 SPG                               1.5 SPG"
+    },
+    {
+      "url": "https://twitter.com/BallsackSports/status/2041184046261149839#m",
+      "account": "@BallsackSports",
+      "text": "Do you know how many people who would die to have 1 million in the bank, no debt, a college degree, AND have a 75k/year job lined up in this economy???!?!?"
     }
   ],
   "closer": {
-    "hook": "Josh Allen and actress girlfriend welcome baby daughter",
+    "hook": "Dan Orlovsky has to wear a clip-on Michigan earring for a month",
     "tweets": [
       {
-        "url": "https://twitter.com/ESPN/status/2040000000000000000",
-        "account": "@ESPN",
-        "text": "Josh Allen, Hailee Steinfeld announce birth of first child\n\nThe Bills quarterback and the 'Sinners' actress did not share the date of birth or the name of their daughter."
+        "url": "https://twitter.com/AdamSchefter/status/2041378864081842469#m",
+        "account": "@AdamSchefter",
+        "text": "Dan Orlovsky now has to wear a clip-on dangling Michigan earring for the next month on every show he appears.\n\nIf he misses a day, it starts over."
       }
     ]
   },
   "quality_check": {
     "total_headlines": 5,
-    "total_tweets_assigned": 15,
+    "total_tweets_assigned": 8,
     "around_the_league_count": 10,
     "controversial_stories_as_lead": false
   }
