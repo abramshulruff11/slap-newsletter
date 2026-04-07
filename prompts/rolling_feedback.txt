@@ -23,17 +23,17 @@
 - WORD CHOICE: "Ancient" was used to describe a 20-year drought. Wrong word, wrong tone. The moment was celebratory — don't frame it as an insult. Don't reach for dramatic words that don't fit.
 - CORNINESS: "The math is doing math" is too corny for SLAP. If the numbers are devastating, just state the numbers. Cut lines that sound like someone trying too hard on Twitter.
 - GIF MATCHING: When a subject uses exact words from a famous meme ("I'm not f*cking leaving" = Wolf of Wall Street), use THAT specific meme, not a generic mood match. Quote-matching beats mood-matching every time.
-- TIMELINE: Remove all framing text from timeline items. Just show the tweets. If a tweet needs a framing sentence to make sense, it's not a good enough tweet for the timeline.
+- AROUND THE LEAGUE: Remove all framing text from Around the League items. Just show the tweets. If a tweet needs a framing sentence to make sense, it's not a good enough tweet for Around the League.
 - STORY SELECTION: March Madness Elite Eight was correctly identified as the lead. Calendar override is working. Good.
 
 ### From 3/22/2026 issue:
 
 - NOT ENOUGH HEADLINES: The issue only had 2 headline stories (Luka 60, Dalton trade). Target 4-6 headlines per issue. Even when the lead is big, find more stories worth covering. A 2-headline newsletter feels thin.
 - LEAD STORY DEPTH: The Luka 60-point game hit the right narrative beats (Kobe parallel, MVP chants, Wilt/Baylor comparison) but needed MORE. A 60-point game gives you tons of material — shooting splits, quarter-by-quarter scoring, specific highlight plays, how the defense adjusted and failed, the full game arc. The lead should feel like the reader watched the game through SLAP's lens.
-- HEADLINE TWEET RELEVANCE: Tweets in headline sections must directly relate to THAT story. The Luka section included a tweet about LeBron officiating vs. KD officiating — that has nothing to do with Luka scoring 60. Apply the same relevance filter to tweets that we apply to GIFs. If a tweet isn't about the story in the headline, it goes to the Timeline or gets cut.
-- WEAK HEADLINE STORIES — DEMOTE THEM: The Andy Dalton trade was not interesting enough for a headline. "A 37-year-old backup traded for a 7th rounder" is just a transaction. The commentary tried to make it interesting ("monopoly money") but there was no real joke, no surprising stat, no narrative hook. Stories without hooks should be demoted to Timeline one-liners. Headline sections need JUICE — a joke that lands, a narrative, or a surprising stat.
+- HEADLINE TWEET RELEVANCE: Tweets in headline sections must directly relate to THAT story. The Luka section included a tweet about LeBron officiating vs. KD officiating — that has nothing to do with Luka scoring 60. Apply the same relevance filter to tweets that we apply to GIFs. If a tweet isn't about the story in the headline, it goes to Around the League or gets cut.
+- WEAK HEADLINE STORIES — DEMOTE THEM: The Andy Dalton trade was not interesting enough for a headline. "A 37-year-old backup traded for a 7th rounder" is just a transaction. The commentary tried to make it interesting ("monopoly money") but there was no real joke, no surprising stat, no narrative hook. Stories without hooks should be demoted to Around the League one-liners. Headline sections need JUICE — a joke that lands, a narrative, or a surprising stat.
 - AVOID STEPHEN A. SMITH: Don't use his tweets or build around his takes. Noise, not signal.
-- TIMELINE/CLOSER WORKING WELL: The quick-hit format mixing stats, comedy, coach meltdowns, and random sports moments (Dennis Rodman WWE HOF, Villanova meltdown, Underdog Fantasy tweet) is exactly right. Keep that formula.
+- AROUND THE LEAGUE/CLOSER WORKING WELL: The quick-hit format mixing stats, comedy, coach meltdowns, and random sports moments (Dennis Rodman WWE HOF, Villanova meltdown, Underdog Fantasy tweet) is exactly right. Keep that formula.
 
 ### From 3/21/2026 issue:
 

@@ -74,7 +74,7 @@ BAD: Andy Dalton trade section → tweet about a completely different Eagles tra
 BAD: Replacement refs section → tweet about a college basketball coach firing his staff. Both involve officials/coaching, but they're unrelated stories.
 GOOD: If Kevin Willard's quote is great content, give it its own Quick Hitter or its own section. Don't shove it under an unrelated header.
 
-If a tweet doesn't fit the section it's in, it either needs its own section, belongs in The Timeline, or gets cut.
+If a tweet doesn't fit the section it's in, it either needs its own section, belongs in Around the League, or gets cut.
 
 ### RULE 8: Diversify tweet sources
 
@@ -183,9 +183,9 @@ MEDIUM (4-6 blocks): One strong angle with 2-3 good tweets. Examples: Embiid out
 
 QUICK HITTER (1-2 blocks): One tweet that's too good to skip but doesn't need a story around it. Examples: Rory's Masters dinner menu, a wild stat, a viral highlight. One framing sentence max.
 
-### The Headline vs. Timeline Filter
+### The Headline vs. Around the League Filter
 
-THIS IS CRITICAL. Not every story deserves a headline section. A headline must have a HOOK — a joke, a narrative, or a surprising stat. If a story is just a transaction with no hook, it belongs in the Timeline as a one-liner.
+THIS IS CRITICAL. Not every story deserves a headline section. A headline must have a HOOK — a joke, a narrative, or a surprising stat. If a story is just a transaction with no hook, it belongs in Around the League as a one-liner.
 
 EXAMPLES OF STORIES THAT EARN HEADLINES:
 - Luka scores 60 → Hook: Kobe parallel (same score, same free throw, same clock), MVP chants in enemy territory, Wilt/Baylor historic comparison. MULTIPLE hooks. Easy headline.
@@ -193,8 +193,8 @@ EXAMPLES OF STORIES THAT EARN HEADLINES:
 - Dolphins $175M dead cap → Hook: The number itself is absurd. Financial comedy writes itself.
 
 EXAMPLES OF STORIES THAT DON'T EARN HEADLINES:
-- Andy Dalton traded for a 7th rounder → No hook. It's a 37-year-old backup changing teams. Calling the pick "monopoly money" isn't a joke — every late-round trade gets that line. Demote to Timeline: "Andy Dalton got traded to the Eagles for a 2027 7th. The Panthers are now basically a YMCA team."
-- A mid-tier free agent signing with no meme angle → Timeline one-liner or skip entirely.
+- Andy Dalton traded for a 7th rounder → No hook. It's a 37-year-old backup changing teams. Calling the pick "monopoly money" isn't a joke — every late-round trade gets that line. Demote to Around the League: "Andy Dalton got traded to the Eagles for a 2027 7th. The Panthers are now basically a YMCA team."
+- A mid-tier free agent signing with no meme angle → Around the League one-liner or skip entirely.
 
 Target 4-6 headlines per issue. If you can only find 2-3, look harder — there's almost always more juice in the day's news. If a story genuinely doesn't have a hook after decomposition, don't force it into a headline to hit the target.
 
@@ -213,7 +213,7 @@ A full issue has pacing. It's not just "stories ranked by importance." Think abo
 2. SECOND LEAD — Peak energy. This is often the funniest or most absurd section.
 3. THIRD LEAD — Can sustain or shift tone (international, different sport, mix of roasting and appreciation).
 4. MEDIUM STORIES — Cool down. Shorter, punchier. Developing stories, running jokes.
-5. QUICK HITTERS / TIMELINE — Rapid fire. One line, one tweet, next. The dessert menu.
+5. QUICK HITTERS / AROUND THE LEAGUE — Rapid fire. One line, one tweet, next. The dessert menu.
 
 The reader should feel like they went on a ride, not read a list.
 
@@ -268,7 +268,7 @@ TWEET SEQUENCE LOGIC — How to Order Tweets Within a Story
    Example: "Here's where it gets truly absurd." Then the dead cap tweets.
 3. If ending on a positive note (like Bryce Harper in WBC), put it last.
 
-### For Quick Hitters / Timeline:
+### For Quick Hitters / Around the League:
 - Each tweet gets ONE framing sentence max
 - The sentence tells the reader HOW TO FEEL, not what the tweet says
   GOOD: "One of those stats that makes you stare at the ceiling for a minute"
