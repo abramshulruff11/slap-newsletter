@@ -6,4 +6,4 @@ Voice: Inclusive, joyful, knowledgeable. The opposite of sports gatekeeping.
 Core Sports: NFL (anchor), NBA, College Football, College Basketball, MLB
 Sprinkled In: Golf, Tennis, NHL, Soccer, College Baseball, WNBA
 Founding Account List:
-SharpFootball, AdamSchefter, BarstoolBigCat, PFTCommenter, TheNBACentel, BallsackSports, Ihartitz, HaterReport, ESPN, Super70sSports, coleadamss, OldTakesExposed, StatMuse, W_B_Rick, mickjason, ArtButSports, JayCuda, HouseOfHighlights
+SharpFootball, AdamSchefter, BarstoolBigCat, PFTCommenter, TheNBACentel, BallsackSports, Ihartitz, HaterReport, ESPN, coleadamss, OldTakesExposed, StatMuse, W_B_Rick, mickjason, ArtButSports, JayCuda, HouseOfHighlights

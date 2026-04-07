@@ -284,7 +284,7 @@ SPORT_PRIORITY = {
 HIGH_VALUE_ACCOUNTS = {
     # Original
     "barstoolbigcat", "pftcommenter", "ballsacksports", "haterreport",
-    "thenbacentel", "super70ssports", "oldtakesexposed", "adamschefter",
+    "thenbacentel", "oldtakesexposed", "adamschefter",
     "shamscharania", "statmuse", "houseofhighlights",
     # New comedy/reaction
     "notsportscenter", "overtime", "sportscenter", "contextfreecbb",

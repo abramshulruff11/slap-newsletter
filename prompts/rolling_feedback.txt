@@ -12,7 +12,6 @@
 
 - CONTROVERSIAL PLAYER COMMENTARY: The Jaden Ivey section included "Sometimes the trash takes itself out." SLAP does not editorialize on controversial player behavior. Report the fact, include the tweet, move on. No moral commentary. No clever put-downs. No "right call" / "wrong call." SLAP stays down the fairway. This is tweet-worthy because it's interesting, but it CANNOT show negativity or take sides.
 - ANTHONY EDWARDS MISATTRIBUTION: The commentary on the Anthony Edwards stat tweet was not about Anthony Edwards — it was about the wrong topic entirely. When writing commentary for a tweet block, READ the tweet_text field in the skeleton and react to THAT specific content. Do not write commentary about what you imagine the tweet says.
-- SUPER70S NON-SPORTS CONTENT: The Johnny Cash / Columbo tweet has no sports connection and should not have been included. Super70sSports tweets must connect to sports — pop culture nostalgia without a sports tie is not SLAP content. No fake wrestling either; college wrestling is fine.
 - MISSING TWEET EMBED: The final tweet in the 3/30 issue did not display. Likely caused by a missing or malformed URL in the blockquote. Every tweet must have a valid `<a href="https://twitter.com/...">View tweet</a>` link.
 
 ### From 3/29/2026 issue:

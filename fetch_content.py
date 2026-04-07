@@ -34,7 +34,6 @@ TWITTER_HANDLES = [
     "Ihartitz",
     "HaterReport",
     "ESPN",
-    "Super70sSports",
     "coleadamss",
     "OldTakesExposed",
     "StatMuse",
