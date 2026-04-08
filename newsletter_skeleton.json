@@ -1,327 +1,304 @@
 {
-  "date": "2026-04-07",
+  "date": "2026-04-08",
   "editorial_reasoning": {
-    "calendar_tier": "TIER 2 — Day after National Championship + NFL offseason workouts begin",
+    "calendar_tier": "TIER 3 — Normal April day, no major events",
     "tweet_volume": [
       {
-        "topic": "Michigan National Championship",
-        "approx_tweets": 15,
-        "accounts": 8
+        "topic": "NFL Draft/Mendoza",
+        "approx_tweets": 8,
+        "accounts": 4
       },
       {
-        "topic": "Dexter Lawrence trade request",
-        "approx_tweets": 6,
+        "topic": "NBA tanking",
+        "approx_tweets": 5,
         "accounts": 3
       },
       {
-        "topic": "Giannis-Bucks conflict",
-        "approx_tweets": 4,
+        "topic": "Michael Malone UNC",
+        "approx_tweets": 3,
         "accounts": 2
       },
       {
-        "topic": "NBA stats/games",
+        "topic": "General NBA games",
         "approx_tweets": 10,
-        "accounts": 5
+        "accounts": 4
       }
     ],
-    "dominant_topic": "Michigan championship aftermath dominates tweet volume, but day-after coverage requires fresh angles beyond just celebration",
+    "dominant_topic": "NFL Draft content leads, but NBA tanking has the funniest content",
     "candidates_considered": [
       {
-        "story": "Michigan championship celebration/aftermath",
-        "hook": "37-year drought ends, Dusty May's miracle run, transfer portal success story",
-        "verdict": "HEADLINE — MEDIUM (day-after angle)"
+        "story": "Fernando Mendoza skipping NFL Draft",
+        "hook": "Projected #1 pick wants to stay home with family in Miami",
+        "verdict": "HEADLINE — DEEP"
       },
       {
-        "story": "Dexter Lawrence trade request",
-        "hook": "$90M All-Pro wants out, contract standoff with new coach",
-        "verdict": "HEADLINE — DEEP (fresh breaking news)"
-      },
-      {
-        "story": "Giannis vs Bucks 'funeral' conflict",
-        "hook": "'It feels like a funeral' quote, NBA investigation ongoing",
+        "story": "Michael Malone to UNC",
+        "hook": "NBA champion coach goes to college for $50M",
         "verdict": "HEADLINE — MEDIUM"
       },
       {
-        "story": "NFL draft intel/workouts begin",
-        "hook": "Mendoza visits Raiders, workouts start across league",
+        "story": "NBA tanking epidemic",
+        "hook": "Kings literally fouled Seth Curry on purpose while winning",
+        "verdict": "HEADLINE — MEDIUM"
+      },
+      {
+        "story": "Mike Vrabel affair scandal",
+        "hook": "Patriots coach caught with reporter, both married",
         "verdict": "HEADLINE — LIGHT"
       },
       {
-        "story": "Grizzlies 29 threes record but lose",
-        "hook": "Historic shooting performance in a loss is peak basketball absurdity",
-        "verdict": "HEADLINE — LIGHT"
-      },
-      {
-        "story": "Bulls fire executives",
-        "hook": "Clean house after disappointing season",
+        "story": "Sam Darnold wedding",
+        "hook": "Super Bowl winner adds another ring",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "Jokic triple-double stats",
-        "hook": "MVP-level numbers",
+        "story": "Cooper Flagg 31 points",
+        "hook": "Rookie putting up numbers",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "Michael Malone to UNC hiring",
-        "hook": "NBA coach to college",
+        "story": "Jeremiah Fears 40 points",
+        "hook": "First rookie since LeBron with 40/5/5/3",
+        "verdict": "AROUND THE LEAGUE"
+      },
+      {
+        "story": "KD vs Dillon Brooks trash talk",
+        "hook": "KD dropped him after the comment",
         "verdict": "AROUND THE LEAGUE"
       }
     ]
   },
   "stories": [
     {
-      "headline": "Dexter Lawrence Demands Trade from Giants After Contract Standoff",
+      "headline": "Fernando Mendoza Is Skipping the NFL Draft to Stay Home",
       "depth": "deep",
-      "editorial_direction": "This is the lead — fresh breaking news with financial comedy angles. Focus on the timing (new coach arriving), contract falling from 3rd to 11th highest, and the absurdity of a $20M player sitting out voluntary workouts. Go deep on potential landing spots and what this means for Harbaugh's first season.",
+      "editorial_direction": "This is actually a sweet story disguised as draft news. Lead with the uniqueness (projected #1 pick staying home), then get into the Miami connection (won title there, family there, mom has MS). The Raiders already learning his playbook angle is wild. Compare to other #1 picks who skipped.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2041193382022619174#m",
+          "url": "https://twitter.com/AdamSchefter/status/2041558894913142823#m",
           "account": "@AdamSchefter",
-          "text": "ESPN sources: Giants All-Pro defensive tackle Dexter Lawrence has requested a trade and he will not be participating in the team's off-season workout program that opens Tuesday.\n\nLawrence and the Giants have been through two off seasons attempting to negotiate a contract reflecting his value to the Giants over the last three years, but there has not been any progress, per sources.",
-          "role": "breaking news"
-        },
-        {
-          "url": "https://twitter.com/AdamSchefter/status/2041193690723463416#m",
-          "account": "@AdamSchefter",
-          "text": "Dexter Lawrence has two years remaining on his deal and is currently scheduled to make $20 million this upcoming season.\n\nInitially there had been optimism that with changes in the organization, discussions could move forward. But now that they haven't, new Giants head coach John Harbaugh will open his team's off-season program Tuesday without one of his best players.",
-          "role": "financial details"
-        }
-      ],
-      "research_notes": {
-        "key_stats": [
-          "$90M extension in 2023 made him 3rd-highest paid DT",
-          "Now tied for 11th at position after market movement",
-          "$20M owed in 2026, $22M in 2027",
-          "Three Pro Bowls, two All-Pro selections since 2022",
-          "Half a sack in down 2025 season"
-        ],
-        "historical_context": "Lawrence was drafted 17th overall by Giants in 2019. Contract extension came after breakout 2022 season with 7.5 sacks. Giants had league-worst 5.3 yards per rush in 2025.",
-        "key_moments": [
-          "Trade request timed perfectly with John Harbaugh's first offseason program",
-          "GM Joe Schoen asked about Lawrence extension at NFL meetings last week",
-          "Previous trade rumors at 2025 deadline but Giants wanted significant return"
-        ],
-        "cross_connections": [
-          "John Harbaugh's first major crisis as Giants coach",
-          "Parallels to Quinnen Williams trade to Cowboys for first and second round picks",
-          "Giants rebuilding under new leadership after 4-13 season"
-        ],
-        "meme_angles": [
-          "$90M player skipping voluntary workouts",
-          "All-Pro requesting trade from team that can't stop the run",
-          "Perfect timing to ruin new coach's first day"
-        ],
-        "where_it_goes": "Multiple contenders calling already. Vikings, Texans, Chiefs all potential landing spots. Giants unlikely to get full value back given contract demands and down season."
-      }
-    },
-    {
-      "headline": "Michigan Completes Miracle Run, Ends 37-Year Championship Drought",
-      "depth": "medium",
-      "editorial_direction": "Day-after championship coverage focusing on the historical significance and Dusty May's incredible coaching job. Emphasize the transfer portal success story and how this validates the new college basketball model.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/AdamSchefter/status/2041378864081842469#m",
-          "account": "@AdamSchefter",
-          "text": "Dan Orlovsky now has to wear a clip-on dangling Michigan earring for the next month on every show he appears.\n\nIf he misses a day, it starts over.",
-          "role": "comedy"
-        },
-        {
-          "url": "https://twitter.com/HaterReport/status/2041362901483540729#m",
-          "account": "@HaterReport",
-          "text": "The Michigan Wolverines lost four straight National Championship games in '92, '93, '13, and '18.\n\n37 years later… they finally get it done",
-          "role": "historical context"
-        },
-        {
-          "url": "https://twitter.com/HaterReport/status/2041356676385612123#m",
-          "account": "@HaterReport",
-          "text": "For the first time in 37 years, the Michigan Wolverines have won the National Championship! \n\nThey're last Championship was in 1989",
-          "role": "celebration"
-        }
-      ],
-      "research_notes": {
-        "key_stats": [
-          "First title since 1989",
-          "37-3 final record",
-          "Elliot Cadeau led with 19 points",
-          "Michigan made 25 of 28 free throws",
-          "Beat UConn 69-63 to deny their third title in four years"
-        ],
-        "historical_context": "Michigan lost title games in 1992, 1993, 2013, and 2018. Last title was 1989. Dusty May brought FAU to Final Four in 2023 before taking Michigan job.",
-        "key_moments": [
-          "Started 0-for-11 from three before breaking through",
-          "Aday Mara's momentum-shifting dunk late",
-          "Crowd of 70,720 heavily favored Michigan",
-          "First Big Ten title since Michigan State in 2000"
-        ],
-        "cross_connections": [
-          "Transfer portal success story under Dusty May",
-          "Validates new model of college basketball roster building",
-          "Michigan football and basketball both champions in recent years"
-        ],
-        "meme_angles": [
-          "Dan Orlovsky earring bet payoff",
-          "37-year wait finally over",
-          "UConn dynasty attempt denied"
-        ]
-      }
-    },
-    {
-      "headline": "Giannis and Bucks in Full-Scale War: 'It Feels Like a Funeral'",
-      "depth": "medium",
-      "editorial_direction": "The 'funeral' quote is incredible content. Focus on how public this has gotten and the NBA investigation. This is a franchise star completely at odds with his organization.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/TheNBACentel/status/2041322716678979787#m",
-          "account": "@TheNBACentel",
-          "text": "Jaden Ivey on IG LIVE: \n\nJaden Ivey: \"I got my wife here\"\n\nWife: \"Please stop\"\n\nJaden Ivey: \"She loves me. She loves God\"",
-          "role": "unrelated — cut this tweet, wrong story"
-        }
-      ],
-      "research_notes": {
-        "key_stats": [
-          "Giannis hasn't played since March 15 injury",
-          "Bucks eliminated from playoffs March 28",
-          "Team went 4-1 without Giannis late in season",
-          "NBA investigation ongoing into injury dispute"
-        ],
-        "historical_context": "Giannis led Bucks to 2021 championship. Lost in first round 2022-23. Disappointing 2025-26 season with key departures of Lillard, Middleton, Lopez.",
-        "key_moments": [
-          "Bobby Portis erupted at practice: 'This is why we suck'",
-          "'It feels like a funeral' quote from team insider",
-          "Giannis publicly declared himself healthy against team's medical staff"
-        ],
-        "cross_connections": [
-          "Similar to load management disputes but more public",
-          "Trade rumors involved Timberwolves, Heat, Warriors",
-          "$275M extension eligible in October"
-        ],
-        "meme_angles": [
-          "'Funeral' atmosphere in Milwaukee",
-          "'Couples therapy' comment from Giannis",
-          "Star player vs. organization going fully public"
-        ]
-      }
-    },
-    {
-      "headline": "Grizzlies Tie NBA Record with 29 Threes, Still Lose by 16",
-      "depth": "light",
-      "editorial_direction": "This is peak basketball absurdity — historic shooting performance in a blowout loss. One tweet, quick hit on the math.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/StatMuse/status/2041364121342312826#m",
-          "account": "@StatMuse",
-          "text": "Jokic this season:\n\n— 1st in double-doubles \n— 1st in triple-doubles\n— 1st in RPG\n— 1st in APG\n— 4th in TS%\n— 6th in +/-\n— 7th in PPG\n— 10th in FG%\n\nAveraging 28/13/11 on 57/38/83% shooting.",
-          "role": "wrong story — use different tweet"
-        }
-      ],
-      "research_notes": {
-        "key_stats": [
-          "Grizzlies made 29 three-pointers, tying NBA single-game record",
-          "Still lost 142-126 at home to Cavaliers",
-          "Historic shooting performance in a 16-point loss"
-        ],
-        "meme_angles": [
-          "Only the Grizzlies could break a record and still lose by 16",
-          "Peak modern NBA — 29 threes not enough"
-        ]
-      }
-    },
-    {
-      "headline": "NFL Draft Intel: Mendoza Visits Raiders, Workouts Begin",
-      "depth": "light",
-      "editorial_direction": "Quick hit on draft season starting up. Presumptive #1 pick visiting the team with #1 pick is not news, but it's the start of draft season.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/AdamSchefter/status/2041451715900117153#m",
-          "account": "@AdamSchefter",
-          "text": "Presumptive No. 1 overall pick, Indiana QB Fernando Mendoza scheduled to visit today with the Las Vegas Raiders, the team that holds the No. 1 overall pick in the upcoming NFL draft.",
+          "text": "Projected No. 1 overall pick Fernando Mendoza has informed the NFL that he is not planning to attend the NFL Draft in Pittsburgh this month, per sources. Mendoza wants to share the draft experience with his family in Miami.",
           "role": "news"
         },
         {
-          "url": "https://twitter.com/AdamSchefter/status/2041451260520407463#m",
+          "url": "https://twitter.com/AdamSchefter/status/2041561230184186053#m",
           "account": "@AdamSchefter",
-          "text": "Off-season workout programs begin today in Arizona, Atlanta, Buffalo, Cleveland, Las Vegas, Miami, the New York Giants, Pittsburgh and Tennessee.",
-          "role": "context"
+          "text": "The last time a No. 1 overall pick QB did not attend the NFL Draft was in 2021, when the Jaguars selected Trevor Lawrence.",
+          "role": "stat"
+        },
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2041674249169936451#m",
+          "account": "@AdamSchefter",
+          "text": "More about Fernando Mendoza, the projected No. 1 pick in the NFL draft, informing the league that he is not planning to attend the draft:\n\nhttps://www.espn.com/nfl/story/_/id/48421461/sources-fernando-mendoza-not-planning-attend-nfl-draft",
+          "role": "news"
         }
       ],
       "research_notes": {
         "key_stats": [
-          "Mendoza presumptive #1 overall pick",
-          "Raiders hold #1 pick",
-          "Nine teams begin offseason workouts including Giants without Lawrence"
+          "<cite index=\"1-14,8-4\">Led Indiana to undefeated season and national title, beating Miami in Miami's home stadium</cite>",
+          "<cite index=\"5-11,5-12\">3,535 passing yards, 41 TDs, 6 INTs, won Heisman Trophy in 2025</cite>",
+          "<cite index=\"3-15,3-16\">Last #1 pick to skip draft was Travon Walker in 2022, stayed in Atlanta hotel</cite>"
         ],
-        "meme_angles": [
-          "Presumptive #1 pick visiting team with #1 pick is not exactly breaking news",
-          "Draft season officially begins"
+        "personal_angle": [
+          "<cite index=\"8-4\">Mendoza's mother Elsa has lived with multiple sclerosis for over 15 years and uses wheelchair</cite>",
+          "<cite index=\"1-12,1-13,1-14\">Miami is where he grew up dreaming of being a pro QB, and where he won the national title against Miami</cite>"
+        ],
+        "raiders_context": [
+          "<cite index=\"4-5,4-7,4-8\">Mendoza already learning Raiders offense with Brian Griese, installing playbook like Joe Burrow did</cite>",
+          "<cite index=\"4-11\">Raiders signed Kirk Cousins for $20M guaranteed, may not start Mendoza right away</cite>"
+        ],
+        "historical_context": [
+          "<cite index=\"3-17,3-18\">Last three #1 picks (Bryce Young, Caleb Williams, Cam Ward) all attended draft</cite>",
+          "<cite index=\"3-25,3-26\">Every #1 pick in 2000s attended, this is more recent trend</cite>"
+        ],
+        "draft_logistics": [
+          "<cite index=\"2-4,2-9\">Raiders hold #1 pick, draft April 23-25 in Pittsburgh</cite>",
+          "<cite index=\"7-10\">NFL invitation restrictions make it hard to bring teammates to ceremony</cite>"
+        ],
+        "scouting_report": [
+          "<cite index=\"5-9,5-17\">6-foot-5, 225 pounds, 79.2% adjusted completion percentage ranked 2nd nationally</cite>",
+          "<cite index=\"5-21,5-22\">Played 97% of snaps in shotgun, needs work under center for NFL</cite>"
+        ],
+        "where_it_goes": [
+          "Draft in 15 days, Raiders visit Tuesday, will celebrate with family in Miami instead of Pittsburgh stage moment"
+        ]
+      }
+    },
+    {
+      "headline": "Michael Malone Leaves NBA Championship for $50 Million College Experiment",
+      "depth": "medium",
+      "editorial_direction": "This is UNC going full pro model after Belichick. Focus on the money ($8.3M/year), the NBA-to-college trend, and his daughter already being at UNC. The firing from Denver adds intrigue.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/JonRothstein/status/2041627083646886381#m",
+          "account": "@JonRothstein",
+          "text": "Michael Malone has officially signed a six-year contract worth more than $50 million dollars plus incentives to be the next head coach at North Carolina, per release.",
+          "role": "news"
+        },
+        {
+          "url": "https://twitter.com/SportsCenter/status/2041644756959142131#m",
+          "account": "@SportsCenter",
+          "text": "\"I have a chance to be a part of something special. ... This was the only college job I'd ever consider.\" \n\nMichael Malone on his decision to become the head coach of @UNC_Basketball.",
+          "role": "quote"
+        }
+      ],
+      "research_notes": {
+        "money_details": [
+          "<cite index=\"16-6,16-7,16-8\">6-year, $50M contract averaging $8.33M/year, only Bill Self makes more among public school coaches</cite>",
+          "<cite index=\"16-18,16-19\">UNC committed $6.75M annually in revenue sharing to men's basketball</cite>"
+        ],
+        "nba_background": [
+          "<cite index=\"17-17,18-15\">Won 2023 NBA championship with Denver, franchise's all-time winningest coach</cite>",
+          "<cite index=\"19-1,19-9\">Fired by Nuggets last spring with less than a week left in regular season</cite>"
+        ],
+        "unc_connection": [
+          "<cite index=\"12-6,15-5\">His daughter Bridget is a sophomore volleyball player for the Tar Heels</cite>",
+          "<cite index=\"11-19,15-6\">Observed UNC's first 5-6 practices last October, spoke to team after practice</cite>"
+        ],
+        "pro_model_trend": [
+          "<cite index=\"17-22,16-24\">Joins Bill Belichick in UNC's pro coaching experiment, both from championship backgrounds</cite>",
+          "<cite index=\"19-5,19-15\">UNC typically keeps job within 'Carolina Family', this is major departure from tradition</cite>"
+        ],
+        "coaching_resume": [
+          "<cite index=\"18-7,18-8\">510 regular season wins, 44 postseason wins (20 more than any other Denver coach)</cite>",
+          "<cite index=\"15-12,15-13\">College assistant experience but hasn't coached college since 2001</cite>"
+        ]
+      }
+    },
+    {
+      "headline": "The NBA Tanking Epidemic Has Reached Peak Absurdity",
+      "depth": "medium",
+      "editorial_direction": "Lead with the Kings fouling Seth Curry on purpose while WINNING. This isn't even trying to hide it anymore. Draymond calling it out adds legitimacy. Adam Silver's concerns about gambling implications.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/HaterReport/status/2041772691040919981#m",
+          "account": "@HaterReport",
+          "text": "We have NEVER seen this level of tanking bruh \n\nDoug Christie literally instructed his players on the Kings TO FOUL SETH CURRY ON PURPOSE while up 101-100 in the 4th quarter \n\nINSANE 😭💀",
+          "role": "comedy"
+        },
+        {
+          "url": "https://twitter.com/HaterReport/status/2041756221871387131#m",
+          "account": "@HaterReport",
+          "text": "Draymond Green about the tanking epidemic: \n\n\"I saw a team tonight foul Seth Curry with three minutes to go in the game for no reason.\"\n\nOn what should be done about it: \n\n\"Keep fining teams.\"",
+          "role": "quote"
+        },
+        {
+          "url": "https://twitter.com/StatMuse/status/2041754522054238711#m",
+          "account": "@StatMuse",
+          "text": "Every teams leading scorer tonight:\n\nBKN — EJ Liddell\nUTA — Kennedy Chandler\nIND — Ethan Thompson\nCHI — Rob Dillingham\nMIN — Ayo Dosunmu \nLAL — Rui Hachimura\nWAS — Bilal Coulibaly\nTOR — Scottie Barnes \nMIA — Andrew Wiggins\nMIL — AJ Green\nNOP — Jeremiah Fears\nDAL — Cooper Flagg\nLAC — Kawhi Leonard\nOKC — Shai Gilgeous-Alexander\nPHX — Devin Booker\nHOU — Kevin Durant\n\nFinal week of the regular season.",
+          "role": "stat"
+        }
+      ],
+      "research_notes": {
+        "kings_example": [
+          "<cite index=\"24-24,24-25,24-26,24-28\">Alex Sarr fouled out in 22 minutes with 5 fouls in first 4 minutes of 3rd quarter, coach didn't pull him</cite>",
+          "<cite index=\"24-31,24-32\">Wizards benched Coulibaly (19 min) and Carrington (26 min) entire 4th quarter while losing lead</cite>"
+        ],
+        "draymond_reaction": [
+          "Doug Christie fouled Seth Curry intentionally while leading 101-100 with 3 minutes left",
+          "Draymond called it unprecedented level of obvious tanking"
+        ],
+        "silver_concerns": [
+          "<cite index=\"24-17,24-18,24-19\">Adam Silver says decision needs to be made at ownership level, has 'integrity implications' for gambling</cite>",
+          "<cite index=\"24-16\">Third of fan bases actively rooting against their teams for two months</cite>"
+        ],
+        "systemic_problem": [
+          "<cite index=\"30-1,30-2\">Volume of teams tanking unprecedented, full-blown race to bottom despite flattened odds</cite>",
+          "Tankathon odds show multiple teams competing for worst record simultaneously"
+        ]
+      }
+    },
+    {
+      "headline": "Mike Vrabel and Married Reporter Caught in Arizona Hotel Scandal",
+      "depth": "light",
+      "editorial_direction": "Report the facts, no commentary. Both married to other people, caught at luxury hotel in Sedona. Vrabel married since 1999, Russini since 2020. Let the details speak for themselves.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/HaterReport/status/2041674845688058067#m",
+          "account": "@HaterReport",
+          "text": "Patriots head coach Mike Vrabel and New York Times NFL reporter Dianna Russini were seen holding hands, hugging, and spending time together at a luxury hotel in Sedona, Arizona.\n\nBoth are married. TO OTHER PEOPLE 😳\n\nMike Vrabel has been married to Jen Vrabel since 1999.\n\nDianna Russini has been married to Kevin Goldschmidt, a Shake Shack executive, since 2020.",
+          "role": "news"
+        }
+      ],
+      "research_notes": {
+        "basic_facts": [
+          "Patriots head coach Mike Vrabel and NY Times reporter Dianna Russini seen at luxury Sedona hotel",
+          "Both married to other people - Vrabel since 1999, Russini since 2020",
+          "Seen holding hands and hugging according to reports"
+        ],
+        "professional_context": [
+          "Vrabel is Patriots head coach in his first season",
+          "Russini covers NFL for New York Times",
+          "Potential conflict of interest between coach and reporter covering league"
         ]
       }
     }
   ],
   "around_the_league": [
     {
-      "url": "https://twitter.com/AdamSchefter/status/2041212760210485460#m",
+      "url": "https://twitter.com/StatMuse/status/2041700501239005393#m",
+      "account": "@StatMuse",
+      "text": "Jeremiah Fears vs Utah:\n\n40 PTS\n5 REB\n6 AST\n3 STL\n+30\n\nThe first rookie with a 40/5/5/3 game since LEBRON JAMES."
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2041856749402030352#m",
+      "account": "@HaterReport",
+      "text": "Kevin Durant to Dillon Brooks\n\n\"My worst season is better than your best\"\n\nKD immediately dropped Brooks after 🥶"
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2041856333280862587#m",
+      "account": "@StatMuse",
+      "text": "Jaylen Brown last 10 games:\n\n32.2 PPG\n6.5 RPG\n5.5 APG\n1.1 SPG\n\nHow many players have been better this season?"
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2041732057118670856#m",
+      "account": "@HaterReport",
+      "text": "Former teammates Jalen Green and Amen Thompson HAVE WORDS\n\nAmen: \"Don't talk. I'm on you boy. I'm on you\" 👀"
+    },
+    {
+      "url": "https://twitter.com/AdamSchefter/status/2041514761104376298#m",
       "account": "@AdamSchefter",
-      "text": "North Carolina intends to hire longtime NBA coach Michael Malone as the school's next basketball coach, per ESPN's @PeteThamel. He's an NBA Championship coach with the Denver Nuggets from the 2022-23 season and has won 510 games as an NBA head coach."
+      "text": "Hall of Famer Steve McMichael, a key member of the dominating defense that helped the 1985 Bears win the Super Bowl, has been diagnosed with chronic traumatic encephalopathy, the Concussion & CTE Foundation said."
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2041364121342312826#m",
+      "url": "https://twitter.com/ShamsCharania/status/2041636471887872061#m",
+      "account": "@ShamsCharania",
+      "text": "Spurs star Victor Wembanyama is listed doubtful to play in Wednesday's game against Portland due to a rib contusion but there's confidence he will play at least one of the team's final three regular-season games."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2041707920157478948#m",
       "account": "@StatMuse",
-      "text": "Jokic this season:\n\n— 1st in double-doubles \n— 1st in triple-doubles\n— 1st in RPG\n— 1st in APG\n— 4th in TS%\n— 6th in +/-\n— 7th in PPG\n— 10th in FG%\n\nAveraging 28/13/11 on 57/38/83% shooting."
+      "text": "Hitters with 20+ strikeouts and a batting average under .200 this season:\n\n— Big Dumper\n\nEnd of list."
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2041341677370040336#m",
-      "account": "@StatMuse",
-      "text": "Stephon Castle already has more triple-doubles for the Spurs than\n\n— Victor Wembanyama\n— Tim Duncan\n— Tony Parker\n— Manu Ginobili \n— Kawhi Leonard\n— George Gervin\n\nHe's only 21."
-    },
-    {
-      "url": "https://twitter.com/HaterReport/status/2041403341134024893#m",
+      "url": "https://twitter.com/HaterReport/status/2041747663276642323#m",
       "account": "@HaterReport",
-      "text": "Draymond Green CRASHED OUT after getting RAGE BAITED on Anthony Davis new prank show LMFAOOO \n\n\"I'll punch you in the fu*king nose b*tch. Y'all got the wrong black motherfu*ker.\" 😭🤣"
+      "text": "JJ Redick said Deandre Ayton can't catch 😭💀\n\n\"He's had trouble catching the ball, so we've ran a bunch of plays for him, he's just had trouble catching the ball\""
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2041336420279664833#m",
-      "account": "@StatMuse",
-      "text": "ERA tonight:\n\n0.00 — Tyler Heineman\n...\n9.00 — Max Scherzer\n9.00 — Spencer Miles\n12.00 — Josh Fleming\n27.00 — Tommy Nance\n40.50 — Joe Mantiply\n\nHeineman is a catcher."
-    },
-    {
-      "url": "https://twitter.com/BallsackSports/status/2041248682591310261#m",
+      "url": "https://twitter.com/BallsackSports/status/2041611756095611046#m",
       "account": "@BallsackSports",
-      "text": "The Memphis hotel looks crazy nice. If this is a BAD hotel, what do these NBA players typically stay in??? 😭😭😭"
+      "text": "You can sit courtside at tonight's Bronny-SGA showdown for $5,518. Get-in price $78.\n\nBronny FC, our time is now. (Via @TickPick)"
     },
     {
-      "url": "https://twitter.com/HaterReport/status/2041295894050460134#m",
-      "account": "@HaterReport",
-      "text": "Brandon Ingram started checking Jaylen Brown hair to make sure wasn't using the black paint again \n😭😭"
-    },
-    {
-      "url": "https://twitter.com/TheNBACentel/status/2041212888774291635#m",
-      "account": "@TheNBACentel",
-      "text": "Warriors reportedly asked Brandin Podziemski to take a break from basketball-related activities until further notice.\n\n(Via @NBCSWarriors)"
-    },
-    {
-      "url": "https://twitter.com/StatMuse/status/2041220895621202065#m",
-      "account": "@StatMuse",
-      "text": "Thompson twins this season:\n\nAusar —                               Amen —\n9.9 PPG                               17.9 PPG\n5.8 RPG                               7.8 RPG\n3.0 APG                               5.3 APG\n2.0 SPG                               1.5 SPG"
-    },
-    {
-      "url": "https://twitter.com/BallsackSports/status/2041184046261149839#m",
-      "account": "@BallsackSports",
-      "text": "Do you know how many people who would die to have 1 million in the bank, no debt, a college degree, AND have a 75k/year job lined up in this economy???!?!?"
+      "url": "https://twitter.com/SportsCenter/status/2041615892014936119#m",
+      "account": "@SportsCenter",
+      "text": "Jon Rahm skipping it off the water and in the hole on the 16th before the Masters will always be a must-watch 😳"
     }
   ],
   "closer": {
-    "hook": "Dan Orlovsky has to wear a clip-on Michigan earring for a month",
+    "hook": "PMT having their best Masters week ever",
     "tweets": [
       {
-        "url": "https://twitter.com/AdamSchefter/status/2041378864081842469#m",
-        "account": "@AdamSchefter",
-        "text": "Dan Orlovsky now has to wear a clip-on dangling Michigan earring for the next month on every show he appears.\n\nIf he misses a day, it starts over."
+        "url": "https://twitter.com/PFTCommenter/status/2041647984597758125#m",
+        "account": "@PFTCommenter",
+        "text": "Im being 100% serious there was zero chance Trump was gona blow up the world right before the Masters"
       }
     ]
   },
   "quality_check": {
-    "total_headlines": 5,
-    "total_tweets_assigned": 8,
+    "total_headlines": 4,
+    "total_tweets_assigned": 18,
     "around_the_league_count": 10,
     "controversial_stories_as_lead": false
   }
