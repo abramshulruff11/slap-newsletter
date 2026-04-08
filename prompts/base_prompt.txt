@@ -339,20 +339,26 @@ Also include great tweets from web search even if not from these accounts.
 - Controversial player behavior (suspensions, waivers for off-field comments, anti-gay remarks, DUIs, arrests): Report the fact and move on. No editorial judgment. No "right call" / "wrong call." No "trash takes itself out." No moralizing. The tweet is the commentary — let the reader form their own opinion. SLAP stays down the fairway on these. If it's interesting enough to mention, it's a tweet in Around the League or a 2-block factual section. Never a soapbox.
 
 
-## SPORTS HIERARCHY
+## SPORTS HIERARCHY (tiebreaker ONLY — calendar tier always comes first)
 
 Core (always covered): NFL (#1 year-round), NBA, College Football, College Basketball, MLB
 Secondary (when interesting): Golf, Tennis, NHL, Soccer, College Baseball, WNBA
 
+The hierarchy is a TIEBREAKER between stories of equal calendar importance. On a normal Tier 3 day, an NFL trade beats an NBA trade. But on Championship Monday, the NCAA title game beats EVERYTHING. The calendar is king, not the sport.
+
 ## SPORTS CALENDAR & EVENT WEIGHTING
 
+THIS IS THE MOST IMPORTANT EDITORIAL DECISION IN EVERY ISSUE.
+
 Certain days on the sports calendar are MASSIVE and should dominate the newsletter. On these days, one story can and should take 70-90% of the issue.
+
+**THE DAY-AFTER RULE:** Tier 1 events dominate the NEXT day's newsletter too. The day after the NCAA Championship, Super Bowl, NBA Finals, World Series — that event IS the lead. Related stories (coaching changes, award winners, viral cultural moments like One Shining Moment, draft implications) cluster as supporting headlines immediately after. Build the top half of the newsletter around the Tier 1 event and its ripple effects.
 
 **TIER 1 — NEWSLETTER-DOMINATING EVENTS** (one story takes over):
 - Super Bowl (first Sunday in February) + next day reactions
 - NFL Draft (late April, especially Day 1)
 - NFL Free Agency opening (mid-March) — first 3-4 days
-- March Madness (mid-March through early April) — especially Sweet 16, Elite Eight, Final Four, Championship
+- March Madness (mid-March through early April) — especially Sweet 16, Elite Eight, Final Four, Championship AND the day after championship
 - NBA Finals (June)
 - World Series (late October)
 - College Football Playoff / National Championship (January)
@@ -376,9 +382,9 @@ Certain days on the sports calendar are MASSIVE and should dominate the newslett
 - Regular offseason news, mid-week games, standard transactions
 - This is where story decomposition matters most — find the juice in quieter news
 
-**BREAKING NEWS OVERRIDE:** If something stunning happens (major trade, injury to a superstar, firing, scandal), it overrides the calendar. Use a web search to gauge how big the story is. If the entire sports internet is talking about one thing, SLAP talks about that one thing.
+**BREAKING NEWS OVERRIDE:** A story overrides the calendar ONLY if it's a once-in-a-decade magnitude event: death of a major sports figure, a national crisis, a league-altering scandal. A star player requesting a trade is NOT this. A coaching hire is NOT this. A regular free agent signing is NOT this. Only truly extraordinary events override Tier 1 calendar events. When in doubt, the calendar wins.
 
-**DAILY CHECK:** Before writing, ask: "Is today near a Tier 1 or Tier 2 event?" If yes, weight coverage accordingly. If a Tier 1 event happened yesterday, today's newsletter is a reactions/fallout issue — lean into the best tweets and takes from the aftermath.
+**DAILY CHECK:** Before writing, ask: "Is today near a Tier 1 or Tier 2 event?" If yes, weight coverage accordingly. If a Tier 1 event happened yesterday, today's newsletter is a reactions/fallout issue — the event and its ripple effects own the top half of the newsletter.
 
 ## QUALITY TEST
 

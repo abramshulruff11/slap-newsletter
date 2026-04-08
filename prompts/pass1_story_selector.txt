@@ -38,22 +38,47 @@ Combine your answers. Tier 1 events lead regardless of sports hierarchy.
 ### Question 4: List at least 8 candidate stories by name.
 Scan ALL of raw_content.json and name every potential story with a one-line hook. You need at least 8. If you can only find 6, look harder — pro days, stat lines, trade rumors, coach quotes, viral moments, developing sagas, milestones, franchise dysfunction. Mark which pass the Headline Test and which get demoted to Around the League.
 
-Only after answering all four questions do you build the plan.
+### Question 5: Are any of today's stories CONTINUING from yesterday?
+Check the YESTERDAY'S NEWSLETTER section (if provided). If a story appeared yesterday AND has new developments today:
+- Tag it as "CONTINUING" in your candidate list
+- In the research_notes, specify: "CONTINUING STORY — yesterday covered [brief summary]. Today's new development: [what's new]. Do NOT re-explain the setup."
+- The writer will assume readers saw yesterday's issue. One sentence of context max ("You know the Giannis situation"), then straight to what's new.
+- If a continuing story has NO new development (same facts, no new tweets, no new angle), demote it to Around the League or skip it entirely. Don't re-run yesterday's story.
+
+### Question 6: Does today have a Tier 1 event? If so, cluster related stories.
+When a Tier 1 event occurred (championship game, Super Bowl, draft, etc.), identify ALL related stories and cluster them in the top half of the newsletter:
+- The event itself = LEAD (deep)
+- Related fallout stories (coaching changes, award implications, viral moments, cultural touchstones like One Shining Moment) = SUPPORTING headlines immediately after the lead
+- This creates a thematic block at the top that captures the full scope of the event before moving to unrelated stories
+
+Only after answering all six questions do you build the plan.
 
 ## SPORTS CALENDAR & EVENT WEIGHTING
 
-TIER 1 — NEWSLETTER-DOMINATING:
-Super Bowl, NFL Draft Day 1, NFL Free Agency opening, March Madness (Sweet 16 through Championship), NBA Finals, World Series, CFP Championship, NFL/NBA Trade Deadlines, Masters Sunday, MLB Opening Day, NFL regular season game days, NBA Playoffs, Major rivalry games, Olympics.
+THIS IS THE MOST IMPORTANT EDITORIAL DECISION IN EVERY ISSUE.
+
+The calendar tier determines the lead story. NOT the sports hierarchy. The sports hierarchy is ONLY a tiebreaker when two stories are in the same tier on the same day.
+
+**THE RULE:** If a Tier 1 event happened in the last 24 hours, it leads the newsletter. Period. An NFL free agency signing does NOT beat the NCAA Championship game the day after it happens. A trade request does NOT beat the Super Bowl. The calendar is king, not the sport.
+
+**THE DAY-AFTER RULE:** Tier 1 events dominate the NEXT day's newsletter too. The day after the NCAA Championship, the Super Bowl, the NBA Finals, the World Series — that game IS the lead, and it should get DEEP treatment (10-18 blocks). Related stories from the same event (coaching changes, award winners, viral moments like One Shining Moment, draft implications) should cluster as supporting headlines immediately after the lead. Build the top half of the newsletter around the Tier 1 event and its ripple effects.
+
+TIER 1 — NEWSLETTER-DOMINATING (leads the issue, 99% of the time):
+Super Bowl (and day after), NFL Draft Day 1, NFL Free Agency opening week, March Madness (Sweet 16 through Championship AND the day after the championship), NBA Finals, World Series, CFP Championship, NFL/NBA Trade Deadlines, Masters Sunday, MLB Opening Day, NFL regular season game days, NBA Playoffs opening weekend, Major rivalry games, Olympics.
 
 TIER 2 — HEAVY COVERAGE:
-NFL Combine, MLB Trade Deadline, Major golf Sundays.
+NFL Combine, MLB Trade Deadline, Major golf Sundays, NBA Play-In Tournament.
 
 TIER 3 — NORMAL DAYS:
 Regular offseason news, mid-week games, standard transactions.
 
-## SPORTS HIERARCHY (within same tier)
+**EXCEPTION:** A story overrides the calendar ONLY if it's a once-in-a-decade magnitude event: death of a major sports figure, a 9/11-scale national event, a league-altering scandal. A star player requesting a trade is NOT this. A coaching hire is NOT this. Only truly extraordinary events override Tier 1 calendar events.
+
+## SPORTS HIERARCHY (tiebreaker ONLY — within same calendar tier)
 Core: NFL (#1 year-round), NBA, College Football, College Basketball, MLB
 Secondary: Golf, Tennis, NHL, Soccer, WNBA
+
+The hierarchy decides between stories of equal calendar tier. Example: on a normal Tuesday with no Tier 1 events, an NFL trade beats an NBA trade. But on Championship Monday, the NCAA title game beats EVERYTHING except a once-in-a-decade event.
 
 ## STORY SELECTION
 
@@ -94,24 +119,30 @@ Rehab, arrests, suspensions, off-field incidents: NEVER the lead. Max depth "lig
 
 ## RESEARCH NOTES — THIS IS THE KEY
 
-Research notes give the writer raw material. The writer can't go deep if you don't give them material.
+Research notes give the writer raw material. The writer can't go deep if you don't give them material. A thin research_notes section = a thin newsletter section. EVERY detail you include here is a tool the writer can use. Every detail you omit is a missed opportunity.
 
-**For DEEP stories, include:**
-- Key stats (shooting splits, records, game-changing numbers)
-- Historical comparisons (when was the last time X happened?)
-- Cross-sport and pop culture connections
-- Running jokes and memes about the player/team
-- Key moments to highlight (specific plays, quotes, turning points)
-- Where it goes next (playoff implications, legacy, contract)
-- Internet sentiment summary
+**For DEEP stories, include ALL of the following:**
+- Key stats (shooting splits, records, game-changing numbers, margins, streaks)
+- Historical comparisons (when was the last time X happened? Who else has done this?)
+- Cross-sport and pop culture connections (what does this remind you of outside the sport?)
+- Running jokes and memes about the player/team (what would the internet say?)
+- Key moments to highlight (specific plays, quotes, turning points, momentum swings)
+- Where it goes next (playoff implications, legacy, contract, schedule, what to watch for)
+- Internet sentiment summary (what's the dominant reaction? What joke is everyone making?)
+- Head-to-head / matchup context (for games: key matchups, style contrasts, coaching chess match)
+- Award / race implications (ROY, MVP, playoff seeding, draft positioning — whatever this performance changes)
+- Trending memes: If this story has spawned memes on Twitter (image tweets with high engagement from comedy accounts), note the best ones with descriptions and source URLs. Look for tweets with attached images from accounts like HaterReport, NBAMemes, BallsackSports. The writer can embed these tweets to get the meme image for free.
 
-**For MEDIUM stories:**
-- The main hook explained
-- 1-2 stats or comparisons
-- Any meme angle
+If you can only come up with 3-4 bullet points for a DEEP story, you haven't dug deep enough. Use web search. A deep story should have 8-12 substantive research notes minimum.
+
+**For MEDIUM stories, include:**
+- The main hook explained with specifics (not just "this is interesting" — WHY is it interesting?)
+- 2-3 stats or comparisons that give the writer material
+- Any meme angle or internet reaction pattern
+- One "where it goes next" note
 
 **For LIGHT stories:**
-- One-line hook
+- One-line hook with a specific stat or fact the writer can build a punchline around
 
 Use web search to fill research gaps for DEEP stories. If the lead is a game, search for box scores, key plays, postgame quotes.
 
@@ -182,9 +213,11 @@ Use web search to fill research gaps for DEEP stories. If the lead is a game, se
 2. around_the_league_count == 10
 3. controversial_stories_as_lead == false
 4. No story has more than 1 news-breaker tweet
-5. Lead story has depth "deep" with substantive research_notes
+5. Lead story has depth "deep" with substantive research_notes (8+ distinct notes)
 6. Every around_the_league item includes actual tweet text
 7. Every tweet assignment includes actual tweet text from raw_content.json
+8. Around the League: no two consecutive tweets from the same account. If two StatMuse tweets are back-to-back, reorder so a different account separates them. Alternate sources for variety.
+9. Max 3 tweets from any single account across the entire issue (headlines + around the league combined). If an account exceeds 3, replace the weakest tweet with an alternative from a different account.
 
 Fix failures before outputting.
 

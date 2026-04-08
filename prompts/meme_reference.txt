@@ -1,0 +1,181 @@
+## MEME REFERENCE — When to Use Memes vs. GIFs
+
+GIFs are REACTIONS — short animations that convey an emotion. They say "this is how I feel."
+Memes are ARGUMENTS — static images with text overlays that make a specific point. They say "this is what happened, and here's why it's funny."
+
+Use a GIF when you want to show HOW someone feels.
+Use a meme when you want to make a COMPARISON, a TAKE, or a VISUAL JOKE with custom text.
+
+A section can have both. A meme makes the argument, a GIF delivers the emotional punchline.
+
+================================================================================
+HOW TO SPECIFY MEMES IN THE NEWSLETTER
+================================================================================
+
+There are TWO types of meme placements:
+
+### TYPE 1: GENERATED MEME (evergreen template + custom text)
+Use when a classic meme format fits and you want to write custom captions.
+
+```html
+<div class="meme-placeholder">
+MEME: [Template Name] | Top: "[top text]" | Bottom: "[bottom text]"
+</div>
+```
+
+Example:
+<div class="meme-placeholder">
+MEME: Drake Hotline Bling | Top: "Watching the game on ESPN" | Bottom: "Reading about it in SLAP the next day"
+</div>
+
+### TYPE 2: FOUND MEME (trending meme from a tweet or web search)
+Use when a specific meme is circulating about a current event (Tiger Woods crash memes, draft day memes, etc.) and you found it during research.
+
+```html
+<div class="meme-placeholder">
+MEME: [Description of the meme] | Source: [URL to the image]
+</div>
+```
+
+Example:
+<div class="meme-placeholder">
+MEME: Tiger Woods car with "me trying to drive home after watching my team lose" caption | Source: https://pbs.twimg.com/media/xxxxx.jpg
+</div>
+
+### SETUP LINES FOR MEMES
+
+Same rule as GIFs — every meme needs a setup line. But meme setup lines are often shorter because the meme itself contains text that does more work.
+
+GOOD:
+<p>Every NBA fan watching Cooper Flagg right now:</p>
+MEME: Galaxy Brain | panels about increasingly wild Flagg comparisons
+
+BAD:
+MEME: Galaxy Brain | panels about Flagg comparisons
+(No setup line — the meme just floats.)
+
+
+================================================================================
+MEME TEMPLATES BY JOKE TYPE
+================================================================================
+
+### COMPARISON / PREFERENCE — "This, not that"
+Use when someone chose one thing over another, or when two things should be compared.
+
+- **Drake Hotline Bling** (imgflip: 181913649) — Top: thing being rejected. Bottom: thing being chosen. Classic, works for anything.
+- **Distracted Boyfriend** (imgflip: 112126428) — Boyfriend (team/player), girlfriend being ignored (current situation), woman being looked at (new temptation). Three-way dynamic.
+- **Left Exit 12 Off Ramp** (imgflip: 124822590) — Car swerving off highway. Highway = the smart choice. Exit = the dumb choice they took.
+- **Two Buttons** (imgflip: 87743020) — Sweating guy choosing between two options. Use when a team/player faces an impossible dilemma.
+- **Corporate Needs You to Find the Difference** (imgflip: 180190441) — "They're the same picture." Use when two things are identical but shouldn't be (e.g., a team's roster before and after a "big" trade).
+
+### ESCALATION / LEVELS — "It keeps getting more extreme"
+Use when a stat line, situation, or take escalates through multiple levels.
+
+- **Galaxy Brain / Expanding Brain** (imgflip: 93895088) — 4-5 panels of increasingly "enlightened" takes. Perfect for devolving takes or increasingly wild stat comparisons.
+- **Vince McMahon Reaction** (imgflip: 27813981) — 4 panels of increasing excitement. (Note: this also exists as a GIF — use the meme version when you want custom text on each panel, GIF version when the escalation is implied.)
+- **Gru's Plan** (imgflip: 131940431) — 4 panels: plan sounds good → plan sounds good → realize the flaw → stare at the flaw. Use when a team's plan has an obvious problem they didn't see coming.
+- **Clown Applying Makeup** (imgflip: 178591752) — Progressive clown makeup. Each panel = a step deeper into delusion. Perfect for fans who keep defending a bad team/player.
+
+### DENIAL / COPIUM — "Refusing to accept reality"
+Use when a fanbase, player, or front office is in denial about their situation.
+
+- **This Is Fine Dog** — Also exists as a GIF, but the meme version lets you add custom text to the burning room. Use when you want to label WHAT is on fire.
+- **Copium Tank** — Person inhaling from a tank labeled "copium." Use when a fanbase is huffing hopium after a loss or bad signing.
+- **Clown Applying Makeup** — (see Escalation above, also works here)
+- **Change My Mind** (imgflip: 129242436) — Crowder sitting at table with a sign. Use for bold/provocative takes: "[Player] is the most overrated player in the NBA. Change my mind."
+
+### REACTION / SURPRISE — "Wait, what?"
+Use when something unexpected happened and you need a visual punchline.
+
+- **Surprised Pikachu** (imgflip: 155067746) — When the obvious outcome happens and everyone acts shocked. "Team trades away all their stars, then is surprised they're bad."
+- **Wait, It's All [X]? Always Has Been** (imgflip: 252600902) — Astronaut meme. Use when something that seems new was actually always the case.
+- **Math Lady / Confused Calculation** — Woman surrounded by floating equations. When a contract, cap situation, or stat doesn't make sense.
+- **Monkey Puppet Side-Eye** (imgflip: 148909805) — Awkward glance. When someone is caught or called out.
+
+### DOMINATION / SUPERIORITY — "One thing destroying another"
+Use when a player, team, or stat line is just demolishing everything.
+
+- **Thanos Infinity Stones** — "Fine, I'll do it myself" or "I am inevitable." When one player is carrying an entire team/game.
+- **Flex Tape** (imgflip: 102156234) — "That's a lot of damage!" When a stat line or trade is devastating.
+- **Pepe Silvia Conspiracy Board** — When someone's stats or a team's dysfunction requires a conspiracy-level breakdown to explain.
+
+### BETRAYAL / ABANDONMENT — "You left me"
+Use for trades, free agency departures, coaching changes.
+
+- **Wolverine Holding Photo** — Lying in bed, holding a framed photo of the thing that's gone. "[City] fans looking at old [player] highlights."
+- **Squidward Looking Out Window** — Watching someone else have what you lost. "Sixers fans watching [traded player] ball out somewhere else."
+- **Fresh Prince "How Come He Don't Want Me"** — For gut-punch departures. Also exists as a GIF — use the meme when you want to add text, GIF when the emotion speaks for itself.
+- **You Could Not Live With Your Own Failure** (Thanos) — "And where did that bring you? Back to me." When a player returns to a former team or a team repeats a mistake.
+
+### SELF-DESTRUCTION / BAD DECISIONS — "They did this to themselves"
+Use when a team or player makes an obviously bad choice.
+
+- **Eric Andre Shooting Hannibal** (imgflip: 97984) — "Why would [someone else] do this?" Shoots own teammate/franchise then blames others.
+- **Bike Spoke Meme** — Guy puts stick in his own bike wheel, then blames the fall on someone else. Same energy as Eric Andre.
+- **Disaster Girl** (imgflip: 97984) — Little girl smiling in front of burning house. When a team burns it all down and seems happy about it.
+- **Is This a Pigeon?** (imgflip: 100947) — Butterfly meme. "Is this [wrong label]?" When someone fundamentally misidentifies what they're looking at. "Knicks looking at a 6-seed: 'Is this a championship contender?'"
+
+### IRONY / HYPOCRISY — "Saying one thing, doing another"
+Use when there's a contradiction between words and actions.
+
+- **Spider-Man Pointing at Spider-Man** (imgflip: 119215120) — When two things/people are identical but acting like they're different.
+- **They're the Same Picture** (see Comparison above)
+- **Trade Offer** (imgflip: 309868304) — "I receive: [good thing]. You receive: [bad thing]." Perfect for lopsided trades.
+- **Panik / Kalm / Panik** (imgflip: 226297822) — Three panels of emotional whiplash. Good for game recaps with momentum swings.
+
+
+================================================================================
+TRENDING MEMES — HOW TO FIND AND USE THEM
+================================================================================
+
+Trending memes are reactive to current events. They appear on Twitter as image tweets, usually within 24-48 hours of a big moment. You CANNOT generate these from templates — they're custom images the internet creates.
+
+### WHERE THEY COME FROM:
+- Image attachments on tweets from comedy accounts (HaterReport, NBAMemes, BallsackSports, NOTSportsCenter)
+- Reddit sports subreddits (r/nba, r/nfl, r/cfb)
+- Instagram meme accounts
+
+### HOW TO USE THEM IN THE PIPELINE:
+During Pass 1 research, if a major story has spawned memes (you'll see them in the tweet feed as image tweets with high engagement), note the best ones in research_notes with descriptions. The writer can then either:
+1. Embed the tweet that CONTAINS the meme (easiest — the meme comes along as part of the tweet embed)
+2. Reference the meme image directly if available as a standalone URL
+
+### WHEN TRENDING MEMES MATTER MOST:
+- Major injuries with visual moments (Tiger Woods crash, player collapsing)
+- Draft day (prospect memes are always gold)
+- Trade deadline (photoshopped jerseys, "goodbye" edits)
+- Playoff eliminations (crying Jordan, faded flair)
+- Historic stat lines (custom comparison graphics)
+- Coaching hires/fires (Welcome/goodbye edits)
+
+### RULE: Embed the tweet when possible.
+If a great meme is attached to a tweet from one of your source accounts, just embed the tweet. The meme image renders as part of the embed. Don't try to extract and re-host the image — embed the tweet and let the platform do the work.
+
+
+================================================================================
+MEME vs. GIF DECISION TREE
+================================================================================
+
+Ask yourself:
+
+1. Am I making a COMPARISON between two things? → MEME (Drake, Distracted Boyfriend, Trade Offer)
+2. Am I showing ESCALATION with custom text at each level? → MEME (Galaxy Brain, Clown Makeup)
+3. Am I reacting to something with pure EMOTION? → GIF (Vince McMahon, blinking guy, MJ crying)
+4. Am I showing a player/team's CONTRADICTION? → MEME (Spider-Man pointing, Eric Andre)
+5. Am I making a TAKE that needs a visual? → MEME (Change My Mind, Is This a Pigeon)
+6. Did the internet already make a SPECIFIC meme about this story? → FOUND MEME (embed the tweet)
+7. Am I just punctuating a moment with a reaction? → GIF
+
+When in doubt: if you need custom text on the image to make the joke work, it's a meme. If the image/animation alone delivers the punchline, it's a GIF.
+
+
+================================================================================
+ROTATION & QUALITY RULES
+================================================================================
+
+1. Max 2-3 generated memes per issue. Don't overdo it — memes are heavier than GIFs. Too many and the newsletter feels like a meme page, not a newsletter.
+2. Drake Hotline Bling: max 1x per week. It's the most overused meme format on the internet.
+3. Surprised Pikachu: max 1x per week. Same reason.
+4. If a trending meme is circulating about today's story, USE IT over a generated template. Trending > evergreen. The reader has probably already seen the trending meme and will appreciate the recognition.
+5. Every meme must pass the same punchline test as GIFs: can you explain the joke in one sentence? If not, pick a different format.
+6. Generated meme captions should be SHORT. Top text: 5-10 words max. Bottom text: 5-10 words max. If you need a paragraph to set up the meme, the meme isn't working.

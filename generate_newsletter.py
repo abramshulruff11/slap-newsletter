@@ -630,6 +630,18 @@ def pass1_story_selector(raw: dict, client: anthropic.Anthropic, tracker: CostTr
         })
         print("  [PROMPT] rolling_feedback.txt loaded")
 
+    gif_reference = load_prompt("gif_reference.txt")
+    if gif_reference:
+        system_blocks.append({
+            "type": "text",
+            "text": (
+                "## GIF REFERENCE\n\n"
+                "Use this menu to select GIFs. Rotate selections.\n\n"
+                + gif_reference
+            ),
+        })
+        print("  [PROMPT] gif_reference.txt loaded")
+
     total_chars = sum(len(b["text"]) for b in system_blocks)
     print(f"  [PROMPT] Pass 1 system prompt: {total_chars:,} chars")
 
@@ -819,6 +831,31 @@ def pass2_writer(plan: dict, raw: dict, client: anthropic.Anthropic, tracker: Co
             ),
         })
         print("  [PROMPT] rolling_feedback.txt loaded")
+
+    gif_reference = load_prompt("gif_reference.txt")
+    meme_reference = load_prompt("meme_reference.txt")
+
+    if gif_reference:
+        system_blocks.append({
+            "type": "text",
+            "text": (
+                "## GIF REFERENCE\n\n"
+                "Use this menu to select GIFs. Rotate selections.\n\n"
+                + gif_reference
+            ),
+        })
+        print("  [PROMPT] gif_reference.txt loaded")
+
+    if meme_reference:
+        system_blocks.append({
+            "type": "text",
+            "text": (
+                "## MEME REFERENCE\n\n"
+                "Use this menu to select and specify memes.\n\n"
+                + meme_reference
+            ),
+        })
+        print("  [PROMPT] meme_reference.txt loaded")
 
     total_chars = sum(len(b["text"]) for b in system_blocks)
     print(f"  [PROMPT] Pass 2 system prompt: {total_chars:,} chars")
