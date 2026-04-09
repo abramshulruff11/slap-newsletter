@@ -1,304 +1,279 @@
 {
-  "date": "2026-04-08",
+  "date": "2026-04-09",
   "editorial_reasoning": {
-    "calendar_tier": "TIER 3 — Normal April day, no major events",
+    "calendar_tier": "TIER 3 — Normal day (NFL draft season, NBA regular season ending, Masters starting)",
     "tweet_volume": [
       {
-        "topic": "NFL Draft/Mendoza",
-        "approx_tweets": 8,
-        "accounts": 4
-      },
-      {
-        "topic": "NBA tanking",
-        "approx_tweets": 5,
-        "accounts": 3
-      },
-      {
-        "topic": "Michael Malone UNC",
-        "approx_tweets": 3,
-        "accounts": 2
-      },
-      {
-        "topic": "General NBA games",
+        "topic": "NBA playoffs/OKC Thunder #1 seed",
         "approx_tweets": 10,
+        "accounts": 6
+      },
+      {
+        "topic": "NFL Draft intel/Fernando Mendoza",
+        "approx_tweets": 8,
+        "accounts": 5
+      },
+      {
+        "topic": "NBA player performances",
+        "approx_tweets": 6,
         "accounts": 4
+      },
+      {
+        "topic": "Masters Tournament starting",
+        "approx_tweets": 3,
+        "accounts": 3
       }
     ],
-    "dominant_topic": "NFL Draft content leads, but NBA tanking has the funniest content",
+    "dominant_topic": "OKC Thunder clinching #1 seed leads — historic achievement + Chet's record performance",
     "candidates_considered": [
       {
-        "story": "Fernando Mendoza skipping NFL Draft",
-        "hook": "Projected #1 pick wants to stay home with family in Miami",
+        "story": "OKC Thunder clinch #1 seed, Chet Holmgren historic stat line",
+        "hook": "Third straight #1 seed, historic NBA record, defending champs rolling",
         "verdict": "HEADLINE — DEEP"
       },
       {
-        "story": "Michael Malone to UNC",
-        "hook": "NBA champion coach goes to college for $50M",
+        "story": "Fernando Mendoza George Floyd controversy",
+        "hook": "Top draft pick has problematic old comment resurface",
+        "verdict": "HEADLINE — LIGHT (controversial player rule)"
+      },
+      {
+        "story": "NBA individual performances (Cade return, other stat lines)",
+        "hook": "Various player milestones",
         "verdict": "HEADLINE — MEDIUM"
       },
       {
-        "story": "NBA tanking epidemic",
-        "hook": "Kings literally fouled Seth Curry on purpose while winning",
-        "verdict": "HEADLINE — MEDIUM"
-      },
-      {
-        "story": "Mike Vrabel affair scandal",
-        "hook": "Patriots coach caught with reporter, both married",
+        "story": "Masters Tournament beginning",
+        "hook": "90th Masters tees off with strong field",
         "verdict": "HEADLINE — LIGHT"
       },
       {
-        "story": "Sam Darnold wedding",
-        "hook": "Super Bowl winner adds another ring",
+        "story": "NFL draft intel and team moves",
+        "hook": "Draft approaching, various team moves",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "Cooper Flagg 31 points",
-        "hook": "Rookie putting up numbers",
+        "story": "Texans pick up Stroud/Anderson options",
+        "hook": "Expected moves",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "Jeremiah Fears 40 points",
-        "hook": "First rookie since LeBron with 40/5/5/3",
+        "story": "Various NBA Kings tanking investigation",
+        "hook": "Strategy mistake not tanking",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "KD vs Dillon Brooks trash talk",
-        "hook": "KD dropped him after the comment",
+        "story": "College basketball transfers/coaching moves",
+        "hook": "Offseason movement",
         "verdict": "AROUND THE LEAGUE"
       }
     ]
   },
   "stories": [
     {
-      "headline": "Fernando Mendoza Is Skipping the NFL Draft to Stay Home",
+      "headline": "Thunder Lock Up Third Straight #1 Seed as Chet Makes NBA History",
       "depth": "deep",
-      "editorial_direction": "This is actually a sweet story disguised as draft news. Lead with the uniqueness (projected #1 pick staying home), then get into the Miami connection (won title there, family there, mom has MS). The Raiders already learning his playbook angle is wild. Compare to other #1 picks who skipped.",
+      "editorial_direction": "Historic achievement on multiple levels. Thunder join Lakers/Warriors as only teams this century with 3 straight #1 seeds. Chet's stat line is NBA record territory. Focus on the championship defense angle and what this means for playoffs.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2041558894913142823#m",
-          "account": "@AdamSchefter",
-          "text": "Projected No. 1 overall pick Fernando Mendoza has informed the NFL that he is not planning to attend the NFL Draft in Pittsburgh this month, per sources. Mendoza wants to share the draft experience with his family in Miami.",
-          "role": "news"
-        },
-        {
-          "url": "https://twitter.com/AdamSchefter/status/2041561230184186053#m",
-          "account": "@AdamSchefter",
-          "text": "The last time a No. 1 overall pick QB did not attend the NFL Draft was in 2021, when the Jaguars selected Trevor Lawrence.",
+          "url": "https://twitter.com/statmuse/status/2042095459317977198#m",
+          "account": "@StatMuse",
+          "text": "Chet Holmgren vs LAC:\n\n30 PTS\n14 REB\n5 AST\n2 STL\n4 BLK\n10-13 FG\n\nThe first player in NBA history with those numbers on 75+ FG% in under 35 MP.",
           "role": "stat"
         },
         {
-          "url": "https://twitter.com/AdamSchefter/status/2041674249169936451#m",
-          "account": "@AdamSchefter",
-          "text": "More about Fernando Mendoza, the projected No. 1 pick in the NFL draft, informing the league that he is not planning to attend the draft:\n\nhttps://www.espn.com/nfl/story/_/id/48421461/sources-fernando-mendoza-not-planning-attend-nfl-draft",
-          "role": "news"
+          "url": "https://twitter.com/TheNBACentel/status/2041885807573668307#m",
+          "account": "@TheNBACentel",
+          "text": "Deandre Ayton reportedly asks teammates to gently place the basketball directly into his palms during live play\n\n(Via @LakersLead)",
+          "role": "comedy"
         }
       ],
       "research_notes": {
         "key_stats": [
-          "<cite index=\"1-14,8-4\">Led Indiana to undefeated season and national title, beating Miami in Miami's home stadium</cite>",
-          "<cite index=\"5-11,5-12\">3,535 passing yards, 41 TDs, 6 INTs, won Heisman Trophy in 2025</cite>",
-          "<cite index=\"3-15,3-16\">Last #1 pick to skip draft was Travon Walker in 2022, stayed in Atlanta hotel</cite>"
-        ],
-        "personal_angle": [
-          "<cite index=\"8-4\">Mendoza's mother Elsa has lived with multiple sclerosis for over 15 years and uses wheelchair</cite>",
-          "<cite index=\"1-12,1-13,1-14\">Miami is where he grew up dreaming of being a pro QB, and where he won the national title against Miami</cite>"
-        ],
-        "raiders_context": [
-          "<cite index=\"4-5,4-7,4-8\">Mendoza already learning Raiders offense with Brian Griese, installing playbook like Joe Burrow did</cite>",
-          "<cite index=\"4-11\">Raiders signed Kirk Cousins for $20M guaranteed, may not start Mendoza right away</cite>"
+          "OKC 64-16, third straight #1 seed",
+          "Chet: 30 PTS, 14 REB, 5 AST, 2 STL, 4 BLK on 76.9% shooting in 31 minutes",
+          "First player in NBA history with those numbers on 75+ FG% in under 35 minutes",
+          "SGA extended streak to 141 straight games with 20+ points (NBA record)",
+          "Thunder won 19 of last 20 games",
+          "Only teams with 3 straight #1 seeds this century: Lakers (2008-10), Warriors (2015-17), Thunder (2024-26)"
         ],
         "historical_context": [
-          "<cite index=\"3-17,3-18\">Last three #1 picks (Bryce Young, Caleb Williams, Cam Ward) all attended draft</cite>",
-          "<cite index=\"3-25,3-26\">Every #1 pick in 2000s attended, this is more recent trend</cite>"
+          "Thunder defending 2025 NBA champions",
+          "If they win one more game, they'll join Bulls (1996-97) and Warriors (2016-17) as only teams with 65+ wins in back-to-back seasons",
+          "Thunder have home court advantage throughout playoffs",
+          "Last season they went 2-0 in Game 7s at home during championship run"
         ],
-        "draft_logistics": [
-          "<cite index=\"2-4,2-9\">Raiders hold #1 pick, draft April 23-25 in Pittsburgh</cite>",
-          "<cite index=\"7-10\">NFL invitation restrictions make it hard to bring teammates to ceremony</cite>"
+        "key_moments": [
+          "Chet scored 24 points in first half",
+          "Thunder built 25-point lead early",
+          "Shot 58.1% from field",
+          "Allowed no fast-break field goals to Clippers",
+          "SGA sat out 4th quarter with game decided"
         ],
-        "scouting_report": [
-          "<cite index=\"5-9,5-17\">6-foot-5, 225 pounds, 79.2% adjusted completion percentage ranked 2nd nationally</cite>",
-          "<cite index=\"5-21,5-22\">Played 97% of snaps in shotgun, needs work under center for NFL</cite>"
+        "cross_connections": [
+          "Home court proved crucial in 2025 championship - went 2-0 in Game 7s at home",
+          "Thunder went 5-5 on road in playoffs vs incredible at home",
+          "Paycom Center sold out 41 consecutive games this season"
         ],
-        "where_it_goes": [
-          "Draft in 15 days, Raiders visit Tuesday, will celebrate with family in Miami instead of Pittsburgh stage moment"
-        ]
+        "meme_angles": [
+          "Defending champs making it look easy",
+          "Chet is evolved basketball player",
+          "Thunder are must-see TV in playoffs"
+        ],
+        "where_it_goes": "First round starts April 18, likely vs #8 seed from play-in. Championship defense begins with massive home court edge. Can they become first back-to-back champs since 2018 Warriors?",
+        "playoff_implications": "Thunder get home court throughout entire playoffs. Play-in tournament April 14-17 determines their first round opponent. Avoiding Spurs/Nuggets side of bracket until potential Conference Finals"
       }
     },
     {
-      "headline": "Michael Malone Leaves NBA Championship for $50 Million College Experiment",
-      "depth": "medium",
-      "editorial_direction": "This is UNC going full pro model after Belichick. Focus on the money ($8.3M/year), the NBA-to-college trend, and his daughter already being at UNC. The firing from Denver adds intrigue.",
+      "headline": "Top Draft Pick Fernando Mendoza Under Fire for Resurfaced George Floyd Comment",
+      "depth": "light",
+      "editorial_direction": "Report the fact, no commentary. Controversial player story gets minimal coverage per rules.",
       "tweets": [
         {
-          "url": "https://twitter.com/JonRothstein/status/2041627083646886381#m",
-          "account": "@JonRothstein",
-          "text": "Michael Malone has officially signed a six-year contract worth more than $50 million dollars plus incentives to be the next head coach at North Carolina, per release.",
+          "url": "https://twitter.com/HaterReport/status/2042012606341218542#m",
+          "account": "@HaterReport",
+          "text": "Fernando Mendoza is under fire after a comment he made on a LeBron James post about George Floyd has resurfaced: \n\nMendoza: \"You need to explain the context of the first photo of the cop on the man, because you never know what he did wrong 🤷‍♂️\"",
           "role": "news"
-        },
-        {
-          "url": "https://twitter.com/SportsCenter/status/2041644756959142131#m",
-          "account": "@SportsCenter",
-          "text": "\"I have a chance to be a part of something special. ... This was the only college job I'd ever consider.\" \n\nMichael Malone on his decision to become the head coach of @UNC_Basketball.",
-          "role": "quote"
         }
       ],
       "research_notes": {
-        "money_details": [
-          "<cite index=\"16-6,16-7,16-8\">6-year, $50M contract averaging $8.33M/year, only Bill Self makes more among public school coaches</cite>",
-          "<cite index=\"16-18,16-19\">UNC committed $6.75M annually in revenue sharing to men's basketball</cite>"
-        ],
-        "nba_background": [
-          "<cite index=\"17-17,18-15\">Won 2023 NBA championship with Denver, franchise's all-time winningest coach</cite>",
-          "<cite index=\"19-1,19-9\">Fired by Nuggets last spring with less than a week left in regular season</cite>"
-        ],
-        "unc_connection": [
-          "<cite index=\"12-6,15-5\">His daughter Bridget is a sophomore volleyball player for the Tar Heels</cite>",
-          "<cite index=\"11-19,15-6\">Observed UNC's first 5-6 practices last October, spoke to team after practice</cite>"
-        ],
-        "pro_model_trend": [
-          "<cite index=\"17-22,16-24\">Joins Bill Belichick in UNC's pro coaching experiment, both from championship backgrounds</cite>",
-          "<cite index=\"19-5,19-15\">UNC typically keeps job within 'Carolina Family', this is major departure from tradition</cite>"
-        ],
-        "coaching_resume": [
-          "<cite index=\"18-7,18-8\">510 regular season wins, 44 postseason wins (20 more than any other Denver coach)</cite>",
-          "<cite index=\"15-12,15-13\">College assistant experience but hasn't coached college since 2001</cite>"
+        "key_facts": [
+          "Mendoza projected #1 overall pick",
+          "Comment was on 2020 LeBron James Instagram post",
+          "Mendoza not attending draft (per earlier reports)",
+          "Odds were -20000 to be #1 pick"
         ]
       }
     },
     {
-      "headline": "The NBA Tanking Epidemic Has Reached Peak Absurdity",
+      "headline": "Cade Cunningham Returns from Collapsed Lung, NBA Stat Lines Everywhere",
       "depth": "medium",
-      "editorial_direction": "Lead with the Kings fouling Seth Curry on purpose while WINNING. This isn't even trying to hide it anymore. Draymond calling it out adds legitimacy. Adam Silver's concerns about gambling implications.",
+      "editorial_direction": "Multiple solid individual performances worth highlighting. Cade's return is the main story, others are stat porn.",
       "tweets": [
         {
-          "url": "https://twitter.com/HaterReport/status/2041772691040919981#m",
-          "account": "@HaterReport",
-          "text": "We have NEVER seen this level of tanking bruh \n\nDoug Christie literally instructed his players on the Kings TO FOUL SETH CURRY ON PURPOSE while up 101-100 in the 4th quarter \n\nINSANE 😭💀",
-          "role": "comedy"
+          "url": "https://twitter.com/SportsCenter/status/2042024682510041592#m",
+          "account": "@ESPNNBA",
+          "text": "Cade Cunningham is BACK after a collapsed left lung 🙏\n\nSmooth as ever. Cunningham wastes no time finding his rhythm after missing time since March 19 while recovering from the injury 💪",
+          "role": "news"
         },
         {
-          "url": "https://twitter.com/HaterReport/status/2041756221871387131#m",
-          "account": "@HaterReport",
-          "text": "Draymond Green about the tanking epidemic: \n\n\"I saw a team tonight foul Seth Curry with three minutes to go in the game for no reason.\"\n\nOn what should be done about it: \n\n\"Keep fining teams.\"",
-          "role": "quote"
-        },
-        {
-          "url": "https://twitter.com/StatMuse/status/2041754522054238711#m",
+          "url": "https://twitter.com/statmuse/status/2042051770071794000#m",
           "account": "@StatMuse",
-          "text": "Every teams leading scorer tonight:\n\nBKN — EJ Liddell\nUTA — Kennedy Chandler\nIND — Ethan Thompson\nCHI — Rob Dillingham\nMIN — Ayo Dosunmu \nLAL — Rui Hachimura\nWAS — Bilal Coulibaly\nTOR — Scottie Barnes \nMIA — Andrew Wiggins\nMIL — AJ Green\nNOP — Jeremiah Fears\nDAL — Cooper Flagg\nLAC — Kawhi Leonard\nOKC — Shai Gilgeous-Alexander\nPHX — Devin Booker\nHOU — Kevin Durant\n\nFinal week of the regular season.",
+          "text": "Cade in his return vs Milwaukee:\n\n13 PTS\n5 REB\n10 AST\n6-11 FG\n\nLeading all guards in double-doubles this season.",
+          "role": "stat"
+        },
+        {
+          "url": "https://twitter.com/statmuse/status/2042050698469134802#m",
+          "account": "@StatMuse",
+          "text": "Terrence Shannon Jr. vs Orlando:\n\n33 PTS\n5 AST\n11-14 FG\n\nThe first Timberwolf with a 30/5a game on 75+ FG% since DLo in 2022.",
           "role": "stat"
         }
       ],
       "research_notes": {
-        "kings_example": [
-          "<cite index=\"24-24,24-25,24-26,24-28\">Alex Sarr fouled out in 22 minutes with 5 fouls in first 4 minutes of 3rd quarter, coach didn't pull him</cite>",
-          "<cite index=\"24-31,24-32\">Wizards benched Coulibaly (19 min) and Carrington (26 min) entire 4th quarter while losing lead</cite>"
+        "cade_return": [
+          "Missed games since March 19 with collapsed left lung",
+          "13 PTS, 5 REB, 10 AST in return",
+          "Leading all guards in double-doubles this season"
         ],
-        "draymond_reaction": [
-          "Doug Christie fouled Seth Curry intentionally while leading 101-100 with 3 minutes left",
-          "Draymond called it unprecedented level of obvious tanking"
+        "other_performances": [
+          "Terrence Shannon Jr: 33 PTS, 5 AST on 79% shooting",
+          "Evan Mobley: 22 PTS, 19 REB, 3 BLK",
+          "Jericho Sims: first Bucks center triple-double since Larry Sanders 2012"
         ],
-        "silver_concerns": [
-          "<cite index=\"24-17,24-18,24-19\">Adam Silver says decision needs to be made at ownership level, has 'integrity implications' for gambling</cite>",
-          "<cite index=\"24-16\">Third of fan bases actively rooting against their teams for two months</cite>"
-        ],
-        "systemic_problem": [
-          "<cite index=\"30-1,30-2\">Volume of teams tanking unprecedented, full-blown race to bottom despite flattened odds</cite>",
-          "Tankathon odds show multiple teams competing for worst record simultaneously"
-        ]
+        "context": "Regular season winding down, players positioning for playoffs"
       }
     },
     {
-      "headline": "Mike Vrabel and Married Reporter Caught in Arizona Hotel Scandal",
+      "headline": "90th Masters Begins with Star-Studded Field",
       "depth": "light",
-      "editorial_direction": "Report the facts, no commentary. Both married to other people, caught at luxury hotel in Sedona. Vrabel married since 1999, Russini since 2020. Let the details speak for themselves.",
+      "editorial_direction": "Masters starting is news but not dominant story today. Quick setup of field and favorites.",
       "tweets": [
         {
-          "url": "https://twitter.com/HaterReport/status/2041674845688058067#m",
-          "account": "@HaterReport",
-          "text": "Patriots head coach Mike Vrabel and New York Times NFL reporter Dianna Russini were seen holding hands, hugging, and spending time together at a luxury hotel in Sedona, Arizona.\n\nBoth are married. TO OTHER PEOPLE 😳\n\nMike Vrabel has been married to Jen Vrabel since 1999.\n\nDianna Russini has been married to Kevin Goldschmidt, a Shake Shack executive, since 2020.",
-          "role": "news"
+          "url": "https://twitter.com/FieldYates/status/2042174321234194899#m",
+          "account": "@JeffDarlington",
+          "text": "Today at 1:44 pm, Gary Woodland will tee off at The Masters. It's been less than three years since he had a lesion removed from his brain, but the tough journey since has proven that courage and pain can live side by side. His story:",
+          "role": "inspiring"
         }
       ],
       "research_notes": {
-        "basic_facts": [
-          "Patriots head coach Mike Vrabel and NY Times reporter Dianna Russini seen at luxury Sedona hotel",
-          "Both married to other people - Vrabel since 1999, Russini since 2020",
-          "Seen holding hands and hugging according to reports"
+        "field_details": [
+          "91 players in field",
+          "Defending champion Rory McIlroy",
+          "Scottie Scheffler seeking third green jacket",
+          "Honorary starters: Nicklaus, Player, Watson"
         ],
-        "professional_context": [
-          "Vrabel is Patriots head coach in his first season",
-          "Russini covers NFL for New York Times",
-          "Potential conflict of interest between coach and reporter covering league"
+        "storylines": [
+          "Gary Woodland brain lesion recovery story",
+          "First major of 2026",
+          "April 9-12 dates"
         ]
       }
     }
   ],
   "around_the_league": [
     {
-      "url": "https://twitter.com/StatMuse/status/2041700501239005393#m",
-      "account": "@StatMuse",
-      "text": "Jeremiah Fears vs Utah:\n\n40 PTS\n5 REB\n6 AST\n3 STL\n+30\n\nThe first rookie with a 40/5/5/3 game since LEBRON JAMES."
+      "url": "https://twitter.com/FieldYates/status/2041903801959891115#m",
+      "account": "@FieldYates",
+      "text": "The Texans have exercised the 2027 fifth-year options on the contracts of QB CJ Stroud and All Pro DE Will Anderson, per source.  \n\nStroud is now due $25.904M in 2027, while Anderson is due $21.512M.   \n\nBoth players are also extension eligible."
     },
     {
-      "url": "https://twitter.com/HaterReport/status/2041856749402030352#m",
-      "account": "@HaterReport",
-      "text": "Kevin Durant to Dillon Brooks\n\n\"My worst season is better than your best\"\n\nKD immediately dropped Brooks after 🥶"
-    },
-    {
-      "url": "https://twitter.com/StatMuse/status/2041856333280862587#m",
-      "account": "@StatMuse",
-      "text": "Jaylen Brown last 10 games:\n\n32.2 PPG\n6.5 RPG\n5.5 APG\n1.1 SPG\n\nHow many players have been better this season?"
-    },
-    {
-      "url": "https://twitter.com/HaterReport/status/2041732057118670856#m",
-      "account": "@HaterReport",
-      "text": "Former teammates Jalen Green and Amen Thompson HAVE WORDS\n\nAmen: \"Don't talk. I'm on you boy. I'm on you\" 👀"
-    },
-    {
-      "url": "https://twitter.com/AdamSchefter/status/2041514761104376298#m",
+      "url": "https://twitter.com/AdamSchefter/status/2041973596889694646#m",
       "account": "@AdamSchefter",
-      "text": "Hall of Famer Steve McMichael, a key member of the dominating defense that helped the 1985 Bears win the Super Bowl, has been diagnosed with chronic traumatic encephalopathy, the Concussion & CTE Foundation said."
+      "text": "Falcons OT Kaleb McGary announced his retirement today, and on the same day, the Falcons reached agreement with former Chiefs RT Jawaan Taylor."
     },
     {
-      "url": "https://twitter.com/ShamsCharania/status/2041636471887872061#m",
+      "url": "https://twitter.com/ShamsCharania/status/2041983840944844983#m",
       "account": "@ShamsCharania",
-      "text": "Spurs star Victor Wembanyama is listed doubtful to play in Wednesday's game against Portland due to a rib contusion but there's confidence he will play at least one of the team's final three regular-season games."
+      "text": "The NBA is looking into what multiple sources say was a strategy mistake by Kings coach Doug Christie on an intentional foul of Seth Curry while leading the Warriors with over 3 minutes left in Tuesday's game:"
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2041707920157478948#m",
+      "url": "https://twitter.com/JonRothstein/status/2042010090174103645#m",
+      "account": "@JonRothstein",
+      "text": "Source: Eastern Washington's Andrew Cook will enter the Transfer Portal. \n\nAveraged 15.8 PPG in 2024-25. \n\nWill need an NCAA waiver."
+    },
+    {
+      "url": "https://twitter.com/statmuse/status/2042052620223697097#m",
       "account": "@StatMuse",
-      "text": "Hitters with 20+ strikeouts and a batting average under .200 this season:\n\n— Big Dumper\n\nEnd of list."
+      "text": "Jericho Sims vs Detroit:\n\n11 PTS\n11 REB\n10 AST (career-high)\n2 STL\n\nThe first Bucks center with a triple-double since Larry Sanders in 2012."
     },
     {
-      "url": "https://twitter.com/HaterReport/status/2041747663276642323#m",
-      "account": "@HaterReport",
-      "text": "JJ Redick said Deandre Ayton can't catch 😭💀\n\n\"He's had trouble catching the ball, so we've ran a bunch of plays for him, he's just had trouble catching the ball\""
-    },
-    {
-      "url": "https://twitter.com/BallsackSports/status/2041611756095611046#m",
-      "account": "@BallsackSports",
-      "text": "You can sit courtside at tonight's Bronny-SGA showdown for $5,518. Get-in price $78.\n\nBronny FC, our time is now. (Via @TickPick)"
-    },
-    {
-      "url": "https://twitter.com/SportsCenter/status/2041615892014936119#m",
+      "url": "https://twitter.com/SportsCenter/status/2041917242024034419#m",
       "account": "@SportsCenter",
-      "text": "Jon Rahm skipping it off the water and in the hole on the 16th before the Masters will always be a must-watch 😳"
+      "text": "Forward Berke Buyuktuncel got a tattoo to commemorate the Huskers historic season, and then entered the transfer portal a day later."
+    },
+    {
+      "url": "https://twitter.com/AdamSchefter/status/2042205780447830179#m",
+      "account": "@AdamSchefter",
+      "text": "Arizona St. WR Jordyn Tyson, a projected first-round pick, will hold his own individual workout day for NFL teams on Friday, April 17 at Arizona State."
+    },
+    {
+      "url": "https://twitter.com/statmuse/status/2041989818582806723#m",
+      "account": "@StatMuse",
+      "text": "Taylor Ward vs White Sox:\n\n4-5\n3 2B\n2 RBI\n\nThe second player with 3 soubles in a game this season (both did it today)."
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2042140432423895199#m",
+      "account": "@HaterReport",
+      "text": "This fan travelled all the way from Italy to San Antonio to see Wemby, who is not playing\n\nBro looks PISSED 😭😭"
+    },
+    {
+      "url": "https://twitter.com/ClutchPoints/status/2042119446488334762#m",
+      "account": "@ClutchPoints",
+      "text": "This is the first time in Nikola Jokic's career that he has won 10 games in a row 😳\n\n(via @MileHighRachel)"
     }
   ],
   "closer": {
-    "hook": "PMT having their best Masters week ever",
+    "hook": "PFT going on Pittsburgh radio to announce Konnor Griffen Pirates signing",
     "tweets": [
       {
-        "url": "https://twitter.com/PFTCommenter/status/2041647984597758125#m",
+        "url": "https://twitter.com/PFTCommenter/status/2041865355736322232#m",
         "account": "@PFTCommenter",
-        "text": "Im being 100% serious there was zero chance Trump was gona blow up the world right before the Masters"
+        "text": "Going on @DVERADIO at 815 central in pittsburgh . THE PIRATES HAVE SIGNED KONNOR GRIFFEN. THIS IS NOT A DRILL https://dve.iheart.com"
       }
     ]
   },
   "quality_check": {
     "total_headlines": 4,
-    "total_tweets_assigned": 18,
+    "total_tweets_assigned": 8,
     "around_the_league_count": 10,
     "controversial_stories_as_lead": false
   }
