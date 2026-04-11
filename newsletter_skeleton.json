@@ -1,217 +1,338 @@
 {
-  "date": "2026-04-10",
+  "date": "2026-04-11",
   "editorial_reasoning": {
-    "calendar_tier": "TIER 3 — Normal day. April draft season with combine/pro day content but no Tier 1 events today.",
+    "calendar_tier": "TIER 1 — NFL Draft preparation season (April 23 draft, 12 days away)",
     "tweet_volume": [
       {
-        "topic": "Joel Embiid appendicitis surgery",
-        "approx_tweets": 4,
-        "accounts": 3
-      },
-      {
-        "topic": "LeBron/Bronny father-son assist",
-        "approx_tweets": 6,
+        "topic": "NFL Draft prep/rankings",
+        "approx_tweets": 8,
         "accounts": 4
       },
       {
-        "topic": "DOJ NFL investigation",
-        "approx_tweets": 2,
+        "topic": "NBA playoff seeding drama",
+        "approx_tweets": 15,
+        "accounts": 7
+      },
+      {
+        "topic": "Eagles trade for Wicks",
+        "approx_tweets": 6,
         "accounts": 2
       },
       {
-        "topic": "Draft content/combine",
-        "approx_tweets": 8,
-        "accounts": 3
+        "topic": "College basketball transfers",
+        "approx_tweets": 5,
+        "accounts": 2
       }
     ],
-    "dominant_topic": "Multiple competing stories — Embiid injury major news but limited tweet reactions. LeBron/Bronny has strong meme potential. DOJ story has institutional weight.",
+    "dominant_topic": "NBA playoff seeding drama leads by tweet volume, but NFL Draft prep is Tier 1 calendar event",
     "candidates_considered": [
       {
-        "story": "Joel Embiid appendicitis surgery",
-        "hook": "Another perfectly-timed Embiid injury crisis as playoffs approach",
+        "story": "NBA playoff chaos: Celtics set NBA record with 29 3s, 168 players sit",
+        "hook": "Final weekend madness, historic shooting, load management absurdity",
+        "verdict": "LEAD — DEEP"
+      },
+      {
+        "story": "Eagles trade for Dontayvion Wicks",
+        "hook": "AJ Brown drama continues, adding WRs while shopping their star",
         "verdict": "HEADLINE — MEDIUM"
       },
       {
-        "story": "DOJ investigation NFL TV deals",
-        "hook": "Government vs. NFL over streaming costs — major institutional story",
+        "story": "Browning Nagle passes away at 57",
+        "hook": "Former Jets QB, tragic cancer battle",
+        "verdict": "HEADLINE — LIGHT (respectful)"
+      },
+      {
+        "story": "NFL Draft rankings finalized",
+        "hook": "Matt Miller's 482 players, Fernando Mendoza #1",
         "verdict": "HEADLINE — MEDIUM"
       },
       {
-        "story": "LeBron/Bronny son-to-father assist NBA history",
-        "hook": "First ever son-to-father assist + meme potential + age 41 LeBron",
+        "story": "Kenny Moore II seeks trade from Colts",
+        "hook": "9-year vet wants out, Pro Bowl corner available",
         "verdict": "HEADLINE — LIGHT"
       },
       {
-        "story": "NFL draft buzz",
-        "hook": "Draft season content but generic",
+        "story": "Bijan Robinson 5th year option",
+        "hook": "Falcons invest in RB, $12M+ decision",
+        "verdict": "AROUND THE LEAGUE"
+      },
+      {
+        "story": "Jack Jones to 49ers",
+        "hook": "One-year deal, depth signing",
+        "verdict": "AROUND THE LEAGUE"
+      },
+      {
+        "story": "Broncos owners buy into Rockies",
+        "hook": "Cross-sport investment, Denver connection",
         "verdict": "AROUND THE LEAGUE"
       },
       {
         "story": "Sam Darnold wedding",
-        "hook": "Super Bowl winner gets married",
-        "verdict": "AROUND THE LEAGUE"
-      },
-      {
-        "story": "Transfer portal moves",
-        "hook": "College basketball portal activity",
-        "verdict": "AROUND THE LEAGUE"
+        "hook": "Super Bowl champ gets married",
+        "verdict": "CLOSER MATERIAL"
       }
-    ],
-    "continuing_stories": "None from yesterday appear in today's content with meaningful updates."
+    ]
   },
   "stories": [
     {
-      "headline": "Joel Embiid's Perfectly-Timed Appendix Crisis",
-      "depth": "medium",
-      "editorial_direction": "Peak Embiid injury timing. This is almost performance art at this point. Hit the absurd injury history, the playoffs implications, the 491 games missed vs 490 played stat.",
+      "headline": "NBA's Final Weekend: Record-Breaking Chaos and Load Management Madness",
+      "depth": "deep",
+      "editorial_direction": "Lead with the Celtics' historic 29 3-pointers tying NBA record, then pivot to the absurdity of 168+ players sitting. Frame as playoff positioning meets load management theater. Include the seeding drama, Pistons locked at #1, final weekend stakes.",
       "tweets": [
         {
-          "url": "https://twitter.com/ShamsCharania/status/2042324025737691368",
-          "account": "@ShamsCharania",
-          "text": "76ers star Joel Embiid has been diagnosed with appendicitis and will undergo surgery this afternoon in Houston.",
-          "role": "news"
+          "url": "https://twitter.com/statmuse/status/2042828566585323832#m",
+          "account": "@StatMuse",
+          "text": "LeBron since Luka got hurt:\n\n30 PTS | 9 REB | 15 AST\n26 PTS | 8 REB | 11 AST\n28 PTS | 6 REB | 12 AST\n\n41 years old.",
+          "role": "stat"
         },
         {
-          "url": "https://twitter.com/statmuse/status/2042331762408190262",
+          "url": "https://twitter.com/HaterReport/status/2042768774575616071#m",
+          "account": "@HaterReport",
+          "text": "LAMELO BALL IS WILDING LMFAOOO \n\nHe just knocked down a three and had words for Isaiah Stewart 😳\n\n\"Fu*k you, shut yo bi*ch a*s up.\" 😭🤣",
+          "role": "comedy"
+        },
+        {
+          "url": "https://twitter.com/HaterReport/status/2042763235812667590#m",
+          "account": "@HaterReport",
+          "text": "Announcer: \"No he didn't.\" \n\nLaMelo had a breakaway DUNK and decided to dribble it back out to shoot a THREE \n\nDawg this is not a real person 😂😂",
+          "role": "comedy"
+        },
+        {
+          "url": "https://twitter.com/statmuse/status/2042817093075107916#m",
           "account": "@StatMuse",
-          "text": "Joel Embiid this season:\n\n26.9 PPG\n7.7 RPG\n1.2 BPG\n1.4 3PM\n\nAveraging the most threes and the fewest turnovers of his career.",
+          "text": "Amen Thompson is the first Rocket in over 40 seasons to record\n\n40+ PTS\n5+ REB\n5+ AST\n75+ FG%\n\nin a game.",
           "role": "stat"
         }
       ],
       "research_notes": {
         "key_stats": [
-          "Embiid has missed 491 games vs played 490 in 12 years since drafted",
-          "Emergency surgery Thursday in Houston before 76ers-Rockets game",
-          "76ers (43-37) two games behind 6th place with two games left",
-          "Missed 13 games in March with oblique strain this season"
+          "Celtics tied NBA record with 29 3-pointers in blowout win over Pelicans",
+          "168+ players held out Friday night across the league - historic load management",
+          "Only 2 games left in regular season, play-in tournament starts April 14",
+          "14 of 20 playoff seeds still undecided with final weekend remaining"
         ],
-        "historical_context": "This is classic Embiid — injury rears its head every April. Has dealt with knee issues, oblique strain, now appendicitis all this season",
-        "playoff_implications": "76ers fighting to avoid play-in tournament. Without Embiid, likely headed for 7-8 seed play-in games",
-        "meme_angles": [
-          "The man is cursed",
-          "Finally got knees manageable, now appendix rebels",
-          "Performance art level injury timing"
+        "playoff_seeding": [
+          "East: Pistons locked #1 seed, Celtics clinched #2, Knicks #3",
+          "West: Thunder locked #1, Spurs #2, everything else chaos",
+          "Nuggets vs Lakers battle for West #3 seed",
+          "6 East teams fighting for final 3 guaranteed playoff spots"
         ],
-        "financial_context": "Star player, max contract, core of championship hopes — all derailed by random internal organ",
-        "where_it_goes": "Recovery timeline unclear. Historical precedent: players have missed 5-6 weeks after appendectomy",
-        "coaching_quotes": "Nick Nurse: 'They finally got him to the doctor and they had the scan and then decided they needed to do the surgery here in Houston'"
+        "load_management_absurdity": [
+          "SGA, Jokic, 14 Grizzlies players all sat - reigning MVP resting",
+          "Teams prioritizing playoff positioning over final games",
+          "Star players getting 'maintenance days' with playoffs 1 week away"
+        ],
+        "lamelo_antics": [
+          "Passed up open dunk to shoot 3-pointer in transition",
+          "Trash talked Isaiah Stewart after knocking down three",
+          "Hornets-Pistons developing into real rivalry with playoff implications"
+        ],
+        "historic_context": [
+          "Celtics' 29 threes tied franchise record from 2024 vs Knicks",
+          "LeBron averaging near triple-double since Luka injury at age 41",
+          "Amen Thompson first Rocket with 40/5/5 on 75% shooting in 40+ years"
+        ],
+        "meme_potential": [
+          "Load management reaching parody levels before playoffs",
+          "LaMelo playing like he's still at Chino Hills",
+          "Final weekend 'seeding games' that nobody's actually playing"
+        ]
       }
     },
     {
-      "headline": "DOJ Declares War on NFL Sunday Ticket Prices",
+      "headline": "Eagles Trade for Dontayvion Wicks While AJ Brown Drama Continues",
       "depth": "medium",
-      "editorial_direction": "Government taking on the most powerful sports league over streaming costs. This has real institutional weight — not just sports business, but antitrust law. Connect to broader streaming frustration.",
+      "editorial_direction": "Frame as Eagles adding WRs (Brown, Moore, Wicks) while AJ Brown's future remains uncertain. Note the timing - third WR addition in weeks, but Brown trade talk persists. Include the compensation and Wicks' contract extension.",
       "tweets": [
         {
-          "url": "https://twitter.com/NFLMemes/status/2042275256774119719",
-          "account": "@NFLMemes",
-          "text": "REPORT: The Dept. of Justice has opened an investigation into the NFL over \"anticompetitive tactics.\" \n\nThe DOJ is coming for the NFL.. 😳\nhttps://dailysnark.com/2026/04/09/the-doj-has-opened-an-investigation-into-nfl-over-anticompetitive-tactics/",
-          "role": "news"
-        }
-      ],
-      "research_notes": {
-        "investigation_scope": "DOJ probing whether NFL violated anticompetitive practices with TV contracts requiring subscription costs to watch games",
-        "legal_context": "NFL has antitrust exemption for TV deals under 1961 Sports Broadcasting Act, but only applies to broadcast TV — not cable, satellite, streaming",
-        "financial_stakes": "NFL has 11-year, $111 billion media rights deal through 2033-34 season across multiple platforms",
-        "consumer_impact": "Critics say fans spend 'almost $1,000 on cable and streaming subscriptions' to watch games. Sunday Ticket costs $240/year",
-        "political_pressure": "Sen. Mike Lee (R-Utah) wrote letter in March urging DOJ review. FCC Chair also raised concerns about paywalls",
-        "nfl_response": "League says over 87% of games available on broadcast TV, calls distribution 'most fan and broadcaster-friendly in entire sports industry'",
-        "where_it_goes": "Investigation doesn't guarantee action — could be pressure tactic to encourage cheaper packaging options"
-      }
-    },
-    {
-      "headline": "LeBron and Bronny Make More History Nobody Asked For",
-      "depth": "light",
-      "editorial_direction": "First son-to-father assist in NBA history. Yes, this is a real record they're tracking. Play it as mildly absurd but genuinely impressive that LeBron is still doing this at 41.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/SportsCenter/status/2042459670837669907",
-          "account": "@SportsCenter",
-          "text": "LeBron and Bronny throwing dimes to each other 🔥❤️\n\nIncluding the first son-to-father assist in NBA history 😤",
+          "url": "https://twitter.com/AdamSchefter/status/2042702494845817209#m",
+          "account": "@AdamSchefter",
+          "text": "ESPN sources: the Green Bay Packers are trading wide receiver Dontayvion Wicks to the Philadelphia Eagles in exchange for a 2026 fifth-round pick and a 2027 sixth-round pick.\n\nWicks will sign a one-year, $12.5 million extension with the Eagles, per his agent @DavidMulugheta.",
           "role": "news"
         },
         {
-          "url": "https://twitter.com/BallsackSports/status/2042461585520611483",
-          "account": "@BallsackSports",
-          "text": "Warriors fans gotta hate LeBron. \n\nDropping 26 out here at age 41 and his sperm checks in and drops another 10 on top of that.",
-          "role": "comedy"
+          "url": "https://twitter.com/AdamSchefter/status/2042702917652591003#m",
+          "account": "@AdamSchefter",
+          "text": "AJ Brown's future in Philadelphia remains a topic of conversation, and in the meantime, the Eagles add another WR in Dontayvion Wicks from Green Bay.\n\nThe belief remains that, if an AJ Brown trade were to happen, it would likely occur after June 1, when the cap burden would be more manageable for the Eagles.",
+          "role": "context"
+        },
+        {
+          "url": "https://twitter.com/billbarnwell/status/2042704659974914465#m",
+          "account": "@BillBarnwell",
+          "text": "Wicks signed for essentially $8 million per year over the next two years is borderline WR2/WR3 money, which is where he fits in the Eagles offense. But that's also where Hollywood Brown fits.",
+          "role": "analysis"
         }
       ],
       "research_notes": {
-        "the_play": "Bronny stole ball with 51 seconds left in first quarter, outlet pass to LeBron who finished with uncontested dunk",
-        "historical_milestone": "First son-to-father assist in NBA history. Previously achieved first father-to-son assist on March 27 vs Brooklyn",
-        "lebron_performance": "26 points, 11 assists, 8 rebounds in 32 minutes against Warriors. Still elite at age 41",
-        "bronny_stats": "10 points, 3 assists, 2 steals. 4-of-7 shooting, 2-of-4 from three. Solid rotation minutes",
-        "game_result": "Lakers beat Warriors 119-103, snapped 3-game losing streak",
-        "meme_angle": "NBA officially tracking father-son assist records now. What's next, uncle-to-nephew rebounds?"
+        "trade_details": [
+          "Eagles send 2026 5th and 2027 6th to Packers for Wicks",
+          "Wicks signs 1-year, $12.5M extension ($8M per year over 2 years)",
+          "Third WR addition in recent weeks: Brown (3/17), Moore (3/24), Wicks (4/10)"
+        ],
+        "aj_brown_context": [
+          "Brown's future 'remains topic of conversation' per Schefter",
+          "Any Brown trade likely after June 1 for cap management",
+          "Eagles adding WRs while potentially shopping their #1"
+        ],
+        "packers_perspective": [
+          "Lost Romeo Doubs in free agency, now traded Wicks",
+          "WR room now: Watson, Reed, Golden, Sheppard as main options",
+          "Getting draft capital back while Packers rebuild WR room"
+        ],
+        "contract_analysis": [
+          "Wicks at $8M/year = WR2/WR3 money per Barnwell",
+          "Hollywood Brown also in that salary range = redundancy",
+          "Eagles building depth or preparing for Brown departure?"
+        ]
+      }
+    },
+    {
+      "headline": "Former Jets QB Browning Nagle Dies at 57 After Cancer Battle",
+      "depth": "light",
+      "editorial_direction": "Respectful coverage. Focus on his Fiesta Bowl legend at Louisville and brief NFL career. No humor - just facts and recognition.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2042742668699050078#m",
+          "account": "@AdamSchefter",
+          "text": "Former New York Jets quarterback Browning Nagle, a strong-armed passer best known for his epic 1991 Fiesta Bowl performance for Louisville, died this week after a battle with colon cancer, the school announced Friday. He was 57.",
+          "role": "news"
+        }
+      ],
+      "research_notes": {
+        "career_highlights": [
+          "Second-round pick by Jets in 1991 after legendary Fiesta Bowl",
+          "Started 1992 season for Jets as rookie",
+          "Strong arm, known for big-game performance at Louisville"
+        ],
+        "personal_details": [
+          "Died after battle with colon cancer at age 57",
+          "Louisville announced the news Friday",
+          "Described as 'nice guy, fun loving' by Rich Cimini"
+        ]
+      }
+    },
+    {
+      "headline": "Matt Miller Drops Final NFL Draft Rankings: 482 Players, Fernando Mendoza #1",
+      "depth": "medium",
+      "editorial_direction": "Focus on the scope (482 players ranked) and top prospects. Include Mendoza as consensus #1 QB, other notable names, and the 12 days until draft day.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/nfldraftscout/status/2042599141579051046#m",
+          "account": "@nfldraftscout",
+          "text": "482 players ranked and graded. My final big board for 2026",
+          "role": "news"
+        },
+        {
+          "url": "https://twitter.com/FieldYates/status/2042632508622213185#m",
+          "account": "@FieldYates",
+          "text": "The Packers don't pick until 52nd overall. With needs in the trenches, @MinaKimes & I debated with an assist from @awscloud & @NextGenStats whether the team should address OL or DL first. http://NFL.com/IQ",
+          "role": "analysis"
+        }
+      ],
+      "research_notes": {
+        "draft_timeline": [
+          "Draft starts April 23 in Pittsburgh - 12 days away",
+          "Raiders hold #1 pick, expected to take Fernando Mendoza",
+          "Jets at #2 with bridge QB Geno Smith acquired"
+        ],
+        "top_prospects": [
+          "Fernando Mendoza (Indiana QB) - #1 overall, comp to Joe Burrow",
+          "Caleb Downs (Alabama S) - elite safety prospect",
+          "Rueben Bain Jr. (Miami DE) - most finished defensive line prospect"
+        ],
+        "draft_scope": [
+          "Miller ranked all 482 prospects with grades",
+          "Only 12 players earned first-round grades per Miller",
+          "AI being used for combine projection analytics"
+        ]
+      }
+    },
+    {
+      "headline": "Colts and Kenny Moore II Agree to Seek Trade",
+      "depth": "light",
+      "editorial_direction": "Nine-year veteran, Pro Bowl corner wants out. Mutual decision, entering final year of contract.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2042598341003936247#m",
+          "account": "@AdamSchefter",
+          "text": "Sources: Colts and Kenny Moore II mutually have agreed to seek a trade and a new home for the veteran cornerback. Moore is entering the last year of his contract, and both sides feel it is time to explore a trade.",
+          "role": "news"
+        }
+      ],
+      "research_notes": {
+        "player_background": [
+          "Nine seasons in Indianapolis, 649 career tackles",
+          "Pro Bowl selection in 2021",
+          "Entering final year of contract, mutual decision to seek trade"
+        ]
       }
     }
   ],
   "around_the_league": [
     {
-      "url": "https://twitter.com/AdamSchefter/status/2042402652827295898",
+      "url": "https://twitter.com/AdamSchefter/status/2042720090378903840#m",
       "account": "@AdamSchefter",
-      "text": "Michigan and star point guard Elliot Cadeau have agreed to a deal for him to return for his senior year, he told ESPN's @PeteThamel."
+      "text": "Dolphins free agent cornerback Jack Jones is signing a one-year deal with the 49ers, per his agent Drew Rosenhaus."
     },
     {
-      "url": "https://twitter.com/AdamSchefter/status/2042326952317452405",
+      "url": "https://twitter.com/AdamSchefter/status/2042721278923022750#m",
       "account": "@AdamSchefter",
-      "text": "Former Titans free-agent CB Kemon Hall is signing a one-year deal with the Buccaneers, per his agents Kevin Conner and Robert Brown of @unisportsmgmt."
+      "text": "More about the Falcons exercising the fifth-year option on standout RB Bijan Robinson's contract"
     },
     {
-      "url": "https://twitter.com/FieldYates/status/2042279202775355902",
-      "account": "@FieldYates",
-      "text": "Alabama LB Justin Jefferson is on a 30 visit with the Falcons today.\n\nHe's a speedy, rangy LB who ran a 4.54 40 at the combine and recorded 5.0 sacks over the past 2 seasons."
+      "url": "https://twitter.com/BallsackSports/status/2042828859104502170#m",
+      "account": "@BallsackSports",
+      "text": "We really witnessed Bam score 83 and Podz drop 30 in the same season.\n\nThat Bronny 15 bomb might break this app."
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2042373080174010850",
+      "url": "https://twitter.com/statmuse/status/2042787781760462963#m",
       "account": "@StatMuse",
-      "text": "Jackie Young in 7 seasons:\n\n— 3x WNBA Champ\n— 4x All-Star\n— 2x All-WNBA\n— 2022 MIP\n\nStaying with Vegas."
+      "text": "Cooper Flagg vs Spurs:\n\n33 PTS\n6 REB\n5 AST\n3 3P\n\nLeBron is the only teenager in NBA history with more 30/5/5 games."
     },
     {
-      "url": "https://twitter.com/JonRothstein/status/2042346420385063362",
+      "url": "https://twitter.com/AdamSchefter/status/2042636369223102729#m",
+      "account": "@AdamSchefter",
+      "text": "Broncos owners Carrie and Greg Penner have expanded their commitment to, and in, the Denver sports community through a significant minority investment in the Colorado Rockies."
+    },
+    {
+      "url": "https://twitter.com/statmuse/status/2042808443350790617#m",
+      "account": "@StatMuse",
+      "text": "Bez Mbeng vs Memphis:\n\n27 PTS\n11 REB\n11 AST\n3 STL\n+40\n\nThe first player with a 25/10/10/3 game off the bench since JJ Barea."
+    },
+    {
+      "url": "https://twitter.com/JonRothstein/status/2042778146529845638#m",
       "account": "@JonRothstein",
-      "text": "Appalachian State transfer Luke Wilson tells me that he will visit UCLA this weekend.\n\n6-9 big man averaged 10.7 PPG, 8.1 RPG, and 1.9 BPG last season while earning Sun Belt Defensive POY honors."
+      "text": "Source: Georgetown transfer KJ Lewis is planning to visit USC.\n\nAveraged 14.9 PPG and 5.1 RPG last season."
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2042415170987634808",
-      "account": "@StatMuse",
-      "text": "Left is Angel Reese as a rookie. Right is Julian Reese as a rookie. Both led their class in RPG.\n\n13.6 PPG                              11.8 PPG\n13.1 RPG                               11.6 RPG\n46.4 TS%                             54.8 TS%"
-    },
-    {
-      "url": "https://twitter.com/StatMuse/status/2042421351915434276",
-      "account": "@StatMuse",
-      "text": "Josh Hart vs Boston:\n\n26 PTS (15 in 4!)\n10-15 FG\n5-7 3P\n\nMore points and threes tonight than his last three games combined."
-    },
-    {
-      "url": "https://twitter.com/JonRothstein/status/2042331719609569480",
-      "account": "@JonRothstein",
-      "text": "Braden Frager is returning to Nebraska next season, per Ross Aroyo of @PrioritySports.\n\nFrager averaged 11.8 PPG last season and was the Big Ten's 6th Man of the Year."
-    },
-    {
-      "url": "https://twitter.com/HaterReport/status/2042459620518605069",
+      "url": "https://twitter.com/HaterReport/status/2042808489475473690#m",
       "account": "@HaterReport",
-      "text": "Kevin Durant missed two clutch free throws, VJ Edgecombe scores and cuts the lead to 5. Then KD knocks down a three and pulls out the easy money sniper rifle 😂🤣"
+      "text": "Hornets and Pistons bringing rivalries BACK \n\nJalen Duren asked Coach JB Bickerstaff to skip shaking hands with the Hornets after the game. \n\n\"Let's go\""
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2042422028037169156",
-      "account": "@StatMuse",
-      "text": "Fun Fact: Baylor Scheierman is the first player in NBA history to go exactly 7-8 FG and exactly 6-7 3P in multiple games."
+      "url": "https://twitter.com/PFTCommenter/status/2042656540327281099#m",
+      "account": "@PFTCommenter",
+      "text": "The best part about truly believing I could shoot 109 at Augusta is that I get to keep saying im right with zero accountability"
+    },
+    {
+      "url": "https://twitter.com/AdamSchefter/status/2042724592611922065#m",
+      "account": "@AdamSchefter",
+      "text": "Star Michigan guard Trey McKenney has signed to return to the Wolverines, per @PeteThamel and @jeffborzello. He earned All Big Ten Freshman honors this season after arriving as a Top 20 recruit and McDonald's All-American."
     }
   ],
   "closer": {
-    "hook": "Barstool mini golf championships went to sudden death",
+    "hook": "Super Bowl LX champion Sam Darnold got married",
     "tweets": [
       {
-        "url": "https://twitter.com/BarstoolBigCat/status/2042429648886260174",
-        "account": "@BarstoolBigCat",
-        "text": "It's looking like a sudden death shoot out \n\nhttps://www.youtube.com/live/4HK5QItyPGw?si=CfQJM-9FlJNLOEp2"
+        "url": "https://twitter.com/AdamSchefter/status/2042674950847291392#m",
+        "account": "@AdamSchefter",
+        "text": "💍 Seahawks QB Sam Darnold adds another ring"
       }
     ]
   },
   "quality_check": {
-    "total_headlines": 3,
-    "total_tweets_assigned": 6,
+    "total_headlines": 5,
+    "total_tweets_assigned": 12,
     "around_the_league_count": 10,
     "controversial_stories_as_lead": false
   }
