@@ -1,338 +1,399 @@
 {
-  "date": "2026-04-11",
+  "date": "2026-04-13",
   "editorial_reasoning": {
-    "calendar_tier": "TIER 1 — NFL Draft preparation season (April 23 draft, 12 days away)",
+    "calendar_tier": "TIER 2 — NBA playoffs set (day after regular season), WNBA Draft today",
     "tweet_volume": [
       {
-        "topic": "NFL Draft prep/rankings",
+        "topic": "NBA playoffs/play-in set",
+        "approx_tweets": 12,
+        "accounts": 6
+      },
+      {
+        "topic": "Rory Masters back-to-back",
         "approx_tweets": 8,
         "accounts": 4
       },
       {
-        "topic": "NBA playoff seeding drama",
-        "approx_tweets": 15,
-        "accounts": 7
-      },
-      {
-        "topic": "Eagles trade for Wicks",
-        "approx_tweets": 6,
-        "accounts": 2
-      },
-      {
-        "topic": "College basketball transfers",
+        "topic": "Doc Rivers fired",
         "approx_tweets": 5,
-        "accounts": 2
+        "accounts": 3
+      },
+      {
+        "topic": "NFL Draft prospects",
+        "approx_tweets": 6,
+        "accounts": 3
       }
     ],
-    "dominant_topic": "NBA playoff seeding drama leads by tweet volume, but NFL Draft prep is Tier 1 calendar event",
+    "dominant_topic": "NBA playoffs bracket finalized — major storylines with Doc firing and play-in drama",
     "candidates_considered": [
       {
-        "story": "NBA playoff chaos: Celtics set NBA record with 29 3s, 168 players sit",
-        "hook": "Final weekend madness, historic shooting, load management absurdity",
-        "verdict": "LEAD — DEEP"
+        "story": "NBA playoffs bracket set, play-in drama",
+        "hook": "Lakers-Rockets first round, De'Aaron Fox choked away Spurs easy path",
+        "verdict": "HEADLINE — DEEP"
       },
       {
-        "story": "Eagles trade for Dontayvion Wicks",
-        "hook": "AJ Brown drama continues, adding WRs while shopping their star",
+        "story": "Doc Rivers fired by Bucks",
+        "hook": "Third coach in three years, 32-50 season, Giannis questions",
         "verdict": "HEADLINE — MEDIUM"
       },
       {
-        "story": "Browning Nagle passes away at 57",
-        "hook": "Former Jets QB, tragic cancer battle",
-        "verdict": "HEADLINE — LIGHT (respectful)"
-      },
-      {
-        "story": "NFL Draft rankings finalized",
-        "hook": "Matt Miller's 482 players, Fernando Mendoza #1",
+        "story": "Rory Masters back-to-back",
+        "hook": "Fourth player ever to repeat, joined Tiger/Jack/Faldo",
         "verdict": "HEADLINE — MEDIUM"
       },
       {
-        "story": "Kenny Moore II seeks trade from Colts",
-        "hook": "9-year vet wants out, Pro Bowl corner available",
+        "story": "Cooper Flagg led Mavs in all categories",
+        "hook": "First rookie since MJ to lead team in PTS/REB/AST/STL",
         "verdict": "HEADLINE — LIGHT"
       },
       {
-        "story": "Bijan Robinson 5th year option",
-        "hook": "Falcons invest in RB, $12M+ decision",
+        "story": "Kon Knueppel beats LaMelo in 3PT race",
+        "hook": "Rookie won 3PT title by ONE three over Ball",
+        "verdict": "HEADLINE — LIGHT"
+      },
+      {
+        "story": "Paul Reed perfect game",
+        "hook": "11-11 FG with 26 PTS, 3 STL, 3 BLK — historic perfection",
+        "verdict": "HEADLINE — LIGHT"
+      },
+      {
+        "story": "NFL Draft risers",
+        "hook": "Seven prospects climbing boards",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "Jack Jones to 49ers",
-        "hook": "One-year deal, depth signing",
+        "story": "Various player stats",
+        "hook": "End of season numbers",
         "verdict": "AROUND THE LEAGUE"
-      },
-      {
-        "story": "Broncos owners buy into Rockies",
-        "hook": "Cross-sport investment, Denver connection",
-        "verdict": "AROUND THE LEAGUE"
-      },
-      {
-        "story": "Sam Darnold wedding",
-        "hook": "Super Bowl champ gets married",
-        "verdict": "CLOSER MATERIAL"
       }
     ]
   },
   "stories": [
     {
-      "headline": "NBA's Final Weekend: Record-Breaking Chaos and Load Management Madness",
+      "headline": "NBA Playoffs Set: Lakers Draw Rockets, Fox Chokes Away Spurs' Easy Path",
       "depth": "deep",
-      "editorial_direction": "Lead with the Celtics' historic 29 3-pointers tying NBA record, then pivot to the absurdity of 168+ players sitting. Frame as playoff positioning meets load management theater. Include the seeding drama, Pistons locked at #1, final weekend stakes.",
+      "editorial_direction": "Lead with the bracket being set, then dive into the Fox collapse that screwed the Spurs, Lakers-Rockets without superstars, play-in chaos. This is the meat of the NBA season ending.",
       "tweets": [
         {
-          "url": "https://twitter.com/statmuse/status/2042828566585323832#m",
+          "url": "https://twitter.com/statmuse/status/2043524241715343747#m",
           "account": "@StatMuse",
-          "text": "LeBron since Luka got hurt:\n\n30 PTS | 9 REB | 15 AST\n26 PTS | 8 REB | 11 AST\n28 PTS | 6 REB | 12 AST\n\n41 years old.",
-          "role": "stat"
+          "text": "Play-in is set:\n\nWest:\nPHX (7) vs POR (8)\nLAC (9) vs GSW (10)\n\nEast:\nPHI (7) vs ORL (8)\nCHA (9) vs MIA (10)\n\nWho makes it out?",
+          "role": "brackets"
         },
         {
-          "url": "https://twitter.com/HaterReport/status/2042768774575616071#m",
+          "url": "https://twitter.com/HaterReport/status/2043535890887090577#m",
           "account": "@HaterReport",
-          "text": "LAMELO BALL IS WILDING LMFAOOO \n\nHe just knocked down a three and had words for Isaiah Stewart 😳\n\n\"Fu*k you, shut yo bi*ch a*s up.\" 😭🤣",
+          "text": "The Spurs had a chance to avoid the Nuggets and the Thunder in the first 2 rounds of the Playoffs and De'Aaron Fox missed 3 STRAIGHT WIDE OPEN corner 3s in less than 10 seconds 😭😭",
           "role": "comedy"
         },
         {
-          "url": "https://twitter.com/HaterReport/status/2042763235812667590#m",
+          "url": "https://twitter.com/HaterReport/status/2043525993306956020#m",
           "account": "@HaterReport",
-          "text": "Announcer: \"No he didn't.\" \n\nLaMelo had a breakaway DUNK and decided to dribble it back out to shoot a THREE \n\nDawg this is not a real person 😂😂",
+          "text": "De'Aaron Fox with a chance to give the Spurs an easy road straight to the Western Conference Finals",
           "role": "comedy"
+        }
+      ],
+      "research_notes": {
+        "final_brackets": [
+          "East: 1-Pistons 2-Celtics 3-Knicks 4-Cavs 5-Hawks 6-Raptors",
+          "West: 1-Thunder 2-Spurs 3-Nuggets 4-Lakers 5-Rockets 6-Timberwolves"
+        ],
+        "key_matchups": [
+          "Lakers (4) vs Rockets (5) — KD vs Luka-less Lakers",
+          "Spurs (2) get winner of 7/8 play-in instead of easier opponent",
+          "Thunder (1) locked into top seed, defending champions"
+        ],
+        "fox_collapse": [
+          "Fox missed 3 straight wide open 3s in final 10 seconds vs Spurs",
+          "Sacramento loss meant Spurs couldn't avoid Thunder/Nuggets early",
+          "Spurs now face much harder path to conference finals"
+        ],
+        "lakers_drama": [
+          "Without both Luka and Austin Reaves for playoffs",
+          "Face Rockets with KD who 'look to take advantage'",
+          "Fell from 3-seed talk to 4-seed reality"
+        ],
+        "play_in_chaos": [
+          "West: PHX vs POR for 7-seed, LAC vs GSW elimination game",
+          "East: 76ers vs Magic for 7-seed, Hornets vs Heat elimination",
+          "Heat tumbled from top-6 to needing two road wins like last year"
+        ],
+        "historical_context": [
+          "Thunder third straight 1-seed as defending champions",
+          "Bucks missed playoffs for first time since 2016",
+          "Play-in tournament April 14-17, playoffs start April 18"
+        ],
+        "where_it_goes": [
+          "First round starts April 18",
+          "Will Lakers survive without superstars vs KD?",
+          "Can Spurs overcome harder path after Fox choke?"
+        ]
+      }
+    },
+    {
+      "headline": "Doc Rivers Fired: Bucks Begin Third Coach Search in Three Years",
+      "depth": "medium",
+      "editorial_direction": "The coaching carousel dysfunction. 32-50 season, Giannis played 36 games, disconnect with players, now what for Milwaukee?",
+      "tweets": [
+        {
+          "url": "https://twitter.com/ShamsCharania/status/2043490909904634290#m",
+          "account": "@ShamsCharania",
+          "text": "BREAKING: Doc Rivers is departing as head coach of the Milwaukee Bucks, sources tell ESPN. After a 32-50 season, the Bucks will embark on their third coaching search in the last three years.",
+          "role": "breaking"
         },
         {
-          "url": "https://twitter.com/statmuse/status/2042817093075107916#m",
+          "url": "https://twitter.com/HaterReport/status/2043492754735485084#m",
+          "account": "@HaterReport",
+          "text": "Doc Rivers is stepping down as Bucks head coach. \n\nThe combination of Doc Rivers and Darvin Ham was an Avengers level threat 😭",
+          "role": "comedy"
+        }
+      ],
+      "research_notes": {
+        "the_record": [
+          "32-50 season, missed playoffs for first time since 2016",
+          "97-103 overall in three seasons with Milwaukee",
+          "Two first-round exits, missed play-in this year"
+        ],
+        "coaching_chaos": [
+          "Third coaching search in three years",
+          "Fired Mike Budenholzer in 2023 (won championship in 2021)",
+          "Adrian Griffin went 30-13, fired after 43 games for Rivers"
+        ],
+        "player_disconnect": [
+          "ESPN reports 'season-long disconnect between Rivers and players'",
+          "Giannis played only 36 games due to injuries",
+          "Rivers blamed lack of success on player injuries each season"
+        ],
+        "contract_details": [
+          "Rivers has one year left at eight-figure salary",
+          "Bucks will pay out full 2026-27 contract",
+          "Discussing potential advisory role in organization"
+        ],
+        "hall_of_fame_timing": [
+          "Just named to Naismith Hall of Fame Class of 2026",
+          "Won championship with Celtics in 2008",
+          "Sixth all-time in NBA coaching wins"
+        ],
+        "giannis_questions": [
+          "Most important offseason in franchise history",
+          "Front office weighing whether Giannis services best for team and superstar",
+          "Championship window concerns with aging roster"
+        ]
+      }
+    },
+    {
+      "headline": "Rory Goes Back-to-Back: Fourth Player Ever to Win Consecutive Masters",
+      "depth": "medium",
+      "editorial_direction": "Historic golf achievement. Joins Tiger, Jack, Faldo. Nearly blew 6-shot lead, parents finally got to see him win at Augusta.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/BarstoolBigCat/status/2043578593419149416#m",
+          "account": "@PardonMyTake",
+          "text": "PMT 4-13 Masters Recap with @notthefakeSVP is Now Live! \n\n- Rory goes back to back at Augusta \n- Max and Brooks both top 12 \n- NBA Playoffs are set\n- Who's back of the week + More \n\nWatch or Listen Here http://beacons.ai/pardonmytake",
+          "role": "coverage"
+        },
+        {
+          "url": "https://twitter.com/SportsCenter/status/2043543531596193798#m",
+          "account": "@SportsCenter",
+          "text": ".@notthefakeSVP joins @richeisen on SportsCenter to discuss Rory McIlroy's historic back-to-back Masters wins 🏆",
+          "role": "celebration"
+        }
+      ],
+      "research_notes": {
+        "historic_achievement": [
+          "Fourth golfer ever to win consecutive Masters",
+          "Joins Jack Nicklaus (1965-66), Nick Faldo (1989-90), Tiger Woods (2001-02)",
+          "First to repeat since Tiger 22 years ago"
+        ],
+        "the_drama": [
+          "Nearly blew record 6-shot halfway lead on Saturday",
+          "Lost lead again Sunday before taking control on back nine",
+          "Won by one shot at 12-under, finished with bogey on 18"
+        ],
+        "family_moment": [
+          "Parents attended this year after missing last year's win",
+          "Almost didn't come because they thought not attending was lucky",
+          "Got to share green jacket ceremony with them this time"
+        ],
+        "career_context": [
+          "Sixth major championship, ties with Faldo for most by European in modern era",
+          "Completed career Grand Slam last year with first Masters",
+          "Waited decade between fifth and sixth majors"
+        ],
+        "the_money": [
+          "Won $4.5 million from record $22.5 million purse",
+          "Largest purse in major championship history",
+          "Beat Scottie Scheffler by one shot for victory"
+        ],
+        "golf_significance": [
+          "Now definitively in conversation among all-time greats",
+          "May never catch Nicklaus/Woods but pathway to No. 3 all-time",
+          "Raised floor so high that few brilliant shots put away field"
+        ]
+      }
+    },
+    {
+      "headline": "Cooper Flagg Becomes First Rookie Since Jordan to Lead Team in Everything",
+      "depth": "light",
+      "editorial_direction": "Insane rookie stat. Led Mavs in points, rebounds, assists, and steals. Only MJ did this before.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/statmuse/status/2043500877835595953#m",
           "account": "@StatMuse",
-          "text": "Amen Thompson is the first Rocket in over 40 seasons to record\n\n40+ PTS\n5+ REB\n5+ AST\n75+ FG%\n\nin a game.",
+          "text": "Cooper Flagg this season:\n\n— Led Mavs in PTS\n— Led Mavs in REB\n— Led Mavs in AST\n— Led Mavs in STL\n\nThe first rookie to lead his team in all four categories since MJ.",
           "role": "stat"
         }
       ],
       "research_notes": {
-        "key_stats": [
-          "Celtics tied NBA record with 29 3-pointers in blowout win over Pelicans",
-          "168+ players held out Friday night across the league - historic load management",
-          "Only 2 games left in regular season, play-in tournament starts April 14",
-          "14 of 20 playoff seeds still undecided with final weekend remaining"
+        "historic_stat": [
+          "First rookie since Michael Jordan to lead team in PTS/REB/AST/STL",
+          "Did this for the Dallas Mavericks in his debut season",
+          "Incredibly rare for any player, let alone a rookie"
         ],
-        "playoff_seeding": [
-          "East: Pistons locked #1 seed, Celtics clinched #2, Knicks #3",
-          "West: Thunder locked #1, Spurs #2, everything else chaos",
-          "Nuggets vs Lakers battle for West #3 seed",
-          "6 East teams fighting for final 3 guaranteed playoff spots"
+        "jordan_parallel": [
+          "MJ accomplished this feat early in career",
+          "Puts Flagg in exclusive company with GOAT",
+          "Shows complete impact beyond just scoring"
         ],
-        "load_management_absurdity": [
-          "SGA, Jokic, 14 Grizzlies players all sat - reigning MVP resting",
-          "Teams prioritizing playoff positioning over final games",
-          "Star players getting 'maintenance days' with playoffs 1 week away"
-        ],
-        "lamelo_antics": [
-          "Passed up open dunk to shoot 3-pointer in transition",
-          "Trash talked Isaiah Stewart after knocking down three",
-          "Hornets-Pistons developing into real rivalry with playoff implications"
-        ],
-        "historic_context": [
-          "Celtics' 29 threes tied franchise record from 2024 vs Knicks",
-          "LeBron averaging near triple-double since Luka injury at age 41",
-          "Amen Thompson first Rocket with 40/5/5 on 75% shooting in 40+ years"
-        ],
-        "meme_potential": [
-          "Load management reaching parody levels before playoffs",
-          "LaMelo playing like he's still at Chino Hills",
-          "Final weekend 'seeding games' that nobody's actually playing"
+        "what_it_means": [
+          "Flagg was the most complete player on his team as a rookie",
+          "Demonstrates versatility across all aspects of game",
+          "Sets up monster sophomore campaign expectations"
         ]
       }
     },
     {
-      "headline": "Eagles Trade for Dontayvion Wicks While AJ Brown Drama Continues",
-      "depth": "medium",
-      "editorial_direction": "Frame as Eagles adding WRs (Brown, Moore, Wicks) while AJ Brown's future remains uncertain. Note the timing - third WR addition in weeks, but Brown trade talk persists. Include the compensation and Wicks' contract extension.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/AdamSchefter/status/2042702494845817209#m",
-          "account": "@AdamSchefter",
-          "text": "ESPN sources: the Green Bay Packers are trading wide receiver Dontayvion Wicks to the Philadelphia Eagles in exchange for a 2026 fifth-round pick and a 2027 sixth-round pick.\n\nWicks will sign a one-year, $12.5 million extension with the Eagles, per his agent @DavidMulugheta.",
-          "role": "news"
-        },
-        {
-          "url": "https://twitter.com/AdamSchefter/status/2042702917652591003#m",
-          "account": "@AdamSchefter",
-          "text": "AJ Brown's future in Philadelphia remains a topic of conversation, and in the meantime, the Eagles add another WR in Dontayvion Wicks from Green Bay.\n\nThe belief remains that, if an AJ Brown trade were to happen, it would likely occur after June 1, when the cap burden would be more manageable for the Eagles.",
-          "role": "context"
-        },
-        {
-          "url": "https://twitter.com/billbarnwell/status/2042704659974914465#m",
-          "account": "@BillBarnwell",
-          "text": "Wicks signed for essentially $8 million per year over the next two years is borderline WR2/WR3 money, which is where he fits in the Eagles offense. But that's also where Hollywood Brown fits.",
-          "role": "analysis"
-        }
-      ],
-      "research_notes": {
-        "trade_details": [
-          "Eagles send 2026 5th and 2027 6th to Packers for Wicks",
-          "Wicks signs 1-year, $12.5M extension ($8M per year over 2 years)",
-          "Third WR addition in recent weeks: Brown (3/17), Moore (3/24), Wicks (4/10)"
-        ],
-        "aj_brown_context": [
-          "Brown's future 'remains topic of conversation' per Schefter",
-          "Any Brown trade likely after June 1 for cap management",
-          "Eagles adding WRs while potentially shopping their #1"
-        ],
-        "packers_perspective": [
-          "Lost Romeo Doubs in free agency, now traded Wicks",
-          "WR room now: Watson, Reed, Golden, Sheppard as main options",
-          "Getting draft capital back while Packers rebuild WR room"
-        ],
-        "contract_analysis": [
-          "Wicks at $8M/year = WR2/WR3 money per Barnwell",
-          "Hollywood Brown also in that salary range = redundancy",
-          "Eagles building depth or preparing for Brown departure?"
-        ]
-      }
-    },
-    {
-      "headline": "Former Jets QB Browning Nagle Dies at 57 After Cancer Battle",
+      "headline": "Kon Knueppel Beats LaMelo by One Three to Win NBA 3-Point Title",
       "depth": "light",
-      "editorial_direction": "Respectful coverage. Focus on his Fiesta Bowl legend at Louisville and brief NFL career. No humor - just facts and recognition.",
+      "editorial_direction": "Insane race. Rookie beat established star by ONE three-pointer. First rookie to ever lead NBA in threes.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2042742668699050078#m",
-          "account": "@AdamSchefter",
-          "text": "Former New York Jets quarterback Browning Nagle, a strong-armed passer best known for his epic 1991 Fiesta Bowl performance for Louisville, died this week after a battle with colon cancer, the school announced Friday. He was 57.",
-          "role": "news"
-        }
-      ],
-      "research_notes": {
-        "career_highlights": [
-          "Second-round pick by Jets in 1991 after legendary Fiesta Bowl",
-          "Started 1992 season for Jets as rookie",
-          "Strong arm, known for big-game performance at Louisville"
-        ],
-        "personal_details": [
-          "Died after battle with colon cancer at age 57",
-          "Louisville announced the news Friday",
-          "Described as 'nice guy, fun loving' by Rich Cimini"
-        ]
-      }
-    },
-    {
-      "headline": "Matt Miller Drops Final NFL Draft Rankings: 482 Players, Fernando Mendoza #1",
-      "depth": "medium",
-      "editorial_direction": "Focus on the scope (482 players ranked) and top prospects. Include Mendoza as consensus #1 QB, other notable names, and the 12 days until draft day.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/nfldraftscout/status/2042599141579051046#m",
-          "account": "@nfldraftscout",
-          "text": "482 players ranked and graded. My final big board for 2026",
-          "role": "news"
+          "url": "https://twitter.com/SportsCenter/status/2043484290663539089#m",
+          "account": "@SportsCenter",
+          "text": "KON WINS NBA 3PT RACE OVER LAMELO BY ONE THREE 🤯 \n\nLaMelo Ball and Kon Knueppel are the first duo with 270+ threes each in a season since Steph and Klay 😳",
+          "role": "celebration"
         },
         {
-          "url": "https://twitter.com/FieldYates/status/2042632508622213185#m",
-          "account": "@FieldYates",
-          "text": "The Packers don't pick until 52nd overall. With needs in the trenches, @MinaKimes & I debated with an assist from @awscloud & @NextGenStats whether the team should address OL or DL first. http://NFL.com/IQ",
-          "role": "analysis"
+          "url": "https://twitter.com/SportsCenter/status/2043529994157379672#m",
+          "account": "@ESPNInsights",
+          "text": "Kon Knueppel is the first rookie in NBA history to lead the NBA in threes ☔️\n\nPrior to this year, no rookie had even finished top 3!",
+          "role": "historic"
         }
       ],
       "research_notes": {
-        "draft_timeline": [
-          "Draft starts April 23 in Pittsburgh - 12 days away",
-          "Raiders hold #1 pick, expected to take Fernando Mendoza",
-          "Jets at #2 with bridge QB Geno Smith acquired"
+        "the_race": [
+          "Kon beat LaMelo by exactly one three-pointer for NBA lead",
+          "Both finished with 270+ threes, first duo since Steph/Klay",
+          "Came down to final games of regular season"
         ],
-        "top_prospects": [
-          "Fernando Mendoza (Indiana QB) - #1 overall, comp to Joe Burrow",
-          "Caleb Downs (Alabama S) - elite safety prospect",
-          "Rueben Bain Jr. (Miami DE) - most finished defensive line prospect"
+        "rookie_record": [
+          "First rookie in NBA history to lead league in threes",
+          "No rookie had even finished top 3 before this year",
+          "Historic shooting season from Duke product"
         ],
-        "draft_scope": [
-          "Miller ranked all 482 prospects with grades",
-          "Only 12 players earned first-round grades per Miller",
-          "AI being used for combine projection analytics"
+        "context": [
+          "LaMelo established as elite shooter, got beaten by rookie",
+          "Shows how prolific three-point shooting has become",
+          "Sets up rivalry between young stars going forward"
         ]
       }
     },
     {
-      "headline": "Colts and Kenny Moore II Agree to Seek Trade",
+      "headline": "Paul Reed Goes Perfect: 11-11 FG with 26 Points in Historic Performance",
       "depth": "light",
-      "editorial_direction": "Nine-year veteran, Pro Bowl corner wants out. Mutual decision, entering final year of contract.",
+      "editorial_direction": "Perfect shooting game with elite stats. Only player in NBA history with 25/3 steals/3 blocks on 100% shooting.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2042598341003936247#m",
-          "account": "@AdamSchefter",
-          "text": "Sources: Colts and Kenny Moore II mutually have agreed to seek a trade and a new home for the veteran cornerback. Moore is entering the last year of his contract, and both sides feel it is time to explore a trade.",
-          "role": "news"
+          "url": "https://twitter.com/statmuse/status/2043484021670257108#m",
+          "account": "@StatMuse",
+          "text": "Paul Reed vs Indiana:\n\n26 PTS\n6 REB\n3 STL\n3 BLK\n11-11 FG\n\nJoins Jarrett Allen as the only players in NBA history with a 25/3s/3b game on 100 FG%.",
+          "role": "stat"
         }
       ],
       "research_notes": {
-        "player_background": [
-          "Nine seasons in Indianapolis, 649 career tackles",
-          "Pro Bowl selection in 2021",
-          "Entering final year of contract, mutual decision to seek trade"
+        "perfect_game": [
+          "Shot 11-11 from field for 26 points",
+          "Added 6 rebounds, 3 steals, 3 blocks",
+          "Only second player ever with 25/3s/3b on perfect shooting"
+        ],
+        "jarrett_allen_company": [
+          "Joins Jarrett Allen as only players to achieve this feat",
+          "Shows elite two-way impact with perfect efficiency",
+          "Rare combination of offense and defense"
+        ],
+        "end_of_season_gem": [
+          "Perfect way to end regular season",
+          "Paul Reed having career year",
+          "Shows depth of talent across NBA"
         ]
       }
     }
   ],
   "around_the_league": [
     {
-      "url": "https://twitter.com/AdamSchefter/status/2042720090378903840#m",
+      "url": "https://twitter.com/AdamSchefter/status/2043355035464049024#m",
       "account": "@AdamSchefter",
-      "text": "Dolphins free agent cornerback Jack Jones is signing a one-year deal with the 49ers, per his agent Drew Rosenhaus."
+      "text": "This year's NFL draft risers: seven prospects thought to be climbing up draft boards, via @Jeff_Legwold:\n\nhttps://www.espn.com/nfl/draft2026/story/_/id/48443025/2026-nfl-draft-risers-prospects-freeling-thieneman-iheanachor"
     },
     {
-      "url": "https://twitter.com/AdamSchefter/status/2042721278923022750#m",
-      "account": "@AdamSchefter",
-      "text": "More about the Falcons exercising the fifth-year option on standout RB Bijan Robinson's contract"
-    },
-    {
-      "url": "https://twitter.com/BallsackSports/status/2042828859104502170#m",
-      "account": "@BallsackSports",
-      "text": "We really witnessed Bam score 83 and Podz drop 30 in the same season.\n\nThat Bronny 15 bomb might break this app."
-    },
-    {
-      "url": "https://twitter.com/statmuse/status/2042787781760462963#m",
+      "url": "https://twitter.com/statmuse/status/2043526151444873493#m",
       "account": "@StatMuse",
-      "text": "Cooper Flagg vs Spurs:\n\n33 PTS\n6 REB\n5 AST\n3 3P\n\nLeBron is the only teenager in NBA history with more 30/5/5 games."
+      "text": "Derik Queen vs Minnesota:\n\n30 PTS\n22 REB\n\nThe first rookie since Alonzo Mourning to record those numbers in a game."
     },
     {
-      "url": "https://twitter.com/AdamSchefter/status/2042636369223102729#m",
-      "account": "@AdamSchefter",
-      "text": "Broncos owners Carrie and Greg Penner have expanded their commitment to, and in, the Denver sports community through a significant minority investment in the Colorado Rockies."
-    },
-    {
-      "url": "https://twitter.com/statmuse/status/2042808443350790617#m",
+      "url": "https://twitter.com/statmuse/status/2043521731273298021#m",
       "account": "@StatMuse",
-      "text": "Bez Mbeng vs Memphis:\n\n27 PTS\n11 REB\n11 AST\n3 STL\n+40\n\nThe first player with a 25/10/10/3 game off the bench since JJ Barea."
+      "text": "Ryan Nembhard vs Chicago:\n\n23 AST (!!)\n15 PTS\n9 REB\n2 STL\n\nThe most AST by a rookie in a game since Ramon Sessions in 2008."
     },
     {
-      "url": "https://twitter.com/JonRothstein/status/2042778146529845638#m",
+      "url": "https://twitter.com/JonRothstein/status/2043503106541937009#m",
       "account": "@JonRothstein",
-      "text": "Source: Georgetown transfer KJ Lewis is planning to visit USC.\n\nAveraged 14.9 PPG and 5.1 RPG last season."
+      "text": "Really strong weekend for Texas.\n\nLonghorns add Isaiah Johnson (Colorado) at PG and David Punch (TCU) at PF.\n\nA pair of All-SEC caliber players in 2026-27."
     },
     {
-      "url": "https://twitter.com/HaterReport/status/2042808489475473690#m",
+      "url": "https://twitter.com/ClutchPoints/status/2043555343213511111#m",
+      "account": "@ClutchPoints",
+      "text": "\"Houston is your first-round opponent…\"\n\nDeandre Ayton: \"How do you know this?\" \n\n\"The league announced it.\"\n\nDA: \"When? I didn't get a chance to go look at it… You spoiled the surprise, bro.\" 😅\n\n(via @mcten)"
+    },
+    {
+      "url": "https://twitter.com/statmuse/status/2043521438724792412#m",
+      "account": "@StatMuse",
+      "text": "Deni Avdija vs Sacramento:\n\n25 PTS\n6 REB\n10 AST\n\nPortland secures the 8-seed and will face Phoenix in the Play-In for the 7-seed."
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2043541224112423307#m",
       "account": "@HaterReport",
-      "text": "Hornets and Pistons bringing rivalries BACK \n\nJalen Duren asked Coach JB Bickerstaff to skip shaking hands with the Hornets after the game. \n\n\"Let's go\""
+      "text": "Shaq put the viral Pacers couple on the spot on LIVE TELEVISION 😭\n\n\"If you ask her to marry you right now, I'll buy the engagement ring.\""
     },
     {
-      "url": "https://twitter.com/PFTCommenter/status/2042656540327281099#m",
-      "account": "@PFTCommenter",
-      "text": "The best part about truly believing I could shoot 109 at Augusta is that I get to keep saying im right with zero accountability"
+      "url": "https://twitter.com/statmuse/status/2043519729353077065#m",
+      "account": "@StatMuse",
+      "text": "Deandre Ayton vs Utah:\n\n22 PTS\n10 REB\n3 BLK\n10-14 FG\n\nTies AD for the fifth-most 20/10/3b games on 70+ FG% as a Laker."
     },
     {
-      "url": "https://twitter.com/AdamSchefter/status/2042724592611922065#m",
-      "account": "@AdamSchefter",
-      "text": "Star Michigan guard Trey McKenney has signed to return to the Wolverines, per @PeteThamel and @jeffborzello. He earned All Big Ten Freshman honors this season after arriving as a Top 20 recruit and McDonald's All-American."
+      "url": "https://twitter.com/HaterReport/status/2043641712254345602#m",
+      "account": "@HaterReport",
+      "text": "I'M CRYING. The viral Pacers fan's reaction after going on Inside the NBA and Shaq tried to get her boyfriend to propose to her. \n\n\"alright I agreed to do this so my boy could talk BASKETBALL\"\n\n\"Am being told this show doesn't talk about basketball??\" 😭😂"
+    },
+    {
+      "url": "https://twitter.com/statmuse/status/2043494464442736781#m",
+      "account": "@StatMuse",
+      "text": "The only players to play 83 games this season:\n\n— Mikal Bridges\n— Keldon Johnson\n— Julian Champagnie\n\nPlayed all 82 and the NBA Cup Final."
     }
   ],
   "closer": {
-    "hook": "Super Bowl LX champion Sam Darnold got married",
+    "hook": "Erik Spoelstra getting philosophical about the play-in tournament",
     "tweets": [
       {
-        "url": "https://twitter.com/AdamSchefter/status/2042674950847291392#m",
-        "account": "@AdamSchefter",
-        "text": "💍 Seahawks QB Sam Darnold adds another ring"
+        "url": "https://twitter.com/ClutchPoints/status/2043563416674251062#m",
+        "account": "@ClutchPoints",
+        "text": "Erik Spoelstra on their confidence entering the play-in, citing familiarity 🗣️\n\n\"It is like the NCAA tournament. It's like FIBA. You know? It's harrowing. It's nuts… It makes you feel alive. That's for sure... Once you're in it, it's exhilarating. And you have to embrace the competition.\"\n\n(via @ZachWeinberger)"
       }
     ]
   },
   "quality_check": {
-    "total_headlines": 5,
-    "total_tweets_assigned": 12,
+    "total_headlines": 6,
+    "total_tweets_assigned": 15,
     "around_the_league_count": 10,
     "controversial_stories_as_lead": false
   }
