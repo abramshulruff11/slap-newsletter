@@ -1,302 +1,260 @@
 {
-  "date": "2026-04-14",
+  "date": "2026-04-15",
   "editorial_reasoning": {
-    "calendar_tier": "TIER 2 — Heavy Coverage Day. NFL Draft Week (April 23-25), NBA Play-In Tournament (April 14-17), WNBA Draft (April 13)",
+    "calendar_tier": "TIER 1 — NFL Draft Week (pre-event coverage)",
     "tweet_volume": [
       {
-        "topic": "WNBA Draft - Azzi Fudd #1",
-        "approx_tweets": 15,
+        "topic": "NFL Draft mock drafts/analysis",
+        "approx_tweets": 12,
         "accounts": 5
       },
       {
-        "topic": "NBA Play-In Tournament starts today",
+        "topic": "LaMelo Ball/Bam Adebayo controversy",
         "approx_tweets": 8,
         "accounts": 4
       },
       {
-        "topic": "NFL Draft prep content",
-        "approx_tweets": 6,
-        "accounts": 3
-      },
-      {
-        "topic": "Dave McGinnis death",
-        "approx_tweets": 4,
+        "topic": "Dianna Russini resignation",
+        "approx_tweets": 3,
         "accounts": 2
       }
     ],
-    "dominant_topic": "WNBA Draft should lead — Tier 2 calendar event that JUST happened, plus the UConn reunion story has strong narrative juice. NBA Play-In starts TODAY but those games are tonight.",
+    "dominant_topic": "NFL Draft leads — Tier 1 confirmed by coverage volume and calendar position",
     "candidates_considered": [
       {
-        "story": "WNBA Draft - Azzi Fudd #1, reunites with Paige Bueckers in Dallas",
-        "hook": "Back-to-back UConn #1 picks, relationship angle, $500K salary, UCLA broke records",
+        "story": "NFL Draft mock releases with trade buzz",
+        "hook": "Raiders #1 pick drama, teams calling about trades",
         "verdict": "HEADLINE — DEEP"
       },
       {
-        "story": "NBA Play-In Tournament starts today",
-        "hook": "LeBron vs KD historic matchup, 4 win-or-go-home games",
+        "story": "LaMelo Ball trips Bam Adebayo, wins play-in game",
+        "hook": "Trip injury to opponent, hits game-winner, controversy",
         "verdict": "HEADLINE — MEDIUM"
       },
       {
-        "story": "Dave McGinnis NFL coach death",
-        "hook": "Coach Mac, beloved figure, Cardinals connection",
-        "verdict": "HEADLINE — LIGHT (respectful)"
+        "story": "Dianna Russini resigns amid Vrabel photos scandal",
+        "hook": "NFL reporter-coach relationship scandal",
+        "verdict": "HEADLINE — LIGHT"
       },
       {
-        "story": "NFL Draft prep week",
-        "hook": "Generic draft content, no fresh angle",
+        "story": "Deni Avdija 41-point playoff game",
+        "hook": "Historic performance, clutch game-winner",
+        "verdict": "HEADLINE — LIGHT"
+      },
+      {
+        "story": "Michigan lands QB after firing coach",
+        "hook": "Coaching change aftermath",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "Various NFL transactions",
-        "hook": "Minor moves, no compelling angles",
+        "story": "Various draft prospect features",
+        "hook": "Pre-draft human interest",
         "verdict": "AROUND THE LEAGUE"
       }
     ]
   },
   "stories": [
     {
-      "headline": "Dallas Wings Reunite UConn Power Couple with Azzi Fudd at #1",
+      "headline": "Everyone Wants the Raiders' #1 Pick (But They're Still Taking Mendoza)",
       "depth": "deep",
-      "editorial_direction": "This is the relationship angle EVERYONE is talking about. Back-to-back UConn #1 picks who are dating. Fudd making $500K (7x what Paige made last year). UCLA also broke records. Go deep on the draft night moment, the salary jump, the basketball fit.",
+      "editorial_direction": "Classic draft week story — teams circling like vultures around the #1 pick. Kiper's mock is out, trade rumors are swirling, but everyone knows it's Mendoza to Vegas. Go into the desperation, the obvious choice, and what makes this QB class unique.",
       "tweets": [
         {
-          "url": "https://twitter.com/HaterReport/status/2043830278083252470#m",
-          "account": "@HaterReport",
-          "text": "THE DALLAS WINGS SELECT AZZI FUDD WITH THE NO. 1 PICK IN THE WNBA DRAFT ‼️\n\nReunited with Paige Bueckers",
+          "url": "https://twitter.com/AdamSchefter/status/2044281818048860191#m",
+          "account": "@AdamSchefter",
+          "text": "Raiders GM John Spytek said teams have inquired about the No. 1 draft pick.\n\nMore via @ryanmcfadden_ :\n\nhttps://www.espn.com/nfl/story/_/id/48488757/raiders-spytek-says-teams-inquired-no-1-draft-pick",
           "role": "news"
         },
         {
-          "url": "https://twitter.com/HaterReport/status/2043833110853218771#m",
-          "account": "@HaterReport",
-          "text": "Paige Bueckers excited the Dallas Wings drafted her girlfriend Azzi Fudd with the number 1 pick in the draft.",
-          "role": "relationship"
+          "url": "https://twitter.com/FieldYates/status/2044370836463751217#m",
+          "account": "@FieldYates",
+          "text": "A new First Draft with @Espngreeny & @MelKiperESPN \n\nMel's final mock has dropped\n\nIt's two rounds and a major trade shakes up the top of the first round \n\n📺: https://youtu.be/P6ynJJXVs2o",
+          "role": "analysis"
         },
         {
-          "url": "https://twitter.com/HaterReport/status/2043834884204986555#m",
-          "account": "@HaterReport",
-          "text": "The crowd reaction while Azzi Fudd was being interviewed when they showed Paige Bueckers on the screen 😂😂",
-          "role": "comedy"
-        },
-        {
-          "url": "https://twitter.com/StatMuse/status/2043834574401052972#m",
-          "account": "@StatMuse",
-          "text": "WNBA Draft Top 4:\n\n1 — Azzi Fudd\n2 — Olivia Miles\n3 — Awa Fam\n4 — Lauren Betts\n\nDid they get it right?",
-          "role": "stat"
-        },
-        {
-          "url": "https://twitter.com/HaterReport/status/2043895375845613623#m",
-          "account": "@HaterReport",
-          "text": "The Dallas Wings had the number 1 overall pick in 2025 and 2026 WNBA Drafts: \n\n2025 — Paige Bueckers \n2026 — Azzi Fudd",
-          "role": "historical"
-        },
-        {
-          "url": "https://twitter.com/SportsCenter/status/2043831727219482685#m",
-          "account": "@SportsCenter",
-          "text": "Paige Bueckers' reaction to Azzi Fudd getting drafted to the same WNBA team as her 🔥 \n\nBack-to-back No. 1 picks from UConn to Dallas!",
-          "role": "reaction"
-        }
-      ],
-      "research_notes": {
-        "key_stats": [
-          "Fudd making $500,000 in rookie year — 7x what Paige made in 2025",
-          "7th UConn player to be #1 pick in WNBA history",
-          "5th team ever to have back-to-back #1 picks",
-          "Fudd shot 45% from 3-point range, led nation in 3-pointers made (117)"
-        ],
-        "relationship_angle": [
-          "Fudd and Bueckers are in a public relationship since 2025",
-          "Their friendship dates back to 2017 USA U-16 team",
-          "Bueckers recruited Fudd to come to UConn in high school",
-          "They won national championship together at UConn"
-        ],
-        "salary_revolution": [
-          "New CBA ratified last month gave massive rookie pay raises",
-          "Top pick salary jumped from ~$70K to $500K",
-          "#2 pick gets $467K, #3 gets $436K",
-          "League salary cap rose from $1.5M to $7M"
-        ],
-        "basketball_fit": [
-          "Wings added veteran posts Alanna Smith and Jessica Shepard in free agency",
-          "Fudd complements Arike Ogunbowale and Bueckers in backcourt",
-          "Fudd is elite shooter — exactly what Dallas needed",
-          "Wings missed playoffs with 10-34 record, this should fix offense"
-        ],
-        "draft_night_moments": [
-          "Crowd erupted when Fudd's name called",
-          "Walked on stage in brown/gold dress to Lady Gaga 'Abracadabra'",
-          "Room reaction when Paige appeared on screen during Fudd interview was iconic",
-          "Emotional moment for both players"
-        ],
-        "ucla_records": [
-          "UCLA had 6 players drafted — most ever from single school",
-          "5 UCLA players went in first round — also a record",
-          "Lauren Betts #4, Gabriela Jaquez #5, Kiki Rice #6 all Bruins",
-          "Champions from April 5 title cashing in"
-        ],
-        "historical_context": [
-          "UConn now has 7 #1 picks in WNBA history",
-          "Third time UConn had back-to-back #1 selections",
-          "Wings join rare company with consecutive #1 picks"
-        ],
-        "where_it_goes": [
-          "WNBA season starts May 8",
-          "Wings should finally make playoffs with this backcourt",
-          "Fudd/Bueckers will be most-watched duo in WNBA"
-        ]
-      }
-    },
-    {
-      "headline": "NBA Play-In Tournament Tips Off Tonight with Historic LeBron-KD Showdown",
-      "depth": "medium",
-      "editorial_direction": "Four win-or-go-home games tonight and tomorrow. LeBron vs KD is the marquee matchup — two players with 75,000+ combined points. Also highlight the other key matchups and what's at stake.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/StatMuse/status/2043798630856085546#m",
-          "account": "@StatMuse",
-          "text": "Detroit this season:\n\n— 1st in steals\n— 1st in blocks\n\nThe first team with 850+ steals and 500+ blocks since the 1983 Nets.",
-          "role": "stat"
-        },
-        {
-          "url": "https://twitter.com/HaterReport/status/2043710585640976436#m",
-          "account": "@HaterReport",
-          "text": "LaMelo Ball and Kon Knueppel knockdown a bunch of threes and lead the Hornets over the Heat in the opening game of the Play-In Tournament",
-          "role": "game_result"
-        },
-        {
-          "url": "https://twitter.com/HaterReport/status/2043869313321324739#m",
-          "account": "@HaterReport",
-          "text": "Zion Williamson has been in the NBA for 7 SEASONS and has not played a single playoff game 😭 \n\n\"I want to experience the playoffs...It's frustrating getting up here every year and not being  in the playoffs. And I take my responsibility in that\"",
+          "url": "https://twitter.com/AdamSchefter/status/2044107861546955164#m",
+          "account": "@AdamSchefter",
+          "text": "With the draft next week in Pittsburgh, the Steelers still are waiting for an answer from Aaron Rodgers about whether he will play this season.\n\nWith @tyschmit \n\n🎧 https://open.spotify.com/episode/6vyNFUZIJBm4posw1C9fh3?si=GXxV2zu5RHykuVjmgeFnyw",
           "role": "context"
         }
       ],
       "research_notes": {
-        "tonight_games": [
-          "Heat (10) at Hornets (9), 7:30 ET — loser eliminated",
-          "Trail Blazers (8) at Suns (7), 10 ET — winner gets 7 seed"
+        "key_stats": [
+          "Raiders have #1 pick, teams calling to inquire about trades",
+          "Fernando Mendoza is consensus #1 QB, 'far and away the best in class' per Kiper",
+          "Raiders ranked bottom 5 in QBR over past 5 seasons (44.8)",
+          "Draft is April 23-25 in Pittsburgh"
         ],
-        "tomorrow_games": [
-          "Magic (8) at 76ers (7), 7:30 ET — winner gets 7 seed",
-          "Warriors (10) at Clippers (9), 10 ET — loser eliminated"
-        ],
-        "historic_matchup": [
-          "Lakers vs Rockets will be first playoff meeting between players with 75,000+ combined career points",
-          "LeBron has 38,000+, KD has 37,000+ — combined they're over 75,000",
-          "Both legendary scorers, different eras meeting"
-        ],
-        "storylines": [
-          "Hornets beat Heat in play-in game — LaMelo Ball's playoff debut",
-          "Zion quote about never making playoffs in 7 seasons is devastating",
-          "Deni Avdija's breakout All-Star season has Portland in postseason for first time since 2021"
-        ],
-        "format": [
-          "Teams 7-10 in each conference battle for 7th and 8th seeds",
-          "7 vs 8 winner gets 7 seed, loser gets second chance",
-          "9 vs 10 winner advances, loser eliminated",
-          "All games exclusive on Prime Video"
-        ]
+        "historical_context": "Raiders solved Derek Carr problem with Geno Smith, but that didn't work - now they need their franchise QB",
+        "trade_dynamics": "Teams are calling but 'those teams know where they stand' - Raiders aren't actually trading it",
+        "qb_comparison": "Mendoza described as 'competitive and precise with ball location' - clear #1 prospect on Kiper's board",
+        "team_building": "Raiders signed Tyler Linderbaum for $81M over 3 years to protect Mendoza, traded Geno Smith to Jets",
+        "mock_draft_trends": "Kiper's final 2-round mock includes 'major trade' that shakes up top of first round - but not #1",
+        "steelers_subplot": "Steelers still waiting on Aaron Rodgers decision, adds QB uncertainty around league",
+        "internet_sentiment": "Draft twitter is in full mock mode, everyone knows it's Mendoza but teams have to make calls",
+        "where_it_goes": "Draft is next week - this is peak speculation season before the obvious happens"
       }
     },
     {
-      "headline": "NFL Mourns Dave McGinnis, the Coach Who Made Everyone Feel Like Family",
-      "depth": "light",
-      "editorial_direction": "Respectful tribute to Coach Mac. Focus on his personality, the famous Cardinals finale, and how beloved he was across the league. Keep it brief but heartfelt.",
+      "headline": "LaMelo Ball Trips Bam Adebayo, Injures Him, Then Hits Game-Winner",
+      "depth": "medium",
+      "editorial_direction": "The most LaMelo Ball sequence ever - controversial ankle grab that injures Miami's best player, then wins the game in OT. Spoelstra is furious, Ball apologizes but claims head injury excuse. Perfect chaos.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2043845767366930868#m",
-          "account": "@AdamSchefter",
-          "text": "Former NFL coach Dave McGinnis died Monday, the Titans announced. McGinnis, 74, had been hospitalized with an illness since early March, as per the team's release.\n\nhttps://www.espn.com/nfl/story/_/id/48479231/former-tennessee-titans-assistant-dave-mcginnis-dies-74",
-          "role": "news"
+          "url": "https://twitter.com/HaterReport/status/2044256183020626255#m",
+          "account": "@HaterReport",
+          "text": "Coach Spo GOING OFF on LaMelo Ball for tripping Bam Adebayo:\n\n\"I don't think it's cute, I don't think it's funny, it's a dangerous play... He should be penalized for that... Somebody's got to see that. He should've been thrown out of the game for that.\"",
+          "role": "reaction"
+        },
+        {
+          "url": "https://twitter.com/HaterReport/status/2044256752082850132#m",
+          "account": "@HaterReport",
+          "text": "LaMelo Ball apologizes for the play where Bam Adebayo got injured:\n\n\"I apologize on that one. I got hit in the head, didn't really know where I was, but I'mma check on him and see if he's okay and everything.\"",
+          "role": "apology"
+        },
+        {
+          "url": "https://twitter.com/SportsCenter/status/2044278059260416173#m",
+          "account": "@SportsCenter",
+          "text": "THE DENI AVDIJA GAME 🔥\n\nAvdija with the game-winning bucket and 40-ball to send the Blazers to the playoffs 👏",
+          "role": "context"
+        },
+        {
+          "url": "https://twitter.com/HaterReport/status/2044266305067323843#m",
+          "account": "@HaterReport",
+          "text": "Wait… this not the first time 😳\n\nLaMelo Ball tried to trip Bam Adebayo back in 2024 too 😭",
+          "role": "history"
         }
       ],
       "research_notes": {
-        "who_he_was": [
-          "Known as 'Coach Mac' — beloved throughout NFL",
-          "Cardinals head coach 2000-2003, went 17-40 but loved by players",
-          "Famous final game: Josh McCown to Nate Poole beat Vikings, knocked them out of playoffs"
+        "key_stats": [
+          "Charlotte won 127-126 in OT",
+          "Ball hit game-winner with 4.7 seconds left",
+          "Adebayo played 11 minutes before injury, 6 points/3 rebounds",
+          "Ball was not called for foul on the trip"
         ],
-        "coaching_career": [
-          "30+ years in NFL — Bears, Cardinals, Titans, Rams",
-          "Coached Pat Tillman throughout his NFL career",
-          "Was spokesman who revealed Tillman's Army enlistment plans"
-        ],
-        "personality": [
-          "Called himself 'ball coach through and through'",
-          "Known for passion, enthusiasm, Texas twang",
-          "Players called him family — not just coach"
-        ],
-        "legacy": [
-          "Coached 8 Hall of Fame players during career",
-          "Had famous postgame speech after Cardinals upset Vikings",
-          "Most recently Titans radio analyst since 2017"
-        ]
+        "injury_details": "Adebayo suffered lower back injury after Ball grabbed his ankle while on the ground, ruled out for game",
+        "controversy_specifics": "Spoelstra wanted Ball ejected, refs said play couldn't be reviewed because no whistle in real-time",
+        "ball_excuse": "Ball claims he 'got hit in the head, didn't really know where I was' - apologized but blamed confusion",
+        "historical_pattern": "This is apparently not the first time Ball has tripped Adebayo - 2024 incident referenced",
+        "playoff_implications": "Charlotte advances to next play-in round, Miami eliminated without their best player",
+        "where_it_goes": "NBA will review for potential suspension, Ball could miss next playoff game"
+      }
+    },
+    {
+      "headline": "NFL Reporter Resigns After Cozy Photos with Patriots Coach Go Public",
+      "depth": "light",
+      "editorial_direction": "Dianna Russini out at The Athletic after Arizona resort photos with Mike Vrabel surface. Both married, initially defended as 'innocent,' but investigation expanded and she resigned. Classic journalism ethics vs. access story.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2044144603536687279#m",
+          "account": "@AdamSchefter",
+          "text": "I submitted my letter of resignation to The Athletic. Everything I have to say about it is below.",
+          "role": "announcement"
+        },
+        {
+          "url": "https://twitter.com/NFLMemes/status/2044143602465407226#m",
+          "account": "@NFLMemes",
+          "text": "BREAKING: Dianna Russini has resigned from 'The Athletic' amid Mike Vrabel scandal. \n\nWoah.. 😮\nhttps://dailysnark.com/2026/04/14/breaking-dianna-russini-resigns-from-the-athletic-after-photos-surfaced-with-mike-vrabel/",
+          "role": "reaction"
+        }
+      ],
+      "research_notes": {
+        "timeline": "Photos published last Tuesday by NY Post, Russini resigned Tuesday - less than a week",
+        "photo_details": "Pictures at luxury Sedona hotel showed them by pool, hot tub, rooftop - some with intertwined hands",
+        "initial_defense": "Athletic initially supported her, called photos 'misleading and lack essential context'",
+        "investigation_expansion": "NYT opened investigation, 'additional information emerged' that raised new questions",
+        "journalism_ethics": "Athletic guidelines require avoiding 'appearance of conflict of interest' - potential favorable coverage concern"
+      }
+    },
+    {
+      "headline": "Deni Avdija Drops 41 to Send Blazers to Playoffs",
+      "depth": "light",
+      "editorial_direction": "Historic performance - 41 points, 12 assists, game-winner. Only third player in franchise history with 40/5/10 playoff game. Clutch gene activated.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/StatMuse/status/2044276384990642562#m",
+          "account": "@StatMuse",
+          "text": "Deni Avdija vs PHX:\n\n41 PTS\n7 REB\n12 AST\n2 BLK\n\nJoins Clyde and Dame as the only players in franchise history with a 40/5/10 postseason game.",
+          "role": "stat"
+        },
+        {
+          "url": "https://twitter.com/ClutchPoints/status/2044291333444219311#m",
+          "account": "@ClutchPoints",
+          "text": "\"I feel like I was just being aggressive the whole night going downhill. I cleared Shaedon so I can go right, so that's what happened.\"\n\nDeni Avdija on clutch drive to win the game for the Blazers 🗣️\n\n(via @NBATV)",
+          "role": "quote"
+        }
+      ],
+      "research_notes": {
+        "historic_stats": "Third player in Trail Blazers history with 40/5/10 playoff game (Clyde Drexler, Damian Lillard)",
+        "clutch_context": "Game-winning drive in final seconds, Blazers came back from 11-point fourth quarter deficit"
       }
     }
   ],
   "around_the_league": [
     {
-      "url": "https://twitter.com/StatMuse/status/2043883821758595560#m",
+      "url": "https://twitter.com/AdamSchefter/status/2044183165258924407#m",
+      "account": "@AdamSchefter",
+      "text": "Michigan now has received its first notable QB commitment of the Kyle Whittingham era, as four-star Kamden Lopati has pledged to the Wolverines for the 2027 season. The 6-3, 220-pound prospect is rated among the top 10 quarterbacks in this recruiting cycle."
+    },
+    {
+      "url": "https://twitter.com/JonRothstein/status/2044189517800693892#m",
+      "account": "@JonRothstein",
+      "text": "Accumulating pieces in the Transfer Portal does not automatically equate to victories next winter, but I will say this:\n\nThe rosters at both Creighton and Xavier should be significantly better than they were last season."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2044268063235727477#m",
       "account": "@StatMuse",
-      "text": "In the Bronx:\n\nTrout —                                    Judge —\n3-5                                            2-5\n2 HR                                          2 HR\n5 RBI                                        3 RBI\n3 R                                             2 R"
+      "text": "Yoshinobu Yamamoto this season:\n\n25.2 IP\n21 SO\n2.10 ERA\n0.81 WHIP\n\nDodgers are 3-1 in his starts this season."
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2043865127816929342#m",
-      "account": "@StatMuse",
-      "text": "Kyle Schwarber vs Cubs:\n\n2-3\n2 HR\n3 RBI\n1 BB\n1 HBP\n\nOnly the second NL player to score 4 runs in a game this season."
+      "url": "https://twitter.com/AdamSchefter/status/2044117861522665964#m",
+      "account": "@AdamSchefter",
+      "text": "Colts signed former Chargers free agent safety Nasir Adderley, who spent the past three seasons out of the NFL after announcing his retirement. In February, the 28-year-old Adderley announced he intended to return to the NFL and now he has landed a deal with the Colts."
     },
     {
-      "url": "https://twitter.com/FieldYates/status/2043707212523086008#m",
-      "account": "@FieldYates",
-      "text": "On the docket for the NFL draft this week:\n\nWednesday: the final day for teams to host prospects on pre-draft 30 visits\n\nAlso Wednesday: Georgia LB CJ Allen will run a 40-yard dash\n\nFriday: Arizona State WR Jordyn Tyson will do a positional drills workout"
-    },
-    {
-      "url": "https://twitter.com/StatMuse/status/2043852042356072880#m",
-      "account": "@StatMuse",
-      "text": "Garrett Crochet vs Twins:\n\n1.2 IP\n9 H\n11 R (10 ER)\n3 BB\n0 SO\n\nFirst time he gives up 8+ ER in a MLB start."
-    },
-    {
-      "url": "https://twitter.com/SportsCenter/status/2043871841073160637#m",
+      "url": "https://twitter.com/SportsCenter/status/2044188787798843419#m",
       "account": "@SportsCenter",
-      "text": "THE FLYERS HEAD TO THE PLAYOFFS FOR THE FIRST TIME IN 6 YEARS‼️ \n\nPhilly will face off with in-state rival Pittsburgh 🍿"
+      "text": "\"Whenever you do step away, what do you think you're going to miss most?\" — @TJOshie77\n\n\"I didn't step away yet so...\" — Alex Ovechkin 👀🔥"
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2043864919913759169#m",
+      "url": "https://twitter.com/StatMuse/status/2044237016439672977#m",
       "account": "@StatMuse",
-      "text": "Pirates 1-3 hitters vs Nats:\n\nCruz | 2-3, 3 RBI, 2 BB, 1 SB\nLowe | 3-5, 1 HR, 5 RBI, 1 HBP\nReynolds | 3-4, 1 3B, 4 RBI, 1 HBP\n\nDrove in 12 runs."
+      "text": "AL teams to hit 5+ home runs in a game this season:\n\nAngels vs Yankees tonight\nYankees vs Angels last night"
     },
     {
-      "url": "https://twitter.com/HaterReport/status/2043716188979499097#m",
+      "url": "https://twitter.com/JonRothstein/status/2044113005575537014#m",
+      "account": "@JonRothstein",
+      "text": "Sources: Penn State transfer Kayden Mingo is currently visiting Oklahoma.\n\nAveraged 13.7 PPG last season."
+    },
+    {
+      "url": "https://twitter.com/NFLMemes/status/2044080184500863385#m",
+      "account": "@NFLMemes",
+      "text": "REPORT: NBC is \"at risk\" of losing Sunday Night Football broadcasting rights to Netflix or Amazon. \n\nNO ONE WANTS THIS! 😭\nhttps://dailysnark.com/2026/04/14/report-nbc-in-danger-of-losing-sunday-night-football-to-streaming-service/"
+    },
+    {
+      "url": "https://twitter.com/AdamSchefter/status/2044193312098140280#m",
+      "account": "@AdamSchefter",
+      "text": "Eagles GM Howie Roseman's stance on AJ Brown remains unchanged despite the trade for wide receiver Dontayvion Wicks.\n\nStory via @Tim_McManus:\n\nhttps://www.espn.com/nfl/story/_/id/48485453/eagles-gm-howie-roseman-says-stance-aj-brown-unchanged-wake-dontayvion-wicks-trade"
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2044248334106247392#m",
       "account": "@HaterReport",
-      "text": "Tyrese Haliburton's noticeable weight gain is due to medication he was taking during a bout with shingles that left him out of shape, per @DustinDopirak"
-    },
-    {
-      "url": "https://twitter.com/StatMuse/status/2043882780459757606#m",
-      "account": "@StatMuse",
-      "text": "JRam vs St. Louis:\n\n2-4\n1 2B\n1 BB\n2 SB\n\nOnly the fourth player to put up those numbers in a game this season."
-    },
-    {
-      "url": "https://twitter.com/StatMuse/status/2043818258868863473#m",
-      "account": "@StatMuse",
-      "text": "Josh Naylor vs Astros:\n\n2-5\n2 HR\n5 RBI\n\nMariners sweep a 4-game series against the Astros for the first time since 2018."
-    },
-    {
-      "url": "https://twitter.com/JoeyMulinaro/status/2043707085032976671#m",
-      "account": "@JoeyMulinaro",
-      "text": "An hour 20 mix of a little Star Wars and a lot of Cubs. Always enjoy my chats with the leaders of the maniacs. Go Cubs"
+      "text": "LaMelo Ball still has NO media training I'M CRYING 😂😂\n\n \"I just gotta win the game I feel like I just f*cked the game up so I'm like it's my fault. I gotta make it work\""
     }
   ],
   "closer": {
-    "hook": "Draft season energy building",
+    "hook": "Bowling perfection anxiety",
     "tweets": [
       {
-        "url": "https://twitter.com/AdamSchefter/status/2043724207490552173#m",
-        "account": "@AdamSchefter",
-        "text": "Let all those making draft pick announcements next week study this one: taunts Dallas…..then selects Dallas."
+        "url": "https://twitter.com/BarstoolBigCat/status/2044227637665481019#m",
+        "account": "@BarstoolBigCat",
+        "text": "If I could pay 10k to have this bowling stream be Steven miss the 12th frame over and over for hours on end I'd pay 20k and say double it"
       }
     ]
   },
   "quality_check": {
-    "total_headlines": 3,
-    "total_tweets_assigned": 11,
+    "total_headlines": 4,
+    "total_tweets_assigned": 13,
     "around_the_league_count": 10,
     "controversial_stories_as_lead": false
   }
