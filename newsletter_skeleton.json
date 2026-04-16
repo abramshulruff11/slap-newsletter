@@ -1,260 +1,308 @@
 {
-  "date": "2026-04-15",
+  "date": "2026-04-16",
   "editorial_reasoning": {
-    "calendar_tier": "TIER 1 — NFL Draft Week (pre-event coverage)",
+    "calendar_tier": "TIER 2 — NFL Draft Week. The 2026 NFL Draft is next week (April 23-25) making this NFL Draft heavy coverage week. NBA Play-In Tournament ongoing but secondary to draft dominance.",
     "tweet_volume": [
       {
-        "topic": "NFL Draft mock drafts/analysis",
-        "approx_tweets": 12,
+        "topic": "NFL Draft",
+        "approx_tweets": 15,
         "accounts": 5
       },
       {
-        "topic": "LaMelo Ball/Bam Adebayo controversy",
-        "approx_tweets": 8,
+        "topic": "NBA Play-In",
+        "approx_tweets": 12,
         "accounts": 4
       },
       {
-        "topic": "Dianna Russini resignation",
+        "topic": "Replacement Officials",
         "approx_tweets": 3,
         "accounts": 2
       }
     ],
-    "dominant_topic": "NFL Draft leads — Tier 1 confirmed by coverage volume and calendar position",
+    "dominant_topic": "NFL Draft week dominates — Tier 2 calendar event confirmed by tweet volume and Kiper's final mock dropping",
     "candidates_considered": [
       {
-        "story": "NFL Draft mock releases with trade buzz",
-        "hook": "Raiders #1 pick drama, teams calling about trades",
+        "story": "Kiper's Final Mock Draft",
+        "hook": "Final predictions, trade possibilities, one week out drama",
         "verdict": "HEADLINE — DEEP"
       },
       {
-        "story": "LaMelo Ball trips Bam Adebayo, wins play-in game",
-        "hook": "Trip injury to opponent, hits game-winner, controversy",
+        "story": "Warriors beat Clippers in Play-In",
+        "hook": "Steph's 35 points, Kawhi elimination, Clippers season over",
         "verdict": "HEADLINE — MEDIUM"
       },
       {
-        "story": "Dianna Russini resigns amid Vrabel photos scandal",
-        "hook": "NFL reporter-coach relationship scandal",
+        "story": "NFL Replacement Officials onboarding",
+        "hook": "CONTINUING from yesterday — new development of actual training starting",
         "verdict": "HEADLINE — LIGHT"
       },
       {
-        "story": "Deni Avdija 41-point playoff game",
-        "hook": "Historic performance, clutch game-winner",
+        "story": "LaMelo Ball $60K fine",
+        "hook": "Trip + cursing = expensive night, no suspension",
         "verdict": "HEADLINE — LIGHT"
       },
       {
-        "story": "Michigan lands QB after firing coach",
-        "hook": "Coaching change aftermath",
+        "story": "76ers beat Magic without Embiid",
+        "hook": "Maxey 31, Embiid missed another big game",
+        "verdict": "HEADLINE — LIGHT"
+      },
+      {
+        "story": "Achane not available for trade",
+        "hook": "Dolphins protecting homegrown talent",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "Various draft prospect features",
-        "hook": "Pre-draft human interest",
+        "story": "A'ja Wilson WNBA supermax",
+        "hook": "$5M WNBA record deal",
         "verdict": "AROUND THE LEAGUE"
       }
     ]
   },
   "stories": [
     {
-      "headline": "Everyone Wants the Raiders' #1 Pick (But They're Still Taking Mendoza)",
+      "headline": "Kiper's Final Mock: Raiders Lock in Mendoza, Jets Chaos at No. 2",
       "depth": "deep",
-      "editorial_direction": "Classic draft week story — teams circling like vultures around the #1 pick. Kiper's mock is out, trade rumors are swirling, but everyone knows it's Mendoza to Vegas. Go into the desperation, the obvious choice, and what makes this QB class unique.",
+      "editorial_direction": "This is draft week — go deep on the final predictions, surprise picks, and trade scenarios. Focus on the drama of final week intel and which teams might shock everyone.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2044281818048860191#m",
+          "url": "https://twitter.com/AdamSchefter/status/2044737475508121830#m",
           "account": "@AdamSchefter",
-          "text": "Raiders GM John Spytek said teams have inquired about the No. 1 draft pick.\n\nMore via @ryanmcfadden_ :\n\nhttps://www.espn.com/nfl/story/_/id/48488757/raiders-spytek-says-teams-inquired-no-1-draft-pick",
+          "text": "This year's full and final mock draft from Mel Kiper Jr.:\n\nhttps://www.espn.com/nfl/draft2026/story/_/id/48478995/2026-nfl-mock-draft-mel-kiper-two-rounds-64-picks-final-predictions",
           "role": "news"
         },
         {
-          "url": "https://twitter.com/FieldYates/status/2044370836463751217#m",
+          "url": "https://twitter.com/FieldYates/status/2044740719026287082#m",
           "account": "@FieldYates",
-          "text": "A new First Draft with @Espngreeny & @MelKiperESPN \n\nMel's final mock has dropped\n\nIt's two rounds and a major trade shakes up the top of the first round \n\n📺: https://youtu.be/P6ynJJXVs2o",
-          "role": "analysis"
+          "text": "Here's my top 150 prospects in the 2026 NFL Draft.\n\nOne week until Round 1:\n\nhttps://www.espn.com/nfl/draft2026/story/_/id/47590505/2026-nfl-draft-rankings-board-top-prospects-best-positional-field-yates",
+          "role": "supporting"
         },
         {
-          "url": "https://twitter.com/AdamSchefter/status/2044107861546955164#m",
+          "url": "https://twitter.com/AdamSchefter/status/2044756022149955940#m",
           "account": "@AdamSchefter",
-          "text": "With the draft next week in Pittsburgh, the Steelers still are waiting for an answer from Aaron Rodgers about whether he will play this season.\n\nWith @tyschmit \n\n🎧 https://open.spotify.com/episode/6vyNFUZIJBm4posw1C9fh3?si=GXxV2zu5RHykuVjmgeFnyw",
-          "role": "context"
+          "text": "Jets had all the information they already needed on David Bailey; they felt there was no reason for a visit.",
+          "role": "intel"
         }
       ],
       "research_notes": {
         "key_stats": [
-          "Raiders have #1 pick, teams calling to inquire about trades",
-          "Fernando Mendoza is consensus #1 QB, 'far and away the best in class' per Kiper",
-          "Raiders ranked bottom 5 in QBR over past 5 seasons (44.8)",
-          "Draft is April 23-25 in Pittsburgh"
+          "Raiders at No. 1 with Fernando Mendoza locked in",
+          "Jets at No. 2 debating between prospects",
+          "Two potential trades projected in first two rounds",
+          "Kiper's final mock covers 64 picks"
         ],
-        "historical_context": "Raiders solved Derek Carr problem with Geno Smith, but that didn't work - now they need their franchise QB",
-        "trade_dynamics": "Teams are calling but 'those teams know where they stand' - Raiders aren't actually trading it",
-        "qb_comparison": "Mendoza described as 'competitive and precise with ball location' - clear #1 prospect on Kiper's board",
-        "team_building": "Raiders signed Tyler Linderbaum for $81M over 3 years to protect Mendoza, traded Geno Smith to Jets",
-        "mock_draft_trends": "Kiper's final 2-round mock includes 'major trade' that shakes up top of first round - but not #1",
-        "steelers_subplot": "Steelers still waiting on Aaron Rodgers decision, adds QB uncertainty around league",
-        "internet_sentiment": "Draft twitter is in full mock mode, everyone knows it's Mendoza but teams have to make calls",
-        "where_it_goes": "Draft is next week - this is peak speculation season before the obvious happens"
+        "historical_context": "Final mock drafts often differ dramatically from reality — Kiper's track record of surprises vs accurate predictions",
+        "key_moments": [
+          "Jets didn't need Bailey visit — suggests they're looking elsewhere",
+          "Cardinals visiting with Ty Simpson on final visit day",
+          "64 picks projected with two trades"
+        ],
+        "cross_connections": [
+          "Draft is in Pittsburgh — Steelers have home field advantage for local connections",
+          "One week out creates final desperate moves"
+        ],
+        "meme_angles": [
+          "Kiper hair jokes never get old",
+          "Jets chaos at No. 2 is brand consistent",
+          "Mock draft 'experts' about to be proven wrong"
+        ],
+        "where_it_goes": "Draft is April 23-25 in Pittsburgh — this is the final intel before teams make real decisions",
+        "internet_sentiment": "Mix of excitement for draft week and skepticism about mock accuracy",
+        "award_implications": "Early picks determine Rookie of the Year landscape, team building philosophies"
       }
     },
     {
-      "headline": "LaMelo Ball Trips Bam Adebayo, Injures Him, Then Hits Game-Winner",
+      "headline": "Steph Saves Warriors Season, Eliminates Kawhi's Clippers",
       "depth": "medium",
-      "editorial_direction": "The most LaMelo Ball sequence ever - controversial ankle grab that injures Miami's best player, then wins the game in OT. Spoelstra is furious, Ball apologizes but claims head injury excuse. Perfect chaos.",
+      "editorial_direction": "Focus on Curry's vintage performance despite slow start, Kawhi's elimination, and Clippers' season ending with investigation hanging over them.",
       "tweets": [
         {
-          "url": "https://twitter.com/HaterReport/status/2044256183020626255#m",
+          "url": "https://twitter.com/HaterReport/status/2044652066006585460#m",
           "account": "@HaterReport",
-          "text": "Coach Spo GOING OFF on LaMelo Ball for tripping Bam Adebayo:\n\n\"I don't think it's cute, I don't think it's funny, it's a dangerous play... He should be penalized for that... Somebody's got to see that. He should've been thrown out of the game for that.\"",
-          "role": "reaction"
+          "text": "Draymond Green had Kawhi Leonard in HELL. Bro even had a facial expression for the first time EVER 😭💀",
+          "role": "comedy"
         },
         {
-          "url": "https://twitter.com/HaterReport/status/2044256752082850132#m",
-          "account": "@HaterReport",
-          "text": "LaMelo Ball apologizes for the play where Bam Adebayo got injured:\n\n\"I apologize on that one. I got hit in the head, didn't really know where I was, but I'mma check on him and see if he's okay and everything.\"",
-          "role": "apology"
-        },
-        {
-          "url": "https://twitter.com/SportsCenter/status/2044278059260416173#m",
-          "account": "@SportsCenter",
-          "text": "THE DENI AVDIJA GAME 🔥\n\nAvdija with the game-winning bucket and 40-ball to send the Blazers to the playoffs 👏",
-          "role": "context"
-        },
-        {
-          "url": "https://twitter.com/HaterReport/status/2044266305067323843#m",
-          "account": "@HaterReport",
-          "text": "Wait… this not the first time 😳\n\nLaMelo Ball tried to trip Bam Adebayo back in 2024 too 😭",
-          "role": "history"
-        }
-      ],
-      "research_notes": {
-        "key_stats": [
-          "Charlotte won 127-126 in OT",
-          "Ball hit game-winner with 4.7 seconds left",
-          "Adebayo played 11 minutes before injury, 6 points/3 rebounds",
-          "Ball was not called for foul on the trip"
-        ],
-        "injury_details": "Adebayo suffered lower back injury after Ball grabbed his ankle while on the ground, ruled out for game",
-        "controversy_specifics": "Spoelstra wanted Ball ejected, refs said play couldn't be reviewed because no whistle in real-time",
-        "ball_excuse": "Ball claims he 'got hit in the head, didn't really know where I was' - apologized but blamed confusion",
-        "historical_pattern": "This is apparently not the first time Ball has tripped Adebayo - 2024 incident referenced",
-        "playoff_implications": "Charlotte advances to next play-in round, Miami eliminated without their best player",
-        "where_it_goes": "NBA will review for potential suspension, Ball could miss next playoff game"
-      }
-    },
-    {
-      "headline": "NFL Reporter Resigns After Cozy Photos with Patriots Coach Go Public",
-      "depth": "light",
-      "editorial_direction": "Dianna Russini out at The Athletic after Arizona resort photos with Mike Vrabel surface. Both married, initially defended as 'innocent,' but investigation expanded and she resigned. Classic journalism ethics vs. access story.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/AdamSchefter/status/2044144603536687279#m",
-          "account": "@AdamSchefter",
-          "text": "I submitted my letter of resignation to The Athletic. Everything I have to say about it is below.",
-          "role": "announcement"
-        },
-        {
-          "url": "https://twitter.com/NFLMemes/status/2044143602465407226#m",
-          "account": "@NFLMemes",
-          "text": "BREAKING: Dianna Russini has resigned from 'The Athletic' amid Mike Vrabel scandal. \n\nWoah.. 😮\nhttps://dailysnark.com/2026/04/14/breaking-dianna-russini-resigns-from-the-athletic-after-photos-surfaced-with-mike-vrabel/",
-          "role": "reaction"
-        }
-      ],
-      "research_notes": {
-        "timeline": "Photos published last Tuesday by NY Post, Russini resigned Tuesday - less than a week",
-        "photo_details": "Pictures at luxury Sedona hotel showed them by pool, hot tub, rooftop - some with intertwined hands",
-        "initial_defense": "Athletic initially supported her, called photos 'misleading and lack essential context'",
-        "investigation_expansion": "NYT opened investigation, 'additional information emerged' that raised new questions",
-        "journalism_ethics": "Athletic guidelines require avoiding 'appearance of conflict of interest' - potential favorable coverage concern"
-      }
-    },
-    {
-      "headline": "Deni Avdija Drops 41 to Send Blazers to Playoffs",
-      "depth": "light",
-      "editorial_direction": "Historic performance - 41 points, 12 assists, game-winner. Only third player in franchise history with 40/5/10 playoff game. Clutch gene activated.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/StatMuse/status/2044276384990642562#m",
+          "url": "https://twitter.com/StatMuse/status/2044638820767866916#m",
           "account": "@StatMuse",
-          "text": "Deni Avdija vs PHX:\n\n41 PTS\n7 REB\n12 AST\n2 BLK\n\nJoins Clyde and Dame as the only players in franchise history with a 40/5/10 postseason game.",
+          "text": "Gui Santos vs LAC:\n\n20 PTS\n7 REB\n5 AST\n9-13 FG\n\nGoing into tonight, he only averaged 2.4 PPG in the postseason.",
           "role": "stat"
         },
         {
-          "url": "https://twitter.com/ClutchPoints/status/2044291333444219311#m",
-          "account": "@ClutchPoints",
-          "text": "\"I feel like I was just being aggressive the whole night going downhill. I cleared Shaedon so I can go right, so that's what happened.\"\n\nDeni Avdija on clutch drive to win the game for the Blazers 🗣️\n\n(via @NBATV)",
-          "role": "quote"
+          "url": "https://twitter.com/HaterReport/status/2044651588514460040#m",
+          "account": "@HaterReport",
+          "text": "Charles Barkley COOKING the Clippers 😂😭\n\n\"I've been poor, I've been rich, I've been fat, I've been skinny, I've been old, I've been in the Hall of Fame and one thing I can always tell you,the Clippers have ALWAYS sucked\"",
+          "role": "roast"
         }
       ],
       "research_notes": {
-        "historic_stats": "Third player in Trail Blazers history with 40/5/10 playoff game (Clyde Drexler, Damian Lillard)",
-        "clutch_context": "Game-winning drive in final seconds, Blazers came back from 11-point fourth quarter deficit"
+        "key_stats": [
+          "Curry 35 points, 27 in second half comeback",
+          "Warriors win 126-121",
+          "Kawhi 19 points in losing effort",
+          "Gui Santos breakout 20-point game"
+        ],
+        "historical_context": "Curry's vintage Play-In performance, Clippers perpetual playoff disappointment",
+        "key_moments": [
+          "Curry struggled first half, exploded in second",
+          "Warriors overcame double-digit deficit 7 times",
+          "Clippers season ends with investigation pending"
+        ],
+        "meme_angles": [
+          "Draymond making Kawhi show emotion",
+          "Barkley's eternal Clippers roasting",
+          "CP3 posting on Instagram after Clippers loss"
+        ],
+        "where_it_goes": "Warriors advance to face Suns Friday, Clippers offseason with cap circumvention investigation"
+      }
+    },
+    {
+      "headline": "NFL Starts Training Replacement Officials",
+      "depth": "light",
+      "editorial_direction": "CONTINUING STORY — yesterday covered the onboarding memo. Today's new development: actual training sessions scheduled for next month. Brief mention of background checks completed, physical exams upcoming.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2044551716272582736#m",
+          "account": "@AdamSchefter",
+          "text": "The NFL has started onboarding potential replacement officials as the expiration of its collective bargaining agreement with the NFL Referees Association approaches, clubs were informed Wednesday in a memo.\n\nMore via @SeifertESPN:\n\nhttps://www.espn.com/nfl/story/_/id/48497778/memo-nfl-begins-onboarding-potential-replacement-officials",
+          "role": "news"
+        }
+      ],
+      "research_notes": {
+        "key_stats": [
+          "Training sessions scheduled for next month",
+          "Background checks already completed for some officials",
+          "Current CBA expires May 31"
+        ],
+        "meme_angles": [
+          "Fail Mary 2.0 incoming",
+          "NFL prepared for chaos"
+        ],
+        "where_it_goes": "Replacement officials could start with June 1 offseason practices if no agreement reached"
+      }
+    },
+    {
+      "headline": "LaMelo Ball's $60K Night: Trip, Cursing, No Suspension",
+      "depth": "light",
+      "editorial_direction": "Report the facts — $35K for flagrant foul upgrade on Bam trip, $25K for postgame cursing, no suspension. Keep it factual.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/ShamsCharania/status/2044593477170893128#m",
+          "account": "@ShamsCharania",
+          "text": "The NBA is fining Charlotte's LaMelo Ball $35,000 for his trip of Miami's Bam Adebayo and upgrading the action to a Flagrant, plus fining him $25,000 for cursing postgame, sources tell ESPN. \n\n$60K in fines, Flagrant. No suspension.",
+          "role": "news"
+        },
+        {
+          "url": "https://twitter.com/HaterReport/status/2044623380322644402#m",
+          "account": "@HaterReport",
+          "text": "LaVar Ball GOES OFF on Nick Wright for calling LaMelo Ball a \"clown\"\n\n\"I bet if you look in a dictionary right now and you look up a clown you gon see 2 things… somebody with some long hair on the sides and a big ass nose. Yup that's Nick Wright\" 😭💀",
+          "role": "reaction"
+        }
+      ],
+      "research_notes": {
+        "key_stats": [
+          "$35K for flagrant foul upgrade",
+          "$25K for postgame cursing",
+          "$60K total fines",
+          "No games suspended"
+        ],
+        "meme_angles": [
+          "LaVar defending LaMelo with Nick Wright roast",
+          "Expensive night for young player"
+        ],
+        "where_it_goes": "Hornets advance in Play-In, Ball available for next game"
+      }
+    },
+    {
+      "headline": "76ers Survive Without Embiid, Beat Magic Behind Maxey's 31",
+      "depth": "light",
+      "editorial_direction": "Embiid missing another big game, Maxey stepping up, 76ers advance to face Celtics. Keep it brief.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/StatMuse/status/2044600340431970807#m",
+          "account": "@StatMuse",
+          "text": "Tyrese Maxey vs Orlando:\n\n31 PTS\n6 AST\n3 3P\n\nHasn't averaged under 20 PPG in a playoff run since his rookie season.",
+          "role": "stat"
+        }
+      ],
+      "research_notes": {
+        "key_stats": [
+          "Maxey 31 points, 6 assists",
+          "Embiid out again for big game",
+          "76ers get 7 seed, will face Celtics"
+        ],
+        "meme_angles": [
+          "Embiid missing when it matters",
+          "Maxey carrying the load"
+        ],
+        "where_it_goes": "76ers face Celtics in first round starting soon"
       }
     }
   ],
   "around_the_league": [
     {
-      "url": "https://twitter.com/AdamSchefter/status/2044183165258924407#m",
+      "url": "https://twitter.com/AdamSchefter/status/2044554482940322170#m",
       "account": "@AdamSchefter",
-      "text": "Michigan now has received its first notable QB commitment of the Kyle Whittingham era, as four-star Kamden Lopati has pledged to the Wolverines for the 2027 season. The 6-3, 220-pound prospect is rated among the top 10 quarterbacks in this recruiting cycle."
+      "text": "Dolphins running back De'Von Achane is \"not available\" for a trade, general manager Jon-Eric Sullivan said Wednesday, as the team looks to sign him to an extension."
     },
     {
-      "url": "https://twitter.com/JonRothstein/status/2044189517800693892#m",
-      "account": "@JonRothstein",
-      "text": "Accumulating pieces in the Transfer Portal does not automatically equate to victories next winter, but I will say this:\n\nThe rosters at both Creighton and Xavier should be significantly better than they were last season."
+      "url": "https://twitter.com/ShamsCharania/status/2044484425422147921#m",
+      "account": "@ShamsCharania",
+      "text": "A'ja Wilson, the WNBA's first ever four-time MVP, is signing a three-year, $5 million supermax contract to return to the Las Vegas Aces, sources tell me and @Andraya_Carter. The deal, which is the largest in WNBA history to date and fully guaranteed, was negotiated by Jade-Li English of Klutch Sports Group."
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2044268063235727477#m",
-      "account": "@StatMuse",
-      "text": "Yoshinobu Yamamoto this season:\n\n25.2 IP\n21 SO\n2.10 ERA\n0.81 WHIP\n\nDodgers are 3-1 in his starts this season."
-    },
-    {
-      "url": "https://twitter.com/AdamSchefter/status/2044117861522665964#m",
-      "account": "@AdamSchefter",
-      "text": "Colts signed former Chargers free agent safety Nasir Adderley, who spent the past three seasons out of the NFL after announcing his retirement. In February, the 28-year-old Adderley announced he intended to return to the NFL and now he has landed a deal with the Colts."
-    },
-    {
-      "url": "https://twitter.com/SportsCenter/status/2044188787798843419#m",
-      "account": "@SportsCenter",
-      "text": "\"Whenever you do step away, what do you think you're going to miss most?\" — @TJOshie77\n\n\"I didn't step away yet so...\" — Alex Ovechkin 👀🔥"
-    },
-    {
-      "url": "https://twitter.com/StatMuse/status/2044237016439672977#m",
-      "account": "@StatMuse",
-      "text": "AL teams to hit 5+ home runs in a game this season:\n\nAngels vs Yankees tonight\nYankees vs Angels last night"
-    },
-    {
-      "url": "https://twitter.com/JonRothstein/status/2044113005575537014#m",
-      "account": "@JonRothstein",
-      "text": "Sources: Penn State transfer Kayden Mingo is currently visiting Oklahoma.\n\nAveraged 13.7 PPG last season."
-    },
-    {
-      "url": "https://twitter.com/NFLMemes/status/2044080184500863385#m",
-      "account": "@NFLMemes",
-      "text": "REPORT: NBC is \"at risk\" of losing Sunday Night Football broadcasting rights to Netflix or Amazon. \n\nNO ONE WANTS THIS! 😭\nhttps://dailysnark.com/2026/04/14/report-nbc-in-danger-of-losing-sunday-night-football-to-streaming-service/"
-    },
-    {
-      "url": "https://twitter.com/AdamSchefter/status/2044193312098140280#m",
-      "account": "@AdamSchefter",
-      "text": "Eagles GM Howie Roseman's stance on AJ Brown remains unchanged despite the trade for wide receiver Dontayvion Wicks.\n\nStory via @Tim_McManus:\n\nhttps://www.espn.com/nfl/story/_/id/48485453/eagles-gm-howie-roseman-says-stance-aj-brown-unchanged-wake-dontayvion-wicks-trade"
-    },
-    {
-      "url": "https://twitter.com/HaterReport/status/2044248334106247392#m",
+      "url": "https://twitter.com/HaterReport/status/2044646877786681730#m",
       "account": "@HaterReport",
-      "text": "LaMelo Ball still has NO media training I'M CRYING 😂😂\n\n \"I just gotta win the game I feel like I just f*cked the game up so I'm like it's my fault. I gotta make it work\""
+      "text": "Nah man this is INSANE \n\nChris Paul posted this on his IG Story after the Clippers lost. They sent him home earlier in the season lmaooo\n\nREAL TEARS 😂😂😂"
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2044509377504137412#m",
+      "account": "@StatMuse",
+      "text": "Kawhi Leonard this season:\n\n— 27.9 PPG (career-high)\n— 6.4 RPG \n— 1.9 SPG \n— 50/39/89%\n— 62.9 TS% (career-high)\n\nThe third most PPG by a player in their 14th season in NBA history."
+    },
+    {
+      "url": "https://twitter.com/FieldYates/status/2044459935426093533#m",
+      "account": "@FieldYates",
+      "text": "On the final day that prospects are allowed to make pre-draft 30 visits, Alabama QB Ty Simpson is visiting the Arizona Cardinals today."
+    },
+    {
+      "url": "https://twitter.com/JonRothstein/status/2044512350183858484#m",
+      "account": "@ShamsCharania",
+      "text": "Florida's Alex Condon – the No. 30 prospect on ESPN's Top 100 – is returning to the Gators for his senior year, he tells me and @JeremyWoo. Condon will be a projected first-rounder in 2027 and among the top big men in college basketball."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2044587513994428731#m",
+      "account": "@StatMuse",
+      "text": "Nico Hoerner vs Phillies:\n\n3-5\n1 HR\n5 RBI\n2 R\n1 SB\n\nThe first Cub with 10 H+R+RBI in a game this season."
+    },
+    {
+      "url": "https://twitter.com/PFTCommenter/status/2044552700747026571#m",
+      "account": "@PFTCommenter",
+      "text": "I keep looking at the W and the spear and its giving me anxiety. I cant tell if its possible or not. Now imagine being a opponent trying to figure that out. Sun Tzu"
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2044508019212308946#m",
+      "account": "@HaterReport",
+      "text": "RT by @HaterReport: The Lakers so decimated by injuries JJ Redick is about to run Bronny out there in the Playoffs against the Rockets 😭\n\n\"We're gonna have to have all hands on deck… I think Bronny's improved a lot. I think, we trust him.\"\n\n(h/t @NBA__Courtside)"
+    },
+    {
+      "url": "https://twitter.com/TheNBACentel/status/2044568470440783993#m",
+      "account": "@TheNBACentel",
+      "text": "RT by @TheNBACentel: Points in the 6 games:  \n\nBronny James - 42\nZaccharie Risacher - 33  \n\nDraft position in 2024:"
     }
   ],
   "closer": {
-    "hook": "Bowling perfection anxiety",
+    "hook": "A perfect closer combining NBA chaos, draft absurdity, and general sports randomness",
     "tweets": [
       {
-        "url": "https://twitter.com/BarstoolBigCat/status/2044227637665481019#m",
+        "url": "https://twitter.com/BarstoolBigCat/status/2044582979012293091#m",
         "account": "@BarstoolBigCat",
-        "text": "If I could pay 10k to have this bowling stream be Steven miss the 12th frame over and over for hours on end I'd pay 20k and say double it"
+        "text": "Is this like a lucky rabbits foot? Because I'm so cold gambling I would gladly rock a raccoon cock for a win"
       }
     ]
   },
   "quality_check": {
-    "total_headlines": 4,
-    "total_tweets_assigned": 13,
+    "total_headlines": 5,
+    "total_tweets_assigned": 10,
     "around_the_league_count": 10,
     "controversial_stories_as_lead": false
   }
