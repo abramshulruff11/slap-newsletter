@@ -1,249 +1,379 @@
 {
-  "date": "2026-04-17",
+  "date": "2026-04-18",
   "editorial_reasoning": {
-    "calendar_tier": "TIER 3 — Normal offseason day",
+    "calendar_tier": "TIER 1 — NBA Play-In Tournament final night plus NFL pre-draft week",
     "tweet_volume": [
       {
-        "topic": "NFL Draft mocks/buzz",
-        "approx_tweets": 25,
-        "accounts": 8
-      },
-      {
-        "topic": "Replacement officials",
-        "approx_tweets": 4,
+        "topic": "Will Anderson extension",
+        "approx_tweets": 8,
         "accounts": 3
       },
       {
-        "topic": "Russini resignation",
-        "approx_tweets": 2,
-        "accounts": 1
+        "topic": "Warriors elimination/Kerr uncertainty",
+        "approx_tweets": 10,
+        "accounts": 4
       },
       {
-        "topic": "NBA stats/comparisons",
-        "approx_tweets": 8,
+        "topic": "NBA playoffs starting tomorrow",
+        "approx_tweets": 12,
+        "accounts": 5
+      },
+      {
+        "topic": "NFL Draft buzz",
+        "approx_tweets": 6,
         "accounts": 3
       }
     ],
-    "dominant_topic": "NFL Draft week leads with extensive mock draft content, scouts predictions, and draft buzz. Normal offseason day allows draft content to dominate.",
+    "dominant_topic": "NBA playoffs dominate — Tier 1 confirmed by volume and calendar significance",
     "candidates_considered": [
       {
-        "story": "NFL Draft week - scouts predictions, mock drafts",
-        "hook": "Anonymous scouts mock draft with surprises",
+        "story": "Will Anderson $150M extension",
+        "hook": "$50M/year makes him highest-paid non-QB ever — QB money territory",
+        "verdict": "HEADLINE — DEEP"
+      },
+      {
+        "story": "Warriors eliminated, Kerr uncertain",
+        "hook": "Dynasty officially over? Kerr's 'expiration date' quote plus Curry/Dray emotional moment",
+        "verdict": "HEADLINE — DEEP"
+      },
+      {
+        "story": "Jalen Green 36 points eliminates Warriors",
+        "hook": "Former Rockets star torches Warriors in play-in",
         "verdict": "HEADLINE — MEDIUM"
       },
       {
-        "story": "Replacement officials onboarding",
-        "hook": "CONTINUING STORY - yesterday was hiring, today is background checks/physicals. Fail Mary 2 references",
+        "story": "Jacoby Brissett holdout",
+        "hook": "Cardinals QB wants starter money",
         "verdict": "HEADLINE — LIGHT"
       },
       {
-        "story": "Dianna Russini resignation",
-        "hook": "High-profile sports media scandal - photos with Vrabel led to Athletic investigation",
+        "story": "Zay Flowers blames Harbaugh practices",
+        "hook": "Ravens player calls out former coach",
         "verdict": "HEADLINE — LIGHT"
       },
       {
-        "story": "Penn State RB Nick Singleton medical clearance",
-        "hook": "Mid-round pick cleared after broken foot",
+        "story": "NFL Draft mock drafts",
+        "hook": "Week before draft buzz",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "Chiefs GM expects trades in first round",
-        "hook": "Brett Veach draft prediction",
-        "verdict": "AROUND THE LEAGUE"
-      },
-      {
-        "story": "Luka MVP stats comparison",
-        "hook": "StatMuse comparing Luka to mystery player stats",
-        "verdict": "AROUND THE LEAGUE"
-      },
-      {
-        "story": "Mike Trout 5 HR series vs Yankees",
-        "hook": "Historic offensive performance",
-        "verdict": "AROUND THE LEAGUE"
-      },
-      {
-        "story": "Bam/LaMelo Ball apology situation",
-        "hook": "Running beef continues",
+        "story": "Various transactions",
+        "hook": "Standard moves",
         "verdict": "AROUND THE LEAGUE"
       }
     ]
   },
   "stories": [
     {
-      "headline": "Anonymous Scouts Drop Their NFL Draft Hot Takes",
-      "depth": "medium",
-      "editorial_direction": "Draft week energy. Focus on the 'surprises' and anonymous scouting takes. Draft buzz with personality — which teams are overthinking, which prospects are rising/falling. Connect to the chaos of mock season.",
+      "headline": "Will Anderson Jr. Signs Historic $150M Deal, Highest-Paid Non-QB Ever",
+      "depth": "deep",
+      "editorial_direction": "This is massive — $50M/year puts him in QB money territory. Focus on the financial absurdity and what it means for C.J. Stroud's upcoming extension. Play up the 'paying a pass rusher like a quarterback' angle.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2044805559258374172",
+          "url": "https://twitter.com/AdamSchefter/status/2045190996686680171#m",
           "account": "@AdamSchefter",
-          "text": "The top 150 prospects in the upcoming NFL Draft via @FieldYates:\n\nhttps://www.espn.com/nfl/draft2026/story/_/id/47590505/2026-nfl-draft-rankings-board-top-prospects-best-positional-field-yates",
+          "text": "Source: Will Anderson is signing a three-year $150 million extension that makes him the highest paid non-quarterback in NFL history. The deal includes $134 million guaranteed.",
           "role": "news"
         },
         {
-          "url": "https://twitter.com/AdamSchefter/status/2044872900734316773",
+          "url": "https://twitter.com/AdamSchefter/status/2045193263900971242#m",
           "account": "@AdamSchefter",
-          "text": "Chiefs GM Brett Veach is expecting a lot of first-round trades next Thursday night.\n\nStory via @ByNateTaylor:\n\nhttps://www.espn.com/nfl/story/_/id/48504831/chiefs-gm-brett-veach-expecting-lot-trades-first-round",
-          "role": "prediction"
+          "text": "Will Anderson Jr. in three NFL seasons:\n\n🏈Defensive Rookie of the Year \n🏈2x Pro Bowler\n🏈First-Team All-Pro\n🏈30 sacks\n🏈4 forced fumbles\n🏈3 fumble recoveries\n🏈64 QB hits\n\nAnd now: the NFL's first-ever $50M-per-year non-QB.",
+          "role": "stat"
         },
         {
-          "url": "https://twitter.com/NFLMemes/status/2044870573281403105",
-          "account": "@NFLMemes",
-          "text": "Pinned: There's a 60% chance Fernando Mendoza updates his LinkedIn during the NFL Draft, according to Polymarket.",
-          "role": "comedy"
+          "url": "https://twitter.com/AdamSchefter/status/2045193188927746559#m",
+          "account": "@AdamSchefter",
+          "text": "Highest paid non-quarterbacks in the NFL:\n\n🏈Will Anderson Jr.: $50M\n🏈Micah Parsons: $46.5M\n🏈Aidan Hutchinson: $45M\n🏈Jaxon Smith-Njigba: $42.15M\n🏈TJ Watt: $41M\n🏈Ja'Marr Chase: $40.25M",
+          "role": "stat"
+        },
+        {
+          "url": "https://twitter.com/FieldYates/status/2045192762228670802#m",
+          "account": "@FieldYates",
+          "text": "The Texans made the 3rd pick in the 2022 and 2023 NFL drafts.\n\n2022: CB Derek Stingley, Jr. who signed a $30M/year extension last year, largest ever for a DB\n\n2023: DE Will Anderson, Jr. who just signed the largest non-QB contract ever at $50M/year",
+          "role": "context"
         }
       ],
       "research_notes": {
         "key_stats": [
-          "10 anonymous scouts predict picks 1-10 with surprises",
-          "Chiefs GM expects 'a lot of trades' in first round",
-          "319 prospects invited to combine"
+          "$50M/year makes Anderson highest-paid non-QB in NFL history",
+          "$134M guaranteed — more than most QB deals",
+          "Anderson has 30 sacks in 3 seasons, DPOY runner-up in 2025",
+          "Only 24 years old, deal runs through 2029"
         ],
-        "draft_buzz": [
-          "Fernando Mendoza projected #1 overall to Raiders by most mocks",
-          "Caleb Downs consensus top safety prospect",
-          "Anonymous scouts creating different predictions than public mocks"
+        "financial_absurdity": [
+          "$50M puts him in QB salary territory — only 9 QBs make $50M+",
+          "More guaranteed money than many franchise quarterbacks get",
+          "Texans now paying $50M to their pass rusher while C.J. Stroud on rookie deal",
+          "Deal includes no-trade clause — rare for non-QB"
         ],
-        "mock_draft_chaos": [
-          "Multiple 5-round mocks released this week",
-          "ESPN, NFL.com, Bleacher Report all have different top 10s",
-          "Trade predictions ranging from conservative to wild"
+        "historical_context": [
+          "First non-QB to reach $50M AAV milestone",
+          "Surpasses Micah Parsons' $46.5M deal from last year",
+          "Shows how elite pass rushers are now valued like QBs",
+          "Part of trend of defensive superstars getting QB-level contracts"
         ],
-        "polymarket_angle": [
-          "60% chance Mendoza updates LinkedIn during draft",
-          "Betting markets on draft positions getting action"
+        "implications_for_stroud": [
+          "Creates massive precedent for Stroud extension talks",
+          "No way Stroud accepts less than $50M after this deal",
+          "Texans may have just made their QB extension $60M+ by paying Anderson $50M",
+          "Anderson deal shows Texans philosophy: pay your stars"
         ],
-        "team_needs": [
-          "Jets need pass rush after 26 sacks last season",
-          "Chargers gave up 60 sacks, need O-line help",
-          "Raiders locked on Mendoza at #1"
+        "cross_sport_connections": [
+          "Like NBA max contracts — elite players get elite money regardless of position",
+          "Similar to how top relievers now get starter money in MLB",
+          "Pass rushers becoming the NBA big men of NFL — premium position getting premium pay"
         ],
-        "surprise_factors": [
-          "Anonymous scouts picking different players than public mocks suggest",
-          "Some prospects rising/falling based on private workouts"
+        "meme_angles": [
+          "Defensive ends eating at the adults' table now",
+          "Anderson making more than most starting QBs",
+          "C.J. Stroud probably calling his agent right now"
+        ],
+        "where_it_goes": "Sets the table for Stroud extension negotiations — Anderson deal makes Stroud's ask much higher",
+        "texans_context": [
+          "Team went all-in on 2023 draft class — Stroud and Anderson both getting mega deals",
+          "Shows commitment to championship window with this core",
+          "Texans have now locked up both cornerstones from historic draft"
         ]
       }
     },
     {
-      "headline": "NFL Replacement Refs Take Next Step Toward Fail Mary 2",
-      "depth": "light",
-      "editorial_direction": "CONTINUING STORY — yesterday covered hiring replacement refs, today's new development: background checks and physicals completed. Reference 2012 lockout and Fail Mary. Don't re-explain the setup.",
+      "headline": "Warriors Dynasty Officially Over? Kerr Says Jobs Have 'Expiration Date'",
+      "depth": "deep",
+      "editorial_direction": "This is the end of an era. Focus on Kerr's emotional moment with Curry/Draymond, the 'expiration date' quote, and what this means for the Warriors future. Play up the uncertainty and finality.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2044831373358252321",
-          "account": "@AdamSchefter",
-          "text": "Miami running back De'Von Achane, who was not present for the start of the team's voluntary off-season workout program last week, was spotted in the Dolphins' training facility today, per sources. It is believed that Achane showed up as a sign of good faith as the two sides continue discussing a contract extension, per source.",
-          "role": "unrelated"
+          "url": "https://twitter.com/HaterReport/status/2045372716664930327#m",
+          "account": "@HaterReport",
+          "text": "Steve Kerr to Steph and Draymond at the end of the Suns game: \n\n\"I don't know what's gonna happen next, but I love you guys to death.\"",
+          "role": "emotion"
+        },
+        {
+          "url": "https://twitter.com/HaterReport/status/2045369357442687394#m",
+          "account": "@HaterReport",
+          "text": "Steve Kerr when asked about the emotional moment at the end of the game with Draymond Green and Steph Curry: \n\n\"None of your business\"\n\n(h/t @ohnohedidnt24)",
+          "role": "comedy"
+        },
+        {
+          "url": "https://twitter.com/ShamsCharania/status/2045397564422537559#m",
+          "account": "@ShamsCharania",
+          "text": "Steve Kerr acknowledged after Friday's elimination his time with the Warriors could be done. He will take some time before a decision with management.\n\n\"These jobs all have an expiration date.\"\n\nESPN story",
+          "role": "news"
+        },
+        {
+          "url": "https://twitter.com/HaterReport/status/2045364020136317278#m",
+          "account": "@HaterReport",
+          "text": "Scott Foster EJECTED Draymond Green and Devin Booker \n\nDraymond trolling Suns fans on his way to the locker room 😂😂",
+          "role": "context"
         }
       ],
       "research_notes": {
-        "continuing_context": "CONTINUING STORY — yesterday covered replacement officials being hired. Today's new development: several completed background checks and will undergo physicals",
-        "new_developments": [
-          "Background checks completed for 'several' replacement officials",
-          "Physical exams scheduled next",
-          "May 1-3 training sessions still planned"
+        "emotional_context": [
+          "Kerr embraced Curry and Draymond in final moments, appeared to say 'thank you'",
+          "When asked what he said, Kerr replied 'None of your business' with a smile",
+          "Fourth time in seven seasons Warriors have missed playoffs",
+          "Dynasty core is aging — Curry 36, Draymond 35"
         ],
-        "timeline_pressure": [
-          "Current CBA expires May 31",
-          "NFLRA wants 10% annual raises plus $2.5M marketing fees",
-          "NFL offering 6.45% annual growth rate"
+        "kerr_quotes": [
+          "'These jobs all have an expiration date'",
+          "'It might still go on. It may not'",
+          "'When the run ends, sometimes it's time for new blood and new ideas'",
+          "Says he'll take a week or two to decide his future"
         ],
-        "fail_mary_callbacks": [
-          "NBC Sports calling it 'Fail Mary 2'",
-          "2012 lockout lasted 110 days",
-          "Owners already passed rule changes to help from New York"
+        "warriors_decline": [
+          "37-45 record this season — worst in Kerr era",
+          "Haven't won 50 games since 2021-22",
+          "Core players dealing with injuries all season",
+          "From dynasty to fringe play-in team"
         ],
-        "escalation": [
-          "Teams will be informed when replacement refs can work minicamps in June"
+        "player_reactions": [
+          "Curry: 'I want Coach to be happy... whatever that means for him'",
+          "Draymond: 'I don't deal with change well. I don't love it'",
+          "Both players clearly want Kerr back but understand the situation"
+        ],
+        "historical_significance": [
+          "End of 12-year run with Kerr",
+          "Won 4 championships together (2015, 2017, 2018, 2022)",
+          "6 Finals appearances in first 6 seasons",
+          "604-353 record under Kerr"
+        ],
+        "contract_situation": [
+          "Kerr is on expiring contract",
+          "Intentionally avoided extension talks during season",
+          "Says he won't coach elsewhere — Warriors or retirement",
+          "Lacob will likely offer top money to retain him"
+        ],
+        "what_this_means": [
+          "Potential end of greatest NBA dynasty since Lakers/Celtics",
+          "Curry's championship window may be closing",
+          "Warriors face massive roster decisions this offseason",
+          "Could be last hurrah for Splash Brothers era"
         ]
       }
     },
     {
-      "headline": "Star NFL Reporter Resigns After Vrabel Photo Scandal",
-      "depth": "light",
-      "editorial_direction": "Factual only, no commentary. Report the resignation, the investigation, don't editorialize on the relationship. Stick to what happened professionally.",
+      "headline": "Jalen Green Torches Warriors for 36 Points, Sends Suns to Playoffs",
+      "depth": "medium",
+      "editorial_direction": "Former Rockets standout eliminates his former city rivals. Focus on Green's dominant performance and how the Warriors just looked gassed after the Clippers game.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2044915372965384701",
-          "account": "@AdamSchefter",
-          "text": "Chargers general manager Joe Hortiz shut down trade rumors surrounding wide receiver Quentin Johnston, making it clear Thursday that the 2023 first-round pick isn't available.\n\nStory via @krisrhim1:\n\nhttps://www.espn.com/nfl/story/_/id/48505918/chargers-gm-joe-hortiz-shuts-quentin-johnston-trade-rumors",
-          "role": "unrelated"
+          "url": "https://twitter.com/StatMuse/status/2045363375824064983#m",
+          "account": "@StatMuse",
+          "text": "Guard battle in the Play-In:\n\nGreen —                              Curry —\n36 PTS                                 17 PTS\n6 REB                                    4 REB\n8-14 3P                                3-10 3P",
+          "role": "stat"
+        },
+        {
+          "url": "https://twitter.com/StatMuse/status/2045363438369554545#m",
+          "account": "@StatMuse",
+          "text": "Jordan Goodwin vs GSW:\n\n19 PTS\n9 REB\n6 STL (!!)\n7-11 FG\n4-7 3P\n\nMore points than Steph. More rebounds than Horford. More steals than Draymond. More threes than Steph.",
+          "role": "stat"
+        },
+        {
+          "url": "https://twitter.com/HaterReport/status/2045382760022323667#m",
+          "account": "@HaterReport",
+          "text": "Dillon Brooks on the Suns playing the Thunder in the first round: \n\n\"There are a lot of foul baiters on that team\" 😭",
+          "role": "comedy"
         }
       ],
       "research_notes": {
-        "timeline": "Dianna Russini resigned from The Athletic after photos with Patriots coach Mike Vrabel at Arizona resort prompted investigation",
-        "photos_context": "Photos showed them at luxury hotel in Sedona - poolside, hot tub, with interlocked hands. Both married to other people",
-        "athletic_response": "Initially defended Russini, called photos 'misleading' and 'lacking context'. Later launched investigation as 'additional information emerged'",
-        "resignation_details": "Russini cited 'self-feeding speculation' and 'media frenzy' in resignation letter. Said she 'stands behind every story' published",
-        "professional_impact": "Nearly decade at ESPN before joining Athletic in 2023. Review of her work continues despite resignation"
+        "green_performance": [
+          "36 points on 14-of-20 shooting",
+          "8-of-14 from three — tied play-in tournament record",
+          "Completely outplayed Curry (17 points, 4-16 FG)",
+          "Had 6 rebounds, 4 assists, 3 blocks, 2 steals"
+        ],
+        "warriors_struggles": [
+          "Looked gassed from Clippers comeback win",
+          "Curry clearly not 100% after knee injury",
+          "Only scored 15 points in first quarter — season low",
+          "Turned ball over 21 times"
+        ],
+        "suns_context": [
+          "Earned 8 seed, will face defending champion Thunder",
+          "Jordan Goodwin also dominated with 19-9-6 steals",
+          "Team that barely made play-in now in playoffs",
+          "Dillon Brooks already talking trash about Thunder"
+        ],
+        "houston_connection": [
+          "Green was former Rockets #2 overall pick",
+          "Now eliminating team from his former city",
+          "Phoenix got him in trade after Houston rebuild",
+          "Revenge game narrative"
+        ]
+      }
+    },
+    {
+      "headline": "Cardinals QB Jacoby Brissett Holds Out for Starter Money",
+      "depth": "light",
+      "editorial_direction": "Veteran backup wants to be paid like a starter. Simple transaction story with some contract context.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2045194268503843253#m",
+          "account": "@AdamSchefter",
+          "text": "Sources: #AZCardinals QB Jacoby Brissett is not attending Phase 1 of the offseason program and is asking for an extension that pays him as the starter. \n\nBrissett, set to make $9.06M in '26, has only $1.5M in guaranteed money and wants security. AZ appears willing to address it.",
+          "role": "news"
+        }
+      ],
+      "research_notes": {
+        "contract_details": [
+          "Currently set to make $9.06M in 2026",
+          "Only $1.5M guaranteed — wants more security",
+          "Cardinals appear willing to negotiate"
+        ],
+        "context": [
+          "37-year-old veteran journeyman",
+          "Cardinals incumbent starter after offseason moves",
+          "Wants to be paid as starter, not backup"
+        ]
+      }
+    },
+    {
+      "headline": "Ravens WR Zay Flowers Blames Harbaugh's 'Heavy' Practices for Injuries",
+      "depth": "light",
+      "editorial_direction": "Player calls out former coach's practice methods. Keep it factual, don't editorialize on the controversy.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2045264283739546062#m",
+          "account": "@AdamSchefter",
+          "text": "Ravens wideout Zay Flowers says \"heavy\" practices under former coach John Harbaugh were the reason Baltimore \"had a lot of injuries\" last season.",
+          "role": "news"
+        }
+      ],
+      "research_notes": {
+        "context": [
+          "Harbaugh left Ravens after 2025 season",
+          "Flowers blaming practice intensity for injury issues",
+          "Ravens did have significant injury problems in 2025"
+        ],
+        "controversy_note": "Keep factual — report what Flowers said without taking sides on practice methods"
       }
     }
   ],
   "around_the_league": [
     {
-      "url": "https://twitter.com/AdamSchefter/status/2044925800688857347",
-      "account": "@AdamSchefter",
-      "text": "Penn St. RB Nick Singleton, who broke his 5th metatarsal in his right foot at the Senior Bowl, now has been medically cleared and has resumed running. Singleton projects to be a mid-round pick next week."
-    },
-    {
-      "url": "https://twitter.com/statmuse/status/2045119836666400923",
+      "url": "https://twitter.com/StatMuse/status/2045334859384864891#m",
       "account": "@StatMuse",
-      "text": "Pick a player:\n\n26.6 PPG                             26.1 PPG\n3.6 RPG                                3.9 RPG\n4.7 APG                                6.0 APG\n47/39/92%                         46/33/87%"
+      "text": "Fun Fact: Paolo Banchero averages more playoff PPG than\n\n— Kobe\n— Wilt\n— Kareem\n— Shaq\n— Dirk\n— Embiid\n— Hakeem\n— Shai\n— Jokic\n— Giannis\n— Ant\n— Steph\n— Bird\n— Melo\n— Kyrie\n— Barkley \n\nReady for Round 1."
     },
     {
-      "url": "https://twitter.com/statmuse/status/2044881824506138977",
+      "url": "https://twitter.com/StatMuse/status/2045322998203486602#m",
       "account": "@StatMuse",
-      "text": "Mike Trout this week in the Bronx:\n\n5 HR\n9 RBI\n2 BB (1 IBB)\n\nThe first player since 1990 to hit 5 home runs in a series against the Yankees."
+      "text": "LaMelo Ball this season:\n\n— 20.1 PPG\n— 7.1 APG\n— 1.2 SPG\n— Second in NBA in threes\n— Top 10 in AST and +/-\n\nThe engine to the best offense in the league in 2026."
     },
     {
-      "url": "https://twitter.com/TheNBACentel/status/2044843938415075519",
-      "account": "@TheNBACentel",
-      "text": "Bam Adebayo on LaMelo Ball's apology: \n\n\"All he kept saying was gang gang… I'm still waiting for the actual apology.\""
-    },
-    {
-      "url": "https://twitter.com/AdamSchefter/status/2044791476958183699",
-      "account": "@AdamSchefter",
-      "text": "Cowboys restricted free agent kicker Brandon Aubrey has until Friday to sign an offer sheet with another team; if he doesn't, Dallas retains his rights for the 2026 season. With time running out and no offer forthcoming, Aubrey now looks destined to remain with Dallas in 2026."
-    },
-    {
-      "url": "https://twitter.com/FieldYates/status/2044878271125262470",
-      "account": "@FieldYates",
-      "text": "This is huge for Oklahoma football and notable for the draft next week. \n\nOwen Heinecke is a projected Day 3 pick who now gets the chance to head back to school for another season."
-    },
-    {
-      "url": "https://twitter.com/BallsackSports/status/2044794377650819158",
-      "account": "@BallsackSports",
-      "text": "One of the coldest parts of Steph's legacy is how his unprecedented dominance at 6'3\" 38 years old is a result of an era he created 10 years ago.\n\nIt's his game, his rules, and he's the grandmaster of it.\n\nThe Chef From Akron 👨‍🍳🐐"
-    },
-    {
-      "url": "https://twitter.com/statmuse/status/2044968493431284125",
-      "account": "@StatMuse",
-      "text": "Macklin Celebrini vs Jets:\n\n1 goal\n3 points\n+2\n\nBroke the Sharks record for points in a season. At 19 years old."
-    },
-    {
-      "url": "https://twitter.com/HaterReport/status/2044905854881710184",
+      "url": "https://twitter.com/HaterReport/status/2045337806579409288#m",
       "account": "@HaterReport",
-      "text": "Drafting your best player's girlfriend #1 overall and expecting nobody to ask questions about their relationship is INSANE"
+      "text": "Kon Knueppel in the Play-In Tournament \n\n2 Games \n17 TOTAL POINTS \n5/22 FG\n1/12 3P\n\nKON MAN"
     },
     {
-      "url": "https://twitter.com/BarstoolBigCat/status/2044988250922664330",
-      "account": "@BarstoolBigCat",
-      "text": "People don't talk enough about the fact that Larry the Goldfish II went 49-34-2 for an entire NFL gambling season. Insane looking back at it."
+      "url": "https://twitter.com/StatMuse/status/2045322914590064691#m",
+      "account": "@StatMuse",
+      "text": "Kon Knueppel this season:\n\n— 18.5 PPG\n— 5.3 RPG\n— 48/43/86%\n— Most threes in the NBA\n— Most threes ever by a rookie\n— Led rookies in PTS, 3PM and +/- \n\nROTY?"
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2045318621929304298#m",
+      "account": "@StatMuse",
+      "text": "Ben Rice ranks on the Yankees this season:\n\n1st in RBI\n1st in AVG\n1st in OBP\n1st in SLG\n1st in OPS\n1st in wRC+\n\nHe's one of only two qualified hitters with a .325 AVG and 1.200 OPS this season."
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2045368284602659163#m",
+      "account": "@HaterReport",
+      "text": "Lamelo Ball says his coach was running too many plays after losing to the Magic: \n\n\"I feel like we were running a lot of plays and getting pushed around. I should've just took the ball from the beginning.\""
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2045328114557895113#m",
+      "account": "@StatMuse",
+      "text": "Ranger Suarez vs Detroit:\n\n8.0 IP\n2 H\n0 R\n1 BB\n4 SO\n\nHe's the first AL East pitcher with 8+ shutout innings in a start this season."
+    },
+    {
+      "url": "https://twitter.com/PFTCommenter/status/2045264147777036524#m",
+      "account": "@PFTCommenter",
+      "text": "I can report that a couple hours ago I saw the bears ownership and Kevin Warren at lost marsh golf club in Hammond Indiana conducting some sort of important business meeting with security and suits and every thing. The golf course is directly adjacent to the proposed Indiana property for the Bears. Furthermore I can report that I shot a 97 in sustained winds of 20 mph. You have to report that part if u use my reporting about the secret bears ownership meeting"
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2045313470128615561#m",
+      "account": "@StatMuse",
+      "text": "Austin Riley vs Phillies:\n\n2-5\n2 HR\n4 RBI\n2 R\n\nHe has more 4-RBI games than Mike Trout since he made his debut in 2019."
+    },
+    {
+      "url": "https://twitter.com/JoeyMulinaro/status/2045316047130005783#m",
+      "account": "@JoeyMulinaro",
+      "text": "Absolute legend. His laugh and jokes was the soundtrack of my drives to school with my dad growing up. One of the first sparks that made me say \"I think I'd like to try to make people laugh one day\". RIP Bob."
     }
   ],
   "closer": {
-    "hook": "BigCat reflecting on Larry the Goldfish's gambling record",
+    "hook": "Spring training vibes meeting NFL draft chaos",
     "tweets": [
       {
-        "url": "https://twitter.com/BarstoolBigCat/status/2044962224616153235",
+        "url": "https://twitter.com/BarstoolBigCat/status/2045323190549815447#m",
         "account": "@BarstoolBigCat",
-        "text": "The skinny girl arm. What the fuck, Dan. \n\nI promise to get back in the lab and be better. I'm embarrassed but not deterred. I'm doing the Tim Tebow speech to myself right now"
+        "text": "He did say he was going to burn Birmingham to the ground this weekend. We just didn't know he was being literal"
       }
     ]
   },
   "quality_check": {
-    "total_headlines": 3,
-    "total_tweets_assigned": 4,
+    "total_headlines": 5,
+    "total_tweets_assigned": 18,
     "around_the_league_count": 10,
     "controversial_stories_as_lead": false
   }
