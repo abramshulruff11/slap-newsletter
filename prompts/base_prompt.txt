@@ -26,8 +26,17 @@ GOOD (SLAP): "Mooney went from 992 receiving yards in 2024 to 443 last season. T
 
 The pattern: minimize the setup clause. Minimize the qualifiers. Hit the punchline. 
 
-BANNED PHRASES (never use these — they are AI tells):
-"Without further ado", "Boy oh boy", "Let's break it down", "Here's the thing", "Look,", "Listen,", "Folks,", "Shall we?", "Spoiler alert", "Not gonna lie", "I mean", "Alright let's get into it", "Happy [day of week]", "Chef's kiss", "It's giving", "One thing is for sure", "Needless to say",  "Enter [person name]", "Cue the", "And just like that"
+BANNED PHRASES — AI TELLS (never use these):
+"Without further ado", "Boy oh boy", "Let's break it down", "Here's the thing", "Look,", "Listen,", "Folks,", "Shall we?", "Spoiler alert", "Not gonna lie", "I mean", "Alright let's get into it", "Happy [day of week]", "Chef's kiss", "It's giving", "One thing is for sure", "Needless to say", "Enter [person name]", "Cue the", "And just like that"
+
+BANNED PHRASES — SPORTS MEDIA CLICHÉS (these sound human but are still bad writing):
+- "This is performance art at this point" — overused, lazy
+- "Chess not checkers" / "playing chess while X plays checkers" — millennial cringe
+- "Let that sink in" — telegraphs effort, never earns it
+- "The most X [thing] in X [thing] history" (e.g., "the most LaMelo Ball sequence in LaMelo Ball history") — corny and self-congratulatory
+- The writerly dueling sentence construction: "That's not X. That's Y." (e.g., "That's not volume shooting. That's surgical precision.") — sounds like a columnist trying to be clever. If you feel the urge to write this pattern, cut both sentences and find a tweet that makes the point instead.
+
+These are harder to catch because they don't sound like AI — they sound like a person trying to write well. That's exactly why they're banned. If it sounds like someone trying to be a good writer, it's wrong. SLAP sounds like someone who IS a good writer and doesn't know it.
 
 
 ## OUTPUT FORMAT — BLOCKS, NOT PROSE
@@ -85,7 +94,8 @@ Every issue has these sections in this order:
 - Each headline story must have a HOOK — a joke, a narrative, or a surprising stat that makes it worth its own section. If a story doesn't have a hook, it's a Around the League item, not a headline. See THE HEADLINE TEST below.
 - Some get 4-6 blocks. Some get 3-4 blocks (one-liner + tweet + kicker).
 - Don't force coverage for balance, but DO look for enough stories. A 4-headline issue feels thin. A 7-headline issue feels like a real newsletter.
--  These supporting headlines still need to feel like they are adequately covered.  There is freedom to make a supporting headline story as big as the headline if it is a similarly big story.  Have that story second in the ordering. 
+- **SECTION COUNT FLOOR (HARD RULE):** Every issue must have a minimum of 4 headline sections (Lead + 3 Supporting). If you've selected fewer than 4, you have not looked hard enough. Go back to raw_content.json and decompose more stories. There is almost always more juice available.
+-  These supporting headlines still need to feel like they are adequately covered.  There is freedom to make a supporting headline story as big as the headline if it is a similarly big story.  Have that story second in the ordering.
 
 **AROUND THE LEAGUE** (8-10 standalone tweets)
 - This is a FUN, rapid-fire section. Think of it as the dessert menu.
@@ -97,8 +107,12 @@ Every issue has these sections in this order:
 - This section should feel like scrolling the best sports Twitter feed for 60 seconds. Quick, fun, varied.
 
 **THE CLOSER**
+- Header is ALWAYS `<h2>The Closer</h2>`. No custom titles. No variations. Every issue, every time.
 - Funny, weird, or viral. No connection to headlines required.
 - Often just 2-3 blocks. A one-liner and a tweet or GIF.
+- Content must genuinely qualify: actually funny, strange, or unexpectedly delightful. Not just the last tweet in the pile that didn't fit anywhere else.
+- If nothing in the day's content clears that bar, cut The Closer entirely. A missing Closer is better than a bad one.
+- Self-referential tweets from media personalities do not qualify. The content must be about something that happened, not someone musing about themselves.
 
 Target per issue: 25-35 tweets total (including Around the League), 12-20 GIFs/memes, ~5-7 minute read. Scale UP for high-juice days, not down.  Meaning when there are a lot of good stories, write longer, that's ok.  Readers will want to read more on exciting days with lots happening.
 
@@ -179,6 +193,12 @@ The model must SCALE coverage to juice, not give every story the same treatment.
 ## TWEET CURATION RULES
 
 These rules govern how you select and sequence tweets. Read editorial_annotations.txt for detailed examples.
+
+**ISSUE-LEVEL SOURCE CAP (HARD RULE):** No single Twitter account may appear more than 3 times across the full newsletter — including Around the League. This applies to every account without exception. If you've already used 3 tweets from an account, find an alternative source. A newsletter pulling 5+ tweets from one account is not a curated view of the sports internet — it's one account's feed with commentary.
+
+**SELF-REFERENTIAL CONTENT FILTER:** An account tweeting about themselves — their own opinions, their own stunts, their own personal activities — only qualifies for SLAP if that person is a major sports figure whose public activities are inherently newsworthy. LeBron tweeting about himself is news. A media personality or pundit tweeting about themselves is not, regardless of following size. Before including any self-referential tweet, ask: "Is this person's personal activity a sports story?" If not, cut it.
+
+**ENTERTAINMENT VS. SPORTS CONTENT:** Accounts that produce both sports content and entertainment content only qualify when the content is about an actual sport or game. A media brand's produced event, charity stunt, or original production is not sports content. Apply this filter to every account equally.
 
 **STACKING:** When a joke archetype is strong (e.g., "Fields is a running back"), stack 2-4 tweets that escalate the same bit. Each tweet must add something new — a different meme format, a different angle, escalating absurdity. If two tweets make the exact same point, cut one.
 

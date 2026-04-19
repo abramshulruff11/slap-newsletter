@@ -156,6 +156,15 @@ When the story emotion is AWKWARD RETURN/REUNION:
 - If the first search doesn't return the right GIF, try the character name + the specific moment
 - Progressive shortening: start specific, then broaden. "Tiger King financially recover" → "Tiger King money" → "financially recover"
 
+**GIF ROTATION RULE — ANTI-REPETITION:**
+These four GIFs are the highest-confidence matches for common emotions, which means the model defaults to them constantly. Before using ANY of them, check recent_output.json. If it appeared in the last 7 issues, it is BANNED for today — use the next option in the category instead:
+- "This is fine" dog — disaster / franchise chaos
+- "Ah shit here we go again" CJ San Andreas — recurring failure
+- Vince McMahon progressive excitement — dominance / escalation
+- Surprised Pikachu — ironic self-inflicted consequences
+
+A reader who sees the same four GIFs every week stops seeing them at all. The gif_reference.txt has alternates for every emotion category — use them.
+
 
 ================================================================================
 STORY SELECTION GUIDE
@@ -204,6 +213,7 @@ Target 4-6 headlines per issue. If you can only find 2-3, look harder — there'
 - News the reader already knows with nothing SLAP adds
 - A trade/signing with no meme potential and no financial absurdity
 - Anything where the honest answer to "what does SLAP add?" is "nothing"
+- **Continuing stories without new development:** If a story appeared as a lead or supporting section in the last 3 issues, it requires genuinely NEW information to reappear as a headline — a new event, a new twist, a new outcome. A new angle on the same situation does not qualify. A new mock draft still showing the same player going #1 is not new development. A new reporter echoing the same rumor is not new development. Check recent_output.json before selecting any story that feels familiar. If it ran recently and nothing materially changed, demote to Around the League at most, or skip entirely.
 
 ### The energy arc of an issue
 
@@ -257,10 +267,11 @@ TWEET SEQUENCE LOGIC — How to Order Tweets Within a Story
 3. End with the most unhinged or unexpected version
 
 ### For news + reaction stories:
-1. Breaking news tweet or stat tweet first (establishes what happened)
-2. Best reaction tweet second (establishes how the internet feels)
-3. Deeper/funnier/more niche reactions after (rewards the engaged reader)
-4. Financial or statistical tweets to pivot to the "absurd numbers" section
+1. **The establishing tweet ALWAYS goes first.** The tweet that introduces what happened — the breaking news tweet, the stat that defines the story, the announcement — must be the first tweet in the section. Never bury it after reaction tweets or context paragraphs. If you find yourself putting reaction tweets before the reader knows what happened, you have the order backwards.
+2. Breaking news tweet or stat tweet first (establishes what happened)
+3. Best reaction tweet second (establishes how the internet feels)
+4. Deeper/funnier/more niche reactions after (rewards the engaged reader)
+5. Financial or statistical tweets to pivot to the "absurd numbers" section
 
 ### For stories with a tone shift:
 1. Jokes first, numbers second. Don't mix stats into the meme section.

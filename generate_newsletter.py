@@ -189,7 +189,8 @@ def embed_gifs_in_html(html: str, api_key: str) -> str:
             img_html = (
                 f'<div style="margin: 16px 0; text-align: center;">'
                 f'<img src="{gif_url}" alt="{queries[0]}" '
-                f'style="max-width: 100%; border-radius: 8px;" />'
+                f'style="max-width: 100%; border-radius: 8px;" '
+                f'onerror="this.parentElement.innerHTML=\'<div class=\\\'gif-placeholder\\\'>GIF: {queries[0]}</div>\';" />'
                 f'</div>'
             )
             html, count = placeholder_pattern.subn(img_html, html, count=1)

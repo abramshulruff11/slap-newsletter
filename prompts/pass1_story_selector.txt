@@ -43,7 +43,7 @@ Check the YESTERDAY'S NEWSLETTER section (if provided). If a story appeared yest
 - Tag it as "CONTINUING" in your candidate list
 - In the research_notes, specify: "CONTINUING STORY — yesterday covered [brief summary]. Today's new development: [what's new]. Do NOT re-explain the setup."
 - The writer will assume readers saw yesterday's issue. One sentence of context max ("You know the Giannis situation"), then straight to what's new.
-- If a continuing story has NO new development (same facts, no new tweets, no new angle), demote it to Around the League or skip it entirely. Don't re-run yesterday's story.
+- CRITICAL — New development required, not new angle: A continuing story ONLY qualifies for a headline section if something materially NEW happened. A new mock draft showing the same player going #1 is NOT new development. A new reporter echoing the same trade rumor is NOT new development. New angles, new commentary, and new tweets about the same underlying facts do NOT qualify. The test: "Did something actually happen since yesterday's issue?" If the honest answer is no, demote to Around the League or skip. Do not re-run yesterday's story with different framing.
 
 ### Question 6: Does today have a Tier 1 event? If so, cluster related stories.
 When a Tier 1 event occurred (championship game, Super Bowl, draft, etc.), identify ALL related stories and cluster them in the top half of the newsletter:
@@ -64,7 +64,7 @@ The calendar tier determines the lead story. NOT the sports hierarchy. The sport
 **THE DAY-AFTER RULE:** Tier 1 events dominate the NEXT day's newsletter too. The day after the NCAA Championship, the Super Bowl, the NBA Finals, the World Series — that game IS the lead, and it should get DEEP treatment (10-18 blocks). Related stories from the same event (coaching changes, award winners, viral moments like One Shining Moment, draft implications) should cluster as supporting headlines immediately after the lead. Build the top half of the newsletter around the Tier 1 event and its ripple effects.
 
 TIER 1 — NEWSLETTER-DOMINATING (leads the issue, 99% of the time):
-Super Bowl (and day after), NFL Draft Day 1, NFL Free Agency opening week, March Madness (Sweet 16 through Championship AND the day after the championship), NBA Finals, World Series, CFP Championship, NFL/NBA Trade Deadlines, Masters Sunday, MLB Opening Day, NFL regular season game days, NBA Playoffs opening weekend, Major rivalry games, Olympics.
+Super Bowl (and day after), NFL Draft Day 1 (and Draft Week — any day a blockbuster trade or major pre-draft move happens), NFL Free Agency opening week, March Madness (Sweet 16 through Championship AND the day after the championship), NBA Finals, World Series, CFP Championship, NFL/NBA Trade Deadlines, Masters Weekend (BOTH Saturday and Sunday — the entire final weekend of the Masters is Tier 1, not just Sunday), MLB Opening Day, NFL regular season game days, NBA Playoffs (opening weekend AND any game with major implications), Major rivalry games, Olympics.
 
 TIER 2 — HEAVY COVERAGE:
 NFL Combine, MLB Trade Deadline, Major golf Sundays, NBA Play-In Tournament.
@@ -209,17 +209,19 @@ Use web search to fill research gaps for DEEP stories. If the lead is a game, se
 ```
 
 ### VALIDATION GATES
-1. total_headlines >= 6
-2. around_the_league_count == 10
+1. total_headlines >= 4 (HARD MINIMUM — if you have fewer than 4 headline sections, you have not looked hard enough. Go back to raw_content.json and decompose more stories before outputting.)
+2. around_the_league_count >= 8
 3. controversial_stories_as_lead == false
 4. No story has more than 1 news-breaker tweet
 5. Lead story has depth "deep" with substantive research_notes (8+ distinct notes)
 6. Every around_the_league item includes actual tweet text
 7. Every tweet assignment includes actual tweet text from raw_content.json
-8. Around the League: no two consecutive tweets from the same account. If two StatMuse tweets are back-to-back, reorder so a different account separates them. Alternate sources for variety.
+8. Around the League: no two consecutive tweets from the same account. If two tweets from the same account are back-to-back, reorder so a different account separates them. Alternate sources for variety.
 9. Max 3 tweets from any single account across the entire issue (headlines + around the league combined). If an account exceeds 3, replace the weakest tweet with an alternative from a different account.
+10. Calendar tier check: If today is a Tier 1 event day (including Masters Weekend, NBA Playoffs, NFL Draft Week), confirm the lead story reflects that. If it does not, override and reselect.
+11. Continuing story check: For every story tagged CONTINUING, confirm a materially new development exists. If no new development, demote to Around the League.
 
-Fix failures before outputting.
+Fix ALL failures before outputting. Do not output a plan that fails any gate.
 
 ### JSON STRING SAFETY
 Your output must be valid JSON. Inside all string values:

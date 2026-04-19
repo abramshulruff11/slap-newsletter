@@ -2,6 +2,19 @@
 
 This is your GIF menu. When you need a GIF, identify the EMOTION first, then pick from the options below. ROTATE — do not use the same GIF in consecutive issues. Max 1 use of any specific GIF per issue.
 
+## ⚠️ HIGH-RISK OVERUSE — CHECK BEFORE USING
+
+These four GIFs are the highest-confidence matches for common emotions, which means they get selected constantly. Before using ANY of them, check recent_output.json. If it appeared in the last 7 issues, it is BANNED for today — pick the next option in the category instead.
+
+| GIF | Emotion | Overuse Risk | Alternative |
+|-----|---------|--------------|-------------|
+| "This is fine" dog | Disaster / franchise chaos | CRITICAL | Elmo fire, Ralph Wiggum "I'm in danger", Titanic sinking |
+| CJ San Andreas "ah shit here we go again" | Recurring failure | CRITICAL | Spongebob "aight imma head out", Community pizza fire |
+| Vince McMahon progressive excitement | Dominance / escalation | CRITICAL | Eduardo Saverin escalation, Galaxy brain, Pepe Silvia board |
+| Surprised Pikachu | Ironic self-inflicted consequences | HIGH | Jordan Peele sweating, Arrested Development "huge mistake" |
+
+If you are about to use one of these and haven't checked recent_output.json, STOP and check first.
+
 ================================================================================
 ESCALATION — It keeps getting better / worse
 ================================================================================
