@@ -1,379 +1,275 @@
 {
-  "date": "2026-04-18",
+  "date": "2026-04-19",
   "editorial_reasoning": {
-    "calendar_tier": "TIER 1 — NBA Play-In Tournament final night plus NFL pre-draft week",
+    "calendar_tier": "TIER 2 — NFL Draft week (major draft coverage, but draft hasn't happened yet)",
     "tweet_volume": [
       {
-        "topic": "Will Anderson extension",
+        "topic": "Dexter Lawrence trade",
+        "approx_tweets": 15,
+        "accounts": 6
+      },
+      {
+        "topic": "NBA playoffs Game 1 results",
+        "approx_tweets": 12,
+        "accounts": 4
+      },
+      {
+        "topic": "LeBron/Bronny father-son moment",
         "approx_tweets": 8,
         "accounts": 3
       },
       {
-        "topic": "Warriors elimination/Kerr uncertainty",
-        "approx_tweets": 10,
-        "accounts": 4
-      },
-      {
-        "topic": "NBA playoffs starting tomorrow",
-        "approx_tweets": 12,
-        "accounts": 5
-      },
-      {
-        "topic": "NFL Draft buzz",
-        "approx_tweets": 6,
-        "accounts": 3
+        "topic": "Will Anderson extension",
+        "approx_tweets": 3,
+        "accounts": 2
       }
     ],
-    "dominant_topic": "NBA playoffs dominate — Tier 1 confirmed by volume and calendar significance",
+    "dominant_topic": "Dexter Lawrence trade dominates by volume and uniqueness — first time Bengals traded a top-10 pick for a player since 1966",
     "candidates_considered": [
       {
-        "story": "Will Anderson $150M extension",
-        "hook": "$50M/year makes him highest-paid non-QB ever — QB money territory",
+        "story": "Giants trade Dexter Lawrence to Bengals for #10 pick",
+        "hook": "Historic trade straight up for top-10 pick, Bengals desperately going all-in",
         "verdict": "HEADLINE — DEEP"
       },
       {
-        "story": "Warriors eliminated, Kerr uncertain",
-        "hook": "Dynasty officially over? Kerr's 'expiration date' quote plus Curry/Dray emotional moment",
-        "verdict": "HEADLINE — DEEP"
-      },
-      {
-        "story": "Jalen Green 36 points eliminates Warriors",
-        "hook": "Former Rockets star torches Warriors in play-in",
+        "story": "LeBron/Bronny first father-son playoff duo",
+        "hook": "Historic moment, emotional LeBron quote, Lakers upset win without Luka/Reaves",
         "verdict": "HEADLINE — MEDIUM"
       },
       {
-        "story": "Jacoby Brissett holdout",
-        "hook": "Cardinals QB wants starter money",
+        "story": "Will Anderson $150M extension makes him highest-paid non-QB",
+        "hook": "Breaking salary barrier, now paid like a QB",
         "verdict": "HEADLINE — LIGHT"
       },
       {
-        "story": "Zay Flowers blames Harbaugh practices",
-        "hook": "Ravens player calls out former coach",
-        "verdict": "HEADLINE — LIGHT"
-      },
-      {
-        "story": "NFL Draft mock drafts",
-        "hook": "Week before draft buzz",
+        "story": "Luke Kennard career playoff high 27 points",
+        "hook": "Journeyman steps up big in upset",
         "verdict": "AROUND THE LEAGUE"
       },
       {
-        "story": "Various transactions",
-        "hook": "Standard moves",
+        "story": "Kevin Durant out for Game 1",
+        "hook": "Just injury news",
         "verdict": "AROUND THE LEAGUE"
+      },
+      {
+        "story": "Jacoby Brissett holdout with Cardinals",
+        "hook": "Backup QB contract dispute",
+        "verdict": "AROUND THE LEAGUE"
+      },
+      {
+        "story": "Zay Flowers blames Harbaugh practices for injuries",
+        "hook": "Player criticism",
+        "verdict": "SKIP — controversial player commentary"
       }
-    ]
+    ],
+    "continuing_stories": "None — yesterday was Trump executive order on college sports, today is NFL draft week trade"
   },
   "stories": [
     {
-      "headline": "Will Anderson Jr. Signs Historic $150M Deal, Highest-Paid Non-QB Ever",
+      "headline": "Giants Trade Dexter Lawrence to Bengals for 10th Overall Pick in Draft Week Blockbuster",
       "depth": "deep",
-      "editorial_direction": "This is massive — $50M/year puts him in QB money territory. Focus on the financial absurdity and what it means for C.J. Stroud's upcoming extension. Play up the 'paying a pass rusher like a quarterback' angle.",
+      "editorial_direction": "Historic trade — first time Bengals traded a top-10 pick for a player since 1966. Giants get two top-10 picks (5th and 10th), Bengals desperately going all-in. Focus on the unprecedented nature, the Bengals' desperation, and what it says about both teams.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2045190996686680171#m",
+          "url": "https://twitter.com/AdamSchefter/status/2045660038488817698",
           "account": "@AdamSchefter",
-          "text": "Source: Will Anderson is signing a three-year $150 million extension that makes him the highest paid non-quarterback in NFL history. The deal includes $134 million guaranteed.",
-          "role": "news"
+          "text": "Draft week blockbuster: The Giants are trading three-time Pro Bowl defensive tackle Dexter Lawrence to the Bengals in a deal that will include the 10th overall pick going to New York, per ESPN sources.\n\nThe Giants now head into Thursday night with the 5th and 10th overall picks.",
+          "role": "breaking news"
         },
         {
-          "url": "https://twitter.com/AdamSchefter/status/2045193263900971242#m",
+          "url": "https://twitter.com/AdamSchefter/status/2045680976420839554",
           "account": "@AdamSchefter",
-          "text": "Will Anderson Jr. in three NFL seasons:\n\n🏈Defensive Rookie of the Year \n🏈2x Pro Bowler\n🏈First-Team All-Pro\n🏈30 sacks\n🏈4 forced fumbles\n🏈3 fumble recoveries\n🏈64 QB hits\n\nAnd now: the NFL's first-ever $50M-per-year non-QB.",
-          "role": "stat"
+          "text": "A Bengals trade for Dexter Lawrence is unprecedented: This is the first time in the common draft era that dates back to 1966 in which the Bengals ever have traded a Top-10 pick for a player, per ESPN research.",
+          "role": "historical context"
         },
         {
-          "url": "https://twitter.com/AdamSchefter/status/2045193188927746559#m",
-          "account": "@AdamSchefter",
-          "text": "Highest paid non-quarterbacks in the NFL:\n\n🏈Will Anderson Jr.: $50M\n🏈Micah Parsons: $46.5M\n🏈Aidan Hutchinson: $45M\n🏈Jaxon Smith-Njigba: $42.15M\n🏈TJ Watt: $41M\n🏈Ja'Marr Chase: $40.25M",
-          "role": "stat"
-        },
-        {
-          "url": "https://twitter.com/FieldYates/status/2045192762228670802#m",
+          "url": "https://twitter.com/FieldYates/status/2045669844377358683",
           "account": "@FieldYates",
-          "text": "The Texans made the 3rd pick in the 2022 and 2023 NFL drafts.\n\n2022: CB Derek Stingley, Jr. who signed a $30M/year extension last year, largest ever for a DB\n\n2023: DE Will Anderson, Jr. who just signed the largest non-QB contract ever at $50M/year",
-          "role": "context"
+          "text": "Absent a trade back info the first round, this will mark just the second time in franchise history the Bengals will not make a first round pick.\n\nThe only other instance was 1989.",
+          "role": "historical context"
+        },
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2045691000853524898",
+          "account": "@AdamSchefter",
+          "text": "New York's NFL teams now control 25% of the top 16 picks in Thursday night's draft.\n\nThe Giants are slated to pick 5th and 10th, the Jets 2nd and 16th.",
+          "role": "implications"
+        },
+        {
+          "url": "https://twitter.com/NFLMemes/status/2045711075908194321",
+          "account": "@NFLMemes",
+          "text": "John Harbaugh after stealing half the Ravens roster and then sending Dexter Lawrence to their division",
+          "role": "comedy"
         }
       ],
       "research_notes": {
         "key_stats": [
-          "$50M/year makes Anderson highest-paid non-QB in NFL history",
-          "$134M guaranteed — more than most QB deals",
-          "Anderson has 30 sacks in 3 seasons, DPOY runner-up in 2025",
-          "Only 24 years old, deal runs through 2029"
+          "First time Bengals traded a top-10 pick for a player since 1966",
+          "Only second time in franchise history Bengals won't have a first-round pick (1989 was the other)",
+          "Giants now have 25% of top 16 picks with Jets",
+          "Lawrence: 3x Pro Bowl, had down 2025 season with 0.5 sacks"
         ],
-        "financial_absurdity": [
-          "$50M puts him in QB salary territory — only 9 QBs make $50M+",
-          "More guaranteed money than many franchise quarterbacks get",
-          "Texans now paying $50M to their pass rusher while C.J. Stroud on rookie deal",
-          "Deal includes no-trade clause — rare for non-QB"
+        "historical_context": "This is the first time a player was traded straight up for a top-10 pick since Randy Moss to Raiders in 2005 for 7th overall",
+        "financial_implications": [
+          "Lawrence has 2 years, $42M left on deal",
+          "Giants save $13.04M in cap space, take $13.92M dead money hit",
+          "Bengals were 31st in cap space before trade"
         ],
-        "historical_context": [
-          "First non-QB to reach $50M AAV milestone",
-          "Surpasses Micah Parsons' $46.5M deal from last year",
-          "Shows how elite pass rushers are now valued like QBs",
-          "Part of trend of defensive superstars getting QB-level contracts"
+        "draft_implications": [
+          "Giants can draft two impact players in top 10",
+          "Bengals bet Lawrence more valuable than any rookie in weak draft class",
+          "Draft class considered weak at defensive tackle"
         ],
-        "implications_for_stroud": [
-          "Creates massive precedent for Stroud extension talks",
-          "No way Stroud accepts less than $50M after this deal",
-          "Texans may have just made their QB extension $60M+ by paying Anderson $50M",
-          "Anderson deal shows Texans philosophy: pay your stars"
+        "team_context": [
+          "Bengals missed playoffs 3 straight years",
+          "Lawrence requested trade after contract talks broke down",
+          "John Harbaugh's first draft as Giants coach",
+          "Bengals added Jonathan Allen, Boye Mafe, Bryan Cook on defense"
         ],
-        "cross_sport_connections": [
-          "Like NBA max contracts — elite players get elite money regardless of position",
-          "Similar to how top relievers now get starter money in MLB",
-          "Pass rushers becoming the NBA big men of NFL — premium position getting premium pay"
+        "meme_potential": [
+          "Harbaugh raiding Ravens roster then trading to AFC North",
+          "Bengals desperation vs Giants rebuilding",
+          "Lawrence from contract holdout to big extension"
         ],
-        "meme_angles": [
-          "Defensive ends eating at the adults' table now",
-          "Anderson making more than most starting QBs",
-          "C.J. Stroud probably calling his agent right now"
+        "cross_connections": [
+          "Giants following Harbaugh rebuild model from Ravens",
+          "Bengals going all-in like Rams did",
+          "Compare to other franchise-altering trades"
         ],
-        "where_it_goes": "Sets the table for Stroud extension negotiations — Anderson deal makes Stroud's ask much higher",
-        "texans_context": [
-          "Team went all-in on 2023 draft class — Stroud and Anderson both getting mega deals",
-          "Shows commitment to championship window with this core",
-          "Texans have now locked up both cornerstones from historic draft"
-        ]
+        "where_it_goes": "Draft is Thursday — will Giants use both picks or trade one? Will Lawrence pass physical and get extension?"
       }
     },
     {
-      "headline": "Warriors Dynasty Officially Over? Kerr Says Jobs Have 'Expiration Date'",
-      "depth": "deep",
-      "editorial_direction": "This is the end of an era. Focus on Kerr's emotional moment with Curry/Draymond, the 'expiration date' quote, and what this means for the Warriors future. Play up the uncertainty and finality.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/HaterReport/status/2045372716664930327#m",
-          "account": "@HaterReport",
-          "text": "Steve Kerr to Steph and Draymond at the end of the Suns game: \n\n\"I don't know what's gonna happen next, but I love you guys to death.\"",
-          "role": "emotion"
-        },
-        {
-          "url": "https://twitter.com/HaterReport/status/2045369357442687394#m",
-          "account": "@HaterReport",
-          "text": "Steve Kerr when asked about the emotional moment at the end of the game with Draymond Green and Steph Curry: \n\n\"None of your business\"\n\n(h/t @ohnohedidnt24)",
-          "role": "comedy"
-        },
-        {
-          "url": "https://twitter.com/ShamsCharania/status/2045397564422537559#m",
-          "account": "@ShamsCharania",
-          "text": "Steve Kerr acknowledged after Friday's elimination his time with the Warriors could be done. He will take some time before a decision with management.\n\n\"These jobs all have an expiration date.\"\n\nESPN story",
-          "role": "news"
-        },
-        {
-          "url": "https://twitter.com/HaterReport/status/2045364020136317278#m",
-          "account": "@HaterReport",
-          "text": "Scott Foster EJECTED Draymond Green and Devin Booker \n\nDraymond trolling Suns fans on his way to the locker room 😂😂",
-          "role": "context"
-        }
-      ],
-      "research_notes": {
-        "emotional_context": [
-          "Kerr embraced Curry and Draymond in final moments, appeared to say 'thank you'",
-          "When asked what he said, Kerr replied 'None of your business' with a smile",
-          "Fourth time in seven seasons Warriors have missed playoffs",
-          "Dynasty core is aging — Curry 36, Draymond 35"
-        ],
-        "kerr_quotes": [
-          "'These jobs all have an expiration date'",
-          "'It might still go on. It may not'",
-          "'When the run ends, sometimes it's time for new blood and new ideas'",
-          "Says he'll take a week or two to decide his future"
-        ],
-        "warriors_decline": [
-          "37-45 record this season — worst in Kerr era",
-          "Haven't won 50 games since 2021-22",
-          "Core players dealing with injuries all season",
-          "From dynasty to fringe play-in team"
-        ],
-        "player_reactions": [
-          "Curry: 'I want Coach to be happy... whatever that means for him'",
-          "Draymond: 'I don't deal with change well. I don't love it'",
-          "Both players clearly want Kerr back but understand the situation"
-        ],
-        "historical_significance": [
-          "End of 12-year run with Kerr",
-          "Won 4 championships together (2015, 2017, 2018, 2022)",
-          "6 Finals appearances in first 6 seasons",
-          "604-353 record under Kerr"
-        ],
-        "contract_situation": [
-          "Kerr is on expiring contract",
-          "Intentionally avoided extension talks during season",
-          "Says he won't coach elsewhere — Warriors or retirement",
-          "Lacob will likely offer top money to retain him"
-        ],
-        "what_this_means": [
-          "Potential end of greatest NBA dynasty since Lakers/Celtics",
-          "Curry's championship window may be closing",
-          "Warriors face massive roster decisions this offseason",
-          "Could be last hurrah for Splash Brothers era"
-        ]
-      }
-    },
-    {
-      "headline": "Jalen Green Torches Warriors for 36 Points, Sends Suns to Playoffs",
+      "headline": "LeBron and Bronny Make History as First Father-Son Playoff Duo",
       "depth": "medium",
-      "editorial_direction": "Former Rockets standout eliminates his former city rivals. Focus on Green's dominant performance and how the Warriors just looked gassed after the Clippers game.",
+      "editorial_direction": "Historic moment overshadows Lakers' upset win. LeBron's emotional postgame reaction is the story. Cover the game context (no Luka/Reaves, beat Durant-less Rockets) but focus on the family milestone.",
       "tweets": [
         {
-          "url": "https://twitter.com/StatMuse/status/2045363375824064983#m",
-          "account": "@StatMuse",
-          "text": "Guard battle in the Play-In:\n\nGreen —                              Curry —\n36 PTS                                 17 PTS\n6 REB                                    4 REB\n8-14 3P                                3-10 3P",
-          "role": "stat"
+          "url": "https://twitter.com/SportsCenter/status/2045720371588968713",
+          "account": "@SportsCenter",
+          "text": "\"I was on the floor with my son in a playoff game.\"\n\nWhat a moment for LeBron, Bronny and the James family 🥹❤️",
+          "role": "emotional core"
         },
         {
-          "url": "https://twitter.com/StatMuse/status/2045363438369554545#m",
+          "url": "https://twitter.com/StatMuse/status/2045703961101877546",
           "account": "@StatMuse",
-          "text": "Jordan Goodwin vs GSW:\n\n19 PTS\n9 REB\n6 STL (!!)\n7-11 FG\n4-7 3P\n\nMore points than Steph. More rebounds than Horford. More steals than Draymond. More threes than Steph.",
-          "role": "stat"
+          "text": "LeBron James in Game 1 vs Houston:\n\n19 PTS\n8 REB\n13 AST\n2 STL\n\nPasses John Stockton to be the oldest player in playoff history with a PTS/AST double-double.",
+          "role": "historic stat"
         },
         {
-          "url": "https://twitter.com/HaterReport/status/2045382760022323667#m",
+          "url": "https://twitter.com/HaterReport/status/2045678433959653696",
           "account": "@HaterReport",
-          "text": "Dillon Brooks on the Suns playing the Thunder in the first round: \n\n\"There are a lot of foul baiters on that team\" 😭",
+          "text": "Bronny tried to get the ball to LeBron and threw it out of bounds \n\nHe going to bed with no dinner tonight 😭",
+          "role": "comedy"
+        },
+        {
+          "url": "https://twitter.com/BallsackSports/status/2045675829162655795",
+          "account": "@BallsackSports",
+          "text": "Bron really the greatest when you realize he's been carrying dudes for so long he's carrying his own son now too 😭😭😭",
           "role": "comedy"
         }
       ],
       "research_notes": {
-        "green_performance": [
-          "36 points on 14-of-20 shooting",
-          "8-of-14 from three — tied play-in tournament record",
-          "Completely outplayed Curry (17 points, 4-16 FG)",
-          "Had 6 rebounds, 4 assists, 3 blocks, 2 steals"
-        ],
-        "warriors_struggles": [
-          "Looked gassed from Clippers comeback win",
-          "Curry clearly not 100% after knee injury",
-          "Only scored 15 points in first quarter — season low",
-          "Turned ball over 21 times"
-        ],
-        "suns_context": [
-          "Earned 8 seed, will face defending champion Thunder",
-          "Jordan Goodwin also dominated with 19-9-6 steals",
-          "Team that barely made play-in now in playoffs",
-          "Dillon Brooks already talking trash about Thunder"
-        ],
-        "houston_connection": [
-          "Green was former Rockets #2 overall pick",
-          "Now eliminating team from his former city",
-          "Phoenix got him in trade after Houston rebuild",
-          "Revenge game narrative"
-        ]
+        "historic_milestone": "First father-son duo to play together in NBA playoffs history — played about 4 minutes together in 2nd quarter",
+        "game_context": "Lakers upset Rockets 107-98 despite missing Luka Doncic (hamstring) and Austin Reaves (oblique). Durant also out for Houston",
+        "lebron_performance": "19 points, 13 assists, 8 rebounds — oldest player ever with 10+ assists in playoff game, passing John Stockton",
+        "luke_kennard_story": "Career playoff-high 27 points on 9-13 shooting, 5-5 from three — first Laker with 5+ threes without a miss in playoffs since Robert Horry 1997",
+        "bronny_stats": "4 minutes, 0 points, 1 turnover, 2 fouls — threw ball out of bounds trying to pass to LeBron",
+        "emotional_context": "LeBron said it's 'probably the craziest thing that's ever happened to me in my career' — his mother watching her son and grandson",
+        "family_moment": "Bronny's mom, siblings, and LeBron's mother Gloria all in attendance for historic moment"
       }
     },
     {
-      "headline": "Cardinals QB Jacoby Brissett Holds Out for Starter Money",
+      "headline": "Will Anderson Jr. Becomes Highest-Paid Non-QB Ever with $150M Extension",
       "depth": "light",
-      "editorial_direction": "Veteran backup wants to be paid like a starter. Simple transaction story with some contract context.",
+      "editorial_direction": "Historic salary barrier — $50M per year puts him in QB territory. Quick hit on the implications for the position and for C.J. Stroud's upcoming extension.",
       "tweets": [
         {
-          "url": "https://twitter.com/AdamSchefter/status/2045194268503843253#m",
+          "url": "https://twitter.com/AdamSchefter/status/2045607176404705761",
+          "account": "@JFowlerESPN",
+          "text": "The Titans plan to pick up OG Peter Skoronski's fifth-year option, per source.\n\nThis sets up Skoronski, the team's No. 11 overall pick in 2023, to make $19.07M in 2027.",
+          "role": "comparison context"
+        },
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2045660815122894939",
           "account": "@AdamSchefter",
-          "text": "Sources: #AZCardinals QB Jacoby Brissett is not attending Phase 1 of the offseason program and is asking for an extension that pays him as the starter. \n\nBrissett, set to make $9.06M in '26, has only $1.5M in guaranteed money and wants security. AZ appears willing to address it.",
-          "role": "news"
+          "text": "Bengals defensive additions this offseason now include:\n\n🏈Dexter Lawrence\n🏈Boye Mafe\n🏈Bryan Cook\n🏈Jonathan Allen",
+          "role": "team building context"
         }
       ],
       "research_notes": {
-        "contract_details": [
-          "Currently set to make $9.06M in 2026",
-          "Only $1.5M guaranteed — wants more security",
-          "Cardinals appear willing to negotiate"
-        ],
-        "context": [
-          "37-year-old veteran journeyman",
-          "Cardinals incumbent starter after offseason moves",
-          "Wants to be paid as starter, not backup"
-        ]
-      }
-    },
-    {
-      "headline": "Ravens WR Zay Flowers Blames Harbaugh's 'Heavy' Practices for Injuries",
-      "depth": "light",
-      "editorial_direction": "Player calls out former coach's practice methods. Keep it factual, don't editorialize on the controversy.",
-      "tweets": [
-        {
-          "url": "https://twitter.com/AdamSchefter/status/2045264283739546062#m",
-          "account": "@AdamSchefter",
-          "text": "Ravens wideout Zay Flowers says \"heavy\" practices under former coach John Harbaugh were the reason Baltimore \"had a lot of injuries\" last season.",
-          "role": "news"
-        }
-      ],
-      "research_notes": {
-        "context": [
-          "Harbaugh left Ravens after 2025 season",
-          "Flowers blaming practice intensity for injury issues",
-          "Ravens did have significant injury problems in 2025"
-        ],
-        "controversy_note": "Keep factual — report what Flowers said without taking sides on practice methods"
+        "salary_milestone": "$50M per year average — joins 9 QBs in $50-55M range, only non-QB at that level",
+        "contract_details": "3 years, $150M with $134M guaranteed and no-trade clause",
+        "performance_justification": "12 sacks, 20 TFL, 85 pressures in 2025 — finished 2nd in DPOY voting behind Myles Garrett",
+        "cj_stroud_implications": "Sets floor for Stroud extension — can't pay QB less than pass rusher on same team",
+        "market_impact": "Surpasses Micah Parsons' $46.5M average from Green Bay deal"
       }
     }
   ],
   "around_the_league": [
     {
-      "url": "https://twitter.com/StatMuse/status/2045334859384864891#m",
+      "url": "https://twitter.com/StatMuse/status/2045703990675935370",
       "account": "@StatMuse",
-      "text": "Fun Fact: Paolo Banchero averages more playoff PPG than\n\n— Kobe\n— Wilt\n— Kareem\n— Shaq\n— Dirk\n— Embiid\n— Hakeem\n— Shai\n— Jokic\n— Giannis\n— Ant\n— Steph\n— Bird\n— Melo\n— Kyrie\n— Barkley \n\nReady for Round 1."
+      "text": "Luke Kennard in Game 1 vs Houston:\n\n27 PTS\n9-13 FG\n5-5 3P\n\nThe first Laker to make 5+ 3P without a miss in a playoff game since Robert Horry in 1997."
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2045322998203486602#m",
+      "url": "https://twitter.com/StatMuse/status/2045666398051979620",
       "account": "@StatMuse",
-      "text": "LaMelo Ball this season:\n\n— 20.1 PPG\n— 7.1 APG\n— 1.2 SPG\n— Second in NBA in threes\n— Top 10 in AST and +/-\n\nThe engine to the best offense in the league in 2026."
+      "text": "Jalen Brunson in Game 1 vs Atlanta:\n\n28 PTS\n5 REB\n7 AST\n\nTies Walt Frazier for the second-most 25 PT playoff games in franchise history."
     },
     {
-      "url": "https://twitter.com/HaterReport/status/2045337806579409288#m",
+      "url": "https://twitter.com/StatMuse/status/2045627217158328559",
+      "account": "@StatMuse",
+      "text": "Nikola Jokic in Game 1 vs Minnesota:\n\n25 PTS\n13 REB\n11 AST\n\nOnly LeBron & Magic have more playoff triple-doubles."
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2045696754176180660",
       "account": "@HaterReport",
-      "text": "Kon Knueppel in the Play-In Tournament \n\n2 Games \n17 TOTAL POINTS \n5/22 FG\n1/12 3P\n\nKON MAN"
+      "text": "Jae'Sean Tate gets a tech for complaining to the refs.\n\n Ime Udoka IMMEDIATELY gets another tech and starts calling the ref a \"b*tch\"\n\nINSANE 😭💀"
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2045322914590064691#m",
+      "url": "https://twitter.com/StatMuse/status/2045695454914982165",
       "account": "@StatMuse",
-      "text": "Kon Knueppel this season:\n\n— 18.5 PPG\n— 5.3 RPG\n— 48/43/86%\n— Most threes in the NBA\n— Most threes ever by a rookie\n— Led rookies in PTS, 3PM and +/- \n\nROTY?"
+      "text": "Longest on-base streak for the Dodgers:\n\n58 — Duke snider (1954)\n53 — Shawn Green (2000)\n50 — Shohei Ohtani (active)\n50 — Willie Keeler (1900-01)"
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2045318621929304298#m",
+      "url": "https://twitter.com/StatMuse/status/2045691596033626248",
       "account": "@StatMuse",
-      "text": "Ben Rice ranks on the Yankees this season:\n\n1st in RBI\n1st in AVG\n1st in OBP\n1st in SLG\n1st in OPS\n1st in wRC+\n\nHe's one of only two qualified hitters with a .325 AVG and 1.200 OPS this season."
+      "text": "Only two players have hit more grand slams than Corbin Carroll (4) for the Diamondbacks:\n\nMatt Williams\nEugenio Suarez\n\nThat's it."
     },
     {
-      "url": "https://twitter.com/HaterReport/status/2045368284602659163#m",
+      "url": "https://twitter.com/HaterReport/status/2045712050794422615",
       "account": "@HaterReport",
-      "text": "Lamelo Ball says his coach was running too many plays after losing to the Magic: \n\n\"I feel like we were running a lot of plays and getting pushed around. I should've just took the ball from the beginning.\""
+      "text": "Inside The NBA is WILD lmaoo \n\nTney just brought up Ice Spice getting attacked by a fan in McDonalds\n\n\"I hear they got some slappy Happy Meals over there\" 😭😭"
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2045328114557895113#m",
+      "url": "https://twitter.com/StatMuse/status/2045633297108111753",
       "account": "@StatMuse",
-      "text": "Ranger Suarez vs Detroit:\n\n8.0 IP\n2 H\n0 R\n1 BB\n4 SO\n\nHe's the first AL East pitcher with 8+ shutout innings in a start this season."
+      "text": "Tarik Skubal vs Red Sox:\n\n6.0 IP\n4 H\n1 ER\n2 BB\n10 SO\n\nHe is the only pitcher with 10 starts of 6+ innings and 10+ strikeouts since the start of last season."
     },
     {
-      "url": "https://twitter.com/PFTCommenter/status/2045264147777036524#m",
-      "account": "@PFTCommenter",
-      "text": "I can report that a couple hours ago I saw the bears ownership and Kevin Warren at lost marsh golf club in Hammond Indiana conducting some sort of important business meeting with security and suits and every thing. The golf course is directly adjacent to the proposed Indiana property for the Bears. Furthermore I can report that I shot a 97 in sustained winds of 20 mph. You have to report that part if u use my reporting about the secret bears ownership meeting"
+      "url": "https://twitter.com/BallsackSports/status/2045522010529288535",
+      "account": "@BallsackSports",
+      "text": "CAPTURED: Hornets Star Lamelo Ball Caught \"striking leg\" of Mailbox While Pulling Into Driveway of NBA Legend Bam Adebayo to Issue Apology for Flagrant Foul"
     },
     {
-      "url": "https://twitter.com/StatMuse/status/2045313470128615561#m",
-      "account": "@StatMuse",
-      "text": "Austin Riley vs Phillies:\n\n2-5\n2 HR\n4 RBI\n2 R\n\nHe has more 4-RBI games than Mike Trout since he made his debut in 2019."
-    },
-    {
-      "url": "https://twitter.com/JoeyMulinaro/status/2045316047130005783#m",
-      "account": "@JoeyMulinaro",
-      "text": "Absolute legend. His laugh and jokes was the soundtrack of my drives to school with my dad growing up. One of the first sparks that made me say \"I think I'd like to try to make people laugh one day\". RIP Bob."
+      "url": "https://twitter.com/JonRothstein/status/2045623750679314741",
+      "account": "@JonRothstein",
+      "text": "BREAKING: Braylon Mullins is returning to UConn for his sophomore season, per his father.\n\nAveraged 12.0 PPG last year as a freshman.\n\nDan Hurley and the Huskies are now firmly in play to reach the Final Four for the fourth time in a five-year span."
     }
   ],
   "closer": {
-    "hook": "Spring training vibes meeting NFL draft chaos",
+    "hook": "LeBron's historic night with Bronny",
     "tweets": [
       {
-        "url": "https://twitter.com/BarstoolBigCat/status/2045323190549815447#m",
-        "account": "@BarstoolBigCat",
-        "text": "He did say he was going to burn Birmingham to the ground this weekend. We just didn't know he was being literal"
+        "url": "https://twitter.com/BallsackSports/status/2045703708634181905",
+        "account": "@BallsackSports",
+        "text": "41 year old LeBron was by far and away the best athlete on the floor tonight. \n\nIt just wasn't close. No disrespect to Amen Thompson."
       }
     ]
   },
   "quality_check": {
-    "total_headlines": 5,
-    "total_tweets_assigned": 18,
+    "total_headlines": 3,
+    "total_tweets_assigned": 14,
     "around_the_league_count": 10,
     "controversial_stories_as_lead": false
   }
