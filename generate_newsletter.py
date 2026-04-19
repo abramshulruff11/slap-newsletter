@@ -43,6 +43,9 @@ RAW_CONTENT_PATH = SCRIPT_DIR / "raw_content.json"
 OUTPUT_PATH = SCRIPT_DIR / "newsletter_draft.html"
 SKELETON_PATH = SCRIPT_DIR / "newsletter_skeleton.json"
 RECENT_OUTPUT_PATH = SCRIPT_DIR / "recent_output.json"
+GIF_HISTORY_PATH = SCRIPT_DIR / "gif_history.json"
+MEME_HISTORY_PATH = SCRIPT_DIR / "meme_history.json"
+HISTORY_DAYS = 14
 PROMPTS_DIR = SCRIPT_DIR / "prompts"
 
 MODEL = "claude-sonnet-4-20250514"
@@ -164,9 +167,10 @@ def embed_gifs_in_html(html: str, api_key: str) -> str:
 
     matches = gif_pattern.findall(html)
     if not matches:
-        return html
+        return html, []
 
     embed_count = 0
+    used_gifs = []
     for search_term in matches:
         queries = clean_giphy_search(search_term)
         gif_url = None
@@ -197,6 +201,11 @@ def embed_gifs_in_html(html: str, api_key: str) -> str:
             if count > 0:
                 embed_count += 1
                 print(f"           -> Found: {gif_url[:80]}...")
+                used_gifs.append({
+                    "date": __import__('datetime').date.today().isoformat(),
+                    "url": gif_url,
+                    "search_term": queries[0],
+                })
             else:
                 print(f"           -> Could not find matching placeholder")
         else:
@@ -205,7 +214,7 @@ def embed_gifs_in_html(html: str, api_key: str) -> str:
         time.sleep(0.3)
 
     print(f"  [GIPHY] {embed_count}/{len(matches)} GIFs embedded")
-    return html
+    return html, used_gifs
 
 
 # ── HTML Templates ───────────────────────────────────────────────────────────
@@ -542,44 +551,106 @@ class CostTracker:
 
 # ── Recent Output Memory ─────────────────────────────────────────────────────
 
-def load_recent_output() -> dict | None:
-    """Load yesterday's output summary for continuity checks."""
+def load_recent_output() -> list[dict]:
+    """Load rolling 14-day output history for continuity checks."""
     if RECENT_OUTPUT_PATH.exists():
         try:
             with open(RECENT_OUTPUT_PATH, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            print(f"  [MEMORY] Loaded recent_output.json (lead: {data.get('lead_story', '?')[:50]})")
+            # Handle legacy single-day format (migrate on first load)
+            if isinstance(data, dict):
+                data = [data]
+            data = sorted(data, key=lambda x: x.get("date", ""), reverse=True)[:HISTORY_DAYS]
+            print(f"  [MEMORY] Loaded {len(data)} days of history (latest: {data[0].get('date', '?')})")
             return data
         except (json.JSONDecodeError, IOError):
-            print("  [MEMORY] recent_output.json exists but couldn't be read — skipping")
-            return None
-    else:
-        print("  [MEMORY] No recent_output.json found — first run or reset")
-        return None
+            print("  [MEMORY] recent_output.json unreadable — starting fresh")
+            return []
+    print("  [MEMORY] No recent_output.json — first run")
+    return []
 
 
 def save_recent_output(plan: dict, newsletter_html: str) -> None:
-    """Save today's output summary for tomorrow's continuity checks."""
+    """Append today's output to rolling 14-day history."""
     stories = plan.get("stories", [])
     lead = next((s for s in stories if s.get("depth") == "deep"), {})
 
-    # Extract GIF references from the final HTML
     gif_pattern = re.compile(r'GIF:\s*(.+?)\s*</div>', re.DOTALL)
     gif_refs = gif_pattern.findall(newsletter_html)
-
-    # Collect all headline topics
     headlines = [s.get("headline", "") for s in stories]
 
-    recent = {
+    today = {
         "date": plan.get("date", "unknown"),
         "lead_story": lead.get("headline", "unknown"),
         "all_headlines": headlines,
         "gif_references": gif_refs,
     }
 
+    history = load_recent_output()
+    # Remove any existing entry for today's date (idempotent re-runs)
+    history = [h for h in history if h.get("date") != today["date"]]
+    history.insert(0, today)
+    history = history[:HISTORY_DAYS]
+
     with open(RECENT_OUTPUT_PATH, "w", encoding="utf-8") as f:
-        json.dump(recent, f, indent=2, ensure_ascii=False)
-    print(f"  [MEMORY] Saved recent_output.json for next run")
+        json.dump(history, f, indent=2, ensure_ascii=False)
+    print(f"  [MEMORY] Saved history ({len(history)} days rolling)")
+
+
+def load_gif_history() -> list[dict]:
+    """Load rolling GIF usage history to prevent repetition."""
+    if GIF_HISTORY_PATH.exists():
+        try:
+            with open(GIF_HISTORY_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            data = sorted(data, key=lambda x: x.get("date", ""), reverse=True)[:HISTORY_DAYS * 5]
+            print(f"  [GIF HISTORY] Loaded {len(data)} recent GIF uses")
+            return data
+        except (json.JSONDecodeError, IOError):
+            return []
+    return []
+
+
+def save_gif_history(used_gifs: list[dict]) -> None:
+    """Append today's GIF uses to rolling history."""
+    if not used_gifs:
+        return
+    history = load_gif_history()
+    today_date = used_gifs[0].get("date", "unknown") if used_gifs else "unknown"
+    history = [h for h in history if h.get("date") != today_date]
+    history = used_gifs + history
+    history = history[:HISTORY_DAYS * 5]
+    with open(GIF_HISTORY_PATH, "w", encoding="utf-8") as f:
+        json.dump(history, f, indent=2, ensure_ascii=False)
+    print(f"  [GIF HISTORY] Saved {len(used_gifs)} new GIF uses ({len(history)} total in history)")
+
+
+def load_meme_history() -> list[dict]:
+    """Load rolling meme usage history to prevent repetition."""
+    if MEME_HISTORY_PATH.exists():
+        try:
+            with open(MEME_HISTORY_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            data = sorted(data, key=lambda x: x.get("date", ""), reverse=True)[:HISTORY_DAYS * 5]
+            print(f"  [MEME HISTORY] Loaded {len(data)} recent meme uses")
+            return data
+        except (json.JSONDecodeError, IOError):
+            return []
+    return []
+
+
+def save_meme_history(used_memes: list[dict]) -> None:
+    """Append today's meme uses to rolling history."""
+    if not used_memes:
+        return
+    history = load_meme_history()
+    today_date = used_memes[0].get("date", "unknown") if used_memes else "unknown"
+    history = [h for h in history if h.get("date") != today_date]
+    history = used_memes + history
+    history = history[:HISTORY_DAYS * 5]
+    with open(MEME_HISTORY_PATH, "w", encoding="utf-8") as f:
+        json.dump(history, f, indent=2, ensure_ascii=False)
+    print(f"  [MEME HISTORY] Saved {len(used_memes)} new meme uses")
 
 
 # ── PASS 1: Story Selector ────────────────────────────────────────────────────
@@ -646,17 +717,20 @@ def pass1_story_selector(raw: dict, client: anthropic.Anthropic, tracker: CostTr
     total_chars = sum(len(b["text"]) for b in system_blocks)
     print(f"  [PROMPT] Pass 1 system prompt: {total_chars:,} chars")
 
-    # Load yesterday's output for continuity
-    recent = load_recent_output()
+    # Load rolling history for continuity
+    history = load_recent_output()
     recent_context = ""
-    if recent:
-        recent_context = (
-            "\n\n## YESTERDAY'S NEWSLETTER (avoid overlap)\n"
-            f"Lead story: {recent.get('lead_story', 'unknown')}\n"
-            f"All headlines: {json.dumps(recent.get('all_headlines', []))}\n"
-            f"GIF references used: {json.dumps(recent.get('gif_references', []))}\n"
-            "RULE: Do not repeat yesterday's lead. Do not reuse yesterday's GIFs.\n"
-        )
+    if history:
+        recent_context = "\n\n## STORY HISTORY (last 14 days — use for continuity detection)\n"
+        for i, day in enumerate(history):
+            label = "YESTERDAY" if i == 0 else f"{i+1} DAYS AGO"
+            recent_context += (
+                f"\n### {label} ({day.get('date', '?')})\n"
+                f"Lead: {day.get('lead_story', 'unknown')}\n"
+                f"All headlines: {json.dumps(day.get('all_headlines', []))}\n"
+                f"GIFs used: {json.dumps(day.get('gif_references', []))}\n"
+            )
+        recent_context += "\nRULE: Do not repeat yesterday's lead. Flag any story as CONTINUING if it appeared in the last 3 days and has new development today. Do not reuse GIFs from the last 14 days.\n"
 
     raw_json = json.dumps(raw, ensure_ascii=False)
     user_message = (
@@ -832,6 +906,28 @@ def pass2_writer(plan: dict, raw: dict, client: anthropic.Anthropic, tracker: Co
             ),
         })
         print("  [PROMPT] rolling_feedback.txt loaded")
+
+    gif_history = load_gif_history()
+    meme_history = load_meme_history()
+    if gif_history:
+        recent_gifs = [g["search_term"] for g in gif_history[:20]]
+        system_blocks.append({
+            "type": "text",
+            "text": (
+                "## GIF USAGE HISTORY (last 14 days — DO NOT REUSE)\n\n"
+                "These GIF search terms have been used recently. Pick different ones.\n\n"
+                + "\n".join(f"- {g}" for g in recent_gifs)
+            ),
+        })
+    if meme_history:
+        recent_memes = [f"{m.get('template_name', '?')} ({m.get('date', '?')})" for m in meme_history[:14]]
+        system_blocks.append({
+            "type": "text",
+            "text": (
+                "## MEME USAGE HISTORY (last 14 days — avoid repeating same template)\n\n"
+                + "\n".join(f"- {m}" for m in recent_memes)
+            ),
+        })
 
     gif_reference = load_prompt("gif_reference.txt")
     meme_reference = load_prompt("meme_reference.txt")
@@ -1013,7 +1109,8 @@ def save_newsletter(content: str, skip_oembed: bool = False) -> None:
 
     if giphy_key:
         print("\nPost-processing: Giphy auto-embedding...")
-        preview_html = embed_gifs_in_html(preview_html, giphy_key)
+        preview_html, used_gifs = embed_gifs_in_html(preview_html, giphy_key)
+        save_gif_history(used_gifs)
     else:
         gif_count = len(re.findall(r'class="gif-placeholder"', preview_html))
         if gif_count > 0:
@@ -1026,7 +1123,7 @@ def save_newsletter(content: str, skip_oembed: bool = False) -> None:
     print("\n[SUBSTACK] Using bare tweet URLs — Substack auto-embeds these on publish")
 
     if giphy_key:
-        substack_content = embed_gifs_in_html(substack_content, giphy_key)
+        substack_content, _ = embed_gifs_in_html(substack_content, giphy_key)
 
     substack_html = SUBSTACK_TEMPLATE.format(content=substack_content)
 

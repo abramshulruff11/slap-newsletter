@@ -72,11 +72,25 @@ jobs:
           done
           echo "All output files present"
 
+      - name: Archive outputs
+        run: |
+          DATE=$(date -u +"%Y-%m-%d")
+          ARCHIVE_DIR="archive/$DATE"
+          mkdir -p "$ARCHIVE_DIR"
+          cp newsletter_draft.html "$ARCHIVE_DIR/"
+          cp newsletter_substack.html "$ARCHIVE_DIR/"
+          cp newsletter_skeleton.json "$ARCHIVE_DIR/"
+          cp raw_content.json "$ARCHIVE_DIR/"
+          if [ -f recent_output.json ]; then
+            cp recent_output.json "$ARCHIVE_DIR/"
+          fi
+          echo "Archived to $ARCHIVE_DIR"
+
       - name: Commit and push outputs
         run: |
           git config user.name "SLAP Bot"
           git config user.email "slap-bot@users.noreply.github.com"
-          git add raw_content.json newsletter_skeleton.json newsletter_draft.html newsletter_substack.html
+          git add raw_content.json newsletter_skeleton.json newsletter_draft.html newsletter_substack.html recent_output.json gif_history.json meme_history.json archive/
           DATE=$(date -u +"%Y-%m-%d")
           git commit -m "SLAP newsletter output for $DATE" || echo "No changes to commit"
           git push
