@@ -1,0 +1,297 @@
+{
+  "date": "2026-04-20",
+  "editorial_reasoning": {
+    "calendar_tier": "TIER 1 — NFL Draft Week begins April 23, this is Draft Week",
+    "tweet_volume": [
+      {
+        "topic": "NFL Draft",
+        "approx_tweets": 15,
+        "accounts": 5
+      },
+      {
+        "topic": "Will Anderson extension",
+        "approx_tweets": 8,
+        "accounts": 4
+      },
+      {
+        "topic": "AJ Brown trade rumors",
+        "approx_tweets": 6,
+        "accounts": 2
+      },
+      {
+        "topic": "NBA Playoffs Game 1s",
+        "approx_tweets": 12,
+        "accounts": 4
+      },
+      {
+        "topic": "NHL Playoffs Game 1s",
+        "approx_tweets": 3,
+        "accounts": 1
+      }
+    ],
+    "dominant_topic": "NFL Draft Week dominates - Tier 1 calendar event confirmed by extensive draft content",
+    "candidates_considered": [
+      {
+        "story": "Will Anderson breaks non-QB record with $150M extension",
+        "hook": "$50M AAV makes him highest-paid non-QB ever, drafted 3 years ago",
+        "verdict": "HEADLINE — DEEP"
+      },
+      {
+        "story": "AJ Brown likely to Patriots after June 1",
+        "hook": "Eagles finally cutting bait, Patriots get their #1 WR",
+        "verdict": "HEADLINE — MEDIUM"
+      },
+      {
+        "story": "Fernando Mendoza #1 pick speculation",
+        "hook": "CONTINUING from yesterday — same story, no new development",
+        "verdict": "AROUND THE LEAGUE"
+      },
+      {
+        "story": "Jeremiyah Love to Cardinals at #3?",
+        "hook": "Schefter intel on potential RB surprise at #3 overall",
+        "verdict": "HEADLINE — LIGHT"
+      },
+      {
+        "story": "Dexter Lawrence trade to Bengals",
+        "hook": "CONTINUING from yesterday — trade done, extension signed",
+        "verdict": "HEADLINE — LIGHT"
+      },
+      {
+        "story": "Wemby 35 points in playoff debut",
+        "hook": "Most ever by Spurs rookie, passing Duncan",
+        "verdict": "HEADLINE — MEDIUM"
+      },
+      {
+        "story": "Broderick Jones neck injury setback",
+        "hook": "Steelers LT uncertainty before draft",
+        "verdict": "AROUND THE LEAGUE"
+      },
+      {
+        "story": "Zachariah Branch arrest details",
+        "hook": "Draft prospect arrested for sidewalk obstruction",
+        "verdict": "LIGHT — factual only"
+      }
+    ]
+  },
+  "stories": [
+    {
+      "headline": "Will Anderson Jr. Becomes Highest-Paid Non-QB in History",
+      "depth": "deep",
+      "editorial_direction": "Historic contract resets the market. 3 years into his career and already breaking records. Financial absurdity meets elite production. Compare to QB money, compare to his draft class.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2045885753436090530#m",
+          "account": "@AdamSchefter",
+          "text": "Compensation update: Now that he has passed his physical and the trade is official, newly-acquired DT Dexter Lawerence is signing a one-year, $28 million contract extension with the Bengals, per @WinSportsGroup \n\nSo in the end, Lawrence gets the trade he wanted while being contractually tied to Cincinnati for the next three seasons.",
+          "role": "news"
+        },
+        {
+          "url": "https://twitter.com/statmuse/status/2046207755367710848#m",
+          "account": "@StatMuse",
+          "text": "2026 playoff Game 1 leaders:\n\nPTS — Cade Cunningham\nREB — Josh Hart\nAST — LeBron James\nSTL — Bruce Brown\nBLK — KAT, Ant",
+          "role": "stat"
+        }
+      ],
+      "research_notes": {
+        "key_stats": [
+          "$150M over 3 years = $50M AAV",
+          "$134M guaranteed",
+          "Highest-paid non-QB ever",
+          "30 sacks in 3 seasons",
+          "12 sacks in 2025, 20 TFL",
+          "2nd in DPOY voting behind Myles Garrett"
+        ],
+        "historical_context": [
+          "Drafted #3 overall in 2023",
+          "Already getting QB-level money",
+          "Surpasses Micah Parsons' $47M AAV",
+          "Texans traded up to get him after drafting CJ Stroud #2"
+        ],
+        "financial_absurdity": [
+          "$50M AAV for a 3rd-year player",
+          "More per year than some QBs",
+          "Includes no-trade clause",
+          "$32M signing bonus"
+        ],
+        "cross_connections": [
+          "Edge rusher market now mirrors QB market",
+          "Draft 3 years ago, already reset the position",
+          "Texans have $50M pass rusher and $55M QB on rookie deals"
+        ],
+        "meme_angles": [
+          "'Defense wins championships' just got expensive",
+          "Alabama to $150M pipeline",
+          "From college to generational wealth in 3 years"
+        ],
+        "where_it_goes": "Sets market for other young edge rushers coming up for extensions. Teams will now prioritize edge rushers like QBs in the draft",
+        "internet_sentiment": "Respect for the bag, but also shock at the money being paid to non-QBs now",
+        "trending_memes": "Agent victory lap tweets, Jonathan Greenard celebrating his former teammate"
+      }
+    },
+    {
+      "headline": "AJ Brown Is 'Likely' Becoming a Patriot",
+      "depth": "medium",
+      "editorial_direction": "Eagles finally ready to move on after all the drama. Patriots get their WR1. Schefter using strong language - 'likely' means it's happening.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2046174326194356373#m",
+          "account": "@AdamSchefter",
+          "text": "A.J. Brown is likely to become a Patriot post June 1, per ESPN sources.\n\nThis and more in ESPN's annual NFL Draft intel column:\n\nhttps://www.espn.com/nfl/draft2026/story/_/id/48507444/2026-nfl-draft-notes-intel-buzz-adam-schefter-first-round-picks-teams-trades",
+          "role": "news"
+        },
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2046174911408881688#m",
+          "account": "@AdamSchefter",
+          "text": "The Eagles remain open to trading AJ Brown, the Patriots remain highly interested in acquiring the star receiver, and conversations are expected to resume shortly on or before June 1, likely culminating in a deal, per league sources.\n\nAs one source said about the Patriots' pursuit of Brown, they'll \"definitely be engaging then.\"\n\nA trade to New England is now considered likely.",
+          "role": "context"
+        },
+        {
+          "url": "https://twitter.com/FieldYates/status/2046174955792974156#m",
+          "account": "@FieldYates",
+          "text": "A jam-packed notebook by Schefty with essential draft information.\n\nAnd: the number 11 jersey is currently available in New England.",
+          "role": "comedy"
+        }
+      ],
+      "research_notes": {
+        "key_context": "Eagles have been shopping Brown after sideline incidents and contract disputes from last season",
+        "patriots_angle": "Need WR1 desperately, have cap space post-June 1 for salary dump trades",
+        "timing_significance": "June 1 designation allows Eagles to spread cap hit over multiple years",
+        "meme_potential": "Patriots finally getting an elite receiver, Eagles dysfunction continues"
+      }
+    },
+    {
+      "headline": "Wemby Drops 35 in Playoff Debut, Breaks Spurs Record",
+      "depth": "medium",
+      "editorial_direction": "Historic debut. Most points ever by a Spurs rookie in playoffs, passing Tim Duncan. The chosen one arrives.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/HaterReport/status/2046073262413685085#m",
+          "account": "@HaterReport",
+          "text": "WEMBY DOMINATED GAME 1 👽\n\n• 35 PTS\n• 5 REB\n• 2 BLK\n\nMost points EVER in a Spurs Playoff debut, passing Tim Duncan. \n\nThe Blazers ARE IN TROUBLE",
+          "role": "stat"
+        },
+        {
+          "url": "https://twitter.com/statmuse/status/2046071089067897149#m",
+          "account": "@StatMuse",
+          "text": "Points in their first playoff game:\n\n35 — Wemby\n32 — Duncan\n26 — Robinson\n21 — Parker\n20 — Gervin\n\nLegends.",
+          "role": "historical"
+        },
+        {
+          "url": "https://twitter.com/HaterReport/status/2046069307168239830#m",
+          "account": "@HaterReport",
+          "text": "Spurs went from David Robinson to Tim Duncan to Victor Wembanyama…\n\nThis the kinda greed they talked about in the Bible 😭😭",
+          "role": "comedy"
+        }
+      ],
+      "research_notes": {
+        "historic_context": "Passed Tim Duncan's 32 points for most by Spurs rookie in playoffs",
+        "franchise_continuity": "Robinson → Duncan → Wembanyama generational center pipeline",
+        "performance_details": "35 points, 5 rebounds, 2 blocks in Game 1 win over Blazers",
+        "meme_angle": "Spurs' ridiculous luck with generational big men continues"
+      }
+    },
+    {
+      "headline": "Cardinals Eyeing RB Surprise at No. 3 Overall?",
+      "depth": "light",
+      "editorial_direction": "Schefter dropping draft intel. RB at #3 would be shocking but Cardinals have needs everywhere.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2046185547916313037#m",
+          "account": "@AdamSchefter",
+          "text": "There is growing chatter in league circles that Notre Dame running back Jeremiyah Love is in play with Arizona at No. 3 overall. Ideally, the Cardinals would like to find a team willing to trade up so they can acquire more picks, and there have already been \"exploratory\" calls, as one source described it, regarding the No. 3 selection. But if the Cardinals hold on to their pick, some around the league believe they could pull an early draft surprise and select Love.\n\nhttps://www.espn.com/nfl/draft2026/story/_/id/48507444/2026-nfl-draft-notes-intel-buzz-adam-schefter-first-round-picks-teams-trades",
+          "role": "news"
+        }
+      ],
+      "research_notes": {
+        "surprise_factor": "RB at #3 overall would be huge shock, hasn't happened since Saquon in 2018",
+        "cardinals_logic": "Have James Conner but need explosive playmaker, Love is generational talent",
+        "trade_possibility": "Cardinals prefer to trade down for more picks but Love is backup plan"
+      }
+    },
+    {
+      "headline": "Dexter Lawrence Gets His Wish and His Bag",
+      "depth": "light",
+      "editorial_direction": "Trade done, extension signed. Lawrence forced his way out of New York and immediately got paid in Cincinnati.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2045885753436090530#m",
+          "account": "@AdamSchefter",
+          "text": "Compensation update: Now that he has passed his physical and the trade is official, newly-acquired DT Dexter Lawerence is signing a one-year, $28 million contract extension with the Bengals, per @WinSportsGroup \n\nSo in the end, Lawrence gets the trade he wanted while being contractually tied to Cincinnati for the next three seasons.",
+          "role": "news"
+        }
+      ],
+      "research_notes": {
+        "trade_details": "Giants get #10 pick, Lawrence gets $28M extension immediately",
+        "player_power": "Lawrence demanded trade or new deal, got both by forcing his way out"
+      }
+    }
+  ],
+  "around_the_league": [
+    {
+      "url": "https://twitter.com/AdamSchefter/status/2046196588033315318#m",
+      "account": "@AdamSchefter",
+      "text": "Steelers left tackle Broderick Jones suffered a setback to the neck injury he sustained last season, and is scheduled to be examined this week to determine whether he will be ready for training camp and/or the start of the season, per league sources."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2046071121896783890#m",
+      "account": "@StatMuse",
+      "text": "Stephon Castle in Game 1:\n\n17 PTS\n7 REB\n7 AST\n\nThe first Spurs point guard with a 15/5/5 playoff game since Tony Parker."
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2046116186178330747#m",
+      "account": "@HaterReport",
+      "text": "INSANE: The Orlando Magic were the only playoff road team this weekend to win a game 😳\n\n4 days ago the Magic looked like they were ready for vacation in cancun 😭"
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2046056348152975700#m",
+      "account": "@StatMuse",
+      "text": "Tage Thompson vs Bruins:\n\n2 goals\n3 points\n3 hits\n+3\n\nScored 2 goals in the final 8 minutes to get the Sabres their first playoff win since April 22, 2011."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2046033428903002336#m",
+      "account": "@StatMuse",
+      "text": "Juraj Slafkovsky vs Lightning:\n\n3 goals\n2 hits\n21:11 TOI\n\nScored the OT winner to seal the hat trick and win game one."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2046013761748640234#m",
+      "account": "@StatMuse",
+      "text": "Luka Doncic this season:\n\n— 33.5 PPG (1st in NBA)\n— 7.7 RPG \n— 8.3 APG (3rd)\n— 1.6 SPG (6th) \n— Best player on four seed\n\nNot an MVP candidate."
+    },
+    {
+      "url": "https://twitter.com/JonRothstein/status/2046012035884810355#m",
+      "account": "@JonRothstein",
+      "text": "Source: Villanova transfer Zion Stanford has committed to Towson.\n\nPotential CAA Player of the Year candidate in 2026-27."
+    },
+    {
+      "url": "https://twitter.com/JonRothstein/status/2045910312440725694#m",
+      "account": "@JonRothstein",
+      "text": "Source: Auburn transfer Elyjah Freeman has committed to Texas.\n\nAveraged 9.2 PPG and 5.2 RPG last season.\n\nSean Miller is building a bonafide contender in Austin."
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2046196974458699993#m",
+      "account": "@HaterReport",
+      "text": "Alperen Sengun really thought LeBron was gonna dap him up before Game 1 😭😭\n\n(h/t underdogsprts on TT , @justinbrosemer)"
+    },
+    {
+      "url": "https://twitter.com/AdamSchefter/status/2046199178829672574#m",
+      "account": "@AdamSchefter",
+      "text": "NFC North updates:\n\n🏈Vikings restricted free agent LB Ivan Pace signed his tender today, per his agents Drew Rosenhaus and Kyle Lincoln.\n\n🏈Packers exclusive rights free agent WR Bo Melton also signed his tender today."
+    }
+  ],
+  "closer": {
+    "hook": "Draft week energy with playoff chaos",
+    "tweets": [
+      {
+        "url": "https://twitter.com/BallsackSports/status/2045910890352988355#m",
+        "account": "@BallsackSports",
+        "text": "LeBron is the closest thing we've seen to a pegasus. \n\nThere are unicorns everywhere in our world that we marvel at.\n\nBut there's one that stands out. \n\nOne that feels so heavenly, so divine, evoking a feeling that doesn't feel Earthly.\n\nThat is LeBron James."
+      }
+    ]
+  },
+  "quality_check": {
+    "total_headlines": 5,
+    "total_tweets_assigned": 10,
+    "around_the_league_count": 10,
+    "controversial_stories_as_lead": false
+  }
+}
