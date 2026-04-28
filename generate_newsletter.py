@@ -48,10 +48,10 @@ MEME_HISTORY_PATH = SCRIPT_DIR / "meme_history.json"
 HISTORY_DAYS = 14
 PROMPTS_DIR = SCRIPT_DIR / "prompts"
 
-MODEL = "claude-sonnet-4-20250514"
-SELECTOR_MODEL = "claude-sonnet-4-20250514"    # Pass 1: editorial judgment
-WRITER_MODEL = "claude-sonnet-4-20250514"      # Pass 2: voice + structure
-EDITOR_MODEL = "claude-sonnet-4-20250514"      # Pass 3: polish
+MODEL = "claude-sonnet-4-6"
+SELECTOR_MODEL = "claude-sonnet-4-6"    # Pass 1: editorial judgment
+WRITER_MODEL = "claude-sonnet-4-6"      # Pass 2: voice + structure
+EDITOR_MODEL = "claude-sonnet-4-6"      # Pass 3: polish
 
 MAX_SEARCHES = 8          # Hard cap on web search calls per run
 MAX_HEADLINES = 40         # Pre-filter: send only top N headlines
@@ -499,7 +499,7 @@ class CostTracker:
 
     # Pricing per million tokens
     PRICING = {
-        "claude-sonnet-4-20250514": {"input": 3, "output": 15, "cache_read": 0.30, "cache_write": 3.75},
+        "claude-sonnet-4-6": {"input": 3, "output": 15, "cache_read": 0.30, "cache_write": 3.75},
         "claude-haiku-4-5-20251001": {"input": 0.80, "output": 4, "cache_read": 0.08, "cache_write": 1.0},
     }
 
@@ -507,7 +507,7 @@ class CostTracker:
         self.passes = []
 
     def record(self, pass_name: str, model: str, response):
-        pricing = self.PRICING.get(model, self.PRICING["claude-sonnet-4-20250514"])
+        pricing = self.PRICING.get(model, self.PRICING["claude-sonnet-4-6"])
         input_tokens = response.usage.input_tokens
         output_tokens = response.usage.output_tokens
         cache_read = getattr(response.usage, "cache_read_input_tokens", 0)
