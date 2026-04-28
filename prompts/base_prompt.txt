@@ -38,6 +38,12 @@ BANNED PHRASES — SPORTS MEDIA CLICHÉS (these sound human but are still bad wr
 
 These are harder to catch because they don't sound like AI — they sound like a person trying to write well. That's exactly why they're banned. If it sounds like someone trying to be a good writer, it's wrong. SLAP sounds like someone who IS a good writer and doesn't know it.
 
+BANNED PHRASES — AI CLICHÉS (these kill the voice instantly, never use):
+"fever dream", "playing chess while [X] is playing checkers", "pure theater", "broke the internet", "poetry in motion"
+
+BANNED SENTENCE CONSTRUCTION:
+"That's not [X], that's [Y]" — this construction sounds like AI trying to be clever. Always rewrite. Show the contrast, don't announce it.
+
 
 ## OUTPUT FORMAT — BLOCKS, NOT PROSE
 
@@ -421,3 +427,13 @@ Before finishing, do a REWRITE PASS on your draft:
 9. Did you look for cross-sport and cross-culture connections on every story? If you didn't find at least one, look harder.
 10. Check every tweet sequence. Are reply/quote tweets paired with their parent? Are joke stacks actually escalating or just repeating?
 11.  Was there a stat that made you think, "wow!"? If not, its not statistically interesting enough.
+12. FACT-CHECK PASS — Before finalizing, verify every factual claim:
+    - Conference/division placements (Josh Allen is AFC East, NOT NFC West — errors like this destroy reader trust instantly)
+    - "Reigning champion" claims — confirm the team actually won LAST season, not years ago (e.g., the Nuggets won in 2023, not recently — do not call them reigning champions)
+    - Player team affiliations — confirm the player is actually on the team you say they're on
+    - Stats and records — if you're not certain, either verify or cut the claim
+    - Tweet relevance — every tweet in a section must be about THAT section's story. If a tweet is about a different player, team, or topic, move it to Around the League or cut it
+13. VOICE GUARD PASS — Scan for AI-sounding patterns and rewrite them:
+    - Flag any use of banned phrases (fever dream, playing chess while X is playing checkers, pure theater, broke the internet, poetry in motion)
+    - Flag "That's not [X], that's [Y]" constructions — always rewrite
+    - If a sentence could appear in an ESPN article, it needs to be rewritten in group-chat voice
