@@ -57,10 +57,6 @@ DRAFT_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 {content}
-<footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; font-family: Arial, sans-serif; font-size: 13px; color: #888; text-align: center;">
-    SLAP — Sports Lunch Afternoon Post<br>
-    Five minutes at lunch. Every sport that matters. Zero doomscrolling.
-</footer>
 </body>
 </html>"""
 
@@ -84,10 +80,6 @@ SUBSTACK_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 {content}
-<footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; font-family: Arial, sans-serif; font-size: 13px; color: #888; text-align: center;">
-    SLAP — Sports Lunch Afternoon Post<br>
-    Five minutes at lunch. Every sport that matters. Zero doomscrolling.
-</footer>
 </body>
 </html>"""
 
@@ -207,33 +199,33 @@ def run_pass1(raw: dict, client: anthropic.Anthropic) -> str:
 # Pass 2 — Writer
 # ---------------------------------------------------------------------------
 
-def run_pass2(raw: dict, story_plan: str, client: anthropic.Anthropic) -> str:
+def run_pass2(story_plan: str, client: anthropic.Anthropic) -> str:
     print("\n── PASS 2: Writer ──────────────────────────────────")
 
-    base_prompt = load_prompt("base_prompt.txt")
+    # pass2_writer.txt is the writer-specific prompt (voice, structure, HTML rules).
+    # base_prompt.txt and editorial_annotations.txt are not needed here —
+    # their key rules are already embedded in pass2_writer.txt.
+    writer_prompt    = load_prompt("pass2_writer.txt")
     rolling_feedback = load_prompt("rolling_feedback.txt")
-    voice_examples = load_prompt("voice_examples.txt")
-    editorial_annotations = load_prompt("editorial_annotations.txt")
+    voice_examples   = load_prompt("voice_examples.txt")
 
-    system_parts = [base_prompt]
+    system_parts = [writer_prompt]
     if rolling_feedback:
         system_parts.append("## ROLLING FEEDBACK (hard rules — apply every time)\n\n" + rolling_feedback)
     if voice_examples:
         system_parts.append(voice_examples)
-    if editorial_annotations:
-        system_parts.append(editorial_annotations)
 
     system_prompt = "\n\n" + ("\n\n" + "="*80 + "\n\n").join(p for p in system_parts if p)
 
+    # Pass 2 only needs the story plan — all tweets are pre-assigned by Pass 1.
+    # Sending full raw_content.json here was redundant and added ~40K tokens per run.
     user_message = (
         "## TODAY'S STORY PLAN\n\n"
         "The story selector has already decided which stories to cover and which "
         "tweets to use. Follow this plan. Do not add stories or tweets not listed "
         "here. You may search the web for additional context and stats on the "
         "stories listed.\n\n"
-        f"{story_plan}\n\n"
-        "## FULL RAW CONTENT (for web search context)\n\n"
-        + json.dumps(raw, ensure_ascii=False)
+        + story_plan
     )
 
     messages = [{"role": "user", "content": user_message}]
@@ -340,7 +332,7 @@ def main() -> None:
 
     # Three passes
     story_plan  = run_pass1(raw, client)
-    draft_html  = run_pass2(raw, story_plan, client)
+    draft_html  = run_pass2(story_plan, client)
     final_html  = run_pass3(draft_html, recent_output, client)
 
     # Save draft (styled blockquotes for browser preview)

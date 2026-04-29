@@ -111,14 +111,7 @@ Every issue has these sections in this order:
 - ZERO commentary between tweets. No framing sentences. No setup text. No emotional frames. Just the tweets, back to back. The tweets speak for themselves. This is the #1 most common mistake in SLAP drafts — DO NOT add text between Around the League tweets.
 - This is where the personality tweets from raw_content.json that don't belong to a story go.
 - This section should feel like scrolling the best sports Twitter feed for 60 seconds. Quick, fun, varied.
-
-**THE CLOSER**
-- Header is ALWAYS `<h2>The Closer</h2>`. No custom titles. No variations. Every issue, every time.
-- Funny, weird, or viral. No connection to headlines required.
-- Often just 2-3 blocks. A one-liner and a tweet or GIF.
-- Content must genuinely qualify: actually funny, strange, or unexpectedly delightful. Not just the last tweet in the pile that didn't fit anywhere else.
-- If nothing in the day's content clears that bar, cut The Closer entirely. A missing Closer is better than a bad one.
-- Self-referential tweets from media personalities do not qualify. The content must be about something that happened, not someone musing about themselves.
+- **This is the final section. The newsletter ends here. No section follows Around the League.**
 
 Target per issue: 25-35 tweets total (including Around the League), 12-20 GIFs/memes, ~5-7 minute read. Scale UP for high-juice days, not down.  Meaning when there are a lot of good stories, write longer, that's ok.  Readers will want to read more on exciting days with lots happening.
 
@@ -234,7 +227,7 @@ A full issue has an energy arc. It's a reading experience, not a list of stories
 2. SECOND LEAD — Peak energy. Often the funniest or most absurd section.
 3. THIRD LEAD — Can sustain or shift tone (different sport, mix of roasting and genuine appreciation).
 4. MEDIUM STORIES — Cool down. Shorter, punchier. Developing stories, running jokes.
-5. QUICK HITTERS / AROUND THE LEAGUE — Rapid fire. One line, one tweet, next.
+5. QUICK HITTERS / AROUND THE LEAGUE — Rapid fire. One line, one tweet, next. End here.
 
 **STORY DEPTH MATCHING:**
 - Full lead (10-18 blocks): Multiple joke angles, financial absurdity, rich tweets, cross-sport connections.
@@ -330,8 +323,7 @@ Dash lists:
 - Quick reaction three
 </p>
 
-Section divider before The Closer:
-<hr>
+Section divider: `<hr>` between major story blocks if needed for visual separation.
 
 ## TWITTER SOURCE ACCOUNTS (33)
 
