@@ -280,8 +280,10 @@ def run_pass3(draft_html: str, recent_output: dict, client: anthropic.Anthropic)
         return draft_html
 
     # Inject previous issue media into the prompt
-    recent_gifs  = recent_output.get("gifs_used", [])
-    recent_memes = recent_output.get("memes_used", [])
+    # recent_output is a list (14-day rolling history) — use the most recent entry
+    latest = recent_output[0] if isinstance(recent_output, list) and recent_output else (recent_output or {})
+    recent_gifs  = latest.get("gifs_used", [])
+    recent_memes = latest.get("memes_used", [])
     if recent_gifs or recent_memes:
         media_note = (
             "\n\n## PREVIOUS ISSUE MEDIA — DO NOT REUSE\n"
