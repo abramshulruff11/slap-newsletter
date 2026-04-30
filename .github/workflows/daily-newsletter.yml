@@ -90,8 +90,8 @@ jobs:
         run: |
           git config user.name "SLAP Bot"
           git config user.email "slap-bot@users.noreply.github.com"
-          git pull --rebase origin main
           git add raw_content.json newsletter_skeleton.json newsletter_draft.html newsletter_substack.html recent_output.json gif_history.json meme_history.json archive/
           DATE=$(date -u +"%Y-%m-%d")
           git commit -m "SLAP newsletter output for $DATE" || echo "No changes to commit"
+          git pull --rebase origin main
           git push
