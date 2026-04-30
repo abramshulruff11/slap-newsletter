@@ -1,3 +1,4 @@
 feedparser
 anthropic
 python-dotenv
+python-substack

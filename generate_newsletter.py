@@ -309,6 +309,67 @@ def run_pass3(draft_html: str, recent_output: dict, client: anthropic.Anthropic)
 
 
 # ---------------------------------------------------------------------------
+# Substack auto-draft
+# ---------------------------------------------------------------------------
+
+def post_to_substack(html: str) -> None:
+    """
+    Creates an unpublished draft in Substack via python-substack.
+    Requires SUBSTACK_EMAIL, SUBSTACK_PASSWORD, SUBSTACK_URL env vars.
+    Skips silently if credentials are not set (local runs).
+    """
+    email    = os.getenv("SUBSTACK_EMAIL")
+    password = os.getenv("SUBSTACK_PASSWORD")
+    pub_url  = os.getenv("SUBSTACK_URL")
+
+    if not all([email, password, pub_url]):
+        print("  ⚠ Substack credentials not set — skipping auto-draft")
+        return
+
+    try:
+        from substack import Api
+        from substack.post import Post
+    except ImportError:
+        print("  ⚠ python-substack not installed — skipping auto-draft")
+        return
+
+    print("\n── SUBSTACK AUTO-DRAFT ─────────────────────────────")
+
+    try:
+        api = Api(
+            email=email,
+            password=password,
+            publication_url=pub_url,
+        )
+        user_id = api.get_user_id()
+
+        # Extract title from first <h1> in the HTML
+        title_match = re.search(r'<h1[^>]*>(.*?)</h1>', html, re.DOTALL)
+        title = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else "SLAP Newsletter"
+
+        from datetime import date
+        subtitle = f"Sports Lunch Afternoon Post — {date.today().strftime('%B %-d, %Y')}"
+
+        post = Post(
+            title=title,
+            subtitle=subtitle,
+            user_id=user_id,
+        )
+
+        # Inject the full newsletter HTML as a single HTML block
+        post.add({"type": "html", "content": html})
+
+        draft = api.post_draft(post.get_draft())
+        draft_id = draft.get("id")
+        print(f"  ✓ Draft created in Substack (id: {draft_id})")
+        print(f"  → Review and publish at: {pub_url}/publish/post/{draft_id}")
+
+    except Exception as e:
+        print(f"  ✗ Substack auto-draft failed: {e}")
+        print("    Newsletter files saved locally — paste manually if needed.")
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -349,6 +410,9 @@ def main() -> None:
     print("\n" + "="*50)
     print(f"✓ newsletter_draft.html    — open in browser to review")
     print(f"✓ newsletter_substack.html — paste into Substack")
+
+    # Auto-post draft to Substack (skips if credentials not set)
+    post_to_substack(substack_html)
 
     flag_count = len(re.findall(r'<!-- EDITOR FLAG:', final_html))
     if flag_count:
