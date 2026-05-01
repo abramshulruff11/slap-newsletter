@@ -122,6 +122,186 @@ def cost_summary(label: str, in_tokens: int, out_tokens: int) -> None:
 # Tweet URL conversion for Substack
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# GIF Auto-Embedding (Giphy API)
+# ---------------------------------------------------------------------------
+
+GIPHY_API_URL = "https://api.giphy.com/v1/gifs/search?api_key={}&q={}&limit=1&rating=pg-13"
+
+from urllib.request import urlopen, Request
+from urllib.error import URLError
+from urllib.parse import quote
+import time
+
+
+def load_gif_history(repo_root: Path) -> list:
+    """Load gif_history.json to check for recently used GIFs."""
+    history_path = repo_root / "gif_history.json"
+    if history_path.exists():
+        try:
+            return json.loads(history_path.read_text(encoding="utf-8"))
+        except Exception:
+            return []
+    return []
+
+
+def is_recently_used(gif_url: str, history: list, days: int = 7) -> bool:
+    """Return True if this GIF URL was used in the past N days."""
+    from datetime import date, timedelta
+    cutoff = date.today() - timedelta(days=days)
+    for entry in history:
+        try:
+            entry_date = date.fromisoformat(entry["date"])
+            if entry_date >= cutoff and entry.get("url") == gif_url:
+                return True
+        except Exception:
+            continue
+    return False
+
+
+def save_gif_history(repo_root: Path, new_entries: list, history: list):
+    """Append new GIF uses to gif_history.json, keep last 60 entries."""
+    history_path = repo_root / "gif_history.json"
+    combined = new_entries + history
+    combined = combined[:60]
+    history_path.write_text(json.dumps(combined, indent=2), encoding="utf-8")
+
+
+def fetch_giphy_url(search_term: str, api_key: str) -> str | None:
+    """Search Giphy for a term and return the top result's direct GIF URL."""
+    try:
+        encoded_term = quote(search_term)
+        api_url = GIPHY_API_URL.format(api_key, encoded_term)
+        req = Request(api_url, headers={"User-Agent": "SLAP-Newsletter/1.0"})
+        with urlopen(req, timeout=5) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            results = data.get("data", [])
+            if results:
+                images = results[0].get("images", {})
+                for size_key in ("downsized_medium", "downsized", "original"):
+                    if size_key in images and images[size_key].get("url"):
+                        return images[size_key]["url"]
+        return None
+    except (URLError, json.JSONDecodeError, KeyError, TimeoutError):
+        return None
+
+
+def clean_giphy_search(term: str) -> list[str]:
+    clean = term.strip().strip('"').strip("'").strip("[]")
+    for filler in ["search Giphy for ", "search for ", "from ", "meme", "gif", "reaction"]:
+        clean = clean.replace(filler, "").strip()
+    queries = [clean]
+    words = clean.split()
+    if len(words) > 4:
+        queries.append(" ".join(words[:4]))
+    if len(words) > 6:
+        queries.append(" ".join(words[:3]))
+    return queries
+
+
+def fetch_giphy_candidates(search_term: str, api_key: str, limit: int = 5) -> list[str]:
+    """Search Giphy and return up to `limit` candidate URLs (best quality per result)."""
+    try:
+        encoded_term = quote(search_term)
+        api_url = f"https://api.giphy.com/v1/gifs/search?api_key={api_key}&q={encoded_term}&limit={limit}&rating=pg-13"
+        req = Request(api_url, headers={"User-Agent": "SLAP-Newsletter/1.0"})
+        with urlopen(req, timeout=5) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            results = data.get("data", [])
+            urls = []
+            for result in results:
+                images = result.get("images", {})
+                for size_key in ("downsized_medium", "downsized", "original"):
+                    if size_key in images and images[size_key].get("url"):
+                        urls.append(images[size_key]["url"])
+                        break
+            return urls
+    except Exception:
+        return []
+
+
+def embed_gifs_in_html(html: str, api_key: str, repo_root: Path = None) -> tuple[str, list]:
+    gif_pattern = re.compile(
+        r'<div class="gif-placeholder">\s*GIF:\s*(.+?)\s*</div>',
+        re.DOTALL
+    )
+    matches = gif_pattern.findall(html)
+    if not matches:
+        print("  [GIPHY] No GIF placeholders found")
+        return html, []
+
+    history = load_gif_history(repo_root) if repo_root else []
+    embed_count = 0
+    used_gifs = []
+
+    for search_term in matches:
+        queries = clean_giphy_search(search_term)
+        gif_url = None
+        chosen_query = None
+
+        for q in queries:
+            print(f"  [GIPHY] Searching: {q}")
+            candidates = fetch_giphy_candidates(q, api_key, limit=5)
+
+            # Pick first candidate not used in the last 7 days
+            for candidate_url in candidates:
+                if not is_recently_used(candidate_url, history):
+                    gif_url = candidate_url
+                    chosen_query = q
+                    break
+                else:
+                    print(f"           -> Skipping recently used: {candidate_url[:60]}...")
+
+            if gif_url:
+                break
+
+            # All candidates were recently used — fall back to first result anyway
+            if candidates:
+                print(f"           -> All candidates recently used, using freshest anyway")
+                gif_url = candidates[0]
+                chosen_query = q
+                break
+
+            print(f"           -> No results, trying shorter...")
+            time.sleep(0.2)
+
+        if gif_url and chosen_query:
+            placeholder_pattern = re.compile(
+                r'<div class="gif-placeholder">\s*GIF:\s*'
+                + re.escape(search_term)
+                + r'\s*</div>',
+                re.DOTALL
+            )
+            img_html = (
+                f'<div style="margin: 16px 0; text-align: center;">'
+                f'<img src="{gif_url}" alt="{chosen_query}" '
+                f'style="max-width: 100%; border-radius: 8px;" />'
+                f'</div>'
+            )
+            html, count = placeholder_pattern.subn(img_html, html, count=1)
+            if count > 0:
+                embed_count += 1
+                print(f"           -> Embedded: {gif_url[:80]}...")
+                entry = {
+                    "date": __import__('datetime').date.today().isoformat(),
+                    "url": gif_url,
+                    "search_term": chosen_query,
+                }
+                used_gifs.append(entry)
+                history.insert(0, entry)  # update in-memory history for same-run dedup
+        else:
+            print(f"           -> All queries failed, keeping placeholder")
+        time.sleep(0.3)
+
+    print(f"  [GIPHY] {embed_count}/{len(matches)} GIFs embedded")
+
+    # Save updated history
+    if repo_root and used_gifs:
+        save_gif_history(repo_root, used_gifs, history)
+
+    return html, used_gifs
+
+
 def blockquotes_to_substack_urls(html: str) -> str:
     """
     Replace styled tweet blockquotes with bare tweet URLs on their own line.
@@ -208,12 +388,18 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic) -> str:
     writer_prompt    = load_prompt("pass2_writer.txt")
     rolling_feedback = load_prompt("rolling_feedback.txt")
     voice_examples   = load_prompt("voice_examples.txt")
+    gif_reference    = load_prompt("gif_reference.txt")
+    meme_reference   = load_prompt("meme_reference.txt")
 
     system_parts = [writer_prompt]
     if rolling_feedback:
         system_parts.append("## ROLLING FEEDBACK (hard rules — apply every time)\n\n" + rolling_feedback)
     if voice_examples:
         system_parts.append(voice_examples)
+    if gif_reference:
+        system_parts.append("## GIF REFERENCE\n\n" + gif_reference)
+    if meme_reference:
+        system_parts.append("## MEME REFERENCE\n\n" + meme_reference)
 
     system_prompt = "\n\n" + ("\n\n" + "="*80 + "\n\n").join(p for p in system_parts if p)
 
@@ -356,8 +542,15 @@ def post_to_substack(html: str) -> None:
             user_id=user_id,
         )
 
-        # Inject the full newsletter HTML as a single HTML block
-        post.add({"type": "html", "content": html})
+        # Extract just the body content — strip the full HTML document wrapper.
+        # Substack's API wants the inner content, not a full HTML document.
+        body_match = re.search(r'<body[^>]*>(.*?)</body>', html, re.DOTALL)
+        body_content = body_match.group(1).strip() if body_match else html
+
+        # Remove HTML comments (editor flags) before sending to Substack
+        body_content = re.sub(r'<!--.*?-->', '', body_content, flags=re.DOTALL).strip()
+
+        post.add({"type": "html", "content": body_content})
 
         draft = api.post_draft(post.get_draft())
         draft_id = draft.get("id")
@@ -411,13 +604,45 @@ def main() -> None:
     print(f"✓ newsletter_draft.html    — open in browser to review")
     print(f"✓ newsletter_substack.html — paste into Substack")
 
-    # Auto-post draft to Substack (skips if credentials not set)
-    post_to_substack(substack_html)
+    # ── GIF Embedding ──────────────────────────────────────
+    print("\n── GIF PIPELINE ────────────────────────────────────")
+    giphy_key = os.getenv("GIPHY_API_KEY", "")
+    if not giphy_key:
+        print("  ⚠ GIPHY_API_KEY not set — skipping GIF embedding")
+    else:
+        for output_path in [DRAFT_OUTPUT_PATH, SUBSTACK_OUTPUT_PATH]:
+            html = output_path.read_text(encoding="utf-8")
+            updated, used_gifs = embed_gifs_in_html(html, giphy_key, repo_root=Path(__file__).parent)
+            output_path.write_text(updated, encoding="utf-8")
+        print(f"  ✓ GIFs embedded in both output files")
+
+    # ── Meme Pipeline ──────────────────────────────────────
+    print("\n── MEME PIPELINE ───────────────────────────────────")
+    try:
+        from generate_memes import build_template_map, process_newsletter
+        imgflip_user = os.getenv("IMGFLIP_USERNAME")
+        imgflip_pass = os.getenv("IMGFLIP_PASSWORD")
+        if not imgflip_user or not imgflip_pass:
+            print("  ⚠ IMGFLIP_USERNAME / IMGFLIP_PASSWORD not set — skipping meme generation")
+        else:
+            template_map = build_template_map()
+            for output_path in [DRAFT_OUTPUT_PATH, SUBSTACK_OUTPUT_PATH]:
+                html = output_path.read_text(encoding="utf-8")
+                updated = process_newsletter(html, template_map, imgflip_user, imgflip_pass)
+                output_path.write_text(updated, encoding="utf-8")
+            print(f"  ✓ Memes embedded in both output files")
+    except Exception as e:
+        print(f"  ✗ Meme pipeline failed: {e}")
+        print("    Newsletter saved without memes — safe to publish as-is.")
 
     flag_count = len(re.findall(r'<!-- EDITOR FLAG:', final_html))
     if flag_count:
         print(f"\n⚠  {flag_count} editor flag(s) need review before publishing.")
         print(f"   Search 'EDITOR FLAG' in newsletter_draft.html to find them.")
+
+    # Auto-post draft to Substack (skips if credentials not set)
+    # Read from disk — not the in-memory variable — so GIFs and memes are included
+    post_to_substack(SUBSTACK_OUTPUT_PATH.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

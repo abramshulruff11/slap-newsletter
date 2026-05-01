@@ -22,6 +22,11 @@ jobs:
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
+      IMGFLIP_USERNAME: ${{ secrets.IMGFLIP_USERNAME }}
+      IMGFLIP_PASSWORD: ${{ secrets.IMGFLIP_PASSWORD }}
+      SUBSTACK_EMAIL: ${{ secrets.SUBSTACK_EMAIL }}
+      SUBSTACK_PASSWORD: ${{ secrets.SUBSTACK_PASSWORD }}
+      SUBSTACK_URL: ${{ secrets.SUBSTACK_URL }}
 
     steps:
       - name: Checkout repo

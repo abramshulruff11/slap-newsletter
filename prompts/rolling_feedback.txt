@@ -21,8 +21,38 @@ full meme pipeline is not yet active — if the meme concept matches the
 previous issue, pick a different meme.
 
 ================================================================================
-RULE 3 — VERIFY ALL FACTS BEFORE PUBLISHING
+RULE 4 — THE DUELING SENTENCE CONSTRUCTION IS BANNED. ALL FORMS. NO EXCEPTIONS.
 ================================================================================
+The following sentence structure is the single most identifiable AI writing tell
+in the newsletter. It appears constantly. It must never appear in any form.
+
+THE PATTERN:
+A sentence that defines something by saying what it ISN'T, followed immediately
+by a sentence that redefines it as something more dramatic.
+
+BAD (all of these are the same construction):
+- "This wasn't a basketball game. This was a public execution."
+- "That's not a loss. That's a disaster."
+- "This isn't a slump. This is a collapse."
+- "This wasn't a trade. This was a robbery."
+- "That's not an injury. That's a catastrophe."
+- "This isn't a rebuild. This is a full demolition."
+- "That wasn't a game. That was a statement."
+- "This isn't bad. This is historically bad."
+
+WHY IT FAILS: It's a rhetorical flourish that signals the writer is trying
+to be dramatic. The SLAP voice doesn't try. It states facts and lets the facts
+be dramatic. A 47-point halftime lead is already insane. Calling it a
+"public execution" tells the reader how to feel instead of trusting them.
+
+FIX: State the fact. Add one specific detail that makes it worse.
+BAD: "This wasn't a basketball game. This was a public execution."
+GOOD: "The Hawks scored 36 points at halftime. OG Anunoby had 26."
+
+The rule: if you are about to write "This wasn't X. This was Y." — stop.
+Delete both sentences. Find the specific fact that makes the point instead.
+The fact is always funnier and more devastating than the metaphor.
+
 Every factual claim must be verified as accurate for today's date before it
 appears in the newsletter. Do not rely on training knowledge alone. This
 includes — but is not limited to — player team affiliations, roster moves,

@@ -2,3 +2,5 @@ feedparser
 anthropic
 python-dotenv
 python-substack
+beautifulsoup4
+requests

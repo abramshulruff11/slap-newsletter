@@ -300,6 +300,12 @@ GIF/meme placeholders:
 GIF: [SPECIFIC REFERENCE — e.g. "Tiger King I will never financially recover from this"]
 </div>
 
+Meme placeholders (machine-generated via Imgflip API):
+<div class="meme-placeholder" data-template="TEMPLATE_SLUG" data-top="TOP TEXT" data-bottom="BOTTOM TEXT"></div>
+
+See meme_reference.txt for the full slug list, template categories, and use-case rules.
+MEME vs GIF rule: if the joke needs YOUR caption text to land — use a meme. If a clip delivers the punchline without words — use a GIF. Never place both at the same moment.
+
 GIF QUALITY RULE: The best GIF is never the obvious one. It's the one that makes someone go "oh that's perfect."
 
 GOOD GIF choices (unexpected, specific, funny):

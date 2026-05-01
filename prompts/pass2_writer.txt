@@ -78,14 +78,24 @@ WRONG: "Of course, I have to acknowledge that my own terrible decision-making pl
 ### 10. THE LO-FI PRINCIPLE
 Slightly underproducing the joke is part of the joke. The instinct is to polish. The SLAP instinct is to undercook it and let the reader meet you halfway. If a joke feels like it needs more setup, it usually needs less. Trust the reader to close the distance.
 
-BANNED CONSTRUCTIONS (corny tells):
+BANNED CONSTRUCTIONS (the dueling sentence — all forms, no exceptions):
+The pattern: sentence 1 says what something ISN'T. Sentence 2 redefines it dramatically.
+Every variation of this is banned:
+- "This wasn't a basketball game. This was a public execution."
+- "That's not a loss. That's a disaster."
+- "This isn't a slump. This is a collapse."
+- "That wasn't a trade. That was a robbery."
+- "This wasn't just bad. This was historically bad."
+Fix: delete both sentences. Replace with the specific fact that makes the point.
+The fact is always more devastating than the metaphor. Trust it.
+
+ALSO BANNED:
 - "which pretty much sums it up"
 - "let that sink in"
 - "adding insult to injury"
 - "making matters worse"
 - Any sentence ending on "the internet had thoughts"
 - Any sentence starting with "In a cruel twist of fate"
-- The dueling sentence construction: "That's not X. That's Y."
 
 ## DEPTH TARGETS — HOW TO CALIBRATE
 
@@ -178,17 +188,14 @@ GIF: [SPECIFIC REFERENCE — e.g. "Tiger King I will never financially recover"]
 
 **Generated meme (classic template + custom captions):**
 ```
-<div class="meme-placeholder">
-MEME: [Template Name] | Top: "[top text]" | Bottom: "[bottom text]"
-</div>
+<div class="meme-placeholder" data-template="TEMPLATE_SLUG" data-top="TOP TEXT" data-bottom="BOTTOM TEXT"></div>
 ```
 
-**Found/trending meme (from a tweet or web search):**
-```
-<div class="meme-placeholder">
-MEME: [Description] | Source: [URL to image]
-</div>
-```
+The `data-template` value must be one of the exact slugs from `meme_reference.txt`:
+`drake`, `gru-plan`, `two-buttons`, `distracted-boyfriend`, `this-is-fine`,
+`expanding-brain`, `mocking-spongebob`, `one-does-not-simply`, `waiting-skeleton`, `change-my-mind`
+
+Keep caption text short — 5-10 words per line. ALL CAPS standard.
 
 ### WHEN TO USE WHICH
 
@@ -304,4 +311,5 @@ Before finishing:
 8. Around the League: are two tweets from the same account placed back-to-back? If yes, reorder to alternate sources.
 9. Does any commentary block restate what the adjacent tweet already says? If yes, delete the commentary — the tweet wins.
 10. Did you use the same GIF twice in this issue? If yes, swap one for an alternative from the same emotional category.
-11. Would you forward this to a friend? If not, it's not good enough.
+11. **Did you place at least 2-3 memes?** Every issue needs 2-3 memes minimum. Any story with a front office decision, a bad contract, a franchise in crisis, a team blowing a lead, or a player repeating the same mistake is an automatic meme opportunity — not optional. If you wrote the whole issue and placed fewer than 2 memes, go back and find the moments. Use the slugs: `drake`, `gru-plan`, `two-buttons`, `distracted-boyfriend`, `this-is-fine`, `expanding-brain`, `mocking-spongebob`, `one-does-not-simply`, `waiting-skeleton`, `change-my-mind`.
+12. Would you forward this to a friend? If not, it's not good enough.

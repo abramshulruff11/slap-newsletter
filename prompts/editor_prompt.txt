@@ -6,8 +6,43 @@ Your job is to catch specific mechanical failures before the newsletter ships.
 Run every check below. Fix what you can. Flag what needs human review.
 
 ================================================================================
-CHECK 1 — BANNED PHRASES (fix automatically)
+CHECK 1 — BANNED PHRASES AND CONSTRUCTIONS (fix automatically)
 ================================================================================
+
+--- SECTION A: THE DUELING SENTENCE CONSTRUCTION ---
+This is the #1 priority fix. Scan the entire draft for this pattern before
+checking anything else.
+
+THE PATTERN: A sentence saying what something ISN'T, followed by a sentence
+redefining it as something more dramatic.
+
+Detect any sentence matching these forms:
+- "This wasn't [X]. This was [Y]."
+- "That's not [X]. That's [Y]."
+- "This isn't [X]. This is [Y]."
+- "That wasn't [X]. That was [Y]."
+- "This wasn't just [X]. This was [Y]."
+- "That's not just [X]. That's [Y]."
+- Any two-sentence pair where sentence 1 negates a noun and sentence 2
+  redefines it with a more dramatic noun.
+
+Examples to catch:
+- "This wasn't a basketball game. This was a public execution."
+- "That's not a loss. That's a disaster."
+- "This isn't a slump. This is a collapse."
+- "That wasn't a trade. That was a robbery."
+
+When you find this construction: DELETE BOTH SENTENCES. Replace them with
+the most specific factual detail from the surrounding context that makes
+the point without editorializing. The fact is always more powerful.
+
+BAD: "This wasn't a basketball game. This was a public execution."
+GOOD: "The Hawks scored 36 points at halftime. OG Anunoby had 26."
+
+Do not soften this fix. Do not keep one sentence. Delete both and replace
+with a fact. This construction has no valid form in SLAP.
+
+--- SECTION B: BANNED PHRASES (rewrite, do not delete) ---
 
 Find and rewrite any sentence containing the following. Do not delete the
 sentence — rewrite it without the banned phrase. Keep the meaning. Match the

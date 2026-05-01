@@ -4,7 +4,9 @@ This is your GIF menu. When you need a GIF, identify the EMOTION first, then pic
 
 ## ⚠️ HIGH-RISK OVERUSE — CHECK BEFORE USING
 
-These four GIFs are the highest-confidence matches for common emotions, which means they get selected constantly. Before using ANY of them, check recent_output.json. If it appeared in the last 7 issues, it is BANNED for today — pick the next option in the category instead.
+These four GIFs are the highest-confidence matches for common emotions, which means they get selected constantly. Before using ANY of them, check **gif_history.json** (not recent_output.json — that's a different file). If it appeared in the last 7 issues, it is BANNED for today — pick the next option in the category instead.
+
+**How to read gif_history.json:** It contains a list of recently used GIFs with dates and search terms. If you see your intended GIF's search term in any entry from the past 7 days, pick a different one from the same category below.
 
 | GIF | Emotion | Overuse Risk | Alternative |
 |-----|---------|--------------|-------------|
