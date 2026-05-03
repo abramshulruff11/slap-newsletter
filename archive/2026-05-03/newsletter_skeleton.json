@@ -1,0 +1,287 @@
+{
+  "date": "2026-04-27",
+  "editorial_reasoning": {
+    "calendar_tier": "TIER 2 — Draft weekend conclusion (Saturday/Sunday wrap-up)",
+    "tweet_volume": [
+      {
+        "topic": "NFL Draft aftermath",
+        "approx_tweets": 15,
+        "accounts": 8
+      },
+      {
+        "topic": "NBA Playoffs Game 4s",
+        "approx_tweets": 12,
+        "accounts": 6
+      },
+      {
+        "topic": "Diego Pavia undrafted",
+        "approx_tweets": 8,
+        "accounts": 4
+      }
+    ],
+    "dominant_topic": "Draft weekend aftermath leads — post-draft analysis and fallout stories",
+    "candidates_considered": [
+      {
+        "story": "Diego Pavia Goes Undrafted, Ravens Minicamp",
+        "hook": "Heisman finalist goes undrafted, first since 2014",
+        "verdict": "HEADLINE — DEEP"
+      },
+      {
+        "story": "LeBron Worst Playoff Game Ever at Age 41",
+        "hook": "8 turnovers, worst numbers in playoff history",
+        "verdict": "HEADLINE — MEDIUM"
+      },
+      {
+        "story": "Ty Simpson to Rams Shocker",
+        "hook": "Stafford replacement while he's still MVP",
+        "verdict": "HEADLINE — LIGHT"
+      },
+      {
+        "story": "Fernando Mendoza #1 Overall Recap",
+        "hook": "CONTINUING — covered extensively last 3 days",
+        "verdict": "SKIP — no new development"
+      },
+      {
+        "story": "Uar Bernard Nigeria Drafted Over Pavia",
+        "hook": "Never played football vs Heisman finalist",
+        "verdict": "HEADLINE — LIGHT"
+      },
+      {
+        "story": "Mike Tomlin Exit Comments",
+        "hook": "Playoff woes drove decision",
+        "verdict": "HEADLINE — LIGHT"
+      },
+      {
+        "story": "Monte Coleman Dies",
+        "hook": "Respectful coverage only",
+        "verdict": "AROUND THE LEAGUE"
+      },
+      {
+        "story": "Russell Wilson Savannah Bananas",
+        "hook": "Off-field fun story",
+        "verdict": "CLOSER"
+      },
+      {
+        "story": "Various NBA playoff performances",
+        "hook": "Multiple good stat tweets",
+        "verdict": "AROUND THE LEAGUE"
+      }
+    ]
+  },
+  "stories": [
+    {
+      "headline": "Diego Pavia Goes Undrafted Then Gets Ravens Minicamp Invite",
+      "depth": "deep",
+      "editorial_direction": "This is the draft's biggest shocker. Heisman finalist undrafted for first time since 2014. Hit the polarizing reputation, height issues, controversial moments, then pivot to Ravens opportunity. Compare to Jordan Lynch 2014.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/AdamSchefter/status/2048515161820922083#m",
+          "account": "@AdamSchefter",
+          "text": "Vanderbilt undrafted free agent QB Diego Pavia accepted an invitation to next weekend's minicamp with the Baltimore Ravens, per source.",
+          "role": "news"
+        },
+        {
+          "url": "https://twitter.com/NFLMemes/status/2048446041352015949#m",
+          "account": "@NFLMemes",
+          "text": "Uar Bernard out of Nigeria was drafted having never played football while Heisman finalist Diego Pavia went undrafted 😭",
+          "role": "comedy"
+        }
+      ],
+      "research_notes": {
+        "key_stats": [
+          "First Heisman finalist undrafted since Jordan Lynch 2014",
+          "Led Vanderbilt to first 10-win season in program history",
+          "3,539 passing yards, 29 TDs, 70.6% completion",
+          "862 rushing yards, 10 rushing TDs",
+          "Measured 5'9 7/8\" at combine — shortest by 2+ inches"
+        ],
+        "historical_context": "Jordan Lynch (Northern Illinois 2014) was last Heisman finalist undrafted. Collin Klein (Kansas State 2013) also undrafted year prior. Both were run-first QBs who couldn't transition",
+        "controversy_background": [
+          "Posted 'F all the voters' after losing Heisman to Mendoza",
+          "Sued NCAA for extra eligibility year and won",
+          "Trespassed and urinated on rival New Mexico's practice field at NMSU",
+          "Brothers repeatedly drew law enforcement attention at Vanderbilt games"
+        ],
+        "why_undrafted": [
+          "Size concerns — 5'9 7/8\" shortest at combine",
+          "Arm strength questions for NFL level",
+          "Polarizing personality scared teams away",
+          "11 other undrafted QBs signed before him"
+        ],
+        "ravens_connection": "Ravens HC Jesse Minter worked with Vanderbilt HC Clark Lea in 2021. Only 2 QBs on roster (Lamar Jackson, Tyler Huntley) so opportunity exists",
+        "vanderbilt_transformation": [
+          "Program won 2 games in 2023",
+          "Pavia led to 7 wins in 2024, 10 wins in 2025",
+          "First SEC Offensive Player of the Year in school history",
+          "Beat Tennessee at Neyland Stadium for first time since 1982"
+        ],
+        "draft_context": "Mendoza (#1 overall) and Jeremiyah Love (#3 overall) were top 2 Heisman finalists. Pavia finished runner-up but went completely undrafted",
+        "meme_angle": "Uar Bernard from Nigeria drafted by Eagles having never played organized football — while Heisman finalist sits home",
+        "where_it_goes": "Minicamp tryout May 1-3. Must earn roster spot with no guarantees. Likely headed for UFL/CFL if NFL doesn't work"
+      }
+    },
+    {
+      "headline": "41-Year-Old LeBron Has Worst Playoff Game of His Career",
+      "depth": "medium",
+      "editorial_direction": "Father Time finally won a battle. Historic bad numbers, back-to-back 8 turnover games. But Lakers still up 3-1. The duality of aging greatness.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/HaterReport/status/2048623198871191673#m",
+          "account": "@HaterReport",
+          "text": "I can't believe LeBron James is doing this at 41 years old!! \n\n10 Points\n2-9 FG\n0-3 3P\n8 Turnovers \n\nBron just had the WORST playoff game of his career. Father Time won tonight.",
+          "role": "stat"
+        },
+        {
+          "url": "https://twitter.com/statmuse/status/2048613224497492459#m",
+          "account": "@statmuse",
+          "text": "LeBron in Game 4 vs Houston:\n\n10 PTS\n9 AST (8 TOV)\n2-9 FG\n0-3 3P\n\nBack-to-back playoff games with 8 TOV for the first time in his career.",
+          "role": "stat"
+        },
+        {
+          "url": "https://twitter.com/HaterReport/status/2048518034013196294#m",
+          "account": "@HaterReport",
+          "text": "Defense on                              Defense on \nLeBron in 2018                       LeBron in 2026",
+          "role": "comedy"
+        }
+      ],
+      "research_notes": {
+        "historic_bad_numbers": [
+          "10 points on 2-9 shooting — lowest playoff output since 2007",
+          "8 turnovers — tied career playoff high",
+          "Back-to-back 8-turnover playoff games for first time ever",
+          "Played 45+ minutes in Game 3, then benched final 7:25 of Game 4"
+        ],
+        "age_context": "At 41 years old, showing rare signs of decline. Still averaging 25+ PPG in series but Game 4 was different",
+        "series_context": "Lakers still up 3-1 despite LeBron's worst game. No team has ever blown 3-0 playoff lead in NBA history",
+        "supporting_cast": "Without Luka Doncic and Austin Reaves, more pressure on LeBron. Marcus Smart and Luke Kennard also struggled in Game 4",
+        "where_it_goes": "Game 5 Wednesday in LA. Can close out series at home. Question is whether Game 4 was aberration or sign of things to come"
+      }
+    },
+    {
+      "headline": "Rams Draft Stafford's Replacement While He's Still the Reigning MVP",
+      "depth": "light",
+      "editorial_direction": "Ty Simpson at #13 was the draft's biggest shocker. Sean McVay won't say what he told 38-year-old Stafford. Awkward timing.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/FieldYates/status/2048401973959963018#m",
+          "account": "@FieldYates",
+          "text": "Wake up, @MelKiperESPN's final draft grades are here‼️\n\nAll the winners, losers and steals of the 2026 NFL draft ⬇️",
+          "role": "news"
+        }
+      ],
+      "research_notes": {
+        "shock_factor": "Alabama QB Ty Simpson taken #13 by Rams — only 2nd QB taken in Round 1 after Mendoza #1",
+        "stafford_context": "Matthew Stafford is 38, coming off MVP season. Still has 2 years left on contract",
+        "mcvay_comments": "Admitted he had a conversation with Stafford but 'wouldn't divulge what was said'",
+        "awkward_timing": "Taking your MVP's replacement in Round 1 while he's still at his peak is rare NFL move"
+      }
+    },
+    {
+      "headline": "Nigeria's Uar Bernard Gets Drafted Having Never Played Football",
+      "depth": "light",
+      "editorial_direction": "The Pavia contrast writes itself. Eagles draft a guy from Nigeria who's never played organized football while Heisman finalist sits home.",
+      "tweets": [
+        {
+          "url": "https://twitter.com/NFLMemes/status/2048446041352015949#m",
+          "account": "@NFLMemes",
+          "text": "Uar Bernard out of Nigeria was drafted having never played football while Heisman finalist Diego Pavia went undrafted 😭",
+          "role": "comedy"
+        }
+      ],
+      "research_notes": {
+        "basic_facts": "Eagles drafted Uar Bernard in 7th round. From Nigeria, never played organized football",
+        "pavia_contrast": "Meanwhile, Heisman Trophy finalist and SEC Offensive Player of the Year goes completely undrafted",
+        "draft_logic": "NFL values measurables and potential over college production in late rounds"
+      }
+    },
+    {
+      "headline": "Mike Tomlin: Recent Playoff Failures Drove My Decision to Step Away",
+      "depth": "light",
+      "editorial_direction": "Rare admission from a coach. Said veterans deserved 'excitement and optimism of new leadership.' Translation: I wasn't getting it done.",
+      "tweets": [],
+      "research_notes": {
+        "tomlin_quote": "Walked away 'in part, because of the recent lack of playoff success' and belief veterans were 'worthy of the excitement and the optimism associated with new leadership'",
+        "steelers_context": "Pittsburgh had struggled in recent playoff runs. Tomlin stepping aside rather than being fired",
+        "rare_admission": "Unusual for coach to directly cite playoff failures as reason for departure"
+      }
+    }
+  ],
+  "around_the_league": [
+    {
+      "url": "https://twitter.com/AdamSchefter/status/2048525942826348767#m",
+      "account": "@Commanders",
+      "text": "We mourn the loss of one of the greatest to ever suit up in the Burgundy & Gold, Monte Coleman\n\nOur heartfelt condolences are with his loved ones"
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2048615342218354820#m",
+      "account": "@statmuse",
+      "text": "Amen Thompson in Game 4 vs LA:\n\n23 PTS\n7 AST\n10-16 FG\n\nAveraging 20.5 PPG in his second career playoff run."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2048615243190779954#m",
+      "account": "@statmuse",
+      "text": "Tari Eason in Game 4 vs LA:\n\n20 PTS\n8 REB\n5 STL\n\nJoins Hakeem and CP3 as the only Rockets to record those numbers in a playoff game."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2048574979915055437#m",
+      "account": "@statmuse",
+      "text": "Payton Pritchard in Game 4 vs Philly:\n\n32 PTS\n5 AST\n12-21 FG\n\nThe second-most PTS off the bench in a playoff game in franchise history."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2048573422175695180#m",
+      "account": "@statmuse",
+      "text": "Jayson Tatum in Game 4 vs Philly:\n\n30 PTS\n7 REB\n11 AST\n\nOnly Havlicek has more 30/10a playoff games for the Celtics."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2048526914852188185#m",
+      "account": "@statmuse",
+      "text": "Wemby in Game 4 vs Portland:\n\n27 PTS\n11 REB\n4 STL\n7 BLK\n\nFirst player since Hakeem Olajuwon with those numbers in a playoff game."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2048526561750503432#m",
+      "account": "@statmuse",
+      "text": "De'Aaron Fox in Game 4 vs Portland:\n\n28 PTS\n6 REB\n7 AST\n2 BLK\n\nFirst guard in franchise history with those numbers in a playoff game."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2048511977123660177#m",
+      "account": "@statmuse",
+      "text": "Alex Lyon vs Boston:\n\n24 shots faced\n23 saves\n.958 SV%\n\nSabres take a 3-1 series lead back to Buffalo for Game 5."
+    },
+    {
+      "url": "https://twitter.com/StatMuse/status/2048506346354389261#m",
+      "account": "@statmuse",
+      "text": "Yordan Alvarez this season (ranks in AL):\n\n38 H (1st)\n11 HR (T-1st)\n26 RBI (1st)\n19 BB (T-10th)\n.358 AVG (1st)\n1.220 OPS (1st)\n225 wRC+ (1st)\n\nMVP 🔜"
+    },
+    {
+      "url": "https://twitter.com/HaterReport/status/2048529445045018800#m",
+      "account": "@HaterReport",
+      "text": "Scoot Henderson in Game 4:\n\n0 Points\n0-7 FG\n0-3 3P\n27 Minutes\n\nPOOT HENDERSON IS BACK 🔥🔥"
+    },
+    {
+      "url": "https://twitter.com/SportsCenter/status/2048628817611088089#m",
+      "account": "@SportsCenter",
+      "text": "Connor McDavid after the Ducks' final goal was ruled good in OT.\n\nThe Oilers are now down 3-1 in the series"
+    },
+    {
+      "url": "https://twitter.com/SportsCenter/status/2048549206227394962#m",
+      "account": "@SportsCenter",
+      "text": "Anze Kopitar waves goodbye to the LA Kings fans 🥹👏\n\nKopitar announced that the 2025-26 season would be his final one before retirement."
+    }
+  ],
+  "closer": {
+    "hook": "Russell Wilson joins Savannah Bananas exhibition game",
+    "tweets": [
+      {
+        "url": "https://twitter.com/ESPN/status/2048?#m",
+        "account": "@ESPN",
+        "text": "The Super Bowl XLVIII-winning quarterback also took a swing for the Savannah Bananas and almost recorded a hit."
+      }
+    ]
+  },
+  "quality_check": {
+    "total_headlines": 5,
+    "total_tweets_assigned": 7,
+    "around_the_league_count": 12,
+    "controversial_stories_as_lead": false
+  }
+}
