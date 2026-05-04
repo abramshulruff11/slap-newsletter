@@ -49,6 +49,7 @@ sentence — rewrite it without the banned phrase. Keep the meaning. Match the
 SLAP voice (punchy, group chat, not ESPN).
 
 Extended ban list (AI tells and clichés):
+- "mental gymnastics" (any variation)
 - "playing chess while [X] is playing checkers" (any variation)
 - "fever dream"
 - "pure theater"
@@ -59,6 +60,14 @@ Extended ban list (AI tells and clichés):
 - "no cap"
 - "slay"
 - "main character"
+
+Phrases that telegraph effort (also banned — rewrite):
+- "which pretty much sums it up"
+- "let that sink in"
+- "adding insult to injury"
+- "making matters worse"
+- Any sentence ending on "the internet had thoughts"
+- Any sentence starting with "In a cruel twist of fate"
 
 Base ban list (AI filler):
 - "Without further ado"
@@ -81,8 +90,39 @@ Base ban list (AI filler):
 - "Cue the"
 - "And just like that"
 
+⚠ SYNC NOTE: This list must match the BANNED PHRASES section of pass2_writer.txt.
+When adding a new phrase, add it to BOTH files.
+
 ================================================================================
-CHECK 2 — ACCOUNT DIVERSITY (flag, do not fix)
+CHECK 2 — HYPERBOLIC CHARACTERIZATIONS (flag, do not fix)
+================================================================================
+
+Scan for reputation-level labels applied to teams or players:
+- "chokers" / "choke artists" / "always choke"
+- "frauds" / "pretenders"
+- "mentally weak" / "can't close"
+- "cursed" / "jinxed" (when used as a serious characterization)
+- Any phrase calling a team or player definitively bad at something as a
+  matter of character, not a one-time event.
+
+For each instance, check whether the surrounding content in the draft
+supports the label with a clear pattern. Ask: does the draft itself contain
+facts, stats, or context that explain why this label is earned right now?
+
+If YES — a Jets "always choke" reference backed by a losing streak and two
+blown fourth-quarter leads — leave it.
+
+If NO — a "choke artists" label applied without any supporting context in the
+draft — add this comment immediately after the sentence:
+
+<!-- EDITOR FLAG: HYPERBOLE — "[quote the label]" — label requires supporting context not present in draft -->
+
+Special rule: A team that won a championship within the last three seasons
+cannot be called a choke artist, fraud, or pretender without exceptional
+supporting context in the same section. Flag these automatically.
+
+================================================================================
+CHECK 3 — ACCOUNT DIVERSITY (flag, do not fix)
 ================================================================================
 
 Count every tweet blockquote in the newsletter by @handle. If any account
@@ -93,7 +133,7 @@ appears 3 or more times, add this comment immediately after the 3rd occurrence:
 Do not remove or reorder tweets yourself. Just flag.
 
 ================================================================================
-CHECK 3 — AROUND THE LEAGUE: ZERO COMMENTARY (fix automatically)
+CHECK 4 — AROUND THE LEAGUE: ZERO COMMENTARY (fix automatically)
 ================================================================================
 
 Find the Around the League section. It begins at <h2>Around the League</h2>
@@ -107,7 +147,31 @@ If a <p> tag appears before the first tweet or after the last tweet in the
 section, remove it too.
 
 ================================================================================
-CHECK 4 — TWEET URL INTEGRITY (flag, do not fix)
+CHECK 5 — TWEET-TO-PROSE DUPLICATION (fix automatically)
+================================================================================
+
+For every tweet blockquote embedded in a section, scan the prose immediately
+before and after it in the same section.
+
+The rule: prose must not restate, paraphrase, or summarize what the tweet
+already shows. Commentary is fine. Repetition is not.
+
+- Prose BEFORE a tweet = setup or context. It should tell the reader why the
+  tweet matters, not describe what the tweet says.
+- Prose AFTER a tweet = reaction or pivot. It should add a new angle, not
+  recap the tweet's content.
+
+BAD: Tweet shows a player's stat line. Prose after: "As you can see, [Player]
+put up an incredible [stat] performance in the game."
+
+GOOD: Tweet shows a player's stat line. Prose after: "The last time someone
+did that in a playoff game, Jordan was in shorts."
+
+When you find duplication — prose that describes the tweet's own content —
+delete the duplicating sentence(s). Do not replace them.
+
+================================================================================
+CHECK 6 — TWEET URL INTEGRITY (flag, do not fix)
 ================================================================================
 
 Every tweet blockquote must contain a valid Twitter URL (twitter.com or x.com)
@@ -117,52 +181,85 @@ appears to be a Nitter URL (nitter.net) without a twitter.com equivalent, add:
 <!-- EDITOR FLAG: TWEET URL — verify this link resolves correctly -->
 
 ================================================================================
-CHECK 5 — MEDIA REUSE (flag, do not fix)
+CHECK 8 — FACTUAL VERIFICATION (flag, do not fix)
 ================================================================================
 
-[Previous issue GIFs and memes are injected at runtime before this prompt]
+This is the most important check. A wrong fact published is worse than a
+correct fact flagged. Over-flagging is correct behavior. Flag everything
+in the three categories below, unconditionally — do not use judgment about
+whether a claim is "probably right." If it falls in a category, flag it.
 
-Check every <img src> tag and every meme placeholder in the draft. If any GIF
-URL or meme concept matches the previous issue's media, add:
+--- CATEGORY A: CONFERENCE AND DIVISION CLAIMS (flag every instance) ---
 
-<!-- EDITOR FLAG: REPEAT MEDIA — [search term or concept] appeared in previous issue — replace -->
+Flag every sentence that places a team in a specific conference or division.
+Do not attempt to verify it yourself. Flag it regardless of how confident
+you are.
 
-================================================================================
-CHECK 6 — FACTUAL VERIFICATION (flag, do not fix)
-================================================================================
+Examples that must be flagged:
+- "the AFC East-leading Bills"
+- "an NFC team for the first time"
+- "the Western Conference's best record"
+- "[Team], who play in the [Division]"
 
-This is the most important check. Read every factual claim in the newsletter.
+Flag format:
+<!-- EDITOR FLAG: VERIFY CONFERENCE/DIVISION — "[quote the exact claim]" -->
 
-A factual claim is any statement presented as true about the real world:
-player on a specific team, team in a specific conference or division, a record
-being broken, a championship being won, a stat being attributed to a player,
-a game outcome, a coaching or front office decision.
+--- CATEGORY B: CHAMPIONSHIP AND TITLE CLAIMS (flag every instance) ---
 
-For each claim that could plausibly be wrong — because rosters change, players
-get traded, records fall, seasons end — add:
+Flag every sentence using any of the following words or phrases in the context
+of a team or player holding a title:
+- "defending"
+- "reigning"
+- "current champion" / "current champs"
+- "back-to-back"
+- "three-peat"
+- "[X]-time champion"
+- Any claim that a team or player currently holds or recently won a title
 
+Flag format:
+<!-- EDITOR FLAG: VERIFY TITLE CLAIM — "[quote the exact claim]" -->
+
+--- CATEGORY C: SPECIFIC STATS AND NUMBERS (flag every instance) ---
+
+Flag every sentence containing a specific number used as a stat, record,
+or performance metric. This includes:
+- Game counts ("his third start," "fourth game back")
+- Scoring lines ("dropped 40," "went 3-for-5")
+- Streak references ("won 8 straight," "hasn't lost in 14 games")
+- Historical records ("first since 1987," "most in franchise history")
+- Season totals ("averaging 28.4 points," "18 touchdowns this year")
+- Any other specific numeral tied to a player or team's performance
+
+Do NOT flag numbers that come directly from an embedded tweet in the same
+section — those are sourced. Flag numbers that appear only in prose with no
+tweet to back them up.
+
+Flag format:
+<!-- EDITOR FLAG: VERIFY STAT — "[quote the exact claim]" -->
+
+--- GENERAL FACTUAL CLAIMS ---
+
+Beyond the three categories above, also flag any other claim that could
+plausibly be wrong because rosters change, players get traded, coaches get
+fired, or seasons end:
+
+- Player listed on a specific team
+- Coaching staff claims
+- Draft pick round or team claim not present in the raw content
+- Any "first time ever" or superlative claim not backed by a tweet
+
+Flag format:
 <!-- EDITOR FLAG: VERIFY — "[quote the exact claim]" -->
 
-Do not try to fix factual errors yourself. Just flag them all. The human
-reviews every flag before publishing.
-
-Common failure patterns to watch for:
-- Player listed on the wrong team (check for recent trades)
-- Team placed in wrong conference or division
-- "Reigning champion" claim for a title won multiple seasons ago
-- Stat attributed to the wrong player
-- Historical record stated as current when it may have been broken
-- Draft pick round or team claim that does not match the raw content
-- Coaching staff claims (coaches get fired and hired mid-season)
-
-When in doubt, flag it. Over-flagging is better than under-flagging.
+Do not try to fix any factual claim. Flag and move on. The human reviews
+every flag before publishing.
 
 ================================================================================
 OUTPUT RULES
 ================================================================================
 
 - Return the full corrected HTML. Do not summarize. Do not truncate.
-- Apply all automatic fixes (Checks 1, 3) directly in the HTML.
-- Insert all flags (Checks 2, 4, 5, 6) as HTML comments inline at the relevant location.
+- Apply all automatic fixes (Checks 1, 4, 5) directly in the HTML.
+- Insert all flags (Checks 2, 3, 6, 8) as HTML comments inline at the relevant location.
 - Do not add any preamble or explanation outside the HTML.
 - Do not wrap output in markdown code fences.

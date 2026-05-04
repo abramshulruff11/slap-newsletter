@@ -32,20 +32,86 @@ load_dotenv(Path(__file__).resolve().parent / ".env", override=True)
 # The live top-100 fetch supplements this but never overrides it.
 # ---------------------------------------------------------------------------
 CURATED_TEMPLATES = {
-    "drake":               "181913649",
-    "gru-plan":            "131940431",
-    "two-buttons":         "87743020",
-    "distracted-boyfriend":"112126428",
-    "this-is-fine":        "55311130",
-    "expanding-brain":     "93895088",
-    "mocking-spongebob":   "102156234",
-    "one-does-not-simply": "61579",
-    "waiting-skeleton":    "4087833",
-    "change-my-mind":      "129242436",
+    # --- COMPARISON / PREFERENCE ---
+    "drake":                                    "181913649",
+    "distracted-boyfriend":                     "112126428",
+    "left-exit-12-off-ramp":                    "124822590",
+    "two-buttons":                              "87743020",
+    "corporates-want-you-to-find-the-difference": "180190441",
+    "buff-doge-vs-cheems":                      "247375501",
+    "epic-handshake":                           "135256802",
+    # --- ESCALATION / LEVELS ---
+    "expanding-brain":                          "93895088",
+    "vince-mcmahon-reaction":                   "27813981",
+    "gru-plan":                                 "131940431",
+    "clown-applying-makeup":                    "178591752",
+    "panik-kalm-panik":                         "226297822",
+    # --- DENIAL / COPIUM ---
+    "this-is-fine":                             "55311130",
+    "hide-the-pain-harold":                     "27865",
+    "anakin-padme":                             "371605855",
+    "bernie-i-am-once-again-asking":            "382370190",
+    # --- REACTION / SURPRISE ---
+    "surprised-pikachu":                        "155067746",
+    "always-has-been":                          "252600902",
+    "monkey-puppet":                            "148909805",
+    "mocking-spongebob":                        "102156234",
+    "first-time":                               "161865971",
+    # --- DOMINATION / SUPERIORITY ---
+    "trade-offer":                              "309868304",
+    "one-does-not-simply":                      "61579",
+    "waiting-skeleton":                         "4087833",
+    # --- BETRAYAL / SELF-DESTRUCTION ---
+    "spider-man-pointing-at-spider-man":        "119215120",
+    "eric-andre-shooting":                      "97984",
+    "is-this-a-pigeon":                         "100947",
+    "woman-yelling-at-cat":                     "188390779",
+    # --- RESIGNATION / WALKING AWAY ---
+    "ight-imma-head-out":                       "378389",
+    # --- DEBATE / TAKES ---
+    "change-my-mind":                           "129242436",
 }
 
 IMGFLIP_CAPTION_URL = "https://api.imgflip.com/caption_image"
 IMGFLIP_MEMES_URL   = "https://api.imgflip.com/get_memes"
+
+
+# ---------------------------------------------------------------------------
+# Meme history — prevents same template reuse within 7 days
+# Mirrors the gif_history.json pattern used in the GIF pipeline.
+# ---------------------------------------------------------------------------
+
+def load_meme_history(repo_root: Path) -> list:
+    """Load meme_history.json to check for recently used templates."""
+    history_path = repo_root / "meme_history.json"
+    if history_path.exists():
+        try:
+            return json.loads(history_path.read_text(encoding="utf-8"))
+        except Exception:
+            return []
+    return []
+
+
+def is_template_recently_used(slug: str, history: list, days: int = 7) -> bool:
+    """Return True if this template slug was used in the past N days."""
+    from datetime import date, timedelta
+    cutoff = date.today() - timedelta(days=days)
+    for entry in history:
+        try:
+            entry_date = date.fromisoformat(entry["date"])
+            if entry_date >= cutoff and entry.get("slug") == slug:
+                return True
+        except Exception:
+            continue
+    return False
+
+
+def save_meme_history(repo_root: Path, new_entries: list, history: list):
+    """Append new meme uses to meme_history.json, keep last 60 entries."""
+    history_path = repo_root / "meme_history.json"
+    combined = new_entries + history
+    combined = combined[:60]
+    history_path.write_text(json.dumps(combined, indent=2), encoding="utf-8")
 
 
 def fetch_live_templates() -> dict:
@@ -136,22 +202,26 @@ def mocking_spongebob_caps(text: str) -> str:
     return "".join(result)
 
 
-def process_newsletter(html: str, template_map: dict, username: str, password: str) -> str:
+def process_newsletter(html: str, template_map: dict, username: str, password: str,
+                       repo_root: Path = None) -> tuple[str, list]:
     """
     Parse all meme-placeholder divs from the newsletter HTML,
     generate real images via Imgflip, and replace with <img> tags.
-    Returns updated HTML.
+    Returns (updated HTML, list of meme history entries).
     """
     soup = BeautifulSoup(html, "html.parser")
     placeholders = soup.find_all("div", class_="meme-placeholder")
 
     if not placeholders:
         print("[memes] No meme placeholders found in newsletter.")
-        return html
+        return html, []
 
     print(f"[memes] Found {len(placeholders)} meme placeholder(s).")
+
+    history = load_meme_history(repo_root) if repo_root else []
     replaced = 0
-    failed  = 0
+    failed   = 0
+    used_memes = []
 
     for div in placeholders:
         template_slug = div.get("data-template", "").strip().lower()
@@ -163,8 +233,11 @@ def process_newsletter(html: str, template_map: dict, username: str, password: s
             failed += 1
             continue
 
-        # Auto-format mocking-spongebob: Imgflip forces uppercase so alternating caps
-        # have no effect via API. The template's visual does the mocking without it.
+        # Warn if this template was used recently but proceed anyway —
+        # with only 10 curated slugs and 2-3 memes per issue, a hard
+        # block would leave the writer with no options on busy weeks.
+        if is_template_recently_used(template_slug, history):
+            print(f"[memes] ⚠ '{template_slug}' used in last 7 days — consider varying template")
 
         template_id = template_map.get(template_slug)
         if not template_id:
@@ -175,7 +248,6 @@ def process_newsletter(html: str, template_map: dict, username: str, password: s
         img_url = generate_meme(template_id, top_text, bottom_text, username, password, template_slug)
 
         if img_url:
-            # Replace placeholder with centered image
             img_tag = soup.new_tag("div", style="text-align:center; margin: 16px 0;")
             img = soup.new_tag(
                 "img",
@@ -186,13 +258,24 @@ def process_newsletter(html: str, template_map: dict, username: str, password: s
             img_tag.append(img)
             div.replace_with(img_tag)
             replaced += 1
+            entry = {
+                "date": __import__('datetime').date.today().isoformat(),
+                "slug": template_slug,
+                "top_text": top_text,
+                "bottom_text": bottom_text,
+            }
+            used_memes.append(entry)
+            history.insert(0, entry)  # update in-memory history for same-run dedup
         else:
-            # Leave placeholder in place but add a comment so it's visible in review
             div.string = f"[MEME FAILED: {template_slug} | {top_text} | {bottom_text}]"
             failed += 1
 
-    print(f"[memes] Done. {replaced} meme(s) generated, {failed} failed/skipped. Cost: $0.00 (Imgflip free tier)")
-    return str(soup)
+    print(f"[memes] Done. {replaced} meme(s) generated, {failed} failed/skipped.")
+
+    if repo_root and used_memes:
+        save_meme_history(repo_root, used_memes, history)
+
+    return str(soup), used_memes
 
 
 def main():

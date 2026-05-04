@@ -9,27 +9,51 @@ OUTPUT FORMAT
 
 Output valid JSON only. No prose before or after. No markdown fences.
 
+For every tweet you include, copy the exact text from raw_content.json into
+the "text" field. Do not paraphrase. Do not summarize. Copy it verbatim.
+If a tweet's text is missing or blank in raw_content.json, omit that tweet
+and select a different one.
+
 {
   "date": "YYYY-MM-DD",
+  "story_log": [
+    {
+      "topic_key": "slug-style-topic-identifier",
+      "title": "Readable title of what was covered today",
+      "section": "lead | supporting | atl",
+      "development": "One sentence: what was specifically new about this story today",
+      "is_new": true,
+      "resolved": false
+    }
+  ],
   "lead_story": {
     "headline": "Short working title",
     "depth": "deep",
-    "tweet_urls": ["url1", "url2", "url3"],
+    "tweets": [
+      {"url": "url1", "account": "handle", "text": "exact tweet text from raw_content.json"},
+      {"url": "url2", "account": "handle", "text": "exact tweet text from raw_content.json"}
+    ],
     "research_notes": "Key stats, historical parallels, meme angles, cross-sport connections the writer must explore. Be specific — these notes are the writer's raw material."
   },
   "supporting_stories": [
     {
       "headline": "Short working title",
       "depth": "medium",
-      "tweet_urls": ["url1", "url2"],
+      "tweets": [
+        {"url": "url1", "account": "handle", "text": "exact tweet text from raw_content.json"},
+        {"url": "url2", "account": "handle", "text": "exact tweet text from raw_content.json"}
+      ],
       "research_notes": "Hook, key angle, any specific stats or context to include."
     }
   ],
   "around_the_league": {
-    "tweet_urls": ["url1", "url2", "url3", "url4", "url5", "url6", "url7", "url8"]
+    "tweets": [
+      {"url": "url1", "account": "handle", "text": "exact tweet text from raw_content.json"},
+      {"url": "url2", "account": "handle", "text": "exact tweet text from raw_content.json"}
+    ]
   },
   "closer": {
-    "tweet_url": "url",
+    "tweet": {"url": "url", "account": "handle", "text": "exact tweet text from raw_content.json"},
     "notes": "Why this works as a closer — funny, weird, wholesome, or viral."
   },
   "account_distribution": {
@@ -37,6 +61,10 @@ Output valid JSON only. No prose before or after. No markdown fences.
     "@account2": 1
   }
 }
+
+The story_log must include one entry for every story that appears anywhere in
+the issue — lead, supporting, and around the league. Around the league entries
+use section "atl". Every story gets logged, even light ones.
 
 ================================================================================
 ACCOUNT DIVERSITY — ENFORCE BEFORE OUTPUTTING
@@ -49,6 +77,134 @@ If any account exceeds the cap, revise the tweet selection before outputting.
   (lead story + supporting + around the league + closer combined)
 - Around the League must include tweets from at least 5 different accounts
 - StatMuse: max 1 tweet in Around the League
+
+================================================================================
+TWEET FILTER — apply before including any tweet in any section
+================================================================================
+
+Before including any tweet in any section, apply this filter. A tweet that
+fails must be cut entirely. Do not move it to a different section. Cut it.
+
+RULE 1 — SPORTS CONTENT ONLY:
+Every tweet must be about a sporting event, athlete, team, or league. If it is
+about entertainment, pop culture, a TV show, a movie, a non-athlete celebrity,
+or any topic with no direct sports connection, cut it. This applies to Around
+the League too — "funny and sports-adjacent" is not the same as sports. The
+subject of the tweet must be sports, not a springboard to talk about something
+else.
+
+BAD: A tweet about a horror movie, even from a sports account.
+BAD: A tweet about a music release, a TV show, or an award show.
+BAD: A tweet from a sports podcast about an episode or guest appearance.
+GOOD: A tweet about a funny sports moment, even if framed with a pop culture
+      reference (sports is the subject; pop culture is the framing).
+GOOD: A tweet comparing a player to a movie character — the player is the subject.
+
+RULE 2 — BARSTOOL CONTENT:
+Barstool accounts produce two kinds of content. Apply this filter:
+- Barstool tweet is about a game, player, team, or league → include if it
+  clears Rule 1.
+- Barstool tweet is about a Barstool personality, Barstool show, internal
+  Barstool drama, or Barstool employees → cut it regardless of how funny it is.
+
+The test: if someone who has never heard of Barstool can fully understand the
+tweet, it is probably about sports. If understanding the tweet requires knowing
+Barstool's internal culture or cast of characters, cut it.
+
+================================================================================
+CONTINUING STORY DETECTION
+================================================================================
+
+You will receive a RECENT STORY HISTORY alongside today's raw content. Read it
+before making any story selection decisions.
+
+The history contains story_log entries from the past 14 days. Each entry has:
+- topic_key: a slug identifying the story topic
+- title: what was covered that day
+- section: where it ran (lead / supporting / atl)
+- development: what was specifically new that day
+- resolved: whether the story reached a natural endpoint
+
+--- STEP 1: IDENTIFY CONTINUING STORIES ---
+
+For each potential story in today's raw content, ask: does this match a
+topic_key from the recent history? Match by concept, not exact wording.
+"mendoza-draft-2026" and "fernando-mendoza-#1-pick" are the same story.
+
+If a story has NO match in recent history — treat it as new. No special handling.
+
+If a story HAS a match in recent history — proceed to Step 2.
+
+--- STEP 2: IS THERE A GENUINE DEVELOPMENT TODAY? ---
+
+Compare today's raw content against the most recent development in the history
+for that topic. Ask: did something actually happen, or is today just more
+reactions, takes, and opinions about something that already happened?
+
+COUNTS AS GENUINELY NEW:
+- Official announcement: draft pick made, trade completed, signing finalized,
+  suspension announced, injury confirmed, coach hired/fired
+- Game outcome or statistical performance (new game = new development)
+- Credible reporting on something imminent: teams calling, deal close,
+  timeline update from a named insider
+- Formal legal or disciplinary action filed or concluded
+
+DOES NOT COUNT AS NEW:
+- Quotes, interviews, opinions about an existing situation
+- Social media reactions to something that already happened yesterday
+- Mock drafts or speculation that hasn't materially moved since last coverage
+- Analysis, hot takes, or fan reactions with no new underlying fact
+- A player acting normal, being a good guy, doing a regular media obligation
+
+--- STEP 3: APPLY THE REFRAME RULE ---
+
+If GENUINELY NEW — cover it normally. In research_notes, add:
+"CONTINUING [Day N]: Reader already knows [prior context]. Today's new
+development is [specific thing]. Skip the backstory, lead with what changed."
+
+Calculate Day N by counting how many days this topic has appeared in the
+recent history (including today).
+
+Example: Fernando Mendoza has appeared 3 times. Today is Day 4. Teams are
+now reportedly offering a package for the #1 pick. research_notes should say:
+"CONTINUING [Day 4]: Reader knows Mendoza is the presumed #1 pick. New today:
+teams actively calling Raiders to trade up. Skip who Mendoza is. Lead with
+the trade calls and what the Raiders might want in return."
+
+If NOT GENUINELY NEW — demote or suppress:
+- If the story ran as lead or supporting yesterday with no new development:
+  move to Around the League as a one-tweet footnote, or cut entirely.
+- If it hasn't appeared in 3+ days: it can return as supporting (light),
+  but only if there is at least one genuinely new element.
+- Never run a story as lead two days in a row without a genuine development.
+
+--- STEP 4: MARK RESOLVED STORIES ---
+
+When a story reaches a natural endpoint, set resolved: true in the story_log.
+Do NOT delete the story from the log. Resolved entries stay in the history.
+
+MARK RESOLVED when:
+- Draft pick is announced (speculation story ends)
+- Trade or signing is completed and announced (rumor story ends)
+- Playoff series ends (series storyline ends)
+- Suspension is served / appeal concluded (suspension story ends)
+- Player returns to game action from injury (injury story ends)
+- Legal case reaches a verdict or settlement
+
+DO NOT mark resolved:
+- Ongoing multi-week injuries still keeping a player out
+- Active lawsuits or investigations with no ruling
+- Contract negotiations still in progress
+- Trades that are reported but not officially announced
+
+--- TOPIC KEY FORMAT ---
+
+Use lowercase hyphenated slugs. Be specific enough to distinguish stories
+but not so specific that tomorrow's version of the same story won't match.
+
+GOOD: "mendoza-draft-2026", "embiid-appendectomy-2026",
+      "sixers-celtics-first-round-2026", "will-anderson-contract"
+BAD: "nba" (too broad), "mendoza-mock-draft-april-24" (too specific)
 
 ================================================================================
 STORY SELECTION RULES
@@ -80,10 +236,14 @@ importance — a hilarious BallsackSports tweet beats a serious transaction twee
 Enforce account diversity hard here: at least 5 different accounts, no account
 more than once.
 
+Apply the TWEET FILTER above before including any tweet here. A tweet about a
+horror movie, a celebrity, or a Barstool personality does not belong in this
+section regardless of which account posted it.
+
 CLOSER — funny, weird, or viral. No connection to main stories required:
 One tweet or moment that ends the newsletter on a high note. Wholesome,
 absurd, or quietly hilarious. Not necessarily the most important thing that
-happened.
+happened. Must still clear the TWEET FILTER — the closer must be sports content.
 
 ================================================================================
 RESEARCH NOTES QUALITY BAR

@@ -69,6 +69,8 @@ Use when someone chose one thing over another, or when two things should be comp
 - **Left Exit 12 Off Ramp** (slug: `left-exit-12-off-ramp`, imgflip: 124822590) — Car swerving off highway. Highway = the smart choice. Exit = the dumb choice they took.
 - **Two Buttons** (slug: `two-buttons`, imgflip: 87743020) — Sweating guy choosing between two options. Use when a team/player faces an impossible dilemma.
 - **Corporate Needs You to Find the Difference** (slug: `corporates-want-you-to-find-the-difference`, imgflip: 180190441) — "They're the same picture." Use when two things are identical but shouldn't be.
+- **Buff Doge vs. Cheems** (slug: `buff-doge-vs-cheems`, imgflip: 247375501) — Strong/intimidating version vs. weak/pathetic version. Use for then vs. now, or two teams at opposite ends.
+- **Epic Handshake** (slug: `epic-handshake`, imgflip: 135256802) — Two things unexpectedly agreeing or sharing the same quality. "Both: [shared trait]" format.
 
 ### ESCALATION / LEVELS — "It keeps getting more extreme"
 Use when a stat line, situation, or take escalates through multiple levels.
@@ -83,6 +85,9 @@ Use when a stat line, situation, or take escalates through multiple levels.
 - **This Is Fine Dog** (slug: `this-is-fine`, imgflip: 55311130) — The meme version lets you add custom text to label WHAT is on fire. Use when a franchise is clearly in crisis but projecting calm.
 - **Clown Applying Makeup** (slug: `clown-applying-makeup`, imgflip: 178591752) — (see Escalation above, also works here)
 - **Change My Mind** (slug: `change-my-mind`, imgflip: 129242436) — Crowder sitting at table with a sign. Use for bold/provocative takes.
+- **Hide the Pain Harold** (slug: `hide-the-pain-harold`, imgflip: 27865) — Smiling through obvious pain. Use for fans/players pretending everything is fine when it clearly isn't.
+- **Anakin Padme** (slug: `anakin-padme`, imgflip: 371605855) — 4-panel. Anakin says something ominous, Padme hopefully asks if he means the good version, Anakin stares blankly. Use for teams in denial about a bad decision.
+- **Bernie I Am Once Again Asking** (slug: `bernie-i-am-once-again-asking`, imgflip: 382370190) — Use for recurring requests/situations. "[Team] is once again asking [player] to carry them."
 
 ### REACTION / SURPRISE — "Wait, what?"
 
@@ -90,18 +95,25 @@ Use when a stat line, situation, or take escalates through multiple levels.
 - **Wait, It's All X? Always Has Been** (slug: `always-has-been`, imgflip: 252600902) — Astronaut meme. Use when something that seems new was actually always the case.
 - **Monkey Puppet Side-Eye** (slug: `monkey-puppet`, imgflip: 148909805) — Awkward glance. When someone is caught or called out.
 - **Mocking Spongebob** (slug: `mocking-spongebob`, imgflip: 102156234) — When a bad excuse or dumb take deserves direct mockery. Top text = the straight version. Bottom text = the same phrase repeated. The Spongebob face does the mocking — no special formatting needed.
+- **First Time?** (slug: `first-time`, imgflip: 161865971) — Parachute instructor meme. Use for recurring disasters where a fan/player acts surprised at something that always happens.
 
 ### DOMINATION / SUPERIORITY — "One thing destroying another"
 
 - **Trade Offer** (slug: `trade-offer`, imgflip: 309868304) — "I receive: [good thing]. You receive: [bad thing]." Perfect for lopsided trades.
 - **Panik / Kalm / Panik** (slug: `panik-kalm-panik`, imgflip: 226297822) — Three panels of emotional whiplash. Good for game recaps with momentum swings.
 - **Waiting Skeleton** (slug: `waiting-skeleton`, imgflip: 4087833) — When a franchise or fan base has been waiting for something so long it's become a joke.
+- **One Does Not Simply** (slug: `one-does-not-simply`, imgflip: 61579) — Boromir from LOTR. "One does not simply [impossible or absurd thing]." Use for situations that seem easy but always end in disaster for a specific team or player.
 
 ### BETRAYAL / SELF-DESTRUCTION — "You left me" / "They did this to themselves"
 
 - **Spider-Man Pointing at Spider-Man** (slug: `spider-man-pointing-at-spider-man`, imgflip: 119215120) — When two things/people are identical but acting like they're different.
 - **Eric Andre Shooting Hannibal** (slug: `eric-andre-shooting`, imgflip: 97984) — "Why would [someone else] do this?" Shoots own franchise then blames others.
 - **Is This a Pigeon?** (slug: `is-this-a-pigeon`, imgflip: 100947) — "Is this [wrong label]?" When someone fundamentally misidentifies what they're looking at.
+- **Woman Yelling at Cat** (slug: `woman-yelling-at-cat`, imgflip: 188390779) — Two-panel argument. Left panel: someone making an emotional accusation. Right panel: the calm/unbothered response. Perfect for fan vs. reality, media vs. player, or team vs. opponent dynamics.
+
+### RESIGNATION / WALKING AWAY
+
+- **Ight Imma Head Out** (slug: `ight-imma-head-out`, imgflip: 378389) — Spongebob getting up to leave. Use when a player, coach, or franchise is clearly done and walking away from a situation.
 
 
 ================================================================================

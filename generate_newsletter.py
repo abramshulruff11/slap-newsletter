@@ -12,6 +12,7 @@ Outputs:
 import os
 import json
 import re
+import argparse
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -113,9 +114,13 @@ def extract_text(response) -> str:
     )
 
 
-def cost_summary(label: str, in_tokens: int, out_tokens: int) -> None:
-    est = (in_tokens * 3 + out_tokens * 15) / 1_000_000
-    print(f"  [{label}] {in_tokens:,} in / {out_tokens:,} out — ~${est:.4f}")
+def cost_summary(label: str, in_tokens: int, out_tokens: int,
+                 cache_read: int = 0, cache_write: int = 0) -> None:
+    est = (cache_write * 3.75 + cache_read * 0.30 + in_tokens * 3 + out_tokens * 15) / 1_000_000
+    cache_note = ""
+    if cache_read or cache_write:
+        cache_note = f" (cache read: {cache_read:,} | cache write: {cache_write:,})"
+    print(f"  [{label}] {in_tokens:,} in / {out_tokens:,} out — ~${est:.4f}{cache_note}")
 
 
 # ---------------------------------------------------------------------------
@@ -125,8 +130,6 @@ def cost_summary(label: str, in_tokens: int, out_tokens: int) -> None:
 # ---------------------------------------------------------------------------
 # GIF Auto-Embedding (Giphy API)
 # ---------------------------------------------------------------------------
-
-GIPHY_API_URL = "https://api.giphy.com/v1/gifs/search?api_key={}&q={}&limit=1&rating=pg-13"
 
 from urllib.request import urlopen, Request
 from urllib.error import URLError
@@ -146,7 +149,7 @@ def load_gif_history(repo_root: Path) -> list:
 
 
 def is_recently_used(gif_url: str, history: list, days: int = 7) -> bool:
-    """Return True if this GIF URL was used in the past N days."""
+    """Return True if this exact GIF URL was used in the past N days."""
     from datetime import date, timedelta
     cutoff = date.today() - timedelta(days=days)
     for entry in history:
@@ -159,6 +162,41 @@ def is_recently_used(gif_url: str, history: list, days: int = 7) -> bool:
     return False
 
 
+def normalize_gif_concept(search_term: str) -> str:
+    """
+    Extract the core meme reference from a search term for concept-level dedup.
+    Strips context notes after " — " or " - ", then takes the first 4 words.
+    This catches the same GIF being used with slightly different search terms.
+
+    Examples:
+      "Monkey Puppet Side-Eye — extremely awkward situation" → "monkey puppet side-eye"
+      "Leonardo DiCaprio raising glass Django — pure respect" → "leonardo dicaprio raising glass"
+    """
+    concept = search_term.split(" — ")[0].split(" - ")[0]
+    concept = concept.strip('"\' ').lower()
+    words = concept.split()[:4]
+    return " ".join(words)
+
+
+def is_concept_recently_used(search_term: str, history: list, days: int = 7) -> bool:
+    """Return True if a GIF with the same core concept was used in the past N days."""
+    from datetime import date, timedelta
+    cutoff = date.today() - timedelta(days=days)
+    concept = normalize_gif_concept(search_term)
+    if not concept:
+        return False
+    for entry in history:
+        try:
+            entry_date = date.fromisoformat(entry["date"])
+            if entry_date >= cutoff:
+                entry_concept = normalize_gif_concept(entry.get("search_term", ""))
+                if concept == entry_concept:
+                    return True
+        except Exception:
+            continue
+    return False
+
+
 def save_gif_history(repo_root: Path, new_entries: list, history: list):
     """Append new GIF uses to gif_history.json, keep last 60 entries."""
     history_path = repo_root / "gif_history.json"
@@ -166,24 +204,6 @@ def save_gif_history(repo_root: Path, new_entries: list, history: list):
     combined = combined[:60]
     history_path.write_text(json.dumps(combined, indent=2), encoding="utf-8")
 
-
-def fetch_giphy_url(search_term: str, api_key: str) -> str | None:
-    """Search Giphy for a term and return the top result's direct GIF URL."""
-    try:
-        encoded_term = quote(search_term)
-        api_url = GIPHY_API_URL.format(api_key, encoded_term)
-        req = Request(api_url, headers={"User-Agent": "SLAP-Newsletter/1.0"})
-        with urlopen(req, timeout=5) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            results = data.get("data", [])
-            if results:
-                images = results[0].get("images", {})
-                for size_key in ("downsized_medium", "downsized", "original"):
-                    if size_key in images and images[size_key].get("url"):
-                        return images[size_key]["url"]
-        return None
-    except (URLError, json.JSONDecodeError, KeyError, TimeoutError):
-        return None
 
 
 def clean_giphy_search(term: str) -> list[str]:
@@ -245,12 +265,13 @@ def embed_gifs_in_html(html: str, api_key: str, repo_root: Path = None) -> tuple
 
             # Pick first candidate not used in the last 7 days
             for candidate_url in candidates:
-                if not is_recently_used(candidate_url, history):
+                if not is_recently_used(candidate_url, history) and not is_concept_recently_used(q, history):
                     gif_url = candidate_url
                     chosen_query = q
                     break
                 else:
-                    print(f"           -> Skipping recently used: {candidate_url[:60]}...")
+                    reason = "URL" if is_recently_used(candidate_url, history) else "concept"
+                    print(f"           -> Skipping recently used ({reason}): {candidate_url[:60]}...")
 
             if gif_url:
                 break
@@ -331,31 +352,120 @@ def blockquotes_to_substack_urls(html: str) -> str:
     )
 
 
+def format_story_history(recent_output: list) -> str:
+    """
+    Format the last 14 days of story_log entries into a readable block
+    for Pass 1 to use in continuing story detection.
+    Handles both new format (story_log) and old format (all_headlines).
+    """
+    from datetime import date, timedelta
+    cutoff = date.today() - timedelta(days=14)
+    lines = []
+
+    for entry in recent_output:
+        try:
+            entry_date = date.fromisoformat(entry.get("date", ""))
+        except Exception:
+            continue
+        if entry_date < cutoff:
+            continue
+
+        lines.append(f"\n--- {entry['date']} ---")
+
+        if "story_log" in entry:
+            for story in entry["story_log"]:
+                resolved = " [RESOLVED]" if story.get("resolved") else ""
+                lines.append(
+                    f"  [{story.get('section', '?').upper()}] "
+                    f"{story.get('topic_key', '?')} — "
+                    f"{story.get('title', '?')}{resolved}"
+                )
+                lines.append(f"    Development: {story.get('development', '?')}")
+        elif "all_headlines" in entry:
+            # Legacy format — provide headline list without topic keys
+            lines.append(f"  Lead: {entry.get('lead_story', '?')}")
+            for h in entry.get("all_headlines", [])[1:]:
+                lines.append(f"  Supporting: {h}")
+
+    if not lines:
+        return "No recent story history available."
+    return "\n".join(lines)
+
+
+def save_story_log(story_plan_raw: str, recent_output: list, path: Path) -> list:
+    """
+    Extract today's story_log from Pass 1's JSON output, prepend it to
+    recent_output, trim to 30 entries, and save to disk.
+    Returns the updated recent_output list.
+    """
+    try:
+        plan = json.loads(story_plan_raw)
+        story_log = plan.get("story_log", [])
+        if not story_log:
+            print("  ⚠ No story_log in Pass 1 output — recent_output not updated")
+            return recent_output
+    except json.JSONDecodeError:
+        print("  ⚠ Pass 1 output not valid JSON — recent_output not updated")
+        return recent_output
+
+    from datetime import date
+    new_entry = {
+        "date": date.today().isoformat(),
+        "story_log": story_log,
+    }
+
+    # Ensure recent_output is a list (handles old dict format)
+    if not isinstance(recent_output, list):
+        recent_output = [recent_output] if recent_output else []
+
+    updated = [new_entry] + recent_output
+    updated = updated[:30]  # keep last 30 days
+
+    path.write_text(json.dumps(updated, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"  ✓ story_log saved — {len(story_log)} stories logged")
+    return updated
+
+
 # ---------------------------------------------------------------------------
 # Pass 1 — Story Selector
 # ---------------------------------------------------------------------------
 
-def run_pass1(raw: dict, client: anthropic.Anthropic) -> str:
+def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> str:
     print("\n── PASS 1: Story Selector ──────────────────────────")
 
     selector_prompt = load_prompt("pass1_story_selector.txt")
     if not selector_prompt:
         raise SystemExit("Error: prompts/pass1_story_selector.txt not found.")
 
+    story_history = format_story_history(
+        recent_output if isinstance(recent_output, list) else []
+    )
+
+    user_content = (
+        "## TODAY'S RAW CONTENT\n\n"
+        + json.dumps(raw, ensure_ascii=False)
+        + "\n\n## RECENT STORY HISTORY — last 14 days\n"
+        "Read this before selecting stories. Use it to identify continuing "
+        "stories and apply the Continuing Story Detection rules.\n"
+        + story_history
+    )
+
     response = client.messages.create(
         model=MODEL,
         max_tokens=4096,
-        system=selector_prompt,
-        messages=[{
-            "role": "user",
-            "content": (
-                "Here is today's raw content. Output the story plan as JSON.\n\n"
-                + json.dumps(raw, ensure_ascii=False)
-            )
-        }]
+        system=[
+            {
+                "type": "text",
+                "text": selector_prompt,
+                "cache_control": {"type": "ephemeral"},
+            }
+        ],
+        messages=[{"role": "user", "content": user_content}]
     )
 
-    cost_summary("PASS 1", response.usage.input_tokens, response.usage.output_tokens)
+    cache_read  = getattr(response.usage, "cache_read_input_tokens", 0)
+    cache_write = getattr(response.usage, "cache_creation_input_tokens", 0)
+    cost_summary("PASS 1", response.usage.input_tokens, response.usage.output_tokens, cache_read, cache_write)
 
     story_plan_raw = extract_text(response)
     story_plan_raw = strip_code_fences(story_plan_raw)
@@ -369,6 +479,20 @@ def run_pass1(raw: dict, client: anthropic.Anthropic) -> str:
             print(f"  ⚠ Account cap violations in plan: {over_cap}")
         else:
             print(f"  ✓ Account distribution within caps")
+
+        # Count tweets with missing text — warn if any slipped through
+        missing_text = 0
+        for section in [plan.get("lead_story", {})] + plan.get("supporting_stories", []):
+            for t in section.get("tweets", []):
+                if not t.get("text", "").strip():
+                    missing_text += 1
+        for t in plan.get("around_the_league", {}).get("tweets", []):
+            if not t.get("text", "").strip():
+                missing_text += 1
+        if missing_text:
+            print(f"  ⚠ {missing_text} tweet(s) have missing text — writer will skip them")
+        else:
+            print(f"  ✓ All tweets have text")
     except json.JSONDecodeError:
         print("  ⚠ Pass 1 output is not valid JSON — writer will receive raw text")
 
@@ -383,25 +507,39 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic) -> str:
     print("\n── PASS 2: Writer ──────────────────────────────────")
 
     # pass2_writer.txt is the writer-specific prompt (voice, structure, HTML rules).
-    # base_prompt.txt and editorial_annotations.txt are not needed here —
-    # their key rules are already embedded in pass2_writer.txt.
+    # Voice examples load first — imitation before instruction.
     writer_prompt    = load_prompt("pass2_writer.txt")
     rolling_feedback = load_prompt("rolling_feedback.txt")
     voice_examples   = load_prompt("voice_examples.txt")
     gif_reference    = load_prompt("gif_reference.txt")
     meme_reference   = load_prompt("meme_reference.txt")
 
-    system_parts = [writer_prompt]
-    if rolling_feedback:
-        system_parts.append("## ROLLING FEEDBACK (hard rules — apply every time)\n\n" + rolling_feedback)
+    # Voice examples load FIRST so the model reads the target before the rules.
+    # This matches how Pass 2.5 works and weights imitation over instruction.
+    static_parts = []
     if voice_examples:
-        system_parts.append(voice_examples)
+        static_parts.append(voice_examples)
+    static_parts.append(writer_prompt)
     if gif_reference:
-        system_parts.append("## GIF REFERENCE\n\n" + gif_reference)
+        static_parts.append("## GIF REFERENCE\n\n" + gif_reference)
     if meme_reference:
-        system_parts.append("## MEME REFERENCE\n\n" + meme_reference)
+        static_parts.append("## MEME REFERENCE\n\n" + meme_reference)
 
-    system_prompt = "\n\n" + ("\n\n" + "="*80 + "\n\n").join(p for p in system_parts if p)
+    static_text = "\n\n" + ("\n\n" + "="*80 + "\n\n").join(p for p in static_parts if p)
+
+    system_blocks = [
+        {
+            "type": "text",
+            "text": static_text,
+            "cache_control": {"type": "ephemeral"},
+        }
+    ]
+    if rolling_feedback:
+        system_blocks.append({
+            "type": "text",
+            "text": "## ROLLING FEEDBACK (hard rules — apply every time)\n\n" + rolling_feedback,
+            "cache_control": {"type": "ephemeral"},
+        })
 
     # Pass 2 only needs the story plan — all tweets are pre-assigned by Pass 1.
     # Sending full raw_content.json here was redundant and added ~40K tokens per run.
@@ -415,18 +553,20 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic) -> str:
     )
 
     messages = [{"role": "user", "content": user_message}]
-    total_in = total_out = 0
+    total_in = total_out = total_cache_read = total_cache_write = 0
 
     while True:
         response = client.messages.create(
             model=MODEL,
             max_tokens=8192,
-            system=system_prompt,
+            system=system_blocks,
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=messages,
         )
-        total_in  += response.usage.input_tokens
-        total_out += response.usage.output_tokens
+        total_in         += response.usage.input_tokens
+        total_out        += response.usage.output_tokens
+        total_cache_read  += getattr(response.usage, "cache_read_input_tokens", 0)
+        total_cache_write += getattr(response.usage, "cache_creation_input_tokens", 0)
 
         if response.stop_reason == "tool_use":
             for block in response.content:
@@ -441,7 +581,57 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic) -> str:
         else:
             break
 
-    cost_summary("PASS 2", total_in, total_out)
+    cost_summary("PASS 2", total_in, total_out, total_cache_read, total_cache_write)
+    return strip_code_fences(extract_text(response))
+
+
+# ---------------------------------------------------------------------------
+# Pass 2.5 — Voice Editor
+# ---------------------------------------------------------------------------
+
+def run_pass2_5(draft_html: str, client: anthropic.Anthropic) -> str:
+    print("\n\u2500\u2500 PASS 2.5: Voice Editor \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500")
+
+    voice_examples = load_prompt("voice_examples.txt")
+    voice_prompt   = load_prompt("pass2_5_voice.txt")
+
+    if not voice_prompt:
+        print("  \u26a0 prompts/pass2_5_voice.txt not found \u2014 skipping voice pass")
+        return draft_html
+
+    # Voice examples lead the system prompt so they are the first thing
+    # the model reads — imitation before instruction.
+    system_blocks = []
+    if voice_examples:
+        system_blocks.append({
+            "type": "text",
+            "text": voice_examples,
+            "cache_control": {"type": "ephemeral"},
+        })
+    system_blocks.append({
+        "type": "text",
+        "text": voice_prompt,
+        "cache_control": {"type": "ephemeral"},
+    })
+
+    response = client.messages.create(
+        model=MODEL,
+        max_tokens=8192,
+        system=system_blocks,
+        messages=[{
+            "role": "user",
+            "content": (
+                "Rewrite any <p> tag prose that fails the Sportswriter Test. "
+                "Leave everything else unchanged. Return the full HTML.\n\n"
+                + draft_html
+            )
+        }]
+    )
+
+    cache_read  = getattr(response.usage, "cache_read_input_tokens", 0)
+    cache_write = getattr(response.usage, "cache_creation_input_tokens", 0)
+    cost_summary("PASS 2.5", response.usage.input_tokens, response.usage.output_tokens, cache_read, cache_write)
+
     return strip_code_fences(extract_text(response))
 
 
@@ -457,30 +647,41 @@ def run_pass3(draft_html: str, recent_output: dict, client: anthropic.Anthropic)
         print("  ⚠ prompts/editor_prompt.txt not found — skipping editor pass")
         return draft_html
 
-    # Inject previous issue media into the prompt
-    # recent_output is a list (14-day rolling history) — use the most recent entry
+    # Build system as cached blocks.
+    # The static editor prompt is cached. The dynamic media note (changes daily)
+    # is appended as a separate uncached block so the static cache still hits.
+    system_blocks = [
+        {
+            "type": "text",
+            "text": editor_prompt,
+            "cache_control": {"type": "ephemeral"},
+        }
+    ]
+
     latest = recent_output[0] if isinstance(recent_output, list) and recent_output else (recent_output or {})
     recent_gifs  = latest.get("gifs_used", [])
     recent_memes = latest.get("memes_used", [])
     if recent_gifs or recent_memes:
         media_note = (
-            "\n\n## PREVIOUS ISSUE MEDIA — DO NOT REUSE\n"
+            "## PREVIOUS ISSUE MEDIA — DO NOT REUSE\n"
             f"GIFs used: {json.dumps(recent_gifs)}\n"
             f"Memes used: {json.dumps(recent_memes)}"
         )
-        editor_prompt = editor_prompt + media_note
+        system_blocks.append({"type": "text", "text": media_note})
 
     response = client.messages.create(
         model=MODEL,
         max_tokens=8192,
-        system=editor_prompt,
+        system=system_blocks,
         messages=[{
             "role": "user",
             "content": f"Edit this newsletter draft and return the corrected HTML:\n\n{draft_html}"
         }]
     )
 
-    cost_summary("PASS 3", response.usage.input_tokens, response.usage.output_tokens)
+    cache_read  = getattr(response.usage, "cache_read_input_tokens", 0)
+    cache_write = getattr(response.usage, "cache_creation_input_tokens", 0)
+    cost_summary("PASS 3", response.usage.input_tokens, response.usage.output_tokens, cache_read, cache_write)
 
     edited = strip_code_fences(extract_text(response))
 
@@ -567,6 +768,11 @@ def post_to_substack(html: str) -> None:
 # ---------------------------------------------------------------------------
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="SLAP Newsletter Generator")
+    parser.add_argument("--no-editor", action="store_true", help="Skip Pass 3 editor")
+    parser.add_argument("--no-gifs", action="store_true", help="Skip GIF embedding")
+    args = parser.parse_args()
+
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
         raise SystemExit("Error: ANTHROPIC_API_KEY not set in .env")
@@ -584,10 +790,17 @@ def main() -> None:
 
     client = anthropic.Anthropic(api_key=api_key)
 
-    # Three passes
-    story_plan  = run_pass1(raw, client)
+    # Three passes + voice editor
+    story_plan  = run_pass1(raw, recent_output, client)
+    recent_output = save_story_log(story_plan, recent_output, RECENT_OUTPUT_PATH)
     draft_html  = run_pass2(story_plan, client)
-    final_html  = run_pass3(draft_html, recent_output, client)
+    voiced_html = run_pass2_5(draft_html, client)
+    if args.no_editor:
+        print("\n── PASS 3: Editor ──────────────────────────────────")
+        print("  ⚠ Skipped via --no-editor flag")
+        final_html = voiced_html
+    else:
+        final_html  = run_pass3(voiced_html, recent_output, client)
 
     # Save draft (styled blockquotes for browser preview)
     DRAFT_OUTPUT_PATH.write_text(
@@ -607,7 +820,9 @@ def main() -> None:
     # ── GIF Embedding ──────────────────────────────────────
     print("\n── GIF PIPELINE ────────────────────────────────────")
     giphy_key = os.getenv("GIPHY_API_KEY", "")
-    if not giphy_key:
+    if args.no_gifs:
+        print("  ⚠ Skipped via --no-gifs flag")
+    elif not giphy_key:
         print("  ⚠ GIPHY_API_KEY not set — skipping GIF embedding")
     else:
         for output_path in [DRAFT_OUTPUT_PATH, SUBSTACK_OUTPUT_PATH]:
@@ -626,9 +841,10 @@ def main() -> None:
             print("  ⚠ IMGFLIP_USERNAME / IMGFLIP_PASSWORD not set — skipping meme generation")
         else:
             template_map = build_template_map()
+            repo_root = Path(__file__).parent
             for output_path in [DRAFT_OUTPUT_PATH, SUBSTACK_OUTPUT_PATH]:
                 html = output_path.read_text(encoding="utf-8")
-                updated = process_newsletter(html, template_map, imgflip_user, imgflip_pass)
+                updated, _ = process_newsletter(html, template_map, imgflip_user, imgflip_pass, repo_root=repo_root)
                 output_path.write_text(updated, encoding="utf-8")
             print(f"  ✓ Memes embedded in both output files")
     except Exception as e:

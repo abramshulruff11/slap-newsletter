@@ -48,7 +48,7 @@ jobs:
           python -c "
           import json, sys
           data = json.load(open('raw_content.json'))
-          headlines = data.get('headlines', [])
+          headlines = data.get('news_headlines', [])
           tweets = data.get('tweets', [])
           if not headlines and not tweets:
               print('ERROR: Both headlines and tweets are empty')
@@ -69,7 +69,7 @@ jobs:
 
       - name: Verify outputs
         run: |
-          for f in newsletter_skeleton.json newsletter_draft.html newsletter_substack.html; do
+          for f in newsletter_draft.html newsletter_substack.html; do
             if [ ! -f "$f" ]; then
               echo "ERROR: Missing output file: $f"
               exit 1
@@ -84,7 +84,6 @@ jobs:
           mkdir -p "$ARCHIVE_DIR"
           cp newsletter_draft.html "$ARCHIVE_DIR/"
           cp newsletter_substack.html "$ARCHIVE_DIR/"
-          cp newsletter_skeleton.json "$ARCHIVE_DIR/"
           cp raw_content.json "$ARCHIVE_DIR/"
           if [ -f recent_output.json ]; then
             cp recent_output.json "$ARCHIVE_DIR/"
@@ -95,7 +94,7 @@ jobs:
         run: |
           git config user.name "SLAP Bot"
           git config user.email "slap-bot@users.noreply.github.com"
-          git add raw_content.json newsletter_skeleton.json newsletter_draft.html newsletter_substack.html recent_output.json gif_history.json meme_history.json archive/
+          git add raw_content.json newsletter_draft.html newsletter_substack.html recent_output.json gif_history.json meme_history.json archive/
           DATE=$(date -u +"%Y-%m-%d")
           git commit -m "SLAP newsletter output for $DATE" || echo "No changes to commit"
           git pull --rebase origin main
