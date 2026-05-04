@@ -452,7 +452,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> st
 
     response = client.messages.create(
         model=MODEL,
-        max_tokens=4096,
+        max_tokens=8192,
         system=[
             {
                 "type": "text",

@@ -10,7 +10,7 @@ These four GIFs are the highest-confidence matches for common emotions, which me
 
 | GIF | Emotion | Overuse Risk | Alternative |
 |-----|---------|--------------|-------------|
-| "This is fine" dog | Disaster / franchise chaos | CRITICAL | Elmo fire, Ralph Wiggum "I'm in danger", Titanic sinking |
+| "This is fine" dog | Disaster / franchise chaos | CRITICAL | Elmo fire, Squidward looking out window, Titanic sinking |
 | CJ San Andreas "ah shit here we go again" | Recurring failure | CRITICAL | Spongebob "aight imma head out", Community pizza fire |
 | Vince McMahon progressive excitement | Dominance / escalation | CRITICAL | Eduardo Saverin escalation, Galaxy brain, Pepe Silvia board |
 | Surprised Pikachu | Ironic self-inflicted consequences | HIGH | Jordan Peele sweating, Arrested Development "huge mistake" |
@@ -61,7 +61,6 @@ PANIC / DISASTER — Everything is falling apart
 - Elmo in front of fire (Sesame Street)
 - CJ San Andreas "ah shit here we go again"
 - Titanic sinking — when a franchise is going down
-- Ralph Wiggum "I'm in danger" (The Simpsons)
 - Spongebob "aight imma head out"
 - Community pizza fire (Troy) — walked into chaos
 

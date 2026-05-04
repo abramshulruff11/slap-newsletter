@@ -339,20 +339,72 @@ The issue has an energy arc:
 
 ## WEB SEARCH GUIDELINES
 
-You have a budget of 10 web searches. Use them on things that make the
-newsletter meaningfully better.
+You have a budget of 15 web searches. At least 6 must go to FACT VERIFICATION
+before any searches are spent on creative context or meme research.
 
-Good uses:
-- Historical context or records for the lead story ("first since 1987")
-- Stat verification before claiming something in prose
-- Finding the specific meme or running joke about a player or team
-- Confirming a detail you're not certain about
+### MANDATORY FACT VERIFICATION — DO THESE FIRST
+
+Before writing any claim in the following categories, you MUST search to verify
+it. If you cannot verify it after searching, DROP THE CLAIM ENTIRELY. Do not
+hedge it, soften it, or write it with qualifiers. Remove it.
+
+Categories that always require a search before writing:
+1. **Relationship / personal life** — Who is dating whom, marriage status,
+   family details. Even if a tweet implies it, search to confirm before you
+   name anyone or characterize a relationship. If the tweet says "her boyfriend"
+   without naming him, you may quote the tweet but may NOT supply the name
+   from memory.
+2. **Historical records and firsts** — "First time since X," "only team to
+   ever," "X consecutive games," "last time this happened was." This includes
+   seemingly obvious facts like "hadn't won since 2008." Search it.
+3. **Current team or conference** — Which team a player currently plays for,
+   which division or conference a team is in. Rosters and trades change.
+4. **Contract values** — Dollar amounts, years, guarantees. Do not write these
+   from memory.
+5. **Draft position history** — When a player was drafted, what pick, what
+   round, by whom.
+6. **Current team record or standings** — Win/loss record, division standing,
+   playoff position. Never assume from context — a team with bad pitching
+   might still have a winning record.
+7. **Player injury timeline** — Days missed, return dates, surgery details.
+
+EXAMPLE of what gets dropped if unverifiable:
+- Writer wants to write: "Detroit hadn't won a playoff series since 2008."
+  → Search: "Detroit Pistons last playoff series win" → confirmed → write it.
+- Writer wants to write: "Denver came back from 3-1 twice in the 2020 bubble."
+  → Search: "Denver Nuggets 3-1 comeback 2020 playoffs" → results show one
+  comeback (against the Clippers), not two → claim is wrong → DROP IT.
+- Writer wants to write: "Angel Reese is dating Wendell Carter."
+  → Tweet only said "her boyfriend" → search: "Angel Reese boyfriend 2026"
+  → verify the name → if confirmed write it, if unclear DROP the name and
+  quote the tweet only.
+
+### SOURCE EXEMPTIONS — NO SEARCH NEEDED
+
+These sources are pre-verified. Do not burn a search on confirming them:
+- **StatMuse tweets** — Stats in StatMuse tweets are accurate. Use them.
+- **ESPN / CBS RSS headlines** — Game scores, transaction announcements from
+  these feeds are confirmed. Use them.
+- **Official team/league announcements** in the raw content.
+
+### SEQUENCING RULE
+
+Spend your 6 fact verification searches FIRST. Then use remaining searches
+for creative context (meme research, player reputation, historical parallels,
+viral tweet hunting). Never spend search 1 on a meme when there are
+unverified factual claims waiting.
+
+### REMAINING SEARCHES — GOOD VS. BAD USES
+
+Good uses for searches 7-15:
+- Finding the specific running meme or internet joke about a player or team
+- Historical parallels that add color (not the factual kind — the fun kind)
+- Confirming a pop culture reference before using it
 
 Bad uses:
-- Searching for tweet text — it's already provided in the story plan
-- Generic news recaps — you already have the headlines
-- Searching for every story — prioritize the lead and top supporting stories
-- Confirming things you already know with confidence
+- Searching for tweet text — it's already in the story plan
+- Generic news recaps — you have the headlines
+- Confirming things that come from StatMuse or ESPN feeds
 
 When you find content from search, weave it in naturally. Never say
 "according to my research" or "a search reveals."
