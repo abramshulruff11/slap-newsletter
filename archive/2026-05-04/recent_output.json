@@ -3,6 +3,91 @@
     "date": "2026-05-04",
     "story_log": [
       {
+        "topic_key": "mavs-hire-masai-ujiri-2026",
+        "title": "Mavs Hire Masai Ujiri as Team President After Six-Month Search",
+        "section": "lead",
+        "development": "Dallas officially hired Ujiri as Team President and Alternate Governor after firing Nico Harrison in November. Ujiri built Raptors' 2019 championship team.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "magic-fire-jamahl-mosley-2026",
+        "title": "Magic Fire Jamahl Mosley After Blowing 3-1 Lead to Pistons",
+        "section": "supporting",
+        "development": "Orlando dismissed Mosley after 5 seasons following third straight first-round exit. Sources say Paolo frustrated with late-game playcalling.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "anthony-edwards-injury-game1-2026",
+        "title": "Anthony Edwards Pushing to Play Game 1 Despite Injury",
+        "section": "supporting",
+        "development": "Edwards listed as questionable, participated significantly in shootaround, pushing medical staff to let him play vs Spurs.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "cowboys-schedule-difficulty-2026",
+        "title": "Cowboys Face #4 Toughest Schedule After Playing #3 Easiest in 2025",
+        "section": "supporting",
+        "development": "Sharp Football Analytics released 2026 schedule rankings. Cowboys have second-biggest difficulty jump league-wide.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "colts-decline-richardson-option-2026",
+        "title": "What's Next for Anthony Richardson After Colts Decline Fifth-Year Option",
+        "section": "atl",
+        "development": "Analysis pieces examining Richardson's future after Colts declined option. He hits free agency after 2026 season.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "john-sterling-death-2026",
+        "title": "Baseball World Mourns Yankees Radio Icon John Sterling",
+        "section": "atl",
+        "development": "Tributes continue pouring in day after Sterling's death. Reactions from players, media, fans remembering iconic calls.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "braves-best-start-1892-2026",
+        "title": "Braves Off to Best Start Since 1892 Boston Beaneaters",
+        "section": "atl",
+        "development": "Atlanta's hot start matches franchise's best since 1892 when they were the Boston Beaneaters.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "giants-call-up-bryce-eldridge-2026",
+        "title": "Giants Call Up Top Prospect Bryce Eldridge After 0-6 Road Trip",
+        "section": "atl",
+        "development": "San Francisco calling up Eldridge after producing just 2 runs in 3-game Rays series during brutal 0-6 road trip.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "savannah-bananas-kyle-field-2026",
+        "title": "Savannah Bananas Pack Kyle Field With 102,000 Fans",
+        "section": "atl",
+        "development": "Bananas filled Texas A&M football stadium to capacity for game vs Texas Tailgaters. Largest crowd in exhibition baseball history.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nfl-schedule-2026-release",
+        "title": "NFL 2026 Schedule Strength Rankings Released",
+        "section": "atl",
+        "development": "Sharp Football Analytics published full 2026 schedule difficulty rankings. Lions easiest, Cardinals hardest.",
+        "is_new": true,
+        "resolved": false
+      }
+    ]
+  },
+  {
+    "date": "2026-05-04",
+    "story_log": [
+      {
         "topic_key": "cavs-raptors-first-round-2026",
         "title": "Cavs Ice Drake and Toronto, Advance on Jarrett Allen's 22-19",
         "section": "lead",
