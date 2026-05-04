@@ -701,35 +701,36 @@ def run_pass3(draft_html: str, recent_output: dict, client: anthropic.Anthropic)
 
 def post_to_substack(html: str) -> None:
     """
-    Creates an unpublished draft in Substack via python-substack.
-    Requires SUBSTACK_EMAIL, SUBSTACK_PASSWORD, SUBSTACK_URL env vars.
+    Creates an unpublished draft in Substack via cookie-based auth.
+    Uses SUBSTACK_SID (session cookie) + SUBSTACK_URL env vars.
+    Bypasses Cloudflare which blocks email/password login from GitHub Actions.
     Skips silently if credentials are not set (local runs).
     """
-    email    = os.getenv("SUBSTACK_EMAIL")
-    password = os.getenv("SUBSTACK_PASSWORD")
-    pub_url  = os.getenv("SUBSTACK_URL")
+    import requests
 
-    if not all([email, password, pub_url]):
-        print("  ⚠ Substack credentials not set — skipping auto-draft")
-        return
+    sid     = os.getenv("SUBSTACK_SID")
+    pub_url = os.getenv("SUBSTACK_URL")
 
-    try:
-        from substack import Api
-        from substack.post import Post
-    except ImportError:
-        print("  ⚠ python-substack not installed — skipping auto-draft")
+    if not all([sid, pub_url]):
+        print("  ⚠ SUBSTACK_SID or SUBSTACK_URL not set — skipping auto-draft")
         return
 
     print("\n── SUBSTACK AUTO-DRAFT ─────────────────────────────")
 
-    try:
-        api = Api(
-            email=email,
-            password=password,
-            publication_url=pub_url,
-        )
-        user_id = api.get_user_id()
+    # Normalise pub_url → bare subdomain (e.g. "mypub" from any format)
+    pub_name = (
+        pub_url
+        .replace("https://", "")
+        .replace("http://", "")
+        .replace(".substack.com", "")
+        .rstrip("/")
+    )
 
+    session = requests.Session()
+    session.cookies.set("substack.sid", sid, domain=".substack.com")
+    session.headers.update({"Content-Type": "application/json"})
+
+    try:
         # Extract title from first <h1> in the HTML
         title_match = re.search(r'<h1[^>]*>(.*?)</h1>', html, re.DOTALL)
         title = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else "SLAP Newsletter"
@@ -737,26 +738,34 @@ def post_to_substack(html: str) -> None:
         from datetime import date
         subtitle = f"Sports Lunch Afternoon Post — {date.today().strftime('%B %-d, %Y')}"
 
-        post = Post(
-            title=title,
-            subtitle=subtitle,
-            user_id=user_id,
-        )
-
-        # Extract just the body content — strip the full HTML document wrapper.
-        # Substack's API wants the inner content, not a full HTML document.
+        # Extract body content — Substack wants inner HTML, not a full document
         body_match = re.search(r'<body[^>]*>(.*?)</body>', html, re.DOTALL)
         body_content = body_match.group(1).strip() if body_match else html
 
-        # Remove HTML comments (editor flags) before sending to Substack
+        # Strip HTML comments (editor flags) before sending
         body_content = re.sub(r'<!--.*?-->', '', body_content, flags=re.DOTALL).strip()
 
-        post.add({"type": "html", "content": body_content})
+        payload = {
+            "draft_title": title,
+            "draft_subtitle": subtitle,
+            "draft_body": body_content,
+            "draft_section_id": None,
+            "audience": "everyone",
+            "type": "newsletter",
+        }
 
-        draft = api.post_draft(post.get_draft())
-        draft_id = draft.get("id")
-        print(f"  ✓ Draft created in Substack (id: {draft_id})")
-        print(f"  → Review and publish at: {pub_url}/publish/post/{draft_id}")
+        resp = session.post(
+            f"https://{pub_name}.substack.com/api/v1/drafts",
+            json=payload,
+        )
+
+        if resp.status_code == 200:
+            draft_id = resp.json().get("id")
+            print(f"  ✓ Draft created in Substack (id: {draft_id})")
+            print(f"  → Review at: https://{pub_name}.substack.com/publish/post/{draft_id}")
+        else:
+            print(f"  ✗ Draft failed ({resp.status_code}): {resp.text[:300]}")
+            print("    Newsletter files saved locally — paste manually if needed.")
 
     except Exception as e:
         print(f"  ✗ Substack auto-draft failed: {e}")
