@@ -27,6 +27,7 @@ jobs:
       SUBSTACK_EMAIL: ${{ secrets.SUBSTACK_EMAIL }}
       SUBSTACK_PASSWORD: ${{ secrets.SUBSTACK_PASSWORD }}
       SUBSTACK_URL: ${{ secrets.SUBSTACK_URL }}
+      SUBSTACK_SID: ${{ secrets.SUBSTACK_SID }}
 
     steps:
       - name: Checkout repo
