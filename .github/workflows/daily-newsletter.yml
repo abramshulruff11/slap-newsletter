@@ -26,6 +26,8 @@ jobs:
       IMGFLIP_PASSWORD: ${{ secrets.IMGFLIP_PASSWORD }}
       SUBSTACK_SID: ${{ secrets.SUBSTACK_SID }}
       SUBSTACK_URL: ${{ secrets.SUBSTACK_URL }}
+      GMAIL_USER: ${{ secrets.GMAIL_USER }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
 
     steps:
       - name: Checkout repo
@@ -88,6 +90,9 @@ jobs:
             cp recent_output.json "$ARCHIVE_DIR/"
           fi
           echo "Archived to $ARCHIVE_DIR"
+
+      - name: Email newsletter
+        run: python email_newsletter.py
 
       - name: Commit and push outputs
         run: |
