@@ -486,7 +486,9 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> st
             for t in section.get("tweets", []):
                 if not t.get("text", "").strip():
                     missing_text += 1
-        for t in plan.get("around_the_league", {}).get("tweets", []):
+        atl = plan.get("around_the_league", {})
+        atl_tweets = atl if isinstance(atl, list) else atl.get("tweets", [])
+        for t in atl_tweets:
             if not t.get("text", "").strip():
                 missing_text += 1
         if missing_text:
