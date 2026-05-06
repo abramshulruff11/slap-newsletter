@@ -19,12 +19,12 @@ SUBSTACK_PATH = SCRIPT_DIR / "newsletter_substack.html"
 
 
 def send_email():
-    gmail_user = os.getenv("GMAIL_USER")
-    gmail_pass = os.getenv("GMAIL_APP_PASSWORD")
-    to_email   = os.getenv("GMAIL_USER")  # send to yourself
+    gmail_user = os.getenv("GMAIL_ADDRESS")
+    gmail_pass = os.getenv("GMAIL_PASSWORD")
+    to_email   = os.getenv("GMAIL_ADDRESS")  # send to yourself
 
     if not gmail_user or not gmail_pass:
-        print("  ⚠ GMAIL_USER or GMAIL_APP_PASSWORD not set — skipping email delivery")
+        print("  ⚠ GMAIL_ADDRESS or GMAIL_PASSWORD not set — skipping email delivery")
         return
 
     if not SUBSTACK_PATH.exists():
