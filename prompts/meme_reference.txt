@@ -95,12 +95,13 @@ Use when a stat line, situation, or take escalates through multiple levels.
 - **Wait, It's All X? Always Has Been** (slug: `always-has-been`, imgflip: 252600902) — Astronaut meme. Use when something that seems new was actually always the case.
 - **Monkey Puppet Side-Eye** (slug: `monkey-puppet`, imgflip: 148909805) — Awkward glance. When someone is caught or called out.
 - **Mocking Spongebob** (slug: `mocking-spongebob`, imgflip: 102156234) — When a bad excuse or dumb take deserves direct mockery. Top text = the straight version. Bottom text = the same phrase repeated. The Spongebob face does the mocking — no special formatting needed.
-- **First Time?** (slug: `first-time`, imgflip: 161865971) — Parachute instructor meme. Use for recurring disasters where a fan/player acts surprised at something that always happens.
+- **First Time?** (slug: `first-time`, imgflip: 277489984) — Parachute instructor meme. Use for recurring disasters where a fan/player acts surprised at something that always happens. IMPORTANT: data-top should be the setup quote — the person/thing freaking out (e.g. "JAYLEN BROWN BLAMING THE REFS AFTER EVERY LOSS"). data-bottom is always the instructor's line: "FIRST TIME?"
 
 ### DOMINATION / SUPERIORITY — "One thing destroying another"
 
 - **Trade Offer** (slug: `trade-offer`, imgflip: 309868304) — "I receive: [good thing]. You receive: [bad thing]." Perfect for lopsided trades.
-- **Panik / Kalm / Panik** (slug: `panik-kalm-panik`, imgflip: 226297822) — Three panels of emotional whiplash. Good for game recaps with momentum swings.
+- **Panik / Kalm / Panik** (slug: `panik-kalm-panik`, imgflip: 226297822) — THREE panels of emotional whiplash. REQUIRES data-middle for the calm panel. Format:
+  `data-top="PANIK TEXT"` (first shock), `data-middle="KALM TEXT"` (false relief), `data-bottom="PANIK TEXT"` (final panic). Good for game recaps with momentum swings.
 - **Waiting Skeleton** (slug: `waiting-skeleton`, imgflip: 4087833) — When a franchise or fan base has been waiting for something so long it's become a joke.
 - **One Does Not Simply** (slug: `one-does-not-simply`, imgflip: 61579) — Boromir from LOTR. "One does not simply [impossible or absurd thing]." Use for situations that seem easy but always end in disaster for a specific team or player.
 

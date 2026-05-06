@@ -471,6 +471,10 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> st
     story_plan_raw = strip_code_fences(story_plan_raw)
 
     # Validate it's parseable JSON — warn but don't crash
+    # Extract the outermost JSON object in case the model added prose around it
+    json_match = re.search(r'\{.*\}', story_plan_raw, re.DOTALL)
+    if json_match:
+        story_plan_raw = json_match.group(0)
     try:
         plan = json.loads(story_plan_raw)
         dist = plan.get("account_distribution", {})

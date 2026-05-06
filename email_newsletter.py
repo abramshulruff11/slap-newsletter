@@ -1,6 +1,7 @@
 """
 SLAP Newsletter — Email Delivery
-Sends newsletter_substack.html as an HTML email attachment after each run.
+Sends newsletter_substack.html as the email body (rendered HTML) after each run.
+Open the email on your phone, select all, copy, paste into Substack.
 Triggered by GitHub Actions after generate_newsletter.py completes.
 """
 
@@ -11,10 +12,8 @@ from pathlib import Path
 from datetime import date
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email import encoders
 
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR    = Path(__file__).resolve().parent
 SUBSTACK_PATH = SCRIPT_DIR / "newsletter_substack.html"
 
 
@@ -39,28 +38,14 @@ def send_email():
     today = date.today().strftime("%B %-d, %Y")
     subject = f"SLAP {today} — {title}"
 
-    msg = MIMEMultipart("mixed")
+    # Send as inline HTML — the newsletter IS the email body.
+    # Open on your phone, select all, copy, paste into Substack.
+    # Gmail renders the HTML; Substack receives clean rich text, not code.
+    msg = MIMEMultipart("alternative")
     msg["From"]    = gmail_user
     msg["To"]      = to_email
     msg["Subject"] = subject
-
-    # Plain-text body so the email isn't blank if HTML fails to load
-    body = MIMEText(
-        f"SLAP Newsletter — {today}\n\n"
-        f"Newsletter attached as HTML file.\n"
-        f"Open the attachment, copy all, paste into Substack editor.\n\n"
-        f"Lead story: {title}",
-        "plain"
-    )
-    msg.attach(body)
-
-    # Attach the Substack-ready HTML file
-    attachment = MIMEBase("text", "html")
-    attachment.set_payload(html_content.encode("utf-8"))
-    encoders.encode_base64(attachment)
-    filename = f"SLAP_{date.today().strftime('%Y-%m-%d')}.html"
-    attachment.add_header("Content-Disposition", "attachment", filename=filename)
-    msg.attach(attachment)
+    msg.attach(MIMEText(html_content, "html"))
 
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
@@ -68,6 +53,7 @@ def send_email():
             server.sendmail(gmail_user, to_email, msg.as_string())
         print(f"  ✓ Email sent to {to_email}")
         print(f"  → Subject: {subject}")
+        print(f"  → Open email, select all, copy, paste into Substack")
     except Exception as e:
         print(f"  ✗ Email failed: {e}")
 

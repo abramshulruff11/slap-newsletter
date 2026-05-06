@@ -153,7 +153,8 @@ def build_template_map() -> dict:
 
 
 def generate_meme(template_id: str, top_text: str, bottom_text: str,
-                  username: str, password: str, template_slug: str = "") -> str | None:
+                  username: str, password: str, template_slug: str = "",
+                  middle_text: str = "") -> str | None:
     """
     Call Imgflip caption_image API. Returns the image URL on success, None on failure.
     Free tier adds a watermark. Paid account ($9.99/mo) removes it — no code change needed.
@@ -171,6 +172,15 @@ def generate_meme(template_id: str, top_text: str, bottom_text: str,
     if template_slug == "gru-plan":
         payload["text2"] = top_text
         payload["text3"] = ""
+
+    # Panik-Kalm-Panik is a 3-panel template:
+    #   text0 = first PANIK  (data-top)
+    #   text1 = KALM         (data-middle)
+    #   text2 = second PANIK (data-bottom)
+    # Override the defaults so middle and bottom map to the correct panels.
+    if template_slug == "panik-kalm-panik":
+        payload["text1"] = middle_text   # KALM → panel 2
+        payload["text2"] = bottom_text   # second PANIK → panel 3
 
     try:
         resp = requests.post(IMGFLIP_CAPTION_URL, data=payload, timeout=10)
@@ -226,6 +236,7 @@ def process_newsletter(html: str, template_map: dict, username: str, password: s
     for div in placeholders:
         template_slug = div.get("data-template", "").strip().lower()
         top_text      = div.get("data-top", "").strip()
+        middle_text   = div.get("data-middle", "").strip()
         bottom_text   = div.get("data-bottom", "").strip()
 
         if not template_slug:
@@ -245,7 +256,7 @@ def process_newsletter(html: str, template_map: dict, username: str, password: s
             failed += 1
             continue
 
-        img_url = generate_meme(template_id, top_text, bottom_text, username, password, template_slug)
+        img_url = generate_meme(template_id, top_text, bottom_text, username, password, template_slug, middle_text)
 
         if img_url:
             img_tag = soup.new_tag("div", style="text-align:center; margin: 16px 0;")

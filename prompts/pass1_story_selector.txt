@@ -107,6 +107,10 @@ Barstool accounts produce two kinds of content. Apply this filter:
 - Barstool tweet is about a Barstool personality, Barstool show, internal
   Barstool drama, or Barstool employees → cut it regardless of how funny it is.
 
+Known Barstool accounts in your feed: W_B_Rick, BarstoolBigCat, PFTCommenter.
+W_B_Rick in particular mixes sports takes with Barstool-internal content about
+personalities and show drama. Apply the filter strictly to every W_B_Rick tweet.
+
 The test: if someone who has never heard of Barstool can fully understand the
 tweet, it is probably about sports. If understanding the tweet requires knowing
 Barstool's internal culture or cast of characters, cut it.
