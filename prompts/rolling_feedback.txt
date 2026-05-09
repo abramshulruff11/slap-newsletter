@@ -53,6 +53,27 @@ The rule: if you are about to write "This wasn't X. This was Y." — stop.
 Delete both sentences. Find the specific fact that makes the point instead.
 The fact is always funnier and more devastating than the metaphor.
 
+================================================================================
+RULE 5 — NBA PLAYOFFS > NFL RECAP CONTENT (MAY–JUNE)
+================================================================================
+From May 1 through the end of the NBA Finals, the NFL year-round tiebreaker is
+SUSPENDED for any NFL story that is recap or stat-fact content from a
+season that has already ended. NBA Playoffs are a Tier 1 calendar event. They
+outrank evergreen NFL stat posts every time.
+
+BAD (lead): "The Bills went 2-of-9 on two-point conversions in 2025." That
+season ended in February. There is no game today. It is a SharpFootball stat
+post, not news.
+GOOD (lead): A playoff game from yesterday. A series-shifting injury. A
+historic playoff stat line.
+
+The test: did the NFL story happen in the last 7 days? If no, and the NBA
+Playoffs are active, the NFL story does not lead. It can still appear as
+Around the League if the stat is genuinely interesting.
+
+================================================================================
+FACT VERIFICATION
+================================================================================
 Every factual claim must be verified as accurate for today's date before it
 appears in the newsletter. Do not rely on training knowledge alone. This
 includes — but is not limited to — player team affiliations, roster moves,

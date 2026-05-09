@@ -211,16 +211,69 @@ GOOD: "mendoza-draft-2026", "embiid-appendectomy-2026",
 BAD: "nba" (too broad), "mendoza-mock-draft-april-24" (too specific)
 
 ================================================================================
+SPORTS CALENDAR — READ THIS BEFORE STORY SELECTION RULES
+================================================================================
+
+The sports calendar overrides the year-round sport hierarchy. If today falls
+within a Tier 1 event window, that sport leads regardless of NFL primacy.
+Check the calendar BEFORE applying any selection rules below.
+
+TIER 1 — NEWSLETTER-DOMINATING EVENTS (lead must come from this sport if
+active, unless a true Breaking News Override exists):
+- Super Bowl + reaction window (early February)
+- NFL Draft (late April, especially Day 1)
+- NFL Free Agency opening (mid-March, first 3-4 days)
+- March Madness (mid-March through early April, especially Sweet 16+)
+- NBA Playoffs (April through NBA Finals, June)
+- NBA Finals (June)
+- World Series (late October)
+- College Football Playoff / National Championship (January)
+- NFL Trade Deadline (November)
+- NBA Trade Deadline (February)
+- Masters Sunday (second Sunday in April)
+- MLB Opening Day (late March)
+
+TIER 2 — HEAVY COVERAGE (lead OR strong supporting):
+- NFL Combine (late February)
+- MLB Trade Deadline (late July)
+- Major golf majors Sundays (US Open, British Open, PGA Championship)
+- NFL regular season Sundays / Mondays (September-January)
+- Big rivalry games (Ohio State-Michigan, Iron Bowl, Army-Navy, Yankees-Red Sox)
+- Olympics
+
+TIER 3 — NORMAL DAYS:
+- Offseason news, midweek games, standard transactions. Sport hierarchy
+  applies normally.
+
+BREAKING NEWS OVERRIDE: A truly stunning event (superstar career-ending injury,
+major scandal, surprise retirement of an active superstar, blockbuster trade)
+overrides the calendar. The bar is high. "NFL stat post on Twitter" does not
+clear it. "Insider reports superstar tore Achilles" does.
+
+DAILY CHECK before story selection:
+1. Is today inside an active Tier 1 window? If yes, the lead must come from
+   that sport unless a Breaking News Override applies. The NFL year-round
+   tiebreaker in the rules below is SUSPENDED for the duration of the Tier 1
+   window.
+2. Is today inside a Tier 2 window? If yes, weight that sport heavier in
+   lead and supporting selection.
+3. Otherwise: apply the standard rules below.
+
+================================================================================
 STORY SELECTION RULES
 ================================================================================
 
 LEAD STORY — pick the story with the most SLAP potential:
-1. Does the internet have strong reactions? (volume and quality of tweets)
-2. Does it connect to running jokes, memes, player reputations, or history?
-3. Is there financial absurdity, historical irony, or cross-sport connection?
-4. Is it NFL? (NFL gets tiebreaker year-round)
+1. Calendar check first (above). If a Tier 1 event is active, the lead comes
+   from that sport. Skip rule 4.
+2. Does the internet have strong reactions? (volume and quality of tweets)
+3. Does it connect to running jokes, memes, player reputations, or history?
+4. Is there financial absurdity, historical irony, or cross-sport connection?
+5. Is it NFL? (NFL gets tiebreaker year-round — ONLY if no Tier 1 event is
+   active per the calendar above)
 A mid-tier NFL story with incredible meme potential beats a major NBA game with
-flat tweet reactions.
+flat tweet reactions — EXCEPT during NBA Playoffs, NBA Finals, or any other
+active Tier 1 window for a non-NFL sport.
 
 DEPTH GUIDE:
 - "deep": Lead story only. 10-18 blocks. Rich tweets, history, stats, angles.
