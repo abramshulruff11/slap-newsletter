@@ -450,59 +450,119 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> st
         + story_history
     )
 
-    response = client.messages.create(
-        model=MODEL,
-        max_tokens=8192,
-        system=[
-            {
-                "type": "text",
-                "text": selector_prompt,
-                "cache_control": {"type": "ephemeral"},
-            }
-        ],
-        messages=[{"role": "user", "content": user_content}]
-    )
+    messages = [{"role": "user", "content": user_content}]
 
-    cache_read  = getattr(response.usage, "cache_read_input_tokens", 0)
-    cache_write = getattr(response.usage, "cache_creation_input_tokens", 0)
-    cost_summary("PASS 1", response.usage.input_tokens, response.usage.output_tokens, cache_read, cache_write)
+    # Retry loop. On JSON failure, send a corrective follow-up turn and try
+    # again. After MAX_ATTEMPTS, abort the pipeline rather than passing
+    # garbage to Pass 2 (which has caused full-pipeline failures historically).
+    MAX_ATTEMPTS = 3
+    total_in = total_out = total_cache_read = total_cache_write = 0
 
-    story_plan_raw = extract_text(response)
-    story_plan_raw = strip_code_fences(story_plan_raw)
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        response = client.messages.create(
+            model=MODEL,
+            max_tokens=8192,
+            system=[
+                {
+                    "type": "text",
+                    "text": selector_prompt,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
+            messages=messages,
+        )
 
-    # Validate it's parseable JSON — warn but don't crash
-    # Extract the outermost JSON object in case the model added prose around it
-    json_match = re.search(r'\{.*\}', story_plan_raw, re.DOTALL)
-    if json_match:
-        story_plan_raw = json_match.group(0)
-    try:
-        plan = json.loads(story_plan_raw)
-        dist = plan.get("account_distribution", {})
-        over_cap = {k: v for k, v in dist.items() if v > 2}
-        if over_cap:
-            print(f"  ⚠ Account cap violations in plan: {over_cap}")
-        else:
-            print(f"  ✓ Account distribution within caps")
+        total_in          += response.usage.input_tokens
+        total_out         += response.usage.output_tokens
+        total_cache_read  += getattr(response.usage, "cache_read_input_tokens", 0)
+        total_cache_write += getattr(response.usage, "cache_creation_input_tokens", 0)
 
-        # Count tweets with missing text — warn if any slipped through
-        missing_text = 0
-        for section in [plan.get("lead_story", {})] + plan.get("supporting_stories", []):
-            for t in section.get("tweets", []):
+        story_plan_raw = extract_text(response)
+        story_plan_raw = strip_code_fences(story_plan_raw)
+
+        # Extract the outermost JSON object in case the model added prose around it
+        json_match = re.search(r'\{.*\}', story_plan_raw, re.DOTALL)
+        if json_match:
+            story_plan_raw = json_match.group(0)
+
+        # Validate JSON + required structure
+        validation_error = None
+        plan = None
+        try:
+            plan = json.loads(story_plan_raw)
+            if not isinstance(plan, dict):
+                validation_error = "Output is not a JSON object"
+            elif "lead_story" not in plan:
+                validation_error = "Missing required field: lead_story"
+            elif "story_log" not in plan:
+                validation_error = "Missing required field: story_log"
+        except json.JSONDecodeError as e:
+            validation_error = f"JSON parse error: {e}"
+
+        if validation_error is None:
+            # Success — print cumulative cost, run remaining validations, return.
+            cost_summary("PASS 1", total_in, total_out, total_cache_read, total_cache_write)
+            if attempt > 1:
+                print(f"  ✓ Pass 1 succeeded on attempt {attempt}/{MAX_ATTEMPTS}")
+
+            dist = plan.get("account_distribution", {})
+            over_cap = {k: v for k, v in dist.items() if v > 2}
+            if over_cap:
+                print(f"  ⚠ Account cap violations in plan: {over_cap}")
+            else:
+                print(f"  ✓ Account distribution within caps")
+
+            # Count tweets with missing text — warn if any slipped through
+            missing_text = 0
+            for section in [plan.get("lead_story", {})] + plan.get("supporting_stories", []):
+                for t in section.get("tweets", []):
+                    if not t.get("text", "").strip():
+                        missing_text += 1
+            atl = plan.get("around_the_league", {})
+            atl_tweets = atl if isinstance(atl, list) else atl.get("tweets", [])
+            for t in atl_tweets:
                 if not t.get("text", "").strip():
                     missing_text += 1
-        atl = plan.get("around_the_league", {})
-        atl_tweets = atl if isinstance(atl, list) else atl.get("tweets", [])
-        for t in atl_tweets:
-            if not t.get("text", "").strip():
-                missing_text += 1
-        if missing_text:
-            print(f"  ⚠ {missing_text} tweet(s) have missing text — writer will skip them")
-        else:
-            print(f"  ✓ All tweets have text")
-    except json.JSONDecodeError:
-        print("  ⚠ Pass 1 output is not valid JSON — writer will receive raw text")
+            if missing_text:
+                print(f"  ⚠ {missing_text} tweet(s) have missing text — writer will skip them")
+            else:
+                print(f"  ✓ All tweets have text")
 
-    return story_plan_raw
+            return story_plan_raw
+
+        # Validation failed — retry with corrective turn, or abort.
+        if attempt < MAX_ATTEMPTS:
+            print(f"  ⚠ Pass 1 attempt {attempt}/{MAX_ATTEMPTS} invalid: {validation_error}")
+            print(f"    Retrying with corrective instruction...")
+            messages.append({
+                "role": "assistant",
+                "content": story_plan_raw[:2000],
+            })
+            messages.append({
+                "role": "user",
+                "content": (
+                    f"⚠ Your previous response was not valid JSON.\n"
+                    f"Error: {validation_error}\n\n"
+                    f"Respond again with ONLY a single valid JSON object. "
+                    f"No prose before or after. No markdown code fences. "
+                    f"The output must start with {{ and end with }} and must "
+                    f"include both 'lead_story' and 'story_log' top-level fields "
+                    f"per the schema in your system prompt."
+                ),
+            })
+        else:
+            cost_summary("PASS 1", total_in, total_out, total_cache_read, total_cache_write)
+            print(f"  ✗ Pass 1 FAILED after {MAX_ATTEMPTS} attempts: {validation_error}")
+            raise RuntimeError(
+                f"Pass 1 produced invalid output after {MAX_ATTEMPTS} attempts. "
+                f"Last error: {validation_error}. "
+                f"Aborting pipeline to prevent garbage downstream output. "
+                f"Check the raw Pass 1 response and the pass1_story_selector.txt "
+                f"prompt for issues."
+            )
+
+    # Unreachable, but appease linters/type checkers.
+    raise RuntimeError("Pass 1 retry loop exited unexpectedly")
 
 
 # ---------------------------------------------------------------------------

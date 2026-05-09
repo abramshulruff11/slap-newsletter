@@ -214,12 +214,13 @@ BAD: "nba" (too broad), "mendoza-mock-draft-april-24" (too specific)
 SPORTS CALENDAR — READ THIS BEFORE STORY SELECTION RULES
 ================================================================================
 
-The sports calendar overrides the year-round sport hierarchy. If today falls
-within a Tier 1 event window, that sport leads regardless of NFL primacy.
-Check the calendar BEFORE applying any selection rules below.
+The sports calendar drives lead story selection. If today falls within a
+Tier 1 event window, that sport leads regardless of any other sport's
+general popularity or volume. Check the calendar BEFORE applying any
+selection rules below.
 
 TIER 1 — NEWSLETTER-DOMINATING EVENTS (lead must come from this sport if
-active, unless a true Breaking News Override exists):
+active, unless a true MASSIVE STORY OVERRIDE exists):
 - Super Bowl + reaction window (early February)
 - NFL Draft (late April, especially Day 1)
 - NFL Free Agency opening (mid-March, first 3-4 days)
@@ -242,38 +243,56 @@ TIER 2 — HEAVY COVERAGE (lead OR strong supporting):
 - Olympics
 
 TIER 3 — NORMAL DAYS:
-- Offseason news, midweek games, standard transactions. Sport hierarchy
-  applies normally.
+- Offseason news, midweek games, standard transactions. The in-season sport
+  with the most going on that day leads (see Lead Story rules below).
 
-BREAKING NEWS OVERRIDE: A truly stunning event (superstar career-ending injury,
-major scandal, surprise retirement of an active superstar, blockbuster trade)
-overrides the calendar. The bar is high. "NFL stat post on Twitter" does not
-clear it. "Insider reports superstar tore Achilles" does.
+MASSIVE STORY OVERRIDE: A truly huge event (death of an all-time great,
+career-ending injury to a superstar, major scandal, surprise retirement of
+an active superstar, franchise-altering trade, lockout/strike, season
+suspension) overrides the calendar entirely. The bar is high — a non-sports
+fan would have heard about it. "NFL stat post on Twitter" does not clear it.
+"Kobe died in a helicopter crash" does. "Insider reports superstar tore
+Achilles" does. See Lead Story rule 1 below for the full test.
 
 DAILY CHECK before story selection:
-1. Is today inside an active Tier 1 window? If yes, the lead must come from
-   that sport unless a Breaking News Override applies. The NFL year-round
-   tiebreaker in the rules below is SUSPENDED for the duration of the Tier 1
-   window.
-2. Is today inside a Tier 2 window? If yes, weight that sport heavier in
+1. Did a MASSIVE STORY happen today? (See Lead Story rule 1 below.) If yes,
+   that leads regardless of sport, calendar, or anything else.
+2. Is today inside an active Tier 1 window? If yes, the lead must come from
+   that sport.
+3. Is today inside a Tier 2 window? If yes, weight that sport heavier in
    lead and supporting selection.
-3. Otherwise: apply the standard rules below.
+4. Otherwise: apply the standard rules below.
 
 ================================================================================
 STORY SELECTION RULES
 ================================================================================
 
-LEAD STORY — pick the story with the most SLAP potential:
-1. Calendar check first (above). If a Tier 1 event is active, the lead comes
-   from that sport. Skip rule 4.
-2. Does the internet have strong reactions? (volume and quality of tweets)
-3. Does it connect to running jokes, memes, player reputations, or history?
-4. Is there financial absurdity, historical irony, or cross-sport connection?
-5. Is it NFL? (NFL gets tiebreaker year-round — ONLY if no Tier 1 event is
-   active per the calendar above)
-A mid-tier NFL story with incredible meme potential beats a major NBA game with
-flat tweet reactions — EXCEPT during NBA Playoffs, NBA Finals, or any other
-active Tier 1 window for a non-NFL sport.
+LEAD STORY RULES — apply in order:
+
+1. MASSIVE STORY CHECK. Did something genuinely huge happen today? Death of
+   an all-time great. Career-ending injury to a superstar. Major scandal.
+   Franchise-altering trade. Lockout, strike, or season suspension.
+
+   The bar: a non-sports-fan would have heard about this. "Kobe died in a
+   helicopter crash" clears it. "SharpFootball posted a stat about last
+   season" does not. "Schefter reports a backup QB signing" does not.
+
+   If yes, that leads regardless of sport, calendar, or anything else.
+
+2. CALENDAR. If today is inside a Tier 1 event window (per the calendar
+   above), the lead comes from that sport. NBA Playoffs in May → NBA leads.
+   World Series in October → MLB leads. CFP National Championship → CFB leads.
+
+3. NORMAL DAYS — the in-season sport with the most going on that day leads.
+   There is no automatic NFL preference. NFL leads when NFL is the most
+   active sport on a given day (e.g., a Sunday in October), not because it's
+   NFL. On ambiguous days where multiple sports are active and no single
+   sport dominates, the in-season sport with games being played leads over
+   a sport in offseason mode.
+
+4. WITHIN whatever sport leads (per 1, 2, or 3): pick the story with the
+   most SLAP potential — internet reactions, running jokes, player
+   reputations, history, financial absurdity, cross-sport irony.
 
 DEPTH GUIDE:
 - "deep": Lead story only. 10-18 blocks. Rich tweets, history, stats, angles.

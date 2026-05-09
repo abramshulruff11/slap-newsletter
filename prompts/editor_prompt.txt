@@ -181,6 +181,44 @@ appears to be a Nitter URL (nitter.net) without a twitter.com equivalent, add:
 <!-- EDITOR FLAG: TWEET URL — verify this link resolves correctly -->
 
 ================================================================================
+CHECK 7 — PUNCHING DOWN (auto-remove)
+================================================================================
+
+Scan every <p> tag for any sentence whose joke or comparison targets:
+- A disability or medical condition (stuttering, dyslexia, autism, ADHD,
+  physical disability)
+- Race, ethnicity, or national origin
+- Religion
+- Sexual orientation or gender identity
+- Body type or weight
+- A mental health diagnosis (depression, anxiety, OCD, PTSD)
+- An athlete's family member who isn't themselves a public figure
+- Death or terminal illness used as a punchline
+
+CARVE-OUTS — the following are NOT punching down. Do NOT remove these:
+- Body type or size discussed as direct athletic context with no mockery:
+  "the offensive line gave up 200 pounds at every position," "Wemby's 7'4"
+  frame," "6'5" Mahomes can see over the line"
+- A team's geographic location used as part of a team-level joke: "New York
+  fans," "Bay Area front offices," "Boston sports radio"
+- A player's nationality stated factually as part of their identity as an
+  athlete: "the 20-year-old Irish rugby convert," "the Slovenian point guard"
+- Self-targeted humor by the writer
+- Jokes about a public figure's professional decisions or on-field actions
+- Jokes about a team's performance, owners, executives, or coaching
+
+THE TEST: is the joke's punchline the target's IDENTITY (a thing they ARE)
+or their ACTIONS (a thing they DID)? Identity → cut. Actions → leave.
+
+When you find a sentence whose punchline targets identity:
+DELETE the sentence and replace with this comment:
+
+<!-- EDITOR FLAG: PUNCHING DOWN — removed: "[quote of cut sentence]" — joke targeted [category]. Writer needs a different angle. -->
+
+This is HARD REMOVAL, not a soft flag. The line cannot ship. The flag tells
+the writer what was cut so they can rewrite the section if needed.
+
+================================================================================
 CHECK 8 — FACTUAL VERIFICATION (flag, do not fix)
 ================================================================================
 
@@ -259,7 +297,7 @@ OUTPUT RULES
 ================================================================================
 
 - Return the full corrected HTML. Do not summarize. Do not truncate.
-- Apply all automatic fixes (Checks 1, 4, 5) directly in the HTML.
+- Apply all automatic fixes (Checks 1, 4, 5, 7) directly in the HTML.
 - Insert all flags (Checks 2, 3, 6, 8) as HTML comments inline at the relevant location.
 - Do not add any preamble or explanation outside the HTML.
 - Do not wrap output in markdown code fences.

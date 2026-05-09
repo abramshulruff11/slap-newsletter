@@ -54,22 +54,52 @@ Delete both sentences. Find the specific fact that makes the point instead.
 The fact is always funnier and more devastating than the metaphor.
 
 ================================================================================
-RULE 5 — NBA PLAYOFFS > NFL RECAP CONTENT (MAY–JUNE)
+RULE 5 — EVERGREEN / OFF-SEASON CONTENT CANNOT LEAD
 ================================================================================
-From May 1 through the end of the NBA Finals, the NFL year-round tiebreaker is
-SUSPENDED for any NFL story that is recap or stat-fact content from a
-season that has already ended. NBA Playoffs are a Tier 1 calendar event. They
-outrank evergreen NFL stat posts every time.
+A stat post or recap from a season that has already ended cannot lead the
+newsletter. This applies to all sports.
 
-BAD (lead): "The Bills went 2-of-9 on two-point conversions in 2025." That
-season ended in February. There is no game today. It is a SharpFootball stat
-post, not news.
-GOOD (lead): A playoff game from yesterday. A series-shifting injury. A
-historic playoff stat line.
+The test: did the underlying event the post references happen in the last 7
+days? If no, and any other sport has an active Tier 1 event (NBA Playoffs,
+World Series, CFP, etc.), the off-season content does not lead. It can still
+appear in Around the League if the stat is genuinely interesting.
 
-The test: did the NFL story happen in the last 7 days? If no, and the NBA
-Playoffs are active, the NFL story does not lead. It can still appear as
-Around the League if the stat is genuinely interesting.
+BAD (lead, May): "The Bills went 2-of-9 on two-point conversions in 2025."
+The 2024-25 NFL season ended in February. There is no game today. It is a
+SharpFootball stat post, not news.
+GOOD (lead, May): A playoff game from yesterday. A series-shifting injury.
+A historic playoff stat line.
+
+This rule reinforces the calendar-first lead selection in
+pass1_story_selector.txt. Both should reach the same conclusion: NBA Playoffs
+lead in May, not Bears stat posts.
+
+================================================================================
+RULE 6 — NO PUNCHING DOWN. EVER.
+================================================================================
+SLAP humor targets PUBLIC FIGURES IN THEIR PROFESSIONAL CAPACITY, teams,
+leagues, brands, owners, and the writer himself. Never an identity category.
+
+NEVER target:
+- Disabilities (stuttering, dyslexia, autism, ADHD, physical disability)
+- Race, ethnicity, or national origin
+- Religion
+- Sexual orientation or gender identity
+- Body type or weight (unless directly an athletic point, no mockery)
+- Mental health diagnoses (depression, anxiety, OCD, PTSD)
+- Family members of athletes who aren't themselves public figures
+- Death or terminal illness as a punchline
+
+THE TEST: if the joke's punchline is what the target IS rather than what
+they DID, it's punching down. Cut it.
+
+The "stuttering convention" line that referred to the Vikings WRs in the
+5/8/2026 issue is the canonical failure to avoid. Mocking a speech disorder
+to frame a roster joke is never acceptable, no matter how clever the line
+seems.
+
+The editor's Check 7 enforces this with auto-removal. The writer's
+responsibility is to not generate these lines in the first place.
 
 ================================================================================
 FACT VERIFICATION

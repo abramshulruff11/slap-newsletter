@@ -1,5 +1,98 @@
 [
   {
+    "date": "2026-05-09",
+    "story_log": [
+      {
+        "topic_key": "wembanyama-spurs-timberwolves-2026",
+        "title": "Wemby's 39-15-5 gem in Game 3 puts Spurs up 2-1 on the Wolves",
+        "section": "lead",
+        "development": "Wemby dropped 39 points, 15 rebounds, and 5 blocks (13-18 FG, 16 in 4Q) to lead Spurs to Game 3 road win. First player in NBA history with 35/15/5b on 70%+ FG in playoffs. Chris Finch had on-court confrontation with Tony Brothers. Julius Randle disappeared with 12-0-3 on 3-12 FG.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "knicks-sixers-second-round-2026",
+        "title": "Knicks go up 3-0 behind Brunson, take over Philly arena",
+        "section": "supporting",
+        "development": "Knicks won Game 3 in Philly without OG Anunoby (hamstring). Brunson had 33 points and 9 assists. Landry Shamet gave 15 bench points, Philly bench had 11. Embiid went 8 points on 3-7 shooting in first half then complained about refs. Knicks fans packed arena — might be biggest road takeover in NBA history.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "guardians-bailey-trade-2026",
+        "title": "Guardians acquire Gold Glove C Patrick Bailey from Giants",
+        "section": "supporting",
+        "development": "Cleveland traded No. 29 draft pick and LHP Matt Wilkinson for two-time Gold Glove catcher Patrick Bailey. Bailey has struggled offensively but is elite defensively. Giants get $3.27M in slot value.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "breece-hall-extension-2026",
+        "title": "Jets lock in Breece Hall with 3-year, $45.75M extension",
+        "section": "supporting",
+        "development": "Hall, who was franchise tagged in March, signed 3-year extension worth $45.75M. One of the league's top backs locked in through 2028.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "cubs-win-streak-2026",
+        "title": "Cubs hit SECOND 10-game win streak of 2026 season",
+        "section": "atl",
+        "development": "Chicago won 10th straight game today, marking second 10-game streak this season — first MLB team to do that since 1955. Cubs have best record in baseball and 15-0 home streak at Wrigley. Michael Busch saw 37 pitches in 5 plate appearances.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "jacob-misiorowski-velocity-2026",
+        "title": "Brewers pitcher Jacob Misiorowski throws 10 pitches at 103+ mph",
+        "section": "atl",
+        "development": "Misiorowski threw 10 pitches of at least 103 mph and hit 105.3 — highest velocity by any starter since Statcast began in 2008. Also threw 6 shutout innings with 11 strikeouts vs Yankees.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "broncos-paton-extension-2026",
+        "title": "Broncos extend GM George Paton through 2030",
+        "section": "atl",
+        "development": "Denver signed GM George Paton to five-year extension through 2030. Built roster that reached AFC Championship last season.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "mavs-hire-mike-schmitz-2026",
+        "title": "Mavs hire Mike Schmitz as GM under Masai Ujiri",
+        "section": "atl",
+        "development": "Dallas hired former Blazers assistant GM Mike Schmitz to run basketball operations under president Masai Ujiri.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "nfl-refs-cba-2026",
+        "title": "NFL refs ratify 7-year CBA, avoid work stoppage",
+        "section": "atl",
+        "development": "NFLRA ratified new seven-year CBA with NFL through 2032 season. Vote was 116-4. Eliminates possibility of replacement refs.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "mccaffrey-culpo-baby-2026",
+        "title": "Christian McCaffrey and Olivia Culpo expecting second child",
+        "section": "atl",
+        "development": "49ers RB and former Miss Universe announced they're expecting second child.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "wnba-opening-night-2026",
+        "title": "WNBA season tips off with Caitlin Clark's Fever debut",
+        "section": "atl",
+        "development": "WNBA season opens today with Fever vs Wings. Caitlin Clark in Year 3, Azzi Fudd makes WNBA debut. Toronto Tempo plays first game in franchise history as Canada's first WNBA team. Breanna Stewart had 31-10-3 in Liberty opener.",
+        "is_new": true,
+        "resolved": false
+      }
+    ]
+  },
+  {
     "date": "2026-05-08",
     "story_log": [
       {
