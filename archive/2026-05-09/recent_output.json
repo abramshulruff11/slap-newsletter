@@ -1,0 +1,391 @@
+[
+  {
+    "date": "2026-05-08",
+    "story_log": [
+      {
+        "topic_key": "bears-penalty-disparity-2025",
+        "title": "Bears opponents drew fewest penalty yards in NFL in 2025 season",
+        "section": "lead",
+        "development": "Sharp Football Analytics published final 2025 season penalty data showing Bears opponents drew just 678 penalty yards — 400+ fewer than Cowboys and Giants",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "okc-lakers-second-round-2026",
+        "title": "Thunder go up 2-0 on Lakers with dominant home win",
+        "section": "supporting",
+        "development": "OKC won Game 2 behind SGA and Chet Holmgren, remain perfect at 6-0 in playoffs; Lakers and JJ Redick complain about officiating after game",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "pistons-cavaliers-second-round-2026",
+        "title": "Pistons take 2-0 series lead as Cade dominates at home",
+        "section": "supporting",
+        "development": "Detroit won Game 2 behind Cade Cunningham's 25-10 and clutch fourth quarter; James Harden continues playoff struggles with more turnovers than baskets",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "jauan-jennings-vikings-2026",
+        "title": "Vikings sign 49ers WR Jauan Jennings to $13M one-year deal",
+        "section": "supporting",
+        "development": "Jennings replaces Jalen Nailor who left for Raiders; will play with Kyler Murray who was his college QB at Tennessee",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "cubs-hot-streak-2026",
+        "title": "Cubs win 9th straight to tie Yankees and Braves for best record in MLB",
+        "section": "atl",
+        "development": "Chicago swept Reds to improve to 26-12, tied with NYY/ATL for best record; PCA celebrates with mop",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "march-madness-expansion-2027",
+        "title": "NCAA votes to expand men's and women's tournaments to 76 teams",
+        "section": "atl",
+        "development": "Committee unanimously approved expansion starting 2027; first games Tuesday/Wednesday with new bracket format",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "taylor-heinicke-retirement-2026",
+        "title": "Taylor Heinicke retires after 11-year NFL career",
+        "section": "atl",
+        "development": "Journeyman QB who started playoff game for Washington announces retirement",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "og-anunoby-injury-2026",
+        "title": "Knicks' OG Anunoby suffers hamstring strain in Game 2 win",
+        "section": "atl",
+        "development": "Anunoby diagnosed with right hamstring strain, questionable for Game 3; is Knicks second-leading scorer at 21.4 PPG",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "hurricanes-sweep-watch-2026",
+        "title": "Hurricanes one win from second consecutive sweep",
+        "section": "atl",
+        "development": "Carolina takes 3-0 lead over Flyers after Game 3 win; could secure back-to-back sweeps",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "rays-win-streak-2026",
+        "title": "Rays go 13-1 in last 14 games with dominant pitching",
+        "section": "atl",
+        "development": "Tampa Bay has allowed just 21 runs in last 14 games, only team under 40 in that span",
+        "is_new": true,
+        "resolved": false
+      }
+    ]
+  },
+  {
+    "date": "2026-05-04",
+    "story_log": [
+      {
+        "topic_key": "mavs-hire-masai-ujiri-2026",
+        "title": "Mavs Hire Masai Ujiri as Team President After Six-Month Search",
+        "section": "lead",
+        "development": "Dallas officially hired Ujiri as Team President and Alternate Governor after firing Nico Harrison in November. Ujiri built Raptors' 2019 championship team.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "magic-fire-jamahl-mosley-2026",
+        "title": "Magic Fire Jamahl Mosley After Blowing 3-1 Lead to Pistons",
+        "section": "supporting",
+        "development": "Orlando dismissed Mosley after 5 seasons following third straight first-round exit. Sources say Paolo frustrated with late-game playcalling.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "anthony-edwards-injury-game1-2026",
+        "title": "Anthony Edwards Pushing to Play Game 1 Despite Injury",
+        "section": "supporting",
+        "development": "Edwards listed as questionable, participated significantly in shootaround, pushing medical staff to let him play vs Spurs.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "cowboys-schedule-difficulty-2026",
+        "title": "Cowboys Face #4 Toughest Schedule After Playing #3 Easiest in 2025",
+        "section": "supporting",
+        "development": "Sharp Football Analytics released 2026 schedule rankings. Cowboys have second-biggest difficulty jump league-wide.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "colts-decline-richardson-option-2026",
+        "title": "What's Next for Anthony Richardson After Colts Decline Fifth-Year Option",
+        "section": "atl",
+        "development": "Analysis pieces examining Richardson's future after Colts declined option. He hits free agency after 2026 season.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "john-sterling-death-2026",
+        "title": "Baseball World Mourns Yankees Radio Icon John Sterling",
+        "section": "atl",
+        "development": "Tributes continue pouring in day after Sterling's death. Reactions from players, media, fans remembering iconic calls.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "braves-best-start-1892-2026",
+        "title": "Braves Off to Best Start Since 1892 Boston Beaneaters",
+        "section": "atl",
+        "development": "Atlanta's hot start matches franchise's best since 1892 when they were the Boston Beaneaters.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "giants-call-up-bryce-eldridge-2026",
+        "title": "Giants Call Up Top Prospect Bryce Eldridge After 0-6 Road Trip",
+        "section": "atl",
+        "development": "San Francisco calling up Eldridge after producing just 2 runs in 3-game Rays series during brutal 0-6 road trip.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "savannah-bananas-kyle-field-2026",
+        "title": "Savannah Bananas Pack Kyle Field With 102,000 Fans",
+        "section": "atl",
+        "development": "Bananas filled Texas A&M football stadium to capacity for game vs Texas Tailgaters. Largest crowd in exhibition baseball history.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nfl-schedule-2026-release",
+        "title": "NFL 2026 Schedule Strength Rankings Released",
+        "section": "atl",
+        "development": "Sharp Football Analytics published full 2026 schedule difficulty rankings. Lions easiest, Cardinals hardest.",
+        "is_new": true,
+        "resolved": false
+      }
+    ]
+  },
+  {
+    "date": "2026-05-04",
+    "story_log": [
+      {
+        "topic_key": "cavs-raptors-first-round-2026",
+        "title": "Cavs Ice Drake and Toronto, Advance on Jarrett Allen's 22-19",
+        "section": "lead",
+        "development": "Cavs won Game 7 at home. Jarrett Allen dominates with 22 points, 19 rebounds in closeout win.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "pistons-magic-first-round-2026",
+        "title": "Pistons Complete 3-1 Comeback, First Series Win in 18 Years",
+        "section": "supporting",
+        "development": "Pistons won Game 7, completed 3-1 comeback. First playoff series win since 2008. Tobias Harris 30 pts, Cade 32 pts.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "jaylen-brown-embiid-flop-complaint-2026",
+        "title": "Jaylen Brown Calls Out Embiid for Flopping, Refs for 'Agenda'",
+        "section": "supporting",
+        "development": "Jaylen Brown went on Twitch stream day after Game 7 loss, accused Embiid of flopping and refs of having agenda.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "john-sterling-death-2026",
+        "title": "Yankees Radio Icon John Sterling Dies at 87",
+        "section": "supporting",
+        "development": "John Sterling, Yankees radio voice for 36 seasons, died today.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "colts-decline-richardson-option-2026",
+        "title": "Colts Decline Anthony Richardson's Fifth-Year Option",
+        "section": "atl",
+        "development": "Colts declined Richardson's 2027 option. He will hit free agency after 2026 season.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "wild-avalanche-game1-2026",
+        "title": "Wild-Avalanche Game 1 Ends 9-6 in 15-Goal Shootout",
+        "section": "atl",
+        "development": "Game 1 of second round series had 15 combined goals, 10th such playoff game in NHL history.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "paolo-banchero-magic-blowout-quote-2026",
+        "title": "Paolo Banchero Questions Magic's Championship Ceiling After Collapse",
+        "section": "atl",
+        "development": "After Magic blew 3-1 lead, Paolo said 'I can't say we're good enough to be in the Finals or Eastern finals.'",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "volpe-yankees-option-2026",
+        "title": "Yankees Option Anthony Volpe to Triple-A",
+        "section": "atl",
+        "development": "Volpe optioned to minors after rehab window closed.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "calais-campbell-ravens-return-2026",
+        "title": "Calais Campbell Returns to Ravens on One-Year Deal",
+        "section": "atl",
+        "development": "Veteran DE Campbell reuniting with Ravens after playing there 2020-2022.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "fernando-mendoza-draft-2026",
+        "title": "Fernando Mendoza Working Under Center in Raiders Rookie Camp",
+        "section": "atl",
+        "development": "Mendoza says he's learned a lot but has long way to go taking snaps under center.",
+        "is_new": false,
+        "resolved": false
+      }
+    ]
+  },
+  {
+    "date": "2026-04-27",
+    "lead_story": "Diego Pavia Goes Undrafted Then Gets Ravens Minicamp Invite",
+    "all_headlines": [
+      "Diego Pavia Goes Undrafted Then Gets Ravens Minicamp Invite",
+      "41-Year-Old LeBron Has Worst Playoff Game of His Career",
+      "Rams Draft Stafford's Replacement While He's Still the Reigning MVP",
+      "Nigeria's Uar Bernard Gets Drafted Having Never Played Football",
+      "Mike Tomlin: Recent Playoff Failures Drove My Decision to Step Away"
+    ],
+    "gif_references": [
+      "Monkey Puppet Side-Eye — extremely awkward situation",
+      "Ralph Wiggum \"I'm in danger\" — Simpsons",
+      "Leonardo DiCaprio raising glass — pure respect for the honesty"
+    ]
+  },
+  {
+    "date": "2026-04-25",
+    "lead_story": "LeBron at 41 Throws a Lob to His Son Then Hits the Shot to Force OT",
+    "all_headlines": [
+      "LeBron at 41 Throws a Lob to His Son Then Hits the Shot to Force OT",
+      "Cardinals Get Roasted for Carson Beck 'D' Grade, Third String QB Competition",
+      "Falcons Draft Avieon Terrell to Play With Brother A.J., Who 'Didn't Want It to Happen'",
+      "Steelers Draft Drew Allar With Pick They Got From Cowboys in George Pickens Trade",
+      "Jermod McCoy Falls Out of Day 2 Entirely, Still Waiting for Call"
+    ],
+    "gif_references": [
+      "Rocky Balboa training montage — American dream coming true",
+      "This is fine dog sitting in burning room",
+      "Ralph Wiggum \"I'm in danger\"",
+      "Monkey Puppet Side-Eye — extremely awkward situation"
+    ]
+  },
+  {
+    "date": "2026-04-24",
+    "lead_story": "Fernando Mendoza: From Cal Benchwarmer to #1 Overall Pick in 12 Months",
+    "all_headlines": [
+      "Fernando Mendoza: From Cal Benchwarmer to #1 Overall Pick in 12 Months",
+      "Cardinals Shock Everyone, Take RB Jeremiyah Love at #3 Overall",
+      "Rams Draft Their Stafford Replacement While He's Still MVP",
+      "Eagles Literally Steal Makai Lemon From Steelers While He's On Phone With Pittsburgh",
+      "Jets Go Full Rebuild Mode With Three First-Round Picks",
+      "Hawks Take 2-1 Lead As Mikal Bridges Posts Historic Bagel"
+    ],
+    "gif_references": [
+      "Rocky Balboa training montage — American dream coming true",
+      "Leonardo DiCaprio raising glass Django — pure respect",
+      "Fresh Prince \"how come he don't want me\"",
+      "Monkey Puppet Side-Eye — extremely awkward situation",
+      "Will Smith \"that's hot\" — smooth move by Philadelphia",
+      "Tiger King \"I will never financially recover from this\" — five first-round picks for a playoff goose egg"
+    ]
+  },
+  {
+    "date": "2026-04-23",
+    "lead_story": "NFL Draft Night Is Finally Here — And Nobody Knows What Happens After Pick #1",
+    "all_headlines": [
+      "NFL Draft Night Is Finally Here — And Nobody Knows What Happens After Pick #1",
+      "Mike Vrabel Steps Away From Patriots for Counseling After Dianna Russini Photos",
+      "Thunder Take 2-0 Lead But Lose Jalen Williams to Injury",
+      "Devin Booker Calls Out Ref by Name: 'It's Bad for the Sport'",
+      "Keldon Johnson Wins 6MOY After Breaking Manu's Spurs Record"
+    ],
+    "gif_references": [
+      "Rocky Balboa training montage — American dream coming true",
+      "Michael Jackson eating popcorn — watching drama unfold"
+    ]
+  },
+  {
+    "date": "2026-04-22",
+    "lead_story": "Wemby's Face-First Fall Throws Spurs Season Into Chaos",
+    "all_headlines": [
+      "Wemby's Face-First Fall Throws Spurs Season Into Chaos",
+      "VJ Edgecombe Goes Nuclear in Boston, 76ers Steal Game 2",
+      "Luke Kennard Averaging More Playoff PPG Than Magic Johnson",
+      "Fernando Mendoza Won't Attend Draft to Care for Mom"
+    ],
+    "gif_references": [
+      "CJ San Andreas \"ah shit here we go again\"",
+      "This is fine dog sitting in burning room",
+      "Math lady with equations floating around her head",
+      "Surprised Pikachu"
+    ]
+  },
+  {
+    "date": "2026-04-21",
+    "lead_story": "CJ McCollum Channels Trae Young, Steals One at MSG",
+    "all_headlines": [
+      "CJ McCollum Channels Trae Young, Steals One at MSG",
+      "Wemby Wins DPOY at 21, Drops 35 in Playoff Debut",
+      "Timberwolves Erase 19-Point Deficit, Ant Gets Unhinged",
+      "Brandon Aubrey Goes From Spring Football to NFL History",
+      "Jimmy Garoppolo Considering Retirement",
+      "OBJ Returns to Giants for Workout"
+    ],
+    "gif_references": [
+      "\"Steve Buscemi how do you do fellow kids\"",
+      "\"Leonardo DiCaprio raising glass Django\"",
+      "\"Jordan Peele sweating then relieved\"",
+      "\"American dream coming true montage\""
+    ]
+  },
+  {
+    "date": "2026-04-20",
+    "lead_story": "Will Anderson Jr. Becomes Highest-Paid Non-QB in History",
+    "all_headlines": [
+      "Will Anderson Jr. Becomes Highest-Paid Non-QB in History",
+      "AJ Brown Is 'Likely' Becoming a Patriot",
+      "Wemby Drops 35 in Playoff Debut, Breaks Spurs Record",
+      "Cardinals Eyeing RB Surprise at No. 3 Overall?",
+      "Dexter Lawrence Gets His Wish and His Bag"
+    ],
+    "gif_references": [
+      "Tiger King I will never financially recover from this",
+      "Michael Jordan and I took that personally",
+      "Leonardo DiCaprio raising glass Django"
+    ]
+  },
+  {
+    "date": "2026-04-12",
+    "lead_story": "Fernando Mendoza Goes From Cal Backup to #1 Overall Pick in One Transfer",
+    "all_headlines": [
+      "Fernando Mendoza Goes From Cal Backup to #1 Overall Pick in One Transfer",
+      "Iowa State's Shooting God Enters Draft AND Transfer Portal",
+      "Masters Sunday: Rory Tries to Avoid Historic Collapse",
+      "#1 Transfer Portal Player Picks Louisville"
+    ],
+    "gif_references": [
+      "Vince McMahon progressive excitement",
+      "surprised Pikachu",
+      "Leonardo DiCaprio pointing at TV",
+      "This is fine dog sitting in burning room"
+    ]
+  }
+]
