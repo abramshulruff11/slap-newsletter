@@ -452,55 +452,159 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> st
 
     messages = [{"role": "user", "content": user_content}]
 
-    # Retry loop. On JSON failure, send a corrective follow-up turn and try
-    # again. After MAX_ATTEMPTS, abort the pipeline rather than passing
-    # garbage to Pass 2 (which has caused full-pipeline failures historically).
+    # Tool definition for structured output.
+    # Using tool_use instead of free-form JSON eliminates JSON escape errors
+    # (unescaped quotes in tweet text, etc.) because the SDK parses tool inputs
+    # and we re-serialize with json.dumps() which handles escaping correctly.
+    _tweet = {
+        "type": "object",
+        "properties": {
+            "account": {"type": "string"},
+            "url":     {"type": "string"},
+            "text":    {"type": "string"},
+            "reason":  {"type": "string"},
+        },
+        "required": ["account", "url", "text"],
+    }
+    _story = {
+        "type": "object",
+        "properties": {
+            "topic":          {"type": "string"},
+            "headline":       {"type": "string"},
+            "tweets":         {"type": "array", "items": _tweet},
+            "research_notes": {"type": "string"},
+            "gif_concept":    {"type": "string"},
+            "meme_concept":   {"type": "string"},
+        },
+        "required": ["topic", "headline", "tweets"],
+    }
+    _log_item = {
+        "type": "object",
+        "properties": {
+            "topic_key":   {"type": "string"},
+            "title":       {"type": "string"},
+            "section":     {"type": "string"},
+            "development": {"type": "string"},
+            "is_new":      {"type": "boolean"},
+            "resolved":    {"type": "boolean"},
+        },
+        "required": ["topic_key", "title", "section", "development", "is_new", "resolved"],
+    }
+    tool_definition = {
+        "name": "submit_story_plan",
+        "description": (
+            "Submit the completed story plan for today's SLAP newsletter. "
+            "You MUST call this tool — do not respond with plain text."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "date":       {"type": "string"},
+                "story_log":  {"type": "array", "items": _log_item},
+                "lead_story": _story,
+                "supporting_stories": {"type": "array", "items": _story},
+                "around_the_league": {
+                    "type": "object",
+                    "properties": {
+                        "tweets": {
+                            "type": "array",
+                            "items": _tweet,
+                            "minItems": 10,
+                            "maxItems": 10,
+                            "description": "Exactly 10 tweets. No more, no fewer.",
+                        }
+                    },
+                    "required": ["tweets"],
+                },
+                "closer": _story,
+                "account_distribution": {
+                    "type": "object",
+                    "additionalProperties": {"type": "integer"},
+                },
+            },
+            "required": ["date", "story_log", "lead_story", "supporting_stories",
+                         "around_the_league", "closer", "account_distribution"],
+        },
+        "cache_control": {"type": "ephemeral"},
+    }
+
     MAX_ATTEMPTS = 3
     total_in = total_out = total_cache_read = total_cache_write = 0
 
     for attempt in range(1, MAX_ATTEMPTS + 1):
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=8192,
-            system=[
-                {
-                    "type": "text",
-                    "text": selector_prompt,
-                    "cache_control": {"type": "ephemeral"},
-                }
-            ],
-            messages=messages,
-        )
+        api_error = None
+        response  = None
 
-        total_in          += response.usage.input_tokens
-        total_out         += response.usage.output_tokens
-        total_cache_read  += getattr(response.usage, "cache_read_input_tokens", 0)
-        total_cache_write += getattr(response.usage, "cache_creation_input_tokens", 0)
-
-        story_plan_raw = extract_text(response)
-        story_plan_raw = strip_code_fences(story_plan_raw)
-
-        # Extract the outermost JSON object in case the model added prose around it
-        json_match = re.search(r'\{.*\}', story_plan_raw, re.DOTALL)
-        if json_match:
-            story_plan_raw = json_match.group(0)
-
-        # Validate JSON + required structure
-        validation_error = None
-        plan = None
         try:
-            plan = json.loads(story_plan_raw)
-            if not isinstance(plan, dict):
-                validation_error = "Output is not a JSON object"
-            elif "lead_story" not in plan:
-                validation_error = "Missing required field: lead_story"
-            elif "story_log" not in plan:
-                validation_error = "Missing required field: story_log"
-        except json.JSONDecodeError as e:
-            validation_error = f"JSON parse error: {e}"
+            response = client.messages.create(
+                model=MODEL,
+                max_tokens=8192,
+                system=[
+                    {
+                        "type": "text",
+                        "text": selector_prompt,
+                        "cache_control": {"type": "ephemeral"},
+                    }
+                ],
+                tools=[tool_definition],
+                tool_choice={"type": "tool", "name": "submit_story_plan"},
+                messages=messages,
+            )
+        except Exception as e:
+            api_error = str(e)
+
+        if response is not None:
+            total_in          += response.usage.input_tokens
+            total_out         += response.usage.output_tokens
+            total_cache_read  += getattr(response.usage, "cache_read_input_tokens", 0)
+            total_cache_write += getattr(response.usage, "cache_creation_input_tokens", 0)
+
+        # --- Determine outcome ---
+        validation_error = None
+        plan         = None
+        tool_use_id  = None
+
+        if api_error:
+            validation_error = f"API error (likely malformed JSON in tool input): {api_error}"
+
+        elif response is None:
+            validation_error = "No response received from API"
+
+        else:
+            tool_block = next(
+                (b for b in response.content
+                 if b.type == "tool_use" and b.name == "submit_story_plan"),
+                None,
+            )
+            if tool_block is None:
+                validation_error = "Model did not invoke submit_story_plan tool"
+            else:
+                tool_use_id = tool_block.id
+                plan = tool_block.input  # already a parsed Python dict from the SDK
+
+                if not isinstance(plan, dict):
+                    validation_error = "Tool input is not a dict"
+                elif "lead_story" not in plan:
+                    validation_error = "Missing required field: lead_story"
+                elif "story_log" not in plan:
+                    validation_error = "Missing required field: story_log"
+                else:
+                    atl = plan.get("around_the_league", {})
+                    atl_tweets = (
+                        atl.get("tweets", []) if isinstance(atl, dict)
+                        else (atl if isinstance(atl, list) else [])
+                    )
+                    if len(atl_tweets) < 8:
+                        validation_error = (
+                            f"Around the League has {len(atl_tweets)} tweets — "
+                            f"must be exactly 10. Add {10 - len(atl_tweets)} more."
+                        )
 
         if validation_error is None:
-            # Success — print cumulative cost, run remaining validations, return.
+            # Success — re-serialize via json.dumps so downstream always gets
+            # correctly escaped JSON regardless of what was in tweet text.
+            story_plan_raw = json.dumps(plan, ensure_ascii=False)
+
             cost_summary("PASS 1", total_in, total_out, total_cache_read, total_cache_write)
             if attempt > 1:
                 print(f"  ✓ Pass 1 succeeded on attempt {attempt}/{MAX_ATTEMPTS}")
@@ -512,44 +616,78 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> st
             else:
                 print(f"  ✓ Account distribution within caps")
 
-            # Count tweets with missing text — warn if any slipped through
+            atl = plan.get("around_the_league", {})
+            atl_tweets = (
+                atl.get("tweets", []) if isinstance(atl, dict)
+                else (atl if isinstance(atl, list) else [])
+            )
             missing_text = 0
-            for section in [plan.get("lead_story", {})] + plan.get("supporting_stories", []):
+            for section in ([plan.get("lead_story", {})]
+                            + plan.get("supporting_stories", [])
+                            + [plan.get("closer", {})]):
                 for t in section.get("tweets", []):
                     if not t.get("text", "").strip():
                         missing_text += 1
-            atl = plan.get("around_the_league", {})
-            atl_tweets = atl if isinstance(atl, list) else atl.get("tweets", [])
             for t in atl_tweets:
                 if not t.get("text", "").strip():
                     missing_text += 1
             if missing_text:
-                print(f"  ⚠ {missing_text} tweet(s) have missing text — writer will skip them")
+                print(f"  ⚠ {missing_text} tweet(s) missing text — writer will skip them")
             else:
                 print(f"  ✓ All tweets have text")
+            print(f"  ✓ Around the League: {len(atl_tweets)} tweets")
 
             return story_plan_raw
 
-        # Validation failed — retry with corrective turn, or abort.
+        # --- Handle failure: build corrective messages then retry or abort ---
         if attempt < MAX_ATTEMPTS:
             print(f"  ⚠ Pass 1 attempt {attempt}/{MAX_ATTEMPTS} invalid: {validation_error}")
-            print(f"    Retrying with corrective instruction...")
-            messages.append({
-                "role": "assistant",
-                "content": story_plan_raw[:2000],
-            })
-            messages.append({
-                "role": "user",
-                "content": (
-                    f"⚠ Your previous response was not valid JSON.\n"
-                    f"Error: {validation_error}\n\n"
-                    f"Respond again with ONLY a single valid JSON object. "
-                    f"No prose before or after. No markdown code fences. "
-                    f"The output must start with {{ and end with }} and must "
-                    f"include both 'lead_story' and 'story_log' top-level fields "
-                    f"per the schema in your system prompt."
-                ),
-            })
+            print( "    Retrying with corrective instruction...")
+
+            if response is not None and tool_use_id:
+                # Proper tool-use retry: return a tool_result with the error so
+                # the model understands exactly what went wrong and can fix it.
+                messages.append({"role": "assistant", "content": response.content})
+                messages.append({
+                    "role": "user",
+                    "content": [{
+                        "type":        "tool_result",
+                        "tool_use_id": tool_use_id,
+                        "content":     (
+                            f"❌ Validation failed: {validation_error}\n\n"
+                            "Fix the issue and call submit_story_plan again. "
+                            "If Around the League is short, add more tweet objects until there are exactly 10. "
+                            "All required top-level fields must be present."
+                        ),
+                        "is_error": True,
+                    }],
+                })
+
+            elif response is not None:
+                # Model responded with text instead of calling the tool.
+                messages.append({"role": "assistant", "content": response.content})
+                messages.append({
+                    "role": "user",
+                    "content": (
+                        f"⚠ Error: {validation_error}\n\n"
+                        "You must call the submit_story_plan tool with your full story plan. "
+                        "Do not respond with plain text."
+                    ),
+                })
+
+            else:
+                # API-level error (e.g. malformed JSON in tool input).
+                # Don't append an assistant turn — add a corrective user message.
+                messages.append({
+                    "role": "user",
+                    "content": (
+                        f"⚠ The previous API call failed: {api_error}\n\n"
+                        "This is usually caused by special characters (unescaped quotes, "
+                        "backslashes) inside string values. "
+                        "Call submit_story_plan again with your complete story plan."
+                    ),
+                })
+
         else:
             cost_summary("PASS 1", total_in, total_out, total_cache_read, total_cache_write)
             print(f"  ✗ Pass 1 FAILED after {MAX_ATTEMPTS} attempts: {validation_error}")
@@ -557,8 +695,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> st
                 f"Pass 1 produced invalid output after {MAX_ATTEMPTS} attempts. "
                 f"Last error: {validation_error}. "
                 f"Aborting pipeline to prevent garbage downstream output. "
-                f"Check the raw Pass 1 response and the pass1_story_selector.txt "
-                f"prompt for issues."
+                f"Check pass1_story_selector.txt and raw content for issues."
             )
 
     # Unreachable, but appease linters/type checkers.
