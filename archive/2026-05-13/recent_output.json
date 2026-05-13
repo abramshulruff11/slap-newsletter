@@ -7,6 +7,107 @@
         "title": "Jason Collins, NBA's first openly gay player, dies at 47 after battle with glioblastoma",
         "section": "lead",
         "development": "Collins died today at 47 after battle with Stage 4 glioblastoma diagnosed in December. NBA community mourning the loss of a pioneer.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "brandon-clarke-death-2026",
+        "title": "Brandon Clarke of the Memphis Grizzlies dies at 29 years old",
+        "section": "supporting",
+        "development": "Clarke, a 7-year veteran forward and 2019 first-round pick, died today at 29 years old.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "wembanyama-spurs-timberwolves-game5-2026",
+        "title": "Wemby's revenge game: 27-17-5-3b as Spurs take 3-2 series lead over Wolves",
+        "section": "supporting",
+        "development": "After ejection in Game 4, Wembanyama explodes for 27 points, 17 rebounds, 5 assists, 3 blocks. Had 16 points in first 6 minutes. Spurs one win from Western Conference Finals for first time since 2017. Dylan Harper 12-10 off bench, Keldon Johnson 21 points. Julius Randle continues to struggle.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "daryl-morey-sixers-departure-2026",
+        "title": "Sixers fire Daryl Morey after six seasons, Nick Nurse stays as head coach",
+        "section": "supporting",
+        "development": "Morey and ownership met today in Philadelphia and decided to part ways. Bob Myers will lead search for new president of basketball operations. Nick Nurse continues as head coach into fourth season despite GM being fired.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "paul-skenes-start-may12-2026",
+        "title": "Paul Skenes flirts with no-hitter, continues historically dominant stretch",
+        "section": "atl",
+        "development": "Skenes took no-hitter into late innings, finished with 8 IP, 1 H, 0 R, 0 BB, 10 SO. Now has 16 IP, 4 H, 0 R, 0 BB, 17 SO in May. Only pitcher with multiple 8+ IP, 7+ SO starts this season. ERA at 1.98 across first 64 career starts.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "nfl-schedule-international-2026",
+        "title": "NFL reveals full international slate: 9 games across 6 countries",
+        "section": "atl",
+        "development": "All nine international matchups announced: Week 1 Rams/49ers in Australia, Week 3 Ravens/Cowboys in Brazil, three London games, France, Spain, Germany, Mexico. Full schedule releases Thursday.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "cal-raleigh-hitless-streak-2026",
+        "title": "Cal Raleigh snaps 0-for-38 slump with hits in consecutive at-bats",
+        "section": "atl",
+        "development": "Raleigh broke out of longest hitless streak of his career and longest by any player this season with single, then hit again. Teammates saved the ball. Prior to game, showered in full uniform to break the slump.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "shohei-ohtani-homer-may12-2026",
+        "title": "Shohei Ohtani ends 13-game homer drought with Ice Cube in the booth",
+        "section": "atl",
+        "development": "Ohtani hit first home run since April 26th moments after Ice Cube entered the Dodgers broadcast booth. Wanted the ball back from fan.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "sabres-canadiens-game4-2026",
+        "title": "Sabres tie series 2-2 with Tage Thompson bank-shot goal from mid-ice",
+        "section": "atl",
+        "development": "Buffalo rallied in Game 4 in Montreal. Tage Thompson scored off the boards from mid-ice. Zach Benson gave Sabres third-period lead. Series tied 2-2.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "golden-knights-ducks-game5-2026",
+        "title": "Golden Knights go up 3-2 on Ducks with OT win, can close out series in Anaheim",
+        "section": "atl",
+        "development": "Pavel Dorofeyev scored in overtime to give Vegas 3-2 series lead. Tomas Hertl scored twice after going 29 games without a goal. Knights can advance in Game 6.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "tracy-mcgrady-wagner-college-2026",
+        "title": "Tracy McGrady joins Wagner College as strategic advisor as son commits",
+        "section": "atl",
+        "development": "Hall of Famer McGrady takes role with Wagner men's basketball program, leading operations, recruiting and NIL efforts. Son Laymen committed to Wagner last month.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "giants-celebration-controversy-2026",
+        "title": "Giants asked to stop thrusting celebration after viral postgame antics",
+        "section": "atl",
+        "development": "Giants players asked not to do explicit thrusting celebration anymore after it went viral. Tonight they responded with polite bowing celebration instead.",
+        "is_new": false,
+        "resolved": false
+      }
+    ]
+  },
+  {
+    "date": "2026-05-13",
+    "story_log": [
+      {
+        "topic_key": "jason-collins-death-2026",
+        "title": "Jason Collins, NBA's first openly gay player, dies at 47 after battle with glioblastoma",
+        "section": "lead",
+        "development": "Collins died today at 47 after battle with Stage 4 glioblastoma diagnosed in December. NBA community mourning the loss of a pioneer.",
         "is_new": true,
         "resolved": true
       },
