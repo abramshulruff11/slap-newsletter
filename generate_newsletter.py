@@ -1,8 +1,10 @@
 """
 SLAP Newsletter — Three-Pass Pipeline
-Pass 1: Story Selector  — picks stories, assigns tweets, enforces account diversity
-Pass 2: Writer          — generates newsletter HTML (with web search)
-Pass 3: Editor          — catches mechanical failures before shipping
+Pass 1:   Story Selector  — picks stories, assigns tweets, enforces account diversity
+Pass 2:   Writer          — generates newsletter HTML (with web search)
+Pass 2.5: Voice Editor    — prose-only pass to enforce SLAP voice
+Pre-Edit: Python auditor  — deterministic tweet misassignment check (no LLM)
+Pass 3:   Editor          — judgment-based checks (dueling sentences, punching down, etc.)
 
 Outputs:
   newsletter_draft.html    — styled preview for browser
@@ -605,6 +607,20 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> st
             # correctly escaped JSON regardless of what was in tweet text.
             story_plan_raw = json.dumps(plan, ensure_ascii=False)
 
+            # Fix malformed tweet URLs where model writes status= instead of status/
+            if 'status=' in story_plan_raw:
+                story_plan_raw = re.sub(
+                    r'(twitter\.com/\w+)/status=',
+                    r'\1/status/',
+                    story_plan_raw,
+                )
+                story_plan_raw = re.sub(
+                    r'(x\.com/\w+)/status=',
+                    r'\1/status/',
+                    story_plan_raw,
+                )
+                print("  ⚠ Fixed malformed tweet URLs (status= → status/)")
+
             cost_summary("PASS 1", total_in, total_out, total_cache_read, total_cache_write)
             if attempt > 1:
                 print(f"  ✓ Pass 1 succeeded on attempt {attempt}/{MAX_ATTEMPTS}")
@@ -793,13 +809,13 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic) -> str:
 # ---------------------------------------------------------------------------
 
 def run_pass2_5(draft_html: str, client: anthropic.Anthropic) -> str:
-    print("\n\u2500\u2500 PASS 2.5: Voice Editor \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500")
+    print("\n── PASS 2.5: Voice Editor ──────────────────────────")
 
     voice_examples = load_prompt("voice_examples.txt")
     voice_prompt   = load_prompt("pass2_5_voice.txt")
 
     if not voice_prompt:
-        print("  \u26a0 prompts/pass2_5_voice.txt not found \u2014 skipping voice pass")
+        print("  ⚠ prompts/pass2_5_voice.txt not found — skipping voice pass")
         return draft_html
 
     # Voice examples lead the system prompt so they are the first thing
@@ -836,6 +852,158 @@ def run_pass2_5(draft_html: str, client: anthropic.Anthropic) -> str:
     cost_summary("PASS 2.5", response.usage.input_tokens, response.usage.output_tokens, cache_read, cache_write)
 
     return strip_code_fences(extract_text(response))
+
+
+# ---------------------------------------------------------------------------
+# Pre-Edit — Programmatic Tweet Misassignment Auditor
+# ---------------------------------------------------------------------------
+
+def _normalize_tweet_url(url: str) -> str:
+    """Normalize a tweet URL for reliable comparison across sources."""
+    url = url.strip()
+    url = url.replace("nitter.net", "twitter.com")
+    url = re.sub(r'#m$', '', url)
+    url = re.sub(r'(/status)=(\d)', r'\1/\2', url)  # status= → status/
+    return url.lower()
+
+
+def pre_edit(draft_html: str, story_plan_raw: str) -> str:
+    """
+    Deterministic pre-editor: flags tweets placed in the wrong story section.
+    Runs after Pass 2.5, before Pass 3, so the LLM editor sees flags in place.
+
+    Logic:
+      - Builds a URL → plan-section map from the story plan JSON.
+      - Splits the draft HTML into sections by h1/h2 headings.
+      - Maps each HTML section to its plan section by position (lead first,
+        then supporting stories in order, ATL identified by heading text).
+      - For each tweet blockquote, checks if its URL belongs to this section.
+      - Injects an HTML comment flag immediately after any mismatch.
+    """
+    print("\n── PRE-EDIT: Tweet Audit ───────────────────────────")
+
+    try:
+        plan = json.loads(story_plan_raw)
+    except (json.JSONDecodeError, TypeError):
+        print("  ⚠ Could not parse story plan — skipping tweet audit")
+        return draft_html
+
+    # --- Build ordered plan sections: [(label, set_of_normalized_urls), ...] ---
+    plan_sections: list[tuple[str, set]] = []
+
+    lead = plan.get("lead_story", {})
+    plan_sections.append(("lead_story", {
+        _normalize_tweet_url(t["url"]) for t in lead.get("tweets", []) if t.get("url")
+    }))
+
+    for i, story in enumerate(plan.get("supporting_stories", [])):
+        plan_sections.append((f"supporting_{i}", {
+            _normalize_tweet_url(t["url"]) for t in story.get("tweets", []) if t.get("url")
+        }))
+
+    atl = plan.get("around_the_league", {})
+    atl_tweets = atl.get("tweets", []) if isinstance(atl, dict) else []
+    atl_urls = {_normalize_tweet_url(t["url"]) for t in atl_tweets if t.get("url")}
+
+    # Full set of every known URL — used to detect tweets not in plan at all
+    all_plan_urls = atl_urls.copy()
+    for _, urls in plan_sections:
+        all_plan_urls |= urls
+
+    if not all_plan_urls:
+        print("  ⚠ No tweet URLs found in plan — skipping tweet audit")
+        return draft_html
+
+    # --- Split HTML into sections at every h1/h2 boundary ---
+    # re.split with a lookahead preserves the h1/h2 tag at the start of each part.
+    raw_parts = re.split(r'(?=<h[12][\s>])', draft_html, flags=re.IGNORECASE)
+
+    # Tag each part: (html_text, is_atl_section, has_heading)
+    tagged: list[tuple[str, bool, bool]] = []
+    for part in raw_parts:
+        if not part.strip():
+            tagged.append((part, False, False))
+            continue
+        heading = re.match(r'<h[12][^>]*>(.*?)</h[12]>', part, re.IGNORECASE | re.DOTALL)
+        if not heading:
+            tagged.append((part, False, False))
+            continue
+        heading_text = re.sub(r'<[^>]+>', '', heading.group(1)).lower()
+        tagged.append((part, "around the league" in heading_text, True))
+
+    # --- Audit: match HTML sections to plan sections by position ---
+    tweet_re = re.compile(
+        r'<blockquote[^>]*class="tweet"[^>]*>.*?</blockquote>',
+        re.DOTALL | re.IGNORECASE
+    )
+    story_idx = 0   # walk plan_sections in order for non-ATL sections
+    flag_count = 0
+    result_parts: list[str] = []
+
+    for part, is_atl, has_heading in tagged:
+        if not has_heading:
+            # Preamble or structureless content — pass through unchanged
+            result_parts.append(part)
+            continue
+
+        if is_atl:
+            allowed = atl_urls
+            section_label = "around_the_league"
+        else:
+            if story_idx < len(plan_sections):
+                section_label, allowed = plan_sections[story_idx]
+                story_idx += 1
+            else:
+                # More HTML sections than plan sections — can't audit, pass through
+                result_parts.append(part)
+                continue
+
+        # For each tweet blockquote in this section, check URL assignment
+        def audit_tweet(m: re.Match) -> str:
+            nonlocal flag_count
+            block = m.group(0)
+            href = re.search(r'href="([^"]+)"', block)
+            if not href:
+                return block
+
+            raw_url = href.group(1)
+            norm = _normalize_tweet_url(raw_url)
+
+            if norm not in all_plan_urls:
+                # Tweet URL wasn't in the plan at all
+                flag_count += 1
+                return (
+                    block
+                    + f'\n<!-- EDITOR FLAG: TWEET NOT IN PLAN — "{raw_url}" was not '
+                    f'assigned to any story. Verify it belongs in [{section_label}]. -->'
+                )
+
+            if norm not in allowed:
+                # Tweet is in the plan but assigned to a different section
+                actual = next(
+                    (lbl for lbl, urls in plan_sections if norm in urls),
+                    "around_the_league" if norm in atl_urls else "unknown",
+                )
+                flag_count += 1
+                return (
+                    block
+                    + f'\n<!-- EDITOR FLAG: TWEET MISASSIGNMENT — "{raw_url}" belongs '
+                    f'to [{actual}] but appears in [{section_label}]. '
+                    f'Remove or replace. -->'
+                )
+
+            return block
+
+        result_parts.append(tweet_re.sub(audit_tweet, part))
+
+    result = "".join(result_parts)
+
+    if flag_count:
+        print(f"  ⚠ {flag_count} tweet misassignment flag(s) inserted")
+    else:
+        print("  ✓ All tweets correctly assigned to their sections")
+
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -1002,17 +1170,18 @@ def main() -> None:
 
     client = anthropic.Anthropic(api_key=api_key)
 
-    # Three passes + voice editor
-    story_plan  = run_pass1(raw, recent_output, client)
+    # Passes: selector → writer → voice editor → tweet audit → LLM editor
+    story_plan    = run_pass1(raw, recent_output, client)
     recent_output = save_story_log(story_plan, recent_output, RECENT_OUTPUT_PATH)
-    draft_html  = run_pass2(story_plan, client)
-    voiced_html = run_pass2_5(draft_html, client)
+    draft_html    = run_pass2(story_plan, client)
+    voiced_html   = run_pass2_5(draft_html, client)
+    audited_html  = pre_edit(voiced_html, story_plan)   # deterministic tweet check
     if args.no_editor:
         print("\n── PASS 3: Editor ──────────────────────────────────")
         print("  ⚠ Skipped via --no-editor flag")
-        final_html = voiced_html
+        final_html = audited_html
     else:
-        final_html  = run_pass3(voiced_html, recent_output, client)
+        final_html = run_pass3(audited_html, recent_output, client)
 
     # Save draft (styled blockquotes for browser preview)
     DRAFT_OUTPUT_PATH.write_text(

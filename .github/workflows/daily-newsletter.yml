@@ -2,7 +2,7 @@ name: Daily SLAP Newsletter
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # 12:00 UTC = 8:00 AM ET
+    - cron: '0 8 * * *'  # 08:00 UTC = 4:00 AM EDT (3:00 AM EST in winter)
   workflow_dispatch:
     inputs:
       skip_editor:
