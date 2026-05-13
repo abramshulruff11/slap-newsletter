@@ -88,6 +88,20 @@ WHAT SLAP VOICE SOUNDS LIKE (leave these alone)
 OUTPUT
 ================================================================================
 
+CRITICAL: Always return the complete HTML. Every single tag from the input
+must appear in your output — either unchanged or rewritten.
+
+Never write a meta-response explaining your approach. Never describe what
+you would do or how you would handle a section. Never summarize your changes.
+An explanation of your editing choices is not a valid response to this prompt.
+If you are uncertain about a section, return it unchanged.
+
+OBITUARIES AND DEATH: If the newsletter contains coverage of someone who has
+died, return that section completely untouched. Do not rewrite it for voice.
+Do not apply the Sportswriter Test to it. Do not add or remove anything.
+Death coverage uses a different register by design — leave it alone and
+include it in your output exactly as written.
+
 Return the full HTML with your prose rewrites applied inline. Do not summarize
 what you changed. Do not add commentary before or after the HTML. Do not wrap
 in markdown code fences.

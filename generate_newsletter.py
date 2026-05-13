@@ -540,7 +540,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> st
         try:
             response = client.messages.create(
                 model=MODEL,
-                max_tokens=8192,
+                max_tokens=16384,
                 system=[
                     {
                         "type": "text",
@@ -1175,6 +1175,14 @@ def main() -> None:
     recent_output = save_story_log(story_plan, recent_output, RECENT_OUTPUT_PATH)
     draft_html    = run_pass2(story_plan, client)
     voiced_html   = run_pass2_5(draft_html, client)
+
+    # Gate: if Pass 2.5 returned a meta-response instead of HTML (e.g. it wrote
+    # about its approach to obituaries rather than returning the draft), fall back
+    # to Pass 2 output. A real newsletter always has at least one h1/h2 tag.
+    if not re.search(r'<h[12][\s>]', voiced_html, re.IGNORECASE):
+        print("  ⚠ Pass 2.5 returned non-HTML — falling back to Pass 2 output")
+        voiced_html = draft_html
+
     audited_html  = pre_edit(voiced_html, story_plan)   # deterministic tweet check
     if args.no_editor:
         print("\n── PASS 3: Editor ──────────────────────────────────")

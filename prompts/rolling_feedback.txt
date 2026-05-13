@@ -102,8 +102,19 @@ The editor's Check 7 enforces this with auto-removal. The writer's
 responsibility is to not generate these lines in the first place.
 
 ================================================================================
-FACT VERIFICATION
+RULE 7 — OBITUARIES: DIFFERENT REGISTER, NO SLAP VOICE
 ================================================================================
+If a sports figure has died and the newsletter covers it, that section
+operates under different rules entirely. SLAP voice does not apply to death.
+
+Obituary sections: factual, respectful prose only. No irreverent framing,
+no group-chat tone, no memes, no GIFs. Do not check for banned phrases or
+apply voice-level editing. Only run mechanical checks: verify tweet URLs
+are valid and flag any factual claims (stats, dates, team affiliations)
+for verification.
+
+Death is not performance. Obituaries are not coverage in the SLAP sense.
+This is a hard register switch, not a judgment call.
 Every factual claim must be verified as accurate for today's date before it
 appears in the newsletter. Do not rely on training knowledge alone. This
 includes — but is not limited to — player team affiliations, roster moves,

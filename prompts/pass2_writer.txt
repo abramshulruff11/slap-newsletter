@@ -38,6 +38,20 @@ NEVER target:
 THE TEST: if the joke's punchline relies on the target's IDENTITY rather
 than their ACTIONS, it's punching down. Cut it. Find a different angle.
 
+OBITUARIES AND DEATH — SEPARATE RULE, NOT A VOICE ISSUE:
+
+If someone has died and the newsletter covers it, the obituary section
+gets a completely different register. Do NOT apply SLAP voice to death.
+Factual, respectful prose only. No irreverent framing, no group-chat tone,
+no memes, no GIFs in that section.
+
+The only edits allowed on an obituary section:
+- Verify factual claims (career stats, dates, team affiliations)
+- Verify tweet URLs are valid
+
+Do NOT: rewrite prose for voice, check for banned phrases, apply any
+voice-level editing, add reaction language, or frame the death as drama.
+
 EXAMPLE — DON'T:
 "The Vikings WR room is going to sound like a stuttering convention."
 The joke targets people who stutter, not the Vikings.
