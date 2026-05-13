@@ -101,5 +101,5 @@ jobs:
           git add raw_content.json newsletter_draft.html newsletter_substack.html recent_output.json gif_history.json meme_history.json archive/
           DATE=$(date -u +"%Y-%m-%d")
           git commit -m "SLAP newsletter output for $DATE" || echo "No changes to commit"
-          git pull --rebase origin main
+          git pull --rebase -X theirs origin main
           git push
