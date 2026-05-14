@@ -23,11 +23,12 @@ import anthropic
 SCRIPT_DIR = Path(__file__).resolve().parent
 load_dotenv(SCRIPT_DIR / ".env", override=True)
 
-RAW_CONTENT_PATH    = SCRIPT_DIR / "raw_content.json"
-RECENT_OUTPUT_PATH  = SCRIPT_DIR / "recent_output.json"
-DRAFT_OUTPUT_PATH   = SCRIPT_DIR / "newsletter_draft.html"
+RAW_CONTENT_PATH     = SCRIPT_DIR / "raw_content.json"
+RECENT_OUTPUT_PATH   = SCRIPT_DIR / "recent_output.json"
+DRAFT_OUTPUT_PATH    = SCRIPT_DIR / "newsletter_draft.html"
 SUBSTACK_OUTPUT_PATH = SCRIPT_DIR / "newsletter_substack.html"
-PROMPTS_DIR         = SCRIPT_DIR / "prompts"
+EMAIL_OUTPUT_PATH    = SCRIPT_DIR / "newsletter_email.html"
+PROMPTS_DIR          = SCRIPT_DIR / "prompts"
 
 # claude-sonnet-4-5 is the current stable Sonnet alias on the Anthropic API.
 # Use this string — do NOT pin a dated version like claude-sonnet-4-20250514.
@@ -1067,10 +1068,10 @@ def run_pass3(draft_html: str, recent_output: dict, client: anthropic.Anthropic)
 
 
 # ---------------------------------------------------------------------------
-# Substack auto-draft
+# MailerLite auto-post
 # ---------------------------------------------------------------------------
 
-def post_to_substack(html: str) -> None:
+def post_to_mailerlite(html: str) -> None:
     """
     Creates an unpublished draft in Substack via cookie-based auth.
     Uses SUBSTACK_SID (session cookie) + SUBSTACK_URL env vars.
@@ -1078,69 +1079,91 @@ def post_to_substack(html: str) -> None:
     Skips silently if credentials are not set (local runs).
     """
     import requests
+    from datetime import datetime, date, timedelta
+    from zoneinfo import ZoneInfo
 
-    sid     = os.getenv("SUBSTACK_SID")
-    pub_url = os.getenv("SUBSTACK_URL")
+    api_key    = os.getenv("MAILERLITE_API_KEY")
+    from_email = os.getenv("MAILERLITE_FROM_EMAIL")
+    group_id   = os.getenv("MAILERLITE_GROUP_ID")
 
-    if not all([sid, pub_url]):
-        print("  ⚠ SUBSTACK_SID or SUBSTACK_URL not set — skipping auto-draft")
+    if not all([api_key, from_email, group_id]):
+        print("  ⚠ MAILERLITE_API_KEY / MAILERLITE_FROM_EMAIL / MAILERLITE_GROUP_ID not set — skipping")
         return
 
-    print("\n── SUBSTACK AUTO-DRAFT ─────────────────────────────")
+    print("\n── MAILERLITE AUTO-POST ────────────────────────────")
 
-    # Normalise pub_url → bare subdomain (e.g. "mypub" from any format)
-    pub_name = (
-        pub_url
-        .replace("https://", "")
-        .replace("http://", "")
-        .replace(".substack.com", "")
-        .rstrip("/")
-    )
-
-    session = requests.Session()
-    session.cookies.set("substack.sid", sid, domain=".substack.com")
-    session.headers.update({"Content-Type": "application/json"})
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type":  "application/json",
+        "Accept":        "application/json",
+    }
 
     try:
-        # Extract title from first <h1> in the HTML
         title_match = re.search(r'<h1[^>]*>(.*?)</h1>', html, re.DOTALL)
         title = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else "SLAP Newsletter"
 
-        from datetime import date
-        subtitle = f"Sports Lunch Afternoon Post — {date.today().strftime('%B %-d, %Y')}"
+        today   = date.today()
+        subject = f"SLAP — {today.strftime('%B')} {today.day}, {today.strftime('%Y')}: {title}"
 
-        # Extract body content — Substack wants inner HTML, not a full document
-        body_match = re.search(r'<body[^>]*>(.*?)</body>', html, re.DOTALL)
+        body_match   = re.search(r'<body[^>]*>(.*?)</body>', html, re.DOTALL | re.IGNORECASE)
         body_content = body_match.group(1).strip() if body_match else html
-
-        # Strip HTML comments (editor flags) before sending
         body_content = re.sub(r'<!--.*?-->', '', body_content, flags=re.DOTALL).strip()
 
-        payload = {
-            "draft_title": title,
-            "draft_subtitle": subtitle,
-            "draft_body": body_content,
-            "draft_section_id": None,
-            "audience": "everyone",
-            "type": "newsletter",
-        }
+        eastern    = ZoneInfo("America/New_York")
+        now_et     = datetime.now(eastern)
+        publish_et = now_et.replace(hour=12, minute=0, second=0, microsecond=0)
+        if now_et.hour >= 12:
+            publish_et = publish_et + timedelta(days=1)
 
-        resp = session.post(
-            f"https://{pub_name}.substack.com/api/v1/drafts",
-            json=payload,
+        create_resp = requests.post(
+            "https://connect.mailerlite.com/api/campaigns",
+            headers=headers,
+            json={
+                "name":   f"SLAP — {today.strftime('%B')} {today.day}, {today.strftime('%Y')}",
+                "type":   "regular",
+                "emails": [{
+                    "subject":   subject,
+                    "from_name": "SLAP Newsletter",
+                    "from":      from_email,
+                    "content":   body_content,
+                }],
+                "groups": [group_id],
+            },
+            timeout=30,
         )
 
-        if resp.status_code == 200:
-            draft_id = resp.json().get("id")
-            print(f"  ✓ Draft created in Substack (id: {draft_id})")
-            print(f"  → Review at: https://{pub_name}.substack.com/publish/post/{draft_id}")
+        if create_resp.status_code not in (200, 201):
+            print(f"  ✗ Campaign creation failed ({create_resp.status_code}): {create_resp.text[:400]}")
+            print("    Newsletter saved locally — publish manually if needed.")
+            return
+
+        campaign_id = create_resp.json()["data"]["id"]
+        print(f"  ✓ Campaign created (id: {campaign_id})")
+
+        sched_resp = requests.post(
+            f"https://connect.mailerlite.com/api/campaigns/{campaign_id}/schedule",
+            headers=headers,
+            json={
+                "delivery": "scheduled",
+                "schedule": {
+                    "date":    publish_et.strftime("%Y-%m-%d"),
+                    "hours":   publish_et.strftime("%H"),
+                    "minutes": publish_et.strftime("%M"),
+                },
+            },
+            timeout=30,
+        )
+
+        if sched_resp.status_code in (200, 201):
+            print(f"  ✓ Scheduled for {today.strftime('%B')} {publish_et.day} at 12:00 PM ET")
+            print(f"  → Review: https://dashboard.mailerlite.com/campaigns")
         else:
-            print(f"  ✗ Draft failed ({resp.status_code}): {resp.text[:300]}")
-            print("    Newsletter files saved locally — paste manually if needed.")
+            print(f"  ✗ Scheduling failed ({sched_resp.status_code}): {sched_resp.text[:400]}")
+            print(f"    Campaign created — schedule manually: https://dashboard.mailerlite.com/campaigns")
 
     except Exception as e:
-        print(f"  ✗ Substack auto-draft failed: {e}")
-        print("    Newsletter files saved locally — paste manually if needed.")
+        print(f"  ✗ MailerLite auto-post failed: {e}")
+        print("    Newsletter saved locally — publish manually if needed.")
 
 
 # ---------------------------------------------------------------------------
@@ -1245,9 +1268,19 @@ def main() -> None:
         print(f"\n⚠  {flag_count} editor flag(s) need review before publishing.")
         print(f"   Search 'EDITOR FLAG' in newsletter_draft.html to find them.")
 
-    # Auto-post draft to Substack (skips if credentials not set)
-    # Read from disk — not the in-memory variable — so GIFs and memes are included
-    post_to_substack(SUBSTACK_OUTPUT_PATH.read_text(encoding="utf-8"))
+    # Build email version and post to MailerLite
+    print("\n── EMAIL BUILD ─────────────────────────────────────")
+    try:
+        from build_email_html import build_email_html
+        draft_for_email = DRAFT_OUTPUT_PATH.read_text(encoding="utf-8")
+        email_html = build_email_html(draft_for_email)
+        EMAIL_OUTPUT_PATH.write_text(email_html, encoding="utf-8")
+        print(f"  ✓ newsletter_email.html built ({len(email_html):,} bytes)")
+        post_to_mailerlite(email_html)
+    except Exception as e:
+        print(f"  ✗ Email build failed: {e}")
+        print("    Falling back to substack HTML for MailerLite.")
+        post_to_mailerlite(SUBSTACK_OUTPUT_PATH.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
