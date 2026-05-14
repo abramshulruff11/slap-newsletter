@@ -45,6 +45,9 @@ jobs:
       - name: Fetch content
         run: python fetch_content.py
 
+      - name: Fetch sports data
+        run: python fetch_sports_data.py
+
       - name: Validate raw content
         run: |
           python -c "

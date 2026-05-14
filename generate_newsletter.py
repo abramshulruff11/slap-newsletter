@@ -28,6 +28,7 @@ RECENT_OUTPUT_PATH   = SCRIPT_DIR / "recent_output.json"
 DRAFT_OUTPUT_PATH    = SCRIPT_DIR / "newsletter_draft.html"
 SUBSTACK_OUTPUT_PATH = SCRIPT_DIR / "newsletter_substack.html"
 EMAIL_OUTPUT_PATH    = SCRIPT_DIR / "newsletter_email.html"
+GAME_STATE_PATH      = SCRIPT_DIR / "game_state.json"
 PROMPTS_DIR          = SCRIPT_DIR / "prompts"
 
 # claude-sonnet-4-5 is the current stable Sonnet alias on the Anthropic API.
@@ -103,6 +104,64 @@ def load_json(path: Path) -> dict:
     if path.exists():
         return json.loads(path.read_text(encoding="utf-8"))
     return {}
+
+
+def format_game_state_summary(game_state: dict) -> str:
+    """
+    Format game_state.json into a concise ground truth block for LLM prompts.
+    Covers yesterday's completed games with series state for playoffs.
+    Pass 1 and Pass 2 both receive this so they never rely on training data
+    for scores, series state, or game numbers.
+    """
+    if not game_state or not game_state.get("sports"):
+        return ""
+
+    lines = [
+        "## GROUND TRUTH: YESTERDAY'S GAME RESULTS",
+        f"Source: ESPN API as of {game_state.get('as_of_date', 'unknown')}",
+        "Treat as AUTHORITATIVE. Any claim about scores, series state, or game numbers",
+        "must match this data exactly or be omitted. Do not invent or assume.",
+        "",
+    ]
+
+    found_any = False
+    for sport_key, sport_data in game_state.get("sports", {}).items():
+        label = sport_data.get("label", sport_key.upper())
+        completed = [
+            g for g in sport_data.get("yesterday_games", [])
+            if g.get("completed")
+        ]
+        if not completed:
+            continue
+        found_any = True
+        lines.append(f"{label}:")
+        for game in completed:
+            home  = game.get("home_team", "?")
+            away  = game.get("away_team", "?")
+            hs    = game.get("home_score", 0)
+            as_   = game.get("away_score", 0)
+            ot    = " (OT)" if game.get("overtime") else ""
+            winner = game.get("winner", "")
+            lines.append(f"  {away} {as_}, {home} {hs}{ot}" + (f" — {winner} wins" if winner else ""))
+            series = game.get("series")
+            if series:
+                if series.get("series_over"):
+                    lines.append(f"    SERIES OVER. {winner} advances. Final: {series.get('home_wins',0)}-{series.get('away_wins',0)}.")
+                else:
+                    summary  = series.get("summary", "")
+                    next_g   = series.get("next_game_number", "?")
+                    elim_h   = series.get("elimination_game_for_home", False)
+                    elim_a   = series.get("elimination_game_for_away", False)
+                    elim_who = []
+                    if elim_h: elim_who.append(home)
+                    if elim_a: elim_who.append(away)
+                    elim_str = f" {', '.join(elim_who)} eliminated." if elim_who else ""
+                    lines.append(f"    PLAYOFFS — {summary}. Next: Game {next_g}.{elim_str}")
+        lines.append("")
+
+    if not found_any:
+        return ""
+    return "\n".join(lines)
 
 
 def strip_code_fences(text: str) -> str:
@@ -433,7 +492,7 @@ def save_story_log(story_plan_raw: str, recent_output: list, path: Path) -> list
 # Pass 1 — Story Selector
 # ---------------------------------------------------------------------------
 
-def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> str:
+def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_state: dict | None = None) -> str:
     print("\n── PASS 1: Story Selector ──────────────────────────")
 
     selector_prompt = load_prompt("pass1_story_selector.txt")
@@ -444,8 +503,10 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> st
         recent_output if isinstance(recent_output, list) else []
     )
 
+    game_state_block = format_game_state_summary(game_state or {})
     user_content = (
-        "## TODAY'S RAW CONTENT\n\n"
+        (game_state_block + "\n\n" if game_state_block else "")
+        + "## TODAY'S RAW CONTENT\n\n"
         + json.dumps(raw, ensure_ascii=False)
         + "\n\n## RECENT STORY HISTORY — last 14 days\n"
         "Read this before selecting stories. Use it to identify continuing "
@@ -723,7 +784,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic) -> st
 # Pass 2 — Writer
 # ---------------------------------------------------------------------------
 
-def run_pass2(story_plan: str, client: anthropic.Anthropic) -> str:
+def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | None = None) -> str:
     print("\n── PASS 2: Writer ──────────────────────────────────")
 
     # pass2_writer.txt is the writer-specific prompt (voice, structure, HTML rules).
@@ -763,8 +824,10 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic) -> str:
 
     # Pass 2 only needs the story plan — all tweets are pre-assigned by Pass 1.
     # Sending full raw_content.json here was redundant and added ~40K tokens per run.
+    game_state_block = format_game_state_summary(game_state or {})
     user_message = (
-        "## TODAY'S STORY PLAN\n\n"
+        (game_state_block + "\n\n" if game_state_block else "")
+        + "## TODAY'S STORY PLAN\n\n"
         "The story selector has already decided which stories to cover and which "
         "tweets to use. Follow this plan. Do not add stories or tweets not listed "
         "here. You may search the web for additional context and stats on the "
@@ -810,7 +873,7 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic) -> str:
 # ---------------------------------------------------------------------------
 
 def run_pass2_5(draft_html: str, client: anthropic.Anthropic) -> str:
-    print("\n── PASS 2.5: Voice Editor ──────────────────────────")
+    print("\n── PASS 5: Voice Editor ────────────────────────────")
 
     voice_examples = load_prompt("voice_examples.txt")
     voice_prompt   = load_prompt("pass2_5_voice.txt")
@@ -881,7 +944,7 @@ def pre_edit(draft_html: str, story_plan_raw: str) -> str:
       - For each tweet blockquote, checks if its URL belongs to this section.
       - Injects an HTML comment flag immediately after any mismatch.
     """
-    print("\n── PRE-EDIT: Tweet Audit ───────────────────────────")
+    print("\n── PASS 6: Pre-Edit (Tweet Audit) ───────────────────")
 
     try:
         plan = json.loads(story_plan_raw)
@@ -1012,7 +1075,7 @@ def pre_edit(draft_html: str, story_plan_raw: str) -> str:
 # ---------------------------------------------------------------------------
 
 def run_pass3(draft_html: str, recent_output: dict, client: anthropic.Anthropic) -> str:
-    print("\n── PASS 3: Editor ──────────────────────────────────")
+    print("\n── PASS 7: Editor ──────────────────────────────────")
 
     editor_prompt = load_prompt("editor_prompt.txt")
     if not editor_prompt:
@@ -1194,22 +1257,38 @@ def main() -> None:
     client = anthropic.Anthropic(api_key=api_key)
 
     # Passes: selector → writer → voice editor → tweet audit → LLM editor
-    story_plan    = run_pass1(raw, recent_output, client)
+    game_state    = load_json(GAME_STATE_PATH)
+    if game_state:
+        print(f"  game_state.json loaded — {len(game_state.get('sports', {}))} sport(s)")
+    else:
+        print("  ⚠ game_state.json not found — run fetch_sports_data.py first")
+
+    story_plan    = run_pass1(raw, recent_output, client, game_state)
     recent_output = save_story_log(story_plan, recent_output, RECENT_OUTPUT_PATH)
-    draft_html    = run_pass2(story_plan, client)
-    voiced_html   = run_pass2_5(draft_html, client)
+    draft_html    = run_pass2(story_plan, client, game_state)
+
+    # Pass 3 — Claim Validator (deterministic, cross-refs game_state.json)
+    try:
+        from claim_validator import validate_claims
+        validated_html, _val_flags = validate_claims(draft_html, GAME_STATE_PATH)
+    except ImportError:
+        print("\n── PASS 3: Claim Validator ─────────────────────────")
+        print("  ⚠ claim_validator.py not found — skipping")
+        validated_html = draft_html
+
+    voiced_html   = run_pass2_5(validated_html, client)
 
     # Gate: if Pass 2.5 returned a meta-response instead of HTML (e.g. it wrote
     # about its approach to obituaries rather than returning the draft), fall back
     # to Pass 2 output. A real newsletter always has at least one h1/h2 tag.
     if not re.search(r'<h[12][\s>]', voiced_html, re.IGNORECASE):
-        print("  ⚠ Pass 2.5 returned non-HTML — falling back to Pass 2 output")
-        voiced_html = draft_html
+        print("  ⚠ Pass 5 returned non-HTML — falling back to validated draft")
+        voiced_html = validated_html
 
     audited_html  = pre_edit(voiced_html, story_plan)   # deterministic tweet check
     if args.no_editor:
-        print("\n── PASS 3: Editor ──────────────────────────────────")
-        print("  ⚠ Skipped via --no-editor flag")
+        print("\n\u2500\u2500 PASS 7: Editor \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500")
+        print("  \u26a0 Skipped via --no-editor flag")
         final_html = audited_html
     else:
         final_html = run_pass3(audited_html, recent_output, client)
