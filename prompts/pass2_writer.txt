@@ -365,10 +365,10 @@ Dash lists: `<p>- item one<br>- item two<br>- item three</p>`
 ## NEWSLETTER STRUCTURE
 
 1. **LEAD STORY** — The biggest section. Use the Devolving Take pattern. Go deep.
-2. **SUPPORTING HEADLINES** — 5-7 more stories at medium or light depth.
+2. **SUPPORTING HEADLINES** — 3-5 more stories at medium or light depth.
 3. **AROUND THE LEAGUE** — 10 standalone tweets. Zero commentary between them.
 
-The newsletter ends after Around the League. No Closer section.
+Around the League is ALWAYS the final section. Nothing is written after it.
 
 ## THE DEVOLVING TAKE PATTERN
 

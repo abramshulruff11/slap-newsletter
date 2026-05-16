@@ -580,14 +580,13 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                     },
                     "required": ["tweets"],
                 },
-                "closer": _story,
                 "account_distribution": {
                     "type": "object",
                     "additionalProperties": {"type": "integer"},
                 },
             },
             "required": ["date", "story_log", "lead_story", "supporting_stories",
-                         "around_the_league", "closer", "account_distribution"],
+                         "around_the_league", "account_distribution"],
         },
         "cache_control": {"type": "ephemeral"},
     }
@@ -700,9 +699,14 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 else (atl if isinstance(atl, list) else [])
             )
             missing_text = 0
-            for section in ([plan.get("lead_story", {})]
-                            + plan.get("supporting_stories", [])
-                            + [plan.get("closer", {})]):
+            # Defensive unpacking — model occasionally returns a string
+            # instead of a list for supporting_stories, which crashes the
+            # list concatenation.
+            _supporting = plan.get("supporting_stories", [])
+            if not isinstance(_supporting, list):
+                _supporting = []
+            for section in ([plan.get("lead_story") or {}]
+                            + _supporting):
                 for t in section.get("tweets", []):
                     if not t.get("text", "").strip():
                         missing_text += 1

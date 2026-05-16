@@ -52,10 +52,6 @@ and select a different one.
       {"url": "url2", "account": "handle", "text": "exact tweet text from raw_content.json"}
     ]
   },
-  "closer": {
-    "tweet": {"url": "url", "account": "handle", "text": "exact tweet text from raw_content.json"},
-    "notes": "Why this works as a closer — funny, weird, wholesome, or viral."
-  },
   "account_distribution": {
     "@account": 2,
     "@account2": 1
@@ -86,13 +82,26 @@ Before including any tweet in any section, apply this filter. A tweet that
 fails must be cut entirely. Do not move it to a different section. Cut it.
 
 RULE 1 — SPORTS CONTENT ONLY:
-Every tweet must be about a sporting event, athlete, team, or league. If it is
-about entertainment, pop culture, a TV show, a movie, a non-athlete celebrity,
-or any topic with no direct sports connection, cut it. This applies to Around
-the League too — "funny and sports-adjacent" is not the same as sports. The
-subject of the tweet must be sports, not a springboard to talk about something
-else.
+Every tweet AND every story must be primarily about sports. This rule applies
+at both levels:
 
+STORY LEVEL: A story's primary subject must be a sporting event, athlete, team,
+or league. An entertainment story (music release, album drop, celebrity drama,
+TV show, award show) does NOT qualify for a lead, supporting, or closer slot
+just because it has a tangential sports angle. A rapper dissing an athlete's
+child in a lyric is not a sports story. A music release that sports accounts
+posted about is not a sports story. The test: if a casual sports fan opened
+SLAP to read about sports and found this story, would they feel misled? If yes,
+cut it.
+
+TWEET LEVEL: Every individual tweet must be about a sporting event, athlete,
+team, or league. If it is about entertainment, pop culture, a TV show, a movie,
+a non-athlete celebrity, or any topic with no direct sports connection, cut it.
+This applies to Around the League too — "funny and sports-adjacent" is not the
+same as sports. The subject of the tweet must be sports, not a springboard to
+talk about something else.
+
+BAD: A story about a music album drop even though it has a Bronny James diss.
 BAD: A tweet about a horror movie, even from a sports account.
 BAD: A tweet about a music release, a TV show, or an award show.
 BAD: A tweet from a sports podcast about an episode or guest appearance.
@@ -315,11 +324,6 @@ more than once.
 Apply the TWEET FILTER above before including any tweet here. A tweet about a
 horror movie, a celebrity, or a Barstool personality does not belong in this
 section regardless of which account posted it.
-
-CLOSER — funny, weird, or viral. No connection to main stories required:
-One tweet or moment that ends the newsletter on a high note. Wholesome,
-absurd, or quietly hilarious. Not necessarily the most important thing that
-happened. Must still clear the TWEET FILTER — the closer must be sports content.
 
 ================================================================================
 RESEARCH NOTES QUALITY BAR
