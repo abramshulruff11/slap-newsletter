@@ -454,6 +454,55 @@ def format_story_history(recent_output: list) -> str:
     return "\n".join(lines)
 
 
+def normalize_plan(plan: dict) -> dict:
+    """
+    Sanitize every field in the Pass 1 plan dict to its expected type.
+
+    The model occasionally returns wrong types for nested fields — a string
+    where a list is expected, a string where a dict is expected, a list of
+    strings where a list of tweet-dicts is expected. This has caused crashes
+    in three different places (missing-text loop, pre_edit, and would have
+    hit others).
+
+    Running this once, immediately after Pass 1 returns, means every
+    downstream consumer (pre_edit, save_story_log, run_pass2, etc.) receives
+    a guaranteed-clean structure and needs no individual type guards.
+    """
+    def safe_dict(val) -> dict:
+        return val if isinstance(val, dict) else {}
+
+    def safe_list(val) -> list:
+        return val if isinstance(val, list) else []
+
+    def safe_tweet_list(val) -> list:
+        """Return a list containing only well-formed tweet dicts."""
+        return [
+            t for t in safe_list(val)
+            if isinstance(t, dict) and t.get("url")
+        ]
+
+    def normalize_story(val) -> dict:
+        s = safe_dict(val)
+        s["tweets"] = safe_tweet_list(s.get("tweets"))
+        return s
+
+    plan["lead_story"]         = normalize_story(plan.get("lead_story"))
+    plan["supporting_stories"] = [
+        normalize_story(s)
+        for s in safe_list(plan.get("supporting_stories"))
+        if isinstance(s, dict)
+    ]
+    atl = safe_dict(plan.get("around_the_league"))
+    atl["tweets"]              = safe_tweet_list(atl.get("tweets"))
+    plan["around_the_league"]  = atl
+    plan["story_log"]          = [
+        s for s in safe_list(plan.get("story_log"))
+        if isinstance(s, dict)
+    ]
+
+    return plan
+
+
 def save_story_log(story_plan_raw: str, recent_output: list, path: Path) -> list:
     """
     Extract today's story_log from Pass 1's JSON output, prepend it to
@@ -664,8 +713,10 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                         )
 
         if validation_error is None:
-            # Success — re-serialize via json.dumps so downstream always gets
-            # correctly escaped JSON regardless of what was in tweet text.
+            # Normalize every field to its expected type in one place.
+            # This prevents type-mismatch crashes in all downstream consumers
+            # (pre_edit, save_story_log, missing-text loop, etc.).
+            plan = normalize_plan(plan)
             story_plan_raw = json.dumps(plan, ensure_ascii=False)
 
             # Fix malformed tweet URLs where model writes status= instead of status/
@@ -699,14 +750,8 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 else (atl if isinstance(atl, list) else [])
             )
             missing_text = 0
-            # Defensive unpacking — model occasionally returns a string
-            # instead of a list for supporting_stories, which crashes the
-            # list concatenation.
-            _supporting = plan.get("supporting_stories", [])
-            if not isinstance(_supporting, list):
-                _supporting = []
-            for section in ([plan.get("lead_story") or {}]
-                            + _supporting):
+            for section in ([plan.get("lead_story", {})]
+                            + plan.get("supporting_stories", [])):
                 for t in section.get("tweets", []):
                     if not t.get("text", "").strip():
                         missing_text += 1
@@ -959,19 +1004,25 @@ def pre_edit(draft_html: str, story_plan_raw: str) -> str:
     # --- Build ordered plan sections: [(label, set_of_normalized_urls), ...] ---
     plan_sections: list[tuple[str, set]] = []
 
+    def _safe_tweet_urls(tweets) -> set:
+        """Extract normalized URLs from a tweets list, skipping any non-dict entries."""
+        if not isinstance(tweets, list):
+            return set()
+        return {
+            _normalize_tweet_url(t["url"])
+            for t in tweets
+            if isinstance(t, dict) and t.get("url")
+        }
+
     lead = plan.get("lead_story", {})
-    plan_sections.append(("lead_story", {
-        _normalize_tweet_url(t["url"]) for t in lead.get("tweets", []) if t.get("url")
-    }))
+    plan_sections.append(("lead_story", _safe_tweet_urls(lead.get("tweets", []))))
 
     for i, story in enumerate(plan.get("supporting_stories", [])):
-        plan_sections.append((f"supporting_{i}", {
-            _normalize_tweet_url(t["url"]) for t in story.get("tweets", []) if t.get("url")
-        }))
+        plan_sections.append((f"supporting_{i}", _safe_tweet_urls(story.get("tweets", []))))
 
     atl = plan.get("around_the_league", {})
     atl_tweets = atl.get("tweets", []) if isinstance(atl, dict) else []
-    atl_urls = {_normalize_tweet_url(t["url"]) for t in atl_tweets if t.get("url")}
+    atl_urls = _safe_tweet_urls(atl_tweets)
 
     # Full set of every known URL — used to detect tweets not in plan at all
     all_plan_urls = atl_urls.copy()
