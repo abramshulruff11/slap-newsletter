@@ -706,11 +706,14 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                         atl.get("tweets", []) if isinstance(atl, dict)
                         else (atl if isinstance(atl, list) else [])
                     )
-                    if len(atl_tweets) < 8:
+                    if len(atl_tweets) < 5:
                         validation_error = (
                             f"Around the League has {len(atl_tweets)} tweets — "
-                            f"must be exactly 10. Add {10 - len(atl_tweets)} more."
+                            f"must have at least 5. Add {5 - len(atl_tweets)} more "
+                            f"from any account not already at its 2-tweet cap."
                         )
+                    elif len(atl_tweets) < 10:
+                        print(f"  ⚠ Around the League has {len(atl_tweets)}/10 tweets — short but acceptable")
 
         if validation_error is None:
             # Normalize every field to its expected type in one place.
@@ -783,7 +786,9 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                         "content":     (
                             f"❌ Validation failed: {validation_error}\n\n"
                             "Fix the issue and call submit_story_plan again. "
-                            "If Around the League is short, add more tweet objects until there are exactly 10. "
+                            "If Around the League is short, scan the raw content for "
+                            "any unused tweets from accounts not yet at their 2-tweet cap "
+                            "and add them — aim for 10 but 5 is the minimum. "
                             "All required top-level fields must be present."
                         ),
                         "is_error": True,
