@@ -24,9 +24,6 @@ jobs:
       GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
       IMGFLIP_USERNAME: ${{ secrets.IMGFLIP_USERNAME }}
       IMGFLIP_PASSWORD: ${{ secrets.IMGFLIP_PASSWORD }}
-      MAILERLITE_API_KEY: ${{ secrets.MAILERLITE_API_KEY }}
-      MAILERLITE_FROM_EMAIL: ${{ secrets.MAILERLITE_FROM_EMAIL }}
-      MAILERLITE_GROUP_ID: ${{ secrets.MAILERLITE_GROUP_ID }}
       GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
       GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
 
