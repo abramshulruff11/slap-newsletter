@@ -33,7 +33,9 @@ and select a different one.
       {"url": "url1", "account": "handle", "text": "exact tweet text from raw_content.json"},
       {"url": "url2", "account": "handle", "text": "exact tweet text from raw_content.json"}
     ],
-    "research_notes": "Key stats, historical parallels, meme angles, cross-sport connections the writer must explore. Be specific — these notes are the writer's raw material."
+    "research_notes": "Key stats, historical parallels, meme angles, cross-sport connections the writer must explore. Be specific — these notes are the writer's raw material.",
+    "gif_concept": "One specific GIF reaction idea tied to this story's main emotional beat — a seed for the writer. See MEDIA SEEDING below.",
+    "meme_concept": "One meme/comparison idea, OR empty string if a GIF fits better. See MEDIA SEEDING below."
   },
   "supporting_stories": [
     {
@@ -43,7 +45,9 @@ and select a different one.
         {"url": "url1", "account": "handle", "text": "exact tweet text from raw_content.json"},
         {"url": "url2", "account": "handle", "text": "exact tweet text from raw_content.json"}
       ],
-      "research_notes": "Hook, key angle, any specific stats or context to include."
+      "research_notes": "Hook, key angle, any specific stats or context to include.",
+      "gif_concept": "One specific GIF reaction idea for this story, OR empty string if none fits. See MEDIA SEEDING below.",
+      "meme_concept": "One meme/comparison idea for this story, OR empty string. See MEDIA SEEDING below."
     }
   ],
   "around_the_league": {
@@ -340,3 +344,34 @@ For every story, force yourself to answer:
 
 If you can't answer at least 3 of these for a story, it probably doesn't
 deserve a headline section — move it to Around the League.
+
+================================================================================
+MEDIA SEEDING — gif_concept / meme_concept
+================================================================================
+
+For the lead and each supporting story, seed ONE media idea so the writer starts
+with a hook instead of a blank slate. The writer makes the final call and may
+add more — your seed is a suggestion, not a mandate. Around the League gets NO
+media seeds (it stays tweet-only).
+
+HOW TO SEED:
+- Identify the story's main emotional beat (disbelief, schadenfreude, vindication,
+  resignation, dominance, etc.) or its core comparison.
+- gif_concept = a specific, named reaction idea for that beat. Be specific:
+  "Ben Affleck smoking, defeated" not "sad reaction." If the subject said words
+  that match a famous quote (e.g. "I'm not leaving"), seed that quote's clip.
+- meme_concept = a comparison/argument idea (Trade Offer, Drake, Spider-Man
+  pointing) ONLY when the story has two things to contrast or a take to make.
+
+GIF vs MEME BALANCE — aim for roughly 70% GIFs, 30% memes across the issue. Most
+stories should seed a gif_concept and leave meme_concept empty. Seed a meme only
+when there is a genuine comparison, contrast, or escalation. Do not force both.
+
+OBITUARY / SOMBER STORIES — seed NOTHING. Set both gif_concept and meme_concept
+to empty strings for any story about a death, serious injury, or genuinely
+somber news. Those sections get no media. This overrides everything above.
+
+VARIETY — when a media idea feels like the obvious default (the generic
+franchise-failure GIF, the generic financial-pain GIF), reach for a more
+specific or fresher angle. The writer dedupes against recent issues; your job is
+just to avoid seeding the most generic option.

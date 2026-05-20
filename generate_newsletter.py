@@ -267,6 +267,71 @@ def save_gif_history(repo_root: Path, new_entries: list, history: list):
     history_path.write_text(json.dumps(combined, indent=2), encoding="utf-8")
 
 
+def format_recent_media_block(repo_root: Path, days: int = 7) -> str:
+    """
+    Build a 'do not repeat' block of GIF concepts and meme templates used in the
+    last N days, for injection into Pass 2's user message.
+
+    Without this, Pass 2 cannot honor the rotation rules in gif_reference.txt /
+    meme_reference.txt — it never sees what was recently used. History files log
+    each item multiple times per day (embed runs over multiple output files), so
+    concepts/slugs are de-duplicated here. Returns "" if there is no history.
+    """
+    from datetime import date, timedelta
+
+    def _parse_date(s):
+        try:
+            return date.fromisoformat(s)
+        except Exception:
+            return None
+
+    cutoff = date.today() - timedelta(days=days)
+
+    # GIF concepts (most recent first, de-duplicated by normalized concept)
+    gif_concepts, seen_concepts = [], set()
+    for e in load_gif_history(repo_root):
+        d = _parse_date(e.get("date", ""))
+        if not d or d < cutoff:
+            continue
+        raw = e.get("search_term", "")
+        concept = normalize_gif_concept(raw)
+        if concept and concept not in seen_concepts:
+            seen_concepts.add(concept)
+            gif_concepts.append(raw.split(" — ")[0].strip())
+
+    # Meme templates (de-duplicated by slug)
+    meme_slugs, seen_slugs = [], set()
+    meme_path = repo_root / "meme_history.json"
+    if meme_path.exists():
+        try:
+            meme_hist = json.loads(meme_path.read_text(encoding="utf-8"))
+        except Exception:
+            meme_hist = []
+        for e in meme_hist:
+            d = _parse_date(e.get("date", ""))
+            if not d or d < cutoff:
+                continue
+            slug = e.get("slug", "")
+            if slug and slug not in seen_slugs:
+                seen_slugs.add(slug)
+                meme_slugs.append(slug)
+
+    if not gif_concepts and not meme_slugs:
+        return ""
+
+    lines = [
+        "## RECENTLY USED MEDIA — DO NOT REPEAT (last 7 days)",
+        "These GIFs and meme templates ran in recent issues. Pick different ones "
+        "from the same emotional category in the GIF / MEME REFERENCE. The only "
+        "exception is a deliberate escalation callback within a single story.",
+    ]
+    if gif_concepts:
+        lines.append("GIF concepts used recently: " + "; ".join(gif_concepts))
+    if meme_slugs:
+        lines.append("Meme templates used recently: " + ", ".join(meme_slugs))
+    return "\n".join(lines) + "\n\n"
+
+
 
 def clean_giphy_search(term: str) -> list[str]:
     clean = term.strip().strip('"').strip("'").strip("[]")
@@ -481,9 +546,14 @@ def normalize_plan(plan: dict) -> dict:
             if isinstance(t, dict) and t.get("url")
         ]
 
+    def safe_str(val) -> str:
+        return val if isinstance(val, str) else ""
+
     def normalize_story(val) -> dict:
         s = safe_dict(val)
         s["tweets"] = safe_tweet_list(s.get("tweets"))
+        s["gif_concept"]  = safe_str(s.get("gif_concept"))
+        s["meme_concept"] = safe_str(s.get("meme_concept"))
         return s
 
     plan["lead_story"]         = normalize_story(plan.get("lead_story"))
@@ -879,8 +949,10 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
     # Pass 2 only needs the story plan — all tweets are pre-assigned by Pass 1.
     # Sending full raw_content.json here was redundant and added ~40K tokens per run.
     game_state_block = format_game_state_summary(game_state or {})
+    recent_media_block = format_recent_media_block(SCRIPT_DIR)
     user_message = (
         (game_state_block + "\n\n" if game_state_block else "")
+        + recent_media_block
         + "## TODAY'S STORY PLAN\n\n"
         "The story selector has already decided which stories to cover and which "
         "tweets to use. Follow this plan. Do not add stories or tweets not listed "
@@ -1353,16 +1425,10 @@ def main() -> None:
     else:
         final_html = run_pass3(audited_html, recent_output, client)
 
-    # Save draft (styled blockquotes for browser preview)
-    DRAFT_OUTPUT_PATH.write_text(
-        DRAFT_TEMPLATE.format(content=final_html), encoding="utf-8"
-    )
-
-    # Save Substack version (bare URLs for embedding)
-    substack_html = blockquotes_to_substack_urls(final_html)
-    SUBSTACK_OUTPUT_PATH.write_text(
-        SUBSTACK_TEMPLATE.format(content=substack_html), encoding="utf-8"
-    )
+    # Embed media once into the shared body (below), then write both files
+    # from it. This keeps GIF/meme history from being logged twice per run
+    # and guarantees the draft and Substack versions show identical media.
+    body = final_html
 
     print("\n" + "="*50)
     print(f"✓ newsletter_draft.html    — open in browser to review")
@@ -1376,10 +1442,7 @@ def main() -> None:
     elif not giphy_key:
         print("  ⚠ GIPHY_API_KEY not set — skipping GIF embedding")
     else:
-        for output_path in [DRAFT_OUTPUT_PATH, SUBSTACK_OUTPUT_PATH]:
-            html = output_path.read_text(encoding="utf-8")
-            updated, used_gifs = embed_gifs_in_html(html, giphy_key, repo_root=Path(__file__).parent)
-            output_path.write_text(updated, encoding="utf-8")
+        body, _used_gifs = embed_gifs_in_html(body, giphy_key, repo_root=SCRIPT_DIR)
         print(f"  ✓ GIFs embedded in both output files")
 
     # ── Meme Pipeline ──────────────────────────────────────
@@ -1392,15 +1455,20 @@ def main() -> None:
             print("  ⚠ IMGFLIP_USERNAME / IMGFLIP_PASSWORD not set — skipping meme generation")
         else:
             template_map = build_template_map()
-            repo_root = Path(__file__).parent
-            for output_path in [DRAFT_OUTPUT_PATH, SUBSTACK_OUTPUT_PATH]:
-                html = output_path.read_text(encoding="utf-8")
-                updated, _ = process_newsletter(html, template_map, imgflip_user, imgflip_pass, repo_root=repo_root)
-                output_path.write_text(updated, encoding="utf-8")
+            body, _ = process_newsletter(body, template_map, imgflip_user, imgflip_pass, repo_root=SCRIPT_DIR)
             print(f"  ✓ Memes embedded in both output files")
     except Exception as e:
         print(f"  ✗ Meme pipeline failed: {e}")
         print("    Newsletter saved without memes — safe to publish as-is.")
+
+    # Write both output files from the single embedded body.
+    DRAFT_OUTPUT_PATH.write_text(
+        DRAFT_TEMPLATE.format(content=body), encoding="utf-8"
+    )
+    substack_html = blockquotes_to_substack_urls(body)
+    SUBSTACK_OUTPUT_PATH.write_text(
+        SUBSTACK_TEMPLATE.format(content=substack_html), encoding="utf-8"
+    )
 
     flag_count = len(re.findall(r'<!-- EDITOR FLAG:', final_html))
     if flag_count:
