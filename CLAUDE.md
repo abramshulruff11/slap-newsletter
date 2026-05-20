@@ -30,6 +30,7 @@ newsletter_draft.html → post to Beehiiv API (scheduled)
 ```
 slap-newsletter/
 ├── CLAUDE.md                  ← this file
+├── feedback_log.md            ← issue review intake + review ritual (read when asked to review)
 ├── fetch_content.py           ← pulls ESPN/CBS RSS + Nitter RSS → raw_content.json
 ├── generate_newsletter.py     ← orchestrates all 5 passes (51KB — main script)
 ├── generate_memes.py          ← Imgflip meme generation
@@ -95,6 +96,11 @@ etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before sele
 
 **Evergreen content cannot lead:** A stat post about a finished season cannot be the lead story
 if any active Tier 1 event is available (see Rule 5 in rolling_feedback.txt).
+
+**Feedback intake lives in `feedback_log.md`:** When the user asks to review SLAP issues, propose
+rule updates, or audit recent newsletters, read `feedback_log.md` first. The file contains the
+review ritual (instructions for Claude) and the active log of unresolved observations. Do not
+edit `rolling_feedback.txt` directly during review — propose changes for the user to integrate.
 
 ---
 
