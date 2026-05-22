@@ -270,6 +270,123 @@
     "story_log": [
       {
         "topic_key": "knicks-cavs-game1-ecf-2026",
+        "title": "Knicks pull off historic 22-point comeback in Game 1 ECF, Brunson hunts Harden in largest playoff comeback since 1970",
+        "section": "lead",
+        "development": "Knicks rallied from 22 points down with 7 minutes left in 4Q, went on 44-11 run to force OT and win 115-104. Jalen Brunson hunted James Harden repeatedly down the stretch, finished with 38-5-6. Harden had 15 pts, 5-16 FG, 6 TOV, 5 fouls. Largest playoff comeback win in Knicks history and since 1970. Cavs blew 99.9% win probability.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "jason-kidd-mavericks-fired-2026",
+        "title": "Mavs fire Jason Kidd as Masai Ujiri makes first major move",
+        "section": "supporting",
+        "development": "Dallas fired coach Jason Kidd with four years and $40M+ remaining on contract. Masai Ujiri's first major decision as new president. Kidd took Mavs to 2024 Finals but missed playoffs in last two seasons. Doc Rivers reportedly contacted about return.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "rashee-rice-jail-knee-surgery-2026",
+        "title": "Rashee Rice ordered to serve 30 days in jail, will miss OTAs and minicamp while rehabbing knee surgery",
+        "section": "supporting",
+        "development": "Rice must serve 30-day jail sentence for probation violation (tested positive for marijuana) tied to 2024 multi-car crash. Also underwent knee surgery last week to remove loose debris, expected out two months. Will rehab while incarcerated, miss all OTAs and minicamp.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nashville-super-bowl-2030",
+        "title": "Nashville officially awarded Super Bowl LXIV in 2030, Minneapolis gets 2028 Draft",
+        "section": "supporting",
+        "development": "NFL owners approved Nashville as Super Bowl LXIV host (February 2030) by unanimous 32-0 vote. Minneapolis awarded 2028 NFL Draft. Nashville will have 80,000 hotel rooms by 2030 (up from 62,000 now). First Super Bowl for Music City.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "arsenal-premier-league-title-2026",
+        "title": "Arsenal end 22-year Premier League title drought after Man City draw",
+        "section": "atl",
+        "development": "Arsenal clinched first Premier League title since 2004 after Man City drew at Bournemouth. Mikel Arteta's seven-year rebuild complete.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "gerrit-cole-mlb-return-2026",
+        "title": "Yankees ace Gerrit Cole to make first MLB start since 2024 on Friday",
+        "section": "atl",
+        "development": "Cole will make first major-league start Friday vs Rays, first appearance since undergoing Tommy John surgery last spring.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "joey-chestnut-battery-arrest-2026",
+        "title": "Joey Chestnut pleads guilty to battery after bar incident, on probation through July 4",
+        "section": "atl",
+        "development": "Hot dog-eating champion pleaded guilty to battery charge after bar incident. Will be on probation through July 4th weekend — his most important weekend of the year.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "jaxon-smith-njigba-trophy-error-2026",
+        "title": "Jaxon Smith-Njigba's Offensive Player of the Year trophy says 'Defensive Player of the Year'",
+        "section": "atl",
+        "development": "NFL gave JSN his Offensive Player of the Year trophy with plaque reading 'Defensive Player of the Year.' JSN: 'It's getting disrespectful at this point.' NFL will send corrected trophy.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nfl-international-games-2027",
+        "title": "NFL approves 10 international games in 2027, changes scheduling policy",
+        "section": "atl",
+        "development": "NFL owners voted to increase cap on international games from 8 to 10 in 2027 (not including Jags Wembley game = 11 total possible). Also eliminated teams' ability to protect two home games from being played abroad. Japan mentioned as future frontier.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "caitlin-clark-indy-500-marshal-2026",
+        "title": "Caitlin Clark to serve as grand marshal of Indianapolis 500",
+        "section": "atl",
+        "development": "Fever guard Clark will be grand marshal of Indy 500 this Sunday during six-day break in Fever schedule.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "inside-the-park-grand-slam-wood-2026",
+        "title": "James Wood hits inside-the-park grand slam for Nationals",
+        "section": "atl",
+        "development": "Wood hit inside-the-park grand slam as Nationals beat Mets 9-6. Center fielder completely botched the play.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "ketel-marte-walkoff-homer-2026",
+        "title": "Ketel Marte walk-off homer with two outs in ninth gives Diamondbacks comeback win",
+        "section": "atl",
+        "development": "Marte hit walk-off homer with Arizona down to last out against Giants. Dodgers also rallied late to beat Padres and reclaim first place in NL West.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "ncaa-flag-football-2028",
+        "title": "NCAA takes big step toward adding flag football as championship sport by 2028",
+        "section": "atl",
+        "development": "NCAA moving toward formal approval of flag football as championship sport by 2028. Expected to be approved by all three divisions in 2027.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "keon-coleman-make-or-break-2026",
+        "title": "Bills WR Keon Coleman says this is a 'make or break' year for him",
+        "section": "atl",
+        "development": "Coleman told media 2026 is 'make or break year' for him after disappointing rookie season. Entering Year 2 with high expectations.",
+        "is_new": true,
+        "resolved": false
+      }
+    ]
+  },
+  {
+    "date": "2026-05-20",
+    "story_log": [
+      {
+        "topic_key": "knicks-cavs-game1-ecf-2026",
         "title": "Knicks pull off historic 22-point comeback in Game 1, largest playoff comeback since 1970",
         "section": "lead",
         "development": "Knicks rallied from 22 points down with 7 minutes left in 4Q, went on 44-11 run to force OT and win 115-104. Jalen Brunson hunted James Harden repeatedly down the stretch, finished with 38-5-6. Largest playoff comeback win in Knicks history and since 1970. Cavs blew 99.9% win probability.",

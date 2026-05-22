@@ -1,9 +1,11 @@
 """
 SLAP Newsletter — Email HTML Builder
-Converts newsletter_draft.html into email-safe HTML for MailerLite delivery.
+Converts newsletter_draft.html into email-safe HTML (inline styles, table-based
+tweet cards). Output (newsletter_email.html) is consumed by the box-score builder
+(box_score/build_box_score.py --append). Not tied to any email provider.
 
 Key transformations:
-- Applies inline styles (MailerLite strips <style> tags)
+- Applies inline styles (many email clients strip <style> tags)
 - Converts tweet blockquotes into styled table-based cards
 - Preserves GIF/meme <img> tags with email-safe attributes
 - Wraps content in a 600px email table layout
@@ -116,7 +118,7 @@ def _img_tag(src: str, alt: str = 'image') -> str:
 
 def build_email_html(draft_html: str) -> str:
     """
-    Convert newsletter_draft.html → email-safe HTML for MailerLite.
+    Convert newsletter_draft.html → email-safe HTML.
     Input: the full draft HTML string (with inline GIFs/memes already embedded).
     Output: a complete email-safe HTML document string.
     """

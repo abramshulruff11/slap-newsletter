@@ -1263,105 +1263,6 @@ def run_pass3(draft_html: str, recent_output: dict, client: anthropic.Anthropic)
 
 
 # ---------------------------------------------------------------------------
-# MailerLite auto-post
-# ---------------------------------------------------------------------------
-
-def post_to_mailerlite(html: str) -> None:
-    """
-    Creates an unpublished draft in Substack via cookie-based auth.
-    Uses SUBSTACK_SID (session cookie) + SUBSTACK_URL env vars.
-    Bypasses Cloudflare which blocks email/password login from GitHub Actions.
-    Skips silently if credentials are not set (local runs).
-    """
-    import requests
-    from datetime import datetime, date, timedelta
-    from zoneinfo import ZoneInfo
-
-    api_key    = os.getenv("MAILERLITE_API_KEY")
-    from_email = os.getenv("MAILERLITE_FROM_EMAIL")
-    group_id   = os.getenv("MAILERLITE_GROUP_ID")
-
-    if not all([api_key, from_email, group_id]):
-        print("  ⚠ MAILERLITE_API_KEY / MAILERLITE_FROM_EMAIL / MAILERLITE_GROUP_ID not set — skipping")
-        return
-
-    print("\n── MAILERLITE AUTO-POST ────────────────────────────")
-
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type":  "application/json",
-        "Accept":        "application/json",
-    }
-
-    try:
-        title_match = re.search(r'<h1[^>]*>(.*?)</h1>', html, re.DOTALL)
-        title = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else "SLAP Newsletter"
-
-        today   = date.today()
-        subject = f"SLAP — {today.strftime('%B')} {today.day}, {today.strftime('%Y')}: {title}"
-
-        body_match   = re.search(r'<body[^>]*>(.*?)</body>', html, re.DOTALL | re.IGNORECASE)
-        body_content = body_match.group(1).strip() if body_match else html
-        body_content = re.sub(r'<!--.*?-->', '', body_content, flags=re.DOTALL).strip()
-
-        eastern    = ZoneInfo("America/New_York")
-        now_et     = datetime.now(eastern)
-        publish_et = now_et.replace(hour=12, minute=0, second=0, microsecond=0)
-        if now_et.hour >= 12:
-            publish_et = publish_et + timedelta(days=1)
-
-        create_resp = requests.post(
-            "https://connect.mailerlite.com/api/campaigns",
-            headers=headers,
-            json={
-                "name":   f"SLAP — {today.strftime('%B')} {today.day}, {today.strftime('%Y')}",
-                "type":   "regular",
-                "emails": [{
-                    "subject":   subject,
-                    "from_name": "SLAP Newsletter",
-                    "from":      from_email,
-                    "content":   body_content,
-                }],
-                "groups": [group_id],
-            },
-            timeout=30,
-        )
-
-        if create_resp.status_code not in (200, 201):
-            print(f"  ✗ Campaign creation failed ({create_resp.status_code}): {create_resp.text[:400]}")
-            print("    Newsletter saved locally — publish manually if needed.")
-            return
-
-        campaign_id = create_resp.json()["data"]["id"]
-        print(f"  ✓ Campaign created (id: {campaign_id})")
-
-        sched_resp = requests.post(
-            f"https://connect.mailerlite.com/api/campaigns/{campaign_id}/schedule",
-            headers=headers,
-            json={
-                "delivery": "scheduled",
-                "schedule": {
-                    "date":    publish_et.strftime("%Y-%m-%d"),
-                    "hours":   publish_et.strftime("%H"),
-                    "minutes": publish_et.strftime("%M"),
-                },
-            },
-            timeout=30,
-        )
-
-        if sched_resp.status_code in (200, 201):
-            print(f"  ✓ Scheduled for {today.strftime('%B')} {publish_et.day} at 12:00 PM ET")
-            print(f"  → Review: https://dashboard.mailerlite.com/campaigns")
-        else:
-            print(f"  ✗ Scheduling failed ({sched_resp.status_code}): {sched_resp.text[:400]}")
-            print(f"    Campaign created — schedule manually: https://dashboard.mailerlite.com/campaigns")
-
-    except Exception as e:
-        print(f"  ✗ MailerLite auto-post failed: {e}")
-        print("    Newsletter saved locally — publish manually if needed.")
-
-
-# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -1475,7 +1376,8 @@ def main() -> None:
         print(f"\n⚠  {flag_count} editor flag(s) need review before publishing.")
         print(f"   Search 'EDITOR FLAG' in newsletter_draft.html to find them.")
 
-    # Build email version and post to MailerLite
+    # Build the email-safe HTML. Consumed by the box-score builder
+    # (box_score/build_box_score.py --append); not auto-sent anywhere.
     print("\n── EMAIL BUILD ─────────────────────────────────────")
     try:
         from build_email_html import build_email_html
@@ -1483,11 +1385,9 @@ def main() -> None:
         email_html = build_email_html(draft_for_email)
         EMAIL_OUTPUT_PATH.write_text(email_html, encoding="utf-8")
         print(f"  ✓ newsletter_email.html built ({len(email_html):,} bytes)")
-        post_to_mailerlite(email_html)
     except Exception as e:
         print(f"  ✗ Email build failed: {e}")
-        print("    Falling back to substack HTML for MailerLite.")
-        post_to_mailerlite(SUBSTACK_OUTPUT_PATH.read_text(encoding="utf-8"))
+        print("    newsletter_email.html not updated — box score will reuse the previous build.")
 
 
 if __name__ == "__main__":

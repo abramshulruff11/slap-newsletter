@@ -369,6 +369,13 @@ def _parse_entries(entries: list) -> list[dict]:
                                   "pct", "PCT", "percentage"),
             "games_behind": _stat(stats, "gamesBehind", "gb", "GB",
                                   "gamesBehindLeader", default="-"),
+            "differential": _stat(stats, "differential", "pointDifferential",
+                                  "runDifferential", "scoreDifferential", default=""),
+            "home_record":  _stat(stats, "homeRecord", "Home", "home", default=""),
+            "away_record":  _stat(stats, "awayRecord", "Away", "away", default=""),
+            "last_ten":     _stat(stats, "Last Ten Games", "L10", "lastTen",
+                                  "vsLast10", "last10", default=""),
+            "streak":       _stat(stats, "streak", "streakCode", "Streak", default=""),
         })
     return result
 
@@ -565,8 +572,14 @@ def _parse_nba_box(summary: dict) -> dict:
     KEY = ["MIN", "FG", "3PT", "FT", "REB", "AST", "STL", "BLK", "PTS"]
     result: dict = {}
 
-    for team_entry in summary.get("boxscore", {}).get("players", []):
-        side      = team_entry.get("homeAway", "home")
+    for i, team_entry in enumerate(summary.get("boxscore", {}).get("players", [])):
+        side_raw = team_entry.get("homeAway", "").lower()
+        if side_raw in ("away", "visitor", "visitors"):
+            side = "away"
+        elif side_raw == "home":
+            side = "home"
+        else:
+            side = "away" if i == 0 else "home"
         team_abbr = team_entry.get("team", {}).get("abbreviation", "")
         players: list[dict] = []
 
@@ -610,15 +623,148 @@ def _parse_nba_box(summary: dict) -> dict:
     return result
 
 
+def _parse_mlb_agate(summary: dict, away_abbr: str, home_abbr: str) -> dict:
+    """
+    Build the newspaper agate block for an MLB game.
+
+    Returns:
+      {
+        "home_runs":     ["Albies 1st, solo", ...],
+        "doubles":       [],   # not available in summary endpoint batting labels
+        "triples":       [],   # not available in summary endpoint batting labels
+        "errors":        [],   # not available cleanly
+        "lob":           {},   # not available cleanly
+        "scoring_plays": [{"inning": 1, "half": "top",
+                           "score": "ATL 1, MIA 0", "text": "..."}, ...],
+      }
+
+    Scoring plays come from summary["plays"] filtered to scoringPlay=True
+    (ESPN's summary endpoint has no top-level "scoringPlays" key for MLB).
+    Home runs are derived from scoring-play text (gives inning + runners),
+    falling back to batting-line HR column counts (name + team only).
+    2B/3B/LOB/errors are not reliably available in this endpoint.
+    """
+    agate: dict = {
+        "home_runs": [], "doubles": [], "triples": [],
+        "errors": [], "lob": {}, "scoring_plays": [],
+    }
+
+    # --- Scoring plays from plays[] filtered by scoringPlay=True -----------
+    # period.type = "Top" / "Bottom" (exact strings ESPN uses).
+    # period.number = inning number (int).
+    # awayScore / homeScore = running score after the play.
+    # team = {"id": "15"} only — no abbreviation, so use period.type for half.
+    for play in summary.get("plays", []):
+        if not play.get("scoringPlay"):
+            continue
+        period = play.get("period", {}) or {}
+        inning = period.get("number")
+        period_type = str(period.get("type", "")).lower()
+        if "top" in period_type:
+            half = "top"
+        elif "bot" in period_type:
+            half = "bottom"
+        else:
+            half = ""
+
+        away_s = play.get("awayScore")
+        home_s = play.get("homeScore")
+        score = ""
+        if away_s is not None and home_s is not None:
+            score = f"{away_abbr} {away_s}, {home_abbr} {home_s}"
+
+        text = play.get("text", "") or ""
+        if not text and inning is None:
+            continue
+        agate["scoring_plays"].append({
+            "inning": inning,
+            "half":   half,
+            "score":  score,
+            "text":   text,
+        })
+
+    # --- HR detail from scoring-play text ----------------------------------
+    # Play text carries inning context and runner count (e.g. "solo", "2 on"),
+    # which is what the agate line wants. Only collect from homer plays.
+    hr_from_plays = []
+    for sp in agate["scoring_plays"]:
+        txt = sp.get("text", "").lower()
+        if "homer" not in txt and "home run" not in txt:
+            continue
+        inning = sp.get("inning")
+        suffix = f" {inning}{_ordinal(inning)}" if inning else ""
+        on = ""
+        if "2 on" in txt or "two on" in txt:
+            on = ", 2 on"
+        elif "1 on" in txt or "one on" in txt:
+            on = ", 1 on"
+        elif "solo" in txt:
+            on = ", solo"
+        # Name = first word of the play text
+        name = sp.get("text", "").split(" ")[0]
+        hr_from_plays.append(f"{name}{suffix}{on}".strip())
+
+    if hr_from_plays:
+        agate["home_runs"] = hr_from_plays
+    else:
+        # Fallback: HR counts from batting lines (name + team, no inning detail).
+        # ESPN batting labels use 'HR' in the summary endpoint.
+        players_list = summary.get("boxscore", {}).get("players", [])
+        for i, team_entry in enumerate(players_list):
+            side_raw = team_entry.get("homeAway", "").lower()
+            side = "away" if side_raw in ("away", "visitor") else (
+                "home" if side_raw == "home" else ("away" if i == 0 else "home"))
+            abbr = away_abbr if side == "away" else home_abbr
+            for sg in team_entry.get("statistics", []):
+                type_raw = sg.get("type", "")
+                type_text = (type_raw.get("text", "").lower()
+                             if isinstance(type_raw, dict) else str(type_raw).lower())
+                if "batt" not in type_text:
+                    continue
+                labels = sg.get("labels", sg.get("names", []))
+                if "HR" not in labels:
+                    continue
+                hr_i = labels.index("HR")
+                for ae in sg.get("athletes", []):
+                    raw = ae.get("stats", [])
+                    if not raw or hr_i >= len(raw):
+                        continue
+                    try:
+                        count = int(str(raw[hr_i]).strip() or 0)
+                    except (ValueError, TypeError):
+                        count = 0
+                    if count > 0:
+                        ath = ae.get("athlete", {})
+                        nm = ath.get("shortName", ath.get("displayName", "?"))
+                        agate["home_runs"].append(f"{nm} ({abbr})")
+
+    return agate
+
+
+def _ordinal(n) -> str:
+    """Ordinal suffix for an inning number: 1->st, 2->nd, 3->rd, else th."""
+    try:
+        n = int(n)
+    except (ValueError, TypeError):
+        return ""
+    if n % 100 in (11, 12, 13):
+        return "th"
+    return {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+
+
 def _parse_mlb_box(summary: dict) -> dict:
     """
     Parse MLB summary into:
       home/away: {team, batting, pitching}
       linescore: {away_innings, home_innings, away_rhe, home_rhe, num_innings}
       notes:     [str, ...]   game notes (2B, HR, WP, LP, T, A, etc.)
+      agate:     {home_runs, doubles, triples, errors, lob, scoring_plays}
     """
-    BAT = ["AB", "R", "H", "RBI", "BB", "SO", "AVG"]
-    PIT = ["IP", "H", "R", "ER", "BB", "SO", "ERA"]
+    # ESPN batting labels use 'K' for strikeouts (not 'SO'), and
+    # have no 2B/3B columns in the summary endpoint batting table.
+    BAT = ["AB", "R", "H", "RBI", "BB", "K", "AVG"]
+    # ESPN pitching labels use 'K' for strikeouts (not 'SO').
+    PIT = ["IP", "H", "R", "ER", "BB", "K", "ERA"]
     result: dict = {}
 
     players_list = summary.get("boxscore", {}).get("players", [])
@@ -677,12 +823,17 @@ def _parse_mlb_box(summary: dict) -> dict:
     num_innings  = max(periods["count"], 9)
 
     def _rhe(ha: str) -> dict:
-        s = team_totals.get(ha, {})
-        return {
-            "R": s.get("runs",   s.get("R", "-")),
-            "H": s.get("hits",   s.get("H", "-")),
-            "E": s.get("errors", s.get("E", "-")),
-        }
+        # boxscore.teams[].statistics displayValues are null in the ESPN summary
+        # endpoint. R is available from header.competitions[0].competitors[].score;
+        # H and E are not exposed cleanly so we leave them as "-".
+        header_comps = summary.get("header", {}).get("competitions", [])
+        comp = header_comps[0] if header_comps else {}
+        r = "-"
+        for competitor in comp.get("competitors", []):
+            if competitor.get("homeAway", "").lower() == ha:
+                r = str(competitor.get("score", "-"))
+                break
+        return {"R": r, "H": "-", "E": "-"}
 
     # Pad innings to at least 9
     away_inn = periods["away_periods"] + ["-"] * max(0, 9 - len(periods["away_periods"]))
@@ -699,23 +850,71 @@ def _parse_mlb_box(summary: dict) -> dict:
     # ── Game notes ──────────────────────────────────────────────────────────
     result["notes"] = _parse_game_notes(summary)
 
+    # ── Agate (HR/2B/3B, errors, LOB, scoring plays) ──
+    away_abbr = result.get("away", {}).get("team", "")
+    home_abbr = result.get("home", {}).get("team", "")
+    result["agate"] = _parse_mlb_agate(summary, away_abbr, home_abbr)
+
     return result
 
 
 def _parse_nhl_box(summary: dict) -> dict:
     """
     Parse NHL summary into:
-      home/away: {team, players (placeholder for future skater/goalie stats)}
+      home/away: {team, players}
       linescore: {period_labels, away_periods, home_periods}
+
+    Attempts ESPN boxscore.players for skater stats (TOI, G, A, PTS, +/-, SOG, PIM).
+    Falls back to empty players list if ESPN doesn't return per-player data.
     """
+    NHL_KEYS = ["TOI", "G", "A", "PTS", "+/-", "SOG", "PIM"]
     result: dict = {}
 
-    # Team sides from boxscore.teams (NHL may not have per-player stats in summary)
-    for team in summary.get("boxscore", {}).get("teams", []):
-        ha        = team.get("homeAway", "").lower()
-        team_abbr = team.get("team", {}).get("abbreviation", "")
-        if ha in ("home", "away"):
-            result[ha] = {"team": team_abbr, "players": []}
+    # Attempt per-player stats from boxscore.players (same structure as NBA)
+    for i, team_entry in enumerate(summary.get("boxscore", {}).get("players", [])):
+        side_raw = team_entry.get("homeAway", "").lower()
+        if side_raw in ("away", "visitor", "visitors"):
+            side = "away"
+        elif side_raw == "home":
+            side = "home"
+        else:
+            side = "away" if i == 0 else "home"
+        team_abbr = team_entry.get("team", {}).get("abbreviation", "")
+        players: list[dict] = []
+
+        for stats_group in team_entry.get("statistics", []):
+            labels = stats_group.get("names", stats_group.get("labels", []))
+            for ae in stats_group.get("athletes", []):
+                raw = ae.get("stats", [])
+                if not raw:
+                    continue
+                stats: dict[str, str] = {}
+                for k in NHL_KEYS:
+                    if k in labels:
+                        idx = labels.index(k)
+                        if idx < len(raw):
+                            stats[k] = raw[idx]
+                # Skip DNP rows (no TOI or TOI is 0:00)
+                toi = stats.get("TOI", "")
+                if not toi or toi in ("0:00", "--", ""):
+                    continue
+                ath = ae.get("athlete", {})
+                players.append({
+                    "name":    ath.get("shortName", ath.get("displayName", "?")),
+                    "pos":     ath.get("position", {}).get("abbreviation", ""),
+                    "starter": ae.get("starter", False),
+                    "stats":   stats,
+                })
+
+        result[side] = {"team": team_abbr, "players": players}
+
+    # Fallback: populate sides from boxscore.teams if boxscore.players was empty
+    if not result:
+        for team in summary.get("boxscore", {}).get("teams", []):
+            ha        = team.get("homeAway", "").lower()
+            team_abbr = team.get("team", {}).get("abbreviation", "")
+            if ha in ("home", "away"):
+                result[ha] = {"team": team_abbr, "players": []}
 
     # Period scores
     periods = _parse_period_scores(summary)
@@ -789,24 +988,131 @@ _STAT_LABELS = {
 }
 
 
+def _byathlete_leaders(sport: str, league: str, category: str,
+                       sort_stat: str, season: int, per_cat: int,
+                       sort_dir: str = "desc", qualified: bool = True) -> list[dict]:
+    """
+    Fallback leaders source: ESPN byathlete statistics endpoint.
+    Returns [{name, team, value}, ...] sorted desc by the requested stat.
+
+    ESPN structure (confirmed via probe 2026-05-22):
+      data.categories[i].names   — column names, top-level ONLY (per-athlete names=[]).
+      data.athletes[j].categories[i].totals — formatted display values, positional.
+    """
+    url = (
+        f"https://site.web.api.espn.com/apis/common/v3/sports/{sport}/{league}"
+        f"/statistics/byathlete?region=us&lang=en&contentorigin=espn"
+        f"&isqualified={'true' if qualified else 'false'}&category={category}&sort={sort_stat}:{sort_dir}"
+        f"&season={season}&seasontype=2&limit={per_cat}"
+    )
+    data = fetch_url(url)
+    if not data:
+        return []
+
+    stat_key = sort_stat.split(".")[-1]
+
+    # ESPN names field uses the API key form (e.g. 'homeRuns', 'avg', 'saves').
+    # Map each internal stat_key to the set of names ESPN might use.
+    label_alias = {
+        "avg":          {"avg", "AVG", "battingAverage", "BA"},
+        "homeRuns":     {"homeRuns", "HR"},
+        "RBIs":         {"RBIs", "RBI"},
+        "OPS":          {"OPS", "onBasePlusSlugging"},
+        "stolenBases":  {"stolenBases", "SB"},
+        "ERA":          {"ERA", "earnedRunAverage"},
+        "wins":         {"wins", "W"},
+        "strikeouts":   {"strikeouts", "SO", "K"},
+        "WHIP":         {"WHIP"},
+        "saves":        {"saves", "SV"},
+    }
+    accepted = label_alias.get(stat_key, {stat_key})
+
+    # Column names live in the TOP-LEVEL categories[], not per-athlete.
+    # Find the target column index for this stat.
+    target_idx: int | None = None
+    for top_cat in data.get("categories", []):
+        if top_cat.get("name", "") != category:
+            continue
+        names = top_cat.get("names", top_cat.get("labels", []))
+        for i, nm in enumerate(names):
+            if nm in accepted:
+                target_idx = i
+                break
+        break
+
+    if target_idx is None:
+        print(f"      ✗ byathlete: no column index found for {stat_key} in {category}")
+        return []
+
+    out: list[dict] = []
+    for item in data.get("athletes", [])[:per_cat]:
+        ath  = item.get("athlete", {})
+        name = ath.get("shortName", ath.get("displayName", "?"))
+        team = (ath.get("teamShortName", "")
+                or (ath.get("team", {}) or {}).get("abbreviation", "")
+                or (item.get("team", {}) or {}).get("abbreviation", ""))
+        value = ""
+        # Pull display value from per-athlete totals using the resolved column index.
+        for cat in item.get("categories", []):
+            if cat.get("name", "") != category:
+                continue
+            totals = cat.get("totals", [])
+            if target_idx < len(totals) and totals[target_idx] not in ("-", "", None):
+                value = totals[target_idx]
+            break
+        if value and value not in ("0", "0.0"):
+            out.append({"name": name, "team": team, "value": value})
+
+    return out
+
+
+# Maps our internal stat names to (byathlete category, dotted sort stat, sort dir, isqualified).
+# sort_dir: 'desc' for counting stats (more=better), 'asc' for rate stats (lower=better).
+# qualified: False for saves — closers don't meet IP threshold so isqualified=true hides them.
+_MLB_BYATHLETE = {
+    "battingAverage":     ("batting",  "batting.avg",          "desc", True),
+    "homeRuns":           ("batting",  "batting.homeRuns",     "desc", True),
+    "RBIs":               ("batting",  "batting.RBIs",         "desc", True),
+    "onBasePlusSlugging": ("batting",  "batting.OPS",          "desc", True),
+    "stolenBases":        ("batting",  "batting.stolenBases",  "desc", True),
+    "ERA":                ("pitching", "pitching.ERA",         "asc",  True),
+    "wins":               ("pitching", "pitching.wins",        "desc", True),
+    "strikeouts":         ("pitching", "pitching.strikeouts",  "desc", True),
+    "WHIP":               ("pitching", "pitching.WHIP",        "asc",  True),
+    "saves":              ("pitching", "pitching.saves",       "desc", False),
+}
+
+
 def fetch_league_leaders(sport: str, league: str, sport_key: str) -> dict:
     """
-    Fetch top-5 leaders for key stats.
+    Fetch leaders for key stats.
     Returns:
       {category_name: {label, leaders: [{name, team, value}, ...]}}
+
+    Source order:
+      1. v3 /leaders endpoint (the old /apis/site/v2/.../leaders 404s — the
+         correct path is /apis/site/v3/.../leaders?season=&seasontype=2).
+      2. byathlete statistics endpoint, per category, for any stat the v3
+         leaders feed didn't return (MLB only).
     """
     config = _LEADERS_CONFIG.get(sport_key, {})
     if not config:
         return {}
 
-    url  = f"{ESPN_BASE}/{sport}/{league}/leaders"
-    data = fetch_url(url)
-    if not data:
-        return {}
+    season = date.today().year
+    # For MLB the renderer splits AL/NL downstream, so pull 25 per category to
+    # guarantee 5 per league after filtering. Other sports cap at 5 in the renderer.
+    per_cat = 25 if sport_key == "mlb" else 5
 
-    # ESPN returns: {"categories": [{"name": ..., "leaders": [{...}]}]}
-    # OR:           {"leaders":    [{"name": ..., "leaders": [{...}]}]}
+    # ── Source 1: v3 /leaders ───────────────────────────────────────────
+    v3_url = (
+        f"https://site.api.espn.com/apis/site/v3/sports/{sport}/{league}"
+        f"/leaders?season={season}&seasontype=2"
+    )
+    data = fetch_url(v3_url) or {}
     raw_cats = data.get("categories", data.get("leaders", []))
+    # v3 sometimes returns a list of strings or a non-dict shape — guard against that
+    raw_cats = [c for c in raw_cats if isinstance(c, dict)]
     cat_map  = {c.get("name", ""): c for c in raw_cats}
 
     all_wanted = [s for group in config.values() for s in group]
@@ -818,7 +1124,7 @@ def fetch_league_leaders(sport: str, league: str, sport_key: str) -> dict:
             continue
         leaders_raw = cat.get("leaders", cat.get("athletes", []))
         leaders: list[dict] = []
-        for entry in leaders_raw[:5]:
+        for entry in leaders_raw[:per_cat]:
             athlete = entry.get("athlete", entry.get("displayName", {}))
             if isinstance(athlete, str):
                 name = athlete
@@ -831,15 +1137,41 @@ def fetch_league_leaders(sport: str, league: str, sport_key: str) -> dict:
                 "team":  team,
                 "value": entry.get("displayValue", entry.get("value", "?")),
             })
-        if leaders:
+        # Only accept v3 result if at least one entry has a real value.
+        # v3 sometimes returns athletes with blank displayValue/value fields,
+        # which would block the byathlete fallback below.
+        has_values = any(
+            l.get("value") not in ("", "?", None, "--")
+            for l in leaders
+        )
+        if leaders and has_values:
             result[stat_name] = {
                 "label":   _STAT_LABELS.get(stat_name, stat_name),
                 "leaders": leaders,
             }
 
+    # ── Source 2: byathlete fallback for any missing MLB category ─────────────
+    if sport_key == "mlb":
+        for stat_name in all_wanted:
+            if stat_name in result:
+                continue
+            mapping = _MLB_BYATHLETE.get(stat_name)
+            if not mapping:
+                continue
+            category, sort_stat, sort_dir, qualified = mapping
+            leaders = _byathlete_leaders(sport, league, category, sort_stat, season, per_cat, sort_dir, qualified)
+            if leaders:
+                result[stat_name] = {
+                    "label":   _STAT_LABELS.get(stat_name, stat_name),
+                    "leaders": leaders,
+                }
+            time.sleep(0.15)
+
     total = sum(len(v["leaders"]) for v in result.values())
     if total:
         print(f"      Leaders: {len(result)} categories, {total} entries")
+    else:
+        print(f"      ✗ No leaders parsed for {sport}/{league}")
     return result
 
 

@@ -69,6 +69,9 @@ jobs:
           fi
           python generate_newsletter.py $FLAGS
 
+      - name: Append box score
+        run: python box_score/build_box_score.py --append
+
       - name: Verify outputs
         run: |
           for f in newsletter_draft.html newsletter_substack.html; do
@@ -86,6 +89,7 @@ jobs:
           mkdir -p "$ARCHIVE_DIR"
           cp newsletter_draft.html "$ARCHIVE_DIR/"
           cp newsletter_substack.html "$ARCHIVE_DIR/"
+          cp newsletter_email.html "$ARCHIVE_DIR/"
           cp raw_content.json "$ARCHIVE_DIR/"
           if [ -f recent_output.json ]; then
             cp recent_output.json "$ARCHIVE_DIR/"
@@ -99,7 +103,7 @@ jobs:
         run: |
           git config user.name "SLAP Bot"
           git config user.email "slap-bot@users.noreply.github.com"
-          git add raw_content.json newsletter_draft.html newsletter_substack.html recent_output.json gif_history.json meme_history.json archive/
+          git add raw_content.json newsletter_draft.html newsletter_substack.html newsletter_email.html recent_output.json gif_history.json meme_history.json archive/
           DATE=$(date -u +"%Y-%m-%d")
           git commit -m "SLAP newsletter output for $DATE" || echo "No changes to commit"
           git pull --rebase -X theirs origin main
