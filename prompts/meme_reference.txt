@@ -19,16 +19,30 @@ Use when a classic meme format fits and you want to write custom captions.
 
 Output this exact HTML — the pipeline parses data attributes to call the Imgflip API:
 
-<div class="meme-placeholder" data-template="TEMPLATE_SLUG" data-top="TOP TEXT" data-bottom="BOTTOM TEXT"></div>
+<div class="meme-placeholder" data-template="TEMPLATE_SLUG" data-boxes="PANEL 1||PANEL 2"></div>
+
+Separate panels with `||`. Write one caption per panel in order (left→right, top→bottom).
+
+PANEL COUNTS — how many captions to write per template:
+
+| Captions | Templates |
+|----------|-----------|
+| 2 panels | drake, distracted-boyfriend, left-exit-12-off-ramp, two-buttons, corporates-want-you-to-find-the-difference, buff-doge-vs-cheems, epic-handshake, this-is-fine, change-my-mind, hide-the-pain-harold, bernie-i-am-once-again-asking, surprised-pikachu, always-has-been, monkey-puppet, mocking-spongebob, first-time, trade-offer, waiting-skeleton, one-does-not-simply, spider-man-pointing-at-spider-man, eric-andre-shooting, is-this-a-pigeon, woman-yelling-at-cat, ight-imma-head-out |
+| 3 captions → 4 physical panels | gru-plan (code repeats flaw as panel 4), expanding-brain, vince-mcmahon-reaction, clown-applying-makeup |
+| 3 panels literal | panik-kalm-panik |
+| 2 captions → 4 physical panels | anakin-padme (code fills blank/repeat panels) |
 
 - data-template must be one of the slugs listed in the template library below
 - Keep text short — 5-10 words max per panel
-- ALL CAPS is standard for meme text
+- ALL CAPS is standard for meme text (applied automatically by the pipeline)
 - No quotation marks inside attribute values — use apostrophes if needed
 - For mocking-spongebob: write bottom text normally, the pipeline auto-applies alternating caps
 
-Example:
-<div class="meme-placeholder" data-template="drake" data-top="Watching the game on ESPN" data-bottom="Reading about it in SLAP the next day"></div>
+Example (2-panel):
+<div class="meme-placeholder" data-template="drake" data-boxes="Watching the game on ESPN||Reading about it in SLAP the next day"></div>
+
+Example (3-caption gru-plan):
+<div class="meme-placeholder" data-template="gru-plan" data-boxes="SIGN THE STAR PLAYER||WIN THE CHAMPIONSHIP||WAIT HE WANTS A MAX EXTENSION"></div>
 
 ### TYPE 2: FOUND MEME (trending meme from a tweet or web search)
 Use when a specific meme is circulating about a current event (Tiger Woods crash memes, draft day memes, etc.) and you found it during research.
@@ -75,10 +89,10 @@ Use when someone chose one thing over another, or when two things should be comp
 ### ESCALATION / LEVELS — "It keeps getting more extreme"
 Use when a stat line, situation, or take escalates through multiple levels.
 
-- **Galaxy Brain / Expanding Brain** (slug: `expanding-brain`, imgflip: 93895088) — 4-5 panels of increasingly "enlightened" takes. Perfect for devolving takes or increasingly wild stat comparisons.
-- **Vince McMahon Reaction** (slug: `vince-mcmahon-reaction`, imgflip: 27813981) — 4 panels of increasing excitement. Use the meme version when you want custom text on each panel.
-- **Gru's Plan** (slug: `gru-plan`, imgflip: 131940431) — 4 panels: plan sounds good → plan sounds good → realize the flaw → stare at the flaw. Use when a team's plan has an obvious problem they didn't see coming.
-- **Clown Applying Makeup** (slug: `clown-applying-makeup`, imgflip: 178591752) — Progressive clown makeup. Each panel = a step deeper into delusion. Perfect for fans who keep defending a bad team/player.
+- **Galaxy Brain / Expanding Brain** (slug: `expanding-brain`, imgflip: 93895088) — 4 panels of increasingly "enlightened" takes. Write 3 captions: `data-boxes="TAKE 1||TAKE 2||TAKE 3"` (code fills panel 4). Perfect for devolving takes or increasingly wild stat comparisons.
+- **Vince McMahon Reaction** (slug: `vince-mcmahon-reaction`, imgflip: 193966043) — 4 panels of increasing excitement. Write 3 captions: `data-boxes="PANEL 1||PANEL 2||PANEL 3"`. Use when you want custom text escalating across panels.
+- **Gru's Plan** (slug: `gru-plan`, imgflip: 131940431) — 4 panels: step 1 → step 2 → the flaw → stare at the flaw. Write 3 captions: `data-boxes="STEP 1||STEP 2||THE FLAW"` (code repeats the flaw as panel 4). Use when a team's plan has an obvious problem they didn't see coming.
+- **Clown Applying Makeup** (slug: `clown-applying-makeup`, imgflip: 195515965) — Progressive clown makeup. Write 3 captions: `data-boxes="STEP 1||STEP 2||STEP 3"`. Each panel = a step deeper into delusion. Perfect for fans who keep defending a bad team/player.
 
 ### DENIAL / COPIUM — "Refusing to accept reality"
 
@@ -86,7 +100,7 @@ Use when a stat line, situation, or take escalates through multiple levels.
 - **Clown Applying Makeup** (slug: `clown-applying-makeup`, imgflip: 178591752) — (see Escalation above, also works here)
 - **Change My Mind** (slug: `change-my-mind`, imgflip: 129242436) — Crowder sitting at table with a sign. Use for bold/provocative takes.
 - **Hide the Pain Harold** (slug: `hide-the-pain-harold`, imgflip: 27865) — Smiling through obvious pain. Use for fans/players pretending everything is fine when it clearly isn't.
-- **Anakin Padme** (slug: `anakin-padme`, imgflip: 371605855) — 4-panel. Anakin says something ominous, Padme hopefully asks if he means the good version, Anakin stares blankly. Use for teams in denial about a bad decision.
+- **Anakin Padme** (slug: `anakin-padme`, imgflip: 322841258) — 4-panel. Anakin says something ominous, Padme hopefully asks if he means the good version, Anakin stares blankly. Write 2 captions: `data-boxes="ANAKIN'S OMINOUS LINE||PADME'S HOPEFUL QUESTION"` (code fills the blank/repeat panels). Use for teams in denial about a bad decision.
 - **Bernie I Am Once Again Asking** (slug: `bernie-i-am-once-again-asking`, imgflip: 382370190) — Use for recurring requests/situations. "[Team] is once again asking [player] to carry them."
 
 ### REACTION / SURPRISE — "Wait, what?"
@@ -94,14 +108,13 @@ Use when a stat line, situation, or take escalates through multiple levels.
 - **Surprised Pikachu** (slug: `surprised-pikachu`, imgflip: 155067746) — When the obvious outcome happens and everyone acts shocked.
 - **Wait, It's All X? Always Has Been** (slug: `always-has-been`, imgflip: 252600902) — Astronaut meme. Use when something that seems new was actually always the case.
 - **Monkey Puppet Side-Eye** (slug: `monkey-puppet`, imgflip: 148909805) — Awkward glance. When someone is caught or called out.
-- **Mocking Spongebob** (slug: `mocking-spongebob`, imgflip: 102156234) — When a bad excuse or dumb take deserves direct mockery. Top text = the straight version. Bottom text = the same phrase repeated. The Spongebob face does the mocking — no special formatting needed.
-- **First Time?** (slug: `first-time`, imgflip: 277489984) — Parachute instructor meme. Use for recurring disasters where a fan/player acts surprised at something that always happens. IMPORTANT: data-top should be the setup quote — the person/thing freaking out (e.g. "JAYLEN BROWN BLAMING THE REFS AFTER EVERY LOSS"). data-bottom is always the instructor's line: "FIRST TIME?"
+- **Mocking Spongebob** (slug: `mocking-spongebob`, imgflip: 102156234) — When a bad excuse or dumb take deserves direct mockery. `data-boxes="THE STRAIGHT VERSION||THE PHRASE REPEATED"`. The pipeline auto-applies alternating caps to the bottom panel — write it normally.
+- **First Time?** (slug: `first-time`, imgflip: 277489984) — Parachute instructor meme. Use for recurring disasters where a fan/player acts surprised at something that always happens. `data-boxes="THE SETUP QUOTE (person/thing freaking out)||FIRST TIME?"` — the bottom panel is always the instructor's line.
 
 ### DOMINATION / SUPERIORITY — "One thing destroying another"
 
 - **Trade Offer** (slug: `trade-offer`, imgflip: 309868304) — "I receive: [good thing]. You receive: [bad thing]." Perfect for lopsided trades.
-- **Panik / Kalm / Panik** (slug: `panik-kalm-panik`, imgflip: 226297822) — THREE panels of emotional whiplash. REQUIRES data-middle for the calm panel. Format:
-  `data-top="PANIK TEXT"` (first shock), `data-middle="KALM TEXT"` (false relief), `data-bottom="PANIK TEXT"` (final panic). Good for game recaps with momentum swings.
+- **Panik / Kalm / Panik** (slug: `panik-kalm-panik`, imgflip: 226297822) — THREE panels of emotional whiplash. `data-boxes="PANIK TEXT||KALM TEXT||PANIK TEXT"` — first shock, false relief, final panic. Good for game recaps with momentum swings.
 - **Waiting Skeleton** (slug: `waiting-skeleton`, imgflip: 4087833) — When a franchise or fan base has been waiting for something so long it's become a joke.
 - **One Does Not Simply** (slug: `one-does-not-simply`, imgflip: 61579) — Boromir from LOTR. "One does not simply [impossible or absurd thing]." Use for situations that seem easy but always end in disaster for a specific team or player.
 

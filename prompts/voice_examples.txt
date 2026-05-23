@@ -1,5 +1,10 @@
 ## VOICE EXAMPLES — Written by Abram, match this energy exactly
 ## These are not templates. They are the target. Write like this.
+## NOTE ON TWEET MARKERS: Some older examples below show tweet slots as concepts
+## like "[TWEET: best reaction tweet to X]". Those illustrate WHERE a tweet goes
+## and WHY — they are NOT a license to invent tweets. In real output you may ONLY
+## use the real tweet URLs supplied in the story plan. Never emit a tweet without
+## a real numeric status URL; if no real tweet fits a beat, use a GIF/meme or skip.
 ## Study the rhythm: short sentences. Media does the emotional work.
 ## Prose sets up. GIF/meme/tweet delivers the punchline.
 ## Never more than 8 consecutive sentences without a media break.

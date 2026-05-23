@@ -479,6 +479,35 @@ def blockquotes_to_substack_urls(html: str) -> str:
     )
 
 
+def drop_fabricated_tweets(html: str) -> tuple[str, int]:
+    """
+    Remove any tweet blockquote whose URL lacks a real numeric status ID.
+
+    The model sometimes invents a reaction-tweet slot for a headliner beat and
+    emits a made-up URL like ".../status/placeholder" when no real tweet exists
+    in the feed for that beat. A fabricated URL never embeds in Substack, so it
+    is strictly worse than no tweet. This deterministic guard strips them before
+    the draft/substack/email files are written, regardless of whether Pass 1 or
+    Pass 2 introduced them.
+    """
+    pattern = re.compile(
+        r'<blockquote[^>]*class="tweet"[^>]*>.*?</blockquote>',
+        re.DOTALL | re.IGNORECASE,
+    )
+    dropped = 0
+
+    def _check(m: re.Match) -> str:
+        nonlocal dropped
+        block = m.group(0)
+        href = re.search(r'href="([^"]+)"', block)
+        if href and re.search(r'/status/\d+', href.group(1)):
+            return block
+        dropped += 1
+        return ""
+
+    return pattern.sub(_check, html), dropped
+
+
 def format_story_history(recent_output: list) -> str:
     """
     Format the last 14 days of story_log entries into a readable block
@@ -540,10 +569,14 @@ def normalize_plan(plan: dict) -> dict:
         return val if isinstance(val, list) else []
 
     def safe_tweet_list(val) -> list:
-        """Return a list containing only well-formed tweet dicts."""
+        """Return a list containing only well-formed tweet dicts with a REAL
+        numeric tweet URL. Drops fabricated tweets (e.g. .../status/placeholder)
+        that the model invents when it wants a reaction tweet not in the feed."""
         return [
             t for t in safe_list(val)
-            if isinstance(t, dict) and t.get("url")
+            if isinstance(t, dict)
+            and t.get("url")
+            and re.search(r'/status/\d+', str(t.get("url", "")))
         ]
 
     def safe_str(val) -> str:
@@ -1330,6 +1363,14 @@ def main() -> None:
     # from it. This keeps GIF/meme history from being logged twice per run
     # and guarantees the draft and Substack versions show identical media.
     body = final_html
+
+    # Safety net: drop any tweet whose URL lacks a real numeric status ID.
+    # The writer occasionally invents a reaction-tweet slot and emits a
+    # placeholder URL (e.g. .../status/placeholder) when no real tweet exists
+    # for a beat. Those never embed in Substack, so strip them before output.
+    body, _fake_tweets = drop_fabricated_tweets(body)
+    if _fake_tweets:
+        print(f"  \u26a0 Dropped {_fake_tweets} fabricated tweet(s) with non-numeric status IDs")
 
     print("\n" + "="*50)
     print(f"✓ newsletter_draft.html    — open in browser to review")

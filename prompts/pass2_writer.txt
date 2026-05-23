@@ -209,6 +209,13 @@ for the href. Use the exact `account` for the handle.
 If a tweet's text field is blank or missing in the plan, skip that tweet
 entirely. Do not write "[Tweet text not provided]" or any placeholder.
 
+NEVER invent a tweet or a tweet URL. Only output tweets that appear in the
+story plan with a real URL of the form twitter.com/<account>/status/<numeric id>.
+If a beat would be improved by a reaction tweet that is NOT in the plan, use a
+GIF or a meme instead, or simply skip it. Never write a URL ending in
+".../status/placeholder" or any non-numeric / made-up status ID. A fabricated
+tweet URL does not embed and is strictly worse than no tweet at all.
+
 ### TWEET-FIRST vs. COMMENTARY-FIRST
 
 Not every section should start with commentary. Decide based on the tweet:
@@ -262,8 +269,17 @@ GIF: [SPECIFIC REFERENCE — e.g. "Tiger King I will never financially recover"]
 
 **Generated meme (classic template + custom captions):**
 ```
-<div class="meme-placeholder" data-template="TEMPLATE_SLUG" data-top="TOP TEXT" data-bottom="BOTTOM TEXT"></div>
+<div class="meme-placeholder" data-template="TEMPLATE_SLUG" data-boxes="PANEL 1||PANEL 2"></div>
 ```
+
+Separate panels with `||`. The number of captions you write depends on the template:
+
+| Captions you write | Templates |
+|---|---|
+| 2 (top \|\| bottom) | drake, distracted-boyfriend, left-exit-12-off-ramp, two-buttons, corporates-want-you-to-find-the-difference, buff-doge-vs-cheems, epic-handshake, this-is-fine, change-my-mind, hide-the-pain-harold, bernie-i-am-once-again-asking, surprised-pikachu, always-has-been, monkey-puppet, mocking-spongebob, first-time, trade-offer, waiting-skeleton, one-does-not-simply, spider-man-pointing-at-spider-man, eric-andre-shooting, is-this-a-pigeon, woman-yelling-at-cat, ight-imma-head-out |
+| 3 (step1 \|\| step2 \|\| flaw) | gru-plan *(code auto-repeats flaw as panel 4)*, expanding-brain, vince-mcmahon-reaction, clown-applying-makeup |
+| 3 (panik \|\| kalm \|\| panik) | panik-kalm-panik |
+| 2 (anakin \|\| padme) | anakin-padme *(code fills the blank/repeat panels)* |
 
 The `data-template` value must be one of the exact slugs from `meme_reference.txt`:
 
@@ -375,7 +391,7 @@ Output ONLY valid HTML. No markdown. No code fences.
 Commentary: `<p>2-4 sentences max per tag.</p>`
 Tweets: `<blockquote class="tweet">...</blockquote>`
 GIFs: `<div class="gif-placeholder">GIF: [reference]</div>`
-Memes: `<div class="meme-placeholder">MEME: [template] | Top: "[text]" | Bottom: "[text]"</div>`
+Memes: `<div class="meme-placeholder" data-template="SLUG" data-boxes="PANEL 1||PANEL 2"></div>`
 Dash lists: `<p>- item one<br>- item two<br>- item three</p>`
 
 ## NEWSLETTER STRUCTURE

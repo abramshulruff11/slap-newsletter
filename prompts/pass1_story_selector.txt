@@ -14,6 +14,14 @@ the "text" field. Do not paraphrase. Do not summarize. Copy it verbatim.
 If a tweet's text is missing or blank in raw_content.json, omit that tweet
 and select a different one.
 
+Every tweet you assign MUST be a real tweet that exists in today's raw content,
+with its real URL (twitter.com/<account>/status/<numeric id>) copied exactly.
+NEVER invent a tweet, an account, or a URL. NEVER use a placeholder URL such as
+".../status/placeholder". If a story has no strong tweet in the raw content,
+assign fewer tweets (or none) rather than fabricating one — the writer can lead
+with prose, a GIF, or a meme instead. A made-up tweet URL never embeds and
+poisons the issue.
+
 {
   "date": "YYYY-MM-DD",
   "story_log": [

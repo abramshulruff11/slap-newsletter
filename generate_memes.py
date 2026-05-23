@@ -152,50 +152,71 @@ def build_template_map() -> dict:
     return combined
 
 
-def generate_meme(template_id: str, top_text: str, bottom_text: str,
-                  username: str, password: str, template_slug: str = "",
-                  middle_text: str = "") -> str | None:
+# ---------------------------------------------------------------------------
+# Multi-panel handling
+# ---------------------------------------------------------------------------
+# Imgflip's caption_image only captions the first two panels via text0/text1.
+# To caption panels 3 and 4 you MUST use the boxes[] interface — that is the
+# entire reason 4-panel memes previously rendered with two blank panels.
+# This is a FREE feature; only watermark removal / GIF captioning are Premium.
+#
+# The writer supplies one caption per panel via data-boxes ("A||B||C||D").
+# A few templates have a physical panel layout that differs from the number of
+# distinct captions a writer would naturally write — those are expanded here.
+
+def _expand_boxes(slug: str, lines: list) -> list:
+    """Map the writer's distinct captions onto the template's physical panels."""
+    if slug == "gru-plan" and len(lines) >= 3:
+        # 4 panels: step 1, step 2, the flaw, and the flaw AGAIN (Gru staring
+        # at it). The repeated 4th panel is the joke, so the writer writes 3.
+        return [lines[0], lines[1], lines[2], lines[2]]
+    if slug == "anakin-padme" and len(lines) >= 2:
+        # Anakin's line / Padme's hopeful question / (blank) / Padme repeats it.
+        return [lines[0], lines[1], "", lines[1]]
+    return lines
+
+
+def _capitalize_boxes(slug: str, boxes: list) -> list:
+    """SLAP meme text is ALL CAPS. boxes[] disables Imgflip's auto-caps, so do
+    it here. mocking-spongebob gets alternating caps on its mocking panel."""
+    if slug == "mocking-spongebob":
+        return [t.upper() if i == 0 else mocking_spongebob_caps(t)
+                for i, t in enumerate(boxes)]
+    return [t.upper() for t in boxes]
+
+
+def generate_meme(template_id: str, boxes: list, username: str, password: str,
+                  template_slug: str = "") -> str | None:
     """
-    Call Imgflip caption_image API. Returns the image URL on success, None on failure.
-    Free tier adds a watermark. Paid account ($9.99/mo) removes it — no code change needed.
+    Caption an Imgflip template using the boxes[] interface so EVERY panel is
+    captioned, including panels 3 and 4 on multi-panel templates.
+
+    boxes: ordered list of strings, one per physical panel, already expanded
+    and capitalized by the caller. Empty strings are allowed for blank panels.
+    Returns the image URL on success, None on failure. Free tier adds a
+    watermark; a paid account removes it with no code change.
     """
     payload = {
         "template_id": template_id,
         "username":    username,
         "password":    password,
-        "text0":       top_text,
-        "text1":       bottom_text,
     }
-
-    # Gru's Plan is a 4-panel template. Panel 3 repeats panel 1 (that's the joke).
-    # Panel 4 is Gru's horrified reaction — no text needed.
-    if template_slug == "gru-plan":
-        payload["text2"] = top_text
-        payload["text3"] = ""
-
-    # Panik-Kalm-Panik is a 3-panel template:
-    #   text0 = first PANIK  (data-top)
-    #   text1 = KALM         (data-middle)
-    #   text2 = second PANIK (data-bottom)
-    # Override the defaults so middle and bottom map to the correct panels.
-    if template_slug == "panik-kalm-panik":
-        payload["text1"] = middle_text   # KALM → panel 2
-        payload["text2"] = bottom_text   # second PANIK → panel 3
+    # form-urlencoded boxes[0][text]=..., boxes[1][text]=..., etc.
+    for i, text in enumerate(boxes):
+        payload[f"boxes[{i}][text]"] = text
 
     try:
         resp = requests.post(IMGFLIP_CAPTION_URL, data=payload, timeout=10)
         data = resp.json()
-
         if data.get("success"):
             url = data["data"]["url"]
-            print(f"[memes] Generated meme: {url}")
+            print(f"[memes] Generated {template_slug or template_id}: {url}")
             return url
-        else:
-            print(f"[memes] Imgflip API error: {data.get('error_message', 'Unknown error')}")
-            return None
-
+        print(f"[memes] Imgflip API error ({template_slug}): "
+              f"{data.get('error_message', 'Unknown error')}")
+        return None
     except Exception as e:
-        print(f"[memes] Request failed: {e}")
+        print(f"[memes] Request failed ({template_slug}): {e}")
         return None
 
 
@@ -235,12 +256,26 @@ def process_newsletter(html: str, template_map: dict, username: str, password: s
 
     for div in placeholders:
         template_slug = div.get("data-template", "").strip().lower()
-        top_text      = div.get("data-top", "").strip()
-        middle_text   = div.get("data-middle", "").strip()
-        bottom_text   = div.get("data-bottom", "").strip()
 
         if not template_slug:
             print(f"[memes] Skipping placeholder with no data-template.")
+            failed += 1
+            continue
+
+        # Captions: prefer the new data-boxes ("A||B||C||D"); fall back to the
+        # legacy data-top / data-middle / data-bottom for any older placeholders.
+        raw_boxes = div.get("data-boxes", "").strip()
+        if raw_boxes:
+            lines = [seg.strip() for seg in raw_boxes.split("||")]
+        else:
+            lines = [t for t in (div.get("data-top", "").strip(),
+                                 div.get("data-middle", "").strip(),
+                                 div.get("data-bottom", "").strip()) if t]
+        # Trim trailing blanks (keep internal blanks for layouts that need them)
+        while lines and lines[-1] == "":
+            lines.pop()
+        if not lines:
+            print(f"[memes] '{template_slug}' has no caption text. Skipping.")
             failed += 1
             continue
 
@@ -256,7 +291,8 @@ def process_newsletter(html: str, template_map: dict, username: str, password: s
             failed += 1
             continue
 
-        img_url = generate_meme(template_id, top_text, bottom_text, username, password, template_slug, middle_text)
+        boxes = _capitalize_boxes(template_slug, _expand_boxes(template_slug, lines))
+        img_url = generate_meme(template_id, boxes, username, password, template_slug)
 
         if img_url:
             img_tag = soup.new_tag("div", style="text-align:center; margin: 16px 0;")
@@ -272,13 +308,12 @@ def process_newsletter(html: str, template_map: dict, username: str, password: s
             entry = {
                 "date": __import__('datetime').date.today().isoformat(),
                 "slug": template_slug,
-                "top_text": top_text,
-                "bottom_text": bottom_text,
+                "boxes": boxes,
             }
             used_memes.append(entry)
             history.insert(0, entry)  # update in-memory history for same-run dedup
         else:
-            div.string = f"[MEME FAILED: {template_slug} | {top_text} | {bottom_text}]"
+            div.string = f"[MEME FAILED: {template_slug} | {' | '.join(boxes)}]"
             failed += 1
 
     print(f"[memes] Done. {replaced} meme(s) generated, {failed} failed/skipped.")
