@@ -1,6 +1,22 @@
 [
   {
     "date": "2026-05-23",
+    "slug": "hide-the-pain-harold",
+    "boxes": [
+      "SELLING HIGH",
+      "PLAYOFF BREAKOUT IN WCF"
+    ]
+  },
+  {
+    "date": "2026-05-23",
+    "slug": "hide-the-pain-harold",
+    "boxes": [
+      "SELLING HIGH",
+      "PLAYOFF BREAKOUT IN WCF"
+    ]
+  },
+  {
+    "date": "2026-05-23",
     "slug": "gru-plan",
     "top_text": "PROTECT THE STICK SIDE",
     "bottom_text": "GIVE UP TWO GOALS STICK SIDE"
@@ -346,17 +362,5 @@
     "slug": "first-time",
     "top_text": "FIRST TIME?",
     "bottom_text": ""
-  },
-  {
-    "date": "2026-05-06",
-    "slug": "first-time",
-    "top_text": "FIRST TIME?",
-    "bottom_text": ""
-  },
-  {
-    "date": "2026-05-06",
-    "slug": "panik-kalm-panik",
-    "top_text": "NEW GM WAS SUSPENDED BY THE NHL",
-    "bottom_text": "WE WON THE LOTTERY / WAIT WE STILL HAVE TO DEVELOP HIM"
   }
 ]

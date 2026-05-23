@@ -3,6 +3,115 @@
     "date": "2026-05-23",
     "story_log": [
       {
+        "topic_key": "kyle-busch-death-2026",
+        "title": "NASCAR legend Kyle Busch dies at 41 after pneumonia complications",
+        "section": "lead",
+        "development": "Family released statement Friday: Busch died after severe pneumonia progressed into sepsis. 911 call obtained by AP revealed he experienced shortness of breath, felt overheating, and was coughing up blood day before death. Two-time Cup Series champion, one of NASCAR's all-time greats.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "thunder-spurs-game3-wcf-2026",
+        "title": "Thunder erase 15-0 deficit, take 2-1 series lead behind 71 bench points",
+        "section": "supporting",
+        "development": "OKC erased early 15-0 hole to win Game 3 in San Antonio 123-108. Thunder bench outscored Spurs' bench 71-18 (53-point margin, most in a CF/Finals game since 1971). Jared McCain exploded for 24 points off the bench (playoff career-high), Jaylin Williams added 18 on 5-6 from three in 21 minutes. SGA had 26-12 assists. Wemby posted 26 pts but only 1 rebound in second half. Jalen Williams ruled out before game (hamstring). Series shifts back to OKC for Game 4.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "golden-knights-avalanche-game2-wcf-2026",
+        "title": "Golden Knights take 2-0 stranglehold after comeback in Colorado",
+        "section": "supporting",
+        "development": "Vegas rallied from 1-0 deficit late in Game 2, scored twice in final 2:14 (Barbashev bar-down, Eichel first goal in 10 games) to win 3-1 in Denver. Colorado was 45-0-0 when leading after 2 periods, now 45-1-0. Only 1945 Red Wings have won NHL best-of-7 semifinal after losing first two at home. Knights take commanding 2-0 lead back to Vegas for Game 3.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "gerrit-cole-return-2026",
+        "title": "Gerrit Cole dominates in return: 6 IP, 0 R, hits 98.6 mph after 569 days",
+        "section": "supporting",
+        "development": "Cole threw 6 shutout innings (2 H, 3 BB, 2 SO) vs Rays in first MLB start since Tommy John surgery 569 days ago. Hit 98.6 mph on fastball. Yankees won 4-2 behind Rays bullpen implosion. Cole looked sharp, rotation finally gets ace back.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "jared-mccain-okc-bench-2026",
+        "title": "Jared McCain's 24-point breakout fuels Thunder comeback, Sixers roasted",
+        "section": "atl",
+        "development": "McCain exploded for 24 points on 10-21 FG in Game 3, playoff career-high. Daryl Morey said in February 'I'm quite confident we were selling high' on McCain trade. Three months later McCain is dominating in WCF. Postgame: 'I love what my life is right now... I never want to take it for granted.' Internet roasting Sixers. StatMuse: McCain made more shots than both MVP finalists.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "shai-flopper-chants-2026",
+        "title": "Spurs fans chant 'FLOPPER' at SGA, he says 'it does nothing'",
+        "section": "atl",
+        "development": "Entire Spurs arena chanted 'FLOPPER' at SGA during Game 3. Spurs fan dressed as SGA in bubble wrap yelling 'TWO SHOTS! THAT'S A FOUL!' SGA postgame: 'It does nothing. Doesn't fuel me, doesn't discourage me. I've been dealing with it for a long time. I honestly like it. It makes the game more interesting.' Internet reaction viral. Lu Dort also dove into De'Aaron Fox's ankle, scuffle broke out, Isaiah Joe faked leaving bench and laughed at coaches.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "southern-miss-walk-off-slam-2026",
+        "title": "Southern Miss hits walk-off grand slam down 3 with 2 outs, 0-2 count — then brawl",
+        "section": "atl",
+        "development": "Drey Barrett hit walk-off grand slam in bottom of 9th down 3 runs, two outs, 0-2 count in conference tournament. Every backyard dream. Then #35 bumped Troy catcher, #32 came to defense, benches cleared. Peak college baseball chaos captured by Jomboy.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "caitlin-clark-injury-return-2026",
+        "title": "Caitlin Clark drops 22-9 in return after back soreness scratch",
+        "section": "atl",
+        "development": "Clark, who missed first game of season Wednesday due to back soreness, returned Friday vs Valkyries with 22 pts, 9 ast, 4 threes. Said returning from 2025 injuries is 'a real mental challenge.' Fever are 2-0. Leading league in APG with 9.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "si-woo-kim-59-attempt-2026",
+        "title": "Si Woo Kim bogeys 18th to shoot 60 after flirting with 59 at Byron Nelson",
+        "section": "atl",
+        "development": "Kim went bogey-free until final hole of round. Needed par on 18th to shoot 16th sub-60 round in PGA Tour history. Bogeyed to shoot 60. Still took five-shot lead into weekend. Scheffler and Spieth in hunt.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "mississippi-state-oklahoma-softball-2026",
+        "title": "Mississippi State rallies from 4 down to stun Oklahoma in Norman, snaps Sooners' 18-game Super Regional streak",
+        "section": "atl",
+        "development": "Since 2000, Oklahoma softball was 77-0 when leading by 4+ in Regional/Super Regional. Now 77-1 after Mississippi State rallied in Norman to end OU's 18-game Supers win streak. Oklahoma had led 6-2. MSU scored 9 runs in final two innings to win Game 1 in stunning fashion. Tennessee punched first WCWS ticket by sweeping Georgia.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "hull-city-premier-league-playoff-2026",
+        "title": "Oliver McBurnie's 95th-minute goal sends Hull City to Premier League",
+        "section": "atl",
+        "development": "McBurnie scored in 95th minute of Championship playoff final to beat Middlesbrough, sends Hull to Premier League. Tigers return to English first division. Middlesbrough got lifeline after Southampton's shock spygate disqualification but couldn't capitalize.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "anthony-edwards-wemby-ejection-quote-2026",
+        "title": "Anthony Edwards on Wemby ejection: 'I was so happy that n***a got kicked out'",
+        "section": "atl",
+        "development": "Edwards on when Wembanyama got ejected for elbowing Naz Reid: 'That n**** like 8'5... The rim aint nothing but 10 feet... I was so happy that n**** got kicked out... I hope they suspend him. Imma email they ass right now!' Hilarious reaction from Ant captured on his YouTube channel.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "daryl-morey-chatgpt-crash-2026",
+        "title": "Daryl Morey says he was using ChatGPT during Jared McCain trade negotiations before service crashed",
+        "section": "atl",
+        "development": "NBA Centel reporting Morey admitted he was using ChatGPT during McCain trade negotiations before service crashed. Would explain a lot about how that deal went down. Internet roasting Sixers again after McCain's 24-point WCF performance.",
+        "is_new": true,
+        "resolved": true
+      }
+    ]
+  },
+  {
+    "date": "2026-05-23",
+    "story_log": [
+      {
         "topic_key": "thunder-spurs-game3-wcf-2026",
         "title": "Thunder take 2-1 series lead after erasing early 15-0 deficit behind monster bench performance",
         "section": "lead",
@@ -2521,22 +2630,6 @@
       "Tiger King I will never financially recover from this",
       "Michael Jordan and I took that personally",
       "Leonardo DiCaprio raising glass Django"
-    ]
-  },
-  {
-    "date": "2026-04-12",
-    "lead_story": "Fernando Mendoza Goes From Cal Backup to #1 Overall Pick in One Transfer",
-    "all_headlines": [
-      "Fernando Mendoza Goes From Cal Backup to #1 Overall Pick in One Transfer",
-      "Iowa State's Shooting God Enters Draft AND Transfer Portal",
-      "Masters Sunday: Rory Tries to Avoid Historic Collapse",
-      "#1 Transfer Portal Player Picks Louisville"
-    ],
-    "gif_references": [
-      "Vince McMahon progressive excitement",
-      "surprised Pikachu",
-      "Leonardo DiCaprio pointing at TV",
-      "This is fine dog sitting in burning room"
     ]
   }
 ]
