@@ -7,7 +7,7 @@ from pathlib import Path
 
 SCRIPT_DIR        = Path(__file__).resolve().parent
 GAME_STATE_PATH   = SCRIPT_DIR.parent / "game_state.json"
-EMAIL_PATH        = SCRIPT_DIR.parent / "newsletter_email.html"
+EMAIL_PATH        = SCRIPT_DIR.parent / "newsletter_substack.html"
 BLOCK_OUTPUT      = SCRIPT_DIR / "box_score_block.html"
 STANDALONE_OUTPUT = SCRIPT_DIR / "box_score.html"
 
