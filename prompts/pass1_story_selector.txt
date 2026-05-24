@@ -333,6 +333,16 @@ importance — a hilarious BallsackSports tweet beats a serious transaction twee
 Enforce account diversity hard here: at least 5 different accounts, no account
 more than once.
 
+AROUND THE LEAGUE IS MANDATORY — it runs in every issue, including days when
+the lead story is an obituary, a death, a career-ending injury, or otherwise
+somber. A heavy lead does NOT make the rest of the sports world stop: games are
+still played, stats still drop, players still do funny things. ATL is exactly
+where all of that goes. The respectful, media-free handling applies to the
+somber story's own section (see MEDIA SEEDING) — it never propagates down to
+ATL. Aim for the full 8-10 tweets even on a somber-lead day. Returning a short
+or empty ATL because the day "feels" heavy is a mistake: fill it from the lighter
+content in today's feed.
+
 Apply the TWEET FILTER above before including any tweet here. A tweet about a
 horror movie, a celebrity, or a Barstool personality does not belong in this
 section regardless of which account posted it.
@@ -377,7 +387,11 @@ when there is a genuine comparison, contrast, or escalation. Do not force both.
 
 OBITUARY / SOMBER STORIES — seed NOTHING. Set both gif_concept and meme_concept
 to empty strings for any story about a death, serious injury, or genuinely
-somber news. Those sections get no media. This overrides everything above.
+somber news. Those sections get no media. This overrides everything above IN
+THIS MEDIA-SEEDING SECTION ONLY — it governs gif_concept/meme_concept for the
+somber story itself. It does NOT suppress other stories, and it does NOT
+suppress or shrink Around the League. ATL still runs in full (see AROUND THE
+LEAGUE above).
 
 VARIETY — when a media idea feels like the obvious default (the generic
 franchise-failure GIF, the generic financial-pain GIF), reach for a more

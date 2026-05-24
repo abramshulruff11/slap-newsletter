@@ -778,6 +778,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         validation_error = None
         plan         = None
         tool_use_id  = None
+        atl_short    = None
 
         if api_error:
             validation_error = f"API error (likely malformed JSON in tool input): {api_error}"
@@ -809,16 +810,49 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                         atl.get("tweets", []) if isinstance(atl, dict)
                         else (atl if isinstance(atl, list) else [])
                     )
-                    if len(atl_tweets) < 5:
-                        validation_error = (
-                            f"Around the League has {len(atl_tweets)} tweets — "
-                            f"must have at least 5. Add {5 - len(atl_tweets)} more "
-                            f"from any account not already at its 2-tweet cap."
-                        )
-                    elif len(atl_tweets) < 10:
-                        print(f"  ⚠ Around the League has {len(atl_tweets)}/10 tweets — short but acceptable")
+                    # ATL shortness is NON-FATAL. We nudge the model to fill it
+                    # (see the accept/nudge block below) but never abort the issue
+                    # over it — per editorial decision, a thin ATL still ships.
+                    n_atl = len(atl_tweets)
+                    if n_atl < 5:
+                        atl_short = n_atl
+                    elif n_atl < 10:
+                        print(f"  ⚠ Around the League has {n_atl}/10 tweets — short but acceptable")
 
         if validation_error is None:
+            # Structurally valid. Around the League shortness is non-fatal: nudge
+            # the model while attempts remain, but never abort the issue over it.
+            if atl_short is not None and attempt < MAX_ATTEMPTS:
+                print(f"  ⚠ Around the League has {atl_short} tweet(s) — nudging (attempt {attempt}/{MAX_ATTEMPTS})")
+                if response is not None and tool_use_id:
+                    messages.append({"role": "assistant", "content": response.content})
+                    messages.append({
+                        "role": "user",
+                        "content": [{
+                            "type":        "tool_result",
+                            "tool_use_id": tool_use_id,
+                            "content": (
+                                f"Around the League came back with {atl_short} tweet(s). "
+                                "It is MANDATORY and runs in every issue — including days "
+                                "when the lead is an obituary or otherwise somber. A heavy "
+                                "lead does not stop the rest of the sports world: games were "
+                                "still played, stats still dropped, players still did funny "
+                                "things today. Fill Around the League with 8-10 light, funny, "
+                                "or stat-drop tweets from today's feed, using at least 5 "
+                                "different accounts not already at their 2-tweet cap. Leave "
+                                "the somber lead exactly as is (media-free) and call "
+                                "submit_story_plan again with the full plan."
+                            ),
+                            "is_error": True,
+                        }],
+                    })
+                continue
+
+            # Accept. If ATL is still short on the final attempt, ship it anyway —
+            # a thin Around the League is never a reason to kill the day's issue.
+            if atl_short is not None:
+                print(f"  ⚠ Around the League has {atl_short} tweet(s) after {MAX_ATTEMPTS} attempt(s) — proceeding anyway (issue still ships)")
+
             # Normalize every field to its expected type in one place.
             # This prevents type-mismatch crashes in all downstream consumers
             # (pre_edit, save_story_log, missing-text loop, etc.).
@@ -891,7 +925,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                             "Fix the issue and call submit_story_plan again. "
                             "If Around the League is short, scan the raw content for "
                             "any unused tweets from accounts not yet at their 2-tweet cap "
-                            "and add them — aim for 10 but 5 is the minimum. "
+                            "and add them — aim for the full 8-10. "
                             "All required top-level fields must be present."
                         ),
                         "is_error": True,
