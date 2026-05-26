@@ -54,17 +54,17 @@ def send_email():
 
     # Box score images — one per sport (MLB chunked). Attach each so they can be
     # saved and uploaded to Substack as image blocks. Sorted for stable order.
-    box_images = sorted(BOX_SCORE_DIR.glob("box_score_sport_*.jpg"))
+    box_images = sorted(BOX_SCORE_DIR.glob("box_score_sport_*.png"))
     if box_images:
         for img_path in box_images:
             img_data = img_path.read_bytes()
-            img = MIMEImage(img_data, _subtype="jpeg", name=img_path.name)
+            img = MIMEImage(img_data, _subtype="png", name=img_path.name)
             img.add_header("Content-Disposition", "attachment", filename=img_path.name)
             msg.attach(img)
             print(f"  → Attached {img_path.name} ({len(img_data) // 1024}KB)")
         print(f"  → {len(box_images)} box score image(s) attached")
     else:
-        print(f"  ⚠ no box_score_sport_*.jpg found — skipping attachments")
+        print(f"  ⚠ no box_score_sport_*.png found — skipping attachments")
 
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:

@@ -1041,13 +1041,20 @@ def build_mlb_chunk_blocks(game_state, games_per_chunk=4, bare=False):
         if ldr: out+=_mi_rule(f"{full_name} Leaders")+ldr
         return out
 
+    # The "MLB" section band goes on the FIRST MLB image only. The remaining
+    # MLB images are continuations of what is conceptually one photo, split
+    # solely for size — so they carry no repeated header. (Non-bare relies on
+    # the masthead instead.) mlb_hdr is consumed after its first use.
+    mlb_hdr = _mi_sport_divider("MLB") if bare else ""
+
     blocks=[]
     summary=""
     summary+=_league_sections("American League",AL_DIVS,_MLB_AL,_MLB_LEAD_LEFT+_MLB_LEAD_RIGHT)
     summary+=_league_sections("National League",NL_DIVS,_MLB_NL,_MLB_LEAD_LEFT+_MLB_LEAD_RIGHT)
     if games: summary+=_mi_rule("Yesterday's Results")+_mi_yesterday_strip(games)
     if today_sched: summary+=_mi_rule("Today's Games")+_mi_today_games(today_sched)
-    if summary.strip(): blocks.append(_wrap("MLB — Standings & Leaders", summary))
+    if summary.strip():
+        blocks.append(_wrap("MLB — Standings & Leaders", mlb_hdr+summary)); mlb_hdr=""
 
     total=len(games)
     if total:
@@ -1055,7 +1062,7 @@ def build_mlb_chunk_blocks(game_state, games_per_chunk=4, bare=False):
         for i in range(0,total,games_per_chunk):
             idx=i//games_per_chunk+1
             label=f"MLB Box Scores ({idx}/{nchunks})" if nchunks>1 else "MLB Box Scores"
-            inner=("" if bare else _mi_rule(label))+"".join(_mi_game(g) for g in games[i:i+games_per_chunk])
+            inner=mlb_hdr+("" if bare else _mi_rule(label))+"".join(_mi_game(g) for g in games[i:i+games_per_chunk]); mlb_hdr=""
             blocks.append(_wrap(label, inner))
     return blocks
 
