@@ -2,26 +2,42 @@
 
 ## What This Is
 SLAP is a daily AI-generated sports newsletter. Group-chat narrator voice, not sportswriter.
-5-minute lunch read. 8-12 tweets with editorial commentary. Sent via Beehiiv (migrating from Substack).
-GitHub Actions runs the full pipeline daily at 4am EDT. No manual trigger required.
+5-minute lunch read. 8-12 tweets with editorial commentary, ending with a box score section.
+GitHub Actions runs the full pipeline daily at 4am EDT (cron `0 8 * * *` UTC). No manual trigger required.
+
+**Delivery (current reality, as of 5/26/2026):** the pipeline emails the finished newsletter to
+the owner's Gmail (`email_newsletter.py`) as an HTML body plus the per-sport box score images as
+PNG attachments. The owner pastes the body into Substack and uploads the images under the
+"Box Scores" header. Auto-posting is NOT live: Substack auto-post is blocked by Cloudflare (403),
+and the Beehiiv post API is enterprise-only (403). So delivery is email → manual paste.
 
 ---
 
 ## Pipeline Architecture — 5 Passes
 
 ```
-fetch_content.py → raw_content.json
+fetch_content.py      → raw_content.json   (ESPN/CBS RSS + Nitter RSS tweets)
+fetch_sports_data.py  → game_state.json    (ESPN scores/standings/box scores — "ground truth")
         ↓
-generate_newsletter.py (orchestrates all passes via Claude API)
+generate_newsletter.py (orchestrates all passes via Claude API; injects game_state as ground truth)
         ↓
 Pass 1: Story Selector    → selects stories, assigns tweets (tool_use: submit_story_plan)
 Pass 2: Writer            → writes HTML draft in SLAP voice
+Pass 3: Claim Validator   → claim_validator.py, deterministic cross-check vs game_state.json
 Pass 2.5: Voice Editor    → rewrites sportswriter-sounding <p> tags only
 pre_edit()                → deterministic Python auditor (tweet URL integrity, section mapping)
-Pass 3: Editor            → mechanical checklist (8 checks, flags + auto-fixes)
+Pass 7: Editor            → mechanical checklist (flags + auto-fixes)
+        ↓ adds "<h2>Box Scores</h2>" after Around the League
+newsletter_draft.html / newsletter_substack.html / newsletter_email.html
         ↓
-newsletter_draft.html → post to Beehiiv API (scheduled)
+box_score/build_box_score.py --per-sport  → per-sport HTML (MLB chunked ~4 games)
+box_score/render_pngs.py                   → cropped PNGs (Chromium screenshot + Pillow trim)
+        ↓
+email_newsletter.py → emails HTML body + box score PNGs to owner's Gmail (manual paste to Substack)
 ```
+
+Note: the printed pass labels are not contiguous (1, 2, 3=Claim Validator, 2.5=Voice, pre_edit,
+7=Editor) — historical numbering. Order of execution is as listed above.
 
 ---
 
@@ -32,16 +48,25 @@ slap-newsletter/
 ├── CLAUDE.md                  ← this file
 ├── feedback_log.md            ← issue review intake + review ritual (read when asked to review)
 ├── fetch_content.py           ← pulls ESPN/CBS RSS + Nitter RSS → raw_content.json
-├── generate_newsletter.py     ← orchestrates all 5 passes (51KB — main script)
+├── fetch_sports_data.py       ← pulls ESPN scores/standings/box scores → game_state.json
+├── claim_validator.py         ← deterministic fact check vs game_state.json (Pass 3)
+├── generate_newsletter.py     ← orchestrates all passes (main script)
 ├── generate_memes.py          ← Imgflip meme generation
-├── email_newsletter.py        ← legacy email delivery (mostly superseded)
+├── email_newsletter.py        ← ACTIVE delivery: emails HTML body + box score PNGs to owner's Gmail
 ├── raw_content.json           ← daily input: headlines + tweets (123KB typical)
-├── recent_output.json         ← previous issue output (for dedup: GIFs, memes, stories)
-├── newsletter_draft.html      ← final output
+├── game_state.json            ← daily ESPN ground truth (GITIGNORED build artifact — not committed)
+├── recent_output.json         ← rolling 30-day story_log + dedup state (GIFs, memes, stories)
+├── newsletter_draft.html      ← browser-preview output
+├── newsletter_substack.html   ← Substack-paste output (bare tweet URLs)
+├── newsletter_email.html      ← emailed body
 ├── gif_history.json           ← 7-day GIF dedup log
 ├── meme_history.json          ← meme dedup log
 ├── .env                       ← API keys (gitignored — never commit)
-├── requirements.txt
+├── requirements.txt           ← incl. playwright + Pillow (box score rendering)
+├── box_score/                 ← box score subsystem (see "Box Score System" below)
+│   ├── build_box_score.py     ← builds per-sport HTML from game_state.json
+│   ├── render_pngs.py         ← Chromium screenshot + Pillow crop → box_score_sport_*.png
+│   └── box_score_sport_NN_*.{html,png}  ← per-sport images, numeric-prefixed for order
 ├── prompts/                   ← all prompt files (versioned in git)
 │   ├── pass1_story_selector.txt
 │   ├── pass2_writer.txt
@@ -104,21 +129,108 @@ edit `rolling_feedback.txt` directly during review — propose changes for the u
 
 ---
 
+## Box Score System (`box_score/`)
+
+A "The Box Score" newspaper-style section appended after Around the League. Built from
+`game_state.json` (ESPN ground truth), delivered as **images** because complex stat tables don't
+paste cleanly into Substack as HTML.
+
+**How it works:**
+- `build_box_score.py --per-sport` writes one standalone HTML per sport that has data. MLB has a
+  full daily slate, so it's split: a summary image (standings + leaders + results + today's games)
+  plus box scores chunked **~4 games per image** (`build_mlb_chunk_blocks`). Other sports = one
+  image each.
+- `render_pngs.py` screenshots each HTML with **Chromium via Playwright** (full-page, locked 400px
+  width, 2× scale for crisp text), then **Pillow** trims top/bottom whitespace. Prefers system
+  Chrome locally; uses Playwright's bundled Chromium in CI. Output is **PNG** (lossless — crisper
+  than JPG for text).
+- `email_newsletter.py` attaches the `box_score_sport_*.png` files (sorted) to the email.
+
+**Ordering:** files use a zero-padded numeric prefix (`box_score_sport_01_nba.png`, `02_nhl`, …)
+so the email and shell glob attach them in a fixed order: **playoffs first** (per `SPORT_ORDER`,
+NBA before NHL), **then regular season** (MLB chunks, WNBA last), golf/tennis at the end. The
+playoff/regular split is computed per-sport from `game_state.json` (`_ordered_sport_keys`), so it
+self-updates as seasons change — no calendar edits needed.
+
+**"Bare" mode:** per-sport images omit all masthead chrome (no "The Box Score" title, date, sport
+subtitle, "Data via ESPN", footer, or border lines) because the newsletter already carries a
+"Box Scores" header. The **"MLB" section band appears on the first MLB image only**; the remaining
+MLB images are continuations of one photo split for size.
+
+**CI gotcha (fixed 5/26):** per-sport filenames shift with the daily slate size (WNBA might be
+`06` one day, `08` the next). The commit step stages `box_score/` with `git add -A` so removed
+files are staged as deletions — a bare glob only matches existing files and leaves stale deletions
+unstaged, which breaks `git pull --rebase`.
+
+---
+
+## Change Log (what / why / when)
+
+Most recent first. Daily auto-commits ("SLAP newsletter output for …") omitted.
+
+**2026-05-26 — Box score images: per-sport, ordered, clean, CI-rendered**
+- Split the one giant box score image (≈15,000px tall, too big to paste) into per-sport images,
+  MLB chunked ~4 games each. (296ee15)
+- Added a `<h2>Box Scores</h2>` section after Around the League; stripped masthead chrome from the
+  images. (338f6da)
+- Ordered images playoffs-first via numeric filename prefix so attach order is deterministic. (aae81ea)
+- Switched CI rendering from `wkhtmltoimage` (JPG) to **Playwright Chromium + Pillow crop (PNG)** so
+  CI output matches the locally-approved images; "MLB" header now on the first MLB image only;
+  added `playwright`+`Pillow` to requirements. (a3b08dc)
+- Fixed the commit step to `git add -A box_score/` so daily filename churn doesn't break the push. (239b7ee)
+
+**2026-05-26 — Tweet + continuing-story fixes**
+- **Tweet URL key mismatch:** the cross-reference filter read `t.get("url")` but `fetch_content`
+  stores it under `link`, so the valid-URL set was always empty and EVERY real tweet was dropped as
+  "fabricated" — leaving stories tweetless and ATL filled with invented `/status/123456789x`
+  placeholders. Now matches on the numeric status ID with a `link`/`url` fallback, plus a guard that
+  no-ops if the URL set is empty. (4e23c10)
+- **`normalize_topic_key()`:** strips `-game3`/`-g3`/date suffixes so a playoff series collapses to
+  one stable key — the model kept embedding the game number, which defeated continuing-story
+  detection and made the series re-explain its backstory every issue. (4e23c10)
+
+**2026-05-22 → 05-25 — Box score subsystem brought online**
+- `fetch_sports_data.py` + `claim_validator.py` added and wired in as Pass 3. (5/14, edccac6)
+- Box score build, leaders, MLB AL/NL sections, NHL/NBA box scores. (5/22, 9d9d5e5)
+- Multi-panel meme `boxes[]` pipeline + prompt sync. (5/23, 610788b)
+- ATL made non-fatal and mandatory on somber-lead days. (5/24, bcdd1b9)
+- ATL fabrication fix + PNG box score attachment. (5/25, 672dc46)
+
+**2026-05-16 → 05-20 — Structure + dedup**
+- Removed the Closer section: structure is now Lead → Supporting → ATL only. (5/16, 6169974)
+- `normalize_plan()`, removed closer from tool schema, ATL retry threshold 8→5. (5/17)
+- Removed MailerLite; added `feedback_log.md` review intake. (5/19)
+- GIF/meme volume, dedup, and double-logging fixes. (5/20, 1e6d517)
+
+---
+
 ## Model & Cost
 
 - All passes: `claude-sonnet-4-5` (or current Sonnet family — pin to family string, not version)
 - Prompt caching enabled on all passes
 - Estimated cost: ~$2-5/month
-- Pass 1 `max_tokens`: 8,192 (raised from 4,096 — silent truncation caused ATL regression)
+- Pass 1 `max_tokens`: 16,384 (raised 4,096 → 8,192 → 16,384; silent truncation caused ATL
+  regression and truncated story plans on full slates). Other passes: 8,192.
 
 ---
 
 ## Known Issues / TODO
 
-- **Imgflip 'expanding-brain' 4-panel meme** — not generating correctly; shows raw placeholder text
+- **`game_state.json` freshness — no guard (LOOSE END, open):** `fetch_sports_data.py` always
+  stamps the file with today's date, even if every ESPN call silently fails (each is wrapped in
+  try/except returning empty). So a today-stamped but *hollow* file is possible, and it degrades
+  silently — the newsletter loses its ground-truth block (`format_game_state_summary` returns ""
+  on empty) and box scores thin out or vanish, with no alarm. A date check is useless; the real
+  fix is a **content-presence guard** (fail CI if the payload has no games/standings) plus logging
+  `as_of_date` + per-sport counts in CI. The 5/26 run was healthy (full slate), so no confirmed bug
+  — just no safety net.
+- **Delivery is manual paste, not auto-post** — Substack auto-post is blocked by Cloudflare (403);
+  Beehiiv post API is enterprise-only (403). Current flow: Gmail email + manual paste. Re-evaluate
+  if either platform opens up.
+- **Imgflip 'expanding-brain' 4-panel meme** — historically flaky; verify after the 5/23 `boxes[]`
+  multi-panel pipeline change.
 - **Cross-section callback rule** — discussed but not yet implemented in pass2_writer.txt
   (callbacks only valid when same person/team/event appears in BOTH sections literally)
-- **Beehiiv migration** — Substack auto-post blocked by Cloudflare 403; migrating to Beehiiv API
 - **Championship/speculation facts** — Pass 2 still writes "defending champions" from training data
   without verifying; fix is adding to Pass 2 mandatory verification list (deferred)
 
@@ -127,24 +239,46 @@ edit `rolling_feedback.txt` directly during review — propose changes for the u
 ## How to Run Locally
 
 ```bash
-# Pull latest content
+# Pull latest content + sports data
 python fetch_content.py
+python fetch_sports_data.py
 
 # Generate newsletter (all passes)
 python generate_newsletter.py
 
-# Flags:
+# Build box score images (per-sport, ordered, cropped PNGs)
+python box_score/build_box_score.py --per-sport
+python box_score/render_pngs.py        # needs Chrome/Chromium + Pillow
+
+# Flags (generate_newsletter.py):
 # --no-editor    skip Pass 3 editor
 # --no-gifs      skip GIF embedding
 ```
 
+On Windows, prefix Python with `-X utf8` to avoid Unicode console errors (e.g.
+`python -X utf8 generate_newsletter.py`). `render_pngs.py` uses your installed Chrome locally; in
+CI, `python -m playwright install chromium` provides the browser.
+
 Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `IMGFLIP_USERNAME`,
-`IMGFLIP_PASSWORD`, `SUBSTACK_EMAIL`, `SUBSTACK_PASSWORD`, `SUBSTACK_URL`
+`IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD` (email delivery).
+`SUBSTACK_*` / `BEEHIIV_*` vars are legacy — auto-post is not currently used (see Known Issues).
 
 ---
 
 ## GitHub Actions
 
-Workflow: `.github/workflows/` — runs daily at 4am EDT (cron: `0 8 * * *` UTC).
-Secrets are stored in GitHub repository settings (Settings → Secrets → Actions).
-If the pipeline fails, check: model string deprecation, Nitter RSS availability, API rate limits.
+Workflow: `.github/workflows/daily-newsletter.yml` — runs daily at 4am EDT (cron: `0 8 * * *` UTC).
+Also supports manual `workflow_dispatch` (Actions tab → Run workflow), with `skip_editor` /
+`skip_gifs` inputs.
+
+Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
+`IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`. (MailerLite and the
+SUBSTACK_* secrets were removed/retired — no longer referenced by the workflow.)
+
+Pipeline steps: checkout → setup Python → `pip install -r requirements.txt` →
+`playwright install --with-deps chromium` → fetch content → fetch sports data → validate →
+generate newsletter → render box score PNGs → archive → email → commit & push outputs.
+
+If the pipeline fails, check, in rough likelihood order: the **commit/push** step (daily box score
+filename churn — must use `git add -A box_score/`), the **Playwright Chromium install**, model
+string deprecation, Nitter RSS availability, and API rate limits.
