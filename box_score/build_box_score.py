@@ -960,6 +960,20 @@ def _sport_has_data(data):
     in_playoffs=any(g.get("playoffs") for g in all_games) or bool(data.get("bracket",[]))
     return in_playoffs, bool(in_playoffs or completed or data.get("standings"))
 
+def _ordered_sport_keys(game_state):
+    """Sport keys with data, ordered playoffs-first then regular season, each
+    group following SPORT_ORDER (so NBA before NHL, etc.). Mirrors the section
+    ordering of the combined block so the per-sport images attach in the same
+    sequence the reader expects."""
+    sports=game_state.get("sports",{})
+    playoff,regular=[],[]
+    for key in SPORT_ORDER:
+        if key not in sports: continue
+        inp,has=_sport_has_data(sports[key])
+        if inp: playoff.append(key)
+        elif has: regular.append(key)
+    return playoff+regular
+
 def build_box_score_block_for_sport(game_state, sport_key, bare=False):
     """Render a standalone box score block for ONE sport, so each can become its
     own small, pasteable image. Returns '' if the sport has no data today.
@@ -1092,22 +1106,24 @@ def main():
     if args.per_sport:
         # One standalone HTML per sport with data, so each renders to its own
         # small, pasteable image. The workflow globs box_score_*.html → .jpg.
-        written=[]
-        for key in SPORT_ORDER:
+        # Numeric prefix locks attach/render order: playoffs first, then regular
+        # season (NBA before NHL, WNBA last), MLB chunks in sequence, golf/tennis
+        # at the end. sorted() in the email and the shell glob both honor it.
+        written=[]; seq=1
+        def _write(key_label, blk):
+            nonlocal seq
+            out=SCRIPT_DIR/f"box_score_sport_{seq:02d}_{key_label}.html"; seq+=1
+            out.write_text(build_standalone(blk),encoding="utf-8"); written.append(out.name); print(f"✓ {out}")
+        for key in _ordered_sport_keys(game_state):
             if key=="mlb":
                 # MLB: summary image + box scores chunked ~4 games per image.
-                for i,blk in enumerate(build_mlb_chunk_blocks(game_state,bare=True),1):
-                    out=SCRIPT_DIR/f"box_score_sport_mlb_{i}.html"
-                    out.write_text(build_standalone(blk),encoding="utf-8"); written.append(out.name); print(f"✓ {out}")
+                for blk in build_mlb_chunk_blocks(game_state,bare=True):
+                    _write("mlb", blk)
                 continue
             blk=build_box_score_block_for_sport(game_state,key,bare=True)
-            if not blk: continue
-            out=SCRIPT_DIR/f"box_score_sport_{key}.html"
-            out.write_text(build_standalone(blk),encoding="utf-8"); written.append(out.name); print(f"✓ {out}")
+            if blk: _write(key, blk)
         gt=build_golf_tennis_block(game_state,bare=True)
-        if gt:
-            out=SCRIPT_DIR/"box_score_sport_golf_tennis.html"
-            out.write_text(build_standalone(gt),encoding="utf-8"); written.append(out.name); print(f"✓ {out}")
+        if gt: _write("golf_tennis", gt)
         if not written: print("⚠ No sports had data — no per-sport images generated.")
         return
     block=build_box_score_block(game_state)
