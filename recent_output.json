@@ -3,6 +3,171 @@
     "date": "2026-05-26",
     "story_log": [
       {
+        "topic_key": "knicks-cavs-ecf-2026",
+        "title": "Knicks sweep Cavaliers 4-0 to reach NBA Finals for first time since 1999",
+        "section": "lead",
+        "development": "New York completed sweep of Cleveland 109-93 at MSG to reach first NBA Finals in 27 years. Brunson 29-8 assists, KAT 19-14 reb, Landry Shamet 16 pts on 4-4 from three (12-13 from three all series). Knicks won 11 straight playoff games, outscored opponents by 262 pts across that run (best 11-game differential in NBA history). Cleveland swept for first time since LeBron era. Series ended with James Harden saying Cavs are 'better team.'",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "knicks-finals-2026",
+        "title": "Knicks advance to NBA Finals for first time since 1999, await Thunder-Spurs winner",
+        "section": "lead",
+        "development": "New York reached NBA Finals for first time in 27 years after sweeping Cavs. Brunson wins ECF MVP. Knicks have won 11 straight playoff games, largest postseason point differential in NBA history. Will face winner of Thunder-Spurs WCF (tied 2-2). Celebration massive in NYC, Ben Stiller emotional, Timothée Chalamet in tears courtside. Tracy Morgan crying. Mayor Zohran Mamdani trolls Cavs.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "kenny-atkinson-cavs-future-2026",
+        "title": "Kenny Atkinson returning as Cavs coach despite sweep, analytics comments backlash",
+        "section": "supporting",
+        "development": "Cavs confirmed Atkinson will return for third season despite sweep and 'analytically winning' comments that drew internet ridicule and reportedly upset front office. Shams and ESPN reported decision. James Harden postgame: 'We're the better team.' Windhorst floats Giannis trade possibility.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "canadiens-hurricanes-ecf-2026",
+        "title": "Hurricanes take 2-1 series lead over Canadiens after Game 3 win",
+        "section": "supporting",
+        "development": "Carolina won Game 3 6-2 at home to take 2-1 series lead over Montreal. Hurricanes bounce back from Game 2 OT loss. Series shifts to Montreal for Game 4 tonight.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "spurs-thunder-wcf-2026",
+        "title": "Thunder-Spurs WCF tied 2-2, Game 5 tonight in OKC as Jalen Williams questionable",
+        "section": "supporting",
+        "development": "Series tied 2-2 after Wemby's 33-point Game 4 masterpiece (including halfcourt buzzer beater) evened things up. Game 5 tonight in Oklahoma City. Jalen Williams listed as questionable again (left hamstring now 'strain' instead of 'soreness'). Ajay Mitchell out again. Scott Foster not assigned to Game 5.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "golden-knights-avalanche-wcf-2026",
+        "title": "Golden Knights one win from Stanley Cup Finals after taking 3-0 lead on Avalanche",
+        "section": "supporting",
+        "development": "Vegas can close out Colorado tonight in Game 4 after taking 3-0 series lead. MacKinnon will play despite puck to knee in Game 3. Knights completed historic 3-goal comeback in Game 3 (Avs were 74-1 when leading by 3+). Mark Stone and Cale Makar both returned from injuries in Game 3.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "usmnt-world-cup-roster-2026",
+        "title": "USMNT announces 26-man World Cup roster: Pulisic, Adams, McKennie lead squad; Diego Luna snubbed",
+        "section": "supporting",
+        "development": "Mauricio Pochettino announced USMNT's 26-man World Cup roster after leaks. Christian Pulisic, Tyler Adams, Weston McKennie headline. Gio Reyna made squad despite 2022 drama. Diego Luna left off despite strong club form. Cristian Roldan inclusion criticized. Ten defenders named. England also announced squad with Trent Alexander-Arnold, Phil Foden, Cole Palmer all snubbed; Ivan Toney made cut.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "manny-fernandez-death-2026",
+        "title": "Manny Fernandez, anchor of 1972 undefeated Dolphins' No-Name Defense, dies at 79",
+        "section": "supporting",
+        "development": "Fernandez, two-time Super Bowl champion and defensive lineman on Miami's legendary 1972 undefeated team, died at age 79. Dolphins announced Tuesday. Part of iconic No-Name Defense.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "matthew-stafford-extension-2026",
+        "title": "Matthew Stafford officially signs 1-year, $55M extension with Rams through 2027",
+        "section": "supporting",
+        "development": "Stafford officially signed extension Tuesday worth $55M (up to $60M with incentives). Reigning MVP at 38 now tied to LA through 2027 with $105M remaining. Brought family to signing. Betting on two more years after MVP season.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "nico-collins-extension-texans-2026",
+        "title": "Texans guarantee Nico Collins' next two years, add $17M cash in adjusted deal",
+        "section": "supporting",
+        "development": "Pro-Bowl WR Nico Collins and Texans reached agreement on adjusted contract that guarantees his salary the next two seasons, includes $9M cash increase this year and $8M increase next year per Drew and Jason Rosenhaus. Schefter reported. Collins remains under contract through 2027.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "astros-rangers-combined-no-hitter-2026",
+        "title": "Astros throw combined no-hitter vs Rangers, first MLB no-no since 2024",
+        "section": "atl",
+        "development": "Tatsuya Imai (6 IP), Steven Okert, and Alimber Santa (MLB debut) combined to no-hit Rangers 9-0. First no-hitter in MLB since 2024 season. Santa becomes second player ever to pitch in no-hitter in MLB debut (Bumpus Jones 1892 threw solo no-no). Combined no-hitters still don't belong in record books per Snyder's Soapbox.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "bob-horner-death-2026",
+        "title": "Bob Horner, 1978 No. 1 overall pick who skipped minors entirely, dies at 68",
+        "section": "atl",
+        "development": "Horner, star at Arizona State and first overall pick in 1978 MLB Draft who went straight to majors, died at 68. Braves slugger 'built a career out of being first.' CBS Sports reported.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "wander-franco-verdict-2026",
+        "title": "Wander Franco found criminally responsible for sexual abuse of minor, no jail time served",
+        "section": "atl",
+        "development": "Tampa Bay Rays shortstop declared criminally responsible for sexual and psychological abuse of a minor, but will not serve sentence. Dominican Republic judge ruled Monday. Full sentencing slated for June 16. Franco will not go to jail.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "flores-nfl-discrimination-suit-2026",
+        "title": "Supreme Court allows Brian Flores discrimination lawsuit vs NFL to proceed to trial",
+        "section": "atl",
+        "development": "Supreme Court refused to intervene in discrimination lawsuit led by former Dolphins coach Brian Flores against NFL, allowing case to proceed toward trial. NFL had hoped to handle case through arbitration. Court decision allows it to move forward.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "brendan-sorsby-ncaa-denial-2026",
+        "title": "NCAA denies Texas Tech QB Brendan Sorsby's eligibility request after gambling rehab",
+        "section": "atl",
+        "development": "NCAA denied Sorsby's request for reinstatement for 2026 season. Sorsby completed 35-day in-patient rehab for gambling addiction at Algamus in Goodyear, Arizona. Will return to campus in upcoming days. Court date June 1 in Lubbock County. PeteThamel reported.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "evgeni-malkin-extension-penguins-2026",
+        "title": "Evgeni Malkin returning to Penguins for 21st season on 1-year, $5.5M deal",
+        "section": "atl",
+        "development": "Penguins center Malkin signed one-year deal worth $5.5 million, team announced Tuesday. Will return for 21st NHL season. Three-time Stanley Cup champion continues career in Pittsburgh.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "victor-wembanyama-card-sale-2026",
+        "title": "Victor Wembanyama's 1-of-1 Prizm Black card sells for $5.11 million in private sale",
+        "section": "atl",
+        "development": "Wembanyama's 1-of-1 numbered 2023-24 Panini Prizm Black parallel sold for $5.11 million in private sale via Fanatics Collect. Fanatics confirmed to ESPN. Record-breaking card sale for second-year player.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "pga-of-america-president-ryder-cup-2026",
+        "title": "Don Rea Jr. out as PGA of America president after Ryder Cup fan behavior controversy",
+        "section": "atl",
+        "development": "Rea, who came under fire for delayed response to unruly fan behavior directed at European Ryder Cup team, is out as president of PGA of America. PGA continues shaking up leadership after tumultuous Ryder Cup.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "ketel-marte-hot-streak-2026",
+        "title": "Ketel Marte's scorching 3-game stretch: 10 H, 3 2B, 8 RBI, 6 RBI in one game",
+        "section": "atl",
+        "development": "Marte over last three games: 10 hits, 3 doubles, 8 RBI, 6 RBI in one game. Only one other player has put up those numbers in 3-game span in last 8 seasons: Nick Kurtz in 2025. StatMuse noted. Marte heating up after slow start.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "craig-kimbrel-rays-signing-2026",
+        "title": "Rays sign veteran closer Craig Kimbrel to shore up bullpen",
+        "section": "atl",
+        "development": "Tampa Bay signed right-handed reliever Craig Kimbrel to major league contract Tuesday. Move to shore up bullpen. Ken Rosenthal reported. Kimbrel gets another chance in AL East.",
+        "is_new": true,
+        "resolved": false
+      }
+    ]
+  },
+  {
+    "date": "2026-05-26",
+    "story_log": [
+      {
         "topic_key": "spurs-thunder-wcf-2026",
         "title": "Spurs tie WCF 2-2 with dominant Game 4 win, Wemby's halfcourt buzzer beater",
         "section": "lead",
@@ -2956,21 +3121,6 @@
       "Monkey Puppet Side-Eye — extremely awkward situation",
       "Will Smith \"that's hot\" — smooth move by Philadelphia",
       "Tiger King \"I will never financially recover from this\" — five first-round picks for a playoff goose egg"
-    ]
-  },
-  {
-    "date": "2026-04-23",
-    "lead_story": "NFL Draft Night Is Finally Here — And Nobody Knows What Happens After Pick #1",
-    "all_headlines": [
-      "NFL Draft Night Is Finally Here — And Nobody Knows What Happens After Pick #1",
-      "Mike Vrabel Steps Away From Patriots for Counseling After Dianna Russini Photos",
-      "Thunder Take 2-0 Lead But Lose Jalen Williams to Injury",
-      "Devin Booker Calls Out Ref by Name: 'It's Bad for the Sport'",
-      "Keldon Johnson Wins 6MOY After Breaking Manu's Spurs Record"
-    ],
-    "gif_references": [
-      "Rocky Balboa training montage — American dream coming true",
-      "Michael Jackson eating popcorn — watching drama unfold"
     ]
   }
 ]

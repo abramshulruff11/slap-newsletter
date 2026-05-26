@@ -931,13 +931,110 @@ def _render_mlb_sections(sport_data):
         html += _mi_today_games(today_sched)
     return html
 
-def build_box_score_block(game_state):
-    sports=game_state.get("sports",{}); golf=game_state.get("golf",[]); tennis=game_state.get("tennis",[])
+def _date_display(game_state):
     yesterday=game_state.get("yesterday_date","")
     try:
-        d=datetime.strptime(yesterday,"%Y-%m-%d"); date_display=d.strftime("%A, %B %#d, %Y")
+        return datetime.strptime(yesterday,"%Y-%m-%d").strftime("%A, %B %#d, %Y")
     except:
-        date_display=yesterday
+        return yesterday
+
+def _masthead(date_display, subtitle=""):
+    sub = (f'<div style="font-family:{_SANS};font-size:13px;font-weight:bold;color:{_M};'
+           f'margin-top:2px;text-transform:uppercase;letter-spacing:.05em;">{subtitle}</div>') if subtitle else ""
+    return (f'<div style="text-align:center;border-top:4px solid {_I};border-bottom:1px solid {_I};'
+            f'padding:10px 0 8px;margin-bottom:6px;">'
+            f'<div style="font-family:Georgia,serif;font-size:30px;font-weight:bold;'
+            f'font-style:italic;letter-spacing:.03em;color:{_I};">The Box Score</div>'
+            f'<div style="font-family:{_SANS};font-size:14px;font-weight:bold;color:{_I};margin-top:3px;">{date_display}</div>'
+            f'{sub}'
+            f'<div style="font-family:{_SANS};font-size:11px;color:{_M};margin-top:2px;">Data via ESPN</div></div>')
+
+def _footer():
+    ts=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    return (f'<div style="font-family:{_SANS};font-size:10px;color:#aaa;text-align:center;'
+            f'border-top:1px solid {_H};padding-top:8px;margin-top:20px;">Generated {ts}</div>')
+
+def _sport_has_data(data):
+    all_games=data.get("yesterday_games",[])+data.get("today_games",[])
+    completed=[g for g in data.get("yesterday_games",[]) if g.get("completed")]
+    in_playoffs=any(g.get("playoffs") for g in all_games) or bool(data.get("bracket",[]))
+    return in_playoffs, bool(in_playoffs or completed or data.get("standings"))
+
+def build_box_score_block_for_sport(game_state, sport_key):
+    """Render a standalone box score block for ONE sport, so each can become its
+    own small, pasteable image. Returns '' if the sport has no data today."""
+    sports=game_state.get("sports",{})
+    if sport_key not in sports:
+        return ""
+    data=sports[sport_key]
+    in_playoffs, has_data = _sport_has_data(data)
+    if not has_data:
+        return ""
+    if sport_key=="mlb":
+        content=_mi_sport_divider("MLB")+_render_mlb_sections(data)
+    else:
+        content=_render_sport_inline(sport_key,data,in_playoffs=in_playoffs)
+    if not content.strip():
+        return ""
+    masthead=_masthead(_date_display(game_state), subtitle=sport_key.upper())
+    return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{masthead}{content}{_footer()}</div>'
+
+def build_golf_tennis_block(game_state):
+    """Render golf + tennis as their own image block. Returns '' if neither present."""
+    golf=game_state.get("golf",[]); tennis=game_state.get("tennis",[])
+    if not (golf or tennis):
+        return ""
+    content="".join(render_golf_html(t) for t in golf)+"".join(render_tennis_html(t) for t in tennis)
+    if not content.strip():
+        return ""
+    masthead=_masthead(_date_display(game_state), subtitle="Golf &amp; Tennis")
+    return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{masthead}{content}{_footer()}</div>'
+
+def build_mlb_chunk_blocks(game_state, games_per_chunk=4):
+    """MLB has a full daily slate, so a single image would be enormous. Split it
+    into: one summary image (standings + leaders + results strip + today's
+    games) and box scores chunked ~games_per_chunk per image. Returns a list of
+    complete standalone-ready blocks (each with its own masthead/footer)."""
+    sports=game_state.get("sports",{})
+    if "mlb" not in sports: return []
+    data=sports["mlb"]
+    standings=data.get("standings",{}); leaders=data.get("leaders",{})
+    games=[g for g in data.get("yesterday_games",[]) if g.get("completed")]
+    today_sched=[g for g in data.get("today_games",[]) if not g.get("completed")]
+    date_display=_date_display(game_state)
+
+    def _wrap(subtitle, inner):
+        return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{_masthead(date_display, subtitle=subtitle)}{inner}{_footer()}</div>'
+
+    def _league_sections(full_name,div_set,team_set,lead_cats):
+        out=""
+        std=_mi_std_half(standings,div_set) if isinstance(standings,dict) else ""
+        if std: out+=_mi_rule(f"{full_name} Standings")+std
+        ldr=_mi_leaders_half(leaders,team_set,lead_cats)
+        if ldr: out+=_mi_rule(f"{full_name} Leaders")+ldr
+        return out
+
+    blocks=[]
+    summary=""
+    summary+=_league_sections("American League",AL_DIVS,_MLB_AL,_MLB_LEAD_LEFT+_MLB_LEAD_RIGHT)
+    summary+=_league_sections("National League",NL_DIVS,_MLB_NL,_MLB_LEAD_LEFT+_MLB_LEAD_RIGHT)
+    if games: summary+=_mi_rule("Yesterday's Results")+_mi_yesterday_strip(games)
+    if today_sched: summary+=_mi_rule("Today's Games")+_mi_today_games(today_sched)
+    if summary.strip(): blocks.append(_wrap("MLB — Standings & Leaders", summary))
+
+    total=len(games)
+    if total:
+        nchunks=(total+games_per_chunk-1)//games_per_chunk
+        for i in range(0,total,games_per_chunk):
+            idx=i//games_per_chunk+1
+            label=f"MLB Box Scores ({idx}/{nchunks})" if nchunks>1 else "MLB Box Scores"
+            inner=_mi_rule(label)+"".join(_mi_game(g) for g in games[i:i+games_per_chunk])
+            blocks.append(_wrap(label, inner))
+    return blocks
+
+def build_box_score_block(game_state):
+    sports=game_state.get("sports",{}); golf=game_state.get("golf",[]); tennis=game_state.get("tennis",[])
+    date_display=_date_display(game_state)
     playoff_keys=[]; regular_keys=[]
     for key in SPORT_ORDER:
         if key not in sports: continue
@@ -961,16 +1058,8 @@ def build_box_score_block(game_state):
         for t in golf: content+=render_golf_html(t)
         for t in tennis: content+=render_tennis_html(t)
     if not content.strip(): content=f'<p style="font-family:{_SANS};color:{_M};padding:20px 0;">No data for {date_display}.</p>'
-    ts=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    masthead=(f'<div style="text-align:center;border-top:4px solid {_I};border-bottom:1px solid {_I};'
-              f'padding:10px 0 8px;margin-bottom:6px;">'
-              f'<div style="font-family:Georgia,serif;font-size:30px;font-weight:bold;'
-              f'font-style:italic;letter-spacing:.03em;color:{_I};">The Box Score</div>'
-              f'<div style="font-family:{_SANS};font-size:14px;font-weight:bold;color:{_I};margin-top:3px;">{date_display}</div>'
-              f'<div style="font-family:{_SANS};font-size:11px;color:{_M};margin-top:2px;">Data via ESPN</div></div>')
-    footer=(f'<div style="font-family:{_SANS};font-size:10px;color:#aaa;text-align:center;'
-            f'border-top:1px solid {_H};padding-top:8px;margin-top:20px;">Generated {ts}</div>')
-    return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{masthead}{content}{footer}</div>'
+    masthead=_masthead(date_display)
+    return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{masthead}{content}{_footer()}</div>'
 
 def build_standalone(block):
     # Lock the page to a fixed mobile width so the rendered image is always
@@ -984,9 +1073,31 @@ def build_standalone(block):
     return f'<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8"/>\n<meta name="viewport" content="width=device-width,initial-scale=1.0"/>\n<title>The Box Score</title>\n<style>\n{PAGE_CSS}\n{img_lock}\n</style>\n</head>\n<body>\n{block}\n</body>\n</html>'
 
 def main():
-    parser=argparse.ArgumentParser(); parser.add_argument("--standalone",action="store_true"); parser.add_argument("--append",action="store_true"); args=parser.parse_args()
+    parser=argparse.ArgumentParser(); parser.add_argument("--standalone",action="store_true"); parser.add_argument("--append",action="store_true"); parser.add_argument("--per-sport",action="store_true",dest="per_sport"); args=parser.parse_args()
     if not GAME_STATE_PATH.exists(): raise SystemExit("game_state.json not found.")
-    game_state=json.loads(GAME_STATE_PATH.read_text(encoding="utf-8")); block=build_box_score_block(game_state)
+    game_state=json.loads(GAME_STATE_PATH.read_text(encoding="utf-8"))
+    if args.per_sport:
+        # One standalone HTML per sport with data, so each renders to its own
+        # small, pasteable image. The workflow globs box_score_*.html → .jpg.
+        written=[]
+        for key in SPORT_ORDER:
+            if key=="mlb":
+                # MLB: summary image + box scores chunked ~4 games per image.
+                for i,blk in enumerate(build_mlb_chunk_blocks(game_state),1):
+                    out=SCRIPT_DIR/f"box_score_sport_mlb_{i}.html"
+                    out.write_text(build_standalone(blk),encoding="utf-8"); written.append(out.name); print(f"✓ {out}")
+                continue
+            blk=build_box_score_block_for_sport(game_state,key)
+            if not blk: continue
+            out=SCRIPT_DIR/f"box_score_sport_{key}.html"
+            out.write_text(build_standalone(blk),encoding="utf-8"); written.append(out.name); print(f"✓ {out}")
+        gt=build_golf_tennis_block(game_state)
+        if gt:
+            out=SCRIPT_DIR/"box_score_sport_golf_tennis.html"
+            out.write_text(build_standalone(gt),encoding="utf-8"); written.append(out.name); print(f"✓ {out}")
+        if not written: print("⚠ No sports had data — no per-sport images generated.")
+        return
+    block=build_box_score_block(game_state)
     if args.standalone:
         STANDALONE_OUTPUT.write_text(build_standalone(block),encoding="utf-8"); print(f"✓ {STANDALONE_OUTPUT}")
     elif args.append:

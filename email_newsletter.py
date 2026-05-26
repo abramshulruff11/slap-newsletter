@@ -17,7 +17,7 @@ from email.mime.image import MIMEImage
 
 SCRIPT_DIR      = Path(__file__).resolve().parent
 SUBSTACK_PATH   = SCRIPT_DIR / "newsletter_substack.html"
-BOX_SCORE_IMAGE = SCRIPT_DIR / "box_score" / "box_score.jpg"
+BOX_SCORE_DIR   = SCRIPT_DIR / "box_score"
 
 
 def send_email():
@@ -52,15 +52,19 @@ def send_email():
     body_wrapper.attach(MIMEText(html_content, "html"))
     msg.attach(body_wrapper)
 
-    # Box score image attachment — save it, upload to Substack as an image block
-    if BOX_SCORE_IMAGE.exists():
-        img_data = BOX_SCORE_IMAGE.read_bytes()
-        img = MIMEImage(img_data, _subtype="jpeg", name="box_score.jpg")
-        img.add_header("Content-Disposition", "attachment", filename="box_score.jpg")
-        msg.attach(img)
-        print(f"  → Box score image attached ({len(img_data) // 1024}KB)")
+    # Box score images — one per sport (MLB chunked). Attach each so they can be
+    # saved and uploaded to Substack as image blocks. Sorted for stable order.
+    box_images = sorted(BOX_SCORE_DIR.glob("box_score_sport_*.jpg"))
+    if box_images:
+        for img_path in box_images:
+            img_data = img_path.read_bytes()
+            img = MIMEImage(img_data, _subtype="jpeg", name=img_path.name)
+            img.add_header("Content-Disposition", "attachment", filename=img_path.name)
+            msg.attach(img)
+            print(f"  → Attached {img_path.name} ({len(img_data) // 1024}KB)")
+        print(f"  → {len(box_images)} box score image(s) attached")
     else:
-        print(f"  ⚠ box_score.png not found — skipping attachment")
+        print(f"  ⚠ no box_score_sport_*.jpg found — skipping attachments")
 
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
