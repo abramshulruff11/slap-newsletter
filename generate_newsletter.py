@@ -857,6 +857,54 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             # This prevents type-mismatch crashes in all downstream consumers
             # (pre_edit, save_story_log, missing-text loop, etc.).
             plan = normalize_plan(plan)
+
+            # Cross-reference all plan tweet URLs against today's raw_content.
+            # Pass 1's prompt already prohibits fabricated URLs, but the model
+            # ignores it under pressure (e.g. when pushed to fill ATL on a day
+            # where Nitter missed some overnight game tweets). Enforce here at
+            # code level so fabricated tweets never reach the newsletter.
+            _raw_url_set = set()
+            for _t in raw.get("tweets", []):
+                _u = _t.get("url", "")
+                if _u:
+                    _norm = _u.replace("nitter.net", "twitter.com")
+                    if _norm.endswith("#m"):
+                        _norm = _norm[:-2]
+                    _raw_url_set.add(_norm.lower().strip())
+
+            def _in_raw(url):
+                n = url.replace("nitter.net", "twitter.com")
+                if n.endswith("#m"):
+                    n = n[:-2]
+                return n.lower().strip() in _raw_url_set
+
+            def _filter_to_raw(tweets):
+                kept = [t for t in tweets if _in_raw(t.get("url", ""))]
+                return kept, len(tweets) - len(kept)
+
+            _fab_total = 0
+            _lead = plan.get("lead_story", {})
+            _lead["tweets"], _n = _filter_to_raw(_lead.get("tweets", []))
+            plan["lead_story"] = _lead
+            _fab_total += _n
+
+            _new_sup = []
+            for _s in plan.get("supporting_stories", []):
+                _s["tweets"], _n = _filter_to_raw(_s.get("tweets", []))
+                _new_sup.append(_s)
+                _fab_total += _n
+            plan["supporting_stories"] = _new_sup
+
+            _atl = plan.get("around_the_league", {})
+            _atl["tweets"], _n = _filter_to_raw(_atl.get("tweets", []))
+            plan["around_the_league"] = _atl
+            _fab_total += _n
+
+            if _fab_total:
+                print(f"  \u26a0 Dropped {_fab_total} fabricated tweet(s) \u2014 URLs not in today's raw content")
+            else:
+                print(f"  \u2713 All plan tweets verified against today's raw content")
+
             story_plan_raw = json.dumps(plan, ensure_ascii=False)
 
             # Fix malformed tweet URLs where model writes status= instead of status/

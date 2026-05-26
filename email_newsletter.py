@@ -1,6 +1,7 @@
 """
 SLAP Newsletter — Email Delivery
 Sends newsletter_substack.html as the email body (rendered HTML) after each run.
+Also attaches box_score.png when present — save the attachment, upload to Substack.
 Open the email on your phone, select all, copy, paste into Substack.
 Triggered by GitHub Actions after generate_newsletter.py completes.
 """
@@ -12,9 +13,11 @@ from pathlib import Path
 from datetime import date
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 
-SCRIPT_DIR    = Path(__file__).resolve().parent
-SUBSTACK_PATH = SCRIPT_DIR / "newsletter_substack.html"
+SCRIPT_DIR      = Path(__file__).resolve().parent
+SUBSTACK_PATH   = SCRIPT_DIR / "newsletter_substack.html"
+BOX_SCORE_IMAGE = SCRIPT_DIR / "box_score" / "box_score.png"
 
 
 def send_email():
@@ -38,14 +41,26 @@ def send_email():
     today = date.today().strftime("%B %-d, %Y")
     subject = f"SLAP {today} — {title}"
 
-    # Send as inline HTML — the newsletter IS the email body.
-    # Open on your phone, select all, copy, paste into Substack.
-    # Gmail renders the HTML; Substack receives clean rich text, not code.
-    msg = MIMEMultipart("alternative")
+    # Use mixed so we can carry both the HTML body and image attachment
+    msg = MIMEMultipart("mixed")
     msg["From"]    = gmail_user
     msg["To"]      = to_email
     msg["Subject"] = subject
-    msg.attach(MIMEText(html_content, "html"))
+
+    # HTML body in its own alternative wrapper (best practice for mixed+html)
+    body_wrapper = MIMEMultipart("alternative")
+    body_wrapper.attach(MIMEText(html_content, "html"))
+    msg.attach(body_wrapper)
+
+    # Box score image attachment — save it, upload to Substack as an image block
+    if BOX_SCORE_IMAGE.exists():
+        img_data = BOX_SCORE_IMAGE.read_bytes()
+        img = MIMEImage(img_data, name="box_score.png")
+        img.add_header("Content-Disposition", "attachment", filename="box_score.png")
+        msg.attach(img)
+        print(f"  → Box score image attached ({len(img_data) // 1024}KB)")
+    else:
+        print(f"  ⚠ box_score.png not found — skipping attachment")
 
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:

@@ -139,7 +139,7 @@ def nitter_to_twitter(url: str) -> str:
 def fetch_tweets() -> list[dict]:
     tweets = []
     for handle in TWITTER_HANDLES:
-        url = f"{NITTER_BASE}/{handle}/rss"
+        url = f"{NITTER_BASE}/{handle}/rss?limit=50"
         print(f"  Fetching @{handle}...")
         feed = feedparser.parse(url)
         for entry in feed.entries:
