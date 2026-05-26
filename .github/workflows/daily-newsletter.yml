@@ -110,7 +110,12 @@ jobs:
         run: |
           git config user.name "SLAP Bot"
           git config user.email "slap-bot@users.noreply.github.com"
-          git add raw_content.json newsletter_draft.html newsletter_substack.html newsletter_email.html recent_output.json gif_history.json meme_history.json archive/ box_score/box_score_sport_*.png box_score/box_score_sport_*.html || true
+          git add raw_content.json newsletter_draft.html newsletter_substack.html newsletter_email.html recent_output.json gif_history.json meme_history.json archive/ || true
+          # -A so renamed/removed per-sport box score files (the set changes with
+          # the daily slate size) are staged as DELETIONS too — a bare glob only
+          # matches existing files and leaves stale deletions unstaged, which
+          # then breaks `git pull --rebase` ("you have unstaged changes").
+          git add -A box_score/ || true
           DATE=$(date -u +"%Y-%m-%d")
           git commit -m "SLAP newsletter output for $DATE" || echo "No changes to commit"
           git pull --rebase -X theirs origin main
