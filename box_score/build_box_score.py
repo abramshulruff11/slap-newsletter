@@ -11,6 +11,12 @@ EMAIL_PATH        = SCRIPT_DIR.parent / "newsletter_substack.html"
 BLOCK_OUTPUT      = SCRIPT_DIR / "box_score_block.html"
 STANDALONE_OUTPUT = SCRIPT_DIR / "box_score.html"
 
+# Fixed render width for the box-score IMAGE (box_score.jpg). The standalone HTML
+# is consumed only by wkhtmltoimage, never read by a human, so we lock it to a
+# phone-friendly width. This makes the output image mobile-sized deterministically,
+# independent of wkhtmltoimage smart-width behavior or any media query.
+MOBILE_IMG_WIDTH = 400
+
 SANS = "Arial, Helvetica, sans-serif"
 MONO = "'Courier New', Courier, monospace"
 
@@ -498,7 +504,7 @@ def _mi_cat(leaders, key, title, abbr, team_set):
            f'border-bottom:1px solid {_I};padding:4px 0 1px;">'
            f'<span style="font-family:{_SANS};font-size:11px;font-weight:bold;color:{_I};">{title}</span>'
            f'<span style="font-family:{_SANS};font-size:10px;font-weight:bold;color:{_M};">{abbr}</span></div>')
-    return f'<div style="margin-bottom:10px;">{hdr}{rows}</div>'
+    return f'<div style="margin-bottom:10px;padding:0 10px;">{hdr}{rows}</div>'
 
 def _mi_leaders_half(leaders, team_set, cats):
     return "".join(_mi_cat(leaders, k, title, abbr, team_set) for k, title, abbr in cats) or ""
@@ -665,11 +671,11 @@ def _mi_today_games(games):
         prob = g.get("probables","")
         start = g.get("start","") or _fmt_et(g.get("date",""))
         items.append(
-            f'<div style="padding:8px 0;border-bottom:.5px solid {_H};font-family:{_SANS};font-size:13px;">'
+            f'<div style="padding:8px 0;border-bottom:.5px solid {_H};font-family:{_SANS};font-size:11px;">'
             f'<span style="color:{_I};">{aw} @ {hm}</span>'
             f'<span style="font-family:{_MONO};font-size:11px;color:{_M};float:right;">'
             f'{start}</span>'
-            f'<div style="font-size:12px;color:{_M};clear:both;">{prob}</div></div>'
+            f'<div style="font-size:11px;color:{_M};clear:both;">{prob}</div></div>'
         )
     per = (len(items) + 1) // 2
     col = (f'<div style="display:inline-block;vertical-align:top;width:100%;max-width:312px;'
@@ -967,7 +973,15 @@ def build_box_score_block(game_state):
     return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{masthead}{content}{footer}</div>'
 
 def build_standalone(block):
-    return f'<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8"/>\n<meta name="viewport" content="width=device-width,initial-scale=1.0"/>\n<title>The Box Score</title>\n<style>\n{PAGE_CSS}\n</style>\n</head>\n<body>\n{block}\n</body>\n</html>'
+    # Lock the page to a fixed mobile width so the rendered image is always
+    # phone-sized. !important overrides the block's inline max-width:600px.
+    img_lock = (
+        f"html,body{{width:{MOBILE_IMG_WIDTH}px;min-width:{MOBILE_IMG_WIDTH}px;"
+        f"max-width:{MOBILE_IMG_WIDTH}px;margin:0;padding:0;background:#fff;}}"
+        f"body>div{{max-width:{MOBILE_IMG_WIDTH}px!important;}}"
+        f"table{{max-width:100%;}}"
+    )
+    return f'<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8"/>\n<meta name="viewport" content="width=device-width,initial-scale=1.0"/>\n<title>The Box Score</title>\n<style>\n{PAGE_CSS}\n{img_lock}\n</style>\n</head>\n<body>\n{block}\n</body>\n</html>'
 
 def main():
     parser=argparse.ArgumentParser(); parser.add_argument("--standalone",action="store_true"); parser.add_argument("--append",action="store_true"); args=parser.parse_args()

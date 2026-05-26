@@ -508,6 +508,30 @@ def drop_fabricated_tweets(html: str) -> tuple[str, int]:
     return pattern.sub(_check, html), dropped
 
 
+def normalize_topic_key(key: str) -> str:
+    """Collapse per-game / per-day topic keys to a stable series-level key.
+
+    The model routinely appends a game number ('-game3', '-g3') or a date to an
+    otherwise-stable key, which defeats continuing-story matching and makes a
+    multi-game playoff series look brand new every single day. Stripping those
+    segments means 'knights-avalanche-game2-wcf-2026' and
+    'knights-avalanche-game3-wcf-2026' both collapse to
+    'knights-avalanche-wcf-2026', so the series is recognized as one ongoing
+    story. The 4-digit season year (e.g. '-2026') is preserved.
+    """
+    if not isinstance(key, str):
+        return ""
+    k = key.lower().strip()
+    k = re.sub(r'-?\bgame[-_]?\d+\b', '', k)   # -game3, game_3
+    k = re.sub(r'-?\bg\d+\b', '', k)           # -g3
+    k = re.sub(r'-?\bgm\d+\b', '', k)          # -gm3
+    k = re.sub(r'-?\bday[-_]?\d+\b', '', k)    # -day2
+    k = re.sub(r'-\d{4}-\d{2}-\d{2}\b', '', k) # -2026-05-25
+    k = re.sub(r'-\d{1,2}-\d{1,2}\b', '', k)   # -05-25
+    k = re.sub(r'-{2,}', '-', k).strip('-')    # collapse/trim stray hyphens
+    return k
+
+
 def format_story_history(recent_output: list) -> str:
     """
     Format the last 14 days of story_log entries into a readable block
@@ -531,9 +555,10 @@ def format_story_history(recent_output: list) -> str:
         if "story_log" in entry:
             for story in entry["story_log"]:
                 resolved = " [RESOLVED]" if story.get("resolved") else ""
+                _tk = normalize_topic_key(story.get('topic_key', '')) or story.get('topic_key', '?')
                 lines.append(
                     f"  [{story.get('section', '?').upper()}] "
-                    f"{story.get('topic_key', '?')} — "
+                    f"{_tk} — "
                     f"{story.get('title', '?')}{resolved}"
                 )
                 lines.append(f"    Development: {story.get('development', '?')}")
@@ -618,6 +643,13 @@ def save_story_log(story_plan_raw: str, recent_output: list, path: Path) -> list
         if not story_log:
             print("  ⚠ No story_log in Pass 1 output — recent_output not updated")
             return recent_output
+        # Normalize topic keys before persisting so a multi-game series stores
+        # one stable key (strips -game3/-g3/date suffixes the model appends).
+        for _s in story_log:
+            if isinstance(_s, dict) and _s.get("topic_key"):
+                _norm = normalize_topic_key(_s["topic_key"])
+                if _norm:
+                    _s["topic_key"] = _norm
     except json.JSONDecodeError:
         print("  ⚠ Pass 1 output not valid JSON — recent_output not updated")
         return recent_output
@@ -863,47 +895,58 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             # ignores it under pressure (e.g. when pushed to fill ATL on a day
             # where Nitter missed some overnight game tweets). Enforce here at
             # code level so fabricated tweets never reach the newsletter.
+            # Match on the numeric status ID — the only invariant across
+            # nitter.net / twitter.com / x.com, #m suffixes, case, and query
+            # strings. fetch_content.py stores the URL under "link"; older
+            # data used "url" — read both so the filter never silently
+            # empties every story (which forces Pass 2 to fabricate URLs).
+            def _status_id(url: str) -> str:
+                m = re.search(r'/status/(\d+)', url or "")
+                return m.group(1) if m else ""
+
             _raw_url_set = set()
             for _t in raw.get("tweets", []):
-                _u = _t.get("url", "")
-                if _u:
-                    _norm = _u.replace("nitter.net", "twitter.com")
-                    if _norm.endswith("#m"):
-                        _norm = _norm[:-2]
-                    _raw_url_set.add(_norm.lower().strip())
+                _sid = _status_id(_t.get("link") or _t.get("url") or "")
+                if _sid:
+                    _raw_url_set.add(_sid)
 
             def _in_raw(url):
-                n = url.replace("nitter.net", "twitter.com")
-                if n.endswith("#m"):
-                    n = n[:-2]
-                return n.lower().strip() in _raw_url_set
+                sid = _status_id(url)
+                return bool(sid) and sid in _raw_url_set
 
             def _filter_to_raw(tweets):
                 kept = [t for t in tweets if _in_raw(t.get("url", ""))]
                 return kept, len(tweets) - len(kept)
 
-            _fab_total = 0
-            _lead = plan.get("lead_story", {})
-            _lead["tweets"], _n = _filter_to_raw(_lead.get("tweets", []))
-            plan["lead_story"] = _lead
-            _fab_total += _n
-
-            _new_sup = []
-            for _s in plan.get("supporting_stories", []):
-                _s["tweets"], _n = _filter_to_raw(_s.get("tweets", []))
-                _new_sup.append(_s)
-                _fab_total += _n
-            plan["supporting_stories"] = _new_sup
-
-            _atl = plan.get("around_the_league", {})
-            _atl["tweets"], _n = _filter_to_raw(_atl.get("tweets", []))
-            plan["around_the_league"] = _atl
-            _fab_total += _n
-
-            if _fab_total:
-                print(f"  \u26a0 Dropped {_fab_total} fabricated tweet(s) \u2014 URLs not in today's raw content")
+            # Safety: if we extracted no usable IDs from raw content, the filter
+            # can't validate anything \u2014 and dropping every tweet is far worse
+            # than keeping them (it forces Pass 2 to fabricate placeholder URLs).
+            # No-op the filter in that case and warn loudly.
+            if not _raw_url_set:
+                print("  \u26a0 No tweet URLs found in raw content \u2014 skipping cross-reference filter (keeping all plan tweets)")
             else:
-                print(f"  \u2713 All plan tweets verified against today's raw content")
+                _fab_total = 0
+                _lead = plan.get("lead_story", {})
+                _lead["tweets"], _n = _filter_to_raw(_lead.get("tweets", []))
+                plan["lead_story"] = _lead
+                _fab_total += _n
+
+                _new_sup = []
+                for _s in plan.get("supporting_stories", []):
+                    _s["tweets"], _n = _filter_to_raw(_s.get("tweets", []))
+                    _new_sup.append(_s)
+                    _fab_total += _n
+                plan["supporting_stories"] = _new_sup
+
+                _atl = plan.get("around_the_league", {})
+                _atl["tweets"], _n = _filter_to_raw(_atl.get("tweets", []))
+                plan["around_the_league"] = _atl
+                _fab_total += _n
+
+                if _fab_total:
+                    print(f"  \u26a0 Dropped {_fab_total} fabricated tweet(s) \u2014 URLs not in today's raw content")
+                else:
+                    print(f"  \u2713 All plan tweets verified against today's raw content")
 
             story_plan_raw = json.dumps(plan, ensure_ascii=False)
 

@@ -3,163 +3,147 @@
     "date": "2026-05-26",
     "story_log": [
       {
-        "topic_key": "knicks-finals-2026",
-        "title": "Knicks sweep Cavs to reach first NBA Finals since 1999",
+        "topic_key": "spurs-thunder-wcf-2026",
+        "title": "Spurs tie WCF 2-2 with dominant Game 4 win, Wemby's halfcourt buzzer beater",
         "section": "lead",
-        "development": "New York completed 4-0 sweep of Cleveland with 130-93 Game 4 blowout. Knicks won closeout games by 51, 30, and 37 points (39.3 avg margin). 11-game win streak, +262 point differential over last 11 games (best in NBA history). Brunson had 15-5 in three quarters, never played 4th quarter in any closeout game. NYC streets flooded with fans, Mayor Mamdani trolled Cavs. First Finals appearance in 27 years.",
-        "is_new": true,
+        "development": "San Antonio evened series 2-2 with 103-82 blowout win behind Wemby's 33 pts (11-22 FG), 8 reb, 5 ast, 3 blk including halfcourt buzzer beater to end first half. Spurs' defense shut down Thunder completely: OKC shot 2-14 from three, Spurs +9 turnover pts, +11 FT margin. Stephon Castle 13-6 ast. Series returns to OKC for Game 5 tied 2-2.",
+        "is_new": false,
         "resolved": false
       },
       {
-        "topic_key": "james-harden-cavs-sweep-2026",
-        "title": "James Harden disappears again: 2-8 FG, 5 TOV, swept in ECF",
-        "section": "lead",
-        "development": "Harden finished Game 4 with 12 points, 2-8 FG, 0-6 from three, 5 turnovers in elimination game. Had more turnovers than made field goals in 7 of 18 playoff games. Postgame said Cavs are 'the better team' despite being swept. Kenny Atkinson said they won series 'analytically.' Mitchell apologized to Cleveland for 'ass' performance.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "hurricanes-canadiens-game3-ecf-2026",
-        "title": "Hurricanes take 2-1 series lead after Svechnikov OT winner in Montreal",
+        "topic_key": "golden-knights-avalanche-wcf-2026",
+        "title": "Golden Knights complete historic 3-goal comeback, take 3-0 stranglehold on Avalanche",
         "section": "supporting",
-        "development": "Carolina won Game 3 in Montreal 3-2 in overtime. Andrei Svechnikov scored 14:04 into OT to give Hurricanes 2-1 series lead. Back-to-back OT victories for Carolina. Canadiens had 0 shots on goal in overtime. Series shifts back to Carolina for Game 4.",
+        "development": "Vegas trailed 3-0 after first period in Game 3, then scored 5 unanswered (3 in final 10 minutes) to win 5-3. Mark Stone and Cale Makar both returned from injuries. Hertl gave Vegas first lead late in 3rd. Avalanche were 74-1 when leading by 3+ in franchise playoff history. Knights one win from Finals. Teams up 3-0 in best-of-7 have won 98% of the time.",
         "is_new": false,
         "resolved": false
       },
       {
-        "topic_key": "astros-no-hitter-2026",
-        "title": "Astros throw first MLB no-hitter since 2024: Imai, Okert, Santa combine",
+        "topic_key": "knicks-cavs-ecf-2026",
+        "title": "Knicks take commanding 3-0 lead over Cavs, one win from first Finals since 1999",
         "section": "supporting",
-        "development": "Tatsuya Imai (6 IP), Steven Okert, and Alimber Santa (MLB debut) combined for first no-hitter since 2024 season, beating Rangers 9-0. Santa is second player in MLB history to pitch in no-hitter in debut. Ended league-wide no-hitter drought of nearly two years.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "matthew-stafford-extension-2026",
-        "title": "Rams finalize Stafford extension: 1-year, $55M through 2027",
-        "section": "supporting",
-        "development": "Stafford officially signed one-year, $55M extension (up to $60M with incentives). Now tied to LA through 2027 with $105M remaining. Reigning MVP at 38 betting on two more years. Brought family to sign contract.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "golden-knights-avalanche-game3-wcf-2026",
-        "title": "Golden Knights complete historic 3-goal comeback, take 3-0 stranglehold",
-        "section": "supporting",
-        "development": "Vegas trailed 3-0 after first period in Game 3, scored 5 unanswered (3 in final period, 2 in final 10 minutes) to win 5-3. Avs were 74-1 all-time when leading by 3+ goals in playoffs, now 74-2. Mark Stone and Cale Makar both returned from injuries. Knights one win from Stanley Cup Finals. Teams up 3-0 in best-of-7 have won 98% historically.",
+        "development": "CONTINUING [Day 3]: New York won Game 3 in Cleveland 121-108 to take commanding 3-0 series lead. Brunson 35-3, Bridges 22-6, OG 21-7. Knicks have won 10 straight playoff games, largest postseason point differential since 1970 (+234). No team has ever come back from 0-3. Knicks can close out Tuesday at MSG.",
         "is_new": false,
         "resolved": false
       },
       {
-        "topic_key": "landry-shamet-knicks-closeout-2026",
-        "title": "Landry Shamet goes 12-of-15 from three across series, 16 pts in Game 4",
-        "section": "atl",
-        "development": "Shamet scored 16 points in 19 minutes in Game 4, went 12-for-15 from three across entire ECF series (80% 3PT%). First player with 10+ threes on 80%+ 3PT% in a Conference Finals. John Starks congratulated him postgame.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "pga-of-america-president-out-2026",
-        "title": "PGA of America president Don Rea Jr. out after Ryder Cup fan behavior delay",
-        "section": "atl",
-        "development": "Rea is out as PGA president after delayed response to unruly fan behavior directed at European Ryder Cup team. Major leadership change for PGA of America.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "jack-campbell-extension-lions-2026",
-        "title": "Lions lock up All-Pro LB Jack Campbell with 4-year, $81M extension",
-        "section": "atl",
-        "development": "Detroit signed Campbell to four-year extension through 2030 worth $81M, $51.5M guaranteed. First player from Lions' 2023 draft class to get extended. Team locking in core.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "roy-robertson-harris-achilles-2026",
-        "title": "Giants DL Roy Robertson-Harris tears Achilles at OTAs, out for 2026",
-        "section": "atl",
-        "development": "Robertson-Harris tore Achilles at Thursday's OTA workout, expected to miss entire 2026 season. Blow to Giants defensive line in year one under Harbaugh.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "jordan-love-baby-2026",
-        "title": "Jordan Love and Ronika Stone welcome first child after full month with newborn",
-        "section": "atl",
-        "development": "Packers QB Love and Stone have spent full month with newborn daughter. Family update from Green Bay.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "wander-franco-ruling-2026",
-        "title": "Wander Franco found criminally responsible but will not serve jail sentence",
-        "section": "atl",
-        "development": "Dominican judge ruled Franco criminally responsible for sexual and psychological abuse of minor but will not serve prison sentence. Full sentencing slated for June 16. Franco has been on MLB's restricted list since 2024.",
+        "topic_key": "kenny-atkinson-cavs-analytics-quote-2026",
+        "title": "Kenny Atkinson says Cavs are 'analytically' winning series despite 0-3 hole vs Knicks",
+        "section": "supporting",
+        "development": "Cavs coach said Cleveland is 'analytically' winning series vs Knicks despite being down 0-3. Added: 'No one wants to hear that.' CBS Sports headline called it verge-of-being-swept delusion. Internet roasting Atkinson for leaning on analytics while facing elimination.",
         "is_new": true,
         "resolved": false
       },
       {
-        "topic_key": "jacob-misiorowski-strikeouts-2026",
-        "title": "Jacob Misiorowski hits 100 mph 57 times in 12-strikeout gem vs Cardinals",
+        "topic_key": "lionel-messi-injury-world-cup-2026",
+        "title": "Lionel Messi exits Inter Miami match with apparent hamstring injury days before World Cup",
+        "section": "supporting",
+        "development": "Messi left Inter Miami's high-scoring thriller vs Philadelphia Union with apparent hamstring injury, went straight to tunnel. World Cup begins in June. Argentina superstar's fitness now in question ahead of tournament. CBS Sports reporting injury sparking major concern.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "all-nba-teams-2026",
+        "title": "All-NBA teams announced: SGA-Jokic-Wemby-Luka-Cade lead First Team, LeBron left off for first time since 2003-04",
         "section": "atl",
-        "development": "Brewers ace matched career-high 12 strikeouts, carried no-hitter into 6th inning, hit 100 mph on more than half his pitches in win over Cardinals. Dominant performance.",
+        "development": "CONTINUING [Day 2]: Full teams released Sunday night. First Team: SGA, Jokic, Wemby, Luka, Cade. Second: Brown, Kawhi, KD, Brunson, Mitchell. Third: Maxey, Murray, Johnson, Duren, Holmgren. LeBron didn't make any team for first time since 2003-04 after playing only 60 games (65-game minimum). Jalen Duren's inclusion makes him eligible for 30% max extension.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "indy-500-2026",
+        "title": "Felix Rosenqvist wins closest Indy 500 finish in history after photo-finish thriller",
+        "section": "atl",
+        "development": "CONTINUING [Day 2]: Rosenqvist won Indianapolis 500 in photo finish, closest in race's 110-year history. Joey Mulinaro, Pat McAfee, racing community called it 'best race in the world.' Rosenqvist's first Indy 500 win. Curt Cignetti drove pace car with Blackhawk helicopters chasing him, rear view mirror disabled.",
         "is_new": false,
         "resolved": true
       },
       {
         "topic_key": "cubs-losing-streak-2026",
-        "title": "Cubs lose 9th straight, match dubious mark with multiple 10-game win streaks and 9-game skid",
+        "title": "Cubs' losing streak hits 8 games after being swept by Astros at Wrigley",
         "section": "atl",
-        "development": "Chicago's 2-1 loss to Pirates marked 9th straight defeat. Join 2017 Dodgers as only two teams in expansion era with multiple 10-game winning streaks and 9-game losing streak in same season. Roller-coaster season continues.",
+        "development": "CONTINUING [Day 2]: Chicago's losing streak reached 8 games after Astros swept them at Wrigley 8-5 on Sunday. Cubs this season: two 10-game win streaks, now an 8-game losing streak. Roller-coaster season continues. Also lost another pitcher to IL. W_B_Rick: 'Imanaga Linsanity run over.'",
         "is_new": false,
         "resolved": false
       },
       {
-        "topic_key": "colton-cowser-walkoff-homer-2026",
-        "title": "Colton Cowser walks off Rays with homer for second straight day",
+        "topic_key": "rangers-angels-sunday-night-baseball-2026",
+        "title": "Angels walk off Rangers on Sunday Night Baseball to complete sweep with wild final play",
         "section": "atl",
-        "development": "Cowser hit back-to-back walk-off homers on consecutive days for Orioles. Earlier made incredible slide in 12th inning to tie game (ruled safe on review after Gunnar Henderson sent back to first). Game went 13 innings, just second game this season to go that long.",
+        "development": "Angels completed first sweep of season by beating Rangers 3-2 on Sunday Night Baseball. Rangers had chance to turn double play and send to extras but couldn't execute, Angels walked it off instead. Reid Detmers dominated with 14 strikeouts (tied for most in MLB this season), retired final 21 hitters (longest streak in MLB this season). Angels' first sweep since 2022. Giants remain only team without a sweep in 2026.",
         "is_new": true,
         "resolved": true
       },
       {
-        "topic_key": "bobby-witt-jr-yankees-royals-2026",
-        "title": "Bobby Witt Jr. blasts go-ahead 432-foot homer in 8th, Volpe walks it off in 9th",
+        "topic_key": "devers-grand-slam-giants-2026",
+        "title": "Rafael Devers oppo grand slam gives Giants comeback lead over Dodgers",
         "section": "atl",
-        "development": "Witt hit go-ahead 432-foot bomb in 8th inning to give Royals lead over Yankees. Anthony Volpe responded with walk-off hit for Yankees in bottom 9th to win 4-3. ESPN featured Tarps Off montage during broadcast.",
+        "development": "Devers crushed opposite-field grand slam in 8th inning to give Giants lead over Dodgers. First Giant with 5-RBI game this season. Devers now SF's power threat. Drew Gilbert's postgame thrust celebration so powerful it knocked out both outfielders behind him.",
         "is_new": true,
         "resolved": true
       },
       {
-        "topic_key": "nick-kurtz-on-base-streak-2026",
-        "title": "Nick Kurtz ties Mark McGwire for A's franchise record with 48-game on-base streak",
+        "topic_key": "chris-taylor-retirement-2026",
+        "title": "Chris Taylor retires after 12-year MLB career, confirms decision after final game",
         "section": "atl",
-        "development": "Kurtz matched McGwire for Oakland's franchise record with hit in 48th consecutive game. A's calling up Gage Jump (23, LHP with 56 Ks in 38 IP at Triple-A). Athletic things happening in Oakland.",
-        "is_new": true,
-        "resolved": false
+        "development": "CONTINUING [Day 2]: Dodgers utility player Chris Taylor officially announced retirement after 12-year career. Confirmed decision postgame Sunday. End of career for longtime Dodgers contributor and 2020 World Series champion.",
+        "is_new": false,
+        "resolved": true
       },
       {
-        "topic_key": "nationals-five-homers-2026",
-        "title": "Nationals hit six homers including Curtis Mead's second of the day in 10-2 blowout",
+        "topic_key": "twins-red-sox-sweep-2026",
+        "title": "Twins sweep Red Sox at Fenway after cutting down tying run at plate in 9th",
         "section": "atl",
-        "development": "Washington crushed Guardians 10-2. Curtis Mead hit two homers, Nats had six total long balls in five innings. James Wood led off game with 14th homer. Kyle Schwarber also blasted MLB-leading 21st home run for Phillies.",
+        "development": "CONTINUING [Day 2]: Minnesota swept Boston at Fenway Park, winning 6-5 after throwing out tying run at home plate in 9th inning. Red Sox challenged for blocking plate, call confirmed. Twins take series in hostile environment.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "heriberto-hernandez-walkoff-slam-2026",
+        "title": "Heriberto Hernandez walk-off grand slam off Devin Williams stuns Brewers",
+        "section": "atl",
+        "development": "CONTINUING [Day 2]: Dodgers' Hernandez hit walk-off grand slam off Brewers closer Devin Williams in dramatic Sunday finish. Jake Burger also homered earlier. Jimmy Knorp knows ball.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "aaron-judge-walkoff-homer-yankees-2026",
+        "title": "Aaron Judge snaps 11-game homerless streak with walk-off bomb vs Blue Jays",
+        "section": "atl",
+        "development": "Judge hit walk-off homer to beat Blue Jays 2-1, ending 11-game stretch without a home run. Earlier in game made baserunning error after picking up rare hit. Yankees finally get win after ice-cold offensive stretch. Judge now heating up.",
         "is_new": true,
         "resolved": true
       },
       {
-        "topic_key": "ketel-marte-three-game-stretch-2026",
-        "title": "Ketel Marte's historic three-game stretch: 10 H, 3 2B, 8 RBI, 6 RBI",
+        "topic_key": "mississippi-state-wcws-2026",
+        "title": "Mississippi State shuts out Oklahoma to reach first-ever WCWS, ending Sooners' dynasty run",
         "section": "atl",
-        "development": "Marte's last three games: 10 hits, 3 doubles, 8 RBI, 6 runs. Only one other player has put up those numbers in 3-game span in last 8 seasons: Nick Kurtz in 2025. Diamondbacks beat Giants 6-2.",
-        "is_new": true,
+        "development": "CONTINUING [Day 2]: Mississippi State blanked Oklahoma 6-0 to deny Sooners a WCWS bid for first time since 2015. MSU's Delainey Everett threw scoreless gem, dedicated performance to late father on parents' anniversary. Oklahoma softball dynasty suffers rare postseason elimination. WCWS field set without Florida or Oklahoma for first time since 2007. Texas punched WCWS ticket after Arizona State couldn't hold them on 4th & 13.",
+        "is_new": false,
         "resolved": true
       },
       {
-        "topic_key": "manny-fernandez-death-2026",
-        "title": "Dolphins legend Manny Fernandez passes away",
+        "topic_key": "ucla-big-ten-baseball-championship-2026",
+        "title": "UCLA wins first-ever Big Ten baseball championship on walk-off hit-by-pitch in 11th inning",
         "section": "atl",
-        "development": "Miami Dolphins released statement mourning passing of Manny Fernandez. Schefter shared the sad news. End of an era for Dolphins history.",
-        "is_new": true,
+        "development": "CONTINUING [Day 2]: UCLA beat Oregon on walk-off HBP in 11th inning to win Big Ten tournament title, first conference championship in program history. Bruins' pitcher Angel Cervantes keeps mini dinosaur named Jerry on mound every game. Will Gasparino ejected for malicious contact, will miss first regional game.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "georgia-sec-baseball-tournament-2026",
+        "title": "Georgia wins first SEC baseball tournament championship in program history",
+        "section": "atl",
+        "development": "CONTINUING [Day 2]: Georgia captured first SEC tournament title in program history. Kenny Ishikawa's celebration went viral. Historic moment for Bulldogs baseball program.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "northwestern-lacrosse-championship-2026",
+        "title": "Northwestern women's lacrosse rallies from 11-9 deficit to beat UNC in national championship",
+        "section": "atl",
+        "development": "CONTINUING [Day 2]: Northwestern trailed UNC 11-9 entering 4th quarter of women's lacrosse national title game, then shut out Tar Heels 5-0 in final frame to win championship. Incredible comeback performance for the Wildcats.",
+        "is_new": false,
         "resolved": true
       }
     ]

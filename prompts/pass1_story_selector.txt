@@ -231,6 +231,29 @@ GOOD: "mendoza-draft-2026", "embiid-appendectomy-2026",
       "sixers-celtics-first-round-2026", "will-anderson-contract"
 BAD: "nba" (too broad), "mendoza-mock-draft-april-24" (too specific)
 
+PLAYOFF SERIES = ONE TOPIC KEY ACROSS ALL GAMES. This is the most common
+mistake. A best-of-7 series is a SINGLE continuing story, not a new story
+each game. The topic key must stay identical from Game 1 to Game 7.
+
+NEVER put a game number, day number, or date in the topic key:
+BAD:  "knights-avalanche-game1-wcf-2026", then "knights-avalanche-game2-wcf-2026",
+      then "knights-avalanche-game3-wcf-2026" (three different keys = the system
+      treats it as three unrelated stories and you re-explain the series every day)
+GOOD: "knights-avalanche-wcf-2026" for every single game of that series.
+
+The game number belongs in the "development" field ("Game 3: Vegas wins 5-3
+to take a 3-0 lead"), NEVER in the topic key. Same rule for any multi-day
+saga: a contract holdout, a trade rumor, a suspension appeal all keep ONE key
+across every day they appear.
+
+CONTINUING SERIES — SKIP THE BACKSTORY. When the recent history shows you have
+already covered this series, do NOT re-explain the season-long setup (favorite
+status, regular-season record, the "curse," how they got here). The reader saw
+it in the last issue. In "development", lead with ONLY what is new today —
+tonight's result, the new series score, an injury that just happened. Put a
+note in research_notes: "CONTINUING: reader knows the series context, cover
+only tonight's game and the new series state."
+
 ================================================================================
 SPORTS CALENDAR — READ THIS BEFORE STORY SELECTION RULES
 ================================================================================

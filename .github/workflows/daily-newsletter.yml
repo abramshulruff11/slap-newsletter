@@ -78,8 +78,8 @@ jobs:
       - name: Render box score image
         run: |
           python box_score/build_box_score.py --standalone
-          wkhtmltoimage --width 680 --quality 90 box_score/box_score.html box_score/box_score.png
-          echo "Box score image: $(du -h box_score/box_score.png | cut -f1)"
+          wkhtmltoimage --width 400 --quality 82 --format jpg box_score/box_score.html box_score/box_score.jpg
+          echo "Box score image: $(du -h box_score/box_score.jpg | cut -f1)"
 
       - name: Verify outputs
         run: |
@@ -103,8 +103,8 @@ jobs:
           if [ -f recent_output.json ]; then
             cp recent_output.json "$ARCHIVE_DIR/"
           fi
-          if [ -f box_score/box_score.png ]; then
-            cp box_score/box_score.png "$ARCHIVE_DIR/"
+          if [ -f box_score/box_score.jpg ]; then
+            cp box_score/box_score.jpg "$ARCHIVE_DIR/"
           fi
           echo "Archived to $ARCHIVE_DIR"
 
@@ -115,7 +115,7 @@ jobs:
         run: |
           git config user.name "SLAP Bot"
           git config user.email "slap-bot@users.noreply.github.com"
-          git add raw_content.json newsletter_draft.html newsletter_substack.html newsletter_email.html recent_output.json gif_history.json meme_history.json archive/ box_score/box_score.png box_score/box_score.html || true
+          git add raw_content.json newsletter_draft.html newsletter_substack.html newsletter_email.html recent_output.json gif_history.json meme_history.json archive/ box_score/box_score.jpg box_score/box_score.html || true
           DATE=$(date -u +"%Y-%m-%d")
           git commit -m "SLAP newsletter output for $DATE" || echo "No changes to commit"
           git pull --rebase -X theirs origin main

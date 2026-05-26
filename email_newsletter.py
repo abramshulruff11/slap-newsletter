@@ -17,7 +17,7 @@ from email.mime.image import MIMEImage
 
 SCRIPT_DIR      = Path(__file__).resolve().parent
 SUBSTACK_PATH   = SCRIPT_DIR / "newsletter_substack.html"
-BOX_SCORE_IMAGE = SCRIPT_DIR / "box_score" / "box_score.png"
+BOX_SCORE_IMAGE = SCRIPT_DIR / "box_score" / "box_score.jpg"
 
 
 def send_email():
@@ -55,8 +55,8 @@ def send_email():
     # Box score image attachment — save it, upload to Substack as an image block
     if BOX_SCORE_IMAGE.exists():
         img_data = BOX_SCORE_IMAGE.read_bytes()
-        img = MIMEImage(img_data, name="box_score.png")
-        img.add_header("Content-Disposition", "attachment", filename="box_score.png")
+        img = MIMEImage(img_data, _subtype="jpeg", name="box_score.jpg")
+        img.add_header("Content-Disposition", "attachment", filename="box_score.jpg")
         msg.attach(img)
         print(f"  → Box score image attached ({len(img_data) // 1024}KB)")
     else:
