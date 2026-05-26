@@ -960,9 +960,13 @@ def _sport_has_data(data):
     in_playoffs=any(g.get("playoffs") for g in all_games) or bool(data.get("bracket",[]))
     return in_playoffs, bool(in_playoffs or completed or data.get("standings"))
 
-def build_box_score_block_for_sport(game_state, sport_key):
+def build_box_score_block_for_sport(game_state, sport_key, bare=False):
     """Render a standalone box score block for ONE sport, so each can become its
-    own small, pasteable image. Returns '' if the sport has no data today."""
+    own small, pasteable image. Returns '' if the sport has no data today.
+
+    bare=True omits the masthead ("The Box Score", date, sport label, "Data via
+    ESPN") and footer, leaving only the content tables — the newsletter already
+    carries a "Box Scores" header, so that chrome is redundant in each image."""
     sports=game_state.get("sports",{})
     if sport_key not in sports:
         return ""
@@ -971,15 +975,17 @@ def build_box_score_block_for_sport(game_state, sport_key):
     if not has_data:
         return ""
     if sport_key=="mlb":
-        content=_mi_sport_divider("MLB")+_render_mlb_sections(data)
+        content=_render_mlb_sections(data) if bare else _mi_sport_divider("MLB")+_render_mlb_sections(data)
     else:
         content=_render_sport_inline(sport_key,data,in_playoffs=in_playoffs)
     if not content.strip():
         return ""
+    if bare:
+        return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{content}</div>'
     masthead=_masthead(_date_display(game_state), subtitle=sport_key.upper())
     return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{masthead}{content}{_footer()}</div>'
 
-def build_golf_tennis_block(game_state):
+def build_golf_tennis_block(game_state, bare=False):
     """Render golf + tennis as their own image block. Returns '' if neither present."""
     golf=game_state.get("golf",[]); tennis=game_state.get("tennis",[])
     if not (golf or tennis):
@@ -987,14 +993,19 @@ def build_golf_tennis_block(game_state):
     content="".join(render_golf_html(t) for t in golf)+"".join(render_tennis_html(t) for t in tennis)
     if not content.strip():
         return ""
+    if bare:
+        return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{content}</div>'
     masthead=_masthead(_date_display(game_state), subtitle="Golf &amp; Tennis")
     return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{masthead}{content}{_footer()}</div>'
 
-def build_mlb_chunk_blocks(game_state, games_per_chunk=4):
+def build_mlb_chunk_blocks(game_state, games_per_chunk=4, bare=False):
     """MLB has a full daily slate, so a single image would be enormous. Split it
     into: one summary image (standings + leaders + results strip + today's
     games) and box scores chunked ~games_per_chunk per image. Returns a list of
-    complete standalone-ready blocks (each with its own masthead/footer)."""
+    complete standalone-ready blocks.
+
+    bare=True omits the masthead/footer chrome and the per-chunk "MLB Box Scores
+    (n/N)" label, leaving only the tables (the newsletter carries the header)."""
     sports=game_state.get("sports",{})
     if "mlb" not in sports: return []
     data=sports["mlb"]
@@ -1004,6 +1015,8 @@ def build_mlb_chunk_blocks(game_state, games_per_chunk=4):
     date_display=_date_display(game_state)
 
     def _wrap(subtitle, inner):
+        if bare:
+            return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{inner}</div>'
         return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{_masthead(date_display, subtitle=subtitle)}{inner}{_footer()}</div>'
 
     def _league_sections(full_name,div_set,team_set,lead_cats):
@@ -1028,7 +1041,7 @@ def build_mlb_chunk_blocks(game_state, games_per_chunk=4):
         for i in range(0,total,games_per_chunk):
             idx=i//games_per_chunk+1
             label=f"MLB Box Scores ({idx}/{nchunks})" if nchunks>1 else "MLB Box Scores"
-            inner=_mi_rule(label)+"".join(_mi_game(g) for g in games[i:i+games_per_chunk])
+            inner=("" if bare else _mi_rule(label))+"".join(_mi_game(g) for g in games[i:i+games_per_chunk])
             blocks.append(_wrap(label, inner))
     return blocks
 
@@ -1083,15 +1096,15 @@ def main():
         for key in SPORT_ORDER:
             if key=="mlb":
                 # MLB: summary image + box scores chunked ~4 games per image.
-                for i,blk in enumerate(build_mlb_chunk_blocks(game_state),1):
+                for i,blk in enumerate(build_mlb_chunk_blocks(game_state,bare=True),1):
                     out=SCRIPT_DIR/f"box_score_sport_mlb_{i}.html"
                     out.write_text(build_standalone(blk),encoding="utf-8"); written.append(out.name); print(f"✓ {out}")
                 continue
-            blk=build_box_score_block_for_sport(game_state,key)
+            blk=build_box_score_block_for_sport(game_state,key,bare=True)
             if not blk: continue
             out=SCRIPT_DIR/f"box_score_sport_{key}.html"
             out.write_text(build_standalone(blk),encoding="utf-8"); written.append(out.name); print(f"✓ {out}")
-        gt=build_golf_tennis_block(game_state)
+        gt=build_golf_tennis_block(game_state,bare=True)
         if gt:
             out=SCRIPT_DIR/"box_score_sport_golf_tennis.html"
             out.write_text(build_standalone(gt),encoding="utf-8"); written.append(out.name); print(f"✓ {out}")

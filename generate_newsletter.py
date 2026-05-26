@@ -1528,6 +1528,11 @@ def main() -> None:
         print(f"  ✗ Meme pipeline failed: {e}")
         print("    Newsletter saved without memes — safe to publish as-is.")
 
+    # Box Scores section header. Around the League is the last written section,
+    # so appending here places "Box Scores" at the very bottom. The cleaned
+    # per-sport box score images are uploaded under this header in Substack.
+    body = body.rstrip() + '\n<h2>Box Scores</h2>\n'
+
     # Write both output files from the single embedded body.
     DRAFT_OUTPUT_PATH.write_text(
         DRAFT_TEMPLATE.format(content=body), encoding="utf-8"

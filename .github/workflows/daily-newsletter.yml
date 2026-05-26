@@ -72,9 +72,6 @@ jobs:
           fi
           python generate_newsletter.py $FLAGS
 
-      - name: Append box score
-        run: python box_score/build_box_score.py --append
-
       - name: Render box score images (one per sport, MLB chunked)
         run: |
           rm -f box_score/box_score_sport_*.html box_score/box_score_sport_*.jpg
