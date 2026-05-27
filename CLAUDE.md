@@ -6,10 +6,15 @@ SLAP is a daily AI-generated sports newsletter. Group-chat narrator voice, not s
 GitHub Actions runs the full pipeline daily at 4am EDT (cron `0 8 * * *` UTC). No manual trigger required.
 
 **Delivery (current reality, as of 5/26/2026):** the pipeline emails the finished newsletter to
-the owner's Gmail (`email_newsletter.py`) as an HTML body plus the per-sport box score images as
-PNG attachments. The owner pastes the body into Substack and uploads the images under the
-"Box Scores" header. Auto-posting is NOT live: Substack auto-post is blocked by Cloudflare (403),
-and the Beehiiv post API is enterprise-only (403). So delivery is email → manual paste.
+the owner's Gmail (`email_newsletter.py`) as an HTML body with the per-sport box score images
+**embedded inline** (under the "Box Scores" header, in order) — so a single select-all → copy →
+paste into Substack carries the whole issue, images included. The owner does that one paste; no
+attachments to download. Auto-posting is NOT live: Substack auto-post is blocked by Cloudflare
+(403), and the Beehiiv post API is enterprise-only (403). So delivery is email → single paste.
+
+**Image delivery has a size guard (see Box Score System):** normal days embed images inline via
+`cid:`; huge-slate days fall back to GitHub-hosted `<img>` URLs so the email never exceeds Gmail's
+25 MB send limit.
 
 ---
 
@@ -33,7 +38,8 @@ newsletter_draft.html / newsletter_substack.html / newsletter_email.html
 box_score/build_box_score.py --per-sport  → per-sport HTML (MLB chunked ~4 games)
 box_score/render_pngs.py                   → cropped PNGs (Chromium screenshot + Pillow trim)
         ↓
-email_newsletter.py → emails HTML body + box score PNGs to owner's Gmail (manual paste to Substack)
+email_newsletter.py → emails HTML body with box scores INLINE (cid:, or hosted URLs if >15MB) →
+                      owner does one copy/paste into Substack (push runs BEFORE email)
 ```
 
 Note: the printed pass labels are not contiguous (1, 2, 3=Claim Validator, 2.5=Voice, pre_edit,
@@ -52,7 +58,7 @@ slap-newsletter/
 ├── claim_validator.py         ← deterministic fact check vs game_state.json (Pass 3)
 ├── generate_newsletter.py     ← orchestrates all passes (main script)
 ├── generate_memes.py          ← Imgflip meme generation
-├── email_newsletter.py        ← ACTIVE delivery: emails HTML body + box score PNGs to owner's Gmail
+├── email_newsletter.py        ← ACTIVE delivery: emails HTML body w/ box scores inline (cid + size guard)
 ├── raw_content.json           ← daily input: headlines + tweets (123KB typical)
 ├── game_state.json            ← daily ESPN ground truth (GITIGNORED build artifact — not committed)
 ├── recent_output.json         ← rolling 30-day story_log + dedup state (GIFs, memes, stories)
@@ -144,13 +150,27 @@ paste cleanly into Substack as HTML.
   width, 2× scale for crisp text), then **Pillow** trims top/bottom whitespace. Prefers system
   Chrome locally; uses Playwright's bundled Chromium in CI. Output is **PNG** (lossless — crisper
   than JPG for text).
-- `email_newsletter.py` attaches the `box_score_sport_*.png` files (sorted) to the email.
+- `email_newsletter.py` embeds the `box_score_sport_*.png` files **inline in the email body** under
+  the "Box Scores" header (see Delivery below) — not as attachments — so one copy/paste carries them.
 
 **Ordering:** files use a zero-padded numeric prefix (`box_score_sport_01_nba.png`, `02_nhl`, …)
 so the email and shell glob attach them in a fixed order: **playoffs first** (per `SPORT_ORDER`,
 NBA before NHL), **then regular season** (MLB chunks, WNBA last), golf/tennis at the end. The
 playoff/regular split is computed per-sport from `game_state.json` (`_ordered_sport_keys`), so it
 self-updates as seasons change — no calendar edits needed.
+
+**Delivery — inline with a size guard:** `email_newsletter.py` injects `<img>` tags under the
+"Box Scores" header so the images travel with one copy/paste.
+- **Normal days** (≤ `MAX_INLINE_RAW_BYTES`, 15 MB raw): images embed **inline via `cid:`**
+  (`multipart/related` + inline image parts) — self-contained, no external dependency.
+- **Huge slates** (NFL Sundays, CFB Saturdays, March Madness — would exceed Gmail's 25 MB send
+  limit after ~37% base64 inflation): falls back to **GitHub-hosted `<img>` URLs**
+  (`raw.githubusercontent.com/<repo>/<branch>/box_score/…` via `_github_raw_base()`), so the email
+  stays tiny regardless of slate size.
+- **cid (not base64 data URIs) is deliberate:** it keeps the HTML body small, avoiding Gmail's
+  ~102 KB "[Message clipped]" truncation that would otherwise break the copy/paste.
+- **Push runs BEFORE email** in the workflow (with `continue-on-error`) so the hosted-URL fallback
+  resolves when Gmail fetches it; the push can hiccup without ever blocking the email.
 
 **"Bare" mode:** per-sport images omit all masthead chrome (no "The Box Score" title, date, sport
 subtitle, "Data via ESPN", footer, or border lines) because the newsletter already carries a
@@ -167,6 +187,16 @@ unstaged, which breaks `git pull --rebase`.
 ## Change Log (what / why / when)
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …") omitted.
+
+**2026-05-26 — Box scores delivered inline (cid) + email size guard**
+- Switched box scores from email **attachments** to **inline** images under the "Box Scores"
+  header, so a single copy/paste into Substack carries them (no download/open/paste-each). (beb1c9b)
+- Added a **size guard**: inline `cid:` normally; if total PNG bytes exceed 15 MB raw (~20.5 MB
+  encoded), fall back to **GitHub-hosted `<img>` URLs** so the email never hits Gmail's 25 MB send
+  limit. Reordered the workflow so **push runs before email** (hosted URLs live when fetched), with
+  `continue-on-error` so a push hiccup never blocks delivery. (d5bdfe2)
+- Why cid not base64 data URIs: keeps HTML body small → avoids Gmail's ~102 KB clip that would
+  break the copy/paste.
 
 **2026-05-26 — Box score images: per-sport, ordered, clean, CI-rendered**
 - Split the one giant box score image (≈15,000px tall, too big to paste) into per-sport images,
@@ -277,7 +307,8 @@ SUBSTACK_* secrets were removed/retired — no longer referenced by the workflow
 
 Pipeline steps: checkout → setup Python → `pip install -r requirements.txt` →
 `playwright install --with-deps chromium` → fetch content → fetch sports data → validate →
-generate newsletter → render box score PNGs → archive → email → commit & push outputs.
+generate newsletter → render box score PNGs → archive → **commit & push** (continue-on-error) →
+email. (Push is before email so the size-guard's hosted-URL fallback resolves when Gmail fetches it.)
 
 If the pipeline fails, check, in rough likelihood order: the **commit/push** step (daily box score
 filename churn — must use `git add -A box_score/`), the **Playwright Chromium install**, model
