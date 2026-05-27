@@ -103,10 +103,12 @@ jobs:
           cp box_score/box_score_sport_*.png "$ARCHIVE_DIR/" 2>/dev/null || true
           echo "Archived to $ARCHIVE_DIR"
 
-      - name: Email newsletter
-        run: python email_newsletter.py
-
+      # Push BEFORE email so the box score images are live on GitHub: the size
+      # guard in email_newsletter.py falls back to raw.githubusercontent URLs on
+      # huge-slate days, and those must resolve when Gmail fetches them.
+      # continue-on-error: a push hiccup must never block the email (the product).
       - name: Commit and push outputs
+        continue-on-error: true
         run: |
           git config user.name "SLAP Bot"
           git config user.email "slap-bot@users.noreply.github.com"
@@ -120,3 +122,6 @@ jobs:
           git commit -m "SLAP newsletter output for $DATE" || echo "No changes to commit"
           git pull --rebase -X theirs origin main
           git push
+
+      - name: Email newsletter
+        run: python email_newsletter.py

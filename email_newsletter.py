@@ -8,8 +8,9 @@ Triggered by GitHub Actions after generate_newsletter.py completes.
 """
 
 import os
-import smtplib
 import re
+import smtplib
+import subprocess
 from pathlib import Path
 from datetime import date
 from email.mime.multipart import MIMEMultipart
@@ -19,6 +20,36 @@ from email.mime.image import MIMEImage
 SCRIPT_DIR      = Path(__file__).resolve().parent
 SUBSTACK_PATH   = SCRIPT_DIR / "newsletter_substack.html"
 BOX_SCORE_DIR   = SCRIPT_DIR / "box_score"
+
+# Gmail rejects messages over 25 MB (and MIME base64 inflates binary by ~37%).
+# Below this RAW total we embed the box scores inline (cid:) — self-contained,
+# single copy/paste. Above it, we fall back to GitHub-hosted <img> URLs so the
+# email stays tiny no matter how huge the slate (NFL Sundays, CFB Saturdays,
+# March Madness). 15 MB raw ≈ 20.5 MB encoded — comfortably under the limit.
+MAX_INLINE_RAW_BYTES = 15 * 1024 * 1024
+
+_IMG_STYLE = "display:block;width:100%;max-width:680px;height:auto;margin:16px auto;"
+
+
+def _github_raw_base():
+    """Base raw.githubusercontent URL for the box_score dir on the live branch.
+    Uses CI env vars when present, else parses the local git remote."""
+    repo = os.getenv("GITHUB_REPOSITORY")
+    branch = os.getenv("GITHUB_REF_NAME") or "main"
+    if not repo:
+        try:
+            url = subprocess.check_output(
+                ["git", "config", "--get", "remote.origin.url"],
+                cwd=SCRIPT_DIR, text=True,
+            ).strip()
+            m = re.search(r'github\.com[:/]+([^/]+)/(.+?)(?:\.git)?$', url)
+            if m:
+                repo = f"{m.group(1)}/{m.group(2)}"
+        except Exception:
+            repo = None
+    if not repo:
+        return None
+    return f"https://raw.githubusercontent.com/{repo}/{branch}/box_score"
 
 
 def send_email():
@@ -42,21 +73,26 @@ def send_email():
     today = date.today().strftime("%B %-d, %Y")
     subject = f"SLAP {today} — {title}"
 
-    # Build inline <img> tags for the box score images and inject them into the
-    # body under the "Box Scores" header, in sorted (numeric-prefix) order. Each
-    # references a cid: that we attach below as an inline image part — so they
-    # render in the email body and travel with a single copy/paste into Substack.
+    # Box score images, in sorted (numeric-prefix) order. Decide delivery mode by
+    # total size: small → embed inline (cid:, self-contained); large → reference
+    # GitHub-hosted URLs so the email stays tiny and always sends. Either way the
+    # images land in the body under the "Box Scores" header, so a single
+    # copy/paste into Substack carries them.
     box_images = sorted(BOX_SCORE_DIR.glob("box_score_sport_*.png"))
-    inline = []  # (cid, path)
+    total_raw = sum(p.stat().st_size for p in box_images)
+    raw_base = _github_raw_base() if box_images else None
+    use_inline = bool(box_images) and (total_raw <= MAX_INLINE_RAW_BYTES or raw_base is None)
+
+    inline = []      # (cid, path) — only populated in inline mode
     imgs_html = ""
     for i, img_path in enumerate(box_images, 1):
-        cid = f"boxscore{i:02d}"
-        inline.append((cid, img_path))
-        imgs_html += (
-            f'<img src="cid:{cid}" alt="{img_path.stem}" '
-            f'style="display:block;width:100%;max-width:680px;height:auto;'
-            f'margin:16px auto;" />\n'
-        )
+        if use_inline:
+            cid = f"boxscore{i:02d}"
+            inline.append((cid, img_path))
+            src = f"cid:{cid}"
+        else:
+            src = f"{raw_base}/{img_path.name}"
+        imgs_html += f'<img src="{src}" alt="{img_path.stem}" style="{_IMG_STYLE}" />\n'
 
     if imgs_html:
         marker = re.search(r'(<h2[^>]*>\s*Box Scores\s*</h2>)', html_content, re.IGNORECASE)
@@ -68,27 +104,36 @@ def send_email():
         else:
             html_content += imgs_html
 
-    # multipart/related so the cid: images render inline within the HTML body.
-    msg = MIMEMultipart("related")
+    if box_images:
+        mb = total_raw / 1024 / 1024
+        if use_inline:
+            print(f"  → {len(box_images)} box score image(s) inline (cid), {mb:.1f}MB raw")
+        else:
+            print(f"  → {len(box_images)} box score image(s) too large to inline "
+                  f"({mb:.1f}MB raw) — using hosted URLs: {raw_base}")
+    else:
+        print("  ⚠ no box_score_sport_*.png found — body sent without box scores")
+
+    # related (with cid parts) for inline mode; plain alternative for hosted URLs.
+    if inline:
+        msg = MIMEMultipart("related")
+    else:
+        msg = MIMEMultipart("alternative")
     msg["From"]    = gmail_user
     msg["To"]      = to_email
     msg["Subject"] = subject
 
-    body_wrapper = MIMEMultipart("alternative")
-    body_wrapper.attach(MIMEText(html_content, "html"))
-    msg.attach(body_wrapper)
-
-    for cid, img_path in inline:
-        img_data = img_path.read_bytes()
-        img = MIMEImage(img_data, _subtype="png")
-        img.add_header("Content-ID", f"<{cid}>")
-        img.add_header("Content-Disposition", "inline", filename=img_path.name)
-        msg.attach(img)
-        print(f"  → Inline {img_path.name} ({len(img_data) // 1024}KB) as cid:{cid}")
     if inline:
-        print(f"  → {len(inline)} box score image(s) embedded inline")
+        body_wrapper = MIMEMultipart("alternative")
+        body_wrapper.attach(MIMEText(html_content, "html"))
+        msg.attach(body_wrapper)
+        for cid, img_path in inline:
+            img = MIMEImage(img_path.read_bytes(), _subtype="png")
+            img.add_header("Content-ID", f"<{cid}>")
+            img.add_header("Content-Disposition", "inline", filename=img_path.name)
+            msg.attach(img)
     else:
-        print(f"  ⚠ no box_score_sport_*.png found — body sent without box scores")
+        msg.attach(MIMEText(html_content, "html"))
 
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
