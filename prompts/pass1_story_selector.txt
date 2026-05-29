@@ -290,22 +290,36 @@ TIER 3 — NORMAL DAYS:
 - Offseason news, midweek games, standard transactions. The in-season sport
   with the most going on that day leads (see Lead Story rules below).
 
-MASSIVE STORY OVERRIDE: A truly huge event (death of an all-time great,
-career-ending injury to a superstar, major scandal, surprise retirement of
-an active superstar, franchise-altering trade, lockout/strike, season
-suspension) overrides the calendar entirely. The bar is high — a non-sports
-fan would have heard about it. "NFL stat post on Twitter" does not clear it.
-"Kobe died in a helicopter crash" does. "Insider reports superstar tore
-Achilles" does. See Lead Story rule 1 below for the full test.
+MASSIVE STORY OVERRIDE: A truly huge event overrides the calendar entirely:
+death of a household-name superstar, career-ending injury to an active
+superstar, major scandal, surprise retirement of an active superstar,
+franchise-altering trade, lockout/strike, or season suspension.
+
+The household-name bar for a death is high. The test: would your non-sports-
+fan parent recognize the name unprompted? Kobe Bryant, Pelé, Hank Aaron,
+Maradona, Bill Russell, Kareem-tier all qualify. Famous-within-their-sport
+does NOT qualify — Claude Lemieux (4x Stanley Cup champion, Conn Smythe)
+fails the test. Kyle Busch fails. These deaths still get full respectful
+obituary treatment as supporting stories — they just don't take the lead
+slot from a major game or playoff event happening the same day.
+
+Generic news ("Schefter reports a backup QB signing") never clears the bar.
+Active-superstar injuries during a live season do ("insider reports superstar
+tore Achilles in playoffs"). See Lead Story rule 1 below for the full test.
 
 DAILY CHECK before story selection:
 1. Did a MASSIVE STORY happen today? (See Lead Story rule 1 below.) If yes,
    that leads regardless of sport, calendar, or anything else.
-2. Is today inside an active Tier 1 window? If yes, the lead must come from
-   that sport.
-3. Is today inside a Tier 2 window? If yes, weight that sport heavier in
-   lead and supporting selection.
-4. Otherwise: apply the standard rules below.
+2. Did yesterday include a Tier 1 ELIMINATION GAME or final-deciding event
+   (see Lead Story rule 2 below)? If yes, that has a floor of lead or co-lead.
+3. Did yesterday include a Tier 2 elimination/final-deciding event (see Lead
+   Story rule 2 below)? If yes, that has a floor of strong supporting and
+   cannot be demoted to Around the League.
+4. Is today inside an active Tier 1 calendar window? If yes, the lead must
+   come from that sport.
+5. Is today inside a Tier 2 calendar window? If yes, weight that sport
+   heavier in lead and supporting selection.
+6. Otherwise: apply the standard rules below.
 
 ================================================================================
 STORY SELECTION RULES
@@ -314,27 +328,93 @@ STORY SELECTION RULES
 LEAD STORY RULES — apply in order:
 
 1. MASSIVE STORY CHECK. Did something genuinely huge happen today? Death of
-   an all-time great. Career-ending injury to a superstar. Major scandal.
-   Franchise-altering trade. Lockout, strike, or season suspension.
+   a household-name superstar (per MASSIVE STORY OVERRIDE above — Kobe-tier
+   only, NOT Lemieux/Kyle Busch). Career-ending injury to an active superstar.
+   Major scandal. Franchise-altering trade. Lockout, strike, or season
+   suspension.
 
-   The bar: a non-sports-fan would have heard about this. "Kobe died in a
-   helicopter crash" clears it. "SharpFootball posted a stat about last
-   season" does not. "Schefter reports a backup QB signing" does not.
+   The bar: your non-sports-fan parent would have heard about this. "Kobe
+   died in a helicopter crash" clears it. "Four-time Stanley Cup winner dies"
+   does not — that's a respectful supporting story, not a lead.
 
    If yes, that leads regardless of sport, calendar, or anything else.
 
-2. CALENDAR. If today is inside a Tier 1 event window (per the calendar
+2. ELIMINATION GAME / FINAL-DECIDING EVENT FLOOR. If yesterday included an
+   elimination game in a team postseason (one of the teams could have been
+   knocked out by losing) OR a final-deciding day of an individual major
+   sport, that story has a TIERED FLOOR. The MASSIVE STORY OVERRIDE (rule 1)
+   can still beat it. Otherwise the floor holds.
+
+   TIER 1 — floor of LEAD or CO-LEAD. Cannot be demoted to supporting.
+   - NFL — every playoff game (single-elimination): Wild Card, Divisional,
+     Conference Championship, Super Bowl.
+   - NBA — Best-of-7 throughout. Game 6, Game 7, or the clinching game of
+     any sweep. Every round including the Finals.
+   - NHL — same as NBA. Best-of-7 throughout, Games 6/7 or clinching sweep.
+   - MLB — series lengths vary:
+       * Wild Card Series (best-of-3): Game 3 or clinching Game 2 sweep.
+       * Division Series ALDS/NLDS (best-of-5): Games 4 and 5, or clinching
+         sweep.
+       * Championship Series ALCS/NLCS (best-of-7): Games 6 and 7, or
+         clinching sweep.
+       * World Series (best-of-7): same as Championship Series.
+   - College Football — CFP single-elimination: Quarterfinals, Semifinals,
+     National Championship.
+   - NCAA Men's Basketball — Elite Eight, Final Four, National Championship.
+   - World Cup soccer — knockout rounds: Round of 16, Quarterfinals,
+     Semifinals, Final.
+   - Olympics (selected events only — see below).
+
+   OLYMPICS — only the following are Tier 1:
+   - Men's 100m dash final.
+   - Any record-breaking medal performance in swimming, track, or gymnastics
+     (most career golds, most career medals, world record set, etc.).
+   - Men's Basketball gold medal game.
+   - Men's Hockey gold medal game.
+
+   TIER 2 — floor of STRONG SUPPORTING. Cannot be demoted to Around the
+   League. Gets at least medium depth.
+   - Golf — final round Sunday of any major: The Masters, PGA Championship,
+     US Open, The Open Championship.
+   - Tennis — final of any Grand Slam, both draws: Australian Open, French
+     Open / Roland Garros, Wimbledon, US Open.
+   - Boxing / MMA — world title fights.
+
+   TIER 3 — no special floor. Covered if it has SLAP potential, possibly as
+   Around the League. No automatic depth requirement.
+   - WNBA — Finals best-of-7 (Games 6/7), semis best-of-5 (Games 4/5), first
+     round best-of-3 (Game 3).
+   - NCAA Women's Basketball — Elite Eight, Final Four, National Championship.
+   - College Baseball — Men's College World Series Finals (best-of-3): Game 3.
+   - Soccer outside World Cup — Champions League knockouts, MLS Cup, FA Cup
+     Final, Champions League Final.
+   - Motor Sports — F1 championship-clinching race, NASCAR Cup Championship
+     race.
+   - Olympics — every event not specifically listed as Tier 1 above.
+
+   CO-LEADS: if multiple Tier 1 elimination events happen the same day
+   (e.g. NBA Game 7 and NHL Game 7), pick the one with more SLAP potential
+   as the primary lead and give the other "deep" depth as a strong second
+   story. Both get full coverage. Lemieux-style deaths from the same day
+   become supporting headlines.
+
+   PRINCIPLE: a game where a team could have been sent home, or a major
+   final where a title was decided, is the kind of event the entire sports
+   world reacts to. Tier 1 cannot lose the lead slot to a supporting-tier
+   story. Tier 2 cannot be buried in Around the League.
+
+3. CALENDAR. If today is inside a Tier 1 event window (per the calendar
    above), the lead comes from that sport. NBA Playoffs in May → NBA leads.
    World Series in October → MLB leads. CFP National Championship → CFB leads.
 
-3. NORMAL DAYS — the in-season sport with the most going on that day leads.
+4. NORMAL DAYS — the in-season sport with the most going on that day leads.
    There is no automatic NFL preference. NFL leads when NFL is the most
    active sport on a given day (e.g., a Sunday in October), not because it's
    NFL. On ambiguous days where multiple sports are active and no single
    sport dominates, the in-season sport with games being played leads over
    a sport in offseason mode.
 
-4. WITHIN whatever sport leads (per 1, 2, or 3): pick the story with the
+5. WITHIN whatever sport leads (per 1, 2, 3, or 4): pick the story with the
    most SLAP potential — internet reactions, running jokes, player
    reputations, history, financial absurdity, cross-sport irony.
 

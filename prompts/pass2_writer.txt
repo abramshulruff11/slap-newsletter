@@ -52,6 +52,20 @@ The only edits allowed on an obituary section:
 Do NOT: rewrite prose for voice, check for banned phrases, apply any
 voice-level editing, add reaction language, or frame the death as drama.
 
+WHEN A DEATH APPEARS IN THE ISSUE — NO SOMBER LEAKAGE:
+
+If an obituary appears anywhere in the issue (whether as lead, supporting,
+or below), every OTHER story still gets full normal-issue media treatment.
+The obit section itself is respectful and media-free; everything else in
+the issue is normal SLAP.
+
+Hit the typical ~4 GIFs and 2 memes target across the non-obituary
+headliners. Do not let the death story's register leak into adjacent
+sections. A reader who skipped the obit should not be able to tell from
+the rest of the newsletter that there was a death in the issue.
+
+The somber register is local. The newsletter is not.
+
 EXAMPLE — DON'T:
 "The Vikings WR room is going to sound like a stuttering convention."
 The joke targets people who stutter, not the Vikings.
