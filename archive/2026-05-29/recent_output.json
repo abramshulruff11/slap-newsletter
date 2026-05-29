@@ -3,6 +3,155 @@
     "date": "2026-05-29",
     "story_log": [
       {
+        "topic_key": "spurs-thunder-wcf-2026",
+        "title": "Spurs force Game 7 after dominant Game 6 win behind Wemby's 28 points",
+        "section": "lead",
+        "development": "Game 6: San Antonio blew out Oklahoma City 118-91 to tie series 3-3. Wemby had 28 pts, 10 reb, 3 blk on 10-21 shooting. Spurs held Thunder to 13 points in third quarter. Game 7 Saturday in OKC.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "nba-draft-lottery-reform-2026",
+        "title": "NBA passes radical anti-tanking lottery reform with 3-2-1 system and relegation zone",
+        "section": "supporting",
+        "development": "NBA Board of Governors passed sweeping lottery reform 29-1 (Grizzlies only no vote). Expands lottery to 16 teams, creates relegation zone penalizing bottom 3 teams with reduced odds, flattens odds across board. Starts 2027 Draft. First American pro sports league to punish worst teams in draft. Memphis voted no because Utah's 2027 pick now capped at 6th.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "mlb-salary-cap-proposal-2026",
+        "title": "MLB proposes $245M hard salary cap, $171M floor in CBA negotiations",
+        "section": "supporting",
+        "development": "MLB made first formal proposal with hard cap of $245.3M and floor of $171.2M starting in 2027. Only major North American sports league without cap. Jeff Passan broke down what it means for future of baseball. MLBPA expected to strongly oppose.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "mitchell-robinson-injury-2026",
+        "title": "Knicks' Mitchell Robinson undergoes surgery on broken finger, plans to play Game 1 of Finals",
+        "section": "supporting",
+        "development": "Robinson broke right pinky finger, underwent surgery Thursday. Fully plans to play Game 1 of NBA Finals next Wednesday wearing brace per Shams. Initially no timetable for return, now targeting Finals opener.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "claude-lemieux-death-2026",
+        "title": "Claude Lemieux, 60, dies by suicide: Four-time Stanley Cup champion won 1995 Conn Smythe Award",
+        "section": "supporting",
+        "development": "Family and NHL Alumni Association confirmed Thursday that Lemieux, four-time Stanley Cup champion and 1995 Conn Smythe winner, died by suicide at age 60. Known for tenacity and clutch playoff performances.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "jalen-williams-return-okc-2026",
+        "title": "Jalen Williams active for Thunder Game 6 after missing three games with hamstring",
+        "section": "atl",
+        "development": "OKC star Jalen Williams available for Game 6 vs Spurs after missing last three games with re-aggravated hamstring strain per Shams. Was in uniform during layup lines.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "terry-rozier-gambling-charges-2026",
+        "title": "Federal prosecutors file new charges against Terry Rozier in gambling scheme",
+        "section": "atl",
+        "development": "Feds allege Rozier agreed to $100k bribe to manipulate performance in NBA game as part of gambling scheme. Two new charges filed Thursday. ESPN reported.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "azzi-fudd-first-start-2026",
+        "title": "Azzi Fudd posts 22 points in first career start for Dallas Wings",
+        "section": "atl",
+        "development": "No. 1 overall pick Fudd started for first time in career Thursday vs Aces, scored 22 pts on 9-15 FG, +15 in Wings win. Undefeated as a starter.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "jessica-shepard-triple-double-2026",
+        "title": "Jessica Shepard posts 22-20-10 triple-double, joins elite WNBA company",
+        "section": "atl",
+        "development": "Shepard had 22 pts, 20 reb, 10 ast on 8-13 FG vs Aces. Joins Alyssa Thomas as only players in WNBA history with 20/20/10 game. StatMuse confirmed.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "veronica-burton-defensive",
+        "title": "Veronica Burton posts 25-6-5b, first guard with 25/5/5b since Taurasi in 2008",
+        "section": "atl",
+        "development": "Burton had 25 pts, 6 reb, 5 blk vs Indiana. First guard with 25/5/5b game since Diana Taurasi in 2008. Blocked Caitlin Clark. StatMuse confirmed.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "wcws-2026",
+        "title": "Women's College World Series begins with Tennessee stunning defending champ Texas",
+        "section": "atl",
+        "development": "WCWS opening day: Tennessee upset reigning national champion Texas to send Horns to losers' bracket. First loss in WCWS opener for Texas since 1998. Nebraska walked off in 10th inning for first WCWS win since 2002. UCLA, Texas Tech also in action.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "hurricanes-canadiens-ecf-2026",
+        "title": "Hurricanes take 3-1 series lead over Canadiens, one win from Stanley Cup Finals",
+        "section": "atl",
+        "development": "Carolina leads series 3-1, can clinch trip to Finals in Game 5 Friday. Montreal facing elimination. Hurricanes outshot Habs 136-65 through four games.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "nick-bosa-acl-recovery-2026",
+        "title": "Nick Bosa could return for 49ers training camp after torn ACL",
+        "section": "atl",
+        "development": "49ers DE Bosa making progress from torn ACL and could be ready for training camp per Nick Wagoner. Schefter reported. Remarkable recovery timeline.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "isaac-guerendo-pec-injury-2026",
+        "title": "49ers RB Isaac Guerendo tore pec lifting weights, could return late in camp",
+        "section": "atl",
+        "development": "Guerendo tore pec about a month ago lifting weights, could be ready at end of training camp per Kyle Shanahan. Schefter reported. Another 49ers injury.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "rashee-rice-jail-2026",
+        "title": "Andy Reid says jailed WR Rashee Rice has chance to learn life lessons now",
+        "section": "atl",
+        "development": "Chiefs HC Reid said Rice, who is in jail serving 30 days for probation violation, has a chance to learn life lessons. Reid: team moving forward and will get Rice caught up. Nate Taylor reported for ESPN.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "lamar-jackson-red-zone-2026",
+        "title": "SharpFootball analysis shows Lamar Jackson had worst red zone EPA in NFL last season",
+        "section": "atl",
+        "development": "SharpFootball posted analysis showing Lamar had -0.53 red zone EPA/pass in 2025, worst in NFL. Career red zone numbers have fluctuated wildly. Also posted Lamar ranked 36th of 36 QBs on 3rd/4th down EPA. Analytics painting concerning picture of 2025 Lamar.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "acuna-grand-slam-2026",
+        "title": "Ronald Acuña Jr. crushes grand slam to give Braves lead over Red Sox",
+        "section": "atl",
+        "development": "Acuña hit grand slam in Braves' 10-2 blowout of Red Sox. TalkinBaseball_ highlighted homer. Atlanta continues strong play.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "caitlin-clark-1000-500-record",
+        "title": "Caitlin Clark fastest ever to 1,000 points and 500 assists in WNBA history",
+        "section": "atl",
+        "development": "Clark reached 1,000+ points and 500+ assists in just 59 games, fastest ever in WNBA history per ClutchPoints. Continues rewriting record books in Year 3.",
+        "is_new": true,
+        "resolved": true
+      }
+    ]
+  },
+  {
+    "date": "2026-05-29",
+    "story_log": [
+      {
         "topic_key": "claude-lemieux-death-2026",
         "title": "NHL legend Claude Lemieux dies by suicide at 60",
         "section": "lead",
@@ -3310,22 +3459,6 @@
         "is_new": false,
         "resolved": false
       }
-    ]
-  },
-  {
-    "date": "2026-04-27",
-    "lead_story": "Diego Pavia Goes Undrafted Then Gets Ravens Minicamp Invite",
-    "all_headlines": [
-      "Diego Pavia Goes Undrafted Then Gets Ravens Minicamp Invite",
-      "41-Year-Old LeBron Has Worst Playoff Game of His Career",
-      "Rams Draft Stafford's Replacement While He's Still the Reigning MVP",
-      "Nigeria's Uar Bernard Gets Drafted Having Never Played Football",
-      "Mike Tomlin: Recent Playoff Failures Drove My Decision to Step Away"
-    ],
-    "gif_references": [
-      "Monkey Puppet Side-Eye — extremely awkward situation",
-      "Ralph Wiggum \"I'm in danger\" — Simpsons",
-      "Leonardo DiCaprio raising glass — pure respect for the honesty"
     ]
   }
 ]
