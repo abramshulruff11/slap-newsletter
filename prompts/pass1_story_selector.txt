@@ -377,7 +377,15 @@ LEAD STORY RULES — apply in order:
    - Golf — final round Sunday of any major: The Masters, PGA Championship,
      US Open, The Open Championship.
    - Tennis — final of any Grand Slam, both draws: Australian Open, French
-     Open / Roland Garros, Wimbledon, US Open.
+     Open / Roland Garros, Wimbledon, US Open. ESCALATION: if the result ends a
+     historically significant dominance streak (e.g. the same 2-3 players have
+     won every Grand Slam for 2+ years and an outsider breaks through), escalate
+     to Tier 1 lead candidate — subject to the Tier 1 calendar override (if an
+     active NBA Playoffs, World Series, CFP, etc. game also occurred, that sport
+     still leads per the calendar rules above). In research_notes, always prompt:
+     how long was the streak, who held it, how does this compare to other dominant
+     eras in tennis history (Federer/Nadal/Djokovic prime, Sampras era, etc.).
+     The streak ending IS the story; who won is the occasion.
    - Boxing / MMA — world title fights.
 
    TIER 3 — no special floor. Covered if it has SLAP potential, possibly as
@@ -465,6 +473,49 @@ For every story, force yourself to answer:
 
 If you can't answer at least 3 of these for a story, it probably doesn't
 deserve a headline section — move it to Around the League.
+
+================================================================================
+EARNED NARRATIVE STORIES — RECOGNIZE THESE [Added: 2026-05-30]
+================================================================================
+
+Some days produce stories where the historical layer IS the story — not just
+context for a game result, but the actual editorial. Recognize these and
+instruct the writer to go deep on the insight, not just the event.
+
+SIGNALS THAT A STORY IS AN EARNED NARRATIVE:
+- A coach, GM, or executive won a championship as a player with the same
+  franchise and is now chasing it again as a leader. (Rare. Always worth
+  a deep dive.)
+- A drought, streak, or record reaches a number that invites comparison to
+  other droughts, streaks, or records across sports history. ("33 years"
+  only lands if you rank it.)
+- A result — in any sport, any round — ends a historically significant
+  dominance streak. The round doesn't matter. A first-round upset that
+  ends a 3-year Grand Slam monopoly is more significant than a final
+  between two players with no narrative stakes.
+- A player's career arc has come full circle in a way a casual fan would
+  find genuinely surprising if told.
+
+WHEN YOU IDENTIFY AN EARNED NARRATIVE:
+In research_notes, explicitly instruct the writer to build the historical
+layer, not just reference it. Don't say "Rod Brind'Amour won in 2006 as
+a player." Say: "Research which coaches in NHL/major sports history won a
+championship as a player with the same franchise and later coached them to
+a title or near-title. How rare is this? Name the others. That list IS the
+story — the game result is the occasion for telling it."
+
+For drought/streak comparisons: "Rank this drought against comparable droughts
+in major North American sports. Give the reader a top 5. The ranking is the
+punchline, not the number alone."
+
+For dominance streak endings: "Research how long the streak ran, who held it,
+and how it compares to other dominant eras in that sport's history. Name the
+players, name the years, name what it took to end it. The streak ending IS
+the story; who won is the occasion."
+
+The test: if a casual fan would say 'wait, I didn't know that' or 'I never
+thought about it that way' — it's an earned narrative. Build the research
+notes to surface that reaction, not just confirm the fact.
 
 ================================================================================
 MEDIA SEEDING — gif_concept / meme_concept

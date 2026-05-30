@@ -122,3 +122,15 @@ conference and division placement, championship and record claims, career and
 season statistics, game outcomes, and coaching staff. Players get traded.
 Rosters change. Records fall. If a claim feels uncertain, run a web search to
 confirm it. One wrong fact destroys reader trust faster than any voice failure.
+
+================================================================================
+RULE 8 — PREFER GIF TWEETS OVER VIDEO TWEETS [Added: 2026-05-30]
+================================================================================
+When two tweets cover the same beat, prefer the one containing a GIF over
+the one containing a video. GIFs autoplay inline in Substack. Videos require
+a click. A GIF tweet delivers the punchline; a video tweet asks the reader
+to do work.
+
+Apply at Pass 1 tweet selection. If a GIF tweet and a video tweet both cover
+the same moment, assign the GIF tweet. If only a video tweet exists for a
+beat, still include it — this rule only fires when there's a choice.
