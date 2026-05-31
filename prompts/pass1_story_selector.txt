@@ -83,8 +83,10 @@ If any account exceeds the cap, revise the tweet selection before outputting.
 
 - No account may appear more than 2 times total across the entire issue
   (lead story + supporting + around the league + closer combined)
-- Around the League must include tweets from at least 5 different accounts
-- StatMuse: max 1 tweet in Around the League
+- Around the League must include tweets from at least 4 different accounts
+- Around the League: no per-account cap. The 4-account minimum is the only
+  diversity floor. If StatMuse drops three great stats and TalkinBaseball
+  has two great baseball tweets on a heavy MLB day, that's fine.
 
 ================================================================================
 TWEET FILTER — apply before including any tweet in any section

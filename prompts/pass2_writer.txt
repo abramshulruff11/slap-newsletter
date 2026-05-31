@@ -516,7 +516,10 @@ Before finishing:
 4. Did you use the research notes? If the plan gave you key stats and you didn't include them, go back.
 5. DEEP stories: did you hit at least 10 blocks? If not, you haven't gone deep enough.
 6. Around the League: is there ANY commentary between tweets? If yes, delete it.
-7. Around the League: are two tweets from the same account placed back-to-back? If yes, reorder to alternate sources.
+7. Around the League: are tweets from the same account placed back-to-back?
+   If yes, reorder to separate them — don't stack same-account tweets
+   consecutively. But there is no cap on how many times an account can
+   appear in ATL total. Spread them out, don't eliminate them.
 8. Does any commentary block restate what the adjacent tweet already says? If yes, delete the commentary — the tweet wins.
 9. Did you use the same GIF twice in this issue? If yes, swap one for an alternative from the same emotional category.
 10. **Media count check (headliners only):** Across the lead + supporting sections, did you place roughly one GIF or meme per 3-4 tweets — about 4 GIFs and 2 memes for a normal issue (70/30 GIF-to-meme)? If you placed fewer than ~3 media total in the headliners, go back and find the moments: a front office decision, a bad contract, a franchise in crisis, a team blowing a lead, or a player repeating the same mistake is an automatic media opportunity. Do NOT add media to Around the League, and do NOT pad somber stories. Consult gif_reference.txt and meme_reference.txt.
