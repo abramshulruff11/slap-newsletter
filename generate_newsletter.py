@@ -1,10 +1,11 @@
 """
-SLAP Newsletter — Three-Pass Pipeline
-Pass 1:   Story Selector  — picks stories, assigns tweets, enforces account diversity
-Pass 2:   Writer          — generates newsletter HTML (with web search)
-Pass 2.5: Voice Editor    — prose-only pass to enforce SLAP voice
-Pre-Edit: Python auditor  — deterministic tweet misassignment check (no LLM)
-Pass 3:   Editor          — judgment-based checks (dueling sentences, punching down, etc.)
+SLAP Newsletter — Six-Pass Pipeline
+Pass 1: Story Selector    — picks stories, assigns tweets, enforces account diversity
+Pass 2: Writer            — generates newsletter HTML (with web search)
+Pass 3: Claim Validator   — deterministic cross-check vs game_state.json (claim_validator.py)
+Pass 4: Voice Editor      — prose-only pass to enforce SLAP voice
+Pass 5: Pre-Edit          — deterministic tweet misassignment audit (no LLM)
+Pass 6: Editor            — judgment-based checks (dueling sentences, punching down, etc.)
 
 Outputs:
   newsletter_draft.html    — styled preview for browser
@@ -31,10 +32,32 @@ EMAIL_OUTPUT_PATH    = SCRIPT_DIR / "newsletter_email.html"
 GAME_STATE_PATH      = SCRIPT_DIR / "game_state.json"
 PROMPTS_DIR          = SCRIPT_DIR / "prompts"
 
-# claude-sonnet-4-5 is the current stable Sonnet alias on the Anthropic API.
-# Use this string — do NOT pin a dated version like claude-sonnet-4-20250514.
-# Anthropic keeps this alias pointing at the current stable release.
-MODEL = "claude-sonnet-4-5"
+# Model selection. Pass 2 (Writer) uses Opus 4.7 for the prose quality lift —
+# A/B trial week starting 2026-06-01. All other LLM passes use Sonnet 4.5,
+# which is sufficient for selection/transformation tasks.
+# NOTE on Opus 4.7: docs warn it follows instructions more literally than
+# Sonnet — prompts tuned for Sonnet may need adjustment if output regresses.
+# Also ships with a new tokenizer that can use 1.0–1.35x more tokens for the
+# same input vs. 4.6; budget for that when reading the cost summary.
+MODEL_DEFAULT = "claude-sonnet-4-5"   # Pass 1, 4, 6
+MODEL_WRITER  = "claude-opus-4-7"     # Pass 2
+
+# Backwards-compat alias — some downstream code still references MODEL.
+MODEL = MODEL_DEFAULT
+
+# Per-million-token prices used by cost_summary. Cache write ≈ 1.25x base
+# input; cache read ≈ 0.1x base input. Keep in sync with the Anthropic rate
+# card. If pricing changes, update here — it's the single source of truth
+# for the daily cost breakdown that lands at the top of the email.
+PRICING = {
+    "claude-sonnet-4-5": {"in": 3.0, "out": 15.0, "cw":  3.75, "cr": 0.30},
+    "claude-opus-4-7":   {"in": 5.0, "out": 25.0, "cw":  6.25, "cr": 0.50},
+}
+
+# Accumulator for per-pass cost so email_newsletter.py can surface a price
+# breakdown above the daily issue. Reset on each run.
+PASS_COSTS: list[dict] = []
+COST_SUMMARY_PATH = SCRIPT_DIR / "cost_summary.json"
 
 # ---------------------------------------------------------------------------
 # HTML wrappers
@@ -176,13 +199,26 @@ def extract_text(response) -> str:
     )
 
 
-def cost_summary(label: str, in_tokens: int, out_tokens: int,
-                 cache_read: int = 0, cache_write: int = 0) -> None:
-    est = (cache_write * 3.75 + cache_read * 0.30 + in_tokens * 3 + out_tokens * 15) / 1_000_000
+def cost_summary(label: str, model: str, in_tokens: int, out_tokens: int,
+                 cache_read: int = 0, cache_write: int = 0) -> float:
+    p = PRICING.get(model, PRICING[MODEL_DEFAULT])
+    est = (cache_write * p["cw"] + cache_read * p["cr"]
+           + in_tokens * p["in"] + out_tokens * p["out"]) / 1_000_000
     cache_note = ""
     if cache_read or cache_write:
         cache_note = f" (cache read: {cache_read:,} | cache write: {cache_write:,})"
-    print(f"  [{label}] {in_tokens:,} in / {out_tokens:,} out — ~${est:.4f}{cache_note}")
+    short_model = model.replace("claude-", "")
+    print(f"  [{label}] {short_model} — {in_tokens:,} in / {out_tokens:,} out — ~${est:.4f}{cache_note}")
+    PASS_COSTS.append({
+        "label":       label,
+        "model":       model,
+        "in_tokens":   in_tokens,
+        "out_tokens":  out_tokens,
+        "cache_read":  cache_read,
+        "cache_write": cache_write,
+        "cost":        round(est, 6),
+    })
+    return est
 
 
 # ---------------------------------------------------------------------------
@@ -784,7 +820,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
 
         try:
             response = client.messages.create(
-                model=MODEL,
+                model=MODEL_DEFAULT,
                 max_tokens=16384,
                 system=[
                     {
@@ -964,7 +1000,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 )
                 print("  ⚠ Fixed malformed tweet URLs (status= → status/)")
 
-            cost_summary("PASS 1", total_in, total_out, total_cache_read, total_cache_write)
+            cost_summary("PASS 1", MODEL_DEFAULT, total_in, total_out, total_cache_read, total_cache_write)
             if attempt > 1:
                 print(f"  ✓ Pass 1 succeeded on attempt {attempt}/{MAX_ATTEMPTS}")
 
@@ -1049,7 +1085,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 })
 
         else:
-            cost_summary("PASS 1", total_in, total_out, total_cache_read, total_cache_write)
+            cost_summary("PASS 1", MODEL_DEFAULT, total_in, total_out, total_cache_read, total_cache_write)
             print(f"  ✗ Pass 1 FAILED after {MAX_ATTEMPTS} attempts: {validation_error}")
             raise RuntimeError(
                 f"Pass 1 produced invalid output after {MAX_ATTEMPTS} attempts. "
@@ -1078,7 +1114,7 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
     meme_reference   = load_prompt("meme_reference.txt")
 
     # Voice examples load FIRST so the model reads the target before the rules.
-    # This matches how Pass 2.5 works and weights imitation over instruction.
+    # This matches how Pass 4 (Voice Editor) works and weights imitation over instruction.
     static_parts = []
     if voice_examples:
         static_parts.append(voice_examples)
@@ -1124,7 +1160,7 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
 
     while True:
         response = client.messages.create(
-            model=MODEL,
+            model=MODEL_WRITER,
             max_tokens=8192,
             system=system_blocks,
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
@@ -1148,22 +1184,22 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
         else:
             break
 
-    cost_summary("PASS 2", total_in, total_out, total_cache_read, total_cache_write)
+    cost_summary("PASS 2", MODEL_WRITER, total_in, total_out, total_cache_read, total_cache_write)
     return strip_code_fences(extract_text(response))
 
 
 # ---------------------------------------------------------------------------
-# Pass 2.5 — Voice Editor
+# Pass 4 — Voice Editor
 # ---------------------------------------------------------------------------
 
-def run_pass2_5(draft_html: str, client: anthropic.Anthropic) -> str:
-    print("\n── PASS 5: Voice Editor ────────────────────────────")
+def run_pass4(draft_html: str, client: anthropic.Anthropic) -> str:
+    print("\n── PASS 4: Voice Editor ────────────────────────────")
 
     voice_examples = load_prompt("voice_examples.txt")
-    voice_prompt   = load_prompt("pass2_5_voice.txt")
+    voice_prompt   = load_prompt("pass4_voice.txt")
 
     if not voice_prompt:
-        print("  ⚠ prompts/pass2_5_voice.txt not found — skipping voice pass")
+        print("  ⚠ prompts/pass4_voice.txt not found — skipping voice pass")
         return draft_html
 
     # Voice examples lead the system prompt so they are the first thing
@@ -1182,7 +1218,7 @@ def run_pass2_5(draft_html: str, client: anthropic.Anthropic) -> str:
     })
 
     response = client.messages.create(
-        model=MODEL,
+        model=MODEL_DEFAULT,
         max_tokens=8192,
         system=system_blocks,
         messages=[{
@@ -1197,7 +1233,7 @@ def run_pass2_5(draft_html: str, client: anthropic.Anthropic) -> str:
 
     cache_read  = getattr(response.usage, "cache_read_input_tokens", 0)
     cache_write = getattr(response.usage, "cache_creation_input_tokens", 0)
-    cost_summary("PASS 2.5", response.usage.input_tokens, response.usage.output_tokens, cache_read, cache_write)
+    cost_summary("PASS 4", MODEL_DEFAULT, response.usage.input_tokens, response.usage.output_tokens, cache_read, cache_write)
 
     return strip_code_fences(extract_text(response))
 
@@ -1218,7 +1254,7 @@ def _normalize_tweet_url(url: str) -> str:
 def pre_edit(draft_html: str, story_plan_raw: str) -> str:
     """
     Deterministic pre-editor: flags tweets placed in the wrong story section.
-    Runs after Pass 2.5, before Pass 3, so the LLM editor sees flags in place.
+    Runs after Pass 4, before Pass 6, so the LLM editor sees flags in place.
 
     Logic:
       - Builds a URL → plan-section map from the story plan JSON.
@@ -1228,7 +1264,7 @@ def pre_edit(draft_html: str, story_plan_raw: str) -> str:
       - For each tweet blockquote, checks if its URL belongs to this section.
       - Injects an HTML comment flag immediately after any mismatch.
     """
-    print("\n── PASS 6: Pre-Edit (Tweet Audit) ───────────────────")
+    print("\n── PASS 5: Pre-Edit (Tweet Audit) ───────────────────")
 
     try:
         plan = json.loads(story_plan_raw)
@@ -1361,11 +1397,11 @@ def pre_edit(draft_html: str, story_plan_raw: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Pass 3 — Editor
+# Pass 6 — Editor
 # ---------------------------------------------------------------------------
 
-def run_pass3(draft_html: str, recent_output: dict, client: anthropic.Anthropic) -> str:
-    print("\n── PASS 7: Editor ──────────────────────────────────")
+def run_pass6(draft_html: str, recent_output: dict, client: anthropic.Anthropic) -> str:
+    print("\n── PASS 6: Editor ──────────────────────────────────")
 
     editor_prompt = load_prompt("editor_prompt.txt")
     if not editor_prompt:
@@ -1395,7 +1431,7 @@ def run_pass3(draft_html: str, recent_output: dict, client: anthropic.Anthropic)
         system_blocks.append({"type": "text", "text": media_note})
 
     response = client.messages.create(
-        model=MODEL,
+        model=MODEL_DEFAULT,
         max_tokens=8192,
         system=system_blocks,
         messages=[{
@@ -1406,7 +1442,7 @@ def run_pass3(draft_html: str, recent_output: dict, client: anthropic.Anthropic)
 
     cache_read  = getattr(response.usage, "cache_read_input_tokens", 0)
     cache_write = getattr(response.usage, "cache_creation_input_tokens", 0)
-    cost_summary("PASS 3", response.usage.input_tokens, response.usage.output_tokens, cache_read, cache_write)
+    cost_summary("PASS 6", MODEL_DEFAULT, response.usage.input_tokens, response.usage.output_tokens, cache_read, cache_write)
 
     edited = strip_code_fences(extract_text(response))
 
@@ -1426,7 +1462,7 @@ def run_pass3(draft_html: str, recent_output: dict, client: anthropic.Anthropic)
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="SLAP Newsletter Generator")
-    parser.add_argument("--no-editor", action="store_true", help="Skip Pass 3 editor")
+    parser.add_argument("--no-editor", action="store_true", help="Skip Pass 6 editor")
     parser.add_argument("--no-gifs", action="store_true", help="Skip GIF embedding")
     args = parser.parse_args()
 
@@ -1467,22 +1503,22 @@ def main() -> None:
         print("  ⚠ claim_validator.py not found — skipping")
         validated_html = draft_html
 
-    voiced_html   = run_pass2_5(validated_html, client)
+    voiced_html   = run_pass4(validated_html, client)
 
-    # Gate: if Pass 2.5 returned a meta-response instead of HTML (e.g. it wrote
+    # Gate: if Pass 4 returned a meta-response instead of HTML (e.g. it wrote
     # about its approach to obituaries rather than returning the draft), fall back
     # to Pass 2 output. A real newsletter always has at least one h1/h2 tag.
     if not re.search(r'<h[12][\s>]', voiced_html, re.IGNORECASE):
-        print("  ⚠ Pass 5 returned non-HTML — falling back to validated draft")
+        print("  ⚠ Pass 4 returned non-HTML — falling back to validated draft")
         voiced_html = validated_html
 
     audited_html  = pre_edit(voiced_html, story_plan)   # deterministic tweet check
     if args.no_editor:
-        print("\n\u2500\u2500 PASS 7: Editor \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500")
+        print("\n\u2500\u2500 PASS 6: Editor \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500")
         print("  \u26a0 Skipped via --no-editor flag")
         final_html = audited_html
     else:
-        final_html = run_pass3(audited_html, recent_output, client)
+        final_html = run_pass6(audited_html, recent_output, client)
 
     # Embed media once into the shared body (below), then write both files
     # from it. This keeps GIF/meme history from being logged twice per run
@@ -1559,6 +1595,24 @@ def main() -> None:
     except Exception as e:
         print(f"  ✗ Email build failed: {e}")
         print("    newsletter_email.html not updated — box score will reuse the previous build.")
+
+    # Write cost_summary.json so email_newsletter.py can prepend a daily price
+    # breakdown above the issue body. Keep the schema minimal — the email
+    # script renders directly from this list.
+    try:
+        from datetime import date
+        total = sum(p["cost"] for p in PASS_COSTS)
+        COST_SUMMARY_PATH.write_text(
+            json.dumps({
+                "date":    date.today().isoformat(),
+                "total":   round(total, 6),
+                "passes":  PASS_COSTS,
+            }, indent=2),
+            encoding="utf-8",
+        )
+        print(f"\n  ✓ cost_summary.json written — total ~${total:.4f}")
+    except Exception as e:
+        print(f"  ✗ cost_summary.json write failed: {e}")
 
 
 if __name__ == "__main__":

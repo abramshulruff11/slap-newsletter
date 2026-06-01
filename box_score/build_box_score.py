@@ -22,6 +22,30 @@ MONO = "'Courier New', Courier, monospace"
 
 SPORT_ORDER = ["nba","nhl","mlb","nfl","wnba","ncaafb","ncaamb"]
 SPORT_EMOJI = {"nba":"🏀","nhl":"🏒","mlb":"⚾","nfl":"🏈","wnba":"🏀","ncaafb":"🏈","ncaamb":"🏀"}
+
+# Calendar-based playoff window fallback. Forces playoff-mode rendering when
+# game_state lacks an explicit flag or bracket data — prevents misleading
+# regular-season standings tables from rendering for sports clearly in the
+# postseason. Longer-term, fetch_sports_data.py should populate the bracket
+# field from ESPN's playoff endpoints and this window can be removed.
+PLAYOFF_WINDOWS = {
+    # sport_key: (start_month, end_month) inclusive, ET
+    "nba":    (4, 6),    # April-June (Finals end mid-June)
+    "nhl":    (4, 6),    # April-June (Cup Final ends mid-June)
+    "wnba":   (9, 10),   # Sept-Oct
+    "mlb":    (10, 11),  # World Series window
+    "ncaafb": (12, 1),   # CFP wraps Dec-Jan (year-wrap)
+    "ncaamb": (3, 4),    # March Madness
+}
+
+def _in_playoff_window(sport_key):
+    win = PLAYOFF_WINDOWS.get(sport_key)
+    if not win: return False
+    m = datetime.now(timezone.utc).month
+    start, end = win
+    if start <= end:
+        return start <= m <= end
+    return m >= start or m <= end  # year-wrap (Dec-Jan)
 AL_DIVS = {"al east","al central","al west","american league east","american league central","american league west"}
 NL_DIVS = {"nl east","nl central","nl west","national league east","national league central","national league west"}
 
@@ -856,6 +880,11 @@ def _render_sport_inline(sport_key, sport_data, in_playoffs):
     leaders = sport_data.get("leaders",{})
     if not games and not standings and not bracket:
         return ""
+    # In playoffs, regular-season standings would mislead readers. If we have
+    # nothing playoff-relevant to show (no games yesterday, no bracket data),
+    # suppress the whole section rather than fall back to standings.
+    if in_playoffs and not games and not bracket:
+        return ""
     html = _mi_sport_divider(label)
     if in_playoffs:
         if bracket: html += _mi_bracket(bracket)
@@ -954,10 +983,14 @@ def _footer():
     return (f'<div style="font-family:{_SANS};font-size:10px;color:#aaa;text-align:center;'
             f'border-top:1px solid {_H};padding-top:8px;margin-top:20px;">Generated {ts}</div>')
 
-def _sport_has_data(data):
+def _sport_has_data(data, sport_key=None):
     all_games=data.get("yesterday_games",[])+data.get("today_games",[])
     completed=[g for g in data.get("yesterday_games",[]) if g.get("completed")]
-    in_playoffs=any(g.get("playoffs") for g in all_games) or bool(data.get("bracket",[]))
+    in_playoffs=(
+        any(g.get("playoffs") for g in all_games)
+        or bool(data.get("bracket",[]))
+        or (sport_key is not None and _in_playoff_window(sport_key))
+    )
     return in_playoffs, bool(in_playoffs or completed or data.get("standings"))
 
 def _ordered_sport_keys(game_state):
@@ -969,7 +1002,7 @@ def _ordered_sport_keys(game_state):
     playoff,regular=[],[]
     for key in SPORT_ORDER:
         if key not in sports: continue
-        inp,has=_sport_has_data(sports[key])
+        inp,has=_sport_has_data(sports[key], sport_key=key)
         if inp: playoff.append(key)
         elif has: regular.append(key)
     return playoff+regular
@@ -985,7 +1018,7 @@ def build_box_score_block_for_sport(game_state, sport_key, bare=False):
     if sport_key not in sports:
         return ""
     data=sports[sport_key]
-    in_playoffs, has_data = _sport_has_data(data)
+    in_playoffs, has_data = _sport_has_data(data, sport_key=sport_key)
     if not has_data:
         return ""
     if sport_key=="mlb":
@@ -1072,9 +1105,10 @@ def build_box_score_block(game_state):
     playoff_keys=[]; regular_keys=[]
     for key in SPORT_ORDER:
         if key not in sports: continue
-        data=sports[key]; all_games=data.get("yesterday_games",[])+data.get("today_games",[]); bracket=data.get("bracket",[])
+        data=sports[key]
+        inp, _has = _sport_has_data(data, sport_key=key)
         completed=[g for g in data.get("yesterday_games",[]) if g.get("completed")]
-        if any(g.get("playoffs") for g in all_games) or bracket: playoff_keys.append(key)
+        if inp: playoff_keys.append(key)
         elif completed or data.get("standings"): regular_keys.append(key)
     content=""
     if playoff_keys:

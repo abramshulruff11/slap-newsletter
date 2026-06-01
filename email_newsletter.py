@@ -20,6 +20,7 @@ from email.mime.image import MIMEImage
 SCRIPT_DIR      = Path(__file__).resolve().parent
 SUBSTACK_PATH   = SCRIPT_DIR / "newsletter_substack.html"
 BOX_SCORE_DIR   = SCRIPT_DIR / "box_score"
+COST_SUMMARY_PATH = SCRIPT_DIR / "cost_summary.json"
 
 # Gmail rejects messages over 25 MB (and MIME base64 inflates binary by ~37%).
 # Below this RAW total we embed the box scores inline (cid:) — self-contained,
@@ -29,6 +30,72 @@ BOX_SCORE_DIR   = SCRIPT_DIR / "box_score"
 MAX_INLINE_RAW_BYTES = 15 * 1024 * 1024
 
 _IMG_STYLE = "display:block;width:100%;max-width:680px;height:auto;margin:16px auto;"
+
+
+def _pricing_block_html():
+    """Render the daily cost summary as a small HTML table that lands at the
+    very top of the email — above the newsletter content.
+
+    Returns '' if cost_summary.json is missing or stale (older than today).
+    Visually distinct from the newsletter (mono font, dashed border, gray
+    background) so Abram can skip past it during copy/paste into Substack.
+    A bold “COPY NEWSLETTER BELOW” marker sits underneath as a selection anchor.
+    """
+    import json
+    from datetime import date
+    if not COST_SUMMARY_PATH.exists():
+        return ""
+    try:
+        data = json.loads(COST_SUMMARY_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+
+    passes = data.get("passes", [])
+    total  = data.get("total", 0.0)
+    cost_date = data.get("date", "")
+
+    rows = ""
+    for p in passes:
+        label = p.get("label", "?")
+        model = p.get("model", "").replace("claude-", "")
+        cost  = p.get("cost", 0.0)
+        in_t  = p.get("in_tokens", 0)
+        out_t = p.get("out_tokens", 0)
+        rows += (
+            '<tr>'
+            f'<td style="padding:2px 10px 2px 0;color:#1a1a1a;">{label}</td>'
+            f'<td style="padding:2px 10px 2px 0;color:#5f5f5f;">{model}</td>'
+            f'<td style="padding:2px 10px 2px 0;color:#5f5f5f;text-align:right;">{in_t:,} / {out_t:,}</td>'
+            f'<td style="padding:2px 0;color:#1a1a1a;text-align:right;font-weight:bold;">${cost:.4f}</td>'
+            '</tr>'
+        )
+
+    return (
+        '<div style="font-family:\'Courier New\',Courier,monospace;font-size:12px;'
+        'background:#f7f7f7;border:1px dashed #999;padding:12px 14px;'
+        'margin:0 0 8px 0;max-width:600px;">'
+        f'<div style="font-weight:bold;color:#1a1a1a;margin-bottom:6px;">'
+        f'SLAP DAILY COST &mdash; {cost_date}</div>'
+        '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;width:100%;">'
+        '<tr>'
+        '<th style="text-align:left;padding:2px 10px 4px 0;color:#5f5f5f;font-weight:bold;border-bottom:1px solid #ccc;">Pass</th>'
+        '<th style="text-align:left;padding:2px 10px 4px 0;color:#5f5f5f;font-weight:bold;border-bottom:1px solid #ccc;">Model</th>'
+        '<th style="text-align:right;padding:2px 10px 4px 0;color:#5f5f5f;font-weight:bold;border-bottom:1px solid #ccc;">Tokens (in / out)</th>'
+        '<th style="text-align:right;padding:2px 0 4px 0;color:#5f5f5f;font-weight:bold;border-bottom:1px solid #ccc;">Cost</th>'
+        '</tr>'
+        f'{rows}'
+        '<tr>'
+        '<td colspan="3" style="padding:6px 10px 2px 0;border-top:1px solid #ccc;color:#1a1a1a;font-weight:bold;">Total</td>'
+        f'<td style="padding:6px 0 2px 0;border-top:1px solid #ccc;text-align:right;font-weight:bold;color:#1a1a1a;">${total:.4f}</td>'
+        '</tr>'
+        '</table>'
+        '</div>'
+        '<div style="text-align:center;font-family:Arial,sans-serif;font-size:11px;'
+        'color:#999;letter-spacing:.1em;text-transform:uppercase;'
+        'border-top:2px solid #ccc;border-bottom:2px solid #ccc;padding:6px 0;margin:0 0 20px 0;">'
+        '↓ Copy newsletter below this line ↓'
+        '</div>'
+    )
 
 
 def _github_raw_base():
@@ -66,6 +133,21 @@ def send_email():
         return
 
     html_content = SUBSTACK_PATH.read_text(encoding="utf-8")
+
+    # Inject the daily cost summary at the very top of the email body, above
+    # the newsletter content. Visually walled off with a copy-from-here marker
+    # so Abram can skip it when pasting into Substack.
+    pricing_html = _pricing_block_html()
+    if pricing_html:
+        body_match = re.search(r'<body[^>]*>', html_content, re.IGNORECASE)
+        if body_match:
+            at = body_match.end()
+            html_content = html_content[:at] + "\n" + pricing_html + "\n" + html_content[at:]
+            print("  → daily cost summary prepended to email body")
+        else:
+            html_content = pricing_html + "\n" + html_content
+    else:
+        print("  ⚠ cost_summary.json missing or unreadable — email sent without price breakdown")
 
     # Extract title from first <h1> for subject line (do this before injecting imgs)
     title_match = re.search(r'<h1[^>]*>(.*?)</h1>', html_content, re.DOTALL)

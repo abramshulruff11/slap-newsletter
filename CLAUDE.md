@@ -18,7 +18,7 @@ attachments to download. Auto-posting is NOT live: Substack auto-post is blocked
 
 ---
 
-## Pipeline Architecture — 5 Passes
+## Pipeline Architecture — 6 Passes
 
 ```
 fetch_content.py      → raw_content.json   (ESPN/CBS RSS + Nitter RSS tweets)
@@ -29,9 +29,9 @@ generate_newsletter.py (orchestrates all passes via Claude API; injects game_sta
 Pass 1: Story Selector    → selects stories, assigns tweets (tool_use: submit_story_plan)
 Pass 2: Writer            → writes HTML draft in SLAP voice
 Pass 3: Claim Validator   → claim_validator.py, deterministic cross-check vs game_state.json
-Pass 2.5: Voice Editor    → rewrites sportswriter-sounding <p> tags only
-pre_edit()                → deterministic Python auditor (tweet URL integrity, section mapping)
-Pass 7: Editor            → mechanical checklist (flags + auto-fixes)
+Pass 4: Voice Editor      → rewrites sportswriter-sounding <p> tags only
+Pass 5: Pre-Edit          → deterministic Python auditor (tweet URL integrity, section mapping)
+Pass 6: Editor            → mechanical checklist (flags + auto-fixes)
         ↓ adds "<h2>Box Scores</h2>" after Around the League
 newsletter_draft.html / newsletter_substack.html / newsletter_email.html
         ↓
@@ -42,8 +42,8 @@ email_newsletter.py → emails HTML body with box scores INLINE (cid:, or hosted
                       owner does one copy/paste into Substack (push runs BEFORE email)
 ```
 
-Note: the printed pass labels are not contiguous (1, 2, 3=Claim Validator, 2.5=Voice, pre_edit,
-7=Editor) — historical numbering. Order of execution is as listed above.
+Pass numbering is sequential (1–6) and matches execution order. Passes 3 and 5 are
+deterministic Python (no LLM); passes 1, 2, 4, and 6 are Claude API calls.
 
 ---
 
@@ -76,7 +76,7 @@ slap-newsletter/
 ├── prompts/                   ← all prompt files (versioned in git)
 │   ├── pass1_story_selector.txt
 │   ├── pass2_writer.txt
-│   ├── pass2_5_voice.txt
+│   ├── pass4_voice.txt
 │   ├── editor_prompt.txt
 │   ├── base_prompt.txt        ← loaded into project knowledge for Claude.ai sessions
 │   ├── rolling_feedback.txt   ← hard rules from real output failures (max 3/session)
@@ -96,11 +96,11 @@ slap-newsletter/
 |------|------|-----|
 | `pass1_story_selector.txt` | Pass 1 | Selects 4-6 stories, assigns tweets, outputs via tool_use |
 | `pass2_writer.txt` | Pass 2 | Writes full HTML draft in SLAP voice |
-| `pass2_5_voice.txt` | Pass 2.5 | Rewrites sportswriter `<p>` tags; leaves everything else alone |
-| `editor_prompt.txt` | Pass 3 | 8-check mechanical editor: auto-fixes + flags |
+| `pass4_voice.txt` | Pass 4 | Rewrites sportswriter `<p>` tags; leaves everything else alone |
+| `editor_prompt.txt` | Pass 6 | 8-check mechanical editor: auto-fixes + flags |
 | `base_prompt.txt` | All | Loaded into claude.ai Project for ad-hoc sessions |
 | `rolling_feedback.txt` | Pass 2 | Hard rules from output failures; overrides base_prompt |
-| `voice_examples.txt` | Pass 2 | The actual voice target — not a description, the target |
+| `voice_examples.txt` | Pass 2 + Pass 4 | The actual voice target — not a description, the target |
 | `editorial_annotations.txt` | Pass 1+2 | Selection and curation logic |
 
 ---
@@ -118,9 +118,9 @@ This was changed 5/12/2026 to fix GitHub Actions JSON escape failures from quote
 in conflict. It captures real failure patterns from published issues. Max 3 rules added per
 session. Rules are numbered (note: Rule 3 is missing — intentional gap from a removed rule).
 
-**pre_edit() is deterministic Python:** Runs between Pass 2.5 and Pass 3. Splits HTML by h1/h2,
-maps sections to story plan by position, flags misassigned tweet URLs as EDITOR FLAG comments.
-Not a Claude call — pure Python auditing.
+**pre_edit() is deterministic Python:** Runs between Pass 4 (Voice) and Pass 6 (Editor) as
+Pass 5. Splits HTML by h1/h2, maps sections to story plan by position, flags misassigned tweet
+URLs as EDITOR FLAG comments. Not a Claude call — pure Python auditing.
 
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.

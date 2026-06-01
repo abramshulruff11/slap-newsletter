@@ -46,7 +46,7 @@ When the user asks to review this log, do the following:
      - `structural` — reader/editorial feedback about section balance, sport
        mix, length, etc. Candidate for a Pass 1 (selector) rule.
      - `voice` — observation about prose style. Candidate for an update to
-       `voice_examples.txt` or `pass2_5_voice.txt`, not necessarily a new rule.
+       `voice_examples.txt` or `pass4_voice.txt`, not necessarily a new rule.
      - `architectural` — requires code changes, not prompt rules (e.g. GIF
        dedup logic, where feedback file is loaded).
    - **Propose** concrete language for any `pattern` or `structural` entries.

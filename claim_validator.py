@@ -2,7 +2,7 @@
 SLAP Newsletter — Claim Validator (Pass 3)
 
 Validates factual claims in the newsletter draft against game_state.json.
-Injects FACT FLAG and COHERENCE FLAG HTML comments for Pass 7 (Editor) to resolve.
+Injects FACT FLAG and COHERENCE FLAG HTML comments for Pass 6 (Editor) to resolve.
 
 This is a deterministic Python script — no LLM calls, no API cost.
 Called from generate_newsletter.py after Pass 2 (Writer).
@@ -269,7 +269,7 @@ def validate_claims(
     Returns:
         (annotated_html, total_flag_count)
         annotated_html has FACT FLAG / COHERENCE FLAG HTML comments injected.
-        Pass 7 (Editor) resolves all flags before publish.
+        Pass 6 (Editor) resolves all flags before publish.
     """
     print("\n── PASS 3: Claim Validator ─────────────────────────")
 
@@ -294,7 +294,7 @@ def validate_claims(
         total_flags += count
 
     if total_flags:
-        print(f"  ⚠ {total_flags} flag(s) inserted — Pass 7 (Editor) will resolve")
+        print(f"  ⚠ {total_flags} flag(s) inserted — Pass 6 (Editor) will resolve")
     else:
         print(f"  ✓ No claim flags raised")
 
