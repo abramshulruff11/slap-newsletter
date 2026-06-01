@@ -1,5 +1,23 @@
 [
   {
+    "date": "2026-06-01",
+    "slug": "expanding-brain",
+    "boxes": [
+      "SCORING 1 RUN",
+      "SCORING 5 RUNS",
+      "SCORING 13 RUNS IN ONE INNING"
+    ]
+  },
+  {
+    "date": "2026-06-01",
+    "slug": "expanding-brain",
+    "boxes": [
+      "SCORING 1 RUN",
+      "SCORING 5 RUNS",
+      "SCORING 13 RUNS IN ONE INNING"
+    ]
+  },
+  {
     "date": "2026-05-31",
     "slug": "gru-plan",
     "boxes": [
@@ -380,17 +398,5 @@
     "slug": "is-this-a-pigeon",
     "top_text": "BILLS COACHES LOOKING AT JOSH ALLEN",
     "bottom_text": "IS THIS A POCKET PASSER?"
-  },
-  {
-    "date": "2026-05-06",
-    "slug": "panik-kalm-panik",
-    "top_text": "MISS PLAYOFFS FOR FIRST TIME SINCE 2016",
-    "bottom_text": "WIN #1 PICK IN LOTTERY"
-  },
-  {
-    "date": "2026-05-06",
-    "slug": "panik-kalm-panik",
-    "top_text": "MISS PLAYOFFS FOR FIRST TIME SINCE 2016",
-    "bottom_text": "WIN #1 PICK IN LOTTERY"
   }
 ]

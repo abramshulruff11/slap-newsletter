@@ -4,113 +4,89 @@
     "story_log": [
       {
         "topic_key": "spurs-knicks-finals-2026",
-        "title": "Spurs vs Knicks NBA Finals set to begin Wednesday night: 1999 rematch, Wemby's stage",
+        "title": "Spurs vs Knicks NBA Finals set: 1999 rematch, Wemby vs Brunson, Game 1 Wednesday June 3",
         "section": "lead",
-        "development": "NBA Finals Game 1 tips Wednesday at 8:30 PM ET on ABC. Official court designs released featuring painted Larry O'Brien trophy. Spurs eliminated Thunder in Game 7 to set up rematch of 1999 Finals.",
+        "development": "Finals court designs officially unveiled featuring Larry O'Brien trophy painted on floor at both arenas. Game 1 Wednesday 8:30pm ET on ABC. Wemby (22, 3rd season) vs Brunson. Spurs' last three top-5 picks power them to Finals in first postseason.",
         "is_new": false,
         "resolved": false
       },
       {
-        "topic_key": "raymond-berry-death-2026",
-        "title": "Raymond Berry, Patriots Super Bowl XX coach and Colts Hall of Fame receiver, dies",
+        "topic_key": "knights-hurricanes-scf-2026",
+        "title": "Golden Knights vs Hurricanes Stanley Cup Finals matchup set after Vegas sweeps Avalanche",
         "section": "supporting",
-        "development": "Berry died Saturday per Albert Breер confirmation Sunday. Legendary receiver for Johnny Unitas Colts, later coached Patriots to Super Bowl XX title in 1986. 'Berry the Bears' shirts were Boston icon.",
+        "development": "Vegas sweeps Colorado 4-0 to advance to Stanley Cup Finals vs Carolina. Knights completed historic 3-goal comeback in Game 3, closed out sweep. Series begins soon. ESPN and CBS previewing matchup.",
         "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "aj-brown-trade-eagles-patriots-2026",
-        "title": "A.J. Brown trade to Patriots progresses as Eagles and New England 'way down the road'",
-        "section": "supporting",
-        "development": "Albert Breер reported Sunday Eagles and Patriots are 'way down the road' on Brown trade. Breer gave update on NBC Sports Boston Friday, expanded in Sunday MMQB column. Trade talk intensifying entering June.",
-        "is_new": false,
         "resolved": false
       },
       {
         "topic_key": "yankees-13-run-inning-2026",
-        "title": "Yankees explode for historic 13-run inning: Ben Rice doubles and triples in same frame",
+        "title": "Yankees explode for historic 13-run inning vs A's including feat never seen before in MLB history",
         "section": "supporting",
-        "development": "New York scored 13 runs in one inning vs Athletics, one short of franchise record. Ben Rice had two-run double AND two-run triple in SAME inning. First time in MLB history anyone had both XBH in same inning worth 2+ RBI each. Yankees won 13-8.",
+        "development": "New York scored all 13 runs in single inning vs Oakland, including Ben Rice's two-run double and two-run triple in SAME INNING. Came one run short of tying franchise record (14). CBS Sports: feat never seen before in MLB history.",
         "is_new": true,
         "resolved": true
       },
       {
-        "topic_key": "giants-19-run-blowout-2026",
-        "title": "Giants hang 19 runs on Rockies as Jung Hoo Lee gets five-hit game",
+        "topic_key": "giants-19-runs-2026",
+        "title": "Giants score 19 runs to demolish Rockies, Jung Hoo Lee goes 5-for-5",
         "section": "supporting",
-        "development": "San Francisco crushed Colorado 19-6. Jung Hoo Lee had five hits for first time in career (first player in MLB with 5-hit game this season). Willy Adames hit grand slam. Giants scored seven runs in fifth inning to blow it open.",
+        "development": "San Francisco beat Colorado 19-6. Jung Hoo Lee had 5 hits in game for first time in career (only 3rd player in MLB this season with 5-hit game). Willy Adames grand slam in 7-run 5th inning. Giants offense explodes.",
         "is_new": true,
         "resolved": true
       },
       {
-        "topic_key": "ncaa-baseball-regionals-2026",
-        "title": "NCAA Baseball Regionals wild Day 3: #1 UCLA eliminated in walk-off, WVU's 9th-inning chaos",
+        "topic_key": "ucla-baseball-upset-2026",
+        "title": "Saint Mary's eliminates No. 1 overall seed UCLA in walk-off fashion, one of biggest NCAA upsets ever",
         "section": "atl",
-        "development": "Saint Mary's walked off #1 overall seed UCLA to eliminate Bruins in regional. Ole Miss advanced. West Virginia hit walk-off homer in 9th after balk tied it, eliminated Kentucky. Little Rock swept through regional as 4-seed, first 4-seed ever to do it. Cal Poly, Kansas, Mississippi State, Alabama all advanced to Supers. Sprinkler delay in OKC during Texas Tech-UCLA extra innings.",
+        "development": "Regional 4-seed Saint Mary's beat overall No. 1 seed UCLA in walk-off to eliminate Bruins from tournament. SMC advances to regional final for first time in program history. Second straight year a No. 1 national seed failed to reach regional final.",
         "is_new": true,
-        "resolved": false
+        "resolved": true
       },
       {
-        "topic_key": "wcws-semifinals-2026",
-        "title": "Women's College World Series semifinals set: Texas Tech survives UCLA in extras",
+        "topic_key": "west-virginia-kentucky-comeback-2026",
+        "title": "West Virginia scores 5 in 9th including walk-off homer to stun Kentucky",
         "section": "atl",
-        "development": "Texas Tech eliminated UCLA in 9 innings to reach semis. Tennessee and Texas both advanced. Monday's semifinals: Tennessee vs Texas, Alabama vs Texas Tech. Jordan Woolery hit tying HR down to final out for UCLA before Tech won in extras.",
+        "development": "WVU trailed entering 9th, balk tied it, then Paul Schoenfeld hit go-ahead homer. 5-run 9th inning. Schoenfeld postgame: 'I'm blacked out right now this is crazy, look at our fans.' Morgantown madness.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "wcws-2026",
+        "title": "Women's College World Series: Texas Tech tops UCLA in 9 innings to reach semifinals",
+        "section": "atl",
+        "development": "Texas Tech eliminated UCLA in 9-inning thriller to advance to WCWS semifinals. Jordan Woolery hit HR with two outs in 9th to tie it, TTU won in extras. Sprinklers came on during extra innings. Texas also advanced. Semifinals set: Tennessee vs Texas, Alabama vs Texas Tech.",
         "is_new": false,
         "resolved": false
       },
       {
-        "topic_key": "white-sox-five-game-win-streak-2026",
-        "title": "White Sox win fifth straight, sweep Tigers to hit 32 wins on May 31",
+        "topic_key": "ncaa-baseball-regionals-2026",
+        "title": "NCAA baseball regionals chaos: Little Rock sweeps to first Super Regional ever, Ole Miss advances",
         "section": "atl",
-        "development": "Chicago beat Detroit 2-1 to sweep series and extend win streak to five games. White Sox reached 32 wins on May 31 — took until July 11 in 2025, September 4 in 2024. Remarkable turnaround from last two seasons.",
+        "development": "Little Rock became fourth 4-seed ever to sweep through regional, heading to Supers for first time in program history. Ole Miss eliminated Arizona State after ASU star ejected for bat throw. West Virginia, Kansas, Cal Poly, Oregon, Alabama, Georgia Tech all advancing.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "aj-brown-trade-patriots-2026",
+        "title": "A.J. Brown trade speculation heats up as Patriots and Eagles reportedly 'way down the road'",
+        "section": "atl",
+        "development": "Albert Breer reporting Patriots and Eagles are 'way down the road' on A.J. Brown trade. Ihartitz: 'When the absolute fuck is the AJ Brown trade going to be announced.' Trade talks intensifying, could be announced soon.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "french-open-vallejo-fine-2026",
+        "title": "French Open player fined $65,000 after saying his match should not have been umpired by a woman",
+        "section": "atl",
+        "development": "Adolfo Daniel Vallejo fined $65,000 at French Open after saying second-round match should not have been umpired by a woman. Organizers announced Monday. ESPN reported.",
         "is_new": true,
         "resolved": true
       },
       {
-        "topic_key": "dodgers-phillies-blowout-2026",
-        "title": "Dodgers demolish Phillies 9-1 as Max Muncy crushes 14th homer",
+        "topic_key": "raymond-berry-death-2026",
+        "title": "Raymond Berry, Hall of Fame receiver and Super Bowl-winning coach, dies",
         "section": "atl",
-        "development": "Los Angeles crushed Philadelphia 9-1. Max Muncy hit 14th home run 'halfway up the bleachers' per TalkinBaseball. Dodgers scored 8 runs before Phillies' first hit. LA dominance continues.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "juan-soto-mets-rbi-2026",
-        "title": "Juan Soto's 4-RBI game leads Mets past Marlins as New York completes sweep",
-        "section": "atl",
-        "development": "Soto went 1 HR, 4 RBI in Mets' 10-1 blowout of Miami to complete sweep. Soto leading Mets in RBI this season. New York swept Miami in Queens after being swept in Miami last weekend.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "aja-wilson-aces-2026",
-        "title": "A'ja Wilson posts 28-15-4b, joins Hamby as only players with 25/15 game this season",
-        "section": "atl",
-        "development": "Wilson had 28 pts, 15 reb, 4 blk vs Golden State in Aces' 91-81 win over expansion Valkyries. Joins Dearica Hamby as only WNBA players with 25/15 game this season per StatMuse.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "usmnt-senegal-friendly-2026",
-        "title": "USMNT beats Senegal 3-2 as Christian Pulisic ends 8-game scoreless drought",
-        "section": "atl",
-        "development": "USA beat Senegal 3-2 in World Cup prep friendly. Pulisic had goal and assist, ending scoreless streak across 8 USMNT games and 21 total matches (club + country). Pochettino's system on display, team looks sharp weeks before World Cup.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "wwe-clash-italy-2026",
-        "title": "Roman Reigns defeats Jacob Fatu in Tribal Combat at WWE Clash in Italy",
-        "section": "atl",
-        "development": "Reigns retained World Heavyweight Championship by defeating Fatu in Tribal Combat main event. Brock Lesnar defeated Oba Femi earlier on card. Cody Rhodes appearance drew massive crowd reaction. WWE international event Sunday in Turin.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "jesus-sanchez-fan-ball-injury-2026",
-        "title": "Blue Jays OF Jesús Sánchez hit by ball thrown from stands, exits with hand injury",
-        "section": "atl",
-        "development": "Sánchez forced to leave game vs Orioles with hand injury after fan threw ball from stands and hit him. Fans say it was 13-year-old kid who thought Sanchez was offering to play catch per Jomboy sources. Bizarre incident.",
+        "development": "Berry, Hall of Fame receiver for Johnny Unitas Colts and Super Bowl-winning Patriots coach, has died. 'Berry the Bears' shirts from January '86 Super Bowl XX. Albert Breer: 'Very sad... RIP Raymond Berry.'",
         "is_new": true,
         "resolved": true
       }
