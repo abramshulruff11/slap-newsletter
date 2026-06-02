@@ -5,7 +5,8 @@ on:
     # 06:17 UTC = 2:17 AM EDT (1:17 AM EST in winter). Moved earlier and off
     # the round hour to dodge GitHub Actions scheduled-workflow queueing during
     # peak load — round-hour crons see the worst delays. The run itself takes
-    # ~7 min, so this gives several hours of buffer before Abram's morning review.
+    # ~15 min (Pass 2 uses Opus 4.7), so this gives several hours of buffer
+    # before Abram's morning review.
     - cron: '17 6 * * *'
   workflow_dispatch:
     inputs:
@@ -21,7 +22,7 @@ on:
 jobs:
   generate:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
