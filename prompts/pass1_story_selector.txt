@@ -9,18 +9,19 @@ OUTPUT FORMAT
 
 Output valid JSON only. No prose before or after. No markdown fences.
 
-For every tweet you include, copy the exact text from raw_content.json into
-the "text" field. Do not paraphrase. Do not summarize. Copy it verbatim.
-If a tweet's text is missing or blank in raw_content.json, omit that tweet
-and select a different one.
+For every tweet you include, provide ONLY its "url" and "account". Do NOT copy
+the tweet text — the system attaches the verbatim text automatically from
+raw_content.json by matching the URL's status ID. Including a "text" field is
+unnecessary and will be ignored. This keeps your output focused on selection.
 
 Every tweet you assign MUST be a real tweet that exists in today's raw content,
 with its real URL (twitter.com/<account>/status/<numeric id>) copied exactly.
 NEVER invent a tweet, an account, or a URL. NEVER use a placeholder URL such as
-".../status/placeholder". If a story has no strong tweet in the raw content,
+".../status/placeholder". A tweet whose URL is not in today's raw content is
+dropped automatically (its text can't be attached), so a fabricated URL simply
+vanishes from the issue. If a story has no strong tweet in the raw content,
 assign fewer tweets (or none) rather than fabricating one — the writer can lead
-with prose, a GIF, or a meme instead. A made-up tweet URL never embeds and
-poisons the issue.
+with prose, a GIF, or a meme instead.
 
 {
   "date": "YYYY-MM-DD",
@@ -38,8 +39,8 @@ poisons the issue.
     "headline": "Short working title",
     "depth": "deep",
     "tweets": [
-      {"url": "url1", "account": "handle", "text": "exact tweet text from raw_content.json"},
-      {"url": "url2", "account": "handle", "text": "exact tweet text from raw_content.json"}
+      {"url": "url1", "account": "handle"},
+      {"url": "url2", "account": "handle"}
     ],
     "research_notes": "Key stats, historical parallels, meme angles, cross-sport connections the writer must explore. Be specific — these notes are the writer's raw material.",
     "gif_concept": "One specific GIF reaction idea tied to this story's main emotional beat — a seed for the writer. See MEDIA SEEDING below.",
@@ -50,8 +51,8 @@ poisons the issue.
       "headline": "Short working title",
       "depth": "medium",
       "tweets": [
-        {"url": "url1", "account": "handle", "text": "exact tweet text from raw_content.json"},
-        {"url": "url2", "account": "handle", "text": "exact tweet text from raw_content.json"}
+        {"url": "url1", "account": "handle"},
+        {"url": "url2", "account": "handle"}
       ],
       "research_notes": "Hook, key angle, any specific stats or context to include.",
       "gif_concept": "One specific GIF reaction idea for this story, OR empty string if none fits. See MEDIA SEEDING below.",
@@ -60,8 +61,8 @@ poisons the issue.
   ],
   "around_the_league": {
     "tweets": [
-      {"url": "url1", "account": "handle", "text": "exact tweet text from raw_content.json"},
-      {"url": "url2", "account": "handle", "text": "exact tweet text from raw_content.json"}
+      {"url": "url1", "account": "handle"},
+      {"url": "url2", "account": "handle"}
     ]
   },
   "account_distribution": {

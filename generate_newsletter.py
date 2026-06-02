@@ -723,11 +723,29 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         recent_output if isinstance(recent_output, list) else []
     )
 
+    # Slim the raw payload before dumping into the (uncached) user message.
+    # Truncate pubDate to date-only: per-second timestamps add ~1.9K tokens
+    # across ~300 items and carry no selection value — day-level recency is
+    # enough, and game_state + story history hold the authoritative "what
+    # happened when" signal. Other fields (text/link/account) are untouched;
+    # the full `raw` is still used below to attach verbatim tweet text.
+    def _slim_item(d):
+        if not isinstance(d, dict):
+            return d
+        pd = d.get("pubDate")
+        if isinstance(pd, str) and len(pd) > 10:
+            d = {**d, "pubDate": pd[:10]}
+        return d
+
+    raw_slim = dict(raw)
+    raw_slim["news_headlines"] = [_slim_item(h) for h in raw.get("news_headlines", [])]
+    raw_slim["tweets"]         = [_slim_item(t) for t in raw.get("tweets", [])]
+
     game_state_block = format_game_state_summary(game_state or {})
     user_content = (
         (game_state_block + "\n\n" if game_state_block else "")
         + "## TODAY'S RAW CONTENT\n\n"
-        + json.dumps(raw, ensure_ascii=False)
+        + json.dumps(raw_slim, ensure_ascii=False)
         + "\n\n## RECENT STORY HISTORY — last 14 days\n"
         "Read this before selecting stories. Use it to identify continuing "
         "stories and apply the Continuing Story Detection rules.\n"
@@ -740,15 +758,19 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
     # Using tool_use instead of free-form JSON eliminates JSON escape errors
     # (unescaped quotes in tweet text, etc.) because the SDK parses tool inputs
     # and we re-serialize with json.dumps() which handles escaping correctly.
+    # Pass 1 selects tweets by url + account only. The verbatim "text" is attached
+    # in Python from raw_content (by status ID) after selection — see the text
+    # injection block below. Dropping "text" from the schema removes ~15-20 tweets'
+    # worth of duplicated text from Pass 1's output every run and makes the text
+    # authoritative (the model can no longer paraphrase or truncate it). The old
+    # "reason" field was never read by any downstream code, so it's gone too.
     _tweet = {
         "type": "object",
         "properties": {
             "account": {"type": "string"},
             "url":     {"type": "string"},
-            "text":    {"type": "string"},
-            "reason":  {"type": "string"},
         },
-        "required": ["account", "url", "text"],
+        "required": ["account", "url"],
     }
     _story = {
         "type": "object",
@@ -846,7 +868,6 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         validation_error = None
         plan         = None
         tool_use_id  = None
-        atl_short    = None
 
         if api_error:
             validation_error = f"API error (likely malformed JSON in tool input): {api_error}"
@@ -873,54 +894,15 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 elif "story_log" not in plan:
                     validation_error = "Missing required field: story_log"
                 else:
-                    atl = plan.get("around_the_league", {})
-                    atl_tweets = (
-                        atl.get("tweets", []) if isinstance(atl, dict)
-                        else (atl if isinstance(atl, list) else [])
-                    )
-                    # ATL shortness is NON-FATAL. We nudge the model to fill it
-                    # (see the accept/nudge block below) but never abort the issue
-                    # over it — per editorial decision, a thin ATL still ships.
-                    n_atl = len(atl_tweets)
-                    if n_atl < 5:
-                        atl_short = n_atl
-                    elif n_atl < 10:
-                        print(f"  ⚠ Around the League has {n_atl}/10 tweets — short but acceptable")
+                    # Structurally valid. Around the League completeness is no
+                    # longer checked or retried here: a full plan regeneration
+                    # (25K in / up to 16K out) just to top up a few ATL tweets is
+                    # not worth the cost, and a thin ATL ships anyway by design.
+                    # The final ATL count is logged after the fabricated-URL
+                    # filter below (which is what actually determines it).
+                    pass
 
         if validation_error is None:
-            # Structurally valid. Around the League shortness is non-fatal: nudge
-            # the model while attempts remain, but never abort the issue over it.
-            if atl_short is not None and attempt < MAX_ATTEMPTS:
-                print(f"  ⚠ Around the League has {atl_short} tweet(s) — nudging (attempt {attempt}/{MAX_ATTEMPTS})")
-                if response is not None and tool_use_id:
-                    messages.append({"role": "assistant", "content": response.content})
-                    messages.append({
-                        "role": "user",
-                        "content": [{
-                            "type":        "tool_result",
-                            "tool_use_id": tool_use_id,
-                            "content": (
-                                f"Around the League came back with {atl_short} tweet(s). "
-                                "It is MANDATORY and runs in every issue — including days "
-                                "when the lead is an obituary or otherwise somber. A heavy "
-                                "lead does not stop the rest of the sports world: games were "
-                                "still played, stats still dropped, players still did funny "
-                                "things today. Fill Around the League with 8-10 light, funny, "
-                                "or stat-drop tweets from today's feed, using at least 5 "
-                                "different accounts not already at their 2-tweet cap. Leave "
-                                "the somber lead exactly as is (media-free) and call "
-                                "submit_story_plan again with the full plan."
-                            ),
-                            "is_error": True,
-                        }],
-                    })
-                continue
-
-            # Accept. If ATL is still short on the final attempt, ship it anyway —
-            # a thin Around the League is never a reason to kill the day's issue.
-            if atl_short is not None:
-                print(f"  ⚠ Around the League has {atl_short} tweet(s) after {MAX_ATTEMPTS} attempt(s) — proceeding anyway (issue still ships)")
-
             # Normalize every field to its expected type in one place.
             # This prevents type-mismatch crashes in all downstream consumers
             # (pre_edit, save_story_log, missing-text loop, etc.).
@@ -940,18 +922,31 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 m = re.search(r'/status/(\d+)', url or "")
                 return m.group(1) if m else ""
 
-            _raw_url_set = set()
+            # Map status ID -> source tweet so we can both (a) verify the URL
+            # exists in raw content and (b) re-attach the VERBATIM text/account.
+            # Pass 1 now outputs only {url, account}; the canonical tweet text
+            # lives here in raw_content, so we overwrite both fields from source.
+            # This cuts Pass 1 output tokens and kills the whole class of
+            # "missing/paraphrased tweet text" errors at the root.
+            _raw_by_sid = {}
             for _t in raw.get("tweets", []):
                 _sid = _status_id(_t.get("link") or _t.get("url") or "")
-                if _sid:
-                    _raw_url_set.add(_sid)
+                if _sid and _sid not in _raw_by_sid:
+                    _raw_by_sid[_sid] = _t
+            _raw_url_set = set(_raw_by_sid)
 
-            def _in_raw(url):
-                sid = _status_id(url)
-                return bool(sid) and sid in _raw_url_set
-
-            def _filter_to_raw(tweets):
-                kept = [t for t in tweets if _in_raw(t.get("url", ""))]
+            def _filter_and_attach(tweets):
+                kept = []
+                for t in tweets:
+                    sid = _status_id(t.get("url", ""))
+                    src = _raw_by_sid.get(sid) if sid else None
+                    if not src:
+                        continue
+                    t["text"] = src.get("text", "") or t.get("text", "")
+                    src_acct = src.get("account") or src.get("handle")
+                    if src_acct:
+                        t["account"] = src_acct
+                    kept.append(t)
                 return kept, len(tweets) - len(kept)
 
             # Safety: if we extracted no usable IDs from raw content, the filter
@@ -963,19 +958,19 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             else:
                 _fab_total = 0
                 _lead = plan.get("lead_story", {})
-                _lead["tweets"], _n = _filter_to_raw(_lead.get("tweets", []))
+                _lead["tweets"], _n = _filter_and_attach(_lead.get("tweets", []))
                 plan["lead_story"] = _lead
                 _fab_total += _n
 
                 _new_sup = []
                 for _s in plan.get("supporting_stories", []):
-                    _s["tweets"], _n = _filter_to_raw(_s.get("tweets", []))
+                    _s["tweets"], _n = _filter_and_attach(_s.get("tweets", []))
                     _new_sup.append(_s)
                     _fab_total += _n
                 plan["supporting_stories"] = _new_sup
 
                 _atl = plan.get("around_the_league", {})
-                _atl["tweets"], _n = _filter_to_raw(_atl.get("tweets", []))
+                _atl["tweets"], _n = _filter_and_attach(_atl.get("tweets", []))
                 plan["around_the_league"] = _atl
                 _fab_total += _n
 
