@@ -16,14 +16,15 @@ Selection source of truth is pass1_story_selector.txt; editor CHECK 3 enforces
 the headliner cap.
 
 ================================================================================
-RULE 2 — NO REPEAT MEDIA FROM PREVIOUS ISSUE
+RULE 2 — NO REPEAT MEDIA WITHIN 7 DAYS
 ================================================================================
-No GIF or Meme that appeared in the previous issue may be reused in the
-current issue. Before selecting any GIF or Meme, check recent_output.json
-for the previous issue's media. If a GIF URL or Meme concept matches anything
-in that file, choose a different one. This rule applies to memes even if the
-full meme pipeline is not yet active — if the meme concept matches the
-previous issue, pick a different meme.
+No GIF or Meme used in the last 7 days may be reused. The user message includes
+a "RECENTLY USED MEDIA — DO NOT REPEAT" list (GIF concepts and meme templates
+from the last 7 days, built from gif_history.json / meme_history.json). Before
+selecting any GIF or Meme, check that list; if a GIF concept or Meme
+template/concept matches anything on it, choose a different one. The only
+exception is a deliberate same-story escalation callback (CRAFT RULE #6 in
+pass2_writer.txt).
 
 ================================================================================
 RULE 4 — THE DUELING SENTENCE CONSTRUCTION IS BANNED. ALL FORMS. NO EXCEPTIONS.
