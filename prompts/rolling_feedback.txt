@@ -3,12 +3,17 @@
 ## These override general guidance in base_prompt.txt when in conflict.
 
 ================================================================================
-RULE 1 — ACCOUNT HARD CAP
+RULE 1 — ACCOUNT CAP (headliners only; ATL uncapped)
 ================================================================================
-No single Twitter account may appear more than 2 times in a complete issue.
-Count every tweet blockquote by @handle before finalizing. If any account
-exceeds 2 appearances, replace the excess with tweets from accounts that
-haven't appeared yet. This is a structural requirement, not a suggestion.
+Diversity is a headliner concern; Around the League is a highlight reel.
+- Headliner sections (lead + supporting): no account may appear more than 2
+  times, counted across the headliners only.
+- Around the League: NO per-account cap. Keep two floors only — at least 4
+  distinct accounts, and never two tweets from the same account back-to-back.
+- Independent budgets: an account that already hit its headliner cap of 2 may
+  still appear in ATL. The cap counts headliner appearances only.
+Selection source of truth is pass1_story_selector.txt; editor CHECK 3 enforces
+the headliner cap.
 
 ================================================================================
 RULE 2 — NO REPEAT MEDIA FROM PREVIOUS ISSUE

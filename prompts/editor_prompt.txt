@@ -125,10 +125,15 @@ supporting context in the same section. Flag these automatically.
 CHECK 3 — ACCOUNT DIVERSITY (flag, do not fix)
 ================================================================================
 
-Count every tweet blockquote in the newsletter by @handle. If any account
-appears 3 or more times, add this comment immediately after the 3rd occurrence:
+Scope: HEADLINER sections only (everything from the top down to, but NOT
+including, <h2>Around the League</h2>). Around the League is a highlight reel
+with no per-account cap — do NOT flag account repeats inside it.
 
-<!-- EDITOR FLAG: @[account] appears [N] times — remove or replace tweet above -->
+Count tweet blockquotes by @handle in the headliner sections only. If any
+account appears 3 or more times in the headliners, add this comment
+immediately after the 3rd headliner occurrence:
+
+<!-- EDITOR FLAG: @[account] appears [N]x in headliners — remove or replace tweet above -->
 
 Do not remove or reorder tweets yourself. Just flag.
 

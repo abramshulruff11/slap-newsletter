@@ -79,15 +79,20 @@ use section "atl". Every story gets logged, even light ones.
 ACCOUNT DIVERSITY — ENFORCE BEFORE OUTPUTTING
 ================================================================================
 
-These are hard rules. Verify your account_distribution field before finalizing.
-If any account exceeds the cap, revise the tweet selection before outputting.
+These are hard rules. Verify your account_distribution field before finalizing,
+then revise tweet selection if the HEADLINER cap below is exceeded.
 
-- No account may appear more than 2 times total across the entire issue
-  (lead story + supporting + around the league + closer combined)
-- Around the League must include tweets from at least 4 different accounts
-- Around the League: no per-account cap. The 4-account minimum is the only
-  diversity floor. If StatMuse drops three great stats and TalkinBaseball
-  has two great baseball tweets on a heavy MLB day, that's fine.
+The mental model: diversity is a headliner concern; ATL is a highlight reel.
+
+- HEADLINER CAP (lead + supporting): no account may appear more than 2 times
+  across the headliner sections combined. If an account would exceed 2 up top,
+  replace the excess with tweets from accounts not yet used in the headliners.
+- AROUND THE LEAGUE: no per-account cap. The accounts that cover a sport best
+  (e.g. StatMuse, TalkinBaseball, Jomboy on a heavy MLB day) may appear several
+  times. Two floors still apply: include at least 4 different accounts, and
+  never place two tweets from the same account back-to-back.
+- INDEPENDENT BUDGETS: the headliner cap counts ONLY headliner appearances. An
+  account that already hit its cap of 2 up top may still appear in ATL.
 
 ================================================================================
 TWEET FILTER — apply before including any tweet in any section
