@@ -86,8 +86,11 @@ Cookies expire over time, so you'll need to refresh them periodically.
   but the API needs the embed node built explicitly).
 - **Images are hot-linked** by URL (giphy/imgflip). Substack usually re-hosts on
   publish; if any fail, we'd switch to uploading via `api.get_image()`.
-- **Box scores** (`box_score_*.png`) are local files in each archive folder and
-  are not yet uploaded; the "Box Scores" heading currently has no images under it.
+- **Box scores** (`box_score_sport_*.png`) are uploaded to Substack and placed
+  under the "Box Scores" heading, in filename order, with correct dimensions.
+  Source dir defaults to the input file's folder, else `./box_score`; override
+  with `--box-score-dir` or skip with `--no-box-scores`. Large images are
+  retried on transient connection resets.
 - Unofficial API — Substack can change it at any time. This is not ToS-blessed.
 
 ## Files

@@ -77,13 +77,33 @@ def next_noon_et(now: Optional[datetime] = None) -> datetime:
     return target
 
 
+def _append_image(post, src: str, alt: Optional[str],
+                  width: Optional[int] = None, height: Optional[int] = None) -> None:
+    """Append a standalone captionedImage node (captioned_image() otherwise
+    fills the *last* node instead of creating its own). When real width/height
+    are known, set them so tall box-score images keep their aspect ratio."""
+    post.draft_body["content"].append({"type": "captionedImage"})
+    if width and height:
+        post.captioned_image(src=src, alt=alt or None, width=width, height=height,
+                             resizeWidth=min(width, 728))
+    else:
+        post.captioned_image(src=src, alt=alt or None)
+
+
+# Substack stores uploaded image dimensions in the URL, e.g. ".._800x7700.jpeg".
+_DIM_RE = re.compile(r"_(\d+)x(\d+)\.[a-z]+$", re.IGNORECASE)
+
+
 def build_post(blocks: List[Dict], title: str, subtitle: str, user_id: int,
-               tweet_attrs: Optional[Dict[str, Dict]] = None):
+               tweet_attrs: Optional[Dict[str, Dict]] = None,
+               box_score_images: Optional[List[Dict]] = None):
     """Turn our intermediate blocks into a python-substack Post object.
 
     tweet_attrs: optional {url: hydrated twitter2 attrs}. When absent, tweet
     nodes get url-only attrs (fine for an offline dry-run; renders an empty
     card if actually published -- so hydrate before draft/schedule/publish).
+    box_score_images: optional [{"url":.., "alt":..}] of already-uploaded box
+    score images, appended after the trailing "Box Scores" heading.
     """
     from substack.post import Post
     from tweets import _bare_attrs
@@ -96,16 +116,76 @@ def build_post(blocks: List[Dict], title: str, subtitle: str, user_id: int,
         elif b["type"] == "paragraph":
             post.paragraph(content=b["tokens"])
         elif b["type"] == "image":
-            # captioned_image() appends into the *last* node, so open a fresh
-            # captionedImage container first, then fill it (mirrors Post.add).
-            post.draft_body["content"].append({"type": "captionedImage"})
-            post.captioned_image(src=b["src"], alt=b.get("alt") or None)
+            _append_image(post, b["src"], b.get("alt"))
         elif b["type"] == "hr":
             post.horizontal_rule()
         elif b["type"] == "tweet":
             attrs = tweet_attrs.get(b["url"]) or _bare_attrs(b["url"])
             post.draft_body["content"].append({"type": "twitter2", "attrs": attrs})
+
+    # Box score images go under the trailing "Box Scores" heading.
+    for img in box_score_images or []:
+        _append_image(post, img["url"], img.get("alt"), img.get("width"), img.get("height"))
     return post
+
+
+# Box score PNGs are named like "box_score_sport_01_nba.png" -- the zero-padded
+# number gives display order; the trailing token is the sport (for alt text).
+_BOX_RE = re.compile(r"box_score_sport_(\d+)_([a-z]+)", re.IGNORECASE)
+
+
+def glob_box(box_dir: str) -> List[str]:
+    """Sorted list of box_score_sport_*.png paths in box_dir (display order)."""
+    import glob
+
+    return sorted(glob.glob(os.path.join(box_dir, "box_score_sport_*.png")))
+
+
+def upload_box_scores(api, box_dir: str) -> List[Dict]:
+    """Upload box_score_sport_*.png from box_dir to Substack, in order.
+
+    Returns [{"url": substack_cdn_url, "alt": "NBA box score"}] for each. Missing
+    dir or zero images -> empty list (auto-draft simply omits the section)."""
+    paths = glob_box(box_dir)
+    if not paths:
+        print(f"No box score PNGs found in {box_dir!r} -- skipping box score upload.")
+        return []
+    out: List[Dict] = []
+    print(f"Uploading {len(paths)} box score image(s) from {box_dir!r}...")
+    for i, p in enumerate(paths, 1):
+        m = _BOX_RE.search(os.path.basename(p))
+        sport = m.group(2).upper() if m else ""
+        url = _upload_one_image(api, p)  # retries transient resets internally
+        if not url:
+            print(f"  [{i}/{len(paths)}] FAILED (giving up) {os.path.basename(p)}")
+            continue
+        dm = _DIM_RE.search(url)
+        item = {"url": url, "alt": f"{sport} box score".strip()}
+        if dm:
+            item["width"], item["height"] = int(dm.group(1)), int(dm.group(2))
+        out.append(item)
+        print(f"  [{i}/{len(paths)}] ok   {os.path.basename(p)} -> {url}")
+    return out
+
+
+def _upload_one_image(api, path: str, attempts: int = 4) -> Optional[str]:
+    """Upload one image with retries. Big box-score PNGs occasionally get the
+    connection reset mid-upload (ConnectionResetError 10054), so retry with
+    backoff before giving up."""
+    import time
+
+    for attempt in range(1, attempts + 1):
+        try:
+            res = api.get_image(path)
+            url = res.get("url")
+            if url:
+                return url
+            print(f"      attempt {attempt}: no url returned")
+        except Exception as e:  # noqa: BLE001
+            print(f"      attempt {attempt}/{attempts} failed: {type(e).__name__}: {str(e)[:80]}")
+        if attempt < attempts:
+            time.sleep(2 * attempt)  # 2s, 4s, 6s backoff
+    return None
 
 
 def hydrate_tweets(blocks: List[Dict]) -> Dict[str, Dict]:
@@ -181,6 +261,11 @@ def main() -> None:
         "Only used with --schedule; defaults to the next upcoming 12:00 PM ET.",
     )
     ap.add_argument("--out", help="dry-run: also write the post body JSON here")
+    ap.add_argument(
+        "--box-score-dir",
+        help="dir holding box_score_sport_*.png (default: input file's dir, else ./box_score)",
+    )
+    ap.add_argument("--no-box-scores", action="store_true", help="skip box score image upload")
     args = ap.parse_args()
 
     with open(args.input, encoding="utf-8") as f:
@@ -220,7 +305,17 @@ def main() -> None:
     print(f"Authenticated as user_id={user_id}")
 
     tweet_attrs = hydrate_tweets(blocks)
-    post = build_post(blocks, title, args.subtitle, user_id=user_id, tweet_attrs=tweet_attrs)
+
+    box_images: List[Dict] = []
+    if not args.no_box_scores:
+        box_dir = args.box_score_dir
+        if not box_dir:
+            input_dir = os.path.dirname(os.path.abspath(args.input))
+            box_dir = input_dir if glob_box(input_dir) else "box_score"
+        box_images = upload_box_scores(api, box_dir)
+
+    post = build_post(blocks, title, args.subtitle, user_id=user_id,
+                      tweet_attrs=tweet_attrs, box_score_images=box_images)
     draft = api.post_draft(post.get_draft())
     draft_id = draft.get("id")
     print(f"Created draft id={draft_id}")
