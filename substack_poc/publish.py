@@ -1,32 +1,39 @@
 """
 SLAP -> Substack publisher (proof of concept).
 
-Pipeline:  newsletter_substack.html  ->  convert.html_to_blocks  ->
-           python-substack Post  ->  (dry-run | draft | publish)
+Pipeline:  newsletter_substack.html  ->  convert.html_to_blocks  ->  hydrate
+           tweets + upload box scores  ->  python-substack Post  ->
+           (dry-run | draft | schedule | publish)
 
 By DEFAULT this runs in --dry-run mode: it builds the *exact* post body
 that would be sent to Substack and prints it, WITHOUT logging in or
 touching the network. That lets you verify the whole pipeline with zero
 credentials and zero risk of accidentally publishing.
 
-Modes
------
+Modes (mutually exclusive)
+--------------------------
   (default)    --dry-run   Build + print the payload. No network.
   --draft                  Log in and create a DRAFT (not published).
-  --publish                Log in, create a draft, then PUBLISH it live.
+  --schedule [--at ISO]    Create a draft and schedule it (default: next 12pm ET).
+  --publish                Create a draft, then PUBLISH it live now.
 
-Auth (only needed for --draft / --publish) is read from a .env file in
-this folder. Prefer cookies; see .env.example. Order of preference:
+Other flags: --title, --subtitle, --out (dry-run JSON dump),
+  --box-score-dir DIR, --no-box-scores.
+
+Auth (needed for draft/schedule/publish) comes from a .env file locally, or
+environment variables in CI. Prefer cookies; see .env.example. Order:
   1. SUBSTACK_COOKIES_PATH      (path to a cookies json file)
   2. SUBSTACK_COOKIES_STRING    (cookie header copied from your browser)
   3. SUBSTACK_EMAIL + SUBSTACK_PASSWORD
 SUBSTACK_PUBLICATION_URL (e.g. https://yourpub.substack.com) is recommended.
+Set PROXY_URL (http://user:pass@host:port) to route via a residential proxy
+(needed from datacenter IPs like GitHub Actions; see _install_proxy_session).
 
 Examples
 --------
   python publish.py "../Archive/2026-06-04/newsletter_substack.html"
-  python publish.py "../Archive/2026-06-04/newsletter_substack.html" --draft
-  python publish.py "../Archive/2026-06-04/newsletter_substack.html" --publish --title "SLAP - June 4"
+  python publish.py newsletter_substack.html --draft
+  python publish.py newsletter_substack.html --schedule
 """
 
 from __future__ import annotations
