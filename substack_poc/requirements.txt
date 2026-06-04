@@ -1,0 +1,3 @@
+python-substack==0.1.22
+curl_cffi
+tzdata; platform_system == "Windows"
