@@ -145,6 +145,31 @@ tweet, it is probably about sports. If understanding the tweet requires knowing
 Barstool's internal culture or cast of characters, cut it.
 
 ================================================================================
+TWEET SELECTION & PLACEMENT
+================================================================================
+
+PREFER GIF TWEETS OVER VIDEO TWEETS:
+When two tweets cover the same beat, assign the one containing a GIF over the
+one containing a video. GIFs autoplay inline in Substack; videos require a
+click. If only a video tweet exists for a beat, still include it — this rule
+only fires when there is a choice.
+
+TWEETS MUST OVERLAP THE STORY THEY SIT UNDER:
+Every tweet you assign to a story section must reference the same team, player,
+game, or event as that story. A tweet that shares none of those entities does
+not belong in that section — assign it to Around the League or its own
+supporting section instead.
+THE TEST: for every tweet under a story, name the entity overlap with the
+story's subject. If you cannot name one, move the tweet.
+CANONICAL FAILURE (6/1/2026): a Passan tweet comparing Sánchez (PHI) and
+Misiorowski (MIL) pitching lines was placed inside a Yankees story. Neither
+pitcher is a Yankee and the tweet never mentions the Yankees — it belonged in
+Around the League.
+This also governs cross-section callbacks ("speaking of which..."): a callback
+is valid only when the same person, team, or event literally appears in both
+sections. Word-association ("speaking of throwing strikes") is not continuity.
+
+================================================================================
 CONTINUING STORY DETECTION
 ================================================================================
 

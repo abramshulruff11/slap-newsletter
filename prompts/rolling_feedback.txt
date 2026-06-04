@@ -1,6 +1,11 @@
 ## ROLLING FEEDBACK — Hard rules extracted from real output failures.
-## Max 3 rules added per issue review session. Apply every rule, every time.
-## These override general guidance in base_prompt.txt when in conflict.
+## Apply every rule, every time. These override general guidance in
+## pass2_writer.txt when in conflict.
+##
+## STAGING AREA: when a rule here has proven out, promote it into the right base
+## prompt (pass1_story_selector.txt, pass2_writer.txt, or editor_prompt.txt) and
+## remove it from here — so every rule lives in exactly one place. Rules that
+## duplicate a base prompt have been retired from this file.
 
 ================================================================================
 RULE 1 — ACCOUNT CAP (headliners only; ATL uncapped)
@@ -27,122 +32,7 @@ exception is a deliberate same-story escalation callback (CRAFT RULE #6 in
 pass2_writer.txt).
 
 ================================================================================
-RULE 4 — THE DUELING SENTENCE CONSTRUCTION IS BANNED. ALL FORMS. NO EXCEPTIONS.
-================================================================================
-The following sentence structure is the single most identifiable AI writing tell
-in the newsletter. It appears constantly. It must never appear in any form.
-
-THE PATTERN:
-A sentence that defines something by saying what it ISN'T, followed immediately
-by a sentence that redefines it as something more dramatic.
-
-BAD (all of these are the same construction):
-- "This wasn't a basketball game. This was a public execution."
-- "That's not a loss. That's a disaster."
-- "This isn't a slump. This is a collapse."
-- "This wasn't a trade. This was a robbery."
-- "That's not an injury. That's a catastrophe."
-- "This isn't a rebuild. This is a full demolition."
-- "That wasn't a game. That was a statement."
-- "This isn't bad. This is historically bad."
-
-WHY IT FAILS: It's a rhetorical flourish that signals the writer is trying
-to be dramatic. The SLAP voice doesn't try. It states facts and lets the facts
-be dramatic. A 47-point halftime lead is already insane. Calling it a
-"public execution" tells the reader how to feel instead of trusting them.
-
-FIX: State the fact. Add one specific detail that makes it worse.
-BAD: "This wasn't a basketball game. This was a public execution."
-GOOD: "The Hawks scored 36 points at halftime. OG Anunoby had 26."
-
-The rule: if you are about to write "This wasn't X. This was Y." — stop.
-Delete both sentences. Find the specific fact that makes the point instead.
-The fact is always funnier and more devastating than the metaphor.
-
-================================================================================
-RULE 5 — EVERGREEN / OFF-SEASON CONTENT CANNOT LEAD
-================================================================================
-A stat post or recap from a season that has already ended cannot lead the
-newsletter. This applies to all sports.
-
-The test: did the underlying event the post references happen in the last 7
-days? If no, and any other sport has an active Tier 1 event (NBA Playoffs,
-World Series, CFP, etc.), the off-season content does not lead. It can still
-appear in Around the League if the stat is genuinely interesting.
-
-BAD (lead, May): "The Bills went 2-of-9 on two-point conversions in 2025."
-The 2024-25 NFL season ended in February. There is no game today. It is a
-SharpFootball stat post, not news.
-GOOD (lead, May): A playoff game from yesterday. A series-shifting injury.
-A historic playoff stat line.
-
-This rule reinforces the calendar-first lead selection in
-pass1_story_selector.txt. Both should reach the same conclusion: NBA Playoffs
-lead in May, not Bears stat posts.
-
-================================================================================
-RULE 6 — NO PUNCHING DOWN. EVER.
-================================================================================
-SLAP humor targets PUBLIC FIGURES IN THEIR PROFESSIONAL CAPACITY, teams,
-leagues, brands, owners, and the writer himself. Never an identity category.
-
-NEVER target:
-- Disabilities (stuttering, dyslexia, autism, ADHD, physical disability)
-- Race, ethnicity, or national origin
-- Religion
-- Sexual orientation or gender identity
-- Body type or weight (unless directly an athletic point, no mockery)
-- Mental health diagnoses (depression, anxiety, OCD, PTSD)
-- Family members of athletes who aren't themselves public figures
-- Death or terminal illness as a punchline
-
-THE TEST: if the joke's punchline is what the target IS rather than what
-they DID, it's punching down. Cut it.
-
-The "stuttering convention" line that referred to the Vikings WRs in the
-5/8/2026 issue is the canonical failure to avoid. Mocking a speech disorder
-to frame a roster joke is never acceptable, no matter how clever the line
-seems.
-
-The editor's Check 7 enforces this with auto-removal. The writer's
-responsibility is to not generate these lines in the first place.
-
-================================================================================
-RULE 7 — OBITUARIES: DIFFERENT REGISTER, NO SLAP VOICE
-================================================================================
-If a sports figure has died and the newsletter covers it, that section
-operates under different rules entirely. SLAP voice does not apply to death.
-
-Obituary sections: factual, respectful prose only. No irreverent framing,
-no group-chat tone, no memes, no GIFs. Do not check for banned phrases or
-apply voice-level editing. Only run mechanical checks: verify tweet URLs
-are valid and flag any factual claims (stats, dates, team affiliations)
-for verification.
-
-Death is not performance. Obituaries are not coverage in the SLAP sense.
-This is a hard register switch, not a judgment call.
-Every factual claim must be verified as accurate for today's date before it
-appears in the newsletter. Do not rely on training knowledge alone. This
-includes — but is not limited to — player team affiliations, roster moves,
-conference and division placement, championship and record claims, career and
-season statistics, game outcomes, and coaching staff. Players get traded.
-Rosters change. Records fall. If a claim feels uncertain, run a web search to
-confirm it. One wrong fact destroys reader trust faster than any voice failure.
-
-================================================================================
-RULE 8 — PREFER GIF TWEETS OVER VIDEO TWEETS [Added: 2026-05-30]
-================================================================================
-When two tweets cover the same beat, prefer the one containing a GIF over
-the one containing a video. GIFs autoplay inline in Substack. Videos require
-a click. A GIF tweet delivers the punchline; a video tweet asks the reader
-to do work.
-
-Apply at Pass 1 tweet selection. If a GIF tweet and a video tweet both cover
-the same moment, assign the GIF tweet. If only a video tweet exists for a
-beat, still include it — this rule only fires when there's a choice.
-
-================================================================================
-RULE 9 — HISTORICAL CLAIMS: SOURCE OR DO NOT MAKE [Added: 2026-06-01]
+RULE 3 — HISTORICAL CLAIMS: SOURCE OR DO NOT MAKE [Added: 2026-06-01]
 ================================================================================
 Numerical historical claims — "X-year drought," "first since YYYY," "most
 since Z," "longest streak in N years" — are the #1 source of factual errors
@@ -175,36 +65,7 @@ The principle: a specific wrong number is far worse than a vague right
 impression. When in doubt, write it vague.
 
 ================================================================================
-RULE 10 — TWEETS IN A STORY SECTION MUST OVERLAP WITH THE STORY [Added: 2026-06-01]
-================================================================================
-Every tweet inside a story's section must reference the same team, player,
-game, or event as the story it appears under. A tweet that doesn't share at
-least one of those entities does not belong in that section — it belongs in
-Around the League or in its own supporting section.
-
-CANONICAL FAILURE: 6/1/2026 placed a Passan tweet comparing Sánchez (PHI)
-and Misiorowski (MIL) pitching lines inside the Yankees-score-13 story. The
-Yankees story is about a Yankees inning. Sánchez and Misiorowski are not on
-the Yankees and the tweet does not mention them. It belongs in ATL or its
-own section, never inside the Yankees story.
-
-THE TEST: for every tweet under a story heading, name the entity overlap
-with the story's subject. If you can't name one, move the tweet.
-
-This is distinct from Rule 1 (account cap) and Rule 8 (gif over video) —
-it's a placement rule. A perfectly good tweet from a varied account with a
-GIF can still be misplaced. Placement matters because section headings
-tell the reader what to expect; a non-overlap tweet inside a story is the
-single most disorienting thing the newsletter can do.
-
-Also applies to cross-section callbacks (e.g. "speaking of which..."):
-callbacks are only valid when the same person, team, or event literally
-appears in both sections. "Speaking of throwing strikes" connecting a
-Yankees blowout to a Phillies-vs-Brewers pitching matchup is not a valid
-callback — it's word-association masquerading as continuity.
-
-================================================================================
-RULE 11 — SENTENCE RHYTHM AND PARALLEL CONSTRUCTIONS [Added: 2026-06-01]
+RULE 4 — SENTENCE RHYTHM AND PARALLEL CONSTRUCTIONS [Added: 2026-06-01]
 ================================================================================
 Two failures from 6/1/2026 share a root cause: the writer hits the
 punchy-fragment register and never exits it. SLAP voice IS punchy, but six
