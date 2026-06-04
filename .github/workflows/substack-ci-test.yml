@@ -13,6 +13,7 @@ jobs:
     env:
       SUBSTACK_COOKIES_STRING: ${{ secrets.SUBSTACK_COOKIES_STRING }}
       SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
+      PROXY_URL: ${{ secrets.PROXY_URL }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -22,8 +23,8 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install python-substack
-        run: pip install python-substack==0.1.22
+      - name: Install deps
+        run: pip install python-substack==0.1.22 curl_cffi
 
       - name: Run Substack connectivity test
         run: python substack_poc/ci_auth_test.py
