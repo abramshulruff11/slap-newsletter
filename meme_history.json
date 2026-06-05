@@ -1,5 +1,39 @@
 [
   {
+    "date": "2026-06-05",
+    "slug": "panik-kalm-panik",
+    "boxes": [
+      "DOWN 2-0 IN THE THIRD",
+      "UP 3-2 WITH FIVE TO GO",
+      "TIED WITH A MINUTE LEFT"
+    ]
+  },
+  {
+    "date": "2026-06-05",
+    "slug": "first-time",
+    "boxes": [
+      "YANKEES FANS PANICKING ABOUT A JUDGE INJURY",
+      "FIRST TIME?"
+    ]
+  },
+  {
+    "date": "2026-06-05",
+    "slug": "first-time",
+    "boxes": [
+      "YANKEES FANS PANICKING ABOUT A JUDGE INJURY",
+      "FIRST TIME?"
+    ]
+  },
+  {
+    "date": "2026-06-05",
+    "slug": "panik-kalm-panik",
+    "boxes": [
+      "DOWN 2-0 IN THE THIRD",
+      "UP 3-2 WITH FIVE TO GO",
+      "TIED WITH A MINUTE LEFT"
+    ]
+  },
+  {
     "date": "2026-06-04",
     "slug": "distracted-boyfriend",
     "boxes": [
@@ -392,29 +426,5 @@
     "slug": "expanding-brain",
     "top_text": "SIGN A CATCHER WHO CAN HIT",
     "bottom_text": "SIGN A CATCHER WHO CAN'T HIT BUT IS ELITE DEFENSIVELY AND HELPS YOUR ACE PITCHERS"
-  },
-  {
-    "date": "2026-05-08",
-    "slug": "is-this-a-pigeon",
-    "top_text": "NFL REFS WATCHING BLATANT HOLDING",
-    "bottom_text": "IS THIS LEGAL IF IT'S AGAINST THE BEARS?"
-  },
-  {
-    "date": "2026-05-08",
-    "slug": "spider-man-pointing-at-spider-man",
-    "top_text": "THREE JJS POINTING AT EACH OTHER",
-    "bottom_text": "IN THE VIKINGS LOCKER ROOM"
-  },
-  {
-    "date": "2026-05-08",
-    "slug": "spider-man-pointing-at-spider-man",
-    "top_text": "THREE JJS POINTING AT EACH OTHER",
-    "bottom_text": "IN THE VIKINGS LOCKER ROOM"
-  },
-  {
-    "date": "2026-05-08",
-    "slug": "is-this-a-pigeon",
-    "top_text": "NFL REFS WATCHING BLATANT HOLDING",
-    "bottom_text": "IS THIS LEGAL IF IT'S AGAINST THE BEARS?"
   }
 ]
