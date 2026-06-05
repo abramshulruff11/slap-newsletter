@@ -131,13 +131,14 @@ jobs:
       - name: Email newsletter
         run: python email_newsletter.py
 
-      # Auto-create a Substack DRAFT of the issue (tweets embedded, GIFs/memes
-      # included; box scores not yet uploaded). Runs LAST and continue-on-error
-      # so a Substack/proxy/Cloudflare hiccup can never block the email (the
-      # product). Routes through a residential proxy (PROXY_URL) because GitHub
-      # Actions' datacenter IP is otherwise Cloudflare-blocked. Draft only --
-      # Abram reviews and hits publish.
-      - name: Create Substack draft
+      # Auto-create a Substack draft AND schedule it to publish at 12:30 PM ET
+      # (tweets embedded, GIFs/memes included, box scores uploaded). The CI run
+      # fires ~2 AM ET, so it schedules the same day's 12:30 PM slot -- leaving a
+      # morning window for Abram to review and unschedule if needed. Runs LAST and
+      # continue-on-error so a Substack/proxy/Cloudflare hiccup can never block the
+      # email (the product). Routes through a residential proxy (PROXY_URL) because
+      # GitHub Actions' datacenter IP is otherwise Cloudflare-blocked.
+      - name: Schedule Substack post
         continue-on-error: true
         env:
           SUBSTACK_COOKIES_STRING: ${{ secrets.SUBSTACK_COOKIES_STRING }}
@@ -145,4 +146,4 @@ jobs:
           PROXY_URL: ${{ secrets.PROXY_URL }}
         run: |
           pip install python-substack==0.1.22 curl_cffi
-          python substack_poc/publish.py newsletter_substack.html --draft
+          python substack_poc/publish.py newsletter_substack.html --schedule

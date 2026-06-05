@@ -61,20 +61,102 @@ def _fmt_date(iso: str) -> str:
         return ""
 
 
-def _photos(data: Dict) -> list:
-    out = []
+def _best_mp4(media: Dict) -> Optional[str]:
+    """Highest-bitrate playable mp4 from a video/gif media's variants.
+
+    Twitter's syndication payload lists an HLS (.m3u8) variant plus several
+    progressive `video/mp4` renditions; Substack's player needs an mp4, so we
+    pick the highest-bitrate one (matching what the editor stores on paste)."""
+    variants = (media.get("video_info") or {}).get("variants") or []
+    mp4s = [v for v in variants if v.get("content_type") == "video/mp4" and v.get("url")]
+    if not mp4s:
+        return None
+    return max(mp4s, key=lambda v: v.get("bitrate", 0) or 0)["url"]
+
+
+def _media(data: Dict) -> tuple[list, Optional[str]]:
+    """Return (photos, video_url) for a tweet.
+
+    Photos are still images; a video/animated_gif tweet additionally contributes
+    its poster thumbnail (so the embed shows a preview frame) and yields the
+    `video_url` Substack's twitter2 card needs to render a player instead of a
+    bare link. The first video wins -- Substack shows a single inline player."""
+    photos: list = []
+    video_url: Optional[str] = None
     for m in data.get("mediaDetails", []) or []:
-        if m.get("type") != "photo":
+        mtype = m.get("type")
+        if mtype not in ("photo", "video", "animated_gif"):
             continue
         info = m.get("original_info", {}) or {}
-        out.append(
+        photos.append(
             {
                 "url": m.get("media_url_https", ""),
                 "width": info.get("width", 0),
                 "height": info.get("height", 0),
             }
         )
-    return out
+        if mtype in ("video", "animated_gif") and video_url is None:
+            video_url = _best_mp4(m)
+    return photos, video_url
+
+
+def _card_image(bv: Dict) -> str:
+    """Best link-preview image URL from a card's binding_values (largest first)."""
+    for key in (
+        "photo_image_full_size_large", "summary_photo_image_large",
+        "thumbnail_image_large", "photo_image_full_size", "thumbnail_image",
+    ):
+        url = (bv.get(key, {}) or {}).get("image_value", {}).get("url")
+        if url:
+            return url
+    return ""
+
+
+def _card(data: Dict) -> Optional[Dict]:
+    """Link-preview attrs for a tweet that links out (Substack's `expanded_url`).
+
+    A tweet with no media but an attached link renders as a "summary" card on
+    Twitter; Substack stores it as expanded_url={url,title,description,domain,
+    image}. Returns None (NOT {}) when there's no card -- Substack renders an
+    empty grey link box for an empty dict but nothing for null."""
+    card = data.get("card") or {}
+    bv = card.get("binding_values") or {}
+    if not bv:
+        return None
+    # The card's t.co points at the outbound link; resolve it to the real URL.
+    tco = card.get("url")
+    resolved = tco
+    for u in data.get("entities", {}).get("urls", []) or []:
+        if u.get("url") == tco:
+            resolved = u.get("expanded_url") or tco
+            break
+    domain = (bv.get("domain", {}) or {}).get("string_value", "")
+    return {
+        "url": resolved or "",
+        "title": (bv.get("title", {}) or {}).get("string_value", ""),
+        "description": (bv.get("description", {}) or {}).get("string_value", ""),
+        "domain": re.sub(r"^www\.", "", domain),
+        "image": _card_image(bv),
+    }
+
+
+def _quoted(data: Dict) -> Dict:
+    """Quoted-tweet attrs (Substack's `quoted_tweet`): text + author only.
+
+    Substack's twitter2 card renders a quote as a nested text+author block and
+    does NOT inline the quoted tweet's own media (matching what pasting the URL
+    produces). Without this a quote-tweet shows an empty grey link box. Returns
+    {} when the tweet quotes nothing."""
+    q = data.get("quoted_tweet") or {}
+    if not q:
+        return {}
+    user = q.get("user", {}) or {}
+    return {
+        "full_text": _TCO_TAIL_RE.sub("", q.get("text", "") or ""),
+        "username": user.get("screen_name", ""),
+        "name": user.get("name", ""),
+        "profile_image_url": user.get("profile_image_url_https", ""),
+    }
 
 
 def _bare_attrs(url: str) -> Dict:
@@ -82,7 +164,7 @@ def _bare_attrs(url: str) -> Dict:
         "url": url, "full_text": "", "username": "", "name": "",
         "profile_image_url": "", "date": "", "photos": [], "quoted_tweet": {},
         "reply_count": 0, "retweet_count": 0, "like_count": 0,
-        "impression_count": 0, "expanded_url": {}, "video_url": None,
+        "impression_count": 0, "expanded_url": None, "video_url": None,
         "belowTheFold": False,
     }
 
@@ -108,6 +190,7 @@ def fetch_tweet_attrs(url: str, session: Optional[requests.Session] = None) -> D
 
     user = d.get("user", {}) or {}
     text = _TCO_TAIL_RE.sub("", d.get("text", "") or "")
+    photos, video_url = _media(d)
     return {
         "url": url,
         "full_text": text,
@@ -115,13 +198,13 @@ def fetch_tweet_attrs(url: str, session: Optional[requests.Session] = None) -> D
         "name": user.get("name", ""),
         "profile_image_url": user.get("profile_image_url_https", ""),
         "date": _fmt_date(d.get("created_at", "")),
-        "photos": _photos(d),
-        "quoted_tweet": {},
+        "photos": photos,
+        "quoted_tweet": _quoted(d),
         "reply_count": d.get("conversation_count", 0) or 0,
         "retweet_count": d.get("retweet_count", 0) or 0,
         "like_count": d.get("favorite_count", 0) or 0,
         "impression_count": 0,
-        "expanded_url": {},
-        "video_url": None,
+        "expanded_url": _card(d),
+        "video_url": video_url,
         "belowTheFold": False,
     }

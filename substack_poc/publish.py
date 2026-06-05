@@ -14,7 +14,7 @@ Modes (mutually exclusive)
 --------------------------
   (default)    --dry-run   Build + print the payload. No network.
   --draft                  Log in and create a DRAFT (not published).
-  --schedule [--at ISO]    Create a draft and schedule it (default: next 12pm ET).
+  --schedule [--at ISO]    Create a draft and schedule it (default: next 12:30pm ET).
   --publish                Create a draft, then PUBLISH it live now.
 
 Other flags: --title, --subtitle, --out (dry-run JSON dump),
@@ -75,10 +75,15 @@ def derive_title(input_path: str, override: Optional[str]) -> str:
     return _fmt_title(datetime.now(ET).date())
 
 
-def next_noon_et(now: Optional[datetime] = None) -> datetime:
-    """The next upcoming 12:00 PM America/New_York (today if still ahead, else tomorrow)."""
+# Daily issues publish at 12:30 PM ET. The CI run fires ~2 AM ET, so the "next
+# upcoming 12:30 PM ET" below resolves to the same day's slot.
+PUBLISH_HOUR, PUBLISH_MINUTE = 12, 30
+
+
+def next_publish_et(now: Optional[datetime] = None) -> datetime:
+    """The next upcoming 12:30 PM America/New_York (today if still ahead, else tomorrow)."""
     now = now or datetime.now(ET)
-    target = now.replace(hour=12, minute=0, second=0, microsecond=0)
+    target = now.replace(hour=PUBLISH_HOUR, minute=PUBLISH_MINUTE, second=0, microsecond=0)
     if now >= target:
         target += timedelta(days=1)
     return target
@@ -195,8 +200,13 @@ def _upload_one_image(api, path: str, attempts: int = 4) -> Optional[str]:
     return None
 
 
-def hydrate_tweets(blocks: List[Dict]) -> Dict[str, Dict]:
-    """Fetch metadata for every tweet block so embeds render fully."""
+def hydrate_tweets(blocks: List[Dict], api=None) -> Dict[str, Dict]:
+    """Fetch metadata for every tweet block so embeds render fully.
+
+    When `api` is given, link-card thumbnails are rehosted onto Substack's CDN:
+    raw pbs.twimg.com/card_img URLs render as a broken image inside the embed
+    (unlike tweet media/profile images), so we mirror what Substack does on paste
+    and upload them. A rehost failure falls back to the raw url."""
     from tweets import fetch_tweet_attrs
 
     urls = [b["url"] for b in blocks if b["type"] == "tweet"]
@@ -204,8 +214,17 @@ def hydrate_tweets(blocks: List[Dict]) -> Dict[str, Dict]:
     print(f"Hydrating {len(urls)} tweet embeds...")
     sess = requests.Session()
     for i, url in enumerate(urls, 1):
-        out[url] = fetch_tweet_attrs(url, session=sess)
-        print(f"  [{i}/{len(urls)}] {'ok   ' if out[url]['full_text'] else 'EMPTY'} {url}")
+        attrs = fetch_tweet_attrs(url, session=sess)
+        card = attrs.get("expanded_url")
+        if api and card and card.get("image"):
+            try:
+                res = api.get_image(card["image"])
+                if res.get("url"):
+                    card["image"] = res["url"]
+            except Exception as e:  # noqa: BLE001 -- keep raw url on failure
+                print(f"      card image rehost failed: {type(e).__name__}: {str(e)[:60]}")
+        out[url] = attrs
+        print(f"  [{i}/{len(urls)}] {'ok   ' if attrs['full_text'] else 'EMPTY'} {url}")
     return out
 
 
@@ -260,12 +279,12 @@ def main() -> None:
     mode = ap.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", help="(default) build + print, no network")
     mode.add_argument("--draft", action="store_true", help="create a Substack draft")
-    mode.add_argument("--schedule", action="store_true", help="create a draft and schedule it (12pm ET by default)")
+    mode.add_argument("--schedule", action="store_true", help="create a draft and schedule it (12:30pm ET by default)")
     mode.add_argument("--publish", action="store_true", help="create a draft AND publish it live now")
     ap.add_argument(
         "--at",
-        help="schedule time, ISO 8601 (e.g. 2026-06-05T12:00). Interpreted as ET if no offset. "
-        "Only used with --schedule; defaults to the next upcoming 12:00 PM ET.",
+        help="schedule time, ISO 8601 (e.g. 2026-06-05T12:30). Interpreted as ET if no offset. "
+        "Only used with --schedule; defaults to the next upcoming 12:30 PM ET.",
     )
     ap.add_argument("--out", help="dry-run: also write the post body JSON here")
     ap.add_argument(
@@ -289,7 +308,7 @@ def main() -> None:
             if sched_dt.tzinfo is None:
                 sched_dt = sched_dt.replace(tzinfo=ET)
         else:
-            sched_dt = next_noon_et()
+            sched_dt = next_publish_et()
         print(f"Scheduling for: {sched_dt.astimezone(ET):%Y-%m-%d %I:%M %p %Z}\n")
 
     # ---- dry run (default): no creds, no network -------------------------
@@ -311,7 +330,7 @@ def main() -> None:
     user_id = api.get_user_id()
     print(f"Authenticated as user_id={user_id}")
 
-    tweet_attrs = hydrate_tweets(blocks)
+    tweet_attrs = hydrate_tweets(blocks, api=api)
 
     box_images: List[Dict] = []
     if not args.no_box_scores:
