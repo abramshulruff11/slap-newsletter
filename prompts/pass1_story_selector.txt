@@ -287,6 +287,19 @@ tonight's result, the new series score, an injury that just happened. Put a
 note in research_notes: "CONTINUING: reader knows the series context, cover
 only tonight's game and the new series state."
 
+CONTINUING SERIES — COVER THE NEWEST GAME ONLY, NEVER RE-RUN A PRIOR ONE. The
+reader already read about the last game in the recent history. The only thing
+you cover is the NEWEST game that appears in TODAY'S raw content — its result,
+its hero, its new series score. Do NOT re-narrate a prior game's highlight (a
+record-setting period, a walk-off, a monster stat line) that the history shows
+you already covered; reprinting it reads as yesterday's news. Sanity check: the
+specific game and performance you describe must appear in TODAY'S raw content,
+not only in the story history — if you can't point to it in today's content,
+you are repeating yourself. And if the series has NO new game in today's content
+(an off day between games), it is NOT a story today: drop it to a one-line
+Around the League footnote or cut it entirely. A series being important does not
+license re-covering a game the reader already saw.
+
 ================================================================================
 SPORTS CALENDAR — READ THIS BEFORE STORY SELECTION RULES
 ================================================================================
@@ -310,11 +323,16 @@ active, unless a true MASSIVE STORY OVERRIDE exists):
 - NBA Trade Deadline (February)
 - Masters Sunday (second Sunday in April)
 - MLB Opening Day (late March)
+- Tennis Grand Slam finals — men's or women's singles final of the Australian
+  Open (late Jan), French Open / Roland Garros (early June), Wimbledon (mid
+  July), US Open (early Sept). A major final is a dominating event the same way
+  a golf major Sunday is; do not let it get buried by big-4 volume.
 
 TIER 2 — HEAVY COVERAGE (lead OR strong supporting):
 - NFL Combine (late February)
 - MLB Trade Deadline (late July)
 - Major golf majors Sundays (US Open, British Open, PGA Championship)
+- Tennis Grand Slam second week (quarterfinals onward, either draw)
 - NFL regular season Sundays / Mondays (September-January)
 - Big rivalry games (Ohio State-Michigan, Iron Bowl, Army-Navy, Yankees-Red Sox)
 - Olympics
