@@ -317,6 +317,8 @@ active, unless a true MASSIVE STORY OVERRIDE exists):
 - March Madness (mid-March through early April, especially Sweet 16+)
 - NBA Playoffs (April through NBA Finals, June)
 - NBA Finals (June)
+- Stanley Cup Final (June) — the NHL's championship round leads on game days the
+  same way the NBA Finals does; do not let a Cup Final game get buried.
 - World Series (late October)
 - College Football Playoff / National Championship (January)
 - NFL Trade Deadline (November)
