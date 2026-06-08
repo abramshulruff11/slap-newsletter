@@ -200,6 +200,24 @@ def _upload_one_image(api, path: str, attempts: int = 4) -> Optional[str]:
     return None
 
 
+def _syndication_session():
+    """Session for Twitter's syndication endpoint.
+
+    Routes through the residential proxy with Chrome impersonation when PROXY_URL
+    is set: GitHub Actions' datacenter IP gets rate-limited/blocked by Twitter,
+    which otherwise bakes empty "Invalid Date" cards (retries from the same blocked
+    IP can't recover). Falls back to a plain requests session locally (residential
+    IP needs no proxy). Tweet JSON is tiny (~1-2 KB each), so the proxy bandwidth
+    cost is negligible."""
+    proxy = os.getenv("PROXY_URL")
+    if proxy:
+        from curl_cffi import requests as creq
+
+        print("Routing tweet syndication through residential proxy + curl_cffi(chrome).")
+        return creq.Session(impersonate="chrome", proxies={"http": proxy, "https": proxy})
+    return requests.Session()
+
+
 def hydrate_tweets(blocks: List[Dict], api=None) -> Dict[str, Dict]:
     """Fetch metadata for every tweet block so embeds render fully.
 
@@ -212,7 +230,7 @@ def hydrate_tweets(blocks: List[Dict], api=None) -> Dict[str, Dict]:
     urls = [b["url"] for b in blocks if b["type"] == "tweet"]
     out: Dict[str, Dict] = {}
     print(f"Hydrating {len(urls)} tweet embeds...")
-    sess = requests.Session()
+    sess = _syndication_session()
     for i, url in enumerate(urls, 1):
         attrs = fetch_tweet_attrs(url, session=sess)
         card = attrs.get("expanded_url")
