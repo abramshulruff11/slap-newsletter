@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import math
 import re
+import time
 from datetime import datetime, timezone
 from typing import Dict, Optional
 
@@ -59,6 +60,28 @@ def _fmt_date(iso: str) -> str:
         return dt.strftime("%a %b %d %H:%M:%S +0000 %Y")
     except Exception:
         return ""
+
+
+def _clean_text(obj: Dict) -> str:
+    """Tweet body with t.co shortlinks resolved the way Twitter/Substack show them.
+
+    A tweet's raw `text` ends in opaque t.co links -- one per attached photo/video
+    plus any links the author included. Using the tweet's `entities` we drop the
+    media t.co's entirely (they're just the pic/video) and swap link t.co's for
+    their human-readable `display_url` (e.g. 'spr.ly/abc'). Without this the embed
+    shows a bare 'https://t.co/xxxx' in the body. A trailing-junk sweep catches any
+    t.co not represented in entities."""
+    text = obj.get("text", "") or ""
+    ents = obj.get("entities", {}) or {}
+    for u in ents.get("urls", []) or []:
+        tco, disp = u.get("url"), (u.get("display_url") or u.get("expanded_url") or "")
+        if tco:
+            text = text.replace(tco, disp)
+    for m in ents.get("media", []) or []:
+        tco = m.get("url")
+        if tco:
+            text = text.replace(tco, "")
+    return _TCO_TAIL_RE.sub("", text).strip()
 
 
 def _best_mp4(media: Dict) -> Optional[str]:
@@ -152,11 +175,35 @@ def _quoted(data: Dict) -> Dict:
         return {}
     user = q.get("user", {}) or {}
     return {
-        "full_text": _TCO_TAIL_RE.sub("", q.get("text", "") or ""),
+        "full_text": _clean_text(q),
         "username": user.get("screen_name", ""),
         "name": user.get("name", ""),
         "profile_image_url": user.get("profile_image_url_https", ""),
     }
+
+
+def _fetch_json(tid: str, sess, attempts: int = 4) -> Optional[Dict]:
+    """GET a tweet's syndication JSON, retrying transient failures.
+
+    Twitter rate-limits / intermittently blocks datacenter IPs (e.g. GitHub
+    Actions), so a single miss would otherwise bake an empty "Invalid Date"
+    card into the post. Retry non-200s and exceptions with backoff; a 404 that
+    persists is treated as a genuine miss (deleted/protected tweet)."""
+    for attempt in range(1, attempts + 1):
+        try:
+            r = sess.get(
+                _SYNDICATION,
+                params={"id": tid, "lang": "en", "token": _token(tid)},
+                headers={"User-Agent": _UA},
+                timeout=20,
+            )
+            if r.status_code == 200:
+                return r.json()
+        except Exception:
+            pass
+        if attempt < attempts:
+            time.sleep(1.5 * attempt)  # 1.5s, 3s, 4.5s backoff
+    return None
 
 
 def _bare_attrs(url: str) -> Dict:
@@ -175,21 +222,12 @@ def fetch_tweet_attrs(url: str, session: Optional[requests.Session] = None) -> D
     if not tid:
         return _bare_attrs(url)
     sess = session or requests
-    try:
-        r = sess.get(
-            _SYNDICATION,
-            params={"id": tid, "lang": "en", "token": _token(tid)},
-            headers={"User-Agent": _UA},
-            timeout=20,
-        )
-        if r.status_code != 200:
-            return _bare_attrs(url)
-        d = r.json()
-    except Exception:
+    d = _fetch_json(tid, sess)
+    if not d:
         return _bare_attrs(url)
 
     user = d.get("user", {}) or {}
-    text = _TCO_TAIL_RE.sub("", d.get("text", "") or "")
+    text = _clean_text(d)
     photos, video_url = _media(d)
     return {
         "url": url,
