@@ -12,6 +12,7 @@ Block shapes produced (all JSON-serializable):
     {"type": "heading",   "level": 1|2, "text": "..."}
     {"type": "paragraph", "tokens": [{"content": "..", "marks": [...]}, ...]}
     {"type": "tweet",     "url": "https://twitter.com/.../status/..."}
+    {"type": "youtube",   "video_id": "0cj3O26-n9Q"}
     {"type": "image",     "src": "https://...", "alt": "..."}
     {"type": "hr"}
 
@@ -67,6 +68,9 @@ class _SlapHTMLParser(HTMLParser):
         self._marks: List[Dict] = []
         # When inside a <p class="tweet-url"> we buffer the URL text here.
         self._tweet_buf: Optional[List[str]] = None
+        # Set to the video id while inside a <p class="yt-highlight"> marker; its
+        # inner poster <img> is suppressed (the youtube2 node renders its own).
+        self._yt_id: Optional[str] = None
 
     # -- block lifecycle ---------------------------------------------------
     def _open_paragraph(self) -> None:
@@ -107,13 +111,17 @@ class _SlapHTMLParser(HTMLParser):
         if tag == "p":
             self._close_block()
             classes = attrs_d.get("class", "")
-            if "tweet-url" in classes:
+            if "yt-highlight" in classes:
+                self._yt_id = attrs_d.get("data-video-id", "").strip()  # emit on </p>
+            elif "tweet-url" in classes:
                 self._tweet_buf = []  # capture the URL text, emit on </p>
             else:
                 self._open_paragraph()
             return
 
         if tag == "img":
+            if self._yt_id is not None:
+                return  # poster thumbnail inside a yt-highlight marker -> skip
             src = attrs_d.get("src", "").strip()
             if src:
                 self.blocks.append(
@@ -150,7 +158,11 @@ class _SlapHTMLParser(HTMLParser):
 
     def handle_endtag(self, tag: str) -> None:
         if tag in ("h1", "h2", "p"):
-            if self._tweet_buf is not None:
+            if self._yt_id is not None:
+                vid, self._yt_id = self._yt_id, None
+                if vid:
+                    self.blocks.append({"type": "youtube", "video_id": vid})
+            elif self._tweet_buf is not None:
                 url = "".join(self._tweet_buf).strip()
                 self._tweet_buf = None
                 if url:
@@ -202,6 +214,8 @@ def block_summary(blocks: List[Dict]) -> str:
             lines.append(f"  P    {preview}")
         elif b["type"] == "tweet":
             lines.append(f'  TWT  {b["url"]}')
+        elif b["type"] == "youtube":
+            lines.append(f'  YT   {b["video_id"]}')
         elif b["type"] == "image":
             lines.append(f'  IMG  [{b["alt"]}] {b["src"][:70]}')
         elif b["type"] == "hr":

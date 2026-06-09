@@ -27,6 +27,7 @@ jobs:
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
+      YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       IMGFLIP_USERNAME: ${{ secrets.IMGFLIP_USERNAME }}
       IMGFLIP_PASSWORD: ${{ secrets.IMGFLIP_PASSWORD }}
       GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}

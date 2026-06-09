@@ -134,6 +134,12 @@ def build_post(blocks: List[Dict], title: str, subtitle: str, user_id: int,
         elif b["type"] == "tweet":
             attrs = tweet_attrs.get(b["url"]) or _bare_attrs(b["url"])
             post.draft_body["content"].append({"type": "twitter2", "attrs": attrs})
+        elif b["type"] == "youtube":
+            # Substack renders an inline player from a youtube2 node whose
+            # videoId is the bare 11-char id (a full watch URL fails to load).
+            post.draft_body["content"].append(
+                {"type": "youtube2", "attrs": {"videoId": b["video_id"]}}
+            )
 
     # Box score images go under the trailing "Box Scores" heading.
     for img in box_score_images or []:

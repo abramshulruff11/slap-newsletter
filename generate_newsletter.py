@@ -1559,6 +1559,22 @@ def main() -> None:
         print(f"  ✗ Meme pipeline failed: {e}")
         print("    Newsletter saved without memes — safe to publish as-is.")
 
+    # ── Highlights Pipeline ────────────────────────────────
+    # Splice official MLB/NHL YouTube game-highlight embeds into the story
+    # sections they belong to (Substack -> inline player, email -> linked
+    # thumbnail). Runs before the Box Scores header so embeds land within stories.
+    print("\n── HIGHLIGHTS PIPELINE ─────────────────────────────")
+    try:
+        from highlights import inject_highlights
+        body, _n_hl = inject_highlights(body, game_state)
+        if _n_hl:
+            print(f"  ✓ {_n_hl} highlight embed(s) added in both output files")
+        else:
+            print("  No highlight embeds added.")
+    except Exception as e:
+        print(f"  ✗ Highlights pipeline failed: {e}")
+        print("    Newsletter saved without highlights — safe to publish as-is.")
+
     # Box Scores section header. Around the League is the last written section,
     # so appending here places "Box Scores" at the very bottom. The cleaned
     # per-sport box score images are uploaded under this header in Substack.
