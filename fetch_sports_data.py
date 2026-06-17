@@ -42,6 +42,14 @@ LEAGUES = {
         "months": [10, 11, 12, 1, 2, 3, 4, 5, 6],
         "label": "NHL",
     },
+    "wc": {
+        # FIFA World Cup (men's). ESPN slug is "fifa.world". The generic
+        # parse_game()/scoreboard path handles soccer's competitor shape as-is;
+        # highlights.py embeds official @FIFA clips for these games.
+        "sport": "soccer", "league": "fifa.world",
+        "months": [6, 7],
+        "label": "World Cup",
+    },
     "wnba": {
         "sport": "basketball", "league": "wnba",
         "months": [5, 6, 7, 8, 9, 10],

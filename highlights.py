@@ -1,5 +1,5 @@
 """
-MLB & NHL highlights — embed official YouTube clips in the newsletter.
+MLB, NHL & World Cup highlights — embed official YouTube clips in the newsletter.
 
 Two kinds of clip, both rendered as inline YouTube players on Substack (a
 youtube2 node) and as linked thumbnails in email:
@@ -13,10 +13,13 @@ youtube2 node) and as linked thumbnails in email:
      cluster appended before Box Scores.
 
 Everything is sourced from each league's OFFICIAL YouTube channel uploads (one
-cheap playlistItems call per league), so we never embed fan re-uploads. Clips
-are matched by team nicknames (recaps) or ESPN player surnames (plays), which
-filters out clickbait/rants/features that don't name a real player. Conservative
-throughout: no confident match -> no embed.
+cheap playlistItems call per league: @MLB, @NHL, @FIFA), so we never embed fan
+re-uploads. Clips are matched by team nicknames (recaps) or player surnames
+(plays — ESPN boxscore for MLB/NHL, ESPN goal scorers for the World Cup), which
+filters out clickbait/rants/features that don't name a real player. Matching is
+accent-insensitive so ESPN's "Mbappé" lines up with @FIFA's "Mbappe". National
+teams are matched on full country name rather than a last-word nickname.
+Conservative throughout: no confident match -> no embed.
 
 Auth: YOUTUBE_API_KEY (YouTube Data API v3). Missing key -> no-op (returns the
 body unchanged) so the pipeline never breaks. Stdlib only.
@@ -27,6 +30,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import unicodedata
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
@@ -36,8 +40,10 @@ _CHANNELS_URL = "https://www.googleapis.com/youtube/v3/channels"
 _PLAYLIST_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
 _ESPN = "https://site.api.espn.com/apis/site/v2/sports"
 
-_LEAGUES = {"mlb": "MLB", "nhl": "NHL"}        # league -> official channel handle
-_ESPN_SPORT = {"mlb": "baseball", "nhl": "hockey"}
+_LEAGUES = {"mlb": "MLB", "nhl": "NHL", "wc": "FIFA"}   # league -> official channel handle
+_ESPN_SPORT = {"mlb": "baseball", "nhl": "hockey", "wc": "soccer"}
+# ESPN league slug (differs from our game_state key for the World Cup).
+_ESPN_LEAGUE = {"mlb": "mlb", "nhl": "nhl", "wc": "fifa.world"}
 
 _MAX_CLUSTER = 4          # cap on the "Top Plays" cluster
 _RECENT_HOURS = 40        # uploads/games older than this are ignored
@@ -66,7 +72,17 @@ def _get(url: str) -> Optional[Dict]:
         return None
 
 
-def _nickname(full_name: str) -> str:
+def _norm(s: str) -> str:
+    """Lowercase + strip diacritics, so ESPN's 'Mbappé' matches '@FIFA's 'Mbappe'
+    and 'Türkiye' matches 'Turkiye'. Used for all title/name comparisons."""
+    s = unicodedata.normalize("NFKD", s or "")
+    return "".join(c for c in s if not unicodedata.combining(c)).lower()
+
+
+def _nickname(full_name: str, league: str = "mlb") -> str:
+    # National teams (World Cup) have no city+nickname; match on full country name.
+    if league == "wc":
+        return full_name or ""
     parts = (full_name or "").split()
     if len(parts) >= 2 and " ".join(parts[-2:]).lower() in _MULTIWORD_NICK:
         return " ".join(parts[-2:])
@@ -138,9 +154,12 @@ def _game_players(league: str, game_id: str, exclude: Set[str]) -> Tuple[Set[str
     curated clips — can miss the marquee play). boxscore = EVERY player who
     appeared, used to confirm a name we pulled from our own story prose is really
     a player in this game before we go hunting its clip."""
-    d = _get(f"{_ESPN}/{_ESPN_SPORT[league]}/{league}/summary?event={game_id}")
+    espn_league = _ESPN_LEAGUE.get(league, league)
+    d = _get(f"{_ESPN}/{_ESPN_SPORT[league]}/{espn_league}/summary?event={game_id}")
     if not d:
         return set(), set()
+    if league == "wc":
+        return _soccer_players(d, exclude)
     notable: Set[str] = set()
     for v in d.get("videos", []) or []:
         head = v.get("headline", "") or ""
@@ -153,6 +172,39 @@ def _game_players(league: str, game_id: str, exclude: Set[str]) -> Tuple[Set[str
                 name = ((ath.get("athlete") or {}).get("displayName") or "").split()
                 if name and len(name[-1]) >= 4 and name[-1].lower() not in exclude:
                     box.add(name[-1])
+    return notable, box
+
+
+def _soccer_players(summary: Dict, exclude: Set[str]) -> Tuple[Set[str], Set[str]]:
+    """World Cup variant of _game_players. Soccer summaries have no batting/skating
+    boxscore; instead -> (goal_scorer_surnames, full_squad_surnames).
+
+    notable = scorers (and assisters) from keyEvents — the marquee single-play
+    candidates; @FIFA posts one clip per goal, e.g. 'Kylian Mbappe Goal | France
+    3-1 Senegal'. We deliberately do NOT mine ESPN video headlines here (as the
+    MLB/NHL path does): soccer headlines are feature-y and name future opponents,
+    which produced false cluster matches. box = every player in the two rosters,
+    used to confirm a name from our prose really played in this match."""
+    def _surname(athlete: Dict) -> str:
+        toks = ((athlete or {}).get("displayName") or "").split()
+        return toks[-1] if toks else ""
+
+    notable: Set[str] = set()
+    for ev in summary.get("keyEvents", []) or []:
+        typ = ((ev.get("type") or {}).get("text") or "").lower()
+        if "goal" not in typ or "own" in typ:   # penalties count; own goals don't
+            continue
+        for p in ev.get("participants", []) or []:   # [0]=scorer, [1]=assist
+            sn = _surname(p.get("athlete") or {})
+            if len(sn) >= 3 and sn.lower() not in exclude:
+                notable.add(sn)
+
+    box: Set[str] = set()
+    for r in summary.get("rosters", []) or []:
+        for entry in r.get("roster", []) or []:
+            sn = _surname(entry.get("athlete") or {})
+            if len(sn) >= 3 and sn.lower() not in exclude:
+                box.add(sn)
     return notable, box
 
 
@@ -173,9 +225,9 @@ def _marker(video_id: str, title: str) -> str:
 
 def _find_recap(uploads: List[Dict], away_nick: str, home_nick: str,
                 used: Set[str]) -> Optional[Dict]:
-    an, hn = away_nick.lower(), home_nick.lower()
+    an, hn = _norm(away_nick), _norm(home_nick)
     for u in uploads:
-        t = u["title"].lower()
+        t = _norm(u["title"])
         if (u["video_id"] not in used and "highlight" in t
                 and an in t and hn in t and _recent(u["published_at"])):
             return u
@@ -183,8 +235,10 @@ def _find_recap(uploads: List[Dict], away_nick: str, home_nick: str,
 
 
 def _is_recap(title: str) -> bool:
-    t = title.lower()
-    return "game highlights" in t or "playoff highlights" in t
+    # Any "highlights" reel is a recap (MLB "Game Highlights", @FIFA "Highlights |
+    # France 3-1 Senegal", "Extended Highlights") — never a single play. Individual
+    # play/goal clips don't carry the word "highlights".
+    return "highlights" in title.lower()
 
 
 # Features / compilations / non-play content that may name a player but aren't a
@@ -198,7 +252,8 @@ _FEATURE_RE = re.compile(
 # Signals a title really is a single highlight play (used to rank candidates).
 _PLAY_RE = re.compile(
     r"walk-?off|home run|homer|grand slam|\bhr\b|\bgoal\b|scores?|buzzer|"
-    r"hat ?trick|dinger|snipe|game-?winner|overtime|\bot\b|save|slam|blast",
+    r"hat ?trick|dinger|snipe|game-?winner|overtime|\bot\b|save|slam|blast|"
+    r"brace|screamer|stunner|free.?kick|penalty|\bpk\b|equali[sz]er|winner",
     re.IGNORECASE,
 )
 
@@ -211,12 +266,12 @@ def _find_play(uploads: List[Dict], players: Set[str], used: Set[str]) -> Option
     """Best play clip naming one of `players`: among recent, non-feature uploads,
     prefer titles that read like an actual play (walk-off, home run, goal, ...).
     Newest wins on ties (uploads are newest-first)."""
-    pl = {p.lower() for p in players}
+    pl = {n for p in players if (n := _norm(p))}
     best, best_score = None, -1
     for u in uploads:
         if u["video_id"] in used or not _is_play_clip(u["title"]) or not _recent(u["published_at"]):
             continue
-        tl = u["title"].lower()
+        tl = _norm(u["title"])
         if not any(re.search(rf"\b{re.escape(p)}\b", tl) for p in pl):
             continue
         score = 1 if _PLAY_RE.search(u["title"]) else 0
@@ -287,11 +342,11 @@ def inject_highlights(body_html: str, game_state: Dict,
     inline_inserts: Dict[int, str] = {}
     cluster_markers: List[str] = []
     n = 0
-    print(f"  {len(games)} completed MLB/NHL game(s); matching to stories...")
+    print(f"  {len(games)} completed game(s); matching to stories...")
 
     for g in games:
         lg, away, home = g["league"], g["away"], g["home"]
-        an, hn = _nickname(away), _nickname(home)
+        an, hn = _nickname(away, lg), _nickname(home, lg)
         uploads = _channel_uploads(lg, api_key)
         recap = _find_recap(uploads, an, hn, used_videos)
 
@@ -314,7 +369,11 @@ def inject_highlights(body_html: str, game_state: Dict,
             # curated clip list misses it. Fall back to ESPN's notable plays.
             story_names = _surnames_from_text(_TAG_RE.sub(" ", body_html[start:end]),
                                               league_excludes[lg])
-            play = (_find_play(uploads, story_names & g["box"], used_videos)
+            # Accent-insensitive intersection (prose "Mbappe" vs boxscore "Mbappé").
+            box_by_norm = {_norm(b): b for b in g["box"]}
+            story_hits = {box_by_norm[_norm(s)] for s in story_names
+                          if _norm(s) in box_by_norm}
+            play = (_find_play(uploads, story_hits, used_videos)
                     or _find_play(uploads, g["notable"], used_videos))
             chunk = ""
             if recap:
@@ -325,8 +384,9 @@ def inject_highlights(body_html: str, game_state: Dict,
                 inline_inserts[end] = inline_inserts.get(end, "") + chunk
                 print(f"    ✓ inline: {lg.upper()} {away} @ {home}"
                       f"{' +recap' if recap else ''}{' +play' if play else ''}")
-        elif g["playoffs"] and recap:
-            # Marquee game with no story section -> recap goes in the cluster.
+        elif (g["playoffs"] or lg == "wc") and recap:
+            # Marquee/World Cup game with no story section -> recap goes in the
+            # cluster so it still gets embedded.
             cluster_markers.append(_marker(recap["video_id"], recap["title"]))
             used_videos.add(recap["video_id"]); n += 1
             print(f"    ✓ cluster recap (marquee): {lg.upper()} {away} @ {home}")
@@ -339,8 +399,9 @@ def inject_highlights(body_html: str, game_state: Dict,
                 break
             if u["video_id"] in used_videos or not _is_play_clip(u["title"]) or not _recent(u["published_at"]):
                 continue
-            tl = u["title"].lower()
-            if any(re.search(rf"\b{re.escape(p.lower())}\b", tl) for p in league_players[lg]):
+            tl = _norm(u["title"])
+            if any(re.search(rf"\b{re.escape(_norm(p))}\b", tl)
+                   for p in league_players[lg] if _norm(p)):
                 cluster_markers.append(_marker(u["video_id"], u["title"]))
                 used_videos.add(u["video_id"]); n += 1
 
