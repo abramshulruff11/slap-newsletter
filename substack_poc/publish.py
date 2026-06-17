@@ -224,13 +224,32 @@ def _syndication_session():
     return requests.Session()
 
 
+def _rehost_image(api, url: str) -> str:
+    """Mirror a Twitter-hosted image onto Substack's CDN, returning the new url.
+
+    Substack renders raw pbs.twimg.com URLs unreliably inside a twitter2 embed --
+    a programmatically-built node shows the image blank/broken even though the same
+    URL loads fine in a browser. Pasting a tweet in the editor works because Substack
+    re-uploads the image to its own CDN; we mirror that here. Falls back to the raw
+    url on any failure (better a hotlinked image than none)."""
+    if not api or not url:
+        return url
+    try:
+        res = api.get_image(url)
+        return res.get("url") or url
+    except Exception as e:  # noqa: BLE001 -- keep raw url on failure
+        print(f"      image rehost failed: {type(e).__name__}: {str(e)[:60]}")
+        return url
+
+
 def hydrate_tweets(blocks: List[Dict], api=None) -> Dict[str, Dict]:
     """Fetch metadata for every tweet block so embeds render fully.
 
-    When `api` is given, link-card thumbnails are rehosted onto Substack's CDN:
-    raw pbs.twimg.com/card_img URLs render as a broken image inside the embed
-    (unlike tweet media/profile images), so we mirror what Substack does on paste
-    and upload them. A rehost failure falls back to the raw url."""
+    When `api` is given, the link-card thumbnail is rehosted onto Substack's CDN
+    (see _rehost_image): a raw pbs.twimg.com/card_img url renders blank inside the
+    embed, so we mirror what Substack does on paste and upload it. Tweet PHOTOS need
+    no upload -- they render from a pbs.substack.com mirror url set in tweets._media.
+    A rehost failure falls back to the raw url."""
     from tweets import fetch_tweet_attrs
 
     urls = [b["url"] for b in blocks if b["type"] == "tweet"]
@@ -239,14 +258,10 @@ def hydrate_tweets(blocks: List[Dict], api=None) -> Dict[str, Dict]:
     sess = _syndication_session()
     for i, url in enumerate(urls, 1):
         attrs = fetch_tweet_attrs(url, session=sess)
-        card = attrs.get("expanded_url")
-        if api and card and card.get("image"):
-            try:
-                res = api.get_image(card["image"])
-                if res.get("url"):
-                    card["image"] = res["url"]
-            except Exception as e:  # noqa: BLE001 -- keep raw url on failure
-                print(f"      card image rehost failed: {type(e).__name__}: {str(e)[:60]}")
+        if api:
+            card = attrs.get("expanded_url")
+            if card and card.get("image"):
+                card["image"] = _rehost_image(api, card["image"])
         out[url] = attrs
         print(f"  [{i}/{len(urls)}] {'ok   ' if attrs['full_text'] else 'EMPTY'} {url}")
     return out

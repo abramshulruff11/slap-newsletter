@@ -97,25 +97,39 @@ def _best_mp4(media: Dict) -> Optional[str]:
     return max(mp4s, key=lambda v: v.get("bitrate", 0) or 0)["url"]
 
 
+_PBS_TWIMG = "https://pbs.twimg.com/"
+_PBS_SUBSTACK = "https://pbs.substack.com/"
+
+
+def _substack_img(url: str) -> str:
+    """Rewrite a pbs.twimg.com image url to Substack's mirror host.
+
+    A twitter2 `photos` entry renders ONLY when its `img_url` points at Substack's
+    own pbs.substack.com proxy (same path, just a different host) -- a raw
+    pbs.twimg.com url renders blank in the embed. This is exactly the rewrite the
+    editor does when you paste a tweet; the proxy fetches the image from Twitter
+    on demand, so no upload is needed."""
+    return url.replace(_PBS_TWIMG, _PBS_SUBSTACK, 1) if url else url
+
+
 def _media(data: Dict) -> tuple[list, Optional[str]]:
     """Return (photos, video_url) for a tweet.
 
-    Photos are still images; a video/animated_gif tweet additionally contributes
-    its poster thumbnail (so the embed shows a preview frame) and yields the
-    `video_url` Substack's twitter2 card needs to render a player instead of a
-    bare link. The first video wins -- Substack shows a single inline player."""
+    A twitter2 `photos` entry is {img_url, link_url} (NOT url/width/height -- those
+    are ignored by Substack's renderer): img_url is the still image on Substack's
+    mirror host (see _substack_img), link_url is the media's t.co short link. Photos
+    cover still images plus a video/animated_gif's poster thumbnail; the first video
+    also yields the `video_url` Substack needs to render an inline player."""
     photos: list = []
     video_url: Optional[str] = None
     for m in data.get("mediaDetails", []) or []:
         mtype = m.get("type")
         if mtype not in ("photo", "video", "animated_gif"):
             continue
-        info = m.get("original_info", {}) or {}
         photos.append(
             {
-                "url": m.get("media_url_https", ""),
-                "width": info.get("width", 0),
-                "height": info.get("height", 0),
+                "img_url": _substack_img(m.get("media_url_https", "")),
+                "link_url": m.get("url", ""),
             }
         )
         if mtype in ("video", "animated_gif") and video_url is None:
