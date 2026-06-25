@@ -132,19 +132,33 @@ jobs:
       - name: Email newsletter
         run: python email_newsletter.py
 
-      # Auto-create a Substack draft AND schedule it to publish at 12:30 PM ET
-      # (tweets embedded, GIFs/memes included, box scores uploaded). The CI run
-      # fires ~2 AM ET, so it schedules the same day's 12:30 PM slot -- leaving a
-      # morning window for Abram to review and unschedule if needed. Runs LAST and
-      # continue-on-error so a Substack/proxy/Cloudflare hiccup can never block the
-      # email (the product). Routes through a residential proxy (PROXY_URL) because
-      # GitHub Actions' datacenter IP is otherwise Cloudflare-blocked.
-      - name: Schedule Substack post
-        continue-on-error: true
+      # Create the Substack DRAFT (tweets embedded, GIFs/memes included, box scores
+      # uploaded) and record a handoff file naming today's draft id. This is the
+      # MORNING half of the two-job auto-post: the companion publish-substack.yml
+      # job auto-publishes this draft at 12:30 PM ET unless Abram published, edited
+      # away, or deleted it first. (Substack removed its /schedule API endpoint, so
+      # we schedule via our own cron + an immediate publish instead.) Routes through
+      # a residential proxy (PROXY_URL) because GitHub Actions' datacenter IP is
+      # otherwise Cloudflare-blocked. NO continue-on-error: a failure here means no
+      # draft was created, and we want that to surface (it runs LAST, after the
+      # email -- the product -- has already gone out, so a red run never blocks it).
+      - name: Create Substack draft (auto-publishes at 12:30 PM ET)
         env:
           SUBSTACK_COOKIES_STRING: ${{ secrets.SUBSTACK_COOKIES_STRING }}
           SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
           PROXY_URL: ${{ secrets.PROXY_URL }}
         run: |
           pip install python-substack==0.1.22 curl_cffi
-          python substack_poc/publish.py newsletter_substack.html --schedule
+          python substack_poc/publish.py newsletter_substack.html --draft \
+            --state-out substack_post_state.json
+
+      # Commit the handoff so the separate noon workflow (which checks out main) can
+      # read today's draft id. Only runs if the draft step above succeeded.
+      - name: Commit Substack draft handoff
+        run: |
+          git config user.name "SLAP Bot"
+          git config user.email "slap-bot@users.noreply.github.com"
+          git add substack_post_state.json
+          git commit -m "Substack draft handoff for $(date -u +%Y-%m-%d)" || echo "No handoff change to commit"
+          git pull --rebase -X theirs origin main
+          git push

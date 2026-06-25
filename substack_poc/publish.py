@@ -12,13 +12,22 @@ credentials and zero risk of accidentally publishing.
 
 Modes (mutually exclusive)
 --------------------------
-  (default)    --dry-run   Build + print the payload. No network.
-  --draft                  Log in and create a DRAFT (not published).
-  --schedule [--at ISO]    Create a draft and schedule it (default: next 12:30pm ET).
-  --publish                Create a draft, then PUBLISH it live now.
+  (default)         --dry-run   Build + print the payload. No network.
+  --draft                       Log in and create a DRAFT (not published).
+  --publish                     Create a draft, then PUBLISH it live now.
+  --publish-existing            Publish a draft created by an earlier --draft run
+                                (via --state-in/--draft-id) IF it still exists and
+                                is not already published/scheduled. The midday half
+                                of the two-job auto-post -- see daily-newsletter.yml
+                                (morning --draft) + publish-substack.yml (noon).
+  --schedule [--at ISO]         BROKEN: Substack removed the /schedule API endpoint
+                                (returns 404). Use the --draft + --publish-existing
+                                two-job flow instead. Kept only for reference.
 
 Other flags: --title, --subtitle, --out (dry-run JSON dump),
-  --box-score-dir DIR, --no-box-scores.
+  --box-score-dir DIR, --no-box-scores, --state-out PATH (with --draft),
+  --state-in PATH / --draft-id ID (with --publish-existing),
+  --send / --no-send (email subscribers vs web-only; default web-only).
 
 Auth (needed for draft/schedule/publish) comes from a .env file locally, or
 environment variables in CI. Prefer cookies; see .env.example. Order:
@@ -310,9 +319,89 @@ def make_api():
     )
 
 
+def today_et() -> str:
+    """Today's date (ISO) in America/New_York -- the handoff key between the
+    morning 'create draft' job and the midday 'publish' job."""
+    return datetime.now(ET).date().isoformat()
+
+
+def write_state(path: str, draft_id, title: str) -> None:
+    """Record which draft the midday job should publish. Keyed by ET date so a
+    stale file (a morning run that failed days ago) is ignored, never published."""
+    payload = {"date": today_et(), "draft_id": draft_id, "title": title}
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
+    print(f"Wrote draft handoff -> {path}: {payload}")
+
+
+def _resolve_send_email(flag: Optional[bool]) -> bool:
+    """Whether to email subscribers on auto-publish. --send/--no-send wins; else
+    env SUBSTACK_SEND_EMAIL (truthy); else False (web-only) -- the safe default so
+    a first live run can never blast an unintended email."""
+    if flag is not None:
+        return flag
+    return (os.getenv("SUBSTACK_SEND_EMAIL") or "").strip().lower() in ("1", "true", "yes", "on")
+
+
+def _looks_like_not_found(exc: Exception) -> bool:
+    s = str(exc).lower()
+    return "404" in s or "not found" in s
+
+
+def publish_existing(args) -> None:
+    """Publish a draft created by an earlier --draft run -- the midday half of the
+    two-job auto-post. Every 'skip' below is a clean exit 0 (a no-op, not a failure):
+      * no / unreadable handoff file          -> skip (nothing was queued)
+      * handoff is for a different ET date     -> skip (stale; morning likely failed)
+      * draft 404s                             -> skip (you deleted it)
+      * draft already published                -> skip (you published it, or a retry)
+      * draft already has a Substack schedule  -> skip (you scheduled it yourself)
+    Otherwise: prepublish + publish the draft *as it stands now*, so any edits made
+    during the morning review go out automatically. Only unexpected errors raise."""
+    draft_id = args.draft_id
+    recorded_date = None
+    if args.state_in:
+        if not os.path.exists(args.state_in):
+            print(f"[skip] No handoff file at {args.state_in!r}; nothing to auto-publish.")
+            return
+        with open(args.state_in, encoding="utf-8") as f:
+            state = json.load(f)
+        draft_id = draft_id or state.get("draft_id")
+        recorded_date = state.get("date")
+    if not draft_id:
+        print("[skip] No draft id (empty handoff and no --draft-id); nothing to do.")
+        return
+    if recorded_date is not None and recorded_date != today_et():
+        print(f"[skip] Handoff draft is for {recorded_date}, today is {today_et()} -- stale, not publishing.")
+        return
+
+    api = make_api()
+    try:
+        draft = api.get_draft(draft_id)
+    except Exception as e:  # noqa: BLE001 -- 404 means you deleted it; anything else is real
+        if _looks_like_not_found(e):
+            print(f"[skip] Draft {draft_id} not found (deleted) -- nothing to publish.")
+            return
+        raise
+
+    if draft.get("is_published"):
+        print(f"[skip] Draft {draft_id} is already published -- nothing to do.")
+        return
+    if draft.get("postSchedules"):
+        print(f"[skip] Draft {draft_id} already has a Substack schedule -- leaving it alone.")
+        return
+
+    send = _resolve_send_email(args.send_email)
+    title = draft.get("draft_title") or draft.get("title") or "(untitled)"
+    print(f"Publishing draft {draft_id} ({title!r}) now -- email_subscribers={send}.")
+    api.prepublish_draft(draft_id)
+    published = api.publish_draft(draft_id, send=send)
+    print(f"PUBLISHED. is_published={published.get('is_published')} slug={published.get('slug', '')}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Publish a SLAP newsletter to Substack.")
-    ap.add_argument("input", help="path to newsletter_substack.html")
+    ap.add_argument("input", nargs="?", help="path to newsletter_substack.html (omit for --publish-existing)")
     ap.add_argument("--title", help="post title (default: derived from date)")
     ap.add_argument("--subtitle", default="", help="post subtitle")
     mode = ap.add_mutually_exclusive_group()
@@ -320,6 +409,9 @@ def main() -> None:
     mode.add_argument("--draft", action="store_true", help="create a Substack draft")
     mode.add_argument("--schedule", action="store_true", help="create a draft and schedule it (12:30pm ET by default)")
     mode.add_argument("--publish", action="store_true", help="create a draft AND publish it live now")
+    mode.add_argument("--publish-existing", action="store_true",
+                      help="publish a draft made by an earlier --draft run (via --state-in/--draft-id), "
+                           "only if it still exists and is not already published/scheduled")
     ap.add_argument(
         "--at",
         help="schedule time, ISO 8601 (e.g. 2026-06-05T12:30). Interpreted as ET if no offset. "
@@ -331,7 +423,25 @@ def main() -> None:
         help="dir holding box_score_sport_*.png (default: input file's dir, else ./box_score)",
     )
     ap.add_argument("--no-box-scores", action="store_true", help="skip box score image upload")
+    ap.add_argument("--state-out", metavar="PATH",
+                    help="with --draft: write a {date,draft_id,title} handoff file for a later --publish-existing run")
+    ap.add_argument("--state-in", metavar="PATH",
+                    help="with --publish-existing: read the handoff file written by an earlier --draft run")
+    ap.add_argument("--draft-id", help="with --publish-existing: target this draft id directly (instead of --state-in)")
+    send = ap.add_mutually_exclusive_group()
+    send.add_argument("--send", dest="send_email", action="store_true", default=None,
+                      help="email subscribers when publishing (default: web-only, or env SUBSTACK_SEND_EMAIL)")
+    send.add_argument("--no-send", dest="send_email", action="store_false", default=None,
+                      help="publish web-only, no email")
+    ap.set_defaults(send_email=None)
     args = ap.parse_args()
+
+    # --publish-existing is the lightweight midday job: no HTML build, just auth + publish.
+    if args.publish_existing:
+        publish_existing(args)
+        return
+    if not args.input:
+        ap.error("input HTML path is required (omit only with --publish-existing)")
 
     with open(args.input, encoding="utf-8") as f:
         blocks = convert.html_to_blocks(f.read())
@@ -384,6 +494,9 @@ def main() -> None:
     draft = api.post_draft(post.get_draft())
     draft_id = draft.get("id")
     print(f"Created draft id={draft_id}")
+
+    if args.state_out:
+        write_state(args.state_out, draft_id, title)
 
     if args.publish:
         api.prepublish_draft(draft_id)

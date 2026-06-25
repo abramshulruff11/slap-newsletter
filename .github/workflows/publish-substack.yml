@@ -1,0 +1,55 @@
+name: Publish SLAP Substack (12:30 PM ET)
+
+# Midday half of the two-job Substack auto-post. The morning daily-newsletter.yml
+# run creates a DRAFT and commits a handoff file (substack_post_state.json) naming
+# today's draft id. This job fires at ~12:30 PM ET and publishes that draft -- but
+# ONLY if it still exists and Abram hasn't already published, scheduled, or deleted
+# it. Every "nothing to do" case is a graceful skip (green run); only an unexpected
+# error fails the run. (Substack removed its native /schedule API endpoint, so we
+# "schedule" by running our own cron + an immediate publish.)
+on:
+  schedule:
+    # 16:30 UTC = 12:30 PM EDT. NOTE: GitHub cron is UTC and ignores DST, so in
+    # winter (EST) this fires at 11:30 AM ET. Adjust to '30 17 * * *' if you want
+    # 12:30 ET year-round during standard time.
+    - cron: '30 16 * * *'
+  workflow_dispatch:
+    inputs:
+      send_email:
+        description: 'Email Substack subscribers on publish (default: web-only)'
+        type: boolean
+        default: false
+
+# Avoid two overlapping publishes (e.g. a manual dispatch during the scheduled run).
+concurrency:
+  group: publish-substack
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repo (latest main = today's committed handoff)
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Substack deps
+        run: pip install python-substack==0.1.22 curl_cffi python-dotenv requests
+
+      - name: Auto-publish today's draft if still unpublished
+        env:
+          SUBSTACK_COOKIES_STRING: ${{ secrets.SUBSTACK_COOKIES_STRING }}
+          SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
+          PROXY_URL: ${{ secrets.PROXY_URL }}
+          # Scheduled runs send no inputs -> default to web-only (safe). Flip via a
+          # manual "Run workflow" with send_email checked, or change the default.
+          SUBSTACK_SEND_EMAIL: ${{ github.event.inputs.send_email || 'false' }}
+        run: |
+          python substack_poc/publish.py --publish-existing \
+            --state-in substack_post_state.json
