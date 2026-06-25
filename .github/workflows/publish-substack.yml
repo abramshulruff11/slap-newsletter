@@ -16,9 +16,9 @@ on:
   workflow_dispatch:
     inputs:
       send_email:
-        description: 'Email Substack subscribers on publish (default: web-only)'
+        description: 'Email Substack subscribers on publish (uncheck for a silent web-only test)'
         type: boolean
-        default: false
+        default: true
 
 # Avoid two overlapping publishes (e.g. a manual dispatch during the scheduled run).
 concurrency:
@@ -47,9 +47,11 @@ jobs:
           SUBSTACK_COOKIES_STRING: ${{ secrets.SUBSTACK_COOKIES_STRING }}
           SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
           PROXY_URL: ${{ secrets.PROXY_URL }}
-          # Scheduled runs send no inputs -> default to web-only (safe). Flip via a
-          # manual "Run workflow" with send_email checked, or change the default.
-          SUBSTACK_SEND_EMAIL: ${{ github.event.inputs.send_email || 'false' }}
+          # Substack subscribers get this newsletter by EMAIL, so the daily auto-
+          # publish sends the email (= a normal Substack publish). Scheduled runs
+          # carry no inputs -> 'true'. A manual run can uncheck send_email for a
+          # silent web-only test (then it resolves to the string 'false').
+          SUBSTACK_SEND_EMAIL: ${{ github.event.inputs.send_email || 'true' }}
         run: |
           python substack_poc/publish.py --publish-existing \
             --state-in substack_post_state.json
