@@ -291,8 +291,27 @@ def _install_proxy_session() -> None:
     print("Using residential proxy + curl_cffi(chrome) for Substack requests.")
 
 
-def make_api():
-    """Authenticate against Substack using whatever .env / env vars provide."""
+def _looks_like_transient_network_error(exc: Exception) -> bool:
+    """True for proxy/connection-level failures worth retrying (timeouts, CONNECT
+    tunnel errors, resets) -- NOT real API responses (bad cookies, 404s, etc.),
+    which a retry can't fix. The residential proxy that routes CI's datacenter IP
+    around Cloudflare occasionally drops the connect handshake; see the Jul/Aug
+    2026 CI failure streak, which was ~90% this exact error."""
+    s = str(exc).lower()
+    return any(t in s for t in (
+        "timed out", "timeout", "tunnel failed", "connection reset",
+        "connection refused", "failed to perform", "remote end closed",
+    ))
+
+
+def make_api(attempts: int = 3, base_delay: int = 15):
+    """Authenticate against Substack using whatever .env / env vars provide.
+
+    Retries on transient proxy/network failures with backoff (15s, 30s, ...)
+    since the Api() constructor itself makes the first network call (signin).
+    Real API/credential errors raise immediately without retrying."""
+    import time
+
     try:  # .env is for local use; in CI the vars come from the environment.
         from dotenv import load_dotenv
 
@@ -303,20 +322,35 @@ def make_api():
     _install_proxy_session()
     from substack import Api
     pub = os.getenv("SUBSTACK_PUBLICATION_URL") or None
-    if os.getenv("SUBSTACK_COOKIES_PATH"):
-        return Api(cookies_path=os.environ["SUBSTACK_COOKIES_PATH"], publication_url=pub)
-    if os.getenv("SUBSTACK_COOKIES_STRING"):
-        return Api(cookies_string=os.environ["SUBSTACK_COOKIES_STRING"], publication_url=pub)
-    if os.getenv("SUBSTACK_EMAIL") and os.getenv("SUBSTACK_PASSWORD"):
-        return Api(
-            email=os.environ["SUBSTACK_EMAIL"],
-            password=os.environ["SUBSTACK_PASSWORD"],
-            publication_url=pub,
+
+    def _connect():
+        if os.getenv("SUBSTACK_COOKIES_PATH"):
+            return Api(cookies_path=os.environ["SUBSTACK_COOKIES_PATH"], publication_url=pub)
+        if os.getenv("SUBSTACK_COOKIES_STRING"):
+            return Api(cookies_string=os.environ["SUBSTACK_COOKIES_STRING"], publication_url=pub)
+        if os.getenv("SUBSTACK_EMAIL") and os.getenv("SUBSTACK_PASSWORD"):
+            return Api(
+                email=os.environ["SUBSTACK_EMAIL"],
+                password=os.environ["SUBSTACK_PASSWORD"],
+                publication_url=pub,
+            )
+        raise SystemExit(
+            "No Substack credentials found. Copy .env.example to .env and fill it in "
+            "(cookies recommended). See README.md."
         )
-    raise SystemExit(
-        "No Substack credentials found. Copy .env.example to .env and fill it in "
-        "(cookies recommended). See README.md."
-    )
+
+    for attempt in range(1, attempts + 1):
+        try:
+            return _connect()
+        except SystemExit:
+            raise
+        except Exception as e:  # noqa: BLE001
+            if not _looks_like_transient_network_error(e) or attempt == attempts:
+                raise
+            delay = base_delay * attempt
+            print(f"  Substack auth attempt {attempt}/{attempts} failed "
+                  f"({type(e).__name__}: {str(e)[:100]}); retrying in {delay}s...")
+            time.sleep(delay)
 
 
 def today_et() -> str:
