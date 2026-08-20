@@ -406,7 +406,14 @@ def main() -> None:
             print(f"  ⚠ {n_dropped} placeholder(s) removed — no matching clip")
 
     # ---- Write output ----------------------------------------------------
-    out_path = G.OUTPUT_DIR / f"newsletter_uat_{date.today().isoformat()}.html"
+    # A partial run must not overwrite the full-chain artifact. Without Pass 7
+    # the media is still un-rendered placeholders, and silently clobbering a
+    # good rendered issue with that is a nasty surprise mid-iteration.
+    suffix = "" if "7" in passes else "_partial"
+    if suffix:
+        print(f"\n  (partial run — media not rendered; writing *{suffix}.html "
+              f"so the full-chain output is preserved)")
+    out_path = G.OUTPUT_DIR / f"newsletter_uat_{date.today().isoformat()}{suffix}.html"
     out_path.write_text(G.DRAFT_TEMPLATE.format(content=html), encoding="utf-8")
     print(f"\n  ✓ {out_path.relative_to(G.REPO_ROOT)}")
 
