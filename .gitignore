@@ -7,3 +7,11 @@ python
 Archive/
 prompts/Archive/
 game_state.json
+prototype/output/
+
+# UAT sandbox (uat/media-mix) — generated output only.
+# uat/fixtures/ is deliberately NOT ignored: the frozen input is the control.
+uat/output/
+uat/media/
+!uat/fixtures/
+!uat/fixtures/game_state.json
