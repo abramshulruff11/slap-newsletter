@@ -1227,13 +1227,39 @@ def run_pass1b(story_plan: str, video_tweets: list, client: anthropic.Anthropic)
         print("  No video tweets tagged — no highlights to select.")
         return []
 
+    # Only the sections that actually get WRITTEN are valid homes for a clip.
+    # The plan's story_log is much larger (it logs Around-the-League and
+    # continuing stories too) — feeding it here let the model attach clips to
+    # stories the newsletter never runs, and the writer then had nowhere to put
+    # them. Observed 2026-08-19: 19 logged topic_keys vs 7 written sections.
+    try:
+        plan = json.loads(story_plan)
+    except json.JSONDecodeError:
+        print("  ⚠ story plan unparseable — skipping highlight selection")
+        return []
+
+    sections = []
+    lead = plan.get("lead_story") or {}
+    if lead:
+        sections.append({"story_id": lead.get("topic", "lead"),
+                         "headline": lead.get("headline", ""),
+                         "slot": "lead"})
+    for s in plan.get("supporting_stories", []):
+        sections.append({"story_id": s.get("topic", ""),
+                         "headline": s.get("headline", ""),
+                         "slot": "supporting"})
+    if not sections:
+        print("  ⚠ no written sections in plan — skipping highlight selection")
+        return []
+    valid_story_ids = {s["story_id"] for s in sections}
+
     candidates = [
         {"account": t.get("account", ""),
          "text":    t.get("text", ""),
          "url":     t.get("link", "")}
         for t in video_tweets
     ]
-    print(f"  {len(candidates)} video tweet candidate(s)")
+    print(f"  {len(sections)} written section(s), {len(candidates)} video tweet candidate(s)")
 
     tool_definition = {
         "name": "submit_highlight_plan",
@@ -1266,7 +1292,11 @@ def run_pass1b(story_plan: str, video_tweets: list, client: anthropic.Anthropic)
     }
 
     user_message = (
-        "## TODAY'S STORY PLAN\n\n" + story_plan
+        "## SECTIONS BEING WRITTEN TODAY\n\n"
+        "These are the ONLY valid values for story_id. A clip that does not "
+        "belong to one of these has no home in the newsletter and must not be "
+        "selected.\n\n"
+        + json.dumps(sections, ensure_ascii=False, indent=2)
         + "\n\n## VIDEO TWEET CANDIDATES\n\n"
         + json.dumps(candidates, ensure_ascii=False, indent=2)
     )
@@ -1311,6 +1341,13 @@ def run_pass1b(story_plan: str, video_tweets: list, client: anthropic.Anthropic)
             continue
         if not (h.get("description") or "").strip():
             print(f"  ⚠ dropped {h.get('id','?')} — empty description")
+            continue
+        # A clip pinned to a story that is never written cannot be placed, and
+        # the writer silently discards it. Drop it here so the failure is loud
+        # and so we never pay to encode a GIF nothing can use.
+        if h.get("story_id") not in valid_story_ids:
+            print(f"  ⚠ dropped {h.get('id','?')} — story_id "
+                  f"'{h.get('story_id')}' is not a written section")
             continue
         kept.append(h)
 
