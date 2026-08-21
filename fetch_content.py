@@ -4,11 +4,20 @@ Filters everything to the last 24 hours and writes raw_content.json.
 """
 
 import json
+import socket
 import time
 from datetime import datetime, timezone, timedelta
 from time import mktime
 
 import feedparser
+
+# feedparser.parse() opens URLs via urllib with no timeout of its own, so a host
+# that accepts the connection but never responds hangs the call forever. That's
+# what happened 2026-08-21: a single stalled request ate the whole 30-minute CI
+# job with zero output, and every later pass got skipped. This bounds every
+# feedparser.parse() call in this file (news + Nitter) at the socket level.
+FEED_TIMEOUT_SECONDS = 15
+socket.setdefaulttimeout(FEED_TIMEOUT_SECONDS)
 
 
 # ── Sports news RSS feeds ────────────────────────────────────────────────────
