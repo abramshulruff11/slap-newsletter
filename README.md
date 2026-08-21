@@ -6,4 +6,6 @@ Voice: Inclusive, joyful, knowledgeable. The opposite of sports gatekeeping.
 Core Sports: NFL (anchor), NBA, College Football, College Basketball, MLB
 Sprinkled In: Golf, Tennis, NHL, Soccer, College Baseball, WNBA
 Founding Account List:
-SharpFootball, AdamSchefter, BarstoolBigCat, PFTCommenter, TheNBACentel, BallsackSports, Ihartitz, HaterReport, ESPN, coleadamss, OldTakesExposed, StatMuse, W_B_Rick, mickjason, ArtButSports, JayCuda, HouseOfHighlights
+SharpFootball, AdamSchefter, BarstoolBigCat, PFTCommenter, TheNBACentel, BallsackSports, Ihartitz, HaterReport, ESPN, coleadamss, OldTakesExposed, StatMuse, W_B_Rick, mickjason, ArtButSports, JayCuda, HoHighlights
+
+(The live list is `TWITTER_HANDLES` in `fetch_content.py`; the above is the founding set. HouseOfHighlights renamed itself to HoHighlights.)
