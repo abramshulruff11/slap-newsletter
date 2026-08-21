@@ -17,6 +17,7 @@ import sys
 import json
 import re
 import argparse
+from html import escape as escape_html
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -520,7 +521,7 @@ def embed_gifs_in_html(html: str, api_key: str, repo_root: Path = None) -> tuple
             )
             img_html = (
                 f'<div style="margin: 16px 0; text-align: center;">'
-                f'<img src="{gif_url}" alt="{chosen_query}" '
+                f'<img src="{escape_html(gif_url, quote=True)}" alt="{escape_html(chosen_query, quote=True)}" '
                 f'style="max-width: 100%; border-radius: 8px;" />'
                 f'</div>'
             )
