@@ -96,8 +96,13 @@ _builtins.__import__ = _blocked_import
 # Sonnet — prompts tuned for Sonnet may need adjustment if output regresses.
 # Also ships with a new tokenizer that can use 1.0–1.35x more tokens for the
 # same input vs. 4.6; budget for that when reading the cost summary.
-MODEL_DEFAULT = "claude-sonnet-4-5"   # Pass 1, 4, 6
+MODEL_DEFAULT = "claude-sonnet-4-5"   # Pass 4, 6
 MODEL_WRITER  = "claude-opus-4-7"     # Pass 2
+# UAT beats test: Pass 1 becomes the editorial brain (story selection + beat
+# skeletons), so it gets its own model constant instead of sharing
+# MODEL_DEFAULT with Pass 4/6. Pass 1B (highlight selection) stays on
+# MODEL_DEFAULT deliberately — it's a small selection task, not judgment-heavy.
+MODEL_PASS1   = "claude-opus-4-7"     # Pass 1
 
 # Backwards-compat alias — some downstream code still references MODEL.
 MODEL = MODEL_DEFAULT
@@ -928,7 +933,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
 
         try:
             response = client.messages.create(
-                model=MODEL_DEFAULT,
+                model=MODEL_PASS1,
                 max_tokens=16384,
                 system=[
                     {
@@ -1081,7 +1086,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 )
                 print("  ⚠ Fixed malformed tweet URLs (status= → status/)")
 
-            cost_summary("PASS 1", MODEL_DEFAULT, total_in, total_out, total_cache_read, total_cache_write)
+            cost_summary("PASS 1", MODEL_PASS1, total_in, total_out, total_cache_read, total_cache_write)
             if attempt > 1:
                 print(f"  ✓ Pass 1 succeeded on attempt {attempt}/{MAX_ATTEMPTS}")
 
@@ -1166,7 +1171,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 })
 
         else:
-            cost_summary("PASS 1", MODEL_DEFAULT, total_in, total_out, total_cache_read, total_cache_write)
+            cost_summary("PASS 1", MODEL_PASS1, total_in, total_out, total_cache_read, total_cache_write)
             print(f"  ✗ Pass 1 FAILED after {MAX_ATTEMPTS} attempts: {validation_error}")
             raise RuntimeError(
                 f"Pass 1 produced invalid output after {MAX_ATTEMPTS} attempts. "
