@@ -705,11 +705,32 @@ def normalize_plan(plan: dict) -> dict:
     def safe_str(val) -> str:
         return val if isinstance(val, str) else ""
 
+    def normalize_beat_list(val) -> list:
+        """Same guarantee as safe_tweet_list, one level down: each beat's
+        media[] gets the fabricated-URL filter too, and a beat missing its
+        required text fields is dropped rather than crashing a downstream
+        consumer that assumes angle/landing are present strings."""
+        out = []
+        for b in safe_list(val):
+            if not isinstance(b, dict):
+                continue
+            angle   = safe_str(b.get("angle"))
+            landing = safe_str(b.get("landing"))
+            if not angle or not landing:
+                continue
+            out.append({
+                "angle": angle,
+                "landing": landing,
+                "media": safe_tweet_list(b.get("media")),
+            })
+        return out
+
     def normalize_story(val) -> dict:
         s = safe_dict(val)
         s["tweets"] = safe_tweet_list(s.get("tweets"))
         s["gif_concept"]  = safe_str(s.get("gif_concept"))
         s["meme_concept"] = safe_str(s.get("meme_concept"))
+        s["beats"]        = normalize_beat_list(s.get("beats"))
         return s
 
     plan["lead_story"]         = normalize_story(plan.get("lead_story"))
@@ -847,6 +868,20 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         },
         "required": ["account", "url"],
     }
+    # UAT beats test: a beat is one complete emotional/informational movement
+    # (setup + landing) within a story. Optional — a light story with no real
+    # sub-angles can submit zero beats and the writer falls back to
+    # research_notes alone. "media" holds candidate tweet(s) for that beat;
+    # empty if the beat is carried by prose/GIF/meme instead.
+    _beat = {
+        "type": "object",
+        "properties": {
+            "angle":   {"type": "string"},
+            "landing": {"type": "string"},
+            "media":   {"type": "array", "items": _tweet},
+        },
+        "required": ["angle", "landing"],
+    }
     _story = {
         "type": "object",
         "properties": {
@@ -856,6 +891,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             "research_notes": {"type": "string"},
             "gif_concept":    {"type": "string"},
             "meme_concept":   {"type": "string"},
+            "beats":          {"type": "array", "items": _beat},
         },
         "required": ["topic", "headline", "tweets"],
     }
@@ -1040,6 +1076,18 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                     kept.append(t)
                 return kept, len(tweets) - len(kept)
 
+            def _filter_beats(beats):
+                # Beats-test wiring: each beat's candidate media goes through
+                # the same cross-reference-and-attach as top-level tweets, so
+                # Pass 2 never receives a beat pointing at a fabricated URL —
+                # it only ever sees beats whose media is already verified with
+                # real attached text, or no media at all (prose/GIF/meme beat).
+                dropped = 0
+                for beat in beats:
+                    beat["media"], n = _filter_and_attach(beat.get("media", []))
+                    dropped += n
+                return beats, dropped
+
             # Safety: if we extracted no usable IDs from raw content, the filter
             # can't validate anything \u2014 and dropping every tweet is far worse
             # than keeping them (it forces Pass 2 to fabricate placeholder URLs).
@@ -1050,14 +1098,18 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 _fab_total = 0
                 _lead = plan.get("lead_story", {})
                 _lead["tweets"], _n = _filter_and_attach(_lead.get("tweets", []))
-                plan["lead_story"] = _lead
                 _fab_total += _n
+                _lead["beats"], _n = _filter_beats(_lead.get("beats", []))
+                _fab_total += _n
+                plan["lead_story"] = _lead
 
                 _new_sup = []
                 for _s in plan.get("supporting_stories", []):
                     _s["tweets"], _n = _filter_and_attach(_s.get("tweets", []))
-                    _new_sup.append(_s)
                     _fab_total += _n
+                    _s["beats"], _n = _filter_beats(_s.get("beats", []))
+                    _fab_total += _n
+                    _new_sup.append(_s)
                 plan["supporting_stories"] = _new_sup
 
                 _atl = plan.get("around_the_league", {})
