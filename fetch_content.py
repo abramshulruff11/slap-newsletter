@@ -4,11 +4,17 @@ Filters everything to the last 24 hours and writes raw_content.json.
 """
 
 import json
+import socket
 import time
 from datetime import datetime, timezone, timedelta
 from time import mktime
 
 import feedparser
+
+# feedparser's fetch has no timeout of its own; a single stalled Nitter
+# connection can hang the whole run until the CI job's 30-minute cap kills it.
+FEED_TIMEOUT_SECONDS = 15
+socket.setdefaulttimeout(FEED_TIMEOUT_SECONDS)
 
 
 # ── Sports news RSS feeds ────────────────────────────────────────────────────
