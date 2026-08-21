@@ -1,0 +1,152 @@
+## GIF REFERENCE — Organized by Emotional Beat
+
+This is your GIF menu. When you need a GIF, identify the EMOTION first, then pick from the options below. ROTATE — do not use the same GIF in consecutive issues. Max 1 use of any specific GIF per issue.
+
+## ⚠️ HIGH-RISK OVERUSE — CHECK BEFORE USING
+
+These four GIFs are the highest-confidence matches for common emotions, which means they get selected constantly. Before using ANY of them, check **gif_history.json** (not recent_output.json — that's a different file). If it appeared in the last 7 issues, it is BANNED for today — pick the next option in the category instead.
+
+**How to read gif_history.json:** It contains a list of recently used GIFs with dates and search terms. If you see your intended GIF's search term in any entry from the past 7 days, pick a different one from the same category below.
+
+| GIF | Emotion | Overuse Risk | Alternative |
+|-----|---------|--------------|-------------|
+| "This is fine" dog | Disaster / franchise chaos | CRITICAL | Elmo fire, Squidward looking out window, Titanic sinking |
+| CJ San Andreas "ah shit here we go again" | Recurring failure | CRITICAL | Spongebob "aight imma head out", Community pizza fire |
+| Vince McMahon progressive excitement | Dominance / escalation | CRITICAL | Eduardo Saverin escalation, Galaxy brain, Pepe Silvia board |
+| Surprised Pikachu | Ironic self-inflicted consequences | HIGH | Jordan Peele sweating, Arrested Development "huge mistake" |
+
+If you are about to use one of these and haven't checked recent_output.json, STOP and check first.
+
+================================================================================
+ESCALATION — It keeps getting better / worse
+================================================================================
+
+- Vince McMahon progressive excitement (MAX 1x per WEEK — this is overused)
+- Eduardo Saverin "a million dollars isn't cool, you know what's cool?" — each stat escalates
+- Eric Andre "let me in" → progressively more desperate
+- Galaxy brain meme (expanding brain) — each take gets more unhinged
+- Pepe Silvia conspiracy board — when the stats/connections pile up
+- Will Smith entanglement table — the reveal keeps getting worse
+- Troy walking in with pizza, apartment on fire (Community) — everything escalated while you were gone
+
+================================================================================
+DISBELIEF — This can't be real
+================================================================================
+
+- Blinking white guy (Drew Scanlon)
+- Math lady / woman calculating (Confused Dash from The Incredibles works too)
+- Jim Halpert looking at camera (The Office)
+- Alonzo Mourning confused nodding — pretending to understand but clearly baffled
+- Robert Downey Jr. eye roll
+- Jackie Chan confused hands
+- Squidward looking out window — watching something unbelievable happen
+
+================================================================================
+RESPECT / AWE — This person is different
+================================================================================
+
+- Leonardo DiCaprio raising glass (Django / Great Gatsby)
+- Denzel Washington "my man"
+- The nod of respect (Jeremiah Johnson / Robert Redford)
+- MJ "and I took that personally" — USE ONLY when someone has a grudge motivation, NOT for generic respect
+- Kobe nodding / killer stare — approval from greatness
+- LeBron "that's crazy" courtside reaction
+- Shaq shimmy — when someone is just cooking
+
+================================================================================
+PANIC / DISASTER — Everything is falling apart
+================================================================================
+
+- This is fine dog in burning room
+- Elmo in front of fire (Sesame Street)
+- CJ San Andreas "ah shit here we go again"
+- Titanic sinking — when a franchise is going down
+- Spongebob "aight imma head out"
+- Community pizza fire (Troy) — walked into chaos
+
+================================================================================
+FINANCIAL PAIN / OVERPAYING
+================================================================================
+
+- Tiger King "I will never financially recover from this"
+- Woody Harrelson wiping tears with money — when someone overpaid but doesn't care
+- Mr. Krabs blurry eyes — staring at the contract number
+- Thanos "what did it cost? Everything"
+- Arrested Development "I've made a huge mistake"
+- Office Space "that would be great" — passive aggressive spending
+
+================================================================================
+SMUGNESS / VINDICATION — Called it / told you so
+================================================================================
+
+- Jordan Peele sweating then relieved
+- Supa Hot Fire "I'm not a rapper" celebration
+- Vince Carter "it's over" point (after the dunk)
+- Larry David HBO curb shrug — "eh, I was right"
+- Nick Young confused face / question marks — but used ironically for "obviously"
+- Leonardo DiCaprio pointing at TV (Once Upon a Time in Hollywood) — "THAT'S what I've been saying"
+
+================================================================================
+SADNESS / RESIGNATION — It's over / they lost
+================================================================================
+
+- Michael Jordan crying face (the classic meme)
+- Sad Charlie Brown walk (Arrested Development version works too)
+- Fresh Prince "how come he don't want me" — when a player gets traded/cut
+- John Travolta confused (Pulp Fiction) — looking around for something that's gone
+- Willy Wonka "you get nothing, good day sir"
+- Ben Affleck smoking — defeated acceptance (OVERUSED — check gif_history before using)
+- Michael Scott "no no no no no" — watching something go wrong in slow motion
+- Peter Griffin falling down the stairs — escalating self-inflicted pain
+- Pam from The Office crying at her desk — quiet devastation
+- SpongeBob crying into his hands — ugly cry energy, pure grief
+- Thanos sitting alone watching the sunrise (after snapping) — mission accomplished but at what cost
+- Ron Burgundy "I'm in a glass case of emotion" — overwhelmed and alone
+- Schitt's Creek David Rose dramatic collapse — overly dramatic disappointment
+- Walter White sitting in the parking garage — quiet, crushing defeat
+- Ted Lasso locker room crying — earnest sadness, not petty
+- The "it wasn't supposed to end this way" stock photo man — generic but effective irony
+
+================================================================================
+RETURN / COMEBACK
+================================================================================
+
+- "I'm back" (Jordan press conference)
+- Undertaker sit-up — back from the dead
+- Gandalf "I am Gandalf the White" — returned stronger
+- John Cena "are you sure about that" — surprise return
+- Steve Buscemi "how do you do fellow kids" — USE ONLY for awkward/forced returns, not genuine comebacks
+
+================================================================================
+PETTY / DRAMA
+================================================================================
+
+- Michael Jackson eating popcorn — watching drama unfold
+- Kermit sipping tea — "but that's none of my business"
+- Oprah "you get a car" — when everyone is getting something (trades, extensions, suspensions)
+- Real Housewives table flip — maximum drama
+- SpongeBob "I'll have you know" — petty flex
+- Kevin Hart "it's about to go down"
+
+================================================================================
+DOMINATION — Someone is absolutely destroying
+================================================================================
+
+- Thanos "I am inevitable"
+- Stone Cold Steve Austin stunner — total destruction
+- John Wick pencil scene — efficient violence
+- Bane "you merely adopted the dark" — they were never in the same class
+- Homelander slow clap (The Boys) — menacing superiority
+- Patrick Bateman business card scene — flexing superiority
+
+================================================================================
+ROTATION RULES
+================================================================================
+
+1. Check recent_output.json before selecting ANY GIF. Do not reuse a GIF from yesterday.
+2. MAX 1 use of any specific GIF per issue.
+3. Vince McMahon escalation: MAX 1x per week. If used in the last 3 issues, pick a different escalation GIF.
+4. Tiger King financial: MAX 1x per week. Rotate with Woody Harrelson, Mr. Krabs, or Thanos.
+5. MJ crying face: MAX 1x per week. Rotate with Charlie Brown, Ben Affleck, or Fresh Prince.
+6. If you catch yourself reaching for the same GIF you always use for this emotion, STOP and pick option #2 or #3 from the category instead.
+7. When in doubt, pick the less obvious option. The reader has seen Vince McMahon 1000 times. They haven't seen the Eduardo Saverin or Pepe Silvia version of the same joke.

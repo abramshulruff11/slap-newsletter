@@ -1,0 +1,101 @@
+## ROLLING FEEDBACK — Hard rules extracted from real output failures.
+## Apply every rule, every time. These override general guidance in
+## pass2_writer.txt when in conflict.
+##
+## STAGING AREA: when a rule here has proven out, promote it into the right base
+## prompt (pass1_story_selector.txt, pass2_writer.txt, or editor_prompt.txt) and
+## remove it from here — so every rule lives in exactly one place. Rules that
+## duplicate a base prompt have been retired from this file.
+
+================================================================================
+RULE 1 — ACCOUNT CAP (headliners only; ATL uncapped)
+================================================================================
+Diversity is a headliner concern; Around the League is a highlight reel.
+- Headliner sections (lead + supporting): no account may appear more than 2
+  times, counted across the headliners only.
+- Around the League: NO per-account cap. Keep two floors only — at least 4
+  distinct accounts, and never two tweets from the same account back-to-back.
+- Independent budgets: an account that already hit its headliner cap of 2 may
+  still appear in ATL. The cap counts headliner appearances only.
+Selection source of truth is pass1_story_selector.txt; editor CHECK 3 enforces
+the headliner cap.
+
+================================================================================
+RULE 2 — NO REPEAT MEDIA WITHIN 7 DAYS
+================================================================================
+No GIF or Meme used in the last 7 days may be reused. The user message includes
+a "RECENTLY USED MEDIA — DO NOT REPEAT" list (GIF concepts and meme templates
+from the last 7 days, built from gif_history.json / meme_history.json). Before
+selecting any GIF or Meme, check that list; if a GIF concept or Meme
+template/concept matches anything on it, choose a different one. The only
+exception is a deliberate same-story escalation callback (CRAFT RULE #6 in
+pass2_writer.txt).
+
+================================================================================
+RULE 3 — HISTORICAL CLAIMS: SOURCE OR DO NOT MAKE [Added: 2026-06-01]
+================================================================================
+Numerical historical claims — "X-year drought," "first since YYYY," "most
+since Z," "longest streak in N years" — are the #1 source of factual errors
+in this newsletter. The model fills them from training memory under pressure
+and gets them wrong.
+
+CANONICAL FAILURE: 6/1/2026 lead claimed the Knicks "ended a 53-year Finals
+drought" upon reaching the 2026 Finals. The 53-year figure is the
+CHAMPIONSHIP drought (last title 1973, still ongoing). The APPEARANCE drought
+is 27 years (last Finals appearance 1999). Conflating the two destroyed
+reader trust on the most-read line of the issue.
+
+RULES:
+1. If a specific numerical historical claim appears in a tweet or article
+   provided in raw_content, you may quote it — use the exact framing in the
+   source.
+2. If you want to make a historical claim that is NOT in raw_content, you
+   must specify what kind of drought/streak (championship vs. appearance
+   vs. playoff series vs. playoff win) AND that exact number must be
+   correct. If you cannot verify the kind and the number, do not make the
+   claim.
+3. If you must reference history without a verified number, use RELATIVE
+   framing — "their first Finals since the '90s," "their longest run in a
+   generation" — not specific years or counts. Relative phrasing cannot be
+   factually wrong; specific phrasing can.
+4. "Defending champion" applies only to the team that won the most recent
+   completed championship. Verify against game_state.json before using.
+
+The principle: a specific wrong number is far worse than a vague right
+impression. When in doubt, write it vague.
+
+================================================================================
+RULE 4 — SENTENCE RHYTHM AND PARALLEL CONSTRUCTIONS [Added: 2026-06-01]
+================================================================================
+Two failures from 6/1/2026 share a root cause: the writer hits the
+punchy-fragment register and never exits it. SLAP voice IS punchy, but six
+consecutive short sentences reads like a Wikipedia bullet list converted to
+prose, not group-chat narration.
+
+FAILURE A — choppy parallel:
+  "Victor Wembanyama is 22. In 1999, the Spurs won their first championship.
+   Tim Duncan was 23 in his second season. Wemby is in his third. Duncan won
+   Finals MVP that year. Wembanyama just dropped 22 and seven boards in Game
+   7 to eliminate the defending champion Thunder."
+Six sentences, all 5–14 words, all the same rhythm. The Wemby/Duncan
+parallel is interesting content rendered as a list.
+
+FIX A: When stacking a multi-fact parallel, vary length. One or two short
+sentences for impact, then weave one longer sentence that connects the
+threads. The goal is the rhythm of a friend talking, not a stat sheet.
+
+FAILURE B — broken "or" parallelism:
+  "Twenty-seven years later, they're back. Or the Knicks finally get revenge."
+The first half is about an APPEARANCE ("they're back"). The second half is
+about an OUTCOME ("finally get revenge"). "Or" demands both halves describe
+the same dimension. Mixing dimensions reads as a non-sequitur.
+
+FIX B: If you write a sentence with "Or X" as an alternate framing, both
+halves must describe the same dimension. Either both about appearance —
+"both franchises are back" — or both about outcome — "the Spurs run it back.
+Or the Knicks finally get even." Never mix.
+
+THE RULE: After writing a passage, count consecutive sentences under 15
+words. If you hit four, the next sentence must be longer. After writing any
+"Or X" construction, verify both halves describe the same dimension; if not,
+rewrite one of them.
