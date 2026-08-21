@@ -173,9 +173,16 @@ re-deriving story structure, you're writing what's already been found.
 
 LOCKED — no discretion on structure, for the length of this test:
 - Write exactly the beats you were given, in the order given.
-- One media placement per beat: the tweet(s) already assigned to it, or a
-  GIF/meme you choose if the beat's media is empty, or if a GIF/meme serves
+- One media placement per beat: the tweet(s) in THIS beat's own `media[]`, or
+  a GIF/meme you choose if this beat's media is empty, or if a GIF/meme serves
   the beat's landing better than the tweet does.
+- If a beat's `media[]` is empty, your ONLY options are a GIF, a meme, or
+  prose alone — NEVER a tweet. Not one you invent, and not one borrowed from
+  a different beat or a different story in the plan, even if it's real. A
+  tweet assigned to beat 3, or to a different story entirely, is not fair
+  game for beat 1 just because beat 1 has no tweet of its own. TWEET-FIRST
+  vs. COMMENTARY-FIRST below describes how to handle a tweet already in
+  YOUR beat — it is not license to go find one elsewhere to open strong.
 - Do NOT merge two beats into one. Do NOT split one beat into two. Do NOT add
   a beat that wasn't in the plan, no matter how good the material looks.
 
@@ -260,7 +267,11 @@ tweet URL does not embed and is strictly worse than no tweet at all.
 
 ### TWEET-FIRST vs. COMMENTARY-FIRST
 
-Not every section should start with commentary. Decide based on the tweet:
+Not every section should start with commentary. Decide based on the tweet —
+but this section governs a tweet already assigned to your current beat. If
+this beat has no tweet, see the LOCKED beats rule above: GIF, meme, or prose
+only. Wanting to open strong with breaking news is not license to reach into
+a different beat or story for a tweet.
 
 **LEAD WITH THE TWEET when:**
 - The tweet IS the breaking news (Shams/Schefter/Woj reports)
