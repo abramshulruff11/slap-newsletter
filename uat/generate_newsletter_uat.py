@@ -968,9 +968,15 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         response  = None
 
         try:
-            response = client.messages.create(
+            # Opus + 32768 max_tokens crosses the SDK's own long-request
+            # guard ("Streaming is required for operations that may take
+            # longer than 10 minutes") — a client-side check, not an API
+            # call, so it fails instantly and free. .get_final_message()
+            # returns the same Message shape client.messages.create() did,
+            # so every downstream .content / .usage access below is unchanged.
+            with client.messages.stream(
                 model=MODEL_PASS1,
-                max_tokens=16384,
+                max_tokens=32768,
                 system=[
                     {
                         "type": "text",
@@ -981,7 +987,10 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 tools=[tool_definition],
                 tool_choice={"type": "tool", "name": "submit_story_plan"},
                 messages=messages,
-            )
+            ) as stream:
+                for _ in stream:
+                    pass
+                response = stream.get_final_message()
         except Exception as e:
             api_error = str(e)
 
@@ -1013,6 +1022,18 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             else:
                 tool_use_id = tool_block.id
                 plan = tool_block.input  # already a parsed Python dict from the SDK
+
+                # Opus (observed 2026-08-21, beats test) sometimes wraps the
+                # entire payload in an extra "story_plan" key that isn't part
+                # of the schema — a literal reading of the tool's own name
+                # (submit_STORY_PLAN) rather than the field list. The inner
+                # dict is otherwise complete and correctly shaped, so unwrap
+                # it defensively instead of retrying (which just reproduces
+                # the same wrap) or trusting prompt wording to hold across
+                # every regeneration.
+                if (isinstance(plan, dict) and set(plan.keys()) == {"story_plan"}
+                        and isinstance(plan.get("story_plan"), dict)):
+                    plan = plan["story_plan"]
 
                 if not isinstance(plan, dict):
                     validation_error = "Tool input is not a dict"
