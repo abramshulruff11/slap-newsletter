@@ -25,6 +25,13 @@ jobs:
     timeout-minutes: 30
 
     env:
+      # Python fully buffers stdout when it's not a TTY (i.e. always, in CI), so
+      # print() output only reaches the log on a normal exit -- never on a run
+      # that gets killed by timeout-minutes. That left the 2026-08-21/22/23 hangs
+      # completely silent in the logs even though fetch_content.py prints
+      # progress per feed/handle. Unbuffered output means a future hang shows
+      # exactly where it got stuck instead of nothing at all.
+      PYTHONUNBUFFERED: "1"
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
       YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}

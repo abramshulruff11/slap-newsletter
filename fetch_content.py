@@ -132,6 +132,16 @@ NITTER_FALLBACKS: list[str] = []
 # newsletter's tweet supply is compromised -- say so loudly rather than proceeding quietly.
 MIN_HEALTHY_HANDLES = 12
 
+# 2026-08-22 and 2026-08-23 both still hit the 30-minute CI job timeout even with
+# FEED_TIMEOUT_SECONDS bounding each individual request: a handle that's unreachable
+# on every attempt still costs up to TWEET_FETCH_ATTEMPTS * FEED_TIMEOUT_SECONDS plus
+# ~50s of backoff (~110s), and a broad Nitter outage multiplies that across every
+# handle in TWITTER_HANDLES (~45) -- enough on its own to blow the job's time budget.
+# This caps the WHOLE fetch_tweets() loop so a broad outage ships with whatever
+# tweets it got instead of guaranteeing another job-timeout cancellation that skips
+# newsletter generation, box scores, the commit, and the email entirely.
+TWEET_FETCH_BUDGET_SECONDS = 480   # 8 minutes
+
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -244,8 +254,14 @@ def fetch_tweets() -> list[dict]:
     tweets = []
     report: dict[str, list[str]] = {}
     dropped_rt_reply = 0
+    deadline = time.monotonic() + TWEET_FETCH_BUDGET_SECONDS
 
     for handle in TWITTER_HANDLES:
+        if time.monotonic() >= deadline:
+            report.setdefault("skipped", []).append(handle)
+            print(f"  @{handle:<20} !! skipped -- {TWEET_FETCH_BUDGET_SECONDS}s tweet-fetch budget exhausted")
+            continue
+
         entries, status = fetch_one_handle(handle)
 
         fresh = 0
@@ -294,10 +310,11 @@ def fetch_tweets() -> list[dict]:
     unreachable = (report.get("ratelimit", []) + report.get("empty", [])
                    + report.get("error", []))
     dead = report.get("missing", []) + report.get("blocked", [])
+    skipped = report.get("skipped", [])
 
     print(f"\n  Handle health: {len(ok)}/{len(TWITTER_HANDLES)} produced tweets, "
           f"{len(report.get('quiet', []))} quiet, {len(unreachable)} unreachable, "
-          f"{len(dead)} dead")
+          f"{len(dead)} dead, {len(skipped)} skipped (budget)")
 
     if dropped_rt_reply:
         print(f"  -- dropped {dropped_rt_reply} retweet(s)/reply(ies)")
@@ -307,6 +324,10 @@ def fetch_tweets() -> list[dict]:
     if unreachable:
         print(f"  !! UNREACHABLE THIS RUN (nitter rate limiting, usually transient): "
               f"{', '.join('@' + h for h in unreachable)}")
+    if skipped:
+        print(f"  !! TWEET-FETCH BUDGET EXHAUSTED ({TWEET_FETCH_BUDGET_SECONDS}s) -- "
+              f"{len(skipped)} handle(s) never attempted this run, likely a broad Nitter "
+              f"outage rather than isolated rate-limiting: {', '.join('@' + h for h in skipped)}")
     if len(ok) < MIN_HEALTHY_HANDLES:
         print(f"  !! WARNING: only {len(ok)} handle(s) produced tweets "
               f"(expected >= {MIN_HEALTHY_HANDLES}). Tweet supply is degraded; "
