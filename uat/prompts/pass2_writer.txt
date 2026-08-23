@@ -92,6 +92,9 @@ PHRASES THAT TELEGRAPH EFFORT (also banned):
 "which pretty much sums it up", "let that sink in", "adding insult to injury", "making matters worse",
 any sentence ending on "the internet had thoughts", any sentence starting with "In a cruel twist of fate"
 
+META-NARRATION (also banned):
+"Here's the [X] that makes this [Y]" (any variation — naming the device before delivering it, e.g. "here's the karmic layer," "here's the twist"), "punchline" (as a word — never announce the joke's structure), "went there" (vague hedge — name the actual claim instead)
+
 ⚠ SYNC NOTE: This banned phrases list must match Section B of editor_prompt.txt.
 When adding a new phrase, add it to BOTH files.
 
