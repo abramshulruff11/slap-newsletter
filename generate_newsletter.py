@@ -32,6 +32,12 @@ EMAIL_OUTPUT_PATH    = SCRIPT_DIR / "newsletter_email.html"
 GAME_STATE_PATH      = SCRIPT_DIR / "game_state.json"
 PROMPTS_DIR          = SCRIPT_DIR / "prompts"
 
+# Around the League alone needs 8-10 real tweets; below this floor there isn't
+# enough real tweet supply to build a normal issue (2026-08-23: a full Nitter
+# outage produced 0). Below the floor, Pass 1/2 run in degraded (headline-only,
+# no ATL) mode instead of the model inventing tweets to hit its schema minimums.
+DEGRADED_TWEET_FLOOR = 8
+
 # Model selection. Pass 2 (Writer) uses Opus 4.7 for the prose quality lift —
 # A/B trial week starting 2026-06-01. All other LLM passes use Sonnet 4.5,
 # which is sufficient for selection/transformation tasks.
@@ -191,6 +197,15 @@ def strip_code_fences(text: str) -> str:
     text = re.sub(r'^```(?:html|json)?\s*\n?', '', text.strip())
     text = re.sub(r'\n?```\s*$', '', text.strip())
     return text.strip()
+
+
+def strip_leading_narration(html: str) -> str:
+    """Drop any "I'll research this first..." narration the model sometimes
+    emits before the actual draft when it used web_search mid-response
+    (observed 2026-08-23 testing degraded mode). The newsletter always opens
+    on the lead story's <h1>; anything before the first one is stray text."""
+    m = re.search(r'<h1[\s>]', html, re.IGNORECASE)
+    return html[m.start():] if m else html
 
 
 def extract_text(response) -> str:
@@ -712,7 +727,8 @@ def save_story_log(story_plan_raw: str, recent_output: list, path: Path) -> list
 # Pass 1 — Story Selector
 # ---------------------------------------------------------------------------
 
-def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_state: dict | None = None) -> str:
+def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_state: dict | None = None,
+              degraded: bool = False) -> str:
     print("\n── PASS 1: Story Selector ──────────────────────────")
 
     selector_prompt = load_prompt("pass1_story_selector.txt")
@@ -741,9 +757,27 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
     raw_slim["news_headlines"] = [_slim_item(h) for h in raw.get("news_headlines", [])]
     raw_slim["tweets"]         = [_slim_item(t) for t in raw.get("tweets", [])]
 
+    degraded_block = ""
+    if degraded:
+        degraded_block = (
+            "## ⚠ DEGRADED MODE — TWEET SUPPLY UNAVAILABLE TODAY\n"
+            "Twitter/X content could not be fetched today (Nitter is down or nearly "
+            "so) — today's raw content has headlines but effectively no tweets. This "
+            "overrides the AROUND THE LEAGUE and tweet-related instructions below:\n"
+            "- Build the lead and every supporting story from headlines only. Do NOT "
+            "invent, paraphrase, or guess at a tweet to fill a story — leave every "
+            "story's \"tweets\" array empty.\n"
+            "- Submit around_the_league with an EMPTY tweets array. It is not "
+            "mandatory today — do not manufacture tweets to reach any count.\n"
+            "- Seed a gif_concept (and meme_concept where it fits) for every story, "
+            "including ones that wouldn't normally get one — with no tweet commentary "
+            "to carry the voice, GIFs/memes are doing more of that work today.\n\n"
+        )
+
     game_state_block = format_game_state_summary(game_state or {})
     user_content = (
-        (game_state_block + "\n\n" if game_state_block else "")
+        degraded_block
+        + (game_state_block + "\n\n" if game_state_block else "")
         + "## TODAY'S RAW CONTENT\n\n"
         + json.dumps(raw_slim, ensure_ascii=False)
         + "\n\n## RECENT STORY HISTORY — last 14 days\n"
@@ -812,13 +846,24 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 "around_the_league": {
                     "type": "object",
                     "properties": {
-                        "tweets": {
-                            "type": "array",
-                            "items": _tweet,
-                            "minItems": 10,
-                            "maxItems": 10,
-                            "description": "Exactly 10 tweets. No more, no fewer.",
-                        }
+                        "tweets": (
+                            {
+                                "type": "array",
+                                "items": _tweet,
+                                "maxItems": 10,
+                                "description": (
+                                    "Degraded mode: real tweet supply is unavailable "
+                                    "today. Submit an EMPTY array — do not invent "
+                                    "tweets to fill it."
+                                ),
+                            } if degraded else {
+                                "type": "array",
+                                "items": _tweet,
+                                "minItems": 10,
+                                "maxItems": 10,
+                                "description": "Exactly 10 tweets. No more, no fewer.",
+                            }
+                        )
                     },
                     "required": ["tweets"],
                 },
@@ -950,11 +995,26 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 return kept, len(tweets) - len(kept)
 
             # Safety: if we extracted no usable IDs from raw content, the filter
-            # can't validate anything \u2014 and dropping every tweet is far worse
-            # than keeping them (it forces Pass 2 to fabricate placeholder URLs).
-            # No-op the filter in that case and warn loudly.
+            # can't validate anything. Two different situations look identical here
+            # and need opposite handling:
+            #  - raw.tweets is NON-empty but ID extraction failed (a bug in this
+            #    file) \u2014 dropping every tweet would be worse than keeping them
+            #    (forces Pass 2 to fabricate placeholder URLs), so no-op and warn.
+            #  - raw.tweets is EMPTY (Nitter down, degraded mode) \u2014 there is
+            #    nothing real to verify against, so anything the model wrote is
+            #    by definition fabricated. Drop it instead of shipping fake tweets.
             if not _raw_url_set:
-                print("  \u26a0 No tweet URLs found in raw content \u2014 skipping cross-reference filter (keeping all plan tweets)")
+                if raw.get("tweets"):
+                    print("  \u26a0 No tweet URLs found in raw content \u2014 skipping cross-reference filter (keeping all plan tweets)")
+                else:
+                    print("  \u26a0 Zero tweets in raw content \u2014 dropping all plan tweets (tweet supply is down; nothing to verify against)")
+                    _lead = plan.get("lead_story", {})
+                    _lead["tweets"] = []
+                    plan["lead_story"] = _lead
+                    plan["supporting_stories"] = [
+                        {**_s, "tweets": []} for _s in plan.get("supporting_stories", [])
+                    ]
+                    plan["around_the_league"] = {"tweets": []}
             else:
                 _fab_total = 0
                 _lead = plan.get("lead_story", {})
@@ -1097,7 +1157,8 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
 # Pass 2 — Writer
 # ---------------------------------------------------------------------------
 
-def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | None = None) -> str:
+def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | None = None,
+              degraded: bool = False) -> str:
     print("\n── PASS 2: Writer ──────────────────────────────────")
 
     # pass2_writer.txt is the writer-specific prompt (voice, structure, HTML rules).
@@ -1135,12 +1196,30 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
             "cache_control": {"type": "ephemeral"},
         })
 
+    degraded_block = ""
+    if degraded:
+        degraded_block = (
+            "## ⚠ DEGRADED MODE — NO AROUND THE LEAGUE TODAY\n"
+            "Real tweet supply was unavailable today (Nitter down). This overrides "
+            "the AROUND THE LEAGUE instructions below:\n"
+            "- Do NOT write an \"Around the League\" heading or section at all — "
+            "the story plan's around_the_league.tweets is empty on purpose, not "
+            "an error to fill. End the issue after the last supporting story.\n"
+            "- Every story here is headline-only (no tweets in the plan). Write "
+            "them with full confidence from the research notes — a missing tweet "
+            "is not a gap to apologize for or work around in the prose.\n"
+            "- Lean harder on GIFs/memes than usual: with no tweet commentary "
+            "carrying reactions, use the seeded gif_concept/meme_concept on every "
+            "story, not just where one happens to fit.\n\n"
+        )
+
     # Pass 2 only needs the story plan — all tweets are pre-assigned by Pass 1.
     # Sending full raw_content.json here was redundant and added ~40K tokens per run.
     game_state_block = format_game_state_summary(game_state or {})
     recent_media_block = format_recent_media_block(SCRIPT_DIR)
     user_message = (
-        (game_state_block + "\n\n" if game_state_block else "")
+        degraded_block
+        + (game_state_block + "\n\n" if game_state_block else "")
         + recent_media_block
         + "## TODAY'S STORY PLAN\n\n"
         "The story selector has already decided which stories to cover and which "
@@ -1180,7 +1259,7 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
             break
 
     cost_summary("PASS 2", MODEL_WRITER, total_in, total_out, total_cache_read, total_cache_write)
-    return strip_code_fences(extract_text(response))
+    return strip_leading_narration(strip_code_fences(extract_text(response)))
 
 
 # ---------------------------------------------------------------------------
@@ -1476,6 +1555,11 @@ def main() -> None:
     if headline_count == 0 and tweet_count == 0:
         raise SystemExit("No content. Run fetch_content.py first.")
 
+    degraded = tweet_count < DEGRADED_TWEET_FLOOR
+    if degraded:
+        print(f"  ⚠ DEGRADED MODE: only {tweet_count} tweet(s) (< {DEGRADED_TWEET_FLOOR}) — "
+              f"today's issue will be headline-only, no Around the League")
+
     client = anthropic.Anthropic(api_key=api_key)
 
     # Passes: selector → writer → voice editor → tweet audit → LLM editor
@@ -1485,9 +1569,9 @@ def main() -> None:
     else:
         print("  ⚠ game_state.json not found — run fetch_sports_data.py first")
 
-    story_plan    = run_pass1(raw, recent_output, client, game_state)
+    story_plan    = run_pass1(raw, recent_output, client, game_state, degraded=degraded)
     recent_output = save_story_log(story_plan, recent_output, RECENT_OUTPUT_PATH)
-    draft_html    = run_pass2(story_plan, client, game_state)
+    draft_html    = run_pass2(story_plan, client, game_state, degraded=degraded)
 
     # Pass 3 — Claim Validator (deterministic, cross-refs game_state.json)
     try:
