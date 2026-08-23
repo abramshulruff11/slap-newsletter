@@ -382,3 +382,23 @@ BAD GIF CHOICE: "This is fine" dog for Israel Adesanya refusing to retire
 GOOD GIF CHOICE: Leonardo DiCaprio "I'm not f*cking leaving" from Wolf of Wall Street
 
 WHY: Adesanya literally said "I'm not f*cking leaving." The Wolf of Wall Street GIF is the EXACT quote. "This is fine" is about denial/resignation — that's a different emotion entirely. When a subject gives you the exact words of a famous meme, use THAT meme.
+
+### META-NARRATION — Don't announce the joke before you tell it
+
+BAD: "Here's the karmic layer that makes this a Greek play."
+GOOD: "Greek playwrights would be jealous of this much karma."
+WHY: Naming the device ("here's the layer," "here's the punchline") tells the reader how to feel about a joke before they've heard it. Just make the comparison. Trust the reader to get it.
+
+BAD: "Now for the punchline."
+GOOD: "The best part:"
+WHY: Same failure as above, plus never use the word "punchline" — it's the writer grading its own joke. Cut straight to the thing, no announcement needed.
+
+BAD: "This is Succession, played straight, in shorts."
+GOOD: "The actual show Succession is playing out here in real time."
+WHY: The bad version reads like a trailer voiceover captioning its own comparison. State the comparison plainly instead of narrating that you're making one.
+
+### VAGUE HEDGING — Name the actual claim, don't gesture at it
+
+BAD: "The Athletic and ESPN both went there this week."
+GOOD: [name what they actually reported/argued]
+WHY: "Went there" and "had an interesting take" are placeholders for a real claim you haven't written yet. If you don't know the specific angle, cut the sentence — don't hedge around it.

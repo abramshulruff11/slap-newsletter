@@ -76,6 +76,11 @@ Phrases that telegraph effort (also banned — rewrite):
 - Any sentence ending on "the internet had thoughts"
 - Any sentence starting with "In a cruel twist of fate"
 
+Meta-narration (also banned — rewrite):
+- "Here's the [X] that makes this [Y]" (any variation — naming the device before delivering it, e.g. "here's the karmic layer," "here's the twist")
+- "punchline" (as a word — never announce the joke's structure)
+- "went there" (vague hedge — name the actual claim instead)
+
 Base ban list (AI filler):
 - "Without further ado"
 - "Boy oh boy"
