@@ -123,11 +123,25 @@ NEWS_SPAM_KEYWORDS = (
 TWEET_FETCH_ATTEMPTS = 4
 TWEET_RETRY_BACKOFF = [5, 15, 30]   # seconds before attempts 2..4
 
-# Surveyed 2026-08-20: xcancel.com (400), nitter.poast.org (403), lightbrd.com (403),
-# nitter.privacydev.net (DNS failure), nitter.tiekoetter.com (200 but always 0 entries).
-# No public mirror is currently usable, so this stays empty -- but the fetch loop reads
-# it, so adding a host here is the only change needed if one comes back.
-NITTER_FALLBACKS: list[str] = []
+# Surveyed 2026-08-24 (54 hosts, real feedparser calls against @AdamSchefter/@ESPN).
+# Exactly one public mirror is serving real feeds, so exactly one is listed. Order
+# matters -- fetch_one_handle() tries these left to right per handle, per attempt.
+#
+# Re-verify before adding to this list; mirror uptime moves week to week. What the
+# 8/24 sweep found, so the next survey doesn't re-walk it:
+#   nitter.perennialte.ch  200, 20 fresh entries per handle, 0.4-2.2s  <- the one
+#   nitter.net             200 with an EMPTY body (the outage we're routing around)
+#   xcancel.com            302 -> rss.xcancel.com, which 400s any browser UA and,
+#                          for a feed-reader UA, answers with a WELL-FORMED feed
+#                          whose one item is "RSS reader not yet whitelisted!".
+#                          Do not add it: it parses clean and would be published as
+#                          a tweet. Real access needs a manual email whitelist.
+#   poast / lightbrd / catsarch / space / cz / freedit / inbox.lv   403 bot wall
+#   tiekoetter / twiiit    200 serving an Anubis "not a bot" challenge page
+#   privacydev / privacyredirect / 1d4 / moomoo / fdn / unixfox +14 more  DNS gone
+NITTER_FALLBACKS: list[str] = [
+    "https://nitter.perennialte.ch",
+]
 
 # If fewer than this many handles yield tweets, the run is degraded enough that the
 # newsletter's tweet supply is compromised -- say so loudly rather than proceeding quietly.
@@ -222,8 +236,34 @@ def fetch_news() -> list[dict]:
 # ── Fetch tweets via Nitter ──────────────────────────────────────────────────
 
 def nitter_to_twitter(url: str) -> str:
-    """Convert nitter.net URLs to twitter.com URLs for Substack embedding."""
-    return url.replace("https://nitter.net/", "https://twitter.com/").replace("http://nitter.net/", "https://twitter.com/")
+    """Convert a nitter URL -- from ANY configured base -- to twitter.com.
+
+    Tweets pulled from a fallback mirror carry that mirror's host, so rewriting
+    only nitter.net would ship links like http://nitter.perennialte.ch/x/status/1
+    straight into the newsletter and break every Substack embed. Match the host of
+    each base we might have fetched from, over either scheme (mirrors emit http://
+    links in their RSS even when served over https).
+    """
+    for base in [NITTER_BASE] + NITTER_FALLBACKS:
+        host = base.split("://", 1)[-1].rstrip("/")
+        for scheme in ("https://", "http://"):
+            prefix = f"{scheme}{host}/"
+            if url.startswith(prefix):
+                return "https://twitter.com/" + url[len(prefix):]
+    return url
+
+
+def _feed_belongs_to(feed, handle: str) -> bool:
+    """Is this parseable feed actually THIS handle's tweets?
+
+    Entry count alone is not enough. xcancel, for one, answers an un-whitelisted
+    reader with a well-formed RSS document -- HTTP 200, bozo False, one <item> --
+    whose content is "RSS reader not yet whitelisted!". That sails through an
+    `if feed.entries` check and gets published as a tweet. Nitter's channel title
+    is always "Display Name / @handle", so require the handle to be in it.
+    """
+    title = (getattr(feed, "feed", {}) or {}).get("title") or ""
+    return f"@{handle}".lower() in title.lower()
 
 
 def fetch_one_handle(handle: str, max_attempts: int = TWEET_FETCH_ATTEMPTS) -> tuple[list, str]:
@@ -239,25 +279,51 @@ def fetch_one_handle(handle: str, max_attempts: int = TWEET_FETCH_ATTEMPTS) -> t
       blocked    -- HTTP 403: suspended or protected
       ratelimit  -- HTTP 429 on every attempt (transient; NOT evidence the account is dead)
       empty      -- HTTP 200 but zero entries
+      challenge  -- a mirror answered with a bot wall / instance notice, not tweets
       error      -- transport failure or unexpected status
     """
     bases = [NITTER_BASE] + NITTER_FALLBACKS
     last = "error"
     for attempt in range(1, max_attempts + 1):
         for base in bases:
+            primary = base == NITTER_BASE
             feed = feedparser.parse(f"{base}/{handle}/rss?limit=50", agent=BROWSER_UA)
             status = getattr(feed, "status", None)
 
+            # 404/403 are facts about the ACCOUNT only from the primary. A mirror
+            # serving 403 is describing ITSELF (Cloudflare, an Anubis wall) -- half
+            # the surveyed mirrors do exactly that -- so returning "blocked" there
+            # would both abandon the remaining fallbacks and libel a live handle as
+            # dead in the health summary. Keep walking the list instead.
             if status == 404:
-                return [], "missing"      # deterministic -- retrying will not help
+                if primary:
+                    return [], "missing"  # deterministic -- retrying will not help
+                last = "error"
+                continue
             if status == 403:
-                return [], "blocked"
+                if primary:
+                    return [], "blocked"
+                last = "challenge"
+                continue
             if status == 429:
                 last = "ratelimit"
                 continue
             if feed.entries:
-                return feed.entries, "ok"
-            last = "empty" if status == 200 else "error"
+                if _feed_belongs_to(feed, handle):
+                    return feed.entries, "ok"
+                print(f"     .. {base} answered for @{handle} with a notice feed, "
+                      f"not tweets: {(feed.feed.get('title') or '')[:60]!r}")
+                last = "challenge"
+                continue
+            if status == 200 and feed.bozo:
+                # Parseable-looking 200 with nothing in it: a Cloudflare/Anubis
+                # challenge page, not a real empty feed. Same outcome (no data),
+                # but say so -- a mirror stuck here should be dropped, not retried.
+                print(f"     .. {base} served a bot-challenge page for @{handle} "
+                      f"(HTTP 200, not RSS)")
+                last = "challenge"
+            else:
+                last = "empty" if status == 200 else "error"
 
         if attempt < max_attempts:
             time.sleep(TWEET_RETRY_BACKOFF[min(attempt - 1, len(TWEET_RETRY_BACKOFF) - 1)])
@@ -345,6 +411,7 @@ def fetch_tweets() -> list[dict]:
             "blocked":   "!! HTTP 403 -- suspended or protected",
             "ratelimit": f"!! rate-limited after {max_attempts} attempt(s) -- no data",
             "empty":     "!! reachable but returned no entries at all",
+            "challenge": "!! every mirror answered with a bot wall, not RSS",
             "error":     "!! fetch failed",
         }[label]
         print(f"  @{handle:<20} {note}")
@@ -352,7 +419,8 @@ def fetch_tweets() -> list[dict]:
     # ── Health summary: this must never degrade silently again ──────────────
     ok = report.get("ok", [])
     unreachable = (report.get("ratelimit", []) + report.get("empty", [])
-                   + report.get("error", []) + report.get("skipped", []))
+                   + report.get("challenge", []) + report.get("error", [])
+                   + report.get("skipped", []))
     dead = report.get("missing", []) + report.get("blocked", [])
 
     print(f"\n  Handle health: {len(ok)}/{len(TWITTER_HANDLES)} produced tweets, "
