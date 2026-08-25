@@ -1,0 +1,30 @@
+name: Nitter CI Test
+
+# Manual-only. Answers one question: can an Actions runner reach the Nitter bases
+# in fetch_content.py, or does its datacenter IP get Cloudflare-blocked the way
+# the Substack integration was? Every surviving mirror sits behind a bot wall, so
+# "it works on my laptop" proves nothing about the daily run.
+#
+# Fetches two handles, writes nothing, sends nothing. Fails the job if no base is
+# usable, so a red run is the signal.
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install feedparser
+
+      - name: Probe Nitter bases from this runner
+        run: python -u nitter_ci_test.py
