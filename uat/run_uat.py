@@ -43,6 +43,8 @@ if str(UAT_DIR) not in sys.path:
 
 import generate_newsletter_uat as G          # noqa: E402
 import highlight_to_gif as H                 # noqa: E402
+import meme_box_check as MB                  # noqa: E402
+import gif_library_select as GL              # noqa: E402
 
 # ---------------------------------------------------------------------------
 # CONFIG — §1.2
@@ -259,6 +261,12 @@ def main() -> None:
                     help="comma list, e.g. 1,1b,2  (default: full chain)")
     ap.add_argument("--no-highlights", action="store_true",
                     help="skip Pass 1B and clip conversion")
+    ap.add_argument("--allow-short-memes", action="store_true",
+                    help="render memes even when the writer supplied fewer "
+                         "captions than the template has panels (blank panels)")
+    ap.add_argument("--max-search-gifs", type=int, default=3,
+                    help="Tier 3 budget: max live-search GIFs per issue "
+                         "(default 3). Excess placeholders are dropped.")
     args = ap.parse_args()
 
     passes = {p.strip().lower() for p in args.passes.split(",") if p.strip()}
@@ -383,8 +391,29 @@ def main() -> None:
         if not giphy_key:
             print("  ⚠ GIPHY_API_KEY not set — gif-placeholders left un-rendered")
         else:
-            html, _ = G.embed_gifs_in_html(html, giphy_key, repo_root=G.OUTPUT_DIR)
-            print("  ✓ GIFs embedded")
+            # Curated library first. It consumes only the placeholders carrying
+            # data-library-category; anything the writer left as a plain
+            # "GIF: <search term>" falls through to the live-search path below,
+            # unchanged. Order matters: library placeholders must be resolved
+            # before embed_gifs_in_html() so the two never contend.
+            _hist = G.load_gif_history(G.OUTPUT_DIR)
+            html, _lib_entries, gif_lib_stats = GL.render_library_gifs(
+                html, giphy_key, _hist)
+            if _lib_entries:
+                G.save_gif_history(G.OUTPUT_DIR, _lib_entries, _hist)
+
+            # Tier 3 budget is enforced BEFORE the search runs, so an over-budget
+            # GIF costs nothing rather than being fetched and then discarded.
+            html, gif_search_stats = GL.enforce_search_budget(
+                html, args.max_search_gifs)
+
+            html, _search_entries = G.embed_gifs_in_html(
+                html, giphy_key, repo_root=G.OUTPUT_DIR)
+            GL.report(gif_lib_stats, gif_search_stats["kept"])
+            _planned, _seeds = GL.count_planned_tier3(
+                G.OUTPUT_DIR / "story_plan.json")
+            GL.report_tiers(gif_lib_stats, gif_search_stats,
+                            args.max_search_gifs, _planned, _seeds)
 
         print("\n── MEME PIPELINE ───────────────────────────────────")
         try:
@@ -393,7 +422,22 @@ def main() -> None:
             if not u or not p:
                 print("  ⚠ IMGFLIP creds not set — meme-placeholders left un-rendered")
             else:
-                html, _ = process_newsletter(html, build_template_map(), u, p,
+                template_map = build_template_map()
+
+                # Box-count guard (§ meme_box_check). Imgflip returns 200 for a
+                # short boxes[] list and renders the leftover panels blank, so
+                # process_newsletter would otherwise report success on a meme
+                # with an empty punchline. Audit before spending the API call.
+                findings, _expected = MB.check_html(html, template_map)
+                MB.report(findings, strict=not args.allow_short_memes)
+                meme_box_findings = findings
+                if not args.allow_short_memes:
+                    html, _dropped = MB.strip_short_memes(html, findings)
+                    if _dropped:
+                        print(f"  ⚠ {_dropped} short meme placeholder(s) removed "
+                              f"(rerun with --allow-short-memes to render them anyway)")
+
+                html, _ = process_newsletter(html, template_map, u, p,
                                              repo_root=G.OUTPUT_DIR)
                 print("  ✓ Memes embedded")
         except Exception as e:

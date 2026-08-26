@@ -26,7 +26,11 @@ import json
 import time
 import urllib.request
 import urllib.error
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gif_url_cache as GC  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 LIBRARY_PATH = REPO_ROOT / "prompts" / "gif_library.DRAFT.json"
@@ -72,6 +76,8 @@ def main():
     sections_html = []
     resolved_count = 0
     failed_count = 0
+    url_cache = GC.load_cache()
+    source_counts: dict = {}
 
     for cat_key, cat in categories.items():
         cards = []
@@ -83,17 +89,23 @@ def main():
             note = entry.get("note", "")
             cooldown = entry.get("cooldown_days", library["_meta"].get("cooldown_days_default"))
 
-            data = resolve_gif(gif_id, api_key)
-            time.sleep(0.05)  # be polite to the API
+            # Cache-backed. Regenerating this page used to cost one API call per
+            # entry (205 as of 2026-08-26), which is what exhausted the daily
+            # Giphy quota and blanked a whole UAT run's library GIFs.
+            def _fetch(gid, _key=api_key):
+                data = resolve_gif(gid, _key)
+                time.sleep(0.05)  # be polite to the API
+                if not data:
+                    return None
+                images = data.get("images", {})
+                return (images.get("downsized_medium", {}).get("url")
+                        or images.get("original", {}).get("url") or None)
 
-            if data:
+            img_url, source = GC.resolve(gif_id, _fetch, url_cache)
+            source_counts[source] = source_counts.get(source, 0) + 1
+
+            if img_url:
                 resolved_count += 1
-                img_url = (
-                    data.get("images", {})
-                    .get("downsized_medium", {})
-                    .get("url")
-                    or data.get("images", {}).get("original", {}).get("url", "")
-                )
                 img_html = f'<img src="{img_url}" loading="lazy" alt="{label}">'
             else:
                 failed_count += 1
@@ -297,7 +309,9 @@ applyStoredDecisions();
 """
 
     OUTPUT_PATH.write_text(html, encoding="utf-8")
+    GC.save_cache(url_cache)
     print(f"\nDone. {resolved_count}/{total} resolved, {failed_count} failed.")
+    print(f"URL source: {GC.summarize(source_counts)}")
     print(f"Open: {OUTPUT_PATH}")
 
 

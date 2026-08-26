@@ -42,7 +42,8 @@ with prose, a GIF, or a meme instead.
       {"url": "url2", "account": "handle"}
     ],
     "research_notes": "Key stats, historical parallels, meme angles, cross-sport connections the writer must explore. Be specific — these notes are the writer's raw material.",
-    "gif_concept": "One specific GIF reaction idea tied to this story's main emotional beat — a seed for the writer. See MEDIA SEEDING below.",
+    "gif_concept": "One GIF reaction idea tied to this story's main emotional beat — a seed for the writer. See MEDIA SEEDING below.",
+    "gif_tier": "1 or 3. See MEDIA SEEDING. 1 = generic beat (library). 3 = a specific named person/clip IS the joke (live search).",
     "meme_concept": "One meme/comparison idea, OR empty string if a GIF fits better. See MEDIA SEEDING below.",
     "beats": [
       {
@@ -60,7 +61,8 @@ with prose, a GIF, or a meme instead.
         {"url": "url2", "account": "handle"}
       ],
       "research_notes": "Hook, key angle, any specific stats or context to include.",
-      "gif_concept": "One specific GIF reaction idea for this story, OR empty string if none fits. See MEDIA SEEDING below.",
+      "gif_concept": "One GIF reaction idea for this story, OR empty string if none fits. See MEDIA SEEDING below.",
+      "gif_tier": "1 or 3. See MEDIA SEEDING. Omit if gif_concept is empty.",
       "meme_concept": "One meme/comparison idea for this story, OR empty string. See MEDIA SEEDING below.",
       "beats": [
         {
@@ -672,9 +674,25 @@ media seeds (it stays tweet-only).
 HOW TO SEED:
 - Identify the story's main emotional beat (disbelief, schadenfreude, vindication,
   resignation, dominance, etc.) or its core comparison.
-- gif_concept = a specific, named reaction idea for that beat. Be specific:
-  "Ben Affleck smoking, defeated" not "sad reaction." If the subject said words
-  that match a famous quote (e.g. "I'm not leaving"), seed that quote's clip.
+- gif_concept = the reaction idea for that beat. Seed it in ONE of two shapes,
+  whichever the moment actually calls for:
+    * TIER 1 — THE BEAT. Name the emotion and what triggers it: "smug
+      vindication after being doubted all summer", "quiet resignation as the
+      season ends". Use when any good reaction of that type would land. Set
+      "gif_tier": 1. The writer pulls these from the curated library, which
+      rotates automatically.
+    * TIER 3 — A SPECIFIC CLIP. Name the person and moment: "Kyrgios underhand
+      serve", "Kevin McCallister setting the Home Alone traps", or a quote the
+      subject echoed ("I'm not leaving"). Use ONLY when the humor depends on
+      that exact person or footage. Set "gif_tier": 3.
+
+  YOU own this decision, not the writer. If you name a specific person, scene or
+  movie in gif_concept, the tier is 3 — the library holds generic reactions only
+  and has no footage of specific athletes or films. Marking such a concept as
+  Tier 1 guarantees it gets replaced by a generic reaction that loses the joke.
+
+  Most stories are Tier 1. Budget at most 3 Tier 3 seeds per issue; beyond that
+  the writer's extras are dropped by the pipeline.
 - meme_concept = a comparison/argument idea (Trade Offer, Drake, Spider-Man
   pointing) ONLY when the story has two things to contrast or a take to make.
 
@@ -690,7 +708,8 @@ somber story itself. It does NOT suppress other stories, and it does NOT
 suppress or shrink Around the League. ATL still runs in full (see AROUND THE
 LEAGUE above).
 
-VARIETY — when a media idea feels like the obvious default (the generic
-franchise-failure GIF, the generic financial-pain GIF), reach for a more
-specific or fresher angle. The writer dedupes against recent issues; your job is
-just to avoid seeding the most generic option.
+VARIETY — vary the EMOTIONAL BEAT you seed across the issue; do not send three
+stories to the same "franchise in disarray" note. This is about not repeating
+yourself, NOT about avoiding common emotions: a plain beat like "resignation"
+is fine and the library rotates the actual GIF for you. Only the specific-clip
+shape needs freshness policing, since those bypass the library's rotation.

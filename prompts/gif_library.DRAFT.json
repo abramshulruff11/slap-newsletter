@@ -1557,6 +1557,56 @@
           "tags": ["betrayal", "self-sabotage"]
         }
       ]
+    },
+
+    "fatigue_over_it": {
+      "description": "Worn out, over it, done — weariness from repetition, not grief from a loss.",
+      "use_when": "A fanbase or voter bloc tired of hearing the same story, 'we do this every year' exhaustion, a player visibly gassed, the collective eye-roll at a narrative that will not end.",
+      "do_not_use_when": "The feeling is grief or defeat after a specific loss — that's sadness_resignation. Or it's active fury rather than weariness — that's anger_outrage.",
+      "gifs": [
+        {
+          "id": "NSbXkzHLr7lWPD1fj7",
+          "label": "'Ugh, it never ends' (FX Networks)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (fatigue category seed). NOT yet eyeballed by Abram. Official @fxnetworks upload; slug ugh-sigh-it-never-ends — the closest literal match for narrative fatigue.",
+          "tags": ["fatigue", "over-it", "weary"]
+        },
+        {
+          "id": "U4jtIORqlc4svxFPUe",
+          "label": "Tired / over it (Bounce)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (fatigue category seed). NOT yet eyeballed by Abram. Official @Bounce_TV upload; slug tired-ugh-stressed.",
+          "tags": ["fatigue", "over-it"]
+        },
+        {
+          "id": "Ma1nnKL3XqZFEtaKs8",
+          "label": "Tired / over it (FOX TV)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (fatigue category seed). NOT yet eyeballed by Abram. Official @foxtv upload.",
+          "tags": ["fatigue", "over-it"]
+        },
+        {
+          "id": "3FckanO0xoIDJo98OO",
+          "label": "Tired (Schitt's Creek, CBC)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (fatigue category seed). NOT yet eyeballed by Abram. Official @cbc upload.",
+          "tags": ["fatigue", "weary"]
+        },
+        {
+          "id": "mpRZbC5izVeBv0eyUI",
+          "label": "'Over it' (I Love Lucy, Paramount+)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (fatigue category seed). NOT yet eyeballed by Abram. Official @paramountplus upload.",
+          "tags": ["fatigue", "over-it"]
+        },
+        {
+          "id": "35BUnGH2e25bn8U6Qh",
+          "label": "'I'm so tired, I can't do this' (FX Networks)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (fatigue category seed). NOT yet eyeballed by Abram. Official @fxnetworks upload.",
+          "tags": ["fatigue", "weary", "over-it"]
+        }
+      ]
     }
   }
 }

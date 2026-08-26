@@ -492,7 +492,10 @@ Output ONLY valid HTML. No markdown. No code fences.
 
 Commentary: `<p>...</p>` — no fixed sentence cap; see HOW LONG IS A BEAT above.
 Tweets: `<blockquote class="tweet">...</blockquote>`
-GIFs: `<div class="gif-placeholder">GIF: [reference]</div>`
+GIFs — TWO forms, see GIF REFERENCE for which tier applies:
+  Tier 1 (generic beat, most GIFs): `<div class="gif-placeholder" data-library-category="CATEGORY"></div>`
+  Tier 3 (a specific person/moment IS the joke, max 3 per issue):
+    `<div class="gif-placeholder" data-tier3-reason="why only this clip works">GIF: [reference]</div>`
 Memes: `<div class="meme-placeholder" data-template="SLUG" data-boxes="PANEL 1||PANEL 2"></div>`
 Highlights: `<div class="highlight-placeholder" data-highlight-id="h1">HIGHLIGHT: [description]</div>`
 Dash lists: `<p>- item one<br>- item two<br>- item three</p>`
@@ -600,7 +603,15 @@ When you find content from search, weave it in naturally. Never say
 Before finishing:
 1. Any section with 4+ <p> tags in a row without media? Insert a tweet, GIF, or meme. In the headliner sections (lead + supporting), a *tweet* does not satisfy this on its own — the issue already runs tweet-heavy. Break long prose with a GIF or meme, not just another tweet.
 2. Every GIF: does it have a setup line immediately before it? If not, add one. (Format: "[Subject] when/watching/after [situation]:")
-3. Every GIF: is it a specific reference or a generic description? If generic, make it specific.
+3. Every GIF: is it in the right TIER?
+   - The plan's gif_tier is BINDING. If a story's plan says gif_tier: 3, that
+     story's seeded GIF MUST be a Tier 3 search placeholder. You may not
+     downgrade it to a library category because a category looks close enough —
+     the library holds only generic reactions and has no footage of specific
+     athletes, actors or film scenes, so downgrading silently destroys the joke.
+   - gif_tier: 1 seeds MUST use a library category, never search.
+   - For any EXTRA GIF you add beyond the plan's seed, you choose the tier by the
+     same test: does a specific person/moment have to be on screen?
 4. Did you use the research notes? If the plan gave you key stats and you didn't include them, go back.
 5. Locked beats check: does your output contain exactly the beats the lead story's plan gave you — same count, same order, none merged, none split, none added? If not, fix the structure before anything else.
 6. Around the League: is there ANY commentary between tweets? If yes, delete it.

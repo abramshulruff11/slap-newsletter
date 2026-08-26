@@ -171,8 +171,13 @@ def _expand_boxes(slug: str, lines: list) -> list:
         # at it). The repeated 4th panel is the joke, so the writer writes 3.
         return [lines[0], lines[1], lines[2], lines[2]]
     if slug == "anakin-padme" and len(lines) >= 2:
-        # Anakin's line / Padme's hopeful question / (blank) / Padme repeats it.
-        return [lines[0], lines[1], "", lines[1]]
+        # Anakin's line / Padme's hopeful question / Padme repeats it, anxious.
+        # The template is FOUR visual panels but only THREE text boxes — panel 3
+        # (Anakin's silent stare) carries no caption of its own. Sending a blank
+        # 4th box pushed the repeat past the last real box, so Imgflip dropped it
+        # and the payoff panel rendered EMPTY. Verified 2026-08-25 by rendering
+        # both shapes: [c0,c1,"",c1] loses the final line, [c0,c1,c1] lands it.
+        return [lines[0], lines[1], lines[1]]
     return lines
 
 

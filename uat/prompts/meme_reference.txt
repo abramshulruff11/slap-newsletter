@@ -25,12 +25,18 @@ Separate panels with `||`. Write one caption per panel in order (left→right, t
 
 PANEL COUNTS — how many captions to write per template:
 
+Write EXACTLY the number of captions listed. Imgflip renders any box you do
+not supply as BLANK — it does not fail, it just ships a meme with an empty
+panel. Corrected 2026-08-25 against Imgflip's live template data; the previous
+table under-counted 14 templates and was the cause of blank-panel memes.
+
 | Captions | Templates |
 |----------|-----------|
-| 2 panels | drake, distracted-boyfriend, left-exit-12-off-ramp, two-buttons, corporates-want-you-to-find-the-difference, buff-doge-vs-cheems, epic-handshake, this-is-fine, change-my-mind, hide-the-pain-harold, bernie-i-am-once-again-asking, surprised-pikachu, always-has-been, monkey-puppet, mocking-spongebob, first-time, trade-offer, waiting-skeleton, one-does-not-simply, spider-man-pointing-at-spider-man, eric-andre-shooting, is-this-a-pigeon, woman-yelling-at-cat, ight-imma-head-out |
-| 3 captions → 4 physical panels | gru-plan (code repeats flaw as panel 4), expanding-brain, vince-mcmahon-reaction, clown-applying-makeup |
-| 3 panels literal | panik-kalm-panik |
-| 2 captions → 4 physical panels | anakin-padme (code fills blank/repeat panels) |
+| 2 captions | drake, this-is-fine, change-my-mind, hide-the-pain-harold, bernie-i-am-once-again-asking, always-has-been, monkey-puppet, mocking-spongebob, first-time, waiting-skeleton, one-does-not-simply, spider-man-pointing-at-spider-man, woman-yelling-at-cat, ight-imma-head-out |
+| 3 captions | distracted-boyfriend, left-exit-12-off-ramp, two-buttons, corporates-want-you-to-find-the-difference, epic-handshake, surprised-pikachu, trade-offer, eric-andre-shooting, is-this-a-pigeon, panik-kalm-panik |
+| 4 captions | expanding-brain, vince-mcmahon-reaction, clown-applying-makeup, buff-doge-vs-cheems |
+| 3 captions → 4 physical panels | gru-plan (code repeats the flaw as panel 4) |
+| 2 captions → 3 physical panels | anakin-padme (code repeats Padme's question as the final panel) |
 
 - data-template must be one of the slugs listed in the template library below
 - Keep text short — 5-10 words max per panel
@@ -79,20 +85,20 @@ MEME TEMPLATES BY JOKE TYPE
 Use when someone chose one thing over another, or when two things should be compared.
 
 - **Drake Hotline Bling** (slug: `drake`, imgflip: 181913649) — Top: thing being rejected. Bottom: thing being chosen. Classic, works for anything.
-- **Distracted Boyfriend** (slug: `distracted-boyfriend`, imgflip: 112126428) — Boyfriend (team/player), girlfriend being ignored (current situation), woman being looked at (new temptation). Three-way dynamic.
-- **Left Exit 12 Off Ramp** (slug: `left-exit-12-off-ramp`, imgflip: 124822590) — Car swerving off highway. Highway = the smart choice. Exit = the dumb choice they took.
-- **Two Buttons** (slug: `two-buttons`, imgflip: 87743020) — Sweating guy choosing between two options. Use when a team/player faces an impossible dilemma.
-- **Corporate Needs You to Find the Difference** (slug: `corporates-want-you-to-find-the-difference`, imgflip: 180190441) — "They're the same picture." Use when two things are identical but shouldn't be.
-- **Buff Doge vs. Cheems** (slug: `buff-doge-vs-cheems`, imgflip: 247375501) — Strong/intimidating version vs. weak/pathetic version. Use for then vs. now, or two teams at opposite ends.
-- **Epic Handshake** (slug: `epic-handshake`, imgflip: 135256802) — Two things unexpectedly agreeing or sharing the same quality. "Both: [shared trait]" format.
+- **Distracted Boyfriend** (slug: `distracted-boyfriend`, imgflip: 112126428) — Three-way dynamic. Write 3 captions: `data-boxes="CURRENT COMMITMENT||THE ONE LOOKING||NEW TEMPTATION"`. Box 2 (the guy) is often omitted by mistake — leave it out and Imgflip renders the RIGHT-side woman (the actual new temptation, the joke's punchline) with no caption at all.
+- **Left Exit 12 Off Ramp** (slug: `left-exit-12-off-ramp`, imgflip: 124822590) — Car swerving off highway. Write 3 captions: `data-boxes="WHO'S DRIVING||THE SMART CHOICE (highway)||THE DUMB CHOICE (exit)"`.
+- **Two Buttons** (slug: `two-buttons`, imgflip: 87743020) — Sweating guy agonizing over two buttons. Write 3 captions, NOT 2: `data-boxes="BUTTON 1||BUTTON 2||WHO IS SWEATING"`. The third box labels the person facing the dilemma — leave it out and the meme never says who is agonizing, which is the joke. Use when a team/player faces an impossible dilemma.
+- **Corporate Needs You to Find the Difference** (slug: `corporates-want-you-to-find-the-difference`, imgflip: 180190441) — "They're the same picture." Write 3 captions: `data-boxes="THE SETUP LINE||THING ONE||THING TWO"` — box 0 is the corporate-speak intro line, boxes 1-2 are the two 'different' things.
+- **Buff Doge vs. Cheems** (slug: `buff-doge-vs-cheems`, imgflip: 247375501) — Strong/intimidating version vs. weak/pathetic version. Write 4 captions: `data-boxes="STRONG LABEL||STRONG CAPTION||WEAK LABEL||WEAK CAPTION"` — this template has a title line AND a caption line per side (4 boxes total, not 2). Use for then vs. now, or two teams at opposite ends.
+- **Epic Handshake** (slug: `epic-handshake`, imgflip: 135256802) — Two things unexpectedly agreeing. Write 3 captions: `data-boxes="PARTY ONE||PARTY TWO||SHARED TRAIT"` — the third box labels what they secretly share.
 
 ### ESCALATION / LEVELS — "It keeps getting more extreme"
 Use when a stat line, situation, or take escalates through multiple levels.
 
-- **Galaxy Brain / Expanding Brain** (slug: `expanding-brain`, imgflip: 93895088) — 4 panels of increasingly "enlightened" takes. Write 3 captions: `data-boxes="TAKE 1||TAKE 2||TAKE 3"` (code fills panel 4). Perfect for devolving takes or increasingly wild stat comparisons.
-- **Vince McMahon Reaction** (slug: `vince-mcmahon-reaction`, imgflip: 193966043) — 4 panels of increasing excitement. Write 3 captions: `data-boxes="PANEL 1||PANEL 2||PANEL 3"`. Use when you want custom text escalating across panels.
+- **Galaxy Brain / Expanding Brain** (slug: `expanding-brain`, imgflip: 93895088) — 4 panels of increasingly "enlightened" takes. Write 4 captions: `data-boxes="TAKE 1||TAKE 2||TAKE 3||TAKE 4"` — panel 4 is the galaxy-brain payoff and is NOT auto-filled. Perfect for devolving takes or increasingly wild stat comparisons.
+- **Vince McMahon Reaction** (slug: `vince-mcmahon-reaction`, imgflip: 193966043) — 4 panels of increasing excitement. Write 4 captions: `data-boxes="PANEL 1||PANEL 2||PANEL 3||PANEL 4"`. Use when you want custom text escalating across panels.
 - **Gru's Plan** (slug: `gru-plan`, imgflip: 131940431) — 4 panels: step 1 → step 2 → the flaw → stare at the flaw. Write 3 captions: `data-boxes="STEP 1||STEP 2||THE FLAW"` (code repeats the flaw as panel 4). Use when a team's plan has an obvious problem they didn't see coming.
-- **Clown Applying Makeup** (slug: `clown-applying-makeup`, imgflip: 195515965) — Progressive clown makeup. Write 3 captions: `data-boxes="STEP 1||STEP 2||STEP 3"`. Each panel = a step deeper into delusion. Perfect for fans who keep defending a bad team/player.
+- **Clown Applying Makeup** (slug: `clown-applying-makeup`, imgflip: 195515965) — Progressive clown makeup. Write 4 captions: `data-boxes="STEP 1||STEP 2||STEP 3||STEP 4"`. Each panel = a step deeper into delusion. Perfect for fans who keep defending a bad team/player.
 
 ### DENIAL / COPIUM — "Refusing to accept reality"
 
@@ -105,7 +111,7 @@ Use when a stat line, situation, or take escalates through multiple levels.
 
 ### REACTION / SURPRISE — "Wait, what?"
 
-- **Surprised Pikachu** (slug: `surprised-pikachu`, imgflip: 155067746) — When the obvious outcome happens and everyone acts shocked.
+- **Surprised Pikachu** (slug: `surprised-pikachu`, imgflip: 155067746) — When the obvious outcome happens and everyone acts shocked. Write 3 captions: `data-boxes="WHO||WHAT THEY DID||THE PREDICTABLE RESULT"`.
 - **Wait, It's All X? Always Has Been** (slug: `always-has-been`, imgflip: 252600902) — Astronaut meme. Use when something that seems new was actually always the case.
 - **Monkey Puppet Side-Eye** (slug: `monkey-puppet`, imgflip: 148909805) — Awkward glance. When someone is caught or called out.
 - **Mocking Spongebob** (slug: `mocking-spongebob`, imgflip: 102156234) — When a bad excuse or dumb take deserves direct mockery. `data-boxes="THE STRAIGHT VERSION||THE PHRASE REPEATED"`. The pipeline auto-applies alternating caps to the bottom panel — write it normally.
@@ -113,7 +119,7 @@ Use when a stat line, situation, or take escalates through multiple levels.
 
 ### DOMINATION / SUPERIORITY — "One thing destroying another"
 
-- **Trade Offer** (slug: `trade-offer`, imgflip: 309868304) — "I receive: [good thing]. You receive: [bad thing]." Perfect for lopsided trades.
+- **Trade Offer** (slug: `trade-offer`, imgflip: 309868304) — "I receive: [good thing]. You receive: [bad thing]." Write 3 captions: `data-boxes="WHO'S OFFERING||WHAT THEY RECEIVE||WHAT YOU RECEIVE"`. Perfect for lopsided trades.
 - **Panik / Kalm / Panik** (slug: `panik-kalm-panik`, imgflip: 226297822) — THREE panels of emotional whiplash. `data-boxes="PANIK TEXT||KALM TEXT||PANIK TEXT"` — first shock, false relief, final panic. Good for game recaps with momentum swings.
 - **Waiting Skeleton** (slug: `waiting-skeleton`, imgflip: 4087833) — When a franchise or fan base has been waiting for something so long it's become a joke.
 - **One Does Not Simply** (slug: `one-does-not-simply`, imgflip: 61579) — Boromir from LOTR. "One does not simply [impossible or absurd thing]." Use for situations that seem easy but always end in disaster for a specific team or player.
@@ -121,8 +127,8 @@ Use when a stat line, situation, or take escalates through multiple levels.
 ### BETRAYAL / SELF-DESTRUCTION — "You left me" / "They did this to themselves"
 
 - **Spider-Man Pointing at Spider-Man** (slug: `spider-man-pointing-at-spider-man`, imgflip: 119215120) — When two things/people are identical but acting like they're different.
-- **Eric Andre Shooting Hannibal** (slug: `eric-andre-shooting`, imgflip: 97984) — "Why would [someone else] do this?" Shoots own franchise then blames others.
-- **Is This a Pigeon?** (slug: `is-this-a-pigeon`, imgflip: 100947) — "Is this [wrong label]?" When someone fundamentally misidentifies what they're looking at.
+- **Eric Andre Shooting Hannibal** (slug: `eric-andre-shooting`, imgflip: 97984) — "Why would [someone else] do this?" Write 3 captions: `data-boxes="WHO PULLED THE TRIGGER||THE ACT OF SELF-SABOTAGE||THE FEIGNED CONFUSION LINE"`. Shoots own franchise then blames others.
+- **Is This a Pigeon?** (slug: `is-this-a-pigeon`, imgflip: 100777631) — Write 3 captions: `data-boxes="WHO IS MISIDENTIFYING||THE THING THEY SEE||IS THIS [WRONG LABEL]?"`. Box 3 is the bottom question line — omit it and the punchline is blank.
 - **Woman Yelling at Cat** (slug: `woman-yelling-at-cat`, imgflip: 188390779) — Two-panel argument. Left panel: someone making an emotional accusation. Right panel: the calm/unbothered response. Perfect for fan vs. reality, media vs. player, or team vs. opponent dynamics.
 
 ### RESIGNATION / WALKING AWAY

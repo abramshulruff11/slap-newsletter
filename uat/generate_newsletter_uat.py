@@ -730,6 +730,13 @@ def normalize_plan(plan: dict) -> dict:
         s = safe_dict(val)
         s["tweets"] = safe_tweet_list(s.get("tweets"))
         s["gif_concept"]  = safe_str(s.get("gif_concept"))
+        # Default to Tier 1: a missing tier must never silently authorize live
+        # search, which is the expensive/uncurated path.
+        try:
+            tier = int(s.get("gif_tier") or 1)
+        except (TypeError, ValueError):
+            tier = 1
+        s["gif_tier"]     = tier if tier in (1, 3) else 1
         s["meme_concept"] = safe_str(s.get("meme_concept"))
         s["beats"]        = normalize_beat_list(s.get("beats"))
         return s
@@ -891,6 +898,24 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             "tweets":         {"type": "array", "items": _tweet},
             "research_notes": {"type": "string"},
             "gif_concept":    {"type": "string"},
+            # Tier is a STRUCTURED decision, not left to the writer's judgment.
+            # Three UAT runs showed the writer collapses every specific concept
+            # into a generic library category ("close enough") when the tier is
+            # only described in prose — including a seed that literally named a
+            # Home Alone scene. Pass 1 already knows which shape it wrote, so it
+            # records the tier here and Pass 2 is forbidden from downgrading it.
+            "gif_tier": {
+                "type": "integer",
+                "enum": [1, 3],
+                "description": (
+                    "1 = generic emotional beat, any face works — the writer must "
+                    "use a curated library category. 3 = a SPECIFIC named person, "
+                    "clip or moment IS the joke and no generic reaction substitutes "
+                    "— the writer must use live search. Set 3 only when you named a "
+                    "specific person/scene in gif_concept. Omit when gif_concept is "
+                    "empty."
+                ),
+            },
             "meme_concept":   {"type": "string"},
             "beats":          {"type": "array", "items": _beat},
         },
@@ -1451,6 +1476,14 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
     voice_examples   = load_prompt("voice_examples.txt")
     gif_reference    = load_prompt("gif_reference.txt")
     meme_reference   = load_prompt("meme_reference.txt")
+
+    # The library's category menu is injected at load time rather than pasted
+    # into the prompt file, so the two can never drift apart as categories are
+    # added or a category's last verified entry is retired.
+    if "{{GIF_LIBRARY_CATEGORIES}}" in gif_reference:
+        import gif_library_select as _GL
+        gif_reference = gif_reference.replace(
+            "{{GIF_LIBRARY_CATEGORIES}}", _GL.category_prompt_block())
 
     # Voice examples load FIRST so the model reads the target before the rules.
     # This matches how Pass 4 (Voice Editor) works and weights imitation over instruction.
