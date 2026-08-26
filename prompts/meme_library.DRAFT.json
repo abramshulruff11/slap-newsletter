@@ -10,7 +10,7 @@
     "box_count_convention": "box_count is the number of PHYSICAL panels the template renders, which may exceed the captions a writer supplies (gru-plan renders 4 from 3; anakin-padme renders 4 from 2). See special_handling.",
     "open_questions_for_review": [
       "SUBJECT ENFORCEMENT (biggest): subject.placement 'copy' is a hard rule in this file, but pass2_writer.txt has no matching rule and pre_edit() does not check it. Options: (a) add the rule to pass2_writer.txt and mirror it like the banned-phrase sync, (b) add data-subject to the meme-placeholder div so pre_edit() can verify the subject appears in the section text -- makes it machine-checkable but needs a generate_memes.py change.",
-      "distracted-boyfriend box_count: documented as 3 with the subject in box 2, but meme_reference.txt says 2 panels and _expand_boxes() has no case for it, so the subject panel may render uncaptioned today. Needs verification against a real render; likely a code + reference fix.",
+      "distracted-boyfriend box_count: RESOLVED 2026-08-26 -- confirmed 3 boxes, subject is the middle figure. No code change needed (_expand_boxes passes it through, generate_meme sends as many captions as it gets). REMAINING ACTION: prompts/meme_reference.txt still lists it under '2 panels', so the writer supplies 2 and the subject panel renders empty in production today. Move it to a 3-panel row there. Box index-to-position ordering still unverified against a real render.",
       "PRUNING: all 30 are documented as requested. Weakest sports fits, flagged for possible removal: epic-handshake (its shared thing has no caption box, so it leans entirely on the copy), is-this-a-pigeon (needs a confidently-wrong public claim, which is rare), one-does-not-simply (the assumed-easy/actually-hard gap is narrow).",
       "Where does this land first -- uat/prompts/ or prod prompts/? CLAUDE.md says UAT before prod, promotion manual."
     ],
@@ -261,10 +261,10 @@
       "box_count": 3,
       "subject": {
         "required": true,
-        "who": "The person or team doing the looking -- the one moving on.",
+        "who": "The person or team making the decision -- the middle figure, the one moving on.",
         "placement": "box:2",
-        "rule": "MUST be captioned in box 2. Do not leave box 2 blank; without the subject label the meme has no protagonist.",
-        "note": "Unlike drake, the subject IS captioned here."
+        "rule": "MUST be captioned in box 2 -- the middle figure. Do not leave it blank; without the subject label the meme has no protagonist.",
+        "note": "Unlike drake, the subject IS captioned here: the guy in the middle is the person/team making the decision."
       },
       "comedic_engine": "The subject is visibly turning away, in public, from the thing they were committed to -- and everyone can see them doing it.",
       "valence": "Box 0 MUST be the established commitment being left behind. Box 1 is the new object of attention -- it does NOT have to be worse, but it must be notable that the subject is moving on. Box 2 MUST name the subject.",
@@ -281,7 +281,7 @@
         },
         {
           "index": 2,
-          "purpose": "the subject themselves -- the person or team doing the looking",
+          "purpose": "the subject -- the middle figure, the person or team making the decision",
           "valence": "neutral -- a label, not a judgment"
         }
       ],
@@ -314,7 +314,8 @@
         "label-the-scene"
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram.",
-      "box_count_conflict": "v1 said 2. Review feedback says 3, with the subject in box 2. meme_reference.txt lists it under '2 panels' and _expand_boxes() has no case for it, so the pipeline currently sends 2 captions and the subject panel likely renders uncaptioned. VERIFY against a real render."
+      "box_count_confirmed": "CONFIRMED 3 boxes by review (2026-08-26): the middle figure (the boyfriend) is the subject making the decision. NO code change is needed -- _expand_boxes() passes this slug through untouched and generate_meme() sends however many captions it receives. The live bug is in prompts/meme_reference.txt, which lists distracted-boyfriend under '2 panels', so the writer only ever supplies 2 and the middle/subject panel renders empty. Fix = move it to a 3-panel row there.",
+      "box_order_caveat": "Box INDEX to physical position is not yet verified against a real Imgflip render. This entry assumes 0=left/abandoned, 1=right/new, 2=middle/subject. If a first render puts captions on the wrong figures, permute the indices here -- the roles are right even if the order needs swapping."
     },
     {
       "slug": "left-exit-12-off-ramp",
