@@ -1,0 +1,1562 @@
+{
+  "_meta": {
+    "purpose": "SLAP reaction-GIF library. Curated, verified GIF assets keyed by a stable Giphy ID. The GIF selector (Sonnet) matches the writer's gif_concept against these entries; live Giphy search is a FALLBACK only when nothing here fits. This mirrors the CURATED_TEMPLATES model in generate_memes.py — but for GIFs.",
+    "schema_version": 1,
+    "status": "DRAFT FORMAT PROPOSAL — real seed examples added 2026-08-23. Still not wired into the pipeline.",
+    "how_giphy_id_works": "For a share-page URL like giphy.com/gifs/{slug}-{ID} (or giphy.com/gifs/{ID} with no slug), the ID is the final token after the last hyphen. That ID is the same one Giphy's API uses for lookup.",
+    "canonical_url_PROBED_2026-08-23": "A clean https://i.giphy.com/media/<id>/giphy.gif does NOT exist — disproved by probe. Giphy's real media URLs require a context-dependent cid blob (media{N}.giphy.com/media/v1.{cid}/<id>/giphy.gif), matching the long URLs already seen in gif_history.json. DO NOT hand-construct the render URL from the ID. Instead, resolve the ID at embed time via Giphy's get-by-ID endpoint: GET https://api.giphy.com/v1/gifs/{id}?api_key=... — this returns the same 'images' object shape that fetch_giphy_candidates() in generate_newsletter.py already parses for search results, so the existing URL-extraction logic (images.downsized_medium / downsized / original) can be reused as-is for library lookups. The library only needs to store the bare ID; resolution is one small new function that mirrors the existing search path.",
+    "verification_states": {
+      "verified": "A human (Abram) has confirmed this IS the intended clip, clean (no random caption overlay), good quality. Entries below marked verified are Abram's own picks from the 2026-08-23 seeding round.",
+      "candidate": "AI-proposed during library expansion. NOT yet human-reviewed. The selector MAY use these only if allow_candidates is on; default is verified-only.",
+      "retired": "Was in rotation, pulled by feedback. Kept in the file (not deleted) so expansion doesn't re-propose it. Never selected."
+    },
+    "cooldown_days_default": 7,
+    "selection_contract": "Selector receives: the writer's gif_concept string + the list of entries whose category matches AND that are not in cooldown AND status=verified. It returns one entry id, or the sentinel NO_MATCH to trigger Giphy fallback. It must NOT invent an id."
+  },
+
+  "categories": {
+    "escalation": {
+      "description": "It keeps getting better / worse — each beat tops the last. Stat lines piling up, a situation compounding.",
+      "use_when": "A story where intensity ratchets: blowup trades stacking, a team's problems compounding, records falling one after another.",
+      "do_not_use_when": "A single flat fact. Escalation needs a sequence to land.",
+      "gifs": [
+        {
+          "id": "dZQR7P1lxgi4mUmsjY",
+          "label": "Anchorman — 'that escalated quickly'",
+          "status": "verified",
+          "tags": ["escalation", "surprise-turn", "classic-line"]
+        },
+        {
+          "id": "Ihy9GQCDUWX8fXcQ8R",
+          "label": "Impeachment inquiry — Steve Castor",
+          "status": "verified",
+          "note": "Dry/deadpan escalation — good for 'this just kept happening' beats without hype energy.",
+          "tags": ["escalation", "deadpan", "bureaucratic-chaos"]
+        },
+        {
+          "id": "4FmAj1XiioCVW",
+          "label": "Vince McMahon progressive excitement (example 1)",
+          "status": "verified",
+          "note": "HIGH overuse risk historically. Longer cooldown + rotate with the second Vince entry and the two above before repeating.",
+          "cooldown_days": 14,
+          "tags": ["escalation", "hype", "each-one-better"]
+        },
+        {
+          "id": "7FyMQm2vBiTjG",
+          "label": "Vince McMahon progressive excitement (example 2)",
+          "status": "verified",
+          "note": "Alt clip of the same bit — use to vary the Vince beat without repeating the exact same GIF within the cooldown window.",
+          "cooldown_days": 14,
+          "tags": ["escalation", "hype", "each-one-better"]
+        },
+        {
+          "id": "1n4iuWZFnTeN6qvdpD",
+          "label": "'This is fine' dog - room on fire",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Register is denial-amid-compounding-chaos rather than ratcheting hype - best for a team whose problems keep stacking while everyone insists it's fine. Extremely famous meme, hence the longer cooldown.",
+          "cooldown_days": 10,
+          "tags": ["escalation", "compounding-disaster", "denial"]
+        },
+        {
+          "id": "K9m5k3LN95osDAL8RC",
+          "label": "'But wait, it gets worse' (Dead Meat James)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @deadmeatjames channel - their whole format is built around 'it gets worse' beats, a near-literal match for this category's description.",
+          "tags": ["escalation", "each-one-better"]
+        },
+        {
+          "id": "qpCYWYWC0CimN5GteN",
+          "label": "'One thing after another' (A&E)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @aetv upload; title is a literal match for the category.",
+          "tags": ["escalation", "each-one-better"]
+        },
+        {
+          "id": "k3pBCNL1n8Bm4ILoVP",
+          "label": "Boiling point (Disney/Pixar Elemental)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @disneypixar upload - literal boiling-over visual.",
+          "tags": ["escalation", "compounding-disaster"]
+        },
+        {
+          "id": "5kFWWtxR0UCHgLaM4O",
+          "label": "'Chaos grenade' (Billions)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @billions upload; a finance-world show, which fits a sports-business escalation story especially well.",
+          "tags": ["escalation", "compounding-disaster"]
+        }
+      ]
+    },
+
+    "embarrassing_awkward": {
+      "description": "A hilarious or cringe-inducing situation — can't-believe-that-just-happened laughter.",
+      "use_when": "A blooper, an on-air gaffe, an awkward postgame moment.",
+      "do_not_use_when": "The subject is genuinely hurt or the moment is sad rather than funny-awkward — that's sadness_resignation instead.",
+      "gifs": [
+        {
+          "id": "XHeLeuirRbwptHhSWd",
+          "label": "Can't-stop-laughing / spit-take laugh",
+          "status": "verified",
+          "tags": ["embarrassing", "laughing", "cant-believe-it"]
+        },
+        {
+          "id": "LM2AKwFXf4SPHOUPCn",
+          "label": "NHL - 'painful to watch' (Paul Bissonnette)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @nhl upload - sports-native cringe reaction, best single fit in this category.",
+          "tags": ["embarrassing", "cringe", "cant-believe-it"]
+        },
+        {
+          "id": "ZmM3OWeJ73016zKZ4x",
+          "label": "Awkward monkey puppet (side-eye)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Canonical awkward-monkey meme; uploader is a small channel (@pinebill), so confirm it's the clean version.",
+          "tags": ["embarrassing", "awkward", "cant-believe-it"]
+        },
+        {
+          "id": "3ohhwCH8N0LmsitYKQ",
+          "label": "Curb Your Enthusiasm - awkward (S6)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @curbyourenthusiasm channel. Title doesn't say WHICH awkward beat - worth an eyeball.",
+          "tags": ["embarrassing", "awkward", "cringe"]
+        },
+        {
+          "id": "smGM0QWaDPST4dalTJ",
+          "label": "The Office - awkward (S4)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @theoffice channel; generic title, verify the specific clip.",
+          "tags": ["embarrassing", "awkward", "cringe"]
+        },
+        {
+          "id": "YrBRYRDN4M5ryrNOND",
+          "label": "'Uh oh / my bad' yikes reaction (Bounce)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @Bounce_TV upload - good for an on-air gaffe.",
+          "tags": ["embarrassing", "awkward", "cant-believe-it"]
+        },
+        {
+          "id": "l41lJQLdSdoezQ1I4",
+          "label": "'I can't look' - covering eyes (RHOC)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Anonymous uploader; slug says rhoc-heather-dubrow-i-cant-look. Content likely right but the upload is unverified.",
+          "tags": ["embarrassing", "cringe", "cant-look"]
+        },
+        {
+          "id": "5bpZkvrwx0B4PqgQFd",
+          "label": "Warriors blooper (Bleacher Report)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @bleacherreport upload - sports media, on-court fail.",
+          "tags": ["embarrassing", "cringe", "cant-believe-it"]
+        },
+        {
+          "id": "bpz6Jo3vrrsfS",
+          "label": "NBA dunk fail",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @nba upload.",
+          "tags": ["embarrassing", "cringe"]
+        },
+        {
+          "id": "3o6Zt1TrXW8uW2lE2I",
+          "label": "Giants fielding fail (MLB)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @mlb upload.",
+          "tags": ["embarrassing", "cringe"]
+        }
+      ]
+    },
+
+    "bad_dumb_move": {
+      "description": "Someone did something weird, bad, or stupid — a flat rejection of a decision or play.",
+      "use_when": "A boneheaded play call, a bad take, a self-inflicted mistake.",
+      "do_not_use_when": "The person is being cocky rather than dumb — that's cockiness_smugness.",
+      "gifs": [
+        {
+          "id": "ji6zzUZwNIuLS",
+          "label": "Flat 'no' reaction",
+          "status": "verified",
+          "tags": ["bad-decision", "rejection", "no"]
+        },
+        {
+          "id": "XsUtdIeJ0MWMo",
+          "label": "Picard facepalm (Star Trek)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Canonical Picard facepalm; anonymous re-upload, so confirm it's clean and uncaptioned.",
+          "tags": ["bad-decision", "facepalm", "no"]
+        },
+        {
+          "id": "xT9DPJVjlYHwWsZRxm",
+          "label": "Gordon Ramsay - head shake / disbelief",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @hells-kitchen channel.",
+          "tags": ["bad-decision", "smh", "no"]
+        },
+        {
+          "id": "c2PEJz1ZRoO9UlSz0A",
+          "label": "Jimmy Carr 'oops' - you had one job (BBC)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @bbc upload; slug is one-job-blankety-blank.",
+          "tags": ["bad-decision", "no"]
+        },
+        {
+          "id": "pajLsGB0Hub0naPw0p",
+          "label": "Bernie Mac smh (Mr. 3000)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @laff_tv upload; Mr. 3000 is a baseball movie, so it reads sports-adjacent.",
+          "tags": ["bad-decision", "smh", "no"]
+        },
+        {
+          "id": "26CaLpDvg2oDf9rAk",
+          "label": "Dragons' Den - 'no' / smh (CBC)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @cbc upload.",
+          "tags": ["bad-decision", "rejection", "no"]
+        },
+        {
+          "id": "3o7WINl7VzLJOAJFVS",
+          "label": "Dave Ramsey - 'why would you do that' no",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @ramseysolutions upload; slug is literally why-dumb-dave-ramsey.",
+          "tags": ["bad-decision", "no", "smh"]
+        },
+        {
+          "id": "Y2tdaxOkw9QgQKUm8F",
+          "label": "Friends - 'why would you do that' (S5)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @friends upload.",
+          "tags": ["bad-decision", "no"]
+        },
+        {
+          "id": "FZMkgYmrPYVHnjEzhE",
+          "label": "Errol Spence Jr reaction (Showtime Sports)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @showtimesports upload - boxing, sports-native.",
+          "tags": ["bad-decision", "no"]
+        },
+        {
+          "id": "jITjaQ9OWbASi8qiwH",
+          "label": "'You live, you learn' (WWE)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @wwe upload - good for a self-inflicted-mistake beat.",
+          "tags": ["bad-decision", "no"]
+        },
+        {
+          "id": "STXfoyQhOKTRmdmZQR",
+          "label": "Facepalm (CW Kung Fu)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @cwkungfu upload.",
+          "tags": ["bad-decision", "facepalm", "no"]
+        },
+        {
+          "id": "AkQnL6wRP7J6PDqGpn",
+          "label": "Facepalm (VeeFriends)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @VeeFriends upload.",
+          "tags": ["bad-decision", "facepalm"]
+        },
+        {
+          "id": "1r94hfYcoLFCdsRyhY",
+          "label": "WWE Raw - blaming / bad call",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @wwe upload; slug is literally wwe-blame-baron-corbin-blaming.",
+          "tags": ["bad-decision", "no"]
+        }
+      ]
+    },
+
+    "confusion": {
+      "description": "Something confusing happened — no one knows what they just saw.",
+      "use_when": "A bizarre play, a rules controversy, an inexplicable roster move.",
+      "do_not_use_when": "The confusion is really disbelief at something great — that leans respect_awe instead.",
+      "gifs": [
+        {
+          "id": "g01ZnwAUvutuK8GIQn",
+          "label": "Confused reaction",
+          "status": "verified",
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "1wnZt7VY9yPDZRZ9M6",
+          "label": "Confused math lady (floating equations)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via web search. This is the canonical/classic version of the meme (shortest, cleanest URL slug of several variants found) but NOT yet eyeballed by Abram.",
+          "tags": ["confusion", "what-just-happened", "overwhelmed"]
+        },
+        {
+          "id": "vnFB72LzHtO4o",
+          "label": "Confused Travolta (Pulp Fiction, looking around)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Canonical version of the meme but an anonymous upload - verify no caption overlay. Extremely overused meme, hence longer cooldown.",
+          "cooldown_days": 10,
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "kWcAYqxFQi6e6NGb9d",
+          "label": "Confused Nick Young ('?' overlay)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official-ish @buzzfeed channel. NOTE: this meme normally carries floating question marks baked in - that's the meme, not a caption bug. Overused, hence longer cooldown.",
+          "cooldown_days": 10,
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "3rlkIb3L5zPTsQEn81",
+          "label": "Blinking white guy (Drew Scanlon)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Anonymous upload of a very famous reaction. Overused, hence longer cooldown.",
+          "cooldown_days": 10,
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "k74OUg6bPJKy2JmyoS",
+          "label": "'Wait, what' / hold on (Bounce)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @Bounce_TV upload.",
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "FcuiZUneg1YRAu1lH2",
+          "label": "It's Always Sunny - confused",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @sunnyfxx upload.",
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "SMAMKsPB2i2pzYPGzb",
+          "label": "Jimmy Fallon - 'what?' confused",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @fallontonight upload.",
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "bm02BE6DQ4Oag8GXep",
+          "label": "The Office - 'what?' (S5)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @theoffice upload.",
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "400IbOQGqOWQgTLCvx",
+          "label": "The Kid Mero - 'what' (Desus & Mero)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @desusandmeroonshowtime upload.",
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "3iwRj8JrhaBfvQMSx9",
+          "label": "Schitt's Creek - 'what' (CBC)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @cbc upload.",
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "N86lbPjFROJIQUzqOq",
+          "label": "Record scratch 'what' (Netflix/Squid Game)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @netflix upload; slug is literally record-scratch-what.",
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "KD2gfeYLy6T5V7eMzp",
+          "label": "'No way' (NBA)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @nba upload - sports-native.",
+          "tags": ["confusion", "what-just-happened"]
+        },
+        {
+          "id": "TlcRinWpGjDqHsDxvA",
+          "label": "'Excuse me?' (Achievement Hunter)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @achievementhunter upload.",
+          "tags": ["confusion", "what-just-happened"]
+        }
+      ]
+    },
+
+    "respect_awe": {
+      "description": "This person is different. Earned reverence for greatness.",
+      "use_when": "A genuinely great performance, a legacy moment, a player operating on another level.",
+      "do_not_use_when": "Generic praise, or when the subject has a grudge/revenge motivation (that's MJ 'took that personally', a different beat).",
+      "gifs": [
+        {
+          "id": "3o7TKyO8h2mlouR71K",
+          "label": "Kobe Bryant Nod (official WNBA channel upload)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23 via web search, cross-checked against the giphy.com page (tags: nod, nodding, kobe; uploaded by official @wnba channel, not a random reupload). NOT yet eyeballed by Abram — needs light review before flipping to verified.",
+          "tags": ["respect", "approval", "greatness-recognizing-greatness", "nod"]
+        },
+        {
+          "id": "zBBPQUhyV6qWjOVbKn",
+          "label": "MLB - bowing down to Albert Pujols",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @mlb upload; slug mlb-respect-albert-pujols-kyle-schwarber. Strongest sports-native fit found.",
+          "tags": ["respect", "greatness-recognizing-greatness", "approval"]
+        },
+        {
+          "id": "A28CxD7W6d4B2",
+          "label": "MLB - tip of the cap (Royals)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @mlb upload.",
+          "tags": ["respect", "approval", "nod"]
+        },
+        {
+          "id": "xUOrwq55SJxeiUBsPu",
+          "label": "Seth Meyers - tip of the hat",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @latenightseth upload.",
+          "tags": ["respect", "approval", "nod"]
+        },
+        {
+          "id": "nWWGEOdq8394Qs4qUw",
+          "label": "Oscars - standing ovation",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @oscars upload; good for a legacy/career moment.",
+          "tags": ["respect", "approval", "greatness-recognizing-greatness"]
+        },
+        {
+          "id": "MUeQeEQaDCjE4",
+          "label": "Wayne's World - 'we're not worthy'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Anonymous upload of a very well-known bit; confirm it's the clean clip.",
+          "tags": ["respect", "greatness-recognizing-greatness"]
+        },
+        {
+          "id": "iP3GyAWP9NrlpI0Ilt",
+          "label": "The Office - slow clap",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @theoffice upload. CAUTION: a slow clap can read sarcastic. Only use where the praise is earnest, or the meaning flips.",
+          "tags": ["respect", "approval"]
+        },
+        {
+          "id": "x0qyzmrDa7LpAEDftB",
+          "label": "'Take your hat off' - impressed (Olivier Awards)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @londontheatre upload from a real awards body - earnest respect register, not sarcastic.",
+          "tags": ["respect", "approval"]
+        },
+        {
+          "id": "fCUTTqU2u2SjwM401F",
+          "label": "Standing ovation (Zee TV)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @zeetv upload.",
+          "tags": ["respect", "approval", "greatness-recognizing-greatness"]
+        },
+        {
+          "id": "yidUzHnBk32Um9aMMw",
+          "label": "Hugh Jackman - amazed / in awe",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Anonymous upload; slug hugh-jackman-amazed-awe. Confirm it isn't a captioned meme variant.",
+          "tags": ["respect", "approval"]
+        },
+        {
+          "id": "9x53b0DRuorXEGOaTh",
+          "label": "Goosebumps / chills (CBS)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @cbs upload.",
+          "tags": ["respect", "approval"]
+        },
+        {
+          "id": "LndRuvKxltQa8DfZnd",
+          "label": "Goosebumps reaction (NBC)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @nbc upload.",
+          "tags": ["respect", "approval"]
+        },
+        {
+          "id": "Aas1NtStlvy7EYcDBY",
+          "label": "UFC - operating on another level",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @ufc upload - sports-native.",
+          "tags": ["respect", "greatness-recognizing-greatness"]
+        }
+      ]
+    },
+
+    "sadness_resignation": {
+      "description": "It's over / they lost. Quiet devastation, dramatic grief, or the bittersweet 'happy tears' variant.",
+      "use_when": "An elimination, a franchise low, a beloved player's rough end, or an emotional retirement/farewell moment.",
+      "do_not_use_when": "Punching down at a fanbase for a normal regular-season loss.",
+      "gifs": [
+        {
+          "id": "rvxMJNyHAgwlW4YWpJ",
+          "label": "Sad Vince McMahon — sadness / happy tears",
+          "status": "verified",
+          "note": "Flexible: works for genuine sadness AND the bittersweet 'happy tears' beat (emotional farewell, career-capping moment).",
+          "tags": ["sadness", "happy-tears", "bittersweet", "emotional"]
+        },
+        {
+          "id": "PLACEHOLDER_AFFLECK",
+          "label": "Ben Affleck smoking — defeated acceptance",
+          "status": "retired",
+          "note": "RETIRED 2026-05: appeared 3 of 4 issues (5/16, 5/18, 5/19). The exact staleness case that motivated this whole library. Kept here so expansion never re-proposes it.",
+          "tags": ["sadness", "resignation", "defeat"]
+        },
+        {
+          "id": "26FPImXfDlv4AFbBC",
+          "label": "Crying Michael Jordan",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. The canonical Crying Jordan face; anonymous upload, so confirm it isn't a photoshopped variant with someone else's face pasted on. Extremely overused, hence longer cooldown.",
+          "cooldown_days": 10,
+          "tags": ["sadness", "defeat", "resignation"]
+        },
+        {
+          "id": "5O0E0jOnTDVfjtXz0k",
+          "label": "MLB - postseason gut punch (Blake Snell)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @mlb upload; slug mlb-sad-postseason-blake-snell.",
+          "tags": ["sadness", "defeat", "resignation"]
+        },
+        {
+          "id": "QAJ1uCAQDQiBg0mEzN",
+          "label": "Mets - head hung (JD Davis)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @mets upload.",
+          "tags": ["sadness", "defeat", "resignation"]
+        },
+        {
+          "id": "3d2kMNpdOWQan2sQrG",
+          "label": "World Rugby - gutted",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @worldrugby upload.",
+          "tags": ["sadness", "defeat", "emotional"]
+        },
+        {
+          "id": "fJXFGEicIov9QGjCkj",
+          "label": "Tennis TV - defeated sigh",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @tennistv upload.",
+          "tags": ["sadness", "resignation", "defeat"]
+        },
+        {
+          "id": "I9OPK7PtlsALTepOq2",
+          "label": "Sad Keanu on a bench",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Uploaded by @heroicgg (an esports org), not the origin. Classic quiet-defeat meme.",
+          "tags": ["sadness", "resignation", "bittersweet"]
+        },
+        {
+          "id": "9S5j6xr0sCuouLklM2",
+          "label": "Formula E - facepalm sad (ABB FIA)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @fiaformulae upload - motorsport, sports-native.",
+          "tags": ["sadness", "defeat", "resignation"]
+        },
+        {
+          "id": "H05oTz7VR1H1chlTX9",
+          "label": "Grey's Anatomy - sad (ABC)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @abcnetwork upload.",
+          "tags": ["sadness", "emotional"]
+        },
+        {
+          "id": "l2SqgyfHkR6gafuTe",
+          "label": "South Park - sad",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @southpark upload; generic title, verify which clip.",
+          "tags": ["sadness", "resignation"]
+        },
+        {
+          "id": "YlMJ1e00nwoZdVTIDQ",
+          "label": "John Cena - defeated (Late Late Show)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @latelateshow upload; slug walk-of-shame-flinch. WWE personality, fits a sports newsletter.",
+          "tags": ["sadness", "resignation", "defeat"]
+        },
+        {
+          "id": "l4LfagGUuIOouvWijX",
+          "label": "Walk of shame - sad (TLC Europe)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @tlceurope upload.",
+          "tags": ["sadness", "resignation"]
+        },
+        {
+          "id": "bHUajSIMIRcDY73Pti",
+          "label": "'It's over' (Netflix/Squid Game)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @netflix upload.",
+          "tags": ["sadness", "resignation", "defeat"]
+        }
+      ]
+    },
+
+    "cockiness_smugness": {
+      "description": "Someone acting cocky, or smug vindication — 'told you so' energy.",
+      "use_when": "A player/team talking trash and backing it up, a confident strut, a called-shot moment.",
+      "do_not_use_when": "The confidence hasn't been earned yet — save for after the payoff, not the boast alone.",
+      "gifs": [
+        {
+          "id": "qOnWoPxXnm0Vi",
+          "label": "Cocky strut / smug reaction",
+          "status": "verified",
+          "tags": ["cocky", "smug", "confidence"]
+        },
+        {
+          "id": "IhEXkpvYS0rYH8A4eq",
+          "label": "Kermit sipping tea (Muppet Wiki official upload)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23. Register is slightly different from your seed pick — this is smug DETACHED commentary ('watching the chaos unfold, not my problem') rather than a cocky strut. Good for a story where SLAP is narrating someone else's mess with knowing distance. Flag if that's not the fit you want for this category — might belong in its own 'wry detachment' category instead. NOT yet eyeballed.",
+          "tags": ["smug", "shade", "watching-from-a-distance"]
+        },
+        {
+          "id": "xUA7beT9PDJoDNAmgU",
+          "label": "Floyd Mayweather stare-down",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Anonymous upload; sports-native cocky stare. Verify it's clean.",
+          "tags": ["cocky", "confidence", "smug"]
+        },
+        {
+          "id": "DT3gYifPXBt5voafS1",
+          "label": "Jimmy Fallon - 'told you so / admit it'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @fallontonight upload.",
+          "tags": ["smug", "confidence"]
+        },
+        {
+          "id": "25OBBnY9j1uiVDV4lJ",
+          "label": "'Told you so' point-made (Bounce)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @Bounce_TV upload.",
+          "tags": ["smug", "shade"]
+        },
+        {
+          "id": "3o72F0Bvsi8CLuY5KE",
+          "label": "Schitt's Creek - 'I knew it' (David Rose)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @schittscreek upload.",
+          "tags": ["smug", "confidence"]
+        },
+        {
+          "id": "WnIPrUqNyFCUYFqLLC",
+          "label": "Westminster - winner's strut (poodle Siba)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @westminsterkennelclub upload. Comic strut, lighter register than the seed entry.",
+          "tags": ["cocky", "confidence"]
+        },
+        {
+          "id": "Nx2Lx1RmLadtC",
+          "label": "Jack Nicholson - 'deal with it' sunglasses",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Anonymous upload; Nicholson-courtside energy fits the cocky beat, but check whether 'DEAL WITH IT' text is baked in - if you want it clean, it may not be.",
+          "tags": ["cocky", "smug", "confidence"]
+        },
+        {
+          "id": "tFdqLBcwrh3AdgzYgT",
+          "label": "'You know' smirk (WWE)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @wwe upload.",
+          "tags": ["smug", "confidence"]
+        },
+        {
+          "id": "STYcRDzNO6AYNmMgvA",
+          "label": "Rick and Morty - swag (S4)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @rickandmorty upload.",
+          "tags": ["cocky", "confidence"]
+        },
+        {
+          "id": "34qsir9hxG8sloNtXQ",
+          "label": "'Sigma' Erling Haaland",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Small channel (@Pera01); a real footballer and a currently-trendy meme format, but verify content since the uploader isn't official.",
+          "tags": ["smug", "confidence"]
+        },
+        {
+          "id": "U8TJaBmNwVY5Ie2crg",
+          "label": "NBA reaction",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @nba upload, but the title is generic ('GIF by NBA') with no further slug context - eyeball closely to confirm the register before verifying.",
+          "tags": ["cocky", "confidence"]
+        },
+        {
+          "id": "s1iCWGBXye6FOM6rSo",
+          "label": "'Told you so' - Blue Cat",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. @thenopecat is a small but recognizable meme channel (the 'Nope Cat' character); slug is literally blue-cat-told-you-so.",
+          "tags": ["smug", "shade"]
+        },
+        {
+          "id": "eKDrGTXLrLqqJMA7NC",
+          "label": "WWE flex",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. @livsriott is a known wrestling-GIF curator channel, not WWE's own account - verify content.",
+          "tags": ["cocky", "confidence"]
+        }
+      ]
+    },
+
+    "celebratory": {
+      "description": "Pure celebration — a win, a big moment, unfiltered joy.",
+      "use_when": "A clinching win, a milestone, good news with no irony attached.",
+      "do_not_use_when": "The celebration is someone else's expense (that's more cockiness_smugness or domination) — this is for earnest joy.",
+      "gifs": [
+        {
+          "id": "D7T5m0AFV8Yg0",
+          "label": "Celebratory reaction",
+          "status": "verified",
+          "tags": ["celebration", "joy", "hype"]
+        },
+        {
+          "id": "t3sZxY5zS5B0z5zMIz",
+          "label": "NHL - 'let's go' fan celebration",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @nhl upload.",
+          "tags": ["celebration", "hype", "joy"]
+        },
+        {
+          "id": "zdjQpEtni7XIX4ncNg",
+          "label": "Welcome to Wrexham - crowd goes wild",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @WelcometoWrexhamFX upload.",
+          "tags": ["celebration", "hype", "joy"]
+        },
+        {
+          "id": "FX6SNOWqjUmzJlor4J",
+          "label": "Bucks - NBA Finals celebration",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @bucks upload.",
+          "tags": ["celebration", "hype"]
+        },
+        {
+          "id": "iOMSfTen1pZUPTx2QF",
+          "label": "Lil Jon - 'hell yeah' hype",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @liljon upload.",
+          "tags": ["celebration", "hype", "joy"]
+        },
+        {
+          "id": "tFXCQpZf3Q95S",
+          "label": "Champagne celebration (MLB clubhouse)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Anonymous upload but the slug is mlb-excited-celebration; good clinching-win beat if the clip is clean.",
+          "tags": ["celebration", "joy", "hype"]
+        },
+        {
+          "id": "DfLwM9kttDFEQ",
+          "label": "Leonardo DiCaprio cheers (Great Gatsby)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Anonymous upload of a very famous toast meme, hence longer cooldown.",
+          "cooldown_days": 10,
+          "tags": ["celebration", "joy"]
+        },
+        {
+          "id": "1BfPP1taCof3s61x71",
+          "label": "Bayern Munich - trophy celebration",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @fcbayern upload.",
+          "tags": ["celebration", "hype"]
+        },
+        {
+          "id": "TLO3uEaFDbd58RUpIl",
+          "label": "Liverpool FC - Champions League celebration",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @lfc upload.",
+          "tags": ["celebration", "hype", "joy"]
+        },
+        {
+          "id": "ugcpY6mLKO1XwLuEEA",
+          "label": "NBA Cup celebration",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @nba upload.",
+          "tags": ["celebration", "hype"]
+        },
+        {
+          "id": "dijK6WYRdSoJEikGPS",
+          "label": "NBA Finals - 'we did it' (Jayson Tatum)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @nba upload.",
+          "tags": ["celebration", "hype", "joy"]
+        },
+        {
+          "id": "Uqepe3KjEVzPYep8oW",
+          "label": "Stanley Cup parade (NHL)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @nhl upload.",
+          "tags": ["celebration", "hype"]
+        },
+        {
+          "id": "l4FGIG0CE6nJxnc1q",
+          "label": "Warriors champions (NBA)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @nba upload.",
+          "tags": ["celebration", "hype"]
+        }
+      ]
+    },
+
+    "hiding_avoidance": {
+      "description": "Trying to hide / avoid — caught red-handed or dodging accountability.",
+      "use_when": "A GM avoiding questions, a player ducking blame, an awkward retreat from a bad take.",
+      "do_not_use_when": "Genuine fear/danger rather than comic avoidance.",
+      "gifs": [
+        {
+          "id": "jUwpNzg9IcyrK",
+          "label": "Homer Simpson hiding/scared",
+          "status": "verified",
+          "tags": ["hiding", "avoidance", "caught"]
+        },
+        {
+          "id": "m93v8Rl9GBaW61AmOK",
+          "label": "James Harden walking out (Farmers Insurance)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @farmersinsurance upload - an actual NBA player leaving, which fits the 'ducking questions' beat literally.",
+          "tags": ["hiding", "avoidance"]
+        },
+        {
+          "id": "B7RQNl4rKdOuFgW8FA",
+          "label": "Backing away slowly / see ya",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @FilmRiot upload; slug backing-away-slowly-awkwardly.",
+          "tags": ["hiding", "avoidance"]
+        },
+        {
+          "id": "hLsCCNF5wlxuE99mxV",
+          "label": "Slowly leaving an awkward moment (Sewing Bee)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @britishsewingbee upload.",
+          "tags": ["hiding", "avoidance"]
+        },
+        {
+          "id": "J6Ox66ByIbq04mHvKG",
+          "label": "'Look away' - can't watch (Worcester Warriors)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @worcswarriors upload; rugby-native.",
+          "tags": ["hiding", "avoidance", "caught"]
+        },
+        {
+          "id": "jgulk8628iAZnq2zwN",
+          "label": "'I'm gone / ima head out' (Steve Wilkos)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @stevewilkos upload.",
+          "tags": ["hiding", "avoidance"]
+        },
+        {
+          "id": "xT5LMBhbii9Emb642Q",
+          "label": "The Simpsons - sneaking away (S20)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Deliberately NOT another Homer-into-the-bushes clip, to avoid duplicating the existing verified Homer entry - but confirm it isn't the same gag.",
+          "tags": ["hiding", "avoidance", "caught"]
+        },
+        {
+          "id": "l4FGl5oHLL4vqOvV6",
+          "label": "'Duck and cover' hide (Hyper RPG)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @hyperrpg upload.",
+          "tags": ["hiding", "avoidance"]
+        },
+        {
+          "id": "C2bdYA271bCG0THc01",
+          "label": "'No words' - disappointed walk-away (CSDRMS)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @CSDRMS upload; slug disappointed-walk-away-no-words fits a 'no comment' beat well.",
+          "tags": ["hiding", "avoidance"]
+        },
+        {
+          "id": "sfPlC3WxH1ARi",
+          "label": "Turtle retreating into its shell",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Anonymous upload of a literal, widely-used hiding visual. Confirm it's clean.",
+          "tags": ["hiding", "avoidance"]
+        },
+        {
+          "id": "BgjfoFQLZUrelvRm9H",
+          "label": "'Don't avoid, sidestep' (Dead Meat James)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @deadmeatjames upload.",
+          "tags": ["hiding", "avoidance"]
+        },
+        {
+          "id": "kRCqgi9tyHcQSZibBw",
+          "label": "'Not talking' (Line of Duty, BBC)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @LineOfDuty upload - fits a 'no comment' beat precisely.",
+          "tags": ["hiding", "avoidance"]
+        },
+        {
+          "id": "09tH4BmFeKA0QwQnph",
+          "label": "Exit stage left (2TON Agency)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @2TONAgency upload; slug is literally exit-stage-left.",
+          "tags": ["hiding", "avoidance"]
+        }
+      ]
+    },
+
+    "join_the_failure": {
+      "description": "Someone fails or something bad happens to them, and another party invites them to join the club — shared misery / 'welcome to the club' energy.",
+      "use_when": "A second team/player joins a company of failure (e.g. another team blows a similar lead, another exec makes the same mistake).",
+      "do_not_use_when": "The failure is a one-off with no 'company' angle — needs the comparison to land.",
+      "gifs": [
+        {
+          "id": "oWjyixDbWuAk8",
+          "label": "'Join us' after a failure",
+          "status": "verified",
+          "tags": ["schadenfreude", "welcome-to-the-club", "shared-misery"]
+        },
+        {
+          "id": "holej0e9EgHgmvEVv4",
+          "label": "Nelson (Simpsons) - 'HA-ha'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. MOODMAN channel (an established Giphy meme channel). This is the point-and-laugh half of the beat rather than the 'join us' half.",
+          "tags": ["schadenfreude", "shared-misery"]
+        },
+        {
+          "id": "kHs1lBhZWaK5rj7lt3",
+          "label": "'One of us' - welcome to the cult",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. MOODMAN channel; slug welcome-cult-one-of-us.",
+          "tags": ["welcome-to-the-club", "shared-misery", "schadenfreude"]
+        },
+        {
+          "id": "YDcxk5LbOh3uU",
+          "label": "Freaks - 'one of us' (original)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Uploaded by @maudit; this is the original film source of the 'one of us' chant.",
+          "tags": ["welcome-to-the-club", "shared-misery"]
+        },
+        {
+          "id": "mCbUi0FyYhHHhutEV8",
+          "label": "'Welcome to the team'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. MOODMAN channel; generic title, worth an eyeball for tone.",
+          "tags": ["welcome-to-the-club", "shared-misery"]
+        },
+        {
+          "id": "l0MYC0LajbaPoEADu",
+          "label": "Dr. Evil - 'welcome aboard'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Anonymous upload; confirm it's the clean Austin Powers clip.",
+          "tags": ["welcome-to-the-club", "schadenfreude"]
+        },
+        {
+          "id": "bmflC6LkR20Blu1UQu",
+          "label": "'Misery loves company' (EST Gee)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @estgee upload; the song title is the exact phrase for this beat.",
+          "tags": ["welcome-to-the-club", "shared-misery"]
+        },
+        {
+          "id": "4PUjcUBXIzQYfI8iVa",
+          "label": "Queen - 'Another One Bites the Dust'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @queen upload - the anthem for 'you're the next victim' schadenfreude.",
+          "tags": ["schadenfreude", "shared-misery"]
+        },
+        {
+          "id": "3ohzAeF9IoGsijgYrm",
+          "label": "SpongeBob (S6)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @spongebob upload; generic title, verify which clip and that the tone fits.",
+          "tags": ["schadenfreude", "welcome-to-the-club"]
+        },
+        {
+          "id": "z2nucjbbmmsscL8Yps",
+          "label": "'All in the same boat'",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @OTHERCOLORS upload; slug is literally all-in-the-same-boat.",
+          "tags": ["welcome-to-the-club", "shared-misery"]
+        },
+        {
+          "id": "WwC8RcSlxbneKlhh0B",
+          "label": "'You are not alone' - hang in there",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Small channel (@dotdave). Register is more supportive/comforting than mocking - a softer 'company in misery' beat than the schadenfreude entries already in this category. Flagging: thin round for this category, only 2 added.",
+          "tags": ["shared-misery"]
+        }
+      ]
+    },
+
+    "promiscuous_flirty": {
+      "description": "Someone being promiscuous or flirtatious — playful innuendo register.",
+      "use_when": "A lighthearted flirty beat (e.g. free-agency 'wooing', a team 'shooting its shot'). Keep it playful, not explicit.",
+      "do_not_use_when": "Anything that reads as actually sexual/suggestive rather than playful innuendo — guardrails say no sexual content, this stays PG.",
+      "gifs": [
+        {
+          "id": "s8t6Ym0zHnLb2",
+          "label": "Awkward eyebrows / flirty look (Simpsons)",
+          "status": "verified",
+          "tags": ["flirty", "innuendo", "playful"]
+        },
+        {
+          "id": "cInRB3UQMkkouSUQ3a",
+          "label": "ESPN - Javier Baez 'slide into your DMs'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @espn upload - by far the best sports-native fit in this category.",
+          "tags": ["flirty", "playful", "innuendo"]
+        },
+        {
+          "id": "47DGndFXqif24qtlDd",
+          "label": "Barstool - 'shoot your shot / sup'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @barstoolsports upload.",
+          "tags": ["flirty", "playful"]
+        },
+        {
+          "id": "BkETEb27qKusSr0lEG",
+          "label": "Eyebrow waggle (The Neighborhood, CBS)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @cbs upload; slug says waggles-eyebrows. The title contains the word 'Sexy' but the show is network primetime, so it should stay PG - worth confirming.",
+          "tags": ["flirty", "innuendo", "playful"]
+        },
+        {
+          "id": "fqcDmrg6OPAR19jeL7",
+          "label": "Wink (The Block, Channel 9)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @theblock upload.",
+          "tags": ["flirty", "playful"]
+        },
+        {
+          "id": "xOrdQiywOf6Kg2imr8",
+          "label": "'Uh huh' wink (Cameo)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @cameo upload.",
+          "tags": ["flirty", "playful", "innuendo"]
+        },
+        {
+          "id": "N4MCtX9gwK0xbw3prE",
+          "label": "Flirty smile / giggle (Bounce)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @Bounce_TV upload; slug cute-flirty-giggle.",
+          "tags": ["flirty", "playful"]
+        },
+        {
+          "id": "GqpS0yRxgr4kwbClKB",
+          "label": "Flirty blushing (Smiley)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @Smileyworld upload.",
+          "tags": ["flirty", "playful"]
+        },
+        {
+          "id": "UQsfXTwnwJLHrqY93f",
+          "label": "'Why haven't I heard from you' flirt (Reba McEntire)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @reba upload.",
+          "tags": ["flirty", "playful"]
+        },
+        {
+          "id": "qLAKEuF339b6yNaf6m",
+          "label": "'Check you out' - shooting a shot",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @luhkel upload; slug date-dating-spitting-game.",
+          "tags": ["flirty", "playful"]
+        },
+        {
+          "id": "uNOYhud5wkCEigIx8B",
+          "label": "Couple flirting (Hollyoaks)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @Hollyoaks upload.",
+          "tags": ["flirty", "playful"]
+        },
+        {
+          "id": "d7BFcx9NB4l2vJ4yIw",
+          "label": "'Shoot your shot' - dancing (So You Think You Can Dance)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @so-you-think-you-can-dance upload.",
+          "tags": ["flirty", "playful"]
+        }
+      ]
+    },
+
+    "getting_paid": {
+      "description": "Someone getting paid — financial glee, the good version of the money beat (contrast with financial_pain, the losing side).",
+      "use_when": "A big contract signing, a bonus, a lucrative deal — the WINNING side of a money story.",
+      "do_not_use_when": "The money story is about overpaying/regret — that's the financial_pain category (created 2026-08-23, still unseeded).",
+      "gifs": [
+        {
+          "id": "6WmyDIKwGvKFO",
+          "label": "Simpsons — money / getting paid",
+          "status": "verified",
+          "tags": ["money", "paid", "celebration"]
+        },
+        {
+          "id": "9HQRIttS5C4Za",
+          "label": "Jerry Maguire - 'show me the money'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Anonymous upload of the canonical contract line; the most on-the-nose fit for a big-contract story.",
+          "tags": ["money", "paid", "celebration"]
+        },
+        {
+          "id": "67ThRZlYBvibtdF9JH",
+          "label": "Bugs Bunny - payday money",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @looneytunes upload; slug bugs-bunny-pay-day.",
+          "tags": ["money", "paid", "celebration"]
+        },
+        {
+          "id": "3o6nUNqTH1lZPqsOti",
+          "label": "Showtime Sports - stacks of cash (boxing)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @showtimesports upload; boxing-purse energy, sports-native.",
+          "tags": ["money", "paid"]
+        },
+        {
+          "id": "3o6gDWzmAzrpi5DQU8",
+          "label": "'Pay me' / make it rain (GQ)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Official @gq upload.",
+          "tags": ["money", "paid", "celebration"]
+        },
+        {
+          "id": "pReb5Koy6JmihUYBLx",
+          "label": "Rounders - 'pay that man his money'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Anonymous upload; slug john-malkovich-rounders-pay-that-man-his-money.",
+          "tags": ["money", "paid"]
+        },
+        {
+          "id": "gQdejV5BBChHi",
+          "label": "Scrooge McDuck diving into money",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py (plus targeted follow-up search terms). NOT yet eyeballed by Abram. Anonymous upload of a very well-known bit; confirm quality.",
+          "tags": ["money", "paid", "celebration"]
+        },
+        {
+          "id": "3o7abJiK9ou8NM64y4",
+          "label": "Conor McGregor - money talk (UFC)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @conormcgregor upload - sports-native, McGregor's whole persona is money flex.",
+          "tags": ["money", "paid", "confidence"]
+        },
+        {
+          "id": "foIUVRRggFTXNI5uuZ",
+          "label": "SpongeBob - 'happy payday'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @spongebob upload.",
+          "tags": ["money", "paid", "celebration"]
+        },
+        {
+          "id": "gr8Ue5HfC1z6OQiSuk",
+          "label": "'Get that money' payday (Current)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @current upload (banking app); slug current-paid-pay-day-get-that-money.",
+          "tags": ["money", "paid", "celebration"]
+        },
+        {
+          "id": "CglumrQL3ilVGivRHo",
+          "label": "'Secure the bag' (QuickBooks)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @intuitquickbooks upload.",
+          "tags": ["money", "paid"]
+        },
+        {
+          "id": "1jl4sivlq7Bcd7cSNa",
+          "label": "New contract signing (Liverpool FC)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @lfc upload - sports-native, literal new-contract-signed fit.",
+          "tags": ["money", "paid", "celebration"]
+        },
+        {
+          "id": "me7IYiufNb1JSV01EN",
+          "label": "'Secure the bag' motivation",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Small channel (@RobertEBlackmon); slug get-paid-money-motivation-financial-success.",
+          "tags": ["money", "paid"]
+        }
+      ]
+    },
+
+    "anger_outrage": {
+      "description": "Genuine fury - the anger itself is the point, not the mistake behind it.",
+      "use_when": "A blown call or officiating controversy, a fanbase in revolt, a coach or player visibly detonating, a scorched-earth press conference.",
+      "do_not_use_when": "The feeling is really disappointment or resignation (sadness_resignation), or the subject did something dumb rather than something infuriating (bad_dumb_move).",
+      "gifs": [
+        {
+          "id": "PizLWrCCo2HK83jI0g",
+          "label": "Angry Bugs Bunny (Looney Tunes)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py. NOT yet eyeballed by Abram. LOWER CONFIDENCE than the rest of this round: surfaced incidentally by another category's search, not by a search aimed at this beat (Giphy key hit its daily quota) - re-probe this category with targeted terms before trusting the coverage. Official @looneytunes upload; slug looneytunes-wtf-angry. Best-sourced entry in this category.",
+          "tags": ["anger", "furious", "wtf"]
+        },
+        {
+          "id": "yL558PFPKeCtFxkiUi",
+          "label": "The Office - angry (S4)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py. NOT yet eyeballed by Abram. LOWER CONFIDENCE than the rest of this round: surfaced incidentally by another category's search, not by a search aimed at this beat (Giphy key hit its daily quota) - re-probe this category with targeted terms before trusting the coverage. Official @theoffice upload; generic title, so verify which blowup it is.",
+          "tags": ["anger", "furious"]
+        },
+        {
+          "id": "HB5jPAoy51vVJXFMsR",
+          "label": "Angry disbelief (IShowSpeed)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py. NOT yet eyeballed by Abram. LOWER CONFIDENCE than the rest of this round: surfaced incidentally by another category's search, not by a search aimed at this beat (Giphy key hit its daily quota) - re-probe this category with targeted terms before trusting the coverage. Official @STRAPPEDUS upload. Very online register - fits fan-rage beats better than institutional anger.",
+          "tags": ["anger", "furious", "wtf"]
+        },
+        {
+          "id": "11mPvWj3R3mCKA",
+          "label": "Fuming (Bad Girls Club)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py. NOT yet eyeballed by Abram. LOWER CONFIDENCE than the rest of this round: surfaced incidentally by another category's search, not by a search aimed at this beat (Giphy key hit its daily quota) - re-probe this category with targeted terms before trusting the coverage. MOODMAN channel - the classic reality-TV 'fuming' reaction. Anonymous origin, worth an eyeball.",
+          "tags": ["anger", "furious"]
+        },
+        {
+          "id": "M6TiHJCalbjaWzzBmv",
+          "label": "Rage quit / table flip (Rageguy)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @Rageguy channel - the source of the classic rage-comic table-flip beat.",
+          "tags": ["anger", "furious", "table-flip"]
+        },
+        {
+          "id": "2oUfvvUgQHnLsQWFMW",
+          "label": "The Office - angry meeting (S6)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @theoffice upload.",
+          "tags": ["anger", "furious"]
+        },
+        {
+          "id": "JI5Na0rpieV8bSuKgO",
+          "label": "MLB umpire ejects grounds crew (Jomboy Media)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @Jomboy channel - a real baseball media outlet, and the clip is literally an on-field ejection. Strongest sports-native fit in this category.",
+          "tags": ["anger", "furious", "ejected"]
+        },
+        {
+          "id": "l0MYScyJlQ2yNOLDi",
+          "label": "Eric Cartman - angry (South Park)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @southpark upload.",
+          "tags": ["anger", "furious"]
+        },
+        {
+          "id": "FnXgJ5KG1DqhzD0dF6",
+          "label": "The Office - angry (S2)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @theoffice upload.",
+          "tags": ["anger", "furious"]
+        },
+        {
+          "id": "O6aGvxBFr1frfrkHNw",
+          "label": "Angry (Apple Music/Mariah Carey)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @applemusic upload.",
+          "tags": ["anger", "furious"]
+        },
+        {
+          "id": "xwDfTNUNxEqZkR06bn",
+          "label": "'Blowing off steam' angry",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @Bubbas_LA upload.",
+          "tags": ["anger", "furious"]
+        }
+      ]
+    },
+
+    "mocking_sarcastic_praise": {
+      "description": "Fake applause - praise delivered as an insult. The sarcastic slow clap, the golf clap, the 'wow, incredible' that means the opposite.",
+      "use_when": "A team clears an absurdly low bar and wants credit, a milestone that isn't one, a self-congratulatory statement that deserves needling.",
+      "do_not_use_when": "The praise is earnest - that's respect_awe. Picking the wrong one inverts the entire joke.",
+      "gifs": [
+        {
+          "id": "q2NigSUGQtF1YbDk2p",
+          "label": "The Bear - sarcastic reaction",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py. NOT yet eyeballed by Abram. LOWER CONFIDENCE than the rest of this round: surfaced incidentally by another category's search, not by a search aimed at this beat (Giphy key hit its daily quota) - re-probe this category with targeted terms before trusting the coverage. Official @TheBearFX upload; the only official-channel option found for this beat.",
+          "tags": ["sarcasm", "mocking", "fake-applause"]
+        },
+        {
+          "id": "gRxjhVNfFgqI0",
+          "label": "James Van Der Beek - sarcastic slow clap",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py. NOT yet eyeballed by Abram. LOWER CONFIDENCE than the rest of this round: surfaced incidentally by another category's search, not by a search aimed at this beat (Giphy key hit its daily quota) - re-probe this category with targeted terms before trusting the coverage. Anonymous upload; slug is applause-sarcastic-slow-clap, so the labelling is at least explicit.",
+          "tags": ["sarcasm", "mocking", "fake-applause"]
+        },
+        {
+          "id": "37Ez5CZ8P0jSM",
+          "label": "Mocking slow clap",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py. NOT yet eyeballed by Abram. LOWER CONFIDENCE than the rest of this round: surfaced incidentally by another category's search, not by a search aimed at this beat (Giphy key hit its daily quota) - re-probe this category with targeted terms before trusting the coverage. Anonymous upload; slug slow-clap-mocking. Source clip unidentified - eyeball before use.",
+          "tags": ["sarcasm", "mocking", "fake-applause"]
+        },
+        {
+          "id": "65fiHpjKxyBgc",
+          "label": "Joker slow clap (Batman)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-23 via gif_library_expand_probe.py. NOT yet eyeballed by Abram. LOWER CONFIDENCE than the rest of this round: surfaced incidentally by another category's search, not by a search aimed at this beat (Giphy key hit its daily quota) - re-probe this category with targeted terms before trusting the coverage. Anonymous upload of a widely-recognised sarcastic-applause beat.",
+          "tags": ["sarcasm", "mocking", "fake-applause"]
+        },
+        {
+          "id": "A5mSnoxe3AVCN7qunq",
+          "label": "Sarcastic golf clap (ZEPETO)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @zepeto_official upload; slug is literally slow-clap-golf-sarcastic.",
+          "tags": ["sarcasm", "mocking", "fake-applause"]
+        },
+        {
+          "id": "1pofg0cTz5mak",
+          "label": "Golf clap (Tiger Woods)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Anonymous upload but an actual golf clap at a golf event - on the nose for a sports newsletter. Verify it's clean.",
+          "tags": ["sarcasm", "mocking", "fake-applause"]
+        },
+        {
+          "id": "3oz8xUlXan455MtWGQ",
+          "label": "Stephen Colbert - 'whatever' (Late Show)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @colbertlateshow upload.",
+          "tags": ["sarcasm", "mocking"]
+        },
+        {
+          "id": "3Tu6hYkQNJ7DncYhUa",
+          "label": "'Uh huh, whatever' / sure Jan (Bounce)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @Bounce_TV upload; slug sure-mmhmm-jan references the classic 'Sure, Jan' sarcasm meme.",
+          "tags": ["sarcasm", "mocking"]
+        },
+        {
+          "id": "l4JyNPwLCWt6mSxlS",
+          "label": "'Um, thank you' - backhanded (BBC)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @bbc upload.",
+          "tags": ["sarcasm", "mocking"]
+        },
+        {
+          "id": "5QYlRFvlqidWU064i5",
+          "label": "Sarcastic 'thank you' (Schitt's Creek, CBC)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @cbc upload.",
+          "tags": ["sarcasm", "mocking"]
+        },
+        {
+          "id": "13X4EBENnlxGPnXlUK",
+          "label": "Sarcastic slow clap",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Small channel (@Chefnickdigiovanni); slug is literally clap-sarcastic-slowclap.",
+          "tags": ["sarcasm", "mocking", "fake-applause"]
+        }
+      ]
+    },
+
+    "financial_pain": {
+      "description": "The losing side of a money story - an albatross contract, money set on fire, buyer's remorse.",
+      "use_when": "A team eating dead money, an extension that aged badly, an owner overpaying, a tax or buyout bill coming due.",
+      "do_not_use_when": "The subject is happily cashing in - that's getting_paid, the winning side of the same story.",
+      "gifs": [
+        {
+          "id": "7XmgAwugUlYWHWKcGt",
+          "label": "'Paid Off' - throwing money (truTV)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @paidoff upload - the show's whole premise is debt, so this is a strong thematic fit.",
+          "tags": ["money", "regret", "expensive"]
+        },
+        {
+          "id": "ASM4IvHzkop00e6sUN",
+          "label": "Money on fire (Epitaph Records)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @epitaphrecords upload; slug is literally burn-drain-money-on-fire.",
+          "tags": ["money", "burned", "regret"]
+        },
+        {
+          "id": "NxJZnWD1RiWOCCwKgE",
+          "label": "Empty wallet / broke",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Small channel (@scribbellz); slug is broke-no-money-empty-wallet, exact fit for the beat.",
+          "tags": ["money", "broke", "regret"]
+        },
+        {
+          "id": "aKT1Wdp8XpNbmf2suv",
+          "label": "'What have I done' (Film Riot)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @FilmRiot upload - general regret rather than money-specific, but reads well captioned onto an overpay story.",
+          "tags": ["regret", "mistake", "money"]
+        },
+        {
+          "id": "3oEjHGnY8oB4BHVTP2",
+          "label": "Arrested Development - 'I've made a huge mistake'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Anonymous upload of a very well-known line; confirm it's the clean clip. Extremely overused meme, hence the cooldown.",
+          "cooldown_days": 10,
+          "tags": ["regret", "mistake", "money"]
+        },
+        {
+          "id": "PyoyQRPyZXYq7mfxxs",
+          "label": "Pinching pennies / financial struggle",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Small channel (@RobertEBlackmon); slug broke-pinching-pennies-financial-struggles.",
+          "tags": ["money", "broke", "regret"]
+        },
+        {
+          "id": "4KEjT4zno9bM6zPIor",
+          "label": "'Can't afford it' (Ghosts, CBS)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @cbs upload.",
+          "tags": ["money", "broke"]
+        },
+        {
+          "id": "irgI4GQkigmt0YpyTb",
+          "label": "'Killing it' - no money (Peacock)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-24 via targeted Giphy probe (round 3). NOT yet eyeballed by Abram. Official @peacock upload.",
+          "tags": ["money", "broke", "regret"]
+        },
+        {
+          "id": "xT9DPIQtwwvGFEqY6c",
+          "label": "'Trouble' (Billions, Showtime)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @showtime upload. Note: the show's own branding/slug leans on a mature/crude catchphrase ('f-you money') even though the clip itself is just a reaction shot - eyeball for tone before using.",
+          "tags": ["money", "regret"]
+        },
+        {
+          "id": "ArzpFLBUJEaur0kUOs",
+          "label": "Money - crying (Foil Arms and Hog)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (round 4). NOT yet eyeballed by Abram. Official @foilarmsandhog upload. Thin round for this category - only 2 added; most other results were off-topic (real estate spam, political content) and were skipped rather than force-fit.",
+          "tags": ["money", "regret"]
+        }
+      ]
+    },
+
+    "domination": {
+      "description": "A one-sided blowout - not a competitive win, a rout. The scoreline itself is the joke.",
+      "use_when": "A lopsided final score, someone thoroughly outclassing an opponent, a 'not even close' result.",
+      "do_not_use_when": "The win was close or hard-fought - that's celebratory. Or the swagger is about one person's personality rather than the scoreline - that's cockiness_smugness.",
+      "gifs": [
+        {
+          "id": "TZKeeVBmWMOushuJQ0",
+          "label": "Islanders shutout win",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Sports-focused regional channel (@NYSports13, not the team's own account); slug shutout-islanders-win-goalie.",
+          "tags": ["domination", "blowout", "shutout"]
+        },
+        {
+          "id": "G8ddvvC0Jb7wbznYcO",
+          "label": "Newcastle United - sport reaction",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Official @Newcastle_United club upload, but a generic title - verify the specific clip before use.",
+          "tags": ["domination", "blowout"]
+        },
+        {
+          "id": "pVVsuy1evliKoSqjCk",
+          "label": "USL - shutout streak",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Official @usl (United Soccer League) upload.",
+          "tags": ["domination", "shutout"]
+        },
+        {
+          "id": "LgFbq0k4pp8ciPbgDm",
+          "label": "Phoenix Suns - trash talk blowout",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Small channel (@Carrson_Peterson_); slug is literally sports-trash-talk-blowout.",
+          "tags": ["domination", "blowout"]
+        }
+      ]
+    },
+
+    "denial_copium": {
+      "description": "Putting on a brave face when things are clearly not fine - spin, refusing to admit reality.",
+      "use_when": "A GM or coach spinning a bad situation as fine, 'we like our team' energy after a bad loss, refusing to panic when panic is warranted.",
+      "do_not_use_when": "The person has actually accepted the bad outcome - that's sadness_resignation. Or they're just oblivious rather than deliberately spinning - that's confusion.",
+      "gifs": [
+        {
+          "id": "dVhXUugTrtfV0KslQh",
+          "label": "'This is fine' (Hulu)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Official @hulu upload of the canonical denial meme. NOTE FOR REVIEW: a different 'This Is Fine' id (1n4iuWZFnTeN6qvdpD) already lives in the escalation category from an earlier round - the meme's actual register (denial/cope, not ratcheting escalation) arguably fits THIS new category better. Worth reconsidering that placement during review rather than just adding this one alongside it.",
+          "tags": ["denial", "spin", "cope"]
+        },
+        {
+          "id": "DTihDMWhrc5XWjdjnd",
+          "label": "'Nothing to see here' - suspicious",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Small channel (@ComedianHollyLogan); literal fit for deflecting spin.",
+          "tags": ["denial", "spin"]
+        },
+        {
+          "id": "1ZJyFLH8l2QfuFe04S",
+          "label": "Deep breath - coping mechanism",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. @thenopecat (the 'Nope Cat' meme channel, previously used elsewhere in the library); slug anxiety-panic-attack-coping-mechanism.",
+          "tags": ["denial", "cope"]
+        },
+        {
+          "id": "XILbmVh4MJV7POZg3Y",
+          "label": "'Unhealthy coping mechanisms'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Small channel (@okjessofficial).",
+          "tags": ["denial", "cope"]
+        }
+      ]
+    },
+
+    "debate_takes": {
+      "description": "Hot-take / sports-debate energy - confidently arguing a position, correcting someone, doubling down.",
+      "use_when": "A hot take, a confident argument, sports-talk-show energy, someone doubling down on a contrarian stance mid-debate.",
+      "do_not_use_when": "The take has already been vindicated by an outcome - that's cockiness_smugness ('told you so' is retrospective; this is the argument itself, before the payoff).",
+      "gifs": [
+        {
+          "id": "gjVuCGGAQhBwRIfbG7",
+          "label": "LeBron James - hot take (SWAG)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. @SWAG (Sealed With A GIF) runs a branded 'debate/hot takes' GIF series - slug is literally SWAG-debate-takes-hot, and the subject is NBA/LeBron, which is directly sports-relevant despite SWAG not being a sports outlet itself.",
+          "tags": ["debate", "hot-take"]
+        },
+        {
+          "id": "2fkfXZ9ENmOIR4SoAN",
+          "label": "South Park - 'prove me wrong'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Official @southpark upload; mirrors the 'change my mind' meme format already used in the sibling meme library.",
+          "tags": ["debate", "hot-take"]
+        },
+        {
+          "id": "GvNFPkAskkSafDozqD",
+          "label": "Seth Meyers - argue",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Official @latenightseth upload.",
+          "tags": ["debate"]
+        },
+        {
+          "id": "M8uYzNT0ZkI6b9uiWm",
+          "label": "'Change my mind' - polar bear (Pudgy Penguins)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Official @pudgypenguins upload (an NFT project's own channel, not a news/sports outlet); slug debate-convince-change-my-mind.",
+          "tags": ["debate", "hot-take"]
+        },
+        {
+          "id": "Ihd7gcvA2PkooJvUjt",
+          "label": "'Well, actually...' correction",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Small channel (@blakelivelyfan); slug well-actually-um.",
+          "tags": ["debate"]
+        }
+      ]
+    },
+
+    "betrayal_self_sabotage": {
+      "description": "A team, player, or org turning on itself - infighting, an own-goal, a self-inflicted collapse from within.",
+      "use_when": "Locker room drama, a coach undermining his own player, an own-goal, a team beating itself rather than being beaten.",
+      "do_not_use_when": "The mistake is a simple external error with no 'turning on your own side' angle - that's bad_dumb_move.",
+      "gifs": [
+        {
+          "id": "8L0T7i6v8DgPeoMII0",
+          "label": "Own goal - 'bad luck' (Eleven Sports)",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Official @elevensportshq (a real football broadcaster) upload - the strongest sports-native fit in this category: a literal own goal.",
+          "tags": ["betrayal", "self-sabotage", "own-goal"]
+        },
+        {
+          "id": "cvilQS3U5K4UYYCvDb",
+          "label": "'Backstabber' (Shogun FX)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Official @ShogunFX (FX network) upload.",
+          "tags": ["betrayal", "self-sabotage"]
+        },
+        {
+          "id": "BsIZ9aNAv69iKMNC39",
+          "label": "'Self destruct'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Small channel (@joluijten); slug self-destruct-destruction.",
+          "tags": ["betrayal", "self-sabotage"]
+        },
+        {
+          "id": "fnQhN4MbhbUNSyypav",
+          "label": "'Betrayal'",
+          "status": "verified",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Small channel (@emileappeal); slug betrayal-betrayed-you-me.",
+          "tags": ["betrayal", "self-sabotage"]
+        },
+        {
+          "id": "VdC5CDTsVQEgPszcgp",
+          "label": "Leon Edwards (UFC)",
+          "status": "retired",
+          "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Official @ufc upload, but the title gives no context beyond the fighter's name - genuinely uncertain whether the clip fits this category's meaning. Eyeball carefully; may not belong.",
+          "tags": ["betrayal", "self-sabotage"]
+        }
+      ]
+    }
+  }
+}

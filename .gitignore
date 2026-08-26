@@ -13,5 +13,13 @@ prototype/output/
 # uat/fixtures/ is deliberately NOT ignored: the frozen input is the control.
 uat/output/
 uat/media/
+uat/probe/
 !uat/fixtures/
 !uat/fixtures/game_state.json
+
+# GIF library — auto-made backups (apply_gif_decisions.py) and the
+# regenerated review page/export (review_gifs.py, gif_review.html) are
+# reproducible from the tracked library file; not worth tracking themselves.
+prompts/gif_library.DRAFT.backup-*.json
+uat/gif_review.html
+uat/gif_decisions.json
