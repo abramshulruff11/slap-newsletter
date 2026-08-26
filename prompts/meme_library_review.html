@@ -245,7 +245,7 @@
 <body>
 <header>
   <h1>SLAP Meme Library Review</h1>
-  <p>30 templates from <code>prompts/meme_library.DRAFT.json</code> — every entry is AI-authored and unreviewed (status: candidate). Images load from Imgflip's CDN, so this page needs internet access to render them.</p>
+  <p>30 templates from <code>prompts/meme_library.DRAFT.json</code> — every entry is AI-authored and unreviewed (status: candidate). Preview thumbnails are matched live against Imgflip's public template list, so this page needs internet access. Not every template is guaranteed a match — those show a link to view it on Imgflip instead. <span id="imgStatus"></span></p>
   <div class="controls">
     <input type="text" id="search" placeholder="Search slug, purpose, tags…">
     <select id="categoryFilter"><option value="">All categories</option></select>
@@ -297,17 +297,42 @@ uniqueSorted(TEMPLATES.map(t => t.pattern_type)).forEach(p => {
   patEl.appendChild(opt);
 });
 
-function imgUrl(id) {
-  return `https://i.imgflip.com/${id}.jpg`;
+let IMG_MAP = {};
+
+function memegenLink(id) {
+  return `https://imgflip.com/memegenerator/${id}`;
+}
+
+function fallbackLinkHtml(templateId) {
+  return `<div class="broken">
+    No live preview matched.<br>
+    <a href="${memegenLink(templateId)}" target="_blank" rel="noopener noreferrer">View blank template on Imgflip ↗</a>
+  </div>`;
 }
 
 function handleImgError(img) {
   const wrap = img.parentElement;
-  wrap.innerHTML = '';
-  const div = document.createElement('div');
-  div.className = 'broken';
-  div.textContent = `Image failed to load (template_id ${img.dataset.templateId})`;
-  wrap.appendChild(div);
+  wrap.innerHTML = fallbackLinkHtml(img.dataset.templateId);
+}
+
+async function loadImgflipMap() {
+  const statusEl = document.getElementById('imgStatus');
+  statusEl.textContent = 'Loading previews…';
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    const resp = await fetch('https://api.imgflip.com/get_memes', { signal: controller.signal });
+    clearTimeout(timeout);
+    const data = await resp.json();
+    if (data && data.success) {
+      (data.data.memes || []).forEach(m => { IMG_MAP[String(m.id)] = m.url; });
+      statusEl.textContent = `(${Object.keys(IMG_MAP).length} live templates fetched)`;
+    } else {
+      statusEl.textContent = '(preview fetch failed — showing links instead)';
+    }
+  } catch (e) {
+    statusEl.textContent = '(preview fetch blocked — showing links instead)';
+  }
 }
 
 function escapeHtml(s) {
@@ -366,12 +391,15 @@ function render() {
       ? `<div class="special"><span class="label">Special handling</span>${escapeHtml(t.special_handling)}</div>`
       : '';
 
-    card.innerHTML = `
-      <div class="card-img">
-        <img src="${imgUrl(t.template_id)}" alt="${escapeHtml(t.slug)}"
+    const matchedUrl = IMG_MAP[String(t.template_id)];
+    const imgHtml = matchedUrl
+      ? `<img src="${escapeHtml(matchedUrl)}" alt="${escapeHtml(t.slug)}"
              loading="lazy" data-template-id="${escapeHtml(t.template_id)}"
-             onerror="handleImgError(this)">
-      </div>
+             onerror="handleImgError(this)">`
+      : fallbackLinkHtml(t.template_id);
+
+    card.innerHTML = `
+      <div class="card-img">${imgHtml}</div>
       <div class="card-body">
         <div class="card-title">
           <h2>${escapeHtml(t.slug)}</h2>
@@ -410,6 +438,7 @@ function render() {
 
 [searchEl, catEl, patEl, revEl].forEach(el => el.addEventListener('input', render));
 render();
+loadImgflipMap().then(render);
 </script>
 </body>
 </html>
