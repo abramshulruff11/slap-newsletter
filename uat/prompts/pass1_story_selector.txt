@@ -675,8 +675,28 @@ HOW TO SEED:
 - gif_concept = a specific, named reaction idea for that beat. Be specific:
   "Ben Affleck smoking, defeated" not "sad reaction." If the subject said words
   that match a famous quote (e.g. "I'm not leaving"), seed that quote's clip.
-- meme_concept = a comparison/argument idea (Trade Offer, Drake, Spider-Man
-  pointing) ONLY when the story has two things to contrast or a take to make.
+- meme_concept = a comparison/argument idea ONLY when the story has two things
+  to contrast or a take to make.
+- meme_template = the SLUG of the template that fits, chosen from the MEME
+  SELECTOR INDEX at the end of this prompt. Empty string when meme_concept is
+  empty. Never invent a slug — if nothing in the index fits, leave BOTH empty.
+- meme_subject = the specific person, team, or front office the meme is ABOUT.
+
+PICKING A meme_template — read the index by ENGINE first, not by template name.
+Each engine states the comedic mechanism and a TEST that decides whether it
+applies. Find the engine whose TEST your story passes, then pick a template
+within it. Two engines that look similar are usually separated by one question
+— e.g. drake vs two-buttons is decided entirely by whether the subject has
+ALREADY decided (drake) or is still stuck (two-buttons).
+
+THE SUBJECT REQUIREMENT IS A GATE, NOT A DETAIL. Every template needs a named
+subject. Before seeding a meme, ask: can I name the person or team this is
+about? If the honest answer is no — it is a league-wide trend, a general stat,
+nobody in particular — then NO template fits. Leave meme_concept,
+meme_template and meme_subject all empty and seed a gif_concept instead. A meme
+about an abstraction is not a joke, it is a comparison, and it lands flat.
+Forcing a template onto a subjectless story is the single most common way these
+go wrong.
 
 GIF vs MEME BALANCE — aim for roughly 70% GIFs, 30% memes across the issue. Most
 stories should seed a gif_concept and leave meme_concept empty. Seed a meme only

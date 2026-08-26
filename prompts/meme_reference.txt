@@ -27,11 +27,15 @@ PANEL COUNTS — how many captions to write per template:
 
 | Captions | Templates |
 |----------|-----------|
-| 2 panels | drake, distracted-boyfriend, left-exit-12-off-ramp, two-buttons, corporates-want-you-to-find-the-difference, buff-doge-vs-cheems, epic-handshake, this-is-fine, change-my-mind, hide-the-pain-harold, bernie-i-am-once-again-asking, surprised-pikachu, always-has-been, monkey-puppet, mocking-spongebob, first-time, trade-offer, waiting-skeleton, one-does-not-simply, spider-man-pointing-at-spider-man, eric-andre-shooting, is-this-a-pigeon, woman-yelling-at-cat, ight-imma-head-out |
+| 2 panels | drake, left-exit-12-off-ramp, two-buttons, corporates-want-you-to-find-the-difference, buff-doge-vs-cheems, epic-handshake, this-is-fine, change-my-mind, hide-the-pain-harold, bernie-i-am-once-again-asking, surprised-pikachu, always-has-been, monkey-puppet, mocking-spongebob, first-time, trade-offer, waiting-skeleton, one-does-not-simply, spider-man-pointing-at-spider-man, eric-andre-shooting, is-this-a-pigeon, woman-yelling-at-cat, ight-imma-head-out |
 | 3 captions → 4 physical panels | gru-plan (code repeats flaw as panel 4), expanding-brain, vince-mcmahon-reaction, clown-applying-makeup |
-| 3 panels literal | panik-kalm-panik |
+| 3 panels literal | panik-kalm-panik, distracted-boyfriend (box 3 = the SUBJECT — see note) |
 | 2 captions → 4 physical panels | anakin-padme (code fills blank/repeat panels) |
 
+- **distracted-boyfriend takes THREE captions, not two.** Panel 1 = the established thing being
+  left behind, panel 2 = the new thing catching their eye, panel 3 = the SUBJECT (the figure in
+  the middle — the person or team making the decision). Leaving panel 3 off strands the joke:
+  without a named subject it reads as an abstract comparison instead of someone caught in the act.
 - data-template must be one of the slugs listed in the template library below
 - Keep text short — 5-10 words max per panel
 - ALL CAPS is standard for meme text (applied automatically by the pipeline)

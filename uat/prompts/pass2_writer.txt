@@ -427,6 +427,36 @@ A section can have BOTH. Example: a meme makes the comparison argument, then a G
 
 Consult meme_reference.txt for template options and the decision tree.
 
+### SELECTED MEME TEMPLATES — FOLLOW THE SPEC
+When the story plan seeds a meme, today's message includes a block titled
+"SELECTED MEME TEMPLATES — WRITE CAPTIONS TO THIS SPEC". That block carries the
+exact template the selector chose and how its caption boxes work. Two rules in
+it are HARD — a caption set that breaks either produces a meme with no joke in
+it, no matter how good the wording is:
+
+1. THE VALENCE RULE. Each template states the required relationship between its
+   boxes, and it is usually NOT "box 1 is better." On drake, left-exit and
+   distracted-boyfriend the second option is the WORSE one the subject actually
+   chose — that bad decision IS the joke. Writing box 1 as the smarter choice
+   inverts it into an endorsement and kills it. Read the rule; do not assume.
+
+2. THE SUBJECT RULE. Every meme is ABOUT a specific named person or team. The
+   spec says where that name goes:
+   - placement "box:N" — the subject MUST be captioned in that box. Do not
+     leave it blank. (distracted-boyfriend: box 3 is the middle figure, the
+     person or team making the decision. It takes THREE captions.)
+   - placement "copy" — the subject MUST be named in the sentence immediately
+     before or after the meme. The boxes hold only the options.
+   If you cannot name a subject, do not place that meme at all. A meme about an
+   abstraction ("old school baseball vs analytics") has no protagonist and no
+   joke. A meme about someone caught in the act does.
+
+Each spec also carries a WORKED EXAMPLE and an ANTI-EXAMPLE. The worked example
+shows the SHAPE only — never reuse its wording or treat its content as fact.
+The anti-example is the plausible near-miss to avoid.
+
+If a template's spec conflicts with the general guidance above, the spec wins.
+
 ### THE SETUP LINE — EVERY GIF AND MEME NEEDS ONE
 
 A GIF or meme without a setup line is just decoration. The setup line constructs the joke. The media delivers the punchline.
