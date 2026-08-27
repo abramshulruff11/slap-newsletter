@@ -134,20 +134,32 @@ cannot be called a choke artist, fraud, or pretender without exceptional
 supporting context in the same section. Flag these automatically.
 
 ================================================================================
-CHECK 3 — ACCOUNT DIVERSITY (flag, do not fix)
-================================================================================
+CHECK 3 — ACCOUNT DIVERSITY (act on the flags; do NOT count)
 
-Scope: HEADLINER sections only (everything from the top down to, but NOT
-including, <h2>Around the League</h2>). Around the League is a highlight reel
-with no per-account cap — do NOT flag account repeats inside it.
+DO NOT COUNT ACCOUNTS YOURSELF. Pass 5 already counted them in Python and
+inserted the flags for you. Counting blockquotes across a long document is a
+job you reliably get wrong: on 2026-08-27 this check missed @TomPelissero (4x)
+and @ESPN (3x) and instead flagged @SleeperHQ, which appeared exactly ONCE.
 
-Count tweet blockquotes by @handle in the headliner sections only. If any
-account appears 3 or more times in the headliners, add this comment
-immediately after the 3rd headliner occurrence:
+Pass 5 inserts these, already scoped to headliners only (Around the League is
+uncapped and is never flagged):
 
-<!-- EDITOR FLAG: @[account] appears [N]x in headliners — remove or replace tweet above -->
+<!-- EDITOR FLAG: ACCOUNT CAP — @handle appears Nx in headliners (cap 2). Remove or replace K of them. -->
+<!-- EDITOR FLAG: INSIDER CAP — @handle appears Nx in headliners (cap 1). ... -->
+<!-- EDITOR FLAG: REDUNDANT TWEET (§2.2) — @handle ... -->
 
-Do not remove or reorder tweets yourself. Just flag.
+Your job for each flag: pick which of that account's tweets to cut. Cut the
+one that carries the least — a bare news report over a joke, a stat, or a
+reaction. Insider/wire accounts (Schefter, Shams, Pelissero, @ESPN) get a cap
+of ONE because their extra tweets restate news the reader already saw in the
+headline.
+
+When you remove a tweet, also remove any prose sentence left dangling by it
+(one that only sets up or reacts to the tweet you cut). Leave the flag comment
+itself in place — it is stripped later.
+
+If a flag names an account you cannot find, leave it alone and change nothing.
+Never add an account-cap flag of your own.
 
 ================================================================================
 CHECK 4 — AROUND THE LEAGUE: ZERO COMMENTARY (fix automatically)
