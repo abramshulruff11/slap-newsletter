@@ -12,7 +12,7 @@
 ## forced_choice_dilemma
    A subject frozen between two options of the SAME valence -- both appealing, or both painful -- that cannot coexist.
    TEST: The choice is NOT yet made -- the subject is still sweating. If it is made, use subject_abandons_sensible_for_funky.
-   - two-buttons (2 boxes, subject: copy) -- Subject still sweating between two SAME-valence options. Choice not yet made.
+   - two-buttons (3 boxes, subject: box:2) -- Subject still sweating between two SAME-valence options, choice not yet made. Subject goes IN box 2.
 
 ## they_are_the_same
    Two things presented or behaving as distinct turn out to be functionally identical.

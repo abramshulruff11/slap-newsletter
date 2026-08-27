@@ -10,7 +10,7 @@
     "box_count_convention": "box_count is the number of PHYSICAL panels the template renders, which may exceed the captions a writer supplies (gru-plan renders 4 from 3; anakin-padme renders 4 from 2). See special_handling.",
     "open_questions_for_review": [
       "SUBJECT ENFORCEMENT (biggest): subject.placement 'copy' is a hard rule in this file, but pass2_writer.txt has no matching rule and pre_edit() does not check it. Options: (a) add the rule to pass2_writer.txt and mirror it like the banned-phrase sync, (b) add data-subject to the meme-placeholder div so pre_edit() can verify the subject appears in the section text -- makes it machine-checkable but needs a generate_memes.py change.",
-      "distracted-boyfriend box_count: RESOLVED 2026-08-26 -- confirmed 3 boxes, subject is the middle figure. No code change needed (_expand_boxes passes it through, generate_meme sends as many captions as it gets). REMAINING ACTION: prompts/meme_reference.txt still lists it under '2 panels', so the writer supplies 2 and the subject panel renders empty in production today. Move it to a 3-panel row there. Box index-to-position ordering still unverified against a real render.",
+      "distracted-boyfriend box_count: documented as 3 with the subject in box 2, but meme_reference.txt says 2 panels and _expand_boxes() has no case for it, so the subject panel may render uncaptioned today. Needs verification against a real render; likely a code + reference fix.",
       "PRUNING: all 30 are documented as requested. Weakest sports fits, flagged for possible removal: epic-handshake (its shared thing has no caption box, so it leans entirely on the copy), is-this-a-pigeon (needs a confidently-wrong public claim, which is rare), one-does-not-simply (the assumed-easy/actually-hard gap is narrow).",
       "Where does this land first -- uat/prompts/ or prod prompts/? CLAUDE.md says UAT before prod, promotion manual."
     ],
@@ -383,13 +383,13 @@
       "category": "comparison_preference",
       "engine": "forced_choice_dilemma",
       "pattern_type": "dilemma_choice",
-      "box_count": 2,
+      "box_count": 3,
       "subject": {
         "required": true,
         "who": "The person or team sweating the decision.",
-        "placement": "copy",
-        "rule": "MUST be named in the sentence immediately before or after the meme. If you cannot name a specific subject, do not use this template.",
-        "note": "The sweating figure is the subject."
+        "placement": "box:2",
+        "rule": "MUST be captioned in box 2 -- the sweating figure. Do not leave it blank; without the subject label nobody is agonizing and the dilemma is abstract.",
+        "note": "Like distracted-boyfriend, the subject IS captioned here rather than named in the copy."
       },
       "comedic_engine": "The paralysis is the joke -- not the options. Either the audience thinks the answer is obvious and the subject clearly does not, or the two buttons expose a hypocrisy the subject created themselves.",
       "valence": "The two buttons MUST be the SAME valence -- both appealing, or both painful. If one is clearly better there is no sweat. Distinct from drake: here the choice has NOT been made yet.",
@@ -403,6 +403,11 @@
           "index": 1,
           "purpose": "the second button -- the conflicting horn, cannot coexist with box 0",
           "valence": "same valence as box 0"
+        },
+        {
+          "index": 2,
+          "purpose": "the subject -- the sweating figure who must choose",
+          "valence": "neutral -- a label, not a judgment"
         }
       ],
       "use_when": "A subject is visibly stuck between two options of equal weight that cannot both be taken -- especially when choosing either exposes something about them.",
@@ -411,28 +416,31 @@
         "subject": "A GM after a bad trade",
         "boxes": [
           "ADMIT THE TRADE WAS A MISTAKE",
-          "DOUBLE DOWN AND SEND ANOTHER FIRST"
+          "DOUBLE DOWN AND SEND ANOTHER FIRST",
+          "THE GM WHO MADE IT"
         ],
-        "why_it_lands": "Both options are painful, they genuinely conflict, and the dilemma is entirely self-inflicted. No decision has been made yet."
+        "why_it_lands": "Both options are painful, they genuinely conflict, and the dilemma is self-inflicted. Box 2 names who is sweating. No decision has been made yet."
       },
       "anti_example": {
         "boxes": [
           "WIN THE CHAMPIONSHIP",
           "MISS THE PLAYOFFS"
         ],
-        "why_it_fails": "Opposite valence and not a real dilemma -- nobody sweats over whether to win."
+        "why_it_fails": "Opposite valence, not a real dilemma -- nobody sweats over whether to win -- and only 2 of 3 boxes filled, so nobody is shown agonizing."
       },
       "special_handling": null,
-      "selector_line": "Subject still sweating between two SAME-valence options. Choice not yet made.",
+      "selector_line": "Subject still sweating between two SAME-valence options, choice not yet made. Subject goes IN box 2.",
       "tags": [
         "dilemma",
         "choice",
         "tension",
         "hypocrisy",
         "indecision",
-        "subject-implied"
+        "subject-labeled"
       ],
-      "note": "AI-authored box semantics, not yet reviewed by Abram."
+      "note": "AI-authored box semantics, not yet reviewed by Abram.",
+      "box_count_confirmed": "CORRECTED 2026-08-26 from 3 to reflect the live pipeline: a UAT run's meme-check reported 'two-buttons 3/3 boxes ok', so the template renders THREE caption boxes. Like distracted-boyfriend, the third is the SUBJECT -- the sweating figure agonizing over the two buttons. v1 said 2, which would have left the subject panel empty.",
+      "box_order_caveat": "Box INDEX to physical position unverified against a real render. This entry assumes 0=first button, 1=second button, 2=the sweating figure. Roles are right even if the indices need permuting."
     },
     {
       "slug": "corporates-want-you-to-find-the-difference",

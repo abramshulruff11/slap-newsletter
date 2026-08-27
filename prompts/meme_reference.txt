@@ -27,11 +27,14 @@ PANEL COUNTS — how many captions to write per template:
 
 | Captions | Templates |
 |----------|-----------|
-| 2 panels | drake, left-exit-12-off-ramp, two-buttons, corporates-want-you-to-find-the-difference, buff-doge-vs-cheems, epic-handshake, this-is-fine, change-my-mind, hide-the-pain-harold, bernie-i-am-once-again-asking, surprised-pikachu, always-has-been, monkey-puppet, mocking-spongebob, first-time, trade-offer, waiting-skeleton, one-does-not-simply, spider-man-pointing-at-spider-man, eric-andre-shooting, is-this-a-pigeon, woman-yelling-at-cat, ight-imma-head-out |
+| 2 panels | drake, left-exit-12-off-ramp, corporates-want-you-to-find-the-difference, buff-doge-vs-cheems, epic-handshake, this-is-fine, change-my-mind, hide-the-pain-harold, bernie-i-am-once-again-asking, surprised-pikachu, always-has-been, monkey-puppet, mocking-spongebob, first-time, trade-offer, waiting-skeleton, one-does-not-simply, spider-man-pointing-at-spider-man, eric-andre-shooting, is-this-a-pigeon, woman-yelling-at-cat, ight-imma-head-out |
 | 3 captions → 4 physical panels | gru-plan (code repeats flaw as panel 4), expanding-brain, vince-mcmahon-reaction, clown-applying-makeup |
-| 3 panels literal | panik-kalm-panik, distracted-boyfriend (box 3 = the SUBJECT — see note) |
+| 3 panels literal | panik-kalm-panik, distracted-boyfriend (box 3 = the SUBJECT), two-buttons (box 3 = the SUBJECT) |
 | 2 captions → 4 physical panels | anakin-padme (code fills blank/repeat panels) |
 
+- **two-buttons takes THREE captions, not two.** Panel 1 and 2 are the two conflicting
+  buttons; panel 3 is the SUBJECT — the sweating figure who has to choose. Leaving panel 3
+  off means nobody is shown agonizing and the dilemma reads as an abstract pair of options.
 - **distracted-boyfriend takes THREE captions, not two.** Panel 1 = the established thing being
   left behind, panel 2 = the new thing catching their eye, panel 3 = the SUBJECT (the figure in
   the middle — the person or team making the decision). Leaving panel 3 off strands the joke:
