@@ -320,7 +320,30 @@ def main() -> None:
                                .get("update_tweets_rejected", "not reported"))
         except (json.JSONDecodeError, AttributeError):
             update_rejected = "unparseable"
-        print(f"  §2.2 pure-update filter: {update_rejected} tweet(s) rejected")
+        print(f"  §2.2 self-reported rejections: {update_rejected} "
+              f"(model's own count — not verified)")
+
+        # Trim to the tweet budget BEFORE Pass 2 writes. Pass 1 has no ceiling
+        # in its prompt and took 35 against a 20-24 target on 2026-08-27, which
+        # is what held the GIF/meme share at 27% against a 50% target.
+        try:
+            _plan = json.loads(story_plan)
+            _rep = G.enforce_tweet_budget(_plan)
+            if _rep["dropped"]:
+                _by = {}
+                for _reason, _acct in _rep["dropped"]:
+                    _by[_reason] = _by.get(_reason, 0) + 1
+                print(f"  §2.3 tweet budget: {_rep['before']} -> {_rep['after']} "
+                      f"(ceiling {G.TWEET_CEILING})")
+                for _reason, _n in sorted(_by.items(), key=lambda kv: -kv[1]):
+                    print(f"       -{_n:<2d} {_reason}")
+                print(f"       per section: {_rep['sections']}")
+                story_plan = json.dumps(_plan, ensure_ascii=False)
+            else:
+                print(f"  ✓ §2.3 tweet budget OK — {_rep['after']} tweet(s)")
+        except (json.JSONDecodeError, TypeError, KeyError) as e:
+            print(f"  ⚠ §2.3 tweet budget skipped — {e}")
+
         (G.OUTPUT_DIR / "story_plan.json").write_text(story_plan, encoding="utf-8")
     else:
         cached = G.OUTPUT_DIR / "story_plan.json"

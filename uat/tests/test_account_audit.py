@@ -107,6 +107,58 @@ check("@SleeperHQ counted once, not 3x", c.get("@SleeperHQ"), 1)
 check("@SleeperHQ not flagged",
       "@SleeperHQ appears" in G._audit_account_diversity(solo), False)
 
+
+
+print()
+print("=" * 66)
+print("TWEET BUDGET (§2.3)")
+print("=" * 66)
+
+
+def tw(handle, text="a normal tweet with several distinct content words here"):
+    return {"url": f"https://twitter.com/{handle}/status/{abs(hash(text+handle))%10**9}",
+            "account": handle, "text": text}
+
+
+def story(headline, tweets):
+    return {"headline": headline, "tweets": list(tweets),
+            "beats": [{"angle": "a", "landing": "b", "media": list(tweets)}]}
+
+
+PLAN = {
+    "lead_story": story("Lead", [tw("ESPN"), tw("ghetto_gronk", "a joke about the thing"),
+                                 tw("ESPN", "second wire item"), tw("PFTCommenter", "bit"),
+                                 tw("StatMuse", "a stat line worth reading"),
+                                 tw("NBAMemes", "meme text"), tw("Ihartitz", "more")]),
+    "supporting_stories": [
+        # Both tweets from one insider — must NOT be emptied (2026-08-27 bug)
+        story("Fines", [tw("TomPelissero", "memo to clubs"),
+                        tw("TomPelissero", "joint statement adds detail")]),
+        # First is pure-update; the second must survive (quota-refund bug)
+        story("Kuminga", [tw("ShamsCharania", "BREAKING: Kuminga has agreed to a deal"),
+                          tw("ShamsCharania", "Kuminga chose Minnesota over three other teams"),
+                          tw("ClutchPoints", "reaction quote here")]),
+    ],
+    "around_the_league": {"tweets": [tw("A%d" % i, "atl item %d" % i) for i in range(12)]},
+}
+
+rep = G.enforce_tweet_budget(PLAN)   # mutates PLAN in place, by design
+
+sup = PLAN["supporting_stories"]
+check("total trimmed to ceiling", rep["after"] <= G.TWEET_CEILING, True)
+check("no section emptied", all(len(s["tweets"]) >= 1 for s in sup), True)
+check("insider-only story keeps one tweet", len(sup[0]["tweets"]), 1)
+check("pure-update dropped, real scoop kept", len(sup[1]["tweets"]) >= 2, True)
+check("BREAKING tweet gone",
+      any("BREAKING" in (t["text"] or "") for t in sup[1]["tweets"]), False)
+check("ATL capped", len(PLAN["around_the_league"]["tweets"]), G.ATL_MAX)
+
+# beats must be pruned in lockstep or Pass 2 (locked to beats) still uses them
+leftover = {t["url"] for s in [PLAN["lead_story"]] + sup for t in s["tweets"]}
+beat_urls = {m["url"] for s in [PLAN["lead_story"]] + sup
+             for b in s["beats"] for m in b["media"]}
+check("beat media pruned in lockstep (no orphans)", beat_urls - leftover, set())
+
 print()
 print("=" * 66)
 print("ALL CHECKS PASSED — 0 API calls")

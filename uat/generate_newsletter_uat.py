@@ -2004,6 +2004,149 @@ def count_headliner_accounts(html: str) -> dict:
     return counts
 
 
+# --- Tweet budget -------------------------------------------------------------
+# Nothing capped the total tweet count. pass1_story_selector.txt never states a
+# ceiling, so Pass 1 took 35 on 2026-08-27 against a 20-24 target — which is
+# what dragged the GIF/meme share down to 27% against a 50% target. Every tweet
+# Pass 1 hands over is one Pass 2 can spend instead of a GIF.
+#
+# This trims the PLAN, before Pass 2 writes, so the excess never reaches the
+# draft. Tweets live in both story["tweets"] and story["beats"][i]["media"] and
+# Pass 2 is locked to the beats, so both have to be pruned together.
+TWEET_CEILING = 24          # top of run_uat.TWEET_TARGET
+ATL_MAX = 8                 # ATL is a highlight reel, but it is not a dumping ground
+MIN_TWEETS_LEAD = 3
+MIN_TWEETS_SUPPORTING = 1   # a supporting story can carry a single tweet
+
+
+def _norm_key(t: dict) -> str:
+    return _normalize_tweet_url(t.get("url", "")) or (t.get("url") or "")
+
+
+def _plan_sections(plan: dict) -> list:
+    """[(label, story_dict, floor)] for headliner sections, in order."""
+    out = [("lead", plan.get("lead_story", {}) or {}, MIN_TWEETS_LEAD)]
+    for i, s in enumerate(plan.get("supporting_stories", []) or []):
+        out.append((f"supporting{i}", s or {}, MIN_TWEETS_SUPPORTING))
+    return out
+
+
+def _drop_from_story(story: dict, keys: set) -> int:
+    """Remove tweets by normalized URL from both tweets[] and every beat's media[]."""
+    removed = 0
+    kept = []
+    for t in story.get("tweets", []) or []:
+        if isinstance(t, dict) and _norm_key(t) in keys:
+            removed += 1
+        else:
+            kept.append(t)
+    story["tweets"] = kept
+    for beat in story.get("beats", []) or []:
+        if isinstance(beat, dict) and isinstance(beat.get("media"), list):
+            beat["media"] = [m for m in beat["media"]
+                             if not (isinstance(m, dict) and _norm_key(m) in keys)]
+    return removed
+
+
+def enforce_tweet_budget(plan: dict, ceiling: int = TWEET_CEILING) -> dict:
+    """
+    Trim the story plan to the tweet budget, dropping the least valuable first.
+
+    Order:
+      1. insider/wire tweets past their cap of 1 (keep the anchor, drop the rest)
+      2. any account past the normal cap of 2
+      3. pure-update shapes ("BREAKING: ...", scorelines)
+      4. if still over, the trailing tweet of the biggest section, respecting
+         per-section floors
+
+    Returns a report dict; mutates `plan` in place.
+    """
+    sections = _plan_sections(plan)
+    atl = plan.get("around_the_league", {})
+    atl_tweets = (atl.get("tweets", []) if isinstance(atl, dict) else atl) or []
+
+    before_head = sum(len(s.get("tweets", []) or []) for _, s, _ in sections)
+    before_atl = len(atl_tweets)
+    report = {"before": before_head + before_atl, "dropped": [], "sections": {}}
+
+    # --- ATL first: it is uncapped per-account but not unlimited in size ---
+    if len(atl_tweets) > ATL_MAX:
+        for t in atl_tweets[ATL_MAX:]:
+            report["dropped"].append(("atl-overflow", "@" + str(t.get("account", "?")).lstrip("@")))
+        atl_tweets = atl_tweets[:ATL_MAX]
+        if isinstance(atl, dict):
+            atl["tweets"] = atl_tweets
+        else:
+            plan["around_the_league"] = atl_tweets
+
+    # --- Rules 1-3, headliners only ---
+    # Insider caps are PER STORY, not per issue: pass1_story_selector.txt says an
+    # insider tweet "may anchor A STORY once". Applying it per issue emptied the
+    # NFL-fines story entirely on 2026-08-27 (both its tweets were Pelissero's),
+    # which is worse than the problem being solved. A section is never taken
+    # below its floor by any rule.
+    seen_issue: dict = {}
+    for label, story, floor in sections:
+        tweets = [t for t in (story.get("tweets", []) or []) if isinstance(t, dict)]
+        seen_section: dict = {}
+        drop: set = set()
+
+        for t in tweets:
+            if len(tweets) - len(drop) <= floor:
+                break                      # floor reached — stop cutting this section
+            acct = "@" + str(t.get("account", "?")).lstrip("@")
+            low = acct.lower()
+            seen_section[acct] = seen_section.get(acct, 0) + 1
+            seen_issue[acct] = seen_issue.get(acct, 0) + 1
+            text = (t.get("text") or "").strip()
+
+            if low in INSIDER_WIRE_ACCOUNTS and seen_section[acct] > INSIDER_HEADLINER_CAP:
+                drop.add(_norm_key(t))
+                report["dropped"].append(("insider-cap/story", acct))
+            elif seen_issue[acct] > HEADLINER_ACCOUNT_CAP:
+                drop.add(_norm_key(t))
+                report["dropped"].append(("account-cap/issue", acct))
+            elif _PURE_UPDATE_RE.match(text) or _SCORELINE_RE.match(text):
+                drop.add(_norm_key(t))
+                report["dropped"].append(("pure-update", acct))
+            else:
+                continue
+            # A dropped tweet consumes no quota — otherwise cutting the first
+            # tweet of an account makes the next one look "over cap" and takes
+            # that too, which zeroed @ShamsCharania out of its own scoop.
+            seen_issue[acct] -= 1
+            seen_section[acct] -= 1
+
+        if drop:
+            _drop_from_story(story, drop)
+
+    # --- Rule 4: still over budget, shave the biggest sections ---
+    def total() -> int:
+        return (sum(len(s.get("tweets", []) or []) for _, s, _ in sections)
+                + len(atl_tweets))
+
+    guard = 0
+    while total() > ceiling and guard < 200:
+        guard += 1
+        candidates = [(len(s.get("tweets", []) or []), label, s, floor)
+                      for label, s, floor in sections
+                      if len(s.get("tweets", []) or []) > floor]
+        if not candidates:
+            break
+        candidates.sort(key=lambda c: -c[0])
+        _, label, story, _floor = candidates[0]
+        victim = (story.get("tweets") or [])[-1]
+        acct = "@" + str(victim.get("account", "?")).lstrip("@")
+        _drop_from_story(story, {_norm_key(victim)})
+        report["dropped"].append((f"over-budget:{label}", acct))
+
+    for label, story, _f in sections:
+        report["sections"][label] = len(story.get("tweets", []) or [])
+    report["sections"]["atl"] = len(atl_tweets)
+    report["after"] = total()
+    return report
+
+
 def effective_cap(account: str) -> int:
     """Insider/wire accounts may anchor ONCE; everyone else gets the normal cap."""
     return (INSIDER_HEADLINER_CAP if account.lower() in INSIDER_WIRE_ACCOUNTS
