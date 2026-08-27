@@ -15,7 +15,7 @@
    TEST: Could the subject have avoided this by not doing the thing they did? If no, wrong engine.
    - gru-plan (4 boxes, subject: copy) -- Plan whose own final step reveals the self-inflicted flaw. Writer supplies 3 captions; code repeats the 3rd.
    - clown-applying-makeup (4 boxes, subject: copy) -- Escalating self-delusion in four stages ending in full clown. All four from the same subject.
-   - eric-andre-shooting (3 boxes, subject: box:2) -- Subject caused the harm then acts baffled about who did it. Same subject in both boxes.
+   - eric-andre-shooting (3 boxes, subject: box:0) -- Subject caused the harm then acts baffled about who did it. Subject goes IN box 0, victim in box 1.
 
 ## never_arrives
    Something awaited -- an answer, a concession, an event -- never materializes, and the waiting itself becomes the joke.
@@ -35,7 +35,7 @@
    An ordered sequence of rungs, each more extreme than the last, ending somewhere absurd.
    TEST: Are there genuinely FOUR distinct rungs? Two beats is a comparison -- use drake instead.
    - expanding-brain (4 boxes, subject: copy) -- Four rungs of escalating 'sophistication', top rung ironically dumbest.
-   - vince-mcmahon-reaction (4 boxes, subject: copy) -- Four escalating versions of ONE thing, peaking at maximum hype.
+   - vince-mcmahon-reaction (5 boxes, subject: copy) -- FIVE escalating versions of ONE thing, peaking at maximum hype. All 5 panels need captions.
 
 ## denial_amid_disaster
    The subject presents calm or contentment while something is visibly going wrong.
@@ -58,7 +58,7 @@
 ## they_are_the_same
    Two things presented or behaving as distinct turn out to be functionally identical.
    TEST: Could you swap the two and have nothing meaningfully change?
-   - corporates-want-you-to-find-the-difference (3 boxes, subject: copy) -- Two things sold as different that are functionally identical.
+   - corporates-want-you-to-find-the-difference (3 boxes, subject: box:2) -- Two things sold as different that are functionally identical. The observer goes IN box 2; the verdict line is pre-printed.
    - spider-man-pointing-at-spider-man (2 boxes, subject: copy) -- Two mirror-image parties accusing each other of the same thing.
 
 ## hardened_vs_soft
@@ -75,7 +75,7 @@
 ## lopsided_exchange
    A transaction framed as mutual that is transparently one-sided.
    TEST: Would anyone actually accept this deal?
-   - trade-offer (3 boxes, subject: box:0) -- Blatantly one-sided swap framed as a polite formal trade offer.
+   - trade-offer (3 boxes, subject: box:2) -- Blatantly one-sided swap framed as a polite formal trade offer. The offerer goes IN box 2.
 
 ## understated_difficulty
    Solemnly correcting the assumption that something is easy.
@@ -85,7 +85,7 @@
 ## unexpected_common_ground
    Two normally-opposed parties turn out to share one thing.
    TEST: Are these two actually rivals?
-   - epic-handshake (3 boxes, subject: copy) -- Two genuine rivals caught agreeing on one specific thing. The shared thing goes IN box 2.
+   - epic-handshake (3 boxes, subject: copy) -- Two genuine rivals caught agreeing on one specific thing. The shared thing goes IN box 0.
 
 ## emotional_whiplash
    A three-beat swing: worry, relief, then a worse worry that cancels the relief.

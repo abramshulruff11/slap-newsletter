@@ -34,7 +34,8 @@ table under-counted 14 templates and was the cause of blank-panel memes.
 |----------|-----------|
 | 2 captions | drake, this-is-fine, change-my-mind, hide-the-pain-harold, bernie-i-am-once-again-asking, always-has-been, monkey-puppet, mocking-spongebob, first-time, waiting-skeleton, one-does-not-simply, spider-man-pointing-at-spider-man, woman-yelling-at-cat, ight-imma-head-out |
 | 3 captions | distracted-boyfriend, left-exit-12-off-ramp, two-buttons, corporates-want-you-to-find-the-difference, epic-handshake, surprised-pikachu, trade-offer, eric-andre-shooting, is-this-a-pigeon, panik-kalm-panik |
-| 4 captions | expanding-brain, vince-mcmahon-reaction, clown-applying-makeup, buff-doge-vs-cheems |
+| 4 captions | expanding-brain, clown-applying-makeup, buff-doge-vs-cheems |
+| 5 captions | vince-mcmahon-reaction |
 | 3 captions → 4 physical panels | gru-plan (code repeats the flaw as panel 4) |
 | 2 captions → 3 physical panels | anakin-padme (code repeats Padme's question as the final panel) |
 
@@ -103,7 +104,7 @@ Use when someone chose one thing over another, or when two things should be comp
 Use when a stat line, situation, or take escalates through multiple levels.
 
 - **Galaxy Brain / Expanding Brain** (slug: `expanding-brain`, imgflip: 93895088) — 4 panels of increasingly "enlightened" takes. Write 4 captions: `data-boxes="TAKE 1||TAKE 2||TAKE 3||TAKE 4"` — panel 4 is the galaxy-brain payoff and is NOT auto-filled. Perfect for devolving takes or increasingly wild stat comparisons.
-- **Vince McMahon Reaction** (slug: `vince-mcmahon-reaction`, imgflip: 193966043) — 4 panels of increasing excitement. Write 4 captions: `data-boxes="PANEL 1||PANEL 2||PANEL 3||PANEL 4"`. Use when you want custom text escalating across panels.
+- **Vince McMahon Reaction** (slug: `vince-mcmahon-reaction`, imgflip: 193966043) — **FIVE** panels of increasing excitement, not four. Write 5 captions: `data-boxes="PANEL 1||PANEL 2||PANEL 3||PANEL 4||PANEL 5"`. Sending only 4 leaves the final payoff panel BLANK (verified by render 2026-08-27). Use when you want custom text escalating across panels.
 - **Gru's Plan** (slug: `gru-plan`, imgflip: 131940431) — 4 panels: step 1 → step 2 → the flaw → stare at the flaw. Write 3 captions: `data-boxes="STEP 1||STEP 2||THE FLAW"` (code repeats the flaw as panel 4). Use when a team's plan has an obvious problem they didn't see coming.
 - **Clown Applying Makeup** (slug: `clown-applying-makeup`, imgflip: 195515965) — Progressive clown makeup. Write 4 captions: `data-boxes="STEP 1||STEP 2||STEP 3||STEP 4"`. Each panel = a step deeper into delusion. Perfect for fans who keep defending a bad team/player.
 

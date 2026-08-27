@@ -8,7 +8,7 @@
     "engine_axis": "'engine' is the shared comedic mechanism -- templates in one engine share comedic_engine, valence_rule, key_test and failure_mode (defined once under _meta.engines). 'pattern_type' is the separate structural axis: how captions map onto physical panels. Two templates can share an engine but differ in pattern_type (drake vs distracted-boyfriend) or vice versa. The taxonomy is open -- add a new engine rather than force a bad fit.",
     "examples_are_illustrative": "worked_example and anti_example captions demonstrate SHAPE ONLY. They are NOT factual claims and must never be reused as source material. Real captions must be built from game_state.json ground truth.",
     "box_count_convention": "box_count is the template's TRUE physical caption count, taken from Imgflip's live get_memes API on 2026-08-27 (authoritative). Entries carrying box_count_source were corrected against it. Boxes flagged role_unverified have a correct COUNT but an inferred panel ORDER -- a single real render settles each.",
-    "open_questions_for_review": "RESOLVED 2026-08-27: box counts for all 26 Imgflip-listed templates verified against the live get_memes API; 9 entries corrected. epic-handshake's 'shared thing has no caption box' concern was wrong -- it has 3 boxes and box 2 is the clasp. Four previously-unknown subject panels found (left-exit-12-off-ramp, trade-offer, eric-andre-shooting, is-this-a-pigeon). STILL OPEN: panel ORDER for entries flagged role_unverified -- counts are right, index-to-position mapping is inferred and needs one real render each. first-time, ight-imma-head-out, spider-man-pointing-at-spider-man and vince-mcmahon-reaction are outside Imgflip's top-100 list so their counts remain unverified.",
+    "open_questions_for_review": "Panel ORDER verified by render 2026-08-27 for 11 of 12 flagged templates. Confirmed as inferred: left-exit-12-off-ramp, is-this-a-pigeon, buff-doge-vs-cheems, first-time, ight-imma-head-out. CORRECTED: eric-andre-shooting (subject box:2->box:0), trade-offer (subject box:0->box:2), epic-handshake (clasp is box 0, not box 2), surprised-pikachu (3 stacked caption lines, face uncaptioned), corporates-want-you-to-find-the-difference (box 2 is the observer; the verdict line is pre-printed), vince-mcmahon-reaction (box_count 4 -> 5; the old 4 shipped a blank payoff panel). STILL OPEN: spider-man-pointing-at-spider-man -- probe inconclusive, see its box_order_caveat.",
     "engines": {
       "subject_abandons_sensible_for_funky": {
         "summary": "A named subject faces an obviously correct option and visibly goes with the worse, pettier, or stranger one.",
@@ -333,20 +333,17 @@
         {
           "index": 0,
           "purpose": "the sensible route straight ahead -- the option the subject should take",
-          "valence": "the responsible option, abandoned",
-          "role_unverified": true
+          "valence": "the responsible option, abandoned"
         },
         {
           "index": 1,
           "purpose": "the exit ramp -- the impulsive option actually taken",
-          "valence": "the tempting, self-defeating option",
-          "role_unverified": true
+          "valence": "the tempting, self-defeating option"
         },
         {
           "index": 2,
           "purpose": "the subject -- the swerving car/driver making the choice",
-          "valence": "neutral -- a label, not a judgment",
-          "role_unverified": true
+          "valence": "neutral -- a label, not a judgment"
         }
       ],
       "use_when": "An abrupt, panicked, or deadline-driven decision that abandoned an established plan. Pick this over drake when the SUDDENNESS is the story.",
@@ -378,7 +375,8 @@
         "reject-approve"
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram.",
-      "box_count_source": "imgflip_live_api_2026-08-27"
+      "box_count_source": "imgflip_live_api_2026-08-27",
+      "box_order_source": "verified_by_render_2026-08-27"
     },
     {
       "slug": "two-buttons",
@@ -457,7 +455,7 @@
       "subject": {
         "required": true,
         "who": "Whoever is selling the false distinction.",
-        "placement": "copy",
+        "placement": "box:2",
         "rule": "MUST be named in the sentence immediately before or after the meme. If you cannot name a specific subject, do not use this template."
       },
       "comedic_engine": "Two things marketed as different are the same picture. The deadpan act of 'spotting the difference' is the joke.",
@@ -465,21 +463,18 @@
       "boxes": [
         {
           "index": 0,
-          "purpose": "the first of two things claimed to be different",
-          "valence": "presented as distinct",
-          "role_unverified": true
+          "purpose": "the first thing claimed to be different (left paper)",
+          "valence": "presented as distinct"
         },
         {
           "index": 1,
-          "purpose": "the second thing, supposedly the contrast",
-          "valence": "presented as distinct -- but identical in substance",
-          "role_unverified": true
+          "purpose": "the second thing, supposedly the contrast (right paper)",
+          "valence": "presented as distinct -- but identical in substance"
         },
         {
           "index": 2,
-          "purpose": "the verdict line -- 'they're the same picture'",
-          "valence": "the deadpan payoff",
-          "role_unverified": true
+          "purpose": "the SUBJECT -- the observer who sees through it (bottom, over Pam)",
+          "valence": "deadpan"
         }
       ],
       "use_when": "Two things are marketed or argued as different when they are functionally the same.",
@@ -499,8 +494,8 @@
         ],
         "why_it_fails": "Genuinely different things. The template asserts sameness that is not there."
       },
-      "special_handling": null,
-      "selector_line": "Two things sold as different that are functionally identical.",
+      "special_handling": "'Corporate needs you to find the differences...' and 'They're the same picture' are PRE-PRINTED in the template. Do not write either line -- box 2 is a caption over Pam, not the verdict.",
+      "selector_line": "Two things sold as different that are functionally identical. The observer goes IN box 2; the verdict line is pre-printed.",
       "tags": [
         "comparison",
         "sameness",
@@ -508,7 +503,8 @@
         "they-re-the-same"
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram.",
-      "box_count_source": "imgflip_live_api_2026-08-27"
+      "box_count_source": "imgflip_live_api_2026-08-27",
+      "box_order_source": "verified_by_render_2026-08-27"
     },
     {
       "slug": "buff-doge-vs-cheems",
@@ -530,26 +526,22 @@
         {
           "index": 0,
           "purpose": "buff doge -- the strong/past version of the subject",
-          "valence": "dominant, former glory",
-          "role_unverified": true
+          "valence": "dominant, former glory"
         },
         {
           "index": 1,
           "purpose": "cheems -- the weak/present version of the same subject",
-          "valence": "diminished",
-          "role_unverified": true
+          "valence": "diminished"
         },
         {
           "index": 2,
           "purpose": "buff doge's line -- what the strong version did",
-          "valence": "the feat",
-          "role_unverified": true
+          "valence": "the feat"
         },
         {
           "index": 3,
           "purpose": "cheems' line -- the pathetic present-day equivalent",
-          "valence": "the deflation",
-          "role_unverified": true
+          "valence": "the deflation"
         }
       ],
       "use_when": "Contrasting a dominant, hardened version against a diminished, soft one -- then vs now, or era vs era.",
@@ -578,7 +570,8 @@
         "then-vs-now"
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram.",
-      "box_count_source": "imgflip_live_api_2026-08-27"
+      "box_count_source": "imgflip_live_api_2026-08-27",
+      "box_order_source": "verified_by_render_2026-08-27"
     },
     {
       "slug": "epic-handshake",
@@ -593,26 +586,25 @@
         "who": "The two opposed parties.",
         "placement": "copy",
         "rule": "MUST be named in the sentence immediately before or after the meme. If you cannot name a specific subject, do not use this template.",
-        "note": "The shared thing IS captionable in box 2 (Imgflip reports 3 boxes). Earlier notes claiming it must live in the copy were wrong."
+        "note": "The shared thing IS captionable -- it is box 0, the clasp. Boxes 1 and 2 are the two arms."
       },
       "comedic_engine": "Two camps that agree on nothing are caught agreeing on this one thing.",
       "valence": "The two parties MUST be genuinely opposed. Two allies agreeing is unremarkable.",
       "boxes": [
         {
           "index": 0,
-          "purpose": "the first party/faction",
-          "valence": "one side of a real rivalry"
+          "purpose": "the CLASP -- the one thing both sides agree on (top centre)",
+          "valence": "the shared grievance or want"
         },
         {
           "index": 1,
-          "purpose": "the second, normally-opposed party/faction",
-          "valence": "the other side"
+          "purpose": "the first party/faction (left arm)",
+          "valence": "one side of a real rivalry"
         },
         {
           "index": 2,
-          "purpose": "the clasp -- the one thing both sides agree on",
-          "valence": "the shared grievance or want",
-          "role_unverified": true
+          "purpose": "the second, normally-opposed party/faction (right arm)",
+          "valence": "the other side"
         }
       ],
       "use_when": "Two normally-opposed groups turn out to share one specific thing.",
@@ -634,7 +626,7 @@
         "why_it_fails": "Not opposed parties, and no named common ground. Nothing unexpected about it."
       },
       "special_handling": null,
-      "selector_line": "Two genuine rivals caught agreeing on one specific thing. The shared thing goes IN box 2.",
+      "selector_line": "Two genuine rivals caught agreeing on one specific thing. The shared thing goes IN box 0.",
       "tags": [
         "agreement",
         "unity",
@@ -642,7 +634,8 @@
         "two-sides"
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram.",
-      "box_count_source": "imgflip_live_api_2026-08-27"
+      "box_count_source": "imgflip_live_api_2026-08-27",
+      "box_order_source": "verified_by_render_2026-08-27"
     },
     {
       "slug": "expanding-brain",
@@ -721,7 +714,7 @@
       "category": "escalation_levels",
       "engine": "escalating_ladder",
       "pattern_type": "escalation_sequence",
-      "box_count": 4,
+      "box_count": 5,
       "subject": {
         "required": true,
         "who": "Whoever is getting progressively more hyped.",
@@ -733,23 +726,28 @@
       "boxes": [
         {
           "index": 0,
-          "purpose": "the mildly good version -- calm",
-          "valence": "mild interest"
+          "purpose": "stage 1 -- the plain, unexciting version",
+          "valence": "baseline"
         },
         {
           "index": 1,
-          "purpose": "a better version -- leaning in",
-          "valence": "interested"
+          "purpose": "stage 2 -- mildly better",
+          "valence": "first lift"
         },
         {
           "index": 2,
-          "purpose": "an even better version -- visibly hyped",
-          "valence": "excited"
+          "purpose": "stage 3 -- notably better",
+          "valence": "clearly escalating"
         },
         {
           "index": 3,
-          "purpose": "the ultimate version -- maximum, over-the-top",
-          "valence": "peak"
+          "purpose": "stage 4 -- excessive",
+          "valence": "near the ceiling"
+        },
+        {
+          "index": 4,
+          "purpose": "stage 5 -- the absurd, transcendent final form",
+          "valence": "the payoff"
         }
       ],
       "use_when": "Something gets progressively, escalatingly more exciting across four intensifying reactions.",
@@ -773,8 +771,8 @@
         ],
         "why_it_fails": "Four unrelated items. No single escalating thread, so the reactions are arbitrary."
       },
-      "special_handling": null,
-      "selector_line": "Four escalating versions of ONE thing, peaking at maximum hype.",
+      "special_handling": "FIVE panels, not four (verified by render 2026-08-27; the library previously said 4, which shipped a BLANK final panel -- the payoff frame). All five need captions.",
+      "selector_line": "FIVE escalating versions of ONE thing, peaking at maximum hype. All 5 panels need captions.",
       "tags": [
         "escalation",
         "levels",
@@ -782,7 +780,8 @@
         "hype",
         "excitement"
       ],
-      "note": "AI-authored box semantics, not yet reviewed by Abram."
+      "note": "AI-authored box semantics, not yet reviewed by Abram.",
+      "box_order_source": "verified_by_render_2026-08-27"
     },
     {
       "slug": "gru-plan",
@@ -1232,21 +1231,18 @@
       "boxes": [
         {
           "index": 0,
-          "purpose": "the setup -- the choice made",
-          "valence": "stated plainly, no alarm",
-          "role_unverified": true
+          "purpose": "first line of the setup (all three stack as text ABOVE the image)",
+          "valence": "stated plainly, no alarm"
         },
         {
           "index": 1,
-          "purpose": "the entirely predictable consequence",
-          "valence": "the inevitable result",
-          "role_unverified": true
+          "purpose": "second line -- the action taken",
+          "valence": "the choice, still deadpan"
         },
         {
           "index": 2,
-          "purpose": "the shocked reaction to that consequence",
-          "valence": "feigned surprise -- the joke",
-          "role_unverified": true
+          "purpose": "third line -- the entirely predictable consequence",
+          "valence": "the inevitable result"
         }
       ],
       "use_when": "Someone does something with a clearly inevitable result, then acts stunned when it happens.",
@@ -1266,7 +1262,7 @@
         ],
         "why_it_fails": "A freak injury is not a foreseeable consequence of a choice. The shock is legitimate, so mocking it is just mean."
       },
-      "special_handling": null,
+      "special_handling": "All THREE boxes stack as separate lines in the caption bar above the image. Pikachu's shocked face is the punchline and carries NO caption -- do not write the reaction, only the setup that earns it.",
       "selector_line": "Shock at a completely foreseeable consequence of the subject's own action.",
       "tags": [
         "reaction",
@@ -1276,7 +1272,8 @@
         "irony"
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram.",
-      "box_count_source": "imgflip_live_api_2026-08-27"
+      "box_count_source": "imgflip_live_api_2026-08-27",
+      "box_order_source": "verified_by_render_2026-08-27"
     },
     {
       "slug": "always-has-been",
@@ -1501,7 +1498,8 @@
         "suffering",
         "first-time"
       ],
-      "note": "AI-authored box semantics, not yet reviewed by Abram."
+      "note": "AI-authored box semantics, not yet reviewed by Abram.",
+      "box_order_source": "verified_by_render_2026-08-27"
     },
     {
       "slug": "trade-offer",
@@ -1514,29 +1512,26 @@
       "subject": {
         "required": true,
         "who": "The party proposing the deal.",
-        "placement": "box:0",
-        "rule": "MUST be named in the sentence immediately before or after the meme. If you cannot name a specific subject, do not use this template."
+        "placement": "box:2",
+        "rule": "MUST be captioned in box 2 -- the figure steepling their hands. Without it nobody is shown making the offer."
       },
       "comedic_engine": "A robbery in the polite language of a trade proposal. The formal framing sells the imbalance.",
       "valence": "Box 0 (what the proposer receives) MUST clearly outweigh box 1 (what the other side receives). A fair trade has no joke.",
       "boxes": [
         {
           "index": 0,
-          "purpose": "the header -- who is making the offer (the SUBJECT)",
-          "valence": "neutral -- a label",
-          "role_unverified": true
+          "purpose": "'I receive:' -- what the subject gets",
+          "valence": "lopsided in the subject's favor, or absurdly not"
         },
         {
           "index": 1,
-          "purpose": "'I receive' -- what the subject gets",
-          "valence": "lopsided in the subject's favor, or absurdly not",
-          "role_unverified": true
+          "purpose": "'You receive:' -- what the other side gets",
+          "valence": "the imbalance that is the joke"
         },
         {
           "index": 2,
-          "purpose": "'You receive' -- what the other side gets",
-          "valence": "the imbalance that is the joke",
-          "role_unverified": true
+          "purpose": "the SUBJECT -- the figure making the offer (bottom, over the man)",
+          "valence": "neutral -- a label"
         }
       ],
       "use_when": "Framing an obviously one-sided swap as a formal, reasonable 'trade offer'.",
@@ -1557,7 +1552,7 @@
         "why_it_fails": "An even swap. Nothing to laugh at in a fair deal."
       },
       "special_handling": null,
-      "selector_line": "Blatantly one-sided swap framed as a polite formal trade offer.",
+      "selector_line": "Blatantly one-sided swap framed as a polite formal trade offer. The offerer goes IN box 2.",
       "tags": [
         "exchange",
         "lopsided",
@@ -1566,7 +1561,8 @@
         "superiority"
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram.",
-      "box_count_source": "imgflip_live_api_2026-08-27"
+      "box_count_source": "imgflip_live_api_2026-08-27",
+      "box_order_source": "verified_by_render_2026-08-27"
     },
     {
       "slug": "one-does-not-simply",
@@ -1732,7 +1728,8 @@
         "blame",
         "mirror"
       ],
-      "note": "AI-authored box semantics, not yet reviewed by Abram."
+      "note": "AI-authored box semantics, not yet reviewed by Abram.",
+      "box_order_caveat": "INCONCLUSIVE: a 4-marker probe on 2026-08-27 rendered only BOX 0 and BOX 3, overlapping centrally. Neither the count nor the order is settled. Re-probe with exactly 2 and then 3 markers before use."
     },
     {
       "slug": "eric-andre-shooting",
@@ -1745,8 +1742,8 @@
       "subject": {
         "required": true,
         "who": "The party who caused the problem and is now feigning ignorance.",
-        "placement": "box:2",
-        "rule": "MUST be captioned in box 2 -- the shooter. The joke is that the shooter and the questioner are the same party; leaving box 2 blank destroys it.",
+        "placement": "box:0",
+        "rule": "MUST be captioned in box 0 -- the shooter in the top panel. The joke is that the shooter and the questioner are the same party; leaving box 0 blank destroys it.",
         "note": "Both figures are the SAME subject -- shooter and questioner."
       },
       "comedic_engine": "The subject shot it, then asked who could possibly have done this. The feigned innocence is the joke, not the damage.",
@@ -1754,21 +1751,18 @@
       "boxes": [
         {
           "index": 0,
-          "purpose": "the question asked after the fact -- 'why would X do this?'",
-          "valence": "performed innocence",
-          "role_unverified": true
+          "purpose": "the shooter -- the SUBJECT who caused it (top panel, beside the gun)",
+          "valence": "self-inflicted, obliviously"
         },
         {
           "index": 1,
-          "purpose": "the victim -- the party harmed",
-          "valence": "the target",
-          "role_unverified": true
+          "purpose": "the victim -- the party harmed (top panel, slumped)",
+          "valence": "the target"
         },
         {
           "index": 2,
-          "purpose": "the shooter -- the SUBJECT, who caused it and is now asking",
-          "valence": "self-inflicted, obliviously",
-          "role_unverified": true
+          "purpose": "the question asked afterward -- 'why would X do this?' (bottom panel)",
+          "valence": "performed innocence"
         }
       ],
       "use_when": "Someone causes a problem themselves and then acts baffled about who is responsible.",
@@ -1789,7 +1783,7 @@
         "why_it_fails": "Nobody did this to themselves. Without a culprit the feigned innocence has no target."
       },
       "special_handling": null,
-      "selector_line": "Subject caused the harm then acts baffled about who did it. Same subject in both boxes.",
+      "selector_line": "Subject caused the harm then acts baffled about who did it. Subject goes IN box 0, victim in box 1.",
       "tags": [
         "self-sabotage",
         "hypocrisy",
@@ -1798,7 +1792,8 @@
         "betrayal"
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram.",
-      "box_count_source": "imgflip_live_api_2026-08-27"
+      "box_count_source": "imgflip_live_api_2026-08-27",
+      "box_order_source": "verified_by_render_2026-08-27"
     },
     {
       "slug": "is-this-a-pigeon",
@@ -1821,20 +1816,17 @@
         {
           "index": 0,
           "purpose": "the SUBJECT -- the person confidently misidentifying something",
-          "valence": "confidently wrong",
-          "role_unverified": true
+          "valence": "confidently wrong"
         },
         {
           "index": 1,
           "purpose": "the butterfly -- what the thing actually is",
-          "valence": "the plain reality being misread",
-          "role_unverified": true
+          "valence": "the plain reality being misread"
         },
         {
           "index": 2,
           "purpose": "the mistaken question -- 'is this a X?'",
-          "valence": "the wrong label, stated with confidence",
-          "role_unverified": true
+          "valence": "the wrong label, stated with confidence"
         }
       ],
       "use_when": "Someone confidently and cluelessly misidentifies something obvious.",
@@ -1863,7 +1855,8 @@
         "confident-wrong"
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram.",
-      "box_count_source": "imgflip_live_api_2026-08-27"
+      "box_count_source": "imgflip_live_api_2026-08-27",
+      "box_order_source": "verified_by_render_2026-08-27"
     },
     {
       "slug": "woman-yelling-at-cat",
@@ -1976,7 +1969,8 @@
         "nope",
         "done"
       ],
-      "note": "AI-authored box semantics, not yet reviewed by Abram."
+      "note": "AI-authored box semantics, not yet reviewed by Abram.",
+      "box_order_source": "verified_by_render_2026-08-27"
     },
     {
       "slug": "change-my-mind",
