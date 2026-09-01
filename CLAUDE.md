@@ -81,6 +81,8 @@ slap-newsletter/
 ├── highlights.py              ← injects MLB/NHL/World Cup highlight video embeds
 ├── build_email_html.py        ← builds the email HTML body
 ├── generate_memes.py          ← Imgflip meme generation
+├── runner_common.py            ← runner body shared by prod + UAT: 24 functions, models,
+│                                 PRICING, PASS_COSTS. configure(prompts_dir=) per runner
 ├── plan_audit.py               ← deterministic audits, SHARED by prod + UAT (see below)
 ├── meme_library.py             ← meme library access layer, shared
 ├── meme_box_check.py           ← box-count guard: blocks memes that would render blank panels
@@ -89,6 +91,8 @@ slap-newsletter/
 ├── email_newsletter.py        ← email delivery: HTML body + box scores inline (cid + size guard)
 ├── raw_content.json           ← daily input: headlines + tweets
 ├── game_state.json            ← daily ESPN ground truth (GITIGNORED build artifact)
+├── story_plan.json            ← Pass 1 plan as Pass 2 received it, post §2.4/§2.3
+│                                 (GITIGNORED; archived daily to archive/<date>/)
 ├── recent_output.json         ← rolling 30-day story_log + dedup state (GIFs, memes, stories)
 ├── cost_summary.json          ← per-pass cost breakdown, surfaced atop the email
 ├── newsletter_draft.html      ← browser-preview output
@@ -115,6 +119,7 @@ slap-newsletter/
 │   ├── promote.py             ← diff-and-confirm prompt promotion (USE THIS, never copy by hand)
 │   ├── probe_meme_box_order.py ← renders marker captions to verify meme panel order
 │   ├── tests/                 ← offline suites, 0 API calls — run before any prompt/code change
+│   │   └── test_runner_drift.py ← fails if a change reaches one runner and not the other
 │   ├── fixtures/              ← frozen inputs — the control. Deliberately NOT gitignored
 │   └── prompts/               ← a FORK of prompts/. Promotion to prod is manual
 ├── prompts/                   ← all production prompt files (versioned in git)
@@ -208,12 +213,31 @@ refuses any copy that would delete content from the destination, and refuses a p
 `{{PLACEHOLDER}}` the destination runner cannot substitute. No flags = read-only status.
 
 **Shared logic lives at the repo root, imported by both runners — never copied.** `plan_audit.py`,
-`meme_library.py`, `meme_box_check.py`, `gif_library_select.py` and `gif_url_cache.py` each have
-exactly one copy. Duplicating any of them into `generate_newsletter.py` recreates the drift
-problem somewhere `promote.py` cannot see it, because it only diffs prompts.
+`meme_library.py`, `meme_box_check.py`, `gif_library_select.py`, `gif_url_cache.py` and
+`runner_common.py` each have exactly one copy. Duplicating any of them into
+`generate_newsletter.py` recreates the drift problem somewhere `promote.py` cannot see it,
+because it only diffs prompts.
+
+**`runner_common.py` holds the runner body itself.** 24 functions were byte-identical copies in
+both runners until 2026-09-01, when two separate half-ports shipped on the same day (Pass 1's
+`max_tokens` raise without its streaming call; the GIF library prompts without their consumer).
+It also owns `MODEL_DEFAULT`, `MODEL_WRITER`, `PRICING` and the `PASS_COSTS` accumulator.
+
+Per-runner config is **injected, never assumed**: each runner calls
+`runner_common.configure(prompts_dir=...)` at import, because `PROMPTS_DIR` genuinely differs —
+prod reads `prompts/`, UAT reads `uat/prompts/`, and that fork is the whole point of the sandbox.
+`configure()` raises on a conflicting reconfigure and `load_prompt()` raises if it was never
+called, so a UAT run can never silently read production's prompts.
+
+**Any function still defined in BOTH runners must be identical.** `uat/tests/test_runner_drift.py`
+enforces it against a declared ledger (`KNOWN_DIVERGENT`) that currently holds four entries:
+`run_pass1`, `run_pass2`, `pre_edit` and `main`. New drift fails the test; a pair that converges
+must be deleted from the ledger, so it can never over-state the debt.
 
 **Tests are offline and free.** `uat/tests/` makes zero API calls: `test_account_audit.py` locks
-the deterministic audits, `test_meme_wiring_dryrun.py` the UAT meme wiring, and
+the deterministic audits, `test_runner_drift.py` locks prod-vs-UAT runner divergence,
+`test_history_dedup.py` the GIF/meme history writers,
+`test_meme_wiring_dryrun.py` the UAT meme wiring, and
 `test_prod_wiring_dryrun.py` exercises the real production path with the Anthropic client
 stubbed. Run all three before changing a prompt or a pass.
 
@@ -272,8 +296,9 @@ unstaged, which breaks `git pull --rebase`.
 - **Pass 2 (Writer): `claude-opus-4-7`** — the prose quality lift is the product. A/B trial began
   2026-06-01 and stuck.
 - **Passes 1, 4, 6: `claude-sonnet-4-5`** — sufficient for selection and transformation.
-- Constants are `MODEL_WRITER` and `MODEL_DEFAULT` in `generate_newsletter.py`.
-- Prompt caching enabled on all passes. `PRICING` in `generate_newsletter.py` is the single source
+- Constants are `MODEL_WRITER` and `MODEL_DEFAULT` in **`runner_common.py`** (moved there
+  2026-09-01 with the shared runner body; both runners re-export them).
+- Prompt caching enabled on all passes. `PRICING` in `runner_common.py` is the single source
   of truth for the cost breakdown that lands atop the daily email (`cost_summary.json`).
 - Estimated cost: ~$2-5/month.
 - Note on Opus 4.7: it follows instructions more literally than Sonnet, and its tokenizer can use
@@ -306,18 +331,20 @@ unstaged, which breaks `git pull --rebase`.
   fails silently. The durable fix is triggering the publish off the draft's existence rather than
   a wall clock.
 
-- **`requirements.txt` pins nothing for `anthropic` (open, 2026-09-01):** the file lists a bare
-  `anthropic`, so every CI run resolves whatever is newest (1.2.0 on 9/1). The Pass 1 outage that
-  day was triggered by an SDK-side *client* guard, not by our code changing behaviour at runtime —
-  the class of break that arrives with no commit and no warning. Pin `anthropic` (and ideally the
-  rest) to a known-good version and bump deliberately.
+- **`anthropic` pinned (RESOLVED 2026-09-02):** now `anthropic==1.2.0`, the version run 169
+  proved green end to end. It was a bare `anthropic`, so CI resolved whatever was newest — and
+  1.3.0 had already shipped, meaning the next scheduled run would have picked up a third,
+  untested version. Bump deliberately and re-run the pipeline before leaving it pinned forward.
+  The rest of `requirements.txt` is still unpinned.
 
-- **Pass 1's body is duplicated across the two runners (open, 2026-09-01):** `run_pass1` exists in
-  full in both `generate_newsletter.py` and `uat/generate_newsletter_uat.py`. That duplication is
-  exactly what let the 32,768 raise reach production without its streaming call. `promote.py`
-  diffs prompts only, and the tests stub the API client, so neither can see this drift. Until the
-  shared parts move to a root module (the standing rule for `plan_audit.py` et al.), **any change
-  to a pass must be applied to both copies in the same commit.**
+- **Runner duplication (MOSTLY RESOLVED 2026-09-01):** 24 byte-identical functions moved to
+  `runner_common.py`, and `uat/tests/test_runner_drift.py` now fails on any undeclared
+  divergence. Duplicated LOC across identical functions went 668 → 0. **Four functions remain
+  duplicated and diverged** — `run_pass1`, `run_pass2`, `pre_edit`, `main` — and are declared in
+  that test's `KNOWN_DIVERGENT` ledger with reasons. `run_pass1` and `run_pass2` are diverged in
+  *both* directions (prod has degraded mode; UAT has the §2.1 video filter and Pass 1B), so
+  neither can be promoted by copying — they need a real merge. Until then, **any change to those
+  four must be applied to both copies in the same commit.**
 
 - **`Archive/` vs `archive/` case collision (open, real):** git's index holds 11 files under
   `Archive/` (old code versions) and 910 under `archive/` (daily CI output). On Windows
@@ -345,6 +372,15 @@ unstaged, which breaks `git pull --rebase`.
   `vince-mcmahon-reaction` turned out to be 5 panels, not 4 — it had been shipping a blank payoff
   frame and reporting success. `meme_box_check.py` now blocks that class of failure in production.
   Re-run the probe after adding any template.
+- **Meme output runs below the floor (open, 2026-09-02):** `MIN_MEME_SEEDS = 3` counts *seeds in
+  the Pass 1 plan*; nothing anywhere floors *rendered* memes. Real output over the 14 logged days
+  was 10 days under 3, median 2 (2026-09-01 shipped 1). Zero Imgflip failures and zero leftover
+  placeholders in that window, so the loss is entirely upstream of rendering — Pass 1 under-seeding
+  or Pass 2 under-emitting, and there is no check that distinguishes them: GIF tiers have
+  `count_planned_tier3`, memes have no equivalent. `story_plan.json` is archived daily as of
+  2026-09-02, so the next few runs will show which. Decide the policy against that data — the
+  "reported, never fabricated" rule for seeds is deliberate and should not be quietly overridden.
+
 - **Cross-section callback rule** — discussed but not yet implemented in pass2_writer.txt
   (callbacks only valid when same person/team/event appears in BOTH sections literally).
 - **Content guardrails not in the pipeline** — the "no heavy politics / no gambling advice /
@@ -447,6 +483,30 @@ for …") omitted.
   a fix from May. It now reports the exception type and message. Same wording fixed in UAT.
 - Re-run 169 on the fix was green end to end: Pass 1 went from a 2-second rejection to 6m32s of
   real generation, 22 tweets, 3 box score images, email sent, draft 213696047 created.
+
+**2026-09-02 — GIF library wired into prod; runner body shared; history double-write fixed**
+- The 09-01 issue shipped 22 tweets, 1 meme and **0 GIFs**. Pass 2 had emitted 7
+  `data-library-category` placeholders; production had no consumer for them, so they shipped as
+  invisible empty divs under a "No GIF placeholders found" log line. Prod now runs the same
+  library-first sequence UAT had, and `strip_orphan_gif_placeholders()` removes and *names* any
+  placeholder no consumer claimed. Replaying the shipped draft renders 7/7. (6c264a6)
+- `runner_common.py`: 24 byte-identical functions lifted out of both runners along with the model
+  constants, `PRICING` and `PASS_COSTS`. Duplicated LOC 668 → 0. `configure(prompts_dir=)` keeps
+  the UAT prompt fork intact and raises rather than letting a second import repoint it.
+  `uat/tests/test_runner_drift.py` fails on any undeclared divergence. Four remain, declared:
+  `run_pass1`, `run_pass2`, `pre_edit`, `main`. (34c9880)
+- Promoted `normalize_plan` from UAT (prod normalized neither `beats[]` nor `gif_tier`) and ported
+  `escape_html` into prod's `embed_gifs_in_html` — drift was not only UAT-ahead-and-harmless.
+- **Every history row was written twice.** Both writers appended new entries to the in-memory
+  `history` for same-run dedup, then saved `new_entries + history`. `gif_history.json` and
+  `meme_history.json` each held 60 rows and 30 distinct entries; the GIF file covered only **6
+  days against a 7-day rotation lookback**, so that rule was silently under-enforced. Fixed by
+  saving against the pre-run snapshot, which keeps same-run dedup working — deleting the insert
+  would have broken it the other way. Both files de-duplicated in place.
+- `story_plan.json` is now written by production and archived daily. It was discarded before, so
+  when 09-01 shipped 1 meme against a floor of 3 there was no way to tell whether Pass 1
+  under-seeded or Pass 2 under-emitted.
+- `anthropic` pinned to `==1.2.0`.
 
 **2026-08-27 → 09-01 — Meme + GIF libraries and deterministic audits reach production**
 - Merged six weeks of UAT-only work into the shipping pipeline: beats, the 30-template meme

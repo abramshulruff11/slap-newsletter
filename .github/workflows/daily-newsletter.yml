@@ -113,6 +113,13 @@ jobs:
           if [ -f recent_output.json ]; then
             cp recent_output.json "$ARCHIVE_DIR/"
           fi
+          # The Pass 1 plan as Pass 2 received it (post §2.4/§2.3). Root copy is
+          # gitignored; THIS archived copy is the record that makes a media
+          # shortfall diagnosable after the fact — see 2026-09-01, when 1 meme
+          # shipped against a floor of 3 and the evidence did not exist.
+          if [ -f story_plan.json ]; then
+            cp story_plan.json "$ARCHIVE_DIR/"
+          fi
           cp box_score/box_score_sport_*.png "$ARCHIVE_DIR/" 2>/dev/null || true
           echo "Archived to $ARCHIVE_DIR"
 

@@ -254,7 +254,13 @@ def process_newsletter(html: str, template_map: dict, username: str, password: s
 
     print(f"[memes] Found {len(placeholders)} meme placeholder(s).")
 
+    # `history` gains this run's entries below so same-run dedup can see
+    # them; `stored_history` is what was on disk. Saving new_entries +
+    # `history` wrote every entry TWICE — 60-row files held 30 real rows,
+    # and gif_history.json covered only 6 days against a 7-day lookback,
+    # so the rotation rule was silently under-enforced. (2026-09-02)
     history = load_meme_history(repo_root) if repo_root else []
+    stored_history = list(history)
     replaced = 0
     failed   = 0
     used_memes = []
@@ -324,7 +330,7 @@ def process_newsletter(html: str, template_map: dict, username: str, password: s
     print(f"[memes] Done. {replaced} meme(s) generated, {failed} failed/skipped.")
 
     if repo_root and used_memes:
-        save_meme_history(repo_root, used_memes, history)
+        save_meme_history(repo_root, used_memes, stored_history)
 
     return str(soup), used_memes
 
