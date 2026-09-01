@@ -283,6 +283,15 @@ unstaged, which breaks `git pull --rebase`.
   beats port on 2026-09-01 — beats plus the meme/gif fields roughly double the plan, and this
   failure mode is silent, so the limit moves in the same commit as anything that enlarges the
   plan. Other passes: 8,192.
+- **Pass 1 MUST stream, and that is a consequence of the 32,768 above.** The Anthropic SDK
+  refuses a *non-streaming* request whose `max_tokens` implies a >10-minute generation — a
+  client-side `ValueError` ("Streaming is required for operations that may take longer than 10
+  minutes") raised by `_calculate_nonstreaming_timeout` when `3600 * max_tokens / 128_000 > 600`.
+  That puts the non-streaming ceiling at **21,333 tokens**. 16,384 was under it; 32,768 is not.
+  So Pass 1 calls `client.messages.stream(...)` + `.get_final_message()`, which returns the same
+  `Message` object (tool_use blocks and `usage` included) that `messages.create()` did. Anything
+  that raises another pass above 21,333 must convert that pass to streaming in the same commit.
+  This is invisible to the tests — they stub the Anthropic client, so the SDK guard never runs.
 
 ---
 
@@ -296,6 +305,19 @@ unstaged, which breaks `git pull --rebase`.
   publish job had already run and skipped. Every "nothing to do" case is a graceful skip, so this
   fails silently. The durable fix is triggering the publish off the draft's existence rather than
   a wall clock.
+
+- **`requirements.txt` pins nothing for `anthropic` (open, 2026-09-01):** the file lists a bare
+  `anthropic`, so every CI run resolves whatever is newest (1.2.0 on 9/1). The Pass 1 outage that
+  day was triggered by an SDK-side *client* guard, not by our code changing behaviour at runtime —
+  the class of break that arrives with no commit and no warning. Pin `anthropic` (and ideally the
+  rest) to a known-good version and bump deliberately.
+
+- **Pass 1's body is duplicated across the two runners (open, 2026-09-01):** `run_pass1` exists in
+  full in both `generate_newsletter.py` and `uat/generate_newsletter_uat.py`. That duplication is
+  exactly what let the 32,768 raise reach production without its streaming call. `promote.py`
+  diffs prompts only, and the tests stub the API client, so neither can see this drift. Until the
+  shared parts move to a root module (the standing rule for `plan_audit.py` et al.), **any change
+  to a pass must be applied to both copies in the same commit.**
 
 - **`Archive/` vs `archive/` case collision (open, real):** git's index holds 11 files under
   `Archive/` (old code versions) and 910 under `archive/` (daily CI output). On Windows
@@ -389,6 +411,12 @@ blocking delivery.
 DST caveat: GitHub cron is UTC and ignores DST. In winter (EST) the two jobs fire at 1:17 AM and
 11:30 AM ET respectively.
 
+**Re-running a failed run does NOT pick up a fix.** GitHub's "Re-run jobs" replays the run at its
+*original* commit, so a run that failed before a fix was pushed fails again identically. To run
+fixed code, use **Run workflow** (`workflow_dispatch`) on `main`. Note a fresh dispatch is a full
+run: it emails again and creates a *second* Substack draft, overwriting `substack_post_state.json`
+and orphaning the earlier draft — delete the orphan, or just let the existing one publish.
+
 If the pipeline fails, check, in rough likelihood order: **Nitter RSS availability** (there is now
 an outage probe that degrades to a headline-only newsletter), the **commit/push** step (daily box
 score filename churn — must use `git add -A box_score/`), the **Playwright Chromium install**,
@@ -401,6 +429,24 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-01 — Pass 1 streams; the first post-merge run had failed outright**
+- The 2026-09-01 scheduled run (168) died in Pass 1 with "Streaming is required for operations
+  that may take longer than 10 minutes" — no newsletter, no email, no Substack draft. Three
+  attempts burned in under a second at zero cost, because that error is a **client-side SDK
+  guard**, not an API call. Pass 1 now streams and keeps `max_tokens=32768`; see the Model & Cost
+  note on the 21,333 non-streaming ceiling. (2b642a7)
+- **The bug was a half-ported change.** UAT had already hit this and already streamed its Pass 1
+  call, with a comment naming the exact error. The 8/27→9/01 merge carried the 16,384 → 32,768
+  raise into production but not the streaming call that made it safe. `promote.py` only diffs
+  *prompts*, so a runner-code divergence was structurally invisible to it — the same class of
+  problem as the "shared logic lives at the repo root" rule, except Pass 1's body is still
+  duplicated between `generate_newsletter.py` and `uat/generate_newsletter_uat.py`.
+- Pass 1's handler caught every exception and reported it as "API error (likely malformed JSON in
+  tool input)", so a `ValueError` about streaming was labelled a JSON-escaping bug and pointed at
+  a fix from May. It now reports the exception type and message. Same wording fixed in UAT.
+- Re-run 169 on the fix was green end to end: Pass 1 went from a 2-second rejection to 6m32s of
+  real generation, 22 tweets, 3 box score images, email sent, draft 213696047 created.
 
 **2026-08-27 → 09-01 — Meme + GIF libraries and deterministic audits reach production**
 - Merged six weeks of UAT-only work into the shipping pipeline: beats, the 30-template meme
