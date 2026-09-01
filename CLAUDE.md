@@ -81,6 +81,8 @@ slap-newsletter/
 ├── highlights.py              ← injects MLB/NHL/World Cup highlight video embeds
 ├── build_email_html.py        ← builds the email HTML body
 ├── generate_memes.py          ← Imgflip meme generation
+├── runner_common.py            ← runner body shared by prod + UAT: 24 functions, models,
+│                                 PRICING, PASS_COSTS. configure(prompts_dir=) per runner
 ├── plan_audit.py               ← deterministic audits, SHARED by prod + UAT (see below)
 ├── meme_library.py             ← meme library access layer, shared
 ├── meme_box_check.py           ← box-count guard: blocks memes that would render blank panels
@@ -115,6 +117,7 @@ slap-newsletter/
 │   ├── promote.py             ← diff-and-confirm prompt promotion (USE THIS, never copy by hand)
 │   ├── probe_meme_box_order.py ← renders marker captions to verify meme panel order
 │   ├── tests/                 ← offline suites, 0 API calls — run before any prompt/code change
+│   │   └── test_runner_drift.py ← fails if a change reaches one runner and not the other
 │   ├── fixtures/              ← frozen inputs — the control. Deliberately NOT gitignored
 │   └── prompts/               ← a FORK of prompts/. Promotion to prod is manual
 ├── prompts/                   ← all production prompt files (versioned in git)
@@ -208,12 +211,30 @@ refuses any copy that would delete content from the destination, and refuses a p
 `{{PLACEHOLDER}}` the destination runner cannot substitute. No flags = read-only status.
 
 **Shared logic lives at the repo root, imported by both runners — never copied.** `plan_audit.py`,
-`meme_library.py`, `meme_box_check.py`, `gif_library_select.py` and `gif_url_cache.py` each have
-exactly one copy. Duplicating any of them into `generate_newsletter.py` recreates the drift
-problem somewhere `promote.py` cannot see it, because it only diffs prompts.
+`meme_library.py`, `meme_box_check.py`, `gif_library_select.py`, `gif_url_cache.py` and
+`runner_common.py` each have exactly one copy. Duplicating any of them into
+`generate_newsletter.py` recreates the drift problem somewhere `promote.py` cannot see it,
+because it only diffs prompts.
+
+**`runner_common.py` holds the runner body itself.** 24 functions were byte-identical copies in
+both runners until 2026-09-01, when two separate half-ports shipped on the same day (Pass 1's
+`max_tokens` raise without its streaming call; the GIF library prompts without their consumer).
+It also owns `MODEL_DEFAULT`, `MODEL_WRITER`, `PRICING` and the `PASS_COSTS` accumulator.
+
+Per-runner config is **injected, never assumed**: each runner calls
+`runner_common.configure(prompts_dir=...)` at import, because `PROMPTS_DIR` genuinely differs —
+prod reads `prompts/`, UAT reads `uat/prompts/`, and that fork is the whole point of the sandbox.
+`configure()` raises on a conflicting reconfigure and `load_prompt()` raises if it was never
+called, so a UAT run can never silently read production's prompts.
+
+**Any function still defined in BOTH runners must be identical.** `uat/tests/test_runner_drift.py`
+enforces it against a declared ledger (`KNOWN_DIVERGENT`) that currently holds four entries:
+`run_pass1`, `run_pass2`, `pre_edit` and `main`. New drift fails the test; a pair that converges
+must be deleted from the ledger, so it can never over-state the debt.
 
 **Tests are offline and free.** `uat/tests/` makes zero API calls: `test_account_audit.py` locks
-the deterministic audits, `test_meme_wiring_dryrun.py` the UAT meme wiring, and
+the deterministic audits, `test_runner_drift.py` locks prod-vs-UAT runner divergence,
+`test_meme_wiring_dryrun.py` the UAT meme wiring, and
 `test_prod_wiring_dryrun.py` exercises the real production path with the Anthropic client
 stubbed. Run all three before changing a prompt or a pass.
 
@@ -272,8 +293,9 @@ unstaged, which breaks `git pull --rebase`.
 - **Pass 2 (Writer): `claude-opus-4-7`** — the prose quality lift is the product. A/B trial began
   2026-06-01 and stuck.
 - **Passes 1, 4, 6: `claude-sonnet-4-5`** — sufficient for selection and transformation.
-- Constants are `MODEL_WRITER` and `MODEL_DEFAULT` in `generate_newsletter.py`.
-- Prompt caching enabled on all passes. `PRICING` in `generate_newsletter.py` is the single source
+- Constants are `MODEL_WRITER` and `MODEL_DEFAULT` in **`runner_common.py`** (moved there
+  2026-09-01 with the shared runner body; both runners re-export them).
+- Prompt caching enabled on all passes. `PRICING` in `runner_common.py` is the single source
   of truth for the cost breakdown that lands atop the daily email (`cost_summary.json`).
 - Estimated cost: ~$2-5/month.
 - Note on Opus 4.7: it follows instructions more literally than Sonnet, and its tokenizer can use
@@ -312,12 +334,14 @@ unstaged, which breaks `git pull --rebase`.
   the class of break that arrives with no commit and no warning. Pin `anthropic` (and ideally the
   rest) to a known-good version and bump deliberately.
 
-- **Pass 1's body is duplicated across the two runners (open, 2026-09-01):** `run_pass1` exists in
-  full in both `generate_newsletter.py` and `uat/generate_newsletter_uat.py`. That duplication is
-  exactly what let the 32,768 raise reach production without its streaming call. `promote.py`
-  diffs prompts only, and the tests stub the API client, so neither can see this drift. Until the
-  shared parts move to a root module (the standing rule for `plan_audit.py` et al.), **any change
-  to a pass must be applied to both copies in the same commit.**
+- **Runner duplication (MOSTLY RESOLVED 2026-09-01):** 24 byte-identical functions moved to
+  `runner_common.py`, and `uat/tests/test_runner_drift.py` now fails on any undeclared
+  divergence. Duplicated LOC across identical functions went 668 → 0. **Four functions remain
+  duplicated and diverged** — `run_pass1`, `run_pass2`, `pre_edit`, `main` — and are declared in
+  that test's `KNOWN_DIVERGENT` ledger with reasons. `run_pass1` and `run_pass2` are diverged in
+  *both* directions (prod has degraded mode; UAT has the §2.1 video filter and Pass 1B), so
+  neither can be promoted by copying — they need a real merge. Until then, **any change to those
+  four must be applied to both copies in the same commit.**
 
 - **`Archive/` vs `archive/` case collision (open, real):** git's index holds 11 files under
   `Archive/` (old code versions) and 910 under `archive/` (daily CI output). On Windows
