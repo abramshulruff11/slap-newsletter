@@ -41,10 +41,13 @@ generate_newsletter.py (orchestrates all passes via Claude API; injects game_sta
         ↓
 Pass 1: Story Selector    → selects stories, emits beat skeletons, assigns tweets,
                             seeds GIF/meme concepts (tool_use: submit_story_plan)
+        §2.3/§2.4       → plan_audit.py trims to the tweet budget and checks the
+                            GIF/meme seed floor BEFORE the writer sees the plan
 Pass 2: Writer            → writes HTML draft in SLAP voice, locked to Pass 1 beats
 Pass 3: Claim Validator   → claim_validator.py, deterministic cross-check vs game_state.json
 Pass 4: Voice Editor      → rewrites sportswriter-sounding <p> tags only
-Pass 5: Pre-Edit          → deterministic Python auditor (tweet URL integrity, section mapping)
+Pass 5: Pre-Edit          → deterministic Python auditor (tweet URLs, section mapping,
+                            account caps, §2.2 redundancy — see plan_audit.py)
 Pass 6: Editor            → mechanical checklist (flags + auto-fixes)
         ↓ highlights.py injects MLB/NHL/World Cup highlight embeds
         ↓ adds "<h2>Box Scores</h2>" after Around the League
@@ -78,6 +81,11 @@ slap-newsletter/
 ├── highlights.py              ← injects MLB/NHL/World Cup highlight video embeds
 ├── build_email_html.py        ← builds the email HTML body
 ├── generate_memes.py          ← Imgflip meme generation
+├── plan_audit.py               ← deterministic audits, SHARED by prod + UAT (see below)
+├── meme_library.py             ← meme library access layer, shared
+├── meme_box_check.py           ← box-count guard: blocks memes that would render blank panels
+├── gif_library_select.py       ← tiered GIF selection from the curated library, shared
+├── gif_url_cache.py            ← GIF URL cache (gif_url_cache.json, gitignored)
 ├── email_newsletter.py        ← email delivery: HTML body + box scores inline (cid + size guard)
 ├── raw_content.json           ← daily input: headlines + tweets
 ├── game_state.json            ← daily ESPN ground truth (GITIGNORED build artifact)
@@ -104,6 +112,9 @@ slap-newsletter/
 ├── uat/                       ← UAT sandbox: own runner, frozen fixtures, own prompt copies
 │   ├── run_uat.py             ← the UAT entry point
 │   ├── generate_newsletter_uat.py
+│   ├── promote.py             ← diff-and-confirm prompt promotion (USE THIS, never copy by hand)
+│   ├── probe_meme_box_order.py ← renders marker captions to verify meme panel order
+│   ├── tests/                 ← offline suites, 0 API calls — run before any prompt/code change
 │   ├── fixtures/              ← frozen inputs — the control. Deliberately NOT gitignored
 │   └── prompts/               ← a FORK of prompts/. Promotion to prod is manual
 ├── prompts/                   ← all production prompt files (versioned in git)
@@ -154,9 +165,15 @@ match exactly. When adding a new banned phrase, update BOTH files simultaneously
 **Pass 1 uses tool_use:** Story selector outputs via `submit_story_plan` tool, not raw JSON.
 This was changed 5/12/2026 to fix GitHub Actions JSON escape failures from quote-heavy tweets.
 
-**Pass 1 emits beats; Pass 2 is locked to them:** since the 8/21 UAT merge, Pass 1 produces a
-beat skeleton per story and Pass 2 writes against it rather than free-forming. The lock closes
-the "borrowed tweet" loophole where Pass 2 could pull a tweet assigned to another section.
+**Pass 1 emits beats; Pass 2 is locked to them:** Pass 1 produces a beat skeleton per story
+(`{angle, landing, media}`) and Pass 2 writes against it rather than free-forming. The lock
+closes the "borrowed tweet" loophole where Pass 2 could pull a tweet assigned to another section.
+If a beat's `media[]` is empty, Pass 2's only options are a GIF, a meme, or prose — it may not go
+find a tweet elsewhere. That empty-beat rule is the mechanism the tweet budget leans on.
+
+This landed in **production on 2026-09-01**, not 8/21. An earlier version of this file said the
+8/21 UAT merge put beats in prod; that was wrong and it misled work for over a week.
+`generate_newsletter.py` had zero references to `beats` until the 2026-09-01 merge.
 
 **Rolling feedback owns hard rules:** `rolling_feedback.txt` overrides `pass2_writer.txt` when
 in conflict. It captures real failure patterns from published issues. Max 3 rules added per
@@ -164,7 +181,14 @@ session. Rules are numbered (note: Rule 3 is missing — intentional gap from a 
 
 **pre_edit() is deterministic Python:** Runs between Pass 4 (Voice) and Pass 6 (Editor) as
 Pass 5. Splits HTML by h1/h2, maps sections to story plan by position, flags misassigned tweet
-URLs as EDITOR FLAG comments. Not a Claude call — pure Python auditing.
+URLs, over-cap accounts, and tweets that restate their own section's prose. Not a Claude call.
+
+**Rules the model is asked to follow must be checked in Python, not self-reported.** On
+2026-08-27 Pass 1 reported its own account-cap violation *accurately* and shipped anyway, because
+nothing acted on the number; the §2.2 "filter" was only ever printing a count the model wrote
+about itself; and editor CHECK 3 missed `@TomPelissero` (4x) and `@ESPN` (3x) while flagging an
+account that appeared once. All three are arithmetic now in `plan_audit.py`. When adding a rule,
+decide where it is *enforced* — a prompt line with no check is not a rule.
 
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
@@ -177,8 +201,21 @@ rule updates, or audit recent newsletters, read `feedback_log.md` first. The fil
 review ritual (instructions for Claude) and the active log of unresolved observations. Do not
 edit `rolling_feedback.txt` directly during review — propose changes for the user to integrate.
 
-**UAT before prod:** `uat/` has its own prompt copies. Changes are tested there and promoted by
-hand. When editing prompts, be explicit about whether you're touching the UAT fork or production.
+**UAT before prod:** `uat/` has its own prompt copies. Changes are tested there, then promoted
+with `python -X utf8 uat/promote.py` — never by hand-copying, which is how the two trees drifted
+for months. It classifies each pair (identical / eol-only / uat-ahead / prod-ahead / diverged),
+refuses any copy that would delete content from the destination, and refuses a prompt whose
+`{{PLACEHOLDER}}` the destination runner cannot substitute. No flags = read-only status.
+
+**Shared logic lives at the repo root, imported by both runners — never copied.** `plan_audit.py`,
+`meme_library.py`, `meme_box_check.py`, `gif_library_select.py` and `gif_url_cache.py` each have
+exactly one copy. Duplicating any of them into `generate_newsletter.py` recreates the drift
+problem somewhere `promote.py` cannot see it, because it only diffs prompts.
+
+**Tests are offline and free.** `uat/tests/` makes zero API calls: `test_account_audit.py` locks
+the deterministic audits, `test_meme_wiring_dryrun.py` the UAT meme wiring, and
+`test_prod_wiring_dryrun.py` exercises the real production path with the Anthropic client
+stubbed. Run all three before changing a prompt or a pass.
 
 ---
 
@@ -241,12 +278,24 @@ unstaged, which breaks `git pull --rebase`.
 - Estimated cost: ~$2-5/month.
 - Note on Opus 4.7: it follows instructions more literally than Sonnet, and its tokenizer can use
   1.0–1.35× more tokens for the same input. Budget for both when reading the cost summary.
-- Pass 1 `max_tokens`: 16,384 (raised 4,096 → 8,192 → 16,384; silent truncation caused ATL
-  regression and truncated story plans on full slates). Other passes: 8,192.
+- Pass 1 `max_tokens`: **32,768** (raised 4,096 → 8,192 → 16,384 → 32,768; silent truncation
+  caused an ATL regression and truncated story plans on full slates). Raised to 32,768 with the
+  beats port on 2026-09-01 — beats plus the meme/gif fields roughly double the plan, and this
+  failure mode is silent, so the limit moves in the same commit as anything that enlarges the
+  plan. Other passes: 8,192.
 
 ---
 
 ## Known Issues / TODO
+
+- **Scheduled runs are landing 6-13 hours late (open, 2026-09-01):** the cron is `17 6 * * *` UTC
+  but recent runs committed at 12:08, 12:52, 14:11 and 19:00 UTC — delays of +5h51m to +12h43m.
+  The 2:17 AM slot was chosen to buy buffer before the morning review; that buffer is gone, and
+  the newsletter now lands between roughly 8 AM and 3 PM ET. Worse, `publish-substack.yml` fires
+  at a fixed 16:30 UTC: on 2026-08-28 the draft handoff committed at 19:01 UTC, **after** the
+  publish job had already run and skipped. Every "nothing to do" case is a graceful skip, so this
+  fails silently. The durable fix is triggering the publish off the draft's existence rather than
+  a wall clock.
 
 - **`Archive/` vs `archive/` case collision (open, real):** git's index holds 11 files under
   `Archive/` (old code versions) and 910 under `archive/` (daily CI output). On Windows
@@ -260,20 +309,20 @@ unstaged, which breaks `git pull --rebase`.
   ground-truth block (`format_game_state_summary` returns "" on empty) and box scores thin out,
   with no alarm. A date check is useless; the real fix is a **content-presence guard** (fail CI if
   the payload has no games/standings) plus logging `as_of_date` + per-sport counts in CI.
-- **UAT prompt drift (open):** `uat/prompts/` is a fork of `prompts/` and promotion is manual.
-  As of 8/23 four files are ahead in UAT (`pass2_writer` +126/-40, `pass1_story_selector` +95/-13,
-  `editor_prompt` +16, `rolling_feedback` +10); the other four are identical. Things slip — prod's
-  `pass2_writer.txt` has the 8/23 meta-narration bans while prod's `rolling_feedback.txt` is still
-  missing the entry explaining why. A `uat/promote.py` that diffs and copies on confirm would fix
-  this class of bug.
-- **No `.gitattributes` (open):** CRLF/LF differences make files look changed when they're
-  content-identical (`voice_examples.txt` diffs as different but is byte-equal ignoring line
-  endings). This masks real drift. `* text=auto` would settle it.
-- **`requirements.txt` drift (open):** `python-substack==0.1.22` and `curl_cffi` are installed
-  inline by both workflows but are not in `requirements.txt`, so a local `publish.py` run fails
-  until you install them by hand.
-- **Imgflip 'expanding-brain' 4-panel meme** — historically flaky; verify after the 5/23 `boxes[]`
-  multi-panel pipeline change.
+- **UAT prompt drift (RESOLVED 2026-09-01):** `uat/promote.py` now diffs and copies on confirm,
+  and all nine pairs are identical or deliberately one-sided (`editor_prompt` is UAT-ahead by the
+  highlight-placeholder rules prod has no Pass 1B for; `pass1b_highlight_selector.txt` is UAT-only).
+  Run `uat/promote.py` after any prompt change to keep it that way.
+- **No `.gitattributes` (RESOLVED 2026-09-01):** `* text=auto` added. `promote.py` also reports
+  line-ending-only differences as `eol-only` rather than as drift.
+- **`requirements.txt` drift (RESOLVED 2026-09-01):** `python-substack==0.1.22` and `curl_cffi`
+  are now listed.
+- **Meme panel counts and order (RESOLVED 2026-09-01):** every template's `box_count` was checked
+  against Imgflip's live `get_memes` API (9 corrected), then panel ORDER was verified by rendering
+  each flagged template with marker captions (`uat/probe_meme_box_order.py`), correcting 7 more.
+  `vince-mcmahon-reaction` turned out to be 5 panels, not 4 — it had been shipping a blank payoff
+  frame and reporting success. `meme_box_check.py` now blocks that class of failure in production.
+  Re-run the probe after adding any template.
 - **Cross-section callback rule** — discussed but not yet implemented in pass2_writer.txt
   (callbacks only valid when same person/team/event appears in BOTH sections literally).
 - **Content guardrails not in the pipeline** — the "no heavy politics / no gambling advice /
@@ -352,6 +401,28 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-08-27 → 09-01 — Meme + GIF libraries and deterministic audits reach production**
+- Merged six weeks of UAT-only work into the shipping pipeline: beats, the 30-template meme
+  library, the tiered GIF library, and the audits. Production had none of it — the note in this
+  file claiming beats merged on 8/21 was wrong. (623d659)
+- Replaced self-graded rules with arithmetic in `plan_audit.py`, shared by both runners. Account
+  caps, §2.2 redundancy and the tweet count had all been things the model was asked to follow and
+  then asked to report on; on 8/27 it reported a cap violation accurately and shipped anyway.
+  (08c902c, 4ddbd8c, aee3950)
+- Tweet budget: 35 → 24 on real data, pruning `beats[].media` in lockstep. Two bugs the
+  before/after caught: a per-issue insider cap emptied a whole story, and dropping an account's
+  first tweet made its second look over-cap. (4ddbd8c)
+- Media seed floor of 3 GIFs + 3 memes; media target 50% → 40%. GIF shortfalls backfill from the
+  beat's own `landing`; meme shortfalls are reported, never fabricated. (7958fbf)
+- Verified every meme box count against Imgflip, then every panel ORDER by render. 16 templates
+  corrected in total, including `vince-mcmahon-reaction` (5 panels, not 4 — was shipping a blank
+  payoff frame) and `distracted-boyfriend` (subject is box 1; boxes 0 and 2 were reversed).
+  `meme_box_check.py` ported to prod so a short caption set can no longer report success.
+  (5aa1fdf, 965b6b7)
+- `uat/promote.py` replaces hand-copying prompts, refusing destructive copies and prompts whose
+  placeholders the destination cannot substitute. (c473580)
+- Pass 1 `max_tokens` 16,384 → 32,768 alongside beats. (0e093f2)
 
 **2026-08-21 → 08-23 — Fetch hardening + AI-speak bans**
 - Nitter outage probe: detects a full outage and degrades to a headline-only newsletter instead of

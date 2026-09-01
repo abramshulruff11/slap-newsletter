@@ -7,7 +7,7 @@
    A named subject faces an obviously correct option and visibly goes with the worse, pettier, or stranger one.
    TEST: The choice is ALREADY MADE and public. We are reacting to it, not predicting it.
    - drake (2 boxes, subject: copy) -- Subject already chose the petty option over the obvious one. Needs a named subject in the copy.
-   - distracted-boyfriend (3 boxes, subject: box:2) -- Subject publicly moves on from an incumbent toward a new option. Subject goes IN box 2.
+   - distracted-boyfriend (3 boxes, subject: box:1) -- Subject abandons the sensible established thing for a flashier new one. Box 0 = the new temptation, box 1 = the SUBJECT, box 2 = what got dropped.
    - left-exit-12-off-ramp (3 boxes, subject: box:2) -- Abrupt last-second swerve off an established plan. Use over drake when suddenness is the story.
 
 ## self_inflicted_realization
@@ -59,7 +59,7 @@
    Two things presented or behaving as distinct turn out to be functionally identical.
    TEST: Could you swap the two and have nothing meaningfully change?
    - corporates-want-you-to-find-the-difference (3 boxes, subject: box:2) -- Two things sold as different that are functionally identical. The observer goes IN box 2; the verdict line is pre-printed.
-   - spider-man-pointing-at-spider-man (2 boxes, subject: copy) -- Two mirror-image parties accusing each other of the same thing.
+   - spider-man-pointing-at-spider-man (2 boxes, subject: copy) -- Two mirror-image parties accusing each other of the same thing. 2 boxes, top and bottom; name both parties explicitly.
 
 ## hardened_vs_soft
    A lopsided contrast between a hardened, battle-worn party and a soft, shocked, or diminished one.

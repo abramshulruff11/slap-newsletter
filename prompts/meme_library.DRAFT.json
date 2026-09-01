@@ -8,7 +8,7 @@
     "engine_axis": "'engine' is the shared comedic mechanism -- templates in one engine share comedic_engine, valence_rule, key_test and failure_mode (defined once under _meta.engines). 'pattern_type' is the separate structural axis: how captions map onto physical panels. Two templates can share an engine but differ in pattern_type (drake vs distracted-boyfriend) or vice versa. The taxonomy is open -- add a new engine rather than force a bad fit.",
     "examples_are_illustrative": "worked_example and anti_example captions demonstrate SHAPE ONLY. They are NOT factual claims and must never be reused as source material. Real captions must be built from game_state.json ground truth.",
     "box_count_convention": "box_count is the template's TRUE physical caption count, taken from Imgflip's live get_memes API on 2026-08-27 (authoritative). Entries carrying box_count_source were corrected against it. Boxes flagged role_unverified have a correct COUNT but an inferred panel ORDER -- a single real render settles each.",
-    "open_questions_for_review": "Panel ORDER verified by render 2026-08-27 for 11 of 12 flagged templates. Confirmed as inferred: left-exit-12-off-ramp, is-this-a-pigeon, buff-doge-vs-cheems, first-time, ight-imma-head-out. CORRECTED: eric-andre-shooting (subject box:2->box:0), trade-offer (subject box:0->box:2), epic-handshake (clasp is box 0, not box 2), surprised-pikachu (3 stacked caption lines, face uncaptioned), corporates-want-you-to-find-the-difference (box 2 is the observer; the verdict line is pre-printed), vince-mcmahon-reaction (box_count 4 -> 5; the old 4 shipped a blank payoff panel). STILL OPEN: spider-man-pointing-at-spider-man -- probe inconclusive, see its box_order_caveat.",
+    "open_questions_for_review": "Panel ORDER verified by render 2026-08-27 for 11 of 12 flagged templates. Confirmed as inferred: left-exit-12-off-ramp, is-this-a-pigeon, buff-doge-vs-cheems, first-time, ight-imma-head-out. CORRECTED: eric-andre-shooting (subject box:2->box:0), trade-offer (subject box:0->box:2), epic-handshake (clasp is box 0, not box 2), surprised-pikachu (3 stacked caption lines, face uncaptioned), corporates-want-you-to-find-the-difference (box 2 is the observer; the verdict line is pre-printed), vince-mcmahon-reaction (box_count 4 -> 5; the old 4 shipped a blank payoff panel). spider-man-pointing-at-spider-man resolved 2026-09-01: exactly 2 boxes (top/bottom, centre-aligned, not on the figures). The earlier probes looked incoherent because Imgflip renders only the first and last of an over-long box list. No panel-order questions remain open. On 2026-09-01 the last three caveats were settled by render: two-buttons confirmed as written (subject box:2); distracted-boyfriend CORRECTED -- subject is box 1, not box 2, and boxes 0/2 were reversed (0 is the new temptation, 2 the established thing); spider-man-pointing-at-spider-man confirmed at 2 boxes. No panel-order questions remain.",
     "engines": {
       "subject_abandons_sensible_for_funky": {
         "summary": "A named subject faces an obviously correct option and visibly goes with the worse, pettier, or stranger one.",
@@ -257,8 +257,8 @@
       "subject": {
         "required": true,
         "who": "The person or team making the decision -- the middle figure, the one moving on.",
-        "placement": "box:2",
-        "rule": "MUST be captioned in box 2 -- the middle figure. Do not leave it blank; without the subject label the meme has no protagonist.",
+        "placement": "box:1",
+        "rule": "MUST be captioned in box 1 -- the middle figure. Verified by render 2026-09-01: box 0 is the woman in RED (the new temptation) and box 2 is the girlfriend (the established thing), which is the reverse of what this entry previously claimed.",
         "note": "Unlike drake, the subject IS captioned here: the guy in the middle is the person/team making the decision."
       },
       "comedic_engine": "The subject is visibly turning away, in public, from the thing they were committed to -- and everyone can see them doing it.",
@@ -266,18 +266,18 @@
       "boxes": [
         {
           "index": 0,
-          "purpose": "the established thing being neglected -- prior commitment, incumbent, or plan",
-          "valence": "was the safe/expected choice"
+          "purpose": "the NEW thing catching the subject's eye -- the woman in red, who the boyfriend has turned to look at",
+          "valence": "the tempting alternative, usually the worse idea"
         },
         {
           "index": 1,
-          "purpose": "the new thing catching the subject's eye",
-          "valence": "notable -- either worse, or simply surprising they are moving on"
+          "purpose": "the SUBJECT -- the boyfriend in the middle, the person or team caught in the act of being tempted",
+          "valence": "neutral -- a label for who this is about"
         },
         {
           "index": 2,
-          "purpose": "the subject -- the middle figure, the person or team making the decision",
-          "valence": "neutral -- a label, not a judgment"
+          "purpose": "the ESTABLISHED thing being neglected -- the girlfriend on the right, the prior commitment, incumbent, or sensible plan",
+          "valence": "the thing that deserved loyalty"
         }
       ],
       "use_when": "A team or figure publicly moves on from an incumbent or prior commitment toward a new option, and the pivot itself is the story.",
@@ -300,7 +300,7 @@
         "why_it_fails": "No subject, nobody doing the looking, and only 2 of 3 boxes filled. An abstract trend comparison, not a person visibly moving on."
       },
       "special_handling": null,
-      "selector_line": "Subject publicly moves on from an incumbent toward a new option. Subject goes IN box 2.",
+      "selector_line": "Subject abandons the sensible established thing for a flashier new one. Box 0 = the new temptation, box 1 = the SUBJECT, box 2 = what got dropped.",
       "tags": [
         "comparison",
         "abandonment",
@@ -310,7 +310,7 @@
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram.",
       "box_count_confirmed": "CONFIRMED 3 boxes by review (2026-08-26): the middle figure (the boyfriend) is the subject making the decision. NO code change is needed -- _expand_boxes() passes this slug through untouched and generate_meme() sends however many captions it receives. The live bug is in prompts/meme_reference.txt, which lists distracted-boyfriend under '2 panels', so the writer only ever supplies 2 and the middle/subject panel renders empty. Fix = move it to a 3-panel row there.",
-      "box_order_caveat": "Box INDEX to physical position is not yet verified against a real Imgflip render. This entry assumes 0=left/abandoned, 1=right/new, 2=middle/subject. If a first render puts captions on the wrong figures, permute the indices here -- the roles are right even if the order needs swapping."
+      "box_order_source": "verified_by_render_2026-09-01"
     },
     {
       "slug": "left-exit-12-off-ramp",
@@ -442,7 +442,7 @@
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram.",
       "box_count_confirmed": "CORRECTED 2026-08-26 from 3 to reflect the live pipeline: a UAT run's meme-check reported 'two-buttons 3/3 boxes ok', so the template renders THREE caption boxes. Like distracted-boyfriend, the third is the SUBJECT -- the sweating figure agonizing over the two buttons. v1 said 2, which would have left the subject panel empty.",
-      "box_order_caveat": "Box INDEX to physical position unverified against a real render. This entry assumes 0=first button, 1=second button, 2=the sweating figure. Roles are right even if the indices need permuting."
+      "box_order_source": "verified_by_render_2026-09-01"
     },
     {
       "slug": "corporates-want-you-to-find-the-difference",
@@ -1693,12 +1693,12 @@
       "boxes": [
         {
           "index": 0,
-          "purpose": "the first party casting blame",
-          "valence": "accusing -- and guilty of it"
+          "purpose": "TOP caption -- names the first party casting blame. Centre-aligned text across the top of the image, NOT attached to either figure.",
+          "valence": "accusing -- and guilty of the same thing"
         },
         {
           "index": 1,
-          "purpose": "the mirror-image second party casting the identical accusation back",
+          "purpose": "BOTTOM caption -- names the mirror-image second party throwing the identical accusation back. Also centre-aligned, not on a figure.",
           "valence": "accusing -- equally guilty"
         }
       ],
@@ -1719,8 +1719,8 @@
         ],
         "why_it_fails": "Not a mirror at all. The whole point is that the two are indistinguishable."
       },
-      "special_handling": null,
-      "selector_line": "Two mirror-image parties accusing each other of the same thing.",
+      "special_handling": "EXACTLY 2 caption boxes: top and bottom, both centre-aligned over the whole image. Neither caption sits on a Spider-Man, so each one must NAME its party outright -- 'THE OWNERS' / 'THE PLAYERS', not 'us' / 'them'. Send exactly 2 boxes: verified by render 2026-09-01, Imgflip renders only the FIRST and LAST of a longer list and silently discards everything between, which is what made the 2026-08-27 probes look incoherent.",
+      "selector_line": "Two mirror-image parties accusing each other of the same thing. 2 boxes, top and bottom; name both parties explicitly.",
       "tags": [
         "mutual-accusation",
         "sameness",
@@ -1728,8 +1728,8 @@
         "blame",
         "mirror"
       ],
-      "note": "AI-authored box semantics, not yet reviewed by Abram.",
-      "box_order_caveat": "INCONCLUSIVE: a 4-marker probe on 2026-08-27 rendered only BOX 0 and BOX 3, overlapping centrally. Neither the count nor the order is settled. Re-probe with exactly 2 and then 3 markers before use."
+      "note": "Box count and order verified by render 2026-09-01. Comedic semantics remain AI-authored and unreviewed.",
+      "box_order_source": "verified_by_render_2026-09-01"
     },
     {
       "slug": "eric-andre-shooting",

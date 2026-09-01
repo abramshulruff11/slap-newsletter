@@ -42,10 +42,12 @@ table under-counted 14 templates and was the cause of blank-panel memes.
 - **two-buttons takes THREE captions, not two.** Panel 1 and 2 are the two conflicting
   buttons; panel 3 is the SUBJECT — the sweating figure who has to choose. Leaving panel 3
   off means nobody is shown agonizing and the dilemma reads as an abstract pair of options.
-- **distracted-boyfriend takes THREE captions, not two.** Panel 1 = the established thing being
-  left behind, panel 2 = the new thing catching their eye, panel 3 = the SUBJECT (the figure in
-  the middle — the person or team making the decision). Leaving panel 3 off strands the joke:
-  without a named subject it reads as an abstract comparison instead of someone caught in the act.
+- **distracted-boyfriend takes THREE captions, not two, and the order is not what you'd guess.**
+  Verified by render 2026-09-01: panel 1 = the NEW thing catching their eye (the woman in red),
+  panel 2 = the SUBJECT (the boyfriend in the middle — the person or team making the decision),
+  panel 3 = the ESTABLISHED thing being left behind (the girlfriend). Leaving panel 2 off strands
+  the joke: without a named subject it reads as an abstract comparison instead of someone caught
+  in the act.
 - data-template must be one of the slugs listed in the template library below
 - Keep text short — 5-10 words max per panel
 - ALL CAPS is standard for meme text (applied automatically by the pipeline)

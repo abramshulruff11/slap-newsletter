@@ -114,7 +114,12 @@ print(f"  ✓ templates specced: {rendered}")
 assert rendered == ["distracted-boyfriend","epic-handshake"], rendered
 assert "### drake" not in um, "unchosen template leaked into Pass 2"
 print("  ✓ unchosen templates absent (no ### drake section)")
-assert "SUBJECT RULE (box:2)" in um and "SUBJECT RULE (copy)" in um
+# distracted-boyfriend carries its subject in a BOX, epic-handshake in the
+# COPY, so this covers both placement shapes. box:1 (not box:2) because the
+# 2026-09-01 render probe showed the middle figure is index 1 — boxes 0 and 2
+# are the new temptation and the thing being left behind, the reverse of what
+# the library originally claimed.
+assert "SUBJECT RULE (box:1)" in um and "SUBJECT RULE (copy)" in um
 assert um.count("VALENCE RULE") == 2
 print("  ✓ subject + valence rules surfaced for both")
 
