@@ -186,6 +186,12 @@ If the commentary states it, cut the tweet.
 Count every tweet you reject under this rule and report the total in
 filter_stats.update_tweets_rejected when you call submit_story_plan.
 
+PREFER GIF TWEETS OVER VIDEO TWEETS:
+When two tweets cover the same beat, assign the one containing a GIF over the
+one containing a video. GIFs autoplay inline in Substack; videos require a
+click. If only a video tweet exists for a beat, still include it — this rule
+only fires when there is a choice.
+
 TWEETS MUST OVERLAP THE STORY THEY SIT UNDER:
 Every tweet you assign to a story section must reference the same team, player,
 game, or event as that story. A tweet that shares none of those entities does

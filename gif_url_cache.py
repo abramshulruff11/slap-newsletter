@@ -31,8 +31,10 @@ import json
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
-UAT_DIR = Path(__file__).resolve().parent
-CACHE_PATH = UAT_DIR / "output" / "gif_url_cache.json"
+# Moved from uat/ to the repo root. The cache is a build artifact, not
+# source, so it sits beside the other daily json at the root.
+REPO_ROOT = Path(__file__).resolve().parent
+CACHE_PATH = REPO_ROOT / "gif_url_cache.json"
 
 TTL_DAYS = 14
 

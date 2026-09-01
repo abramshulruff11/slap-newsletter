@@ -37,26 +37,40 @@ with prose, a GIF, or a meme instead.
   ],
   "lead_story": {
     "headline": "Short working title",
-    "depth": "deep",
     "tweets": [
       {"url": "url1", "account": "handle"},
       {"url": "url2", "account": "handle"}
     ],
     "research_notes": "Key stats, historical parallels, meme angles, cross-sport connections the writer must explore. Be specific — these notes are the writer's raw material.",
-    "gif_concept": "One specific GIF reaction idea tied to this story's main emotional beat — a seed for the writer. See MEDIA SEEDING below.",
-    "meme_concept": "One meme/comparison idea, OR empty string if a GIF fits better. See MEDIA SEEDING below."
+    "gif_concept": "One GIF reaction idea tied to this story's main emotional beat — a seed for the writer. See MEDIA SEEDING below.",
+    "gif_tier": "1 or 3. See MEDIA SEEDING. 1 = generic beat (library). 3 = a specific named person/clip IS the joke (live search).",
+    "meme_concept": "One meme/comparison idea, OR empty string if a GIF fits better. See MEDIA SEEDING below.",
+    "beats": [
+      {
+        "angle": "The specific sub-angle THIS beat covers — one clause, not the story headline restated",
+        "landing": "What the reader feels or knows by the end of this beat — the payoff you're aiming the writer at",
+        "media": [{"url": "url1", "account": "handle"}]
+      }
+    ]
   },
   "supporting_stories": [
     {
       "headline": "Short working title",
-      "depth": "medium",
       "tweets": [
         {"url": "url1", "account": "handle"},
         {"url": "url2", "account": "handle"}
       ],
       "research_notes": "Hook, key angle, any specific stats or context to include.",
-      "gif_concept": "One specific GIF reaction idea for this story, OR empty string if none fits. See MEDIA SEEDING below.",
-      "meme_concept": "One meme/comparison idea for this story, OR empty string. See MEDIA SEEDING below."
+      "gif_concept": "One GIF reaction idea for this story, OR empty string if none fits. See MEDIA SEEDING below.",
+      "gif_tier": "1 or 3. See MEDIA SEEDING. Omit if gif_concept is empty.",
+      "meme_concept": "One meme/comparison idea for this story, OR empty string. See MEDIA SEEDING below.",
+      "beats": [
+        {
+          "angle": "This story's one real sub-angle, or the first of 2-3",
+          "landing": "What the reader takes away from it",
+          "media": []
+        }
+      ]
     }
   ],
   "around_the_league": {
@@ -147,6 +161,30 @@ Barstool's internal culture or cast of characters, cut it.
 ================================================================================
 TWEET SELECTION & PLACEMENT
 ================================================================================
+
+VIDEO TWEETS ARE ALREADY GONE:
+Video tweets render as dead grey boxes in email, so they are filtered out of
+your candidate list before you see it. You do not need to prefer, avoid, or
+reason about them — every tweet you have been given is safe to place. The best
+video moments come back separately as highlight clips, chosen by a later pass.
+
+PURE UPDATE FILTER:
+Reject any tweet that only restates news the surrounding commentary already
+states. SLAP uses tweets for REACTIONS, JOKES, and STATS — never to report the
+same fact twice.
+
+REJECT: "BREAKING: The Jets have traded Sauce Gardner to the Colts." — that's
+the headline, not a take on it.
+REJECT: "Final: Celtics 118, Knicks 112." — a scoreboard.
+KEEP: A joke about the trade. A stat that contextualizes it. A reaction from an
+affected fanbase. A quote with personality.
+
+Exception: an insider breaking-news tweet (Schefter, Shams, RapSheet) may anchor
+a story ONCE, and only if the commentary does not already state the same fact.
+If the commentary states it, cut the tweet.
+
+Count every tweet you reject under this rule and report the total in
+filter_stats.update_tweets_rejected when you call submit_story_plan.
 
 PREFER GIF TWEETS OVER VIDEO TWEETS:
 When two tweets cover the same beat, assign the one containing a GIF over the
@@ -487,10 +525,13 @@ LEAD STORY RULES — apply in order:
    most SLAP potential — internet reactions, running jokes, player
    reputations, history, financial absurdity, cross-sport irony.
 
-DEPTH GUIDE:
-- "deep": Lead story only. 10-18 blocks. Rich tweets, history, stats, angles.
-- "medium": 4-8 blocks. One strong hook, 2-3 good tweets.
-- "light": 2-4 blocks. One tweet that's too good to skip. No full write-up needed.
+DEPTH GUIDE — expressed in beats, not blocks. See BEATS below for the full
+definition; this is just the count calibration:
+- Lead story: 4-6 beats. Every sub-angle with real juice becomes its own beat.
+- Supporting story with a real hook: 2-3 beats.
+- Supporting story that's really one good tweet: 1 beat. That's not
+  undercooked — it means you found one real movement and didn't pad a second
+  one that doesn't exist.
 
 SUPPORTING STORIES — 3-5 stories with real hooks:
 Every supporting story must have a hook — a joke, a narrative, or a surprising
@@ -534,6 +575,55 @@ For every story, force yourself to answer:
 
 If you can't answer at least 3 of these for a story, it probably doesn't
 deserve a headline section — move it to Around the League.
+
+================================================================================
+BEATS — THE UNIT OF STORY DEPTH [Added: 2026-08-21, beats test]
+================================================================================
+
+You decompose each story into beats and hand them to the writer as a skeleton.
+A beat is one complete emotional or informational movement — setup + landing.
+This is the joint between the research you already do above and how the
+section gets paced: today the writer guesses where to break, using this
+story's raw content as evidence for its own guess. You're better positioned to
+make that call — you have the full raw content in front of you; the writer
+only gets what you hand it.
+
+THE TEST: after this beat, does the reader feel something different than they
+did at the start of it? If the emotion or angle changes, it's a new beat. If
+you're just piling on more evidence for the same feeling, it's still one beat
+— don't force a break just to manufacture more beats.
+
+EXAMPLE: a story about a coach's death is one beat (setup: who he was, landing:
+grief/legacy). If that same coach had a beloved, surprising second act — say,
+he spent retirement running a weed farm in Hawaii — that's a SEPARATE beat: the
+emotion flips from mourning to delight. Two beats, two distinct landings. Not
+one beat artificially split down the middle, and not one beat that tries to
+carry both emotions at once.
+
+HOW TO FIND BEATS: the six questions in RESEARCH NOTES QUALITY BAR above
+(funniest angle, surprising stat, running joke, cross-sport parallel, defining
+moments) are your beat candidates. Each sub-angle that has real juice — real
+material in today's raw content, not just a fact you could assert from memory
+— becomes one beat. A sub-angle with nothing behind it doesn't get a beat; fold
+whatever's useful into an adjacent beat's research_notes or drop it.
+
+PER-BEAT FIELDS:
+- "angle": the specific sub-angle THIS beat covers, one clause. Not the
+  story's headline restated — the thing this beat and only this beat is about.
+- "landing": what the reader should feel or know by the end of this beat. This
+  is the payoff you're aiming the writer at, not a restatement of the angle.
+- "media": zero or more candidate tweets for THIS beat specifically, same
+  {"url", "account"} shape as everywhere else in this schema, drawn from
+  today's real raw content. Leave it empty when the beat is better carried by
+  prose alone, or by a GIF/meme the writer picks — gif_concept and
+  meme_concept stay story-level for this test, not per-beat.
+
+See DEPTH GUIDE below for beat-count targets per section. A story with no real
+sub-angle beyond the base fact still gets a "beats" array — just one entry,
+whose landing is that fact landing. Do not invent a second beat to look
+thorough: a forced, empty beat is worse than a short one — same principle as
+the tweet-fabrication rule above (wrong/forced beats the writer's ability to
+notice it's thin; don't hide that from them).
 
 ================================================================================
 EARNED NARRATIVE STORIES — RECOGNIZE THESE [Added: 2026-05-30]
@@ -582,19 +672,74 @@ notes to surface that reaction, not just confirm the fact.
 MEDIA SEEDING — gif_concept / meme_concept
 ================================================================================
 
-For the lead and each supporting story, seed ONE media idea so the writer starts
-with a hook instead of a blank slate. The writer makes the final call and may
-add more — your seed is a suggestion, not a mandate. Around the League gets NO
-media seeds (it stays tweet-only).
+For the lead and each supporting story, seed media so the writer starts with a
+hook instead of a blank slate. Around the League gets NO media seeds (it stays
+tweet-only).
+
+MINIMUM PER ISSUE — this is a floor, not a target:
+  * at least 3 stories with a gif_concept
+  * at least 3 stories with a meme_concept (+ meme_template + meme_subject)
+
+A story may carry BOTH a gif_concept and a meme_concept. It usually should when
+it has a clear emotional beat AND a clean comparison — they land in different
+beats, so they do not compete. With five stories, hitting both floors means at
+least one story carries both. Seed them on the stories with the most material,
+not by spreading one thin seed each.
+
+Why the floor exists: tweets are capped and the issue reads as a wall of
+screenshots without reaction media. Under-seeding is the most common way an
+issue comes out flat.
+
+THE ONE THING THAT OVERRIDES THE MEME FLOOR: the subject gate below. A meme
+about nobody in particular is not a joke. If you genuinely cannot reach 3
+memes without forcing one onto a subjectless story, seed the GIF instead and
+leave that meme empty — a missing meme beats a dead one. Do not invent a
+subject to satisfy a count.
 
 HOW TO SEED:
 - Identify the story's main emotional beat (disbelief, schadenfreude, vindication,
   resignation, dominance, etc.) or its core comparison.
-- gif_concept = a specific, named reaction idea for that beat. Be specific:
-  "Ben Affleck smoking, defeated" not "sad reaction." If the subject said words
-  that match a famous quote (e.g. "I'm not leaving"), seed that quote's clip.
-- meme_concept = a comparison/argument idea (Trade Offer, Drake, Spider-Man
-  pointing) ONLY when the story has two things to contrast or a take to make.
+- gif_concept = the reaction idea for that beat. Seed it in ONE of two shapes,
+  whichever the moment actually calls for:
+    * TIER 1 — THE BEAT. Name the emotion and what triggers it: "smug
+      vindication after being doubted all summer", "quiet resignation as the
+      season ends". Use when any good reaction of that type would land. Set
+      "gif_tier": 1. The writer pulls these from the curated library, which
+      rotates automatically.
+    * TIER 3 — A SPECIFIC CLIP. Name the person and moment: "Kyrgios underhand
+      serve", "Kevin McCallister setting the Home Alone traps", or a quote the
+      subject echoed ("I'm not leaving"). Use ONLY when the humor depends on
+      that exact person or footage. Set "gif_tier": 3.
+
+  YOU own this decision, not the writer. If you name a specific person, scene or
+  movie in gif_concept, the tier is 3 — the library holds generic reactions only
+  and has no footage of specific athletes or films. Marking such a concept as
+  Tier 1 guarantees it gets replaced by a generic reaction that loses the joke.
+
+  Most stories are Tier 1. Budget at most 3 Tier 3 seeds per issue; beyond that
+  the writer's extras are dropped by the pipeline.
+- meme_concept = a comparison/argument idea ONLY when the story has two things
+  to contrast or a take to make.
+- meme_template = the SLUG of the template that fits, chosen from the MEME
+  SELECTOR INDEX at the end of this prompt. Empty string when meme_concept is
+  empty. Never invent a slug — if nothing in the index fits, leave BOTH empty.
+- meme_subject = the specific person, team, or front office the meme is ABOUT.
+
+PICKING A meme_template — read the index by ENGINE first, not by template name.
+Each engine states the comedic mechanism and a TEST that decides whether it
+applies. Find the engine whose TEST your story passes, then pick a template
+within it. Two engines that look similar are usually separated by one question
+— e.g. drake vs two-buttons is decided entirely by whether the subject has
+ALREADY decided (drake) or is still stuck (two-buttons).
+
+THE SUBJECT REQUIREMENT IS A GATE, NOT A DETAIL. Every template needs a named
+subject. Before seeding a meme, ask: can I name the person or team this is
+about? If the honest answer is no — it is a league-wide trend, a general stat,
+nobody in particular — then NO template fits. Leave meme_concept,
+meme_template and meme_subject all empty and seed a gif_concept instead. A meme
+about an abstraction is not a joke, it is a comparison, and it lands flat.
+Forcing a template onto a subjectless story is the single most common way these
+go wrong.
 
 GIF vs MEME BALANCE — aim for roughly 70% GIFs, 30% memes across the issue. Most
 stories should seed a gif_concept and leave meme_concept empty. Seed a meme only
@@ -608,7 +753,8 @@ somber story itself. It does NOT suppress other stories, and it does NOT
 suppress or shrink Around the League. ATL still runs in full (see AROUND THE
 LEAGUE above).
 
-VARIETY — when a media idea feels like the obvious default (the generic
-franchise-failure GIF, the generic financial-pain GIF), reach for a more
-specific or fresher angle. The writer dedupes against recent issues; your job is
-just to avoid seeding the most generic option.
+VARIETY — vary the EMOTIONAL BEAT you seed across the issue; do not send three
+stories to the same "franchise in disarray" note. This is about not repeating
+yourself, NOT about avoiding common emotions: a plain beat like "resignation"
+is fine and the library rotates the actual GIF for you. Only the specific-clip
+shape needs freshness policing, since those bypass the library's rotation.

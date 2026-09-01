@@ -59,7 +59,7 @@ or below), every OTHER story still gets full normal-issue media treatment.
 The obit section itself is respectful and media-free; everything else in
 the issue is normal SLAP.
 
-Hit the typical ~4 GIFs and 2 memes target across the non-obituary
+Hit the normal media target (below) across the non-obituary
 headliners. Do not let the death story's register leak into adjacent
 sections. A reader who skipped the obit should not be able to tell from
 the rest of the newsletter that there was a death in the issue.
@@ -298,7 +298,7 @@ You place GIFs and memes yourself. Place them as punchlines, not decoration.
 
 HOW MANY (headliner sections only — lead + supporting):
 Target per issue: 20-24 tweets total (including Around the League), 20-24
-GIFs/memes, ~5-7 minute read. Roughly half of all media blocks should be GIFs or
+GIFs/memes, ~5-7 minute read. Around 40% of all media blocks should be GIFs or
 memes rather than tweets. Scale UP for high-juice days.
 
 That works out to roughly one GIF or meme per tweet across the headliner
@@ -306,8 +306,8 @@ sections — a much denser mix than a wall of quoted tweets. A highlight clip
 counts as a GIF for this purpose.
 
 This is a target, not a quota, and it is NOT a licence to pad. Every GIF and meme
-must still earn its place as a punchline. Landing at 45% with media that all
-works is better than hitting 50% with three decorative GIFs. If a day is thin or
+must still earn its place as a punchline. Landing at 35% with media that all
+works is better than hitting 40% with three decorative GIFs. If a day is thin or
 somber, run under and let it run under.
 
 AROUND THE LEAGUE gets ZERO GIFs and ZERO memes — tweets only, always.
@@ -651,7 +651,7 @@ Before finishing:
    appear in ATL total. Spread them out, don't eliminate them.
 8. Does any commentary block restate what the adjacent tweet already says? If yes, delete the commentary — the tweet wins.
 9. Did you use the same GIF twice in this issue? If yes, swap one for an alternative from the same emotional category.
-10. **Media count check (headliners only):** Across the lead + supporting sections, did you place roughly one GIF or meme per tweet — about 20-24 GIFs/memes against 20-24 tweets for a normal issue, so that roughly half of all media blocks are GIFs/memes rather than tweets (70/30 GIF-to-meme)? If you are well under, go back and find the moments: a front office decision, a bad contract, a franchise in crisis, a team blowing a lead, or a player repeating the same mistake is an automatic media opportunity. Do NOT add media to Around the League, and do NOT pad somber stories — landing at 45% with media that all works beats 50% with decorative filler. Consult gif_reference.txt and meme_reference.txt.
+10. **Media count check (headliners only):** Across the lead + supporting sections, did you place roughly one GIF or meme per tweet — about 16-20 GIFs/memes against 20-24 tweets for a normal issue, so that around 40% of all media blocks are GIFs/memes rather than tweets (70/30 GIF-to-meme)? If you are well under, go back and find the moments: a front office decision, a bad contract, a franchise in crisis, a team blowing a lead, or a player repeating the same mistake is an automatic media opportunity. Do NOT add media to Around the League, and do NOT pad somber stories — landing at 35% with media that all works beats 40% with decorative filler. Consult gif_reference.txt and meme_reference.txt.
 11. **Highlight check:** Every `highlight-placeholder` uses an id from the HIGHLIGHT PLAN — no invented ids. Each one has a setup line before it and a reaction GIF/meme after it, and no tweet nearby just restates the play the clip already shows.
 12. For every DEEP section: is there a narrative thread connecting the stats,
     or is it just stat → tweet → stat → tweet? Read it linearly. If you

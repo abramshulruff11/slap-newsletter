@@ -23,3 +23,6 @@ uat/probe/
 prompts/gif_library.DRAFT.backup-*.json
 uat/gif_review.html
 uat/gif_decisions.json
+
+# GIF URL cache — build artifact, regenerated per run
+gif_url_cache.json
