@@ -100,6 +100,16 @@ words. If you hit four, the next sentence must be longer. After writing any
 "Or X" construction, verify both halves describe the same dimension; if not,
 rewrite one of them.
 
+[8/23/2026] AI-speak pattern caught in 8/20 UAT review: self-narrating
+meta-commentary ("Here's the karmic layer that makes this a Greek play,"
+"Now for the punchline") and vague hedging ("The Athletic and ESPN both
+went there this week") were shipping unflagged by both Pass 2 and Pass 6.
+Added pattern-level bans (not just literal phrase matches) to pass2_writer.txt
+BANNED PHRASES and editor_prompt.txt Check 1 Section B, plus before/after
+pairs to voice_examples.txt under a new META-NARRATION / VAGUE HEDGING
+section, since the phrase ban alone won't generalize to unseen variants of
+the same construction.
+
 STILL RECURRING [Noted: 2026-08-31]:
 Two more instances from 8/29, same root failure — six-plus short fragments
 stacked with zero connective sentence:

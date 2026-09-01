@@ -402,3 +402,50 @@ WHY: The bad version reads like a trailer voiceover captioning its own compariso
 BAD: "The Athletic and ESPN both went there this week."
 GOOD: [name what they actually reported/argued]
 WHY: "Went there" and "had an interesting take" are placeholders for a real claim you haven't written yet. If you don't know the specific angle, cut the sentence — don't hedge around it.
+
+
+================================================================================
+GOOD LINES + BAD/GOOD PAIRS — From 8/29-8/31 pipeline output review
+================================================================================
+
+### GROUNDING A BIG NUMBER — relatable anchor first, precise figures second
+
+GOOD: "Second Tour Championship. Second FedEx Cup. Then the $10M check pushed him past a milestone Tiger has owned since Bill Clinton was in office. Scheffler at $130,390,661 in career earnings. Tiger at $120,999,166. Woods had held the top spot since Feb. 13, 2000. Scheffler is 30 years old. He already has 22 PGA Tour wins, including four majors."
+WHY: "Since Bill Clinton was in office" tells the reader HOW long without making them do math. Once the scale is set, THEN it drops the exact dollar figures. Relatable anchor before precision — not the other way around.
+
+### SCALE CONTRAST — a small stat becomes a big one through population/context framing
+
+GOOD: "An island of 150,000 people just won the Little League World Series for the second time. First since 2004. Only Curacao and Japan have ever won this thing with a country's name on the jersey. Every other champion has been a city or region."
+WHY: "Island of 150,000 people" does the work an adjective can't — it makes the achievement's size legible before a single stat is given. Leads with the frame, backs it up with the specific fact after.
+
+### RESTRAINED RESPECT — flat statement for a sincere moment, no adjective needed
+
+GOOD: "Twenty years and seventy-two consecutive Grand Slams without a first-round exit. Ended by a guy who was in kindergarten the last time this happened. Djokovic was 39, sick, and still gave New York everything he had. The same Arthur Ashe crowd that booed him for a decade rose to its feet in a first-round loss."
+WHY: The emotional payload is entirely in the flat statement of fact — "the crowd that booed him for a decade rose to its feet." No adjective does the lifting. Proof CRAFT RULE #8 (numbers as punchlines) works outside of jokes too, for genuinely moving moments.
+
+### EARNED COMPARISON + UNDERCUT — don't just drop a legendary name, set up why it applies, then subvert it
+
+GOOD: "Donald walked away at the top. 10 straight Pro Bowls. Eight first-team All-Pros. Three DPOYs. He left as arguably the best interior defender of all time. Two years later he's back at 35 to run it with a guy who just broke the single-season sack record. The last time a generational talent came back from an extended layoff and picked up where he left off, it was Jordan in 1995. Even MJ needed a rust year. Donald's plan is to show up Week 1."
+WHY: The Jordan comparison isn't a drive-by name-drop — "even MJ needed a rust year" earns it, then the actual joke (Donald isn't planning to take one) subverts the comparison instead of just resting on it.
+
+### DRY UNDERSTATEMENT — let a casual aside carry the sarcasm instead of a punchline sentence
+
+GOOD: "The WNBA looked at a suspension that would keep its most-double-doubled player out of a crucial seeding game against Minnesota and decided... nah, we good."
+WHY: The setup plays it straight and serious right up until "nah, we good" undercuts it in three casual words. The joke is entirely in the register shift, not in a separate punchline sentence.
+
+### EMOTIONAL BEAT THEN PIVOT — let sincerity land, then cut to the payoff without commentary
+
+GOOD: "Tarik Skubal took the mound at Comerica Park for the first time as a Los Angeles Dodger. The Tigers played a tribute video before he threw a pitch. He didn't make it through dry. Then he went out and pitched like the reigning Cy Young winner."
+WHY: Two short sentences of real sentiment, then a hard pivot to the payoff with zero transition word bridging them (no "but" or "and yet"). The cut itself is the rhythm.
+
+### BAD/GOOD PAIR — Specificity beats the generic label
+
+BAD: "The internet's main character Saturday was Daejon Love — the fake NFL player who scammed 26 women out of $1.3 million."
+GOOD: "A man posed as San Francisco 49ers receiver 'Daejon Love,' scammed 26 women out of $1.3 million total, and constructed a backstory so detailed it included offseason film sessions in Switzerland with Tyreek Hill, John Brown, and Antonio Brown."
+WHY: Same core facts, same day's story pool. The bad version stops at a generic label ("main character") and a bare recap — it tells the reader this was notable. The good version keeps going to the one absurd, specific detail (fake film sessions in Switzerland with named real players) that actually makes the scam vivid. When a story has a genuinely absurd specific detail, that detail IS the story — don't summarize past it to a label.
+
+### BAD/GOOD PAIR — Explain the transaction, don't just log it
+
+BAD: "Pittsburgh traded Broderick Jones to Dallas. Two years after taking him 14th overall."
+GOOD: "Pittsburgh declined his fifth-year option, spent a first-rounder on Max Iheanachor, and sold Jones for a third and a sixth. A former top-15 pick as a Day 2 asset two years later."
+WHY: The bad version states what happened. The good version explains WHY (declined the option, drafted his replacement) and lands on the actual value judgment (top-15 pick reduced to a Day 2 asset). Same facts — only one version tells the reader something a transaction wire couldn't.
