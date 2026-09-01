@@ -91,6 +91,8 @@ slap-newsletter/
 ├── email_newsletter.py        ← email delivery: HTML body + box scores inline (cid + size guard)
 ├── raw_content.json           ← daily input: headlines + tweets
 ├── game_state.json            ← daily ESPN ground truth (GITIGNORED build artifact)
+├── story_plan.json            ← Pass 1 plan as Pass 2 received it, post §2.4/§2.3
+│                                 (GITIGNORED; archived daily to archive/<date>/)
 ├── recent_output.json         ← rolling 30-day story_log + dedup state (GIFs, memes, stories)
 ├── cost_summary.json          ← per-pass cost breakdown, surfaced atop the email
 ├── newsletter_draft.html      ← browser-preview output
@@ -234,6 +236,7 @@ must be deleted from the ledger, so it can never over-state the debt.
 
 **Tests are offline and free.** `uat/tests/` makes zero API calls: `test_account_audit.py` locks
 the deterministic audits, `test_runner_drift.py` locks prod-vs-UAT runner divergence,
+`test_history_dedup.py` the GIF/meme history writers,
 `test_meme_wiring_dryrun.py` the UAT meme wiring, and
 `test_prod_wiring_dryrun.py` exercises the real production path with the Anthropic client
 stubbed. Run all three before changing a prompt or a pass.
@@ -328,11 +331,11 @@ unstaged, which breaks `git pull --rebase`.
   fails silently. The durable fix is triggering the publish off the draft's existence rather than
   a wall clock.
 
-- **`requirements.txt` pins nothing for `anthropic` (open, 2026-09-01):** the file lists a bare
-  `anthropic`, so every CI run resolves whatever is newest (1.2.0 on 9/1). The Pass 1 outage that
-  day was triggered by an SDK-side *client* guard, not by our code changing behaviour at runtime —
-  the class of break that arrives with no commit and no warning. Pin `anthropic` (and ideally the
-  rest) to a known-good version and bump deliberately.
+- **`anthropic` pinned (RESOLVED 2026-09-02):** now `anthropic==1.2.0`, the version run 169
+  proved green end to end. It was a bare `anthropic`, so CI resolved whatever was newest — and
+  1.3.0 had already shipped, meaning the next scheduled run would have picked up a third,
+  untested version. Bump deliberately and re-run the pipeline before leaving it pinned forward.
+  The rest of `requirements.txt` is still unpinned.
 
 - **Runner duplication (MOSTLY RESOLVED 2026-09-01):** 24 byte-identical functions moved to
   `runner_common.py`, and `uat/tests/test_runner_drift.py` now fails on any undeclared
@@ -369,6 +372,15 @@ unstaged, which breaks `git pull --rebase`.
   `vince-mcmahon-reaction` turned out to be 5 panels, not 4 — it had been shipping a blank payoff
   frame and reporting success. `meme_box_check.py` now blocks that class of failure in production.
   Re-run the probe after adding any template.
+- **Meme output runs below the floor (open, 2026-09-02):** `MIN_MEME_SEEDS = 3` counts *seeds in
+  the Pass 1 plan*; nothing anywhere floors *rendered* memes. Real output over the 14 logged days
+  was 10 days under 3, median 2 (2026-09-01 shipped 1). Zero Imgflip failures and zero leftover
+  placeholders in that window, so the loss is entirely upstream of rendering — Pass 1 under-seeding
+  or Pass 2 under-emitting, and there is no check that distinguishes them: GIF tiers have
+  `count_planned_tier3`, memes have no equivalent. `story_plan.json` is archived daily as of
+  2026-09-02, so the next few runs will show which. Decide the policy against that data — the
+  "reported, never fabricated" rule for seeds is deliberate and should not be quietly overridden.
+
 - **Cross-section callback rule** — discussed but not yet implemented in pass2_writer.txt
   (callbacks only valid when same person/team/event appears in BOTH sections literally).
 - **Content guardrails not in the pipeline** — the "no heavy politics / no gambling advice /
@@ -471,6 +483,30 @@ for …") omitted.
   a fix from May. It now reports the exception type and message. Same wording fixed in UAT.
 - Re-run 169 on the fix was green end to end: Pass 1 went from a 2-second rejection to 6m32s of
   real generation, 22 tweets, 3 box score images, email sent, draft 213696047 created.
+
+**2026-09-02 — GIF library wired into prod; runner body shared; history double-write fixed**
+- The 09-01 issue shipped 22 tweets, 1 meme and **0 GIFs**. Pass 2 had emitted 7
+  `data-library-category` placeholders; production had no consumer for them, so they shipped as
+  invisible empty divs under a "No GIF placeholders found" log line. Prod now runs the same
+  library-first sequence UAT had, and `strip_orphan_gif_placeholders()` removes and *names* any
+  placeholder no consumer claimed. Replaying the shipped draft renders 7/7. (6c264a6)
+- `runner_common.py`: 24 byte-identical functions lifted out of both runners along with the model
+  constants, `PRICING` and `PASS_COSTS`. Duplicated LOC 668 → 0. `configure(prompts_dir=)` keeps
+  the UAT prompt fork intact and raises rather than letting a second import repoint it.
+  `uat/tests/test_runner_drift.py` fails on any undeclared divergence. Four remain, declared:
+  `run_pass1`, `run_pass2`, `pre_edit`, `main`. (34c9880)
+- Promoted `normalize_plan` from UAT (prod normalized neither `beats[]` nor `gif_tier`) and ported
+  `escape_html` into prod's `embed_gifs_in_html` — drift was not only UAT-ahead-and-harmless.
+- **Every history row was written twice.** Both writers appended new entries to the in-memory
+  `history` for same-run dedup, then saved `new_entries + history`. `gif_history.json` and
+  `meme_history.json` each held 60 rows and 30 distinct entries; the GIF file covered only **6
+  days against a 7-day rotation lookback**, so that rule was silently under-enforced. Fixed by
+  saving against the pre-run snapshot, which keeps same-run dedup working — deleting the insert
+  would have broken it the other way. Both files de-duplicated in place.
+- `story_plan.json` is now written by production and archived daily. It was discarded before, so
+  when 09-01 shipped 1 meme against a floor of 3 there was no way to tell whether Pass 1
+  under-seeded or Pass 2 under-emitted.
+- `anthropic` pinned to `==1.2.0`.
 
 **2026-08-27 → 09-01 — Meme + GIF libraries and deterministic audits reach production**
 - Merged six weeks of UAT-only work into the shipping pipeline: beats, the 30-template meme

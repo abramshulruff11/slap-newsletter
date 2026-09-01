@@ -7,6 +7,8 @@ python
 Archive/
 prompts/Archive/
 game_state.json
+# Daily build artifact; the copy that matters is archive/<date>/story_plan.json
+story_plan.json
 prototype/output/
 
 # UAT sandbox (uat/media-mix) — generated output only.

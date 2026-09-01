@@ -391,7 +391,13 @@ def embed_gifs_in_html(html: str, api_key: str, repo_root: Path = None) -> tuple
         print("  [GIPHY] No GIF placeholders found")
         return html, []
 
+    # `history` gains this run's entries below so same-run dedup can see
+    # them; `stored_history` is what was on disk. Saving new_entries +
+    # `history` wrote every entry TWICE — 60-row files held 30 real rows,
+    # and gif_history.json covered only 6 days against a 7-day lookback,
+    # so the rotation rule was silently under-enforced. (2026-09-02)
     history = load_gif_history(repo_root) if repo_root else []
+    stored_history = list(history)
     embed_count = 0
     used_gifs = []
 
@@ -459,7 +465,7 @@ def embed_gifs_in_html(html: str, api_key: str, repo_root: Path = None) -> tuple
 
     # Save updated history
     if repo_root and used_gifs:
-        save_gif_history(repo_root, used_gifs, history)
+        save_gif_history(repo_root, used_gifs, stored_history)
 
     return html, used_gifs
 

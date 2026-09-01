@@ -72,6 +72,7 @@ DRAFT_OUTPUT_PATH    = SCRIPT_DIR / "newsletter_draft.html"
 SUBSTACK_OUTPUT_PATH = SCRIPT_DIR / "newsletter_substack.html"
 EMAIL_OUTPUT_PATH    = SCRIPT_DIR / "newsletter_email.html"
 GAME_STATE_PATH      = SCRIPT_DIR / "game_state.json"
+STORY_PLAN_PATH      = SCRIPT_DIR / "story_plan.json"
 PROMPTS_DIR          = SCRIPT_DIR / "prompts"
 
 # Point the shared helpers at THIS runner's prompt tree.
@@ -1097,6 +1098,20 @@ def main() -> None:
             print(f"  ✓ §2.3 tweet budget OK — {_rep['after']} tweet(s)")
     except (json.JSONDecodeError, TypeError, KeyError) as e:
         print(f"  ⚠ §2.3 tweet budget skipped — {e}")
+
+    # Persist the plan Pass 2 is about to receive — AFTER §2.4 backfill and §2.3
+    # trimming, so what lands on disk is what the writer actually saw.
+    #
+    # Production discarded this until 2026-09-02. story_log in recent_output.json
+    # keeps only topic/title/section, so when the 09-01 issue shipped 1 meme
+    # against a floor of 3 there was no way to tell whether Pass 1 under-seeded
+    # or Pass 2 under-emitted — the evidence had never been written down. The
+    # media seed counts, gif_tier and beats[] all live here and nowhere else.
+    try:
+        STORY_PLAN_PATH.write_text(story_plan, encoding="utf-8")
+        print(f"  ✓ story_plan.json saved — {len(story_plan):,} chars")
+    except OSError as e:
+        print(f"  ⚠ story_plan.json not saved — {e}")
 
     draft_html    = run_pass2(story_plan, client, game_state, degraded=degraded)
 

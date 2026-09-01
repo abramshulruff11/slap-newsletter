@@ -1,5 +1,11 @@
 feedparser
-anthropic
+# PINNED. The 2026-09-01 Pass 1 outage was a client-side SDK guard that
+# arrived with no commit of ours: a bare `anthropic` resolves whatever is
+# newest on every CI run, so the pipeline could break overnight with nothing
+# to diff. 1.2.0 is the version run 169 proved green end to end (1.3.0 had
+# already shipped by 2026-09-02, untested here). Bump deliberately, and
+# re-run the pipeline on the new version before leaving it pinned forward.
+anthropic==1.2.0
 python-dotenv
 beautifulsoup4
 requests
