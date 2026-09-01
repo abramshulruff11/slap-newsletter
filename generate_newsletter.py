@@ -1775,6 +1775,20 @@ def main() -> None:
             print("  ⚠ IMGFLIP_USERNAME / IMGFLIP_PASSWORD not set — skipping meme generation")
         else:
             template_map = build_template_map()
+
+            # Box-count guard. Imgflip returns HTTP 200 for a short boxes[]
+            # list and renders the leftover panels BLANK, so process_newsletter
+            # would otherwise count a meme with an empty punchline as a
+            # success. Audit before spending the API call, and drop any
+            # placeholder that would render short — a missing meme is better
+            # than one with a blank payoff panel.
+            import meme_box_check as _MB
+            _findings, _ = _MB.check_html(body, template_map)
+            _MB.report(_findings, strict=True)
+            body, _short = _MB.strip_short_memes(body, _findings)
+            if _short:
+                print(f"  ⚠ {_short} short meme placeholder(s) removed")
+
             body, _ = process_newsletter(body, template_map, imgflip_user, imgflip_pass, repo_root=SCRIPT_DIR)
             print(f"  ✓ Memes embedded in both output files")
     except Exception as e:
