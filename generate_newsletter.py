@@ -938,12 +938,22 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         response  = None
 
         try:
-            response = client.messages.create(
+            # Streaming is REQUIRED here, not a preference. The SDK refuses a
+            # non-streaming request whose max_tokens implies a >10-minute
+            # generation: it raises ValueError when
+            # 3600 * max_tokens / 128_000 > 600, i.e. above 21,333 tokens
+            # (anthropic/_base_client.py::_calculate_nonstreaming_timeout).
+            # Pass 1 needs 32768 -- beats plus the meme/gif fields roughly
+            # double the plan's size, and leaving it at 16384 truncates
+            # silently, which is what cost Around the League a regression the
+            # last time this limit was too low. So the limit stays and the
+            # call streams. 2026-09-01's run died on exactly this: three
+            # instant attempts, zero tokens billed, no newsletter.
+            # get_final_message() returns the same Message object
+            # messages.create() would have -- tool_use blocks and usage
+            # included -- so everything below is unchanged.
+            with client.messages.stream(
                 model=MODEL_DEFAULT,
-                # Beats plus the meme/gif fields roughly double the plan's size.
-                # UAT runs this at 32768; leaving prod at 16384 truncates
-                # silently, which is what cost Around the League a regression
-                # the last time this limit was too low.
                 max_tokens=32768,
                 system=[
                     {
@@ -955,9 +965,10 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 tools=[tool_definition],
                 tool_choice={"type": "tool", "name": "submit_story_plan"},
                 messages=messages,
-            )
+            ) as stream:
+                response = stream.get_final_message()
         except Exception as e:
-            api_error = str(e)
+            api_error = f"{type(e).__name__}: {e}"
 
         if response is not None:
             total_in          += response.usage.input_tokens
@@ -971,7 +982,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         tool_use_id  = None
 
         if api_error:
-            validation_error = f"API error (likely malformed JSON in tool input): {api_error}"
+            validation_error = f"API call failed: {api_error}"
 
         elif response is None:
             validation_error = "No response received from API"

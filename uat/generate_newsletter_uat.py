@@ -1045,7 +1045,7 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         tool_use_id  = None
 
         if api_error:
-            validation_error = f"API error (likely malformed JSON in tool input): {api_error}"
+            validation_error = f"API call failed: {api_error}"
 
         elif response is None:
             validation_error = "No response received from API"
