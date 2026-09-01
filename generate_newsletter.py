@@ -21,6 +21,12 @@ from pathlib import Path
 from dotenv import load_dotenv
 import anthropic
 
+# Deterministic audits shared with uat/generate_newsletter_uat.py. One copy on
+# purpose: the prompt forks drifted for months because promotion was manual,
+# and a second copy of this code would drift the same way somewhere a prompt
+# diff would never surface it.
+import plan_audit
+
 SCRIPT_DIR = Path(__file__).resolve().parent
 load_dotenv(SCRIPT_DIR / ".env", override=True)
 
@@ -1059,10 +1065,23 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             if attempt > 1:
                 print(f"  ✓ Pass 1 succeeded on attempt {attempt}/{MAX_ATTEMPTS}")
 
-            dist = plan.get("account_distribution", {})
-            over_cap = {k: v for k, v in dist.items() if v > 2}
+            # account_distribution is written by the MODEL and spans every
+            # tweet including Around the League — but ATL is uncapped under the
+            # unified account-cap policy, so trusting it flags accounts that
+            # are within policy. On 2026-08-27 the UAT copy of this check named
+            # @AdamSchefter and @TalkinBaseball_, both over only because of
+            # ATL, while the real violations went unmentioned. Count the
+            # headliners ourselves.
+            head_dist: dict = {}
+            for _s in [plan.get("lead_story", {})] + plan.get("supporting_stories", []):
+                for _t in (_s.get("tweets") or []):
+                    if isinstance(_t, dict) and _t.get("account"):
+                        _a = "@" + str(_t["account"]).lstrip("@")
+                        head_dist[_a] = head_dist.get(_a, 0) + 1
+            over_cap = {k: v for k, v in head_dist.items()
+                        if v > plan_audit.effective_cap(k)}
             if over_cap:
-                print(f"  ⚠ Account cap violations in plan: {over_cap}")
+                print(f"  ⚠ Headliner account cap violations: {over_cap}")
             else:
                 print(f"  ✓ Account distribution within caps")
 
@@ -1467,6 +1486,12 @@ def pre_edit(draft_html: str, story_plan_raw: str) -> str:
     else:
         print("  ✓ All tweets correctly assigned to their sections")
 
+    # Account caps and §2.2 redundancy, counted rather than asked for.
+    # editor_prompt.txt CHECK 3 used to ask the model to do this and it got the
+    # answer backwards; see plan_audit.py.
+    result = plan_audit.audit_account_diversity(result)
+    result = plan_audit.audit_redundant_tweets(result)
+
     return result
 
 
@@ -1571,6 +1596,27 @@ def main() -> None:
 
     story_plan    = run_pass1(raw, recent_output, client, game_state, degraded=degraded)
     recent_output = save_story_log(story_plan, recent_output, RECENT_OUTPUT_PATH)
+
+    # §2.3 — trim to the tweet budget BEFORE Pass 2 writes, so the excess never
+    # reaches the draft. Pass 1's prompt states no ceiling; on 2026-08-27 it
+    # took 35 against a 20-24 target. Degrades safely on a plan with no beats.
+    try:
+        _plan = json.loads(story_plan)
+        _rep = plan_audit.enforce_tweet_budget(_plan)
+        if _rep["dropped"]:
+            _by: dict = {}
+            for _reason, _acct in _rep["dropped"]:
+                _by[_reason] = _by.get(_reason, 0) + 1
+            print(f"  §2.3 tweet budget: {_rep['before']} → {_rep['after']} "
+                  f"(ceiling {plan_audit.TWEET_CEILING})")
+            for _reason, _n in sorted(_by.items(), key=lambda kv: -kv[1]):
+                print(f"       -{_n:<2d} {_reason}")
+            story_plan = json.dumps(_plan, ensure_ascii=False)
+        else:
+            print(f"  ✓ §2.3 tweet budget OK — {_rep['after']} tweet(s)")
+    except (json.JSONDecodeError, TypeError, KeyError) as e:
+        print(f"  ⚠ §2.3 tweet budget skipped — {e}")
+
     draft_html    = run_pass2(story_plan, client, game_state, degraded=degraded)
 
     # Pass 3 — Claim Validator (deterministic, cross-refs game_state.json)
