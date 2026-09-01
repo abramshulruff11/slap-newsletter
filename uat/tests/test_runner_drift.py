@@ -35,25 +35,39 @@ UAT = REPO / "uat" / "generate_newsletter_uat.py"
 
 # Declared, understood divergences. Each entry is a debt with a reason, not a
 # blessing. Delete the entry when the pair converges — the test enforces that.
+#
+# The recorded hashes are what stop an allowlist from becoming a blind spot.
+# Being declared exempts a pair from the identical-source rule, and these four
+# are the highest-traffic functions in the pipeline — run_pass1 is where the
+# 2026-09-01 streaming outage happened, a change made to production alone. If
+# "declared" also meant "unchecked", the test would be blind to a repeat of the
+# exact failure it exists to prevent. So each side's normalized source is
+# pinned: touch either copy and this test fails until you have looked at the
+# counterpart and deliberately re-recorded the hash.
 KNOWN_DIVERGENT = {
-    "run_pass1": (
+    "run_pass1": dict(prod="000825e533b2", uat="7f7dea4672c0", reason=(
         "Bidirectional. Prod has degraded mode (Nitter outage -> headline-only "
         "newsletter); UAT has the §2.1 video-tweet filter and Pass 1B. Neither "
         "is a superset, so no copy in either direction is safe — this one needs "
         "a real merge."
-    ),
-    "run_pass2": (
+    )),
+    "run_pass2": dict(prod="719792321475", uat="257eed61581e", reason=(
         "Bidirectional. Prod carries degraded-mode wiring UAT lacks; UAT "
         "carries highlight-plan wiring prod has no Pass 1B for."
-    ),
-    "pre_edit": (
+    )),
+    "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
-    ),
-    "main": (
+    )),
+    "main": dict(prod="a19c6885a9ce", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
         "5-line stub. Expected to stay divergent permanently."
-    ),
+    )),
 }
+
+
+def fingerprint(text: str) -> str:
+    import hashlib
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:12]
 
 
 def top_level_functions(path: Path) -> dict:
@@ -118,11 +132,35 @@ check("no stale KNOWN_DIVERGENT entries", stale, [])
 orphaned = sorted(set(KNOWN_DIVERGENT) - set(shared))
 check("no KNOWN_DIVERGENT entry for a non-shared function", orphaned, [])
 
+# 4. A declared pair is exempt from the identical-source rule, so its CONTENT
+#    is pinned instead. Otherwise the four riskiest functions in the pipeline
+#    would be the four with no drift protection at all.
 print()
 print("  Declared divergences (the outstanding debt):")
+drifted = []
 for name in sorted(KNOWN_DIVERGENT):
-    if name in shared:
-        print(f"    {name}()  prod {prod[name][1]} / uat {uat[name][1]} lines")
+    if name not in shared:
+        continue
+    rec = KNOWN_DIVERGENT[name]
+    got = {"prod": fingerprint(prod[name][0]), "uat": fingerprint(uat[name][0])}
+    moved = [side for side in ("prod", "uat") if got[side] != rec[side]]
+    flag = "" if not moved else f"   <-- CHANGED: {', '.join(moved)}"
+    print(f"    {name}()  prod {prod[name][1]} / uat {uat[name][1]} lines{flag}")
+    if moved:
+        drifted.append((name, moved, got))
+
+if drifted:
+    print()
+    print("  A declared-divergent function changed. These are exempt from the")
+    print("  identical-source rule, so their content is pinned instead — this is")
+    print("  the prompt to check the OTHER runner before moving on.")
+    for name, moved, got in drifted:
+        print(f"    - {name}(): changed in {', '.join(moved)}")
+        print(f"        record: prod=\"{got['prod']}\", uat=\"{got['uat']}\"")
+    print("  If the counterpart is handled (or deliberately still diverges),")
+    print("  paste those hashes into KNOWN_DIVERGENT to re-arm the check.")
+check("no unreviewed change to a declared-divergent function",
+      [d[0] for d in drifted], [])
 
 dup_loc = sum(max(prod[n][1], uat[n][1]) for n in identical)
 print()
