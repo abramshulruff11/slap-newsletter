@@ -1,0 +1,185 @@
+{
+  "_meta": {
+    "purpose": "PROPOSAL ONLY -- not the live library. Demonstrates an extended entry schema for prompts/meme_library.DRAFT.json on ONE comedic-engine cluster (drake, distracted-boyfriend, left-exit-12-off-ramp), plus one deliberate contrast template (two-buttons) that sits in the same category but a DIFFERENT engine. Review the shape here before it is applied to all 30 templates.",
+    "why_this_exists": "The v1 library documented template MECHANICS (which panel is which) but omitted the three things that make a meme land: who it is about, where the laugh comes from, and the required valence relationship between boxes. On drake the v1 entry had the valence INVERTED -- it described box 1 as the smarter/preferred option, when the joke requires box 1 to be the worse option the subject actually chose. That error would actively steer the writer toward earnest, non-funny memes.",
+    "new_fields": {
+      "engine": "Cluster key. Templates sharing a comedic engine share their comedic_engine, valence_rule, choice_state and failure_mode, defined once under _meta.engines. Lets ~30 templates be fixed as ~5-7 clusters instead of 30 independent rewrites, and keeps sibling templates consistent with each other.",
+      "subject": "Who the meme is ABOUT -- the person/team/org whose decision or reaction is the joke. placement is one of: 'implied' (no box; name them in surrounding copy), 'box:N' (a physical panel labels the subject), or 'none' (subjectless template). v1 had no subject concept at all, which is why its entries produced abstract comparisons with no protagonist.",
+      "comedic_engine": "One sentence on where the laugh actually comes from -- almost always a violated expectation.",
+      "valence": "The REQUIRED relationship between boxes, stated as a rule a writer can be caught violating. This is the checkable part.",
+      "worked_example": "A concrete, correctly-shaped example. One example teaches an LLM more than three sentences of description.",
+      "anti_example": "The plausible near-miss that fails -- usually the earnest/flat version. Exists to stop regression toward the engine's failure_mode."
+    },
+    "examples_are_illustrative": "IMPORTANT: worked_example and anti_example captions demonstrate SHAPE ONLY. They are not factual claims and must never be reused as source material or treated as true. Real captions must be built from game_state.json ground truth.",
+    "open_questions_for_review": [
+      "engine vs pattern_type -- kept here as two separate axes: engine = shared comedic mechanism, pattern_type = structural caption-to-panel mapping. drake and left-exit share BOTH; distracted-boyfriend shares the engine but has a different pattern_type (it labels the subject in a box). Keep both axes, or collapse to one?",
+      "distracted-boyfriend box_count -- this proposal says 3 per review feedback, but prompts/meme_reference.txt lists it under '2 panels' and generate_memes.py _expand_boxes() has no case for it, so the pipeline currently sends only 2 captions and the subject panel likely renders uncaptioned. Needs verification against a real Imgflip render; may require a code + reference fix, not just metadata.",
+      "Should status stay a flat candidate/verified, or split into semantics_reviewed vs example_reviewed? The box semantics and the worked examples are separately reviewable.",
+      "Are worked_example captions worth carrying at all, given they must never be reused as fact? Alternative is shape-only skeletons with no real names."
+    ],
+    "engines": {
+      "subject_abandons_sensible_for_funky": {
+        "summary": "A named subject faces an obviously correct option and visibly goes with the worse, pettier, or stranger one.",
+        "comedic_engine": "The laugh is not the comparison itself -- it is that a real, named person actually chose the dumb thing, while the audience can plainly see the right answer.",
+        "valence_rule": "The abandoned option MUST be genuinely appealing or rational. The chosen option MUST be petty, self-defeating, or conspicuously odd. NEVER write the chosen option as the smarter one.",
+        "requires_subject": true,
+        "choice_state": "already made -- the subject has committed and we are reacting to it",
+        "failure_mode": "The straight upgrade: both options ranked with the second genuinely better. Produces an earnest endorsement or an ad, with zero comedy.",
+        "members": ["drake", "distracted-boyfriend", "left-exit-12-off-ramp"]
+      },
+      "forced_choice_dilemma": {
+        "summary": "A subject is frozen between two options of the SAME valence -- both appealing, or both painful -- that cannot coexist.",
+        "comedic_engine": "The paralysis is the joke, not the options. Either the audience finds the answer obvious and the subject clearly does not, or the two buttons expose a hypocrisy the subject created themselves.",
+        "valence_rule": "The two options MUST be same-valence and genuinely in conflict. If one is clearly better there is no sweat and the meme dies.",
+        "requires_subject": true,
+        "choice_state": "not yet made -- the subject is still sweating",
+        "failure_mode": "Writing it as a ranked preference. That is the abandons-sensible engine wearing the wrong template.",
+        "members": ["two-buttons"]
+      }
+    },
+    "scope": "4 of 30 templates, for shape review only. template_id values remain inherited from CURATED_TEMPLATES in generate_memes.py and are unchanged."
+  },
+  "templates": [
+    {
+      "slug": "drake",
+      "template_id": "181913649",
+      "status": "candidate",
+      "category": "comparison_preference",
+      "engine": "subject_abandons_sensible_for_funky",
+      "pattern_type": "reject_approve",
+      "box_count": 2,
+      "subject": {
+        "who": "The person, team, or front office making the choice.",
+        "placement": "implied",
+        "note": "Drake is the stand-in for the subject. Name them in the surrounding paragraph -- the boxes carry the two options only."
+      },
+      "comedic_engine": "A named figure had the obvious move available and went with the pettier one instead.",
+      "valence": "Box 0 MUST be the obviously desirable/rational thing. Box 1 MUST be the petty, self-defeating, or odd thing the subject actually chose. Never write box 1 as the smarter option -- that inverts the joke into an endorsement.",
+      "boxes": [
+        {"index": 0, "purpose": "the sensible, obviously appealing option the subject is waving off", "valence": "positive -- must read as the right answer"},
+        {"index": 1, "purpose": "the petty or self-defeating option the subject is actually going with", "valence": "negative or absurd -- must read as the wrong answer they picked anyway"}
+      ],
+      "use_when": "A specific, named figure passed on the obvious move and chose something pettier, stranger, or plainly worse -- and that choice is already public.",
+      "do_not_use_when": "No specific subject is making the choice, or box 1 is genuinely the better option. A ranked upgrade with no bad decision is an ad, not a joke.",
+      "worked_example": {
+        "subject": "Jeanie Buss",
+        "boxes": ["SELLING THE LAKERS FOR $2B MORE A YEAR LATER", "FIGHTING WITH HER SIBLINGS"],
+        "why_it_lands": "Box 0 is the rational windfall anyone would take. Box 1 is the pettiness she chose instead. The subject is named in the copy, not in a box."
+      },
+      "anti_example": {
+        "boxes": ["WATCHING THE GAME ON ESPN", "READING ABOUT IT IN SLAP THE NEXT DAY"],
+        "why_it_fails": "Straight upgrade, no subject, nobody makes a bad decision -- it reads as an ad. This is the example currently sitting in prompts/meme_reference.txt, so the existing reference material is teaching the wrong instinct."
+      },
+      "special_handling": null,
+      "tags": ["comparison", "preference", "bad-decision", "subject-implied", "reject-approve"],
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Valence CORRECTED from v1 per review feedback -- v1 had box 1 as the better option."
+    },
+    {
+      "slug": "distracted-boyfriend",
+      "template_id": "112126428",
+      "status": "candidate",
+      "category": "comparison_preference",
+      "engine": "subject_abandons_sensible_for_funky",
+      "pattern_type": "entity_labeling",
+      "box_count": 3,
+      "box_count_conflict": "v1 said 2. Review feedback says 3, with the subject in box 2. prompts/meme_reference.txt lists this template under '2 panels' and generate_memes.py _expand_boxes() has no case for it, so the pipeline currently sends 2 captions and the subject panel likely renders uncaptioned. VERIFY against a real render before trusting this entry.",
+      "subject": {
+        "who": "The person or team doing the looking -- the one moving on.",
+        "placement": "box:2",
+        "note": "Unlike drake, the subject IS captioned here. That label is what makes the meme land; leaving it blank strands the joke."
+      },
+      "comedic_engine": "The subject is visibly turning away, in public, from the thing they were committed to -- and everyone can see them doing it.",
+      "valence": "Box 0 MUST be the established commitment being left behind. Box 1 is the new object of attention -- it does NOT have to be worse than box 0, but it must be notable that the subject is moving on. Box 2 MUST name the subject doing the looking.",
+      "boxes": [
+        {"index": 0, "purpose": "the established thing being neglected -- the prior commitment, incumbent, or plan", "valence": "was the safe/expected choice"},
+        {"index": 1, "purpose": "the new thing catching the subject's eye", "valence": "notable -- either worse, or simply surprising that they are moving on"},
+        {"index": 2, "purpose": "the subject themselves -- the person or team doing the looking", "valence": "neutral -- this is a label, not a judgment"}
+      ],
+      "use_when": "A team or figure publicly moves on from an incumbent or prior commitment toward a new option, and the pivot itself is the story.",
+      "do_not_use_when": "Nobody is abandoning anything, or you cannot name the subject for box 2. Without the subject label this collapses into a generic two-way comparison -- use drake instead.",
+      "worked_example": {
+        "subject": "The Vikings",
+        "boxes": ["J.J. MCCARTHY", "KYLER MURRAY", "THE VIKINGS"],
+        "why_it_lands": "Box 0 is who they were committed to, box 1 is who they turned toward, box 2 names who is doing the turning.",
+        "timing": "Post-decision only -- runs after the starter call is public. Before the decision there is no abandonment to point at."
+      },
+      "anti_example": {
+        "boxes": ["OLD SCHOOL BASEBALL", "ANALYTICS"],
+        "why_it_fails": "No subject, nobody doing the looking, and only 2 of 3 boxes filled. An abstract trend comparison, not a person visibly moving on."
+      },
+      "special_handling": null,
+      "tags": ["comparison", "abandonment", "pivot", "subject-labeled", "label-the-scene"],
+      "note": "AI-authored box semantics, not yet reviewed by Abram. box_count raised 2 -> 3 per review feedback; see box_count_conflict -- needs verification against a real render."
+    },
+    {
+      "slug": "left-exit-12-off-ramp",
+      "template_id": "124822590",
+      "status": "candidate",
+      "category": "comparison_preference",
+      "engine": "subject_abandons_sensible_for_funky",
+      "pattern_type": "reject_approve",
+      "box_count": 2,
+      "subject": {
+        "who": "The person or team making the abrupt swerve.",
+        "placement": "implied",
+        "note": "The car is the subject. SLAP uses 2 boxes, so name the subject in surrounding copy."
+      },
+      "comedic_engine": "Same abandonment as drake, but the humor is in the VIOLENCE of the swerve -- this was not a considered preference, it was a last-second reflex nobody saw coming.",
+      "valence": "Box 0 MUST be the sensible route being blown past. Box 1 MUST be the impulsive exit taken instead. Same valence rule as drake -- box 1 is the worse option.",
+      "boxes": [
+        {"index": 0, "purpose": "the sensible route straight ahead, being blown past", "valence": "positive -- the plan everyone expected"},
+        {"index": 1, "purpose": "the impulsive exit the subject swerves toward at the last second", "valence": "negative or chaotic -- the reflex decision"}
+      ],
+      "use_when": "An abrupt, panicked, or deadline-driven decision that abandoned an established plan. Pick this over drake when the SUDDENNESS is the story.",
+      "do_not_use_when": "The decision was calm, gradual, or long-telegraphed -- that is drake. The tire-screech is the whole point here.",
+      "worked_example": {
+        "subject": "A front office at the trade deadline",
+        "boxes": ["RUN IT BACK WITH A HEALTHY ROSTER", "TRADE THREE FIRSTS AN HOUR BEFORE THE DEADLINE"],
+        "why_it_lands": "Box 0 is the plan they were already on; box 1 is the last-second swerve. The deadline timing is what earns this template over drake.",
+        "timing": "Best same-day as the abrupt move."
+      },
+      "anti_example": {
+        "boxes": ["REBUILDING SLOWLY", "REBUILDING THROUGH THE DRAFT"],
+        "why_it_fails": "Two versions of the same calm plan. No swerve, no abruptness -- nothing for the template to do."
+      },
+      "special_handling": null,
+      "tags": ["comparison", "abandonment", "impulse", "swerve", "subject-implied", "reject-approve"],
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Marked 'pretty good' in v1 review; refined here mainly to sharpen the drake-vs-left-exit boundary."
+    },
+    {
+      "slug": "two-buttons",
+      "template_id": "87743020",
+      "status": "candidate",
+      "category": "comparison_preference",
+      "engine": "forced_choice_dilemma",
+      "pattern_type": "dilemma_choice",
+      "box_count": 2,
+      "included_as": "CONTRAST CASE -- demonstrates that the engine axis has real boundaries. Same category as the three above, different engine.",
+      "subject": {
+        "who": "The person or team sweating the decision.",
+        "placement": "implied",
+        "note": "The sweating figure is the subject. Name them in surrounding copy."
+      },
+      "comedic_engine": "The paralysis is the joke -- not the options. Either the audience thinks the answer is obvious and the subject clearly does not, or the two buttons expose a hypocrisy the subject created themselves.",
+      "valence": "The two buttons MUST be the SAME valence -- both appealing, or both painful. If one is clearly better there is no sweat and the meme dies. Distinct from drake: here the choice has NOT been made yet.",
+      "boxes": [
+        {"index": 0, "purpose": "the first button -- one horn of the dilemma", "valence": "same valence as box 1"},
+        {"index": 1, "purpose": "the second button -- the conflicting horn, cannot coexist with box 0", "valence": "same valence as box 0"}
+      ],
+      "use_when": "A subject is visibly stuck between two options of equal weight that cannot both be taken -- especially when choosing either one exposes something about them.",
+      "do_not_use_when": "One option is clearly better (that is drake), or the choice is already made (also drake -- this template is for the sweat BEFORE the decision).",
+      "worked_example": {
+        "subject": "A GM after a bad trade",
+        "boxes": ["ADMIT THE TRADE WAS A MISTAKE", "DOUBLE DOWN AND SEND ANOTHER FIRST"],
+        "why_it_lands": "Both options are painful, they genuinely conflict, and the dilemma is entirely self-inflicted. No decision has been made yet -- he is still sweating."
+      },
+      "anti_example": {
+        "boxes": ["WIN THE CHAMPIONSHIP", "MISS THE PLAYOFFS"],
+        "why_it_fails": "Opposite valence and not a real dilemma -- nobody sweats over whether to win. A ranked preference wearing the wrong template."
+      },
+      "special_handling": null,
+      "tags": ["dilemma", "choice", "tension", "hypocrisy", "indecision", "subject-implied"],
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Same-valence requirement added per review feedback."
+    }
+  ]
+}

@@ -43,8 +43,9 @@ from bs4 import BeautifulSoup
 
 import gif_url_cache as GC
 
-UAT_DIR = Path(__file__).resolve().parent
-REPO_ROOT = UAT_DIR.parent
+# Moved from uat/ to the repo root so production shares it rather than
+# carrying a second copy. REPO_ROOT is now this file's own directory.
+REPO_ROOT = Path(__file__).resolve().parent
 LIBRARY_PATH = REPO_ROOT / "prompts" / "gif_library.DRAFT.json"
 
 GIPHY_BY_ID_URL = "https://api.giphy.com/v1/gifs/{gif_id}?api_key={key}"

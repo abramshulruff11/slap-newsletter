@@ -21,6 +21,13 @@ from pathlib import Path
 from dotenv import load_dotenv
 import anthropic
 
+# Deterministic audits shared with uat/generate_newsletter_uat.py. One copy on
+# purpose: the prompt forks drifted for months because promotion was manual,
+# and a second copy of this code would drift the same way somewhere a prompt
+# diff would never surface it.
+import plan_audit
+import meme_library
+
 SCRIPT_DIR = Path(__file__).resolve().parent
 load_dotenv(SCRIPT_DIR / ".env", override=True)
 
@@ -732,6 +739,12 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
     print("\n── PASS 1: Story Selector ──────────────────────────")
 
     selector_prompt = load_prompt("pass1_story_selector.txt")
+    # Compact one-line-per-template index (~1.8K tokens). Pass 1 picks the slug;
+    # Pass 2 receives only the chosen templates' full entries, which is why the
+    # whole ~20K library is never injected here.
+    _meme_index = meme_library.load_selector_index()
+    if _meme_index:
+        selector_prompt = selector_prompt + "\n\n" + "=" * 80 + "\n\n" + _meme_index
     if not selector_prompt:
         raise SystemExit("Error: prompts/pass1_story_selector.txt not found.")
 
@@ -806,6 +819,22 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         },
         "required": ["account", "url"],
     }
+    # A beat is one complete emotional/informational movement (setup + landing)
+    # within a story. Pass 2 writes against these rather than free-forming,
+    # which closes the "borrowed tweet" loophole where the writer could pull a
+    # tweet assigned to another section. Optional: a light story with no real
+    # sub-angles can submit zero beats and the writer falls back to
+    # research_notes. "media" holds candidate tweet(s) for that beat, empty
+    # when the beat is carried by prose, a GIF or a meme instead.
+    _beat = {
+        "type": "object",
+        "properties": {
+            "angle":   {"type": "string"},
+            "landing": {"type": "string"},
+            "media":   {"type": "array", "items": _tweet},
+        },
+        "required": ["angle", "landing"],
+    }
     _story = {
         "type": "object",
         "properties": {
@@ -814,7 +843,30 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             "tweets":         {"type": "array", "items": _tweet},
             "research_notes": {"type": "string"},
             "gif_concept":    {"type": "string"},
+            # Tier is a STRUCTURED decision, not left to the writer's judgment.
+            # UAT runs showed the writer collapses every specific concept into a
+            # generic library category when the tier is only described in prose
+            # — including a seed that literally named a Home Alone scene.
+            "gif_tier": {
+                "type": "integer",
+                "enum": [1, 3],
+                "description": (
+                    "1 = generic emotional beat, any face works — the writer must "
+                    "use a curated library category. 3 = a SPECIFIC named person, "
+                    "clip or moment IS the joke and no generic reaction substitutes "
+                    "— the writer must use live search. Set 3 only when you named a "
+                    "specific person/scene in gif_concept. Omit when gif_concept is "
+                    "empty."
+                ),
+            },
             "meme_concept":   {"type": "string"},
+            # Pass 1 picks the TEMPLATE, not just a prose concept.
+            # meme_template must be a slug from the MEME SELECTOR INDEX;
+            # meme_subject names who the meme is about. Both empty when no meme
+            # fits — an empty pair is a valid, common answer.
+            "meme_template":  {"type": "string"},
+            "meme_subject":   {"type": "string"},
+            "beats":          {"type": "array", "items": _beat},
         },
         "required": ["topic", "headline", "tweets"],
     }
@@ -888,7 +940,11 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         try:
             response = client.messages.create(
                 model=MODEL_DEFAULT,
-                max_tokens=16384,
+                # Beats plus the meme/gif fields roughly double the plan's size.
+                # UAT runs this at 32768; leaving prod at 16384 truncates
+                # silently, which is what cost Around the League a regression
+                # the last time this limit was too low.
+                max_tokens=32768,
                 system=[
                     {
                         "type": "text",
@@ -1059,10 +1115,23 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             if attempt > 1:
                 print(f"  ✓ Pass 1 succeeded on attempt {attempt}/{MAX_ATTEMPTS}")
 
-            dist = plan.get("account_distribution", {})
-            over_cap = {k: v for k, v in dist.items() if v > 2}
+            # account_distribution is written by the MODEL and spans every
+            # tweet including Around the League — but ATL is uncapped under the
+            # unified account-cap policy, so trusting it flags accounts that
+            # are within policy. On 2026-08-27 the UAT copy of this check named
+            # @AdamSchefter and @TalkinBaseball_, both over only because of
+            # ATL, while the real violations went unmentioned. Count the
+            # headliners ourselves.
+            head_dist: dict = {}
+            for _s in [plan.get("lead_story", {})] + plan.get("supporting_stories", []):
+                for _t in (_s.get("tweets") or []):
+                    if isinstance(_t, dict) and _t.get("account"):
+                        _a = "@" + str(_t["account"]).lstrip("@")
+                        head_dist[_a] = head_dist.get(_a, 0) + 1
+            over_cap = {k: v for k, v in head_dist.items()
+                        if v > plan_audit.effective_cap(k)}
             if over_cap:
-                print(f"  ⚠ Account cap violations in plan: {over_cap}")
+                print(f"  ⚠ Headliner account cap violations: {over_cap}")
             else:
                 print(f"  ✓ Account distribution within caps")
 
@@ -1169,6 +1238,15 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
     gif_reference    = load_prompt("gif_reference.txt")
     meme_reference   = load_prompt("meme_reference.txt")
 
+    # The GIF library's category menu is injected at load time rather than
+    # pasted into the prompt file, so the two can never drift as categories are
+    # added or a category's last verified entry is retired. Without this the
+    # prompt would ship a literal "{{GIF_LIBRARY_CATEGORIES}}" to the model.
+    if "{{GIF_LIBRARY_CATEGORIES}}" in gif_reference:
+        import gif_library_select as _GL
+        gif_reference = gif_reference.replace(
+            "{{GIF_LIBRARY_CATEGORIES}}", _GL.category_prompt_block())
+
     # Voice examples load FIRST so the model reads the target before the rules.
     # This matches how Pass 4 (Voice Editor) works and weights imitation over instruction.
     static_parts = []
@@ -1217,10 +1295,23 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
     # Sending full raw_content.json here was redundant and added ~40K tokens per run.
     game_state_block = format_game_state_summary(game_state or {})
     recent_media_block = format_recent_media_block(SCRIPT_DIR)
+    # Full spec for ONLY the 1-2 templates Pass 1 chose (~550 tokens each).
+    # Deliberately in the user message, never the cached system block: the
+    # selection changes per run and would thrash the prompt cache.
+    try:
+        _plan_obj = json.loads(story_plan)
+    except (json.JSONDecodeError, TypeError):
+        _plan_obj = {}
+    _meme_slugs = meme_library.collect_meme_slugs(_plan_obj)
+    _meme_specs = meme_library.format_meme_specs(_meme_slugs)
+    if _meme_slugs:
+        print(f"  [memelib] Pass 2 spec injected for: {', '.join(_meme_slugs)}")
+
     user_message = (
         degraded_block
         + (game_state_block + "\n\n" if game_state_block else "")
         + recent_media_block
+        + (_meme_specs + "\n" if _meme_specs else "")
         + "## TODAY'S STORY PLAN\n\n"
         "The story selector has already decided which stories to cover and which "
         "tweets to use. Follow this plan. Do not add stories or tweets not listed "
@@ -1467,6 +1558,12 @@ def pre_edit(draft_html: str, story_plan_raw: str) -> str:
     else:
         print("  ✓ All tweets correctly assigned to their sections")
 
+    # Account caps and §2.2 redundancy, counted rather than asked for.
+    # editor_prompt.txt CHECK 3 used to ask the model to do this and it got the
+    # answer backwards; see plan_audit.py.
+    result = plan_audit.audit_account_diversity(result)
+    result = plan_audit.audit_redundant_tweets(result)
+
     return result
 
 
@@ -1571,6 +1668,47 @@ def main() -> None:
 
     story_plan    = run_pass1(raw, recent_output, client, game_state, degraded=degraded)
     recent_output = save_story_log(story_plan, recent_output, RECENT_OUTPUT_PATH)
+
+    # §2.4 — verify the media seed floor the Pass 1 prompt asks for. GIF
+    # shortfalls are filled from the story's own beat landings; meme shortfalls
+    # are reported, never fabricated, because a meme needs a named subject.
+    try:
+        _p = json.loads(story_plan)
+        _s = plan_audit.audit_media_seeds(_p)
+        print(f"  §2.4 media seeds: {_s['gif']} gif / {_s['meme']} meme across "
+              f"{_s['stories']} stories (floor {plan_audit.MIN_GIF_SEEDS}/"
+              f"{plan_audit.MIN_MEME_SEEDS})")
+        if _s["gif_short"]:
+            for _h, _c in plan_audit.backfill_gif_seeds(_p):
+                print(f"       + gif seed from beat landing — {_h}: {_c}…")
+            _s = plan_audit.audit_media_seeds(_p)
+            story_plan = json.dumps(_p, ensure_ascii=False)
+        if _s["meme_short"]:
+            print(f"       ⚠ {_s['meme_short']} meme seed(s) below floor — "
+                  f"subject gate unmet; not fabricated")
+    except (json.JSONDecodeError, TypeError, KeyError) as e:
+        print(f"  ⚠ §2.4 seed audit skipped — {e}")
+
+    # §2.3 — trim to the tweet budget BEFORE Pass 2 writes, so the excess never
+    # reaches the draft. Pass 1's prompt states no ceiling; on 2026-08-27 it
+    # took 35 against a 20-24 target. Degrades safely on a plan with no beats.
+    try:
+        _plan = json.loads(story_plan)
+        _rep = plan_audit.enforce_tweet_budget(_plan)
+        if _rep["dropped"]:
+            _by: dict = {}
+            for _reason, _acct in _rep["dropped"]:
+                _by[_reason] = _by.get(_reason, 0) + 1
+            print(f"  §2.3 tweet budget: {_rep['before']} → {_rep['after']} "
+                  f"(ceiling {plan_audit.TWEET_CEILING})")
+            for _reason, _n in sorted(_by.items(), key=lambda kv: -kv[1]):
+                print(f"       -{_n:<2d} {_reason}")
+            story_plan = json.dumps(_plan, ensure_ascii=False)
+        else:
+            print(f"  ✓ §2.3 tweet budget OK — {_rep['after']} tweet(s)")
+    except (json.JSONDecodeError, TypeError, KeyError) as e:
+        print(f"  ⚠ §2.3 tweet budget skipped — {e}")
+
     draft_html    = run_pass2(story_plan, client, game_state, degraded=degraded)
 
     # Pass 3 — Claim Validator (deterministic, cross-refs game_state.json)
@@ -1637,6 +1775,20 @@ def main() -> None:
             print("  ⚠ IMGFLIP_USERNAME / IMGFLIP_PASSWORD not set — skipping meme generation")
         else:
             template_map = build_template_map()
+
+            # Box-count guard. Imgflip returns HTTP 200 for a short boxes[]
+            # list and renders the leftover panels BLANK, so process_newsletter
+            # would otherwise count a meme with an empty punchline as a
+            # success. Audit before spending the API call, and drop any
+            # placeholder that would render short — a missing meme is better
+            # than one with a blank payoff panel.
+            import meme_box_check as _MB
+            _findings, _ = _MB.check_html(body, template_map)
+            _MB.report(_findings, strict=True)
+            body, _short = _MB.strip_short_memes(body, _findings)
+            if _short:
+                print(f"  ⚠ {_short} short meme placeholder(s) removed")
+
             body, _ = process_newsletter(body, template_map, imgflip_user, imgflip_pass, repo_root=SCRIPT_DIR)
             print(f"  ✓ Memes embedded in both output files")
     except Exception as e:

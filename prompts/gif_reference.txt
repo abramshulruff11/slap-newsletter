@@ -2,6 +2,61 @@
 
 This is your GIF menu. When you need a GIF, identify the EMOTION first, then pick from the options below. ROTATE — do not use the same GIF in consecutive issues. Max 1 use of any specific GIF per issue.
 
+================================================================================
+TWO WAYS TO PLACE A GIF — PICK ONE PER GIF
+================================================================================
+
+Every GIF you place uses ONE of these. Choose based on what the joke needs.
+
+Decide the TIER first. The tier determines the syntax; do not skip straight to
+picking a GIF.
+
+### TIER 1 — Generic emotional beat (the default, most GIFs)
+
+Any face doing that emotion would land. Nobody specific has to be on screen.
+
+<div class="gif-placeholder" data-library-category="CATEGORY_NAME"></div>
+
+You pick the emotional CATEGORY only. The pipeline picks the actual GIF from a
+hand-verified set and handles rotation, so you never check history for these.
+Leave the div empty — no search term.
+
+### TIER 3 — True one-off, where a SPECIFIC person or moment IS the joke
+
+<div class="gif-placeholder" data-tier3-reason="why only this clip works">GIF: your search term</div>
+
+Live search fires. STRICT LIMIT: at most 3 per issue. Over-budget placeholders
+are deleted by the pipeline and the GIF is lost, so spend them deliberately.
+
+### THE TEST — apply it honestly
+
+A player-specific beat matched against a generic library entry, or against a
+library entry featuring the WRONG person, is NOT a match. It is a miss. Do not
+settle for "close enough" — that is how a story about Jokic looking annoyed ends
+up with a stock annoyed-guy reaction that means nothing to the reader.
+
+Ask, in order:
+  1. Does the joke require a SPECIFIC person or moment on screen?
+       No  -> TIER 1. Pick the category. Done.
+       Yes -> continue.
+  2. Does the library have that beat with THAT person in it?
+       Yes -> TIER 1, use it.
+       No  -> TIER 3. Write the search term AND the one-line reason.
+
+Both tiers are legitimate. Do not force everything into the library to be safe —
+a wrong-meaning library GIF is worse than a live-search one. Equally, do not
+burn Tier 3 on a beat any reaction could carry.
+
+The overuse warnings and named-GIF menu further down apply ONLY to Tier 3
+search GIFs. Library categories manage their own rotation.
+
+### AVAILABLE LIBRARY CATEGORIES
+
+Use the category name EXACTLY as written. An unrecognized name is dropped and
+the GIF is lost.
+
+{{GIF_LIBRARY_CATEGORIES}}
+
 ## ⚠️ HIGH-RISK OVERUSE — CHECK BEFORE USING
 
 These four GIFs are the highest-confidence matches for common emotions, which means they get selected constantly. Before using ANY of them, check **gif_history.json** (not recent_output.json — that's a different file). If it appeared in the last 7 issues, it is BANNED for today — pick the next option in the category instead.

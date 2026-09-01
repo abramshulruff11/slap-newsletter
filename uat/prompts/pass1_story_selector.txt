@@ -186,6 +186,12 @@ If the commentary states it, cut the tweet.
 Count every tweet you reject under this rule and report the total in
 filter_stats.update_tweets_rejected when you call submit_story_plan.
 
+PREFER GIF TWEETS OVER VIDEO TWEETS:
+When two tweets cover the same beat, assign the one containing a GIF over the
+one containing a video. GIFs autoplay inline in Substack; videos require a
+click. If only a video tweet exists for a beat, still include it — this rule
+only fires when there is a choice.
+
 TWEETS MUST OVERLAP THE STORY THEY SIT UNDER:
 Every tweet you assign to a story section must reference the same team, player,
 game, or event as that story. A tweet that shares none of those entities does
@@ -666,10 +672,29 @@ notes to surface that reaction, not just confirm the fact.
 MEDIA SEEDING — gif_concept / meme_concept
 ================================================================================
 
-For the lead and each supporting story, seed ONE media idea so the writer starts
-with a hook instead of a blank slate. The writer makes the final call and may
-add more — your seed is a suggestion, not a mandate. Around the League gets NO
-media seeds (it stays tweet-only).
+For the lead and each supporting story, seed media so the writer starts with a
+hook instead of a blank slate. Around the League gets NO media seeds (it stays
+tweet-only).
+
+MINIMUM PER ISSUE — this is a floor, not a target:
+  * at least 3 stories with a gif_concept
+  * at least 3 stories with a meme_concept (+ meme_template + meme_subject)
+
+A story may carry BOTH a gif_concept and a meme_concept. It usually should when
+it has a clear emotional beat AND a clean comparison — they land in different
+beats, so they do not compete. With five stories, hitting both floors means at
+least one story carries both. Seed them on the stories with the most material,
+not by spreading one thin seed each.
+
+Why the floor exists: tweets are capped and the issue reads as a wall of
+screenshots without reaction media. Under-seeding is the most common way an
+issue comes out flat.
+
+THE ONE THING THAT OVERRIDES THE MEME FLOOR: the subject gate below. A meme
+about nobody in particular is not a joke. If you genuinely cannot reach 3
+memes without forcing one onto a subjectless story, seed the GIF instead and
+leave that meme empty — a missing meme beats a dead one. Do not invent a
+subject to satisfy a count.
 
 HOW TO SEED:
 - Identify the story's main emotional beat (disbelief, schadenfreude, vindication,
@@ -693,8 +718,28 @@ HOW TO SEED:
 
   Most stories are Tier 1. Budget at most 3 Tier 3 seeds per issue; beyond that
   the writer's extras are dropped by the pipeline.
-- meme_concept = a comparison/argument idea (Trade Offer, Drake, Spider-Man
-  pointing) ONLY when the story has two things to contrast or a take to make.
+- meme_concept = a comparison/argument idea ONLY when the story has two things
+  to contrast or a take to make.
+- meme_template = the SLUG of the template that fits, chosen from the MEME
+  SELECTOR INDEX at the end of this prompt. Empty string when meme_concept is
+  empty. Never invent a slug — if nothing in the index fits, leave BOTH empty.
+- meme_subject = the specific person, team, or front office the meme is ABOUT.
+
+PICKING A meme_template — read the index by ENGINE first, not by template name.
+Each engine states the comedic mechanism and a TEST that decides whether it
+applies. Find the engine whose TEST your story passes, then pick a template
+within it. Two engines that look similar are usually separated by one question
+— e.g. drake vs two-buttons is decided entirely by whether the subject has
+ALREADY decided (drake) or is still stuck (two-buttons).
+
+THE SUBJECT REQUIREMENT IS A GATE, NOT A DETAIL. Every template needs a named
+subject. Before seeding a meme, ask: can I name the person or team this is
+about? If the honest answer is no — it is a league-wide trend, a general stat,
+nobody in particular — then NO template fits. Leave meme_concept,
+meme_template and meme_subject all empty and seed a gif_concept instead. A meme
+about an abstraction is not a joke, it is a comparison, and it lands flat.
+Forcing a template onto a subjectless story is the single most common way these
+go wrong.
 
 GIF vs MEME BALANCE — aim for roughly 70% GIFs, 30% memes across the issue. Most
 stories should seed a gif_concept and leave meme_concept empty. Seed a meme only

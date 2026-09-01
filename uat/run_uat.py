@@ -49,7 +49,7 @@ import gif_library_select as GL              # noqa: E402
 # ---------------------------------------------------------------------------
 # CONFIG — §1.2
 # ---------------------------------------------------------------------------
-MEDIA_MIX_TARGET = 0.50   # (gifs + memes + highlights) / total media blocks
+MEDIA_MIX_TARGET = 0.40   # (gifs + memes + highlights) / total media blocks
 TWEET_TARGET     = (20, 24)
 GIF_MEME_TARGET  = (20, 24)
 HIGHLIGHT_TARGET = (3, 5)
@@ -320,7 +320,55 @@ def main() -> None:
                                .get("update_tweets_rejected", "not reported"))
         except (json.JSONDecodeError, AttributeError):
             update_rejected = "unparseable"
-        print(f"  §2.2 pure-update filter: {update_rejected} tweet(s) rejected")
+        print(f"  §2.2 self-reported rejections: {update_rejected} "
+              f"(model's own count — not verified)")
+
+        # §2.4 media seed floor — verify what the prompt asks for.
+        try:
+            _p = json.loads(story_plan)
+            _s = G.audit_media_seeds(_p)
+            print(f"  §2.4 media seeds: {_s['gif']} gif / {_s['meme']} meme "
+                  f"across {_s['stories']} stories "
+                  f"(floor {G.MIN_GIF_SEEDS}/{G.MIN_MEME_SEEDS}, "
+                  f"{_s['both']} story/ies carry both)")
+            if _s["gif_short"]:
+                _filled = G.backfill_gif_seeds(_p)
+                for _h, _c in _filled:
+                    print(f"       + gif seed from beat landing — {_h}: {_c}…")
+                _s = G.audit_media_seeds(_p)
+                if _s["gif_short"]:
+                    print(f"       ⚠ still {_s['gif_short']} gif seed(s) short "
+                          f"— no beat landing to derive from")
+                story_plan = json.dumps(_p, ensure_ascii=False)
+            if _s["meme_short"]:
+                # Never auto-filled: a meme needs a named subject and inventing
+                # one is the failure the subject gate exists to prevent.
+                print(f"       ⚠ {_s['meme_short']} meme seed(s) below floor — "
+                      f"Pass 1 judged the subject gate unmet; not fabricated")
+        except (json.JSONDecodeError, TypeError, KeyError) as e:
+            print(f"  ⚠ §2.4 seed audit skipped — {e}")
+
+        # Trim to the tweet budget BEFORE Pass 2 writes. Pass 1 has no ceiling
+        # in its prompt and took 35 against a 20-24 target on 2026-08-27, which
+        # is what held the GIF/meme share at 27% against a 50% target.
+        try:
+            _plan = json.loads(story_plan)
+            _rep = G.enforce_tweet_budget(_plan)
+            if _rep["dropped"]:
+                _by = {}
+                for _reason, _acct in _rep["dropped"]:
+                    _by[_reason] = _by.get(_reason, 0) + 1
+                print(f"  §2.3 tweet budget: {_rep['before']} -> {_rep['after']} "
+                      f"(ceiling {G.TWEET_CEILING})")
+                for _reason, _n in sorted(_by.items(), key=lambda kv: -kv[1]):
+                    print(f"       -{_n:<2d} {_reason}")
+                print(f"       per section: {_rep['sections']}")
+                story_plan = json.dumps(_plan, ensure_ascii=False)
+            else:
+                print(f"  ✓ §2.3 tweet budget OK — {_rep['after']} tweet(s)")
+        except (json.JSONDecodeError, TypeError, KeyError) as e:
+            print(f"  ⚠ §2.3 tweet budget skipped — {e}")
+
         (G.OUTPUT_DIR / "story_plan.json").write_text(story_plan, encoding="utf-8")
     else:
         cached = G.OUTPUT_DIR / "story_plan.json"

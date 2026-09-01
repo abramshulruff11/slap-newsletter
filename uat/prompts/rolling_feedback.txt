@@ -109,3 +109,48 @@ BANNED PHRASES and editor_prompt.txt Check 1 Section B, plus before/after
 pairs to voice_examples.txt under a new META-NARRATION / VAGUE HEDGING
 section, since the phrase ban alone won't generalize to unseen variants of
 the same construction.
+
+STILL RECURRING [Noted: 2026-08-31]:
+Two more instances from 8/29, same root failure — six-plus short fragments
+stacked with zero connective sentence:
+
+  "Eight years. $163.2 million. The NHL has its first $20 million man.
+   Total contract is the largest in league history — just below the $20.8M
+   cap maximum. Two-time Norris winner, Conn Smythe winner, Stanley Cup
+   champion. Also a defenseman."
+
+  "First player. WNBA history. Back-to-back 30-and-10s. The league has
+   existed since 1997 and nobody had done this. Clark did it in her second
+   season."
+
+Both were flagged "fragmented, bad writing" despite strong underlying facts.
+A second passage in the SAME review, covering the SAME Makar contract, was
+flagged good — it used the identical raw material (record-setting money,
+cross-league comparison) but connected the facts with real sentences instead
+of a bare list. The fix specified above (vary length, land one longer
+connecting sentence per 3-4 short ones) is correct — enforcement is still
+slipping three months after this rule was added. If this keeps recurring,
+move it from "count and vary" guidance into an explicit self-check step
+before finalizing a section, similar to Editor Check 1.
+
+================================================================================
+RULE 5 — EMPTY CLOSER FRAGMENTS [Added: 2026-08-31]
+================================================================================
+A recurring failure across 8/29-8/30 output: a passage ends on a short
+fragment that restates timing or scale but adds no new information — a
+stage direction standing in for content.
+
+FAILURE EXAMPLES:
+  "Allen is 34. On a one-year deal. Signed twelve days ago. Do the math."
+  "The Colts WR depth chart without Allen and Pierce: Josh Downs, Nick
+   Westbrook-Ikhine, and Laquon Treadwell. In 2026."
+
+Both passages were flagged "starts solid, turns meh" / "ends meh" — the
+setup (the facts) worked, the closer added nothing and just restated what
+the reader already knows (the year, that they should do arithmetic).
+
+THE RULE: A closing fragment must land a fact or a joke, not just gesture
+at one. Before shipping a trailing one-line fragment, ask: does this add
+information the reader didn't already have? If it's just naming the year,
+telling the reader to do math, or otherwise pointing at the punchline
+instead of being one — cut it and end on the last real fact instead.

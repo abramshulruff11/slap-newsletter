@@ -1,0 +1,98 @@
+# MEME SELECTOR INDEX -- one line per template, for Pass 1 slug selection.
+# Derived from prompts/meme_library.DRAFT.json. Do not hand-edit.
+# Regenerate: python -c "import meme_library; meme_library.write_selector_index()"
+# Pass 1 picks a slug; Pass 2 receives that template's full entry for caption writing.
+
+## subject_abandons_sensible_for_funky
+   A named subject faces an obviously correct option and visibly goes with the worse, pettier, or stranger one.
+   TEST: The choice is ALREADY MADE and public. We are reacting to it, not predicting it.
+   - drake (2 boxes, subject: copy) -- Subject already chose the petty option over the obvious one. Needs a named subject in the copy.
+   - distracted-boyfriend (3 boxes, subject: box:2) -- Subject publicly moves on from an incumbent toward a new option. Subject goes IN box 2.
+   - left-exit-12-off-ramp (3 boxes, subject: box:2) -- Abrupt last-second swerve off an established plan. Use over drake when suddenness is the story.
+
+## self_inflicted_realization
+   The subject caused their own problem, and the reveal -- them realizing it, or conspicuously not -- is the punchline.
+   TEST: Could the subject have avoided this by not doing the thing they did? If no, wrong engine.
+   - gru-plan (4 boxes, subject: copy) -- Plan whose own final step reveals the self-inflicted flaw. Writer supplies 3 captions; code repeats the 3rd.
+   - clown-applying-makeup (4 boxes, subject: copy) -- Escalating self-delusion in four stages ending in full clown. All four from the same subject.
+   - eric-andre-shooting (3 boxes, subject: box:0) -- Subject caused the harm then acts baffled about who did it. Subject goes IN box 0, victim in box 1.
+
+## never_arrives
+   Something awaited -- an answer, a concession, an event -- never materializes, and the waiting itself becomes the joke.
+   TEST: Is the subject still waiting/asking as of today? If it already resolved, do not use this engine.
+   - anakin-padme (3 boxes, subject: copy) -- Ominous statement + hopeful question that never gets answered. Writer supplies 2 captions.
+   - bernie-i-am-once-again-asking (2 boxes, subject: copy) -- Weary Nth-time plea for a reasonable thing that keeps going unmet.
+   - waiting-skeleton (2 boxes, subject: copy) -- Eternal futile wait for something that never comes. Do not use if it resolved.
+
+## obliviousness_gap
+   The subject's grasp of reality is comically out of step with what the audience can plainly see.
+   TEST: Would a casual fan have seen this coming? If not, the subject is not oblivious -- they are just informed.
+   - surprised-pikachu (3 boxes, subject: copy) -- Shock at a completely foreseeable consequence of the subject's own action.
+   - always-has-been (2 boxes, subject: copy) -- Naive realization of a cynical truth that was always true. Not for new developments.
+   - is-this-a-pigeon (3 boxes, subject: box:0) -- Confident, cheerful misidentification of something obvious.
+
+## escalating_ladder
+   An ordered sequence of rungs, each more extreme than the last, ending somewhere absurd.
+   TEST: Are there genuinely FOUR distinct rungs? Two beats is a comparison -- use drake instead.
+   - expanding-brain (4 boxes, subject: copy) -- Four rungs of escalating 'sophistication', top rung ironically dumbest.
+   - vince-mcmahon-reaction (5 boxes, subject: copy) -- FIVE escalating versions of ONE thing, peaking at maximum hype. All 5 panels need captions.
+
+## denial_amid_disaster
+   The subject presents calm or contentment while something is visibly going wrong.
+   TEST: Is the subject claiming things are fine? If they are openly panicking, use a panic template instead.
+   - this-is-fine (2 boxes, subject: copy) -- Subject calmly insists all is fine while a visible disaster burns. Denial is required.
+   - hide-the-pain-harold (2 boxes, subject: copy) -- Forced smile over private, quiet pain. Softer than this-is-fine.
+
+## contempt_face_off
+   Two parties, one of them dismissive, mocking, or utterly unbothered by the other.
+   TEST: Is one side clearly not taking the other seriously?
+   - mocking-spongebob (2 boxes, subject: copy) -- Echo a real claim back mockingly. Box 1 is the SAME words as box 0, typed normally.
+   - woman-yelling-at-cat (2 boxes, subject: copy) -- Heated accusation met with total, smug indifference. Energy mismatch required.
+
+## awkward_exit_or_evasion
+   The subject wants out of a situation -- either glancing away guiltily or actually leaving.
+   TEST: Does the subject have a reason to stay? If not, leaving is just sensible.
+   - monkey-puppet (2 boxes, subject: copy) -- Guilty side-eye from a subject implicated in the awkwardness.
+   - ight-imma-head-out (2 boxes, subject: copy) -- Resigned 'I'm out' exit from something the subject was invested in.
+
+## they_are_the_same
+   Two things presented or behaving as distinct turn out to be functionally identical.
+   TEST: Could you swap the two and have nothing meaningfully change?
+   - corporates-want-you-to-find-the-difference (3 boxes, subject: box:2) -- Two things sold as different that are functionally identical. The observer goes IN box 2; the verdict line is pre-printed.
+   - spider-man-pointing-at-spider-man (2 boxes, subject: copy) -- Two mirror-image parties accusing each other of the same thing.
+
+## hardened_vs_soft
+   A lopsided contrast between a hardened, battle-worn party and a soft, shocked, or diminished one.
+   TEST: Has the hardened side plainly been through worse?
+   - buff-doge-vs-cheems (4 boxes, subject: copy) -- Hardened past vs diminished present. Needs a lopsided toughness gap.
+   - first-time (2 boxes, subject: copy) -- Newcomer's shock vs veteran's routine endurance of the same thing.
+
+## forced_choice_dilemma
+   A subject frozen between two options of the SAME valence -- both appealing, or both painful -- that cannot coexist.
+   TEST: The choice is NOT yet made -- the subject is still sweating. If it is made, use subject_abandons_sensible_for_funky.
+   - two-buttons (3 boxes, subject: box:2) -- Subject still sweating between two SAME-valence options, choice not yet made. Subject goes IN box 2.
+
+## lopsided_exchange
+   A transaction framed as mutual that is transparently one-sided.
+   TEST: Would anyone actually accept this deal?
+   - trade-offer (3 boxes, subject: box:2) -- Blatantly one-sided swap framed as a polite formal trade offer. The offerer goes IN box 2.
+
+## understated_difficulty
+   Solemnly correcting the assumption that something is easy.
+   TEST: Does the audience underestimate this?
+   - one-does-not-simply (2 boxes, subject: copy) -- Solemn correction that an assumed-easy thing is actually hard.
+
+## unexpected_common_ground
+   Two normally-opposed parties turn out to share one thing.
+   TEST: Are these two actually rivals?
+   - epic-handshake (3 boxes, subject: copy) -- Two genuine rivals caught agreeing on one specific thing. The shared thing goes IN box 0.
+
+## emotional_whiplash
+   A three-beat swing: worry, relief, then a worse worry that cancels the relief.
+   TEST: Does the middle beat actually provide relief?
+   - panik-kalm-panik (3 boxes, subject: copy) -- Worry, GENUINE relief, then worse worry. Middle beat must actually reassure.
+
+## provocative_dare
+   Planting a contestable opinion and inviting argument.
+   TEST: Would this actually start an argument?
+   - change-my-mind (2 boxes, subject: copy) -- Genuinely contestable hot take planted as a dare. Must actually start an argument.

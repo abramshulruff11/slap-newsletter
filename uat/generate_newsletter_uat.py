@@ -38,6 +38,8 @@ if hasattr(sys.stdout, "reconfigure"):
 
 UAT_DIR     = Path(__file__).resolve().parent
 REPO_ROOT   = UAT_DIR.parent
+sys.path.insert(0, str(REPO_ROOT))
+import meme_library  # shared with prod; reads prompts/meme_library.DRAFT.json
 
 SCRIPT_DIR  = UAT_DIR            # kept: referenced throughout as repo_root for history
 PROMPT_DIR  = UAT_DIR / "prompts"
@@ -807,6 +809,11 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
     print("\n── PASS 1: Story Selector ──────────────────────────")
 
     selector_prompt = load_prompt("pass1_story_selector.txt")
+    # Compact one-line-per-template index (~2K tokens). Pass 1 selects the slug;
+    # Pass 2 receives only the chosen templates' full entries.
+    _meme_index = meme_library.load_selector_index()
+    if _meme_index:
+        selector_prompt = selector_prompt + "\n\n" + "="*80 + "\n\n" + _meme_index
     if not selector_prompt:
         raise SystemExit("Error: prompts/pass1_story_selector.txt not found.")
 
@@ -917,6 +924,12 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 ),
             },
             "meme_concept":   {"type": "string"},
+            # UAT meme-library test: Pass 1 now picks the TEMPLATE, not just a
+            # prose concept. meme_template must be a slug from the MEME SELECTOR
+            # INDEX; meme_subject names who the meme is about. Both empty when
+            # no meme fits — an empty pair is a valid, common answer.
+            "meme_template":  {"type": "string"},
+            "meme_subject":   {"type": "string"},
             "beats":          {"type": "array", "items": _beat},
         },
         "required": ["topic", "headline", "tweets"],
@@ -1189,10 +1202,21 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             if attempt > 1:
                 print(f"  ✓ Pass 1 succeeded on attempt {attempt}/{MAX_ATTEMPTS}")
 
-            dist = plan.get("account_distribution", {})
-            over_cap = {k: v for k, v in dist.items() if v > 2}
+            # account_distribution is written by the MODEL and covers every
+            # tweet including Around the League — but ATL is uncapped, so
+            # trusting it flags accounts that are actually within policy.
+            # On 2026-08-27 it named @AdamSchefter and @TalkinBaseball_, both
+            # of which were over only because of ATL. Count the headliners
+            # ourselves instead.
+            head_dist: dict = {}
+            for _s in [plan.get("lead_story", {})] + plan.get("supporting_stories", []):
+                for _t in (_s.get("tweets") or []):
+                    if isinstance(_t, dict) and _t.get("account"):
+                        _a = "@" + str(_t["account"]).lstrip("@")
+                        head_dist[_a] = head_dist.get(_a, 0) + 1
+            over_cap = {k: v for k, v in head_dist.items() if v > 2}
             if over_cap:
-                print(f"  ⚠ Account cap violations in plan: {over_cap}")
+                print(f"  ⚠ Headliner account cap violations: {over_cap}")
             else:
                 print(f"  ✓ Account distribution within caps")
 
@@ -1516,9 +1540,24 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
     # Sending full raw_content.json here was redundant and added ~40K tokens per run.
     game_state_block = format_game_state_summary(game_state or {})
     recent_media_block = format_recent_media_block(OUTPUT_DIR)
+
+    # UAT meme-library test: inject the FULL spec for only the templates Pass 1
+    # selected (~600 tokens each), not the whole 20K-token library. Goes in the
+    # user message rather than the cached system block because the selection
+    # changes every run and would thrash the cache.
+    try:
+        _plan_obj   = json.loads(story_plan) if isinstance(story_plan, str) else (story_plan or {})
+    except Exception:
+        _plan_obj   = {}
+    _meme_slugs = meme_library.collect_meme_slugs(_plan_obj)
+    _meme_specs = meme_library.format_meme_specs(_meme_slugs)
+    if _meme_slugs:
+        print(f"  [memelib] Pass 2 spec injected for: {', '.join(_meme_slugs)}")
+
     user_message = (
         (game_state_block + "\n\n" if game_state_block else "")
         + recent_media_block
+        + (_meme_specs + "\n" if _meme_specs else "")
         + "## TODAY'S STORY PLAN\n\n"
         "The story selector has already decided which stories to cover and which "
         "tweets to use. Follow this plan. Do not add stories or tweets not listed "
@@ -1766,8 +1805,26 @@ def pre_edit(draft_html: str, story_plan_raw: str) -> str:
     else:
         print("  ✓ All tweets correctly assigned to their sections")
 
+    result = _audit_account_diversity(result)
+    result = _audit_redundant_tweets(result)
+
     return result
 
+
+# The deterministic audits moved to plan_audit.py at the repo root so that
+# generate_newsletter.py can share them rather than carry a second copy.
+# Re-exported here because run_uat.py and the tests reach them as G.<name>,
+# and because pre_edit() above calls the two flaggers directly.
+from plan_audit import (                                          # noqa: E402
+    HEADLINER_ACCOUNT_CAP, INSIDER_HEADLINER_CAP, INSIDER_WIRE_ACCOUNTS,
+    REDUNDANCY_THRESHOLD, MIN_CONTENT_WORDS,
+    MIN_GIF_SEEDS, MIN_MEME_SEEDS,
+    TWEET_CEILING, ATL_MAX, MIN_TWEETS_LEAD, MIN_TWEETS_SUPPORTING,
+    audit_account_diversity as _audit_account_diversity,
+    audit_redundant_tweets as _audit_redundant_tweets,
+    audit_media_seeds, audit_redundancy, backfill_gif_seeds,
+    count_headliner_accounts, effective_cap, enforce_tweet_budget,
+)
 
 # ---------------------------------------------------------------------------
 # Pass 6 — Editor

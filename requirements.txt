@@ -6,3 +6,5 @@ requests
 tzdata
 playwright
 Pillow
+python-substack==0.1.22
+curl_cffi

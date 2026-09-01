@@ -39,8 +39,10 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
-UAT_DIR = Path(__file__).resolve().parent
-REPO_ROOT = UAT_DIR.parent
+# Moved from uat/ to the repo root so production shares it. It was UAT-only
+# until 2026-09-01, which meant prod could ship a meme with a blank panel
+# and report success — the exact failure this guard exists to catch.
+REPO_ROOT = Path(__file__).resolve().parent
 MEME_LIBRARY_PATH = REPO_ROOT / "prompts" / "meme_library.DRAFT.json"
 
 IMGFLIP_MEMES_URL = "https://api.imgflip.com/get_memes"
