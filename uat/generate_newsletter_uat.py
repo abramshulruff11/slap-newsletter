@@ -2004,6 +2004,72 @@ def count_headliner_accounts(html: str) -> dict:
     return counts
 
 
+# --- Media seed floor ---------------------------------------------------------
+# Pass 1 seeded 4 memes on one run and 2 on the next from the SAME input, which
+# is what left the media share at 33%. The prompt now states a floor; this
+# verifies it, because a prompt rule with no check is how the account cap and
+# §2.2 both ended up unenforced.
+#
+# GIFs can be backfilled safely: a Tier 1 concept IS an emotional beat, and the
+# plan already carries one per beat in `landing`. Memes cannot — they need a
+# named subject, and inventing one to satisfy a count produces exactly the dead
+# meme the subject gate exists to prevent. Meme shortfalls are reported, never
+# fabricated.
+MIN_GIF_SEEDS = 3
+MIN_MEME_SEEDS = 3
+
+
+def _seeded_stories(plan: dict) -> list:
+    out = [plan.get("lead_story", {}) or {}]
+    out += [s or {} for s in (plan.get("supporting_stories") or [])]
+    return out
+
+
+def audit_media_seeds(plan: dict) -> dict:
+    """Count gif/meme seeds against the floor. Read-only."""
+    stories = _seeded_stories(plan)
+    gifs = [s for s in stories if (s.get("gif_concept") or "").strip()]
+    memes = [s for s in stories
+             if (s.get("meme_concept") or "").strip()
+             and (s.get("meme_template") or "").strip()]
+    return {
+        "stories": len(stories),
+        "gif": len(gifs), "meme": len(memes),
+        "gif_short": max(0, MIN_GIF_SEEDS - len(gifs)),
+        "meme_short": max(0, MIN_MEME_SEEDS - len(memes)),
+        "both": sum(1 for s in stories
+                    if (s.get("gif_concept") or "").strip()
+                    and (s.get("meme_template") or "").strip()),
+    }
+
+
+def backfill_gif_seeds(plan: dict) -> list:
+    """
+    Fill empty gif_concepts from the story's own beat landings, up to the floor.
+
+    Not fabrication: `landing` is Pass 1's own statement of what the reader
+    should feel at that beat, which is precisely a Tier 1 GIF concept.
+    """
+    filled = []
+    for story in _seeded_stories(plan):
+        rep = audit_media_seeds(plan)
+        if rep["gif_short"] <= 0:
+            break
+        if (story.get("gif_concept") or "").strip():
+            continue
+        landing = ""
+        for beat in (story.get("beats") or []):
+            if isinstance(beat, dict) and (beat.get("landing") or "").strip():
+                landing = beat["landing"].strip()
+                break
+        if not landing:
+            continue
+        story["gif_concept"] = landing
+        story["gif_tier"] = 1          # derived beats are always library-generic
+        filled.append((story.get("headline", "?")[:40], landing[:60]))
+    return filled
+
+
 # --- Tweet budget -------------------------------------------------------------
 # Nothing capped the total tweet count. pass1_story_selector.txt never states a
 # ceiling, so Pass 1 took 35 on 2026-08-27 against a 20-24 target — which is

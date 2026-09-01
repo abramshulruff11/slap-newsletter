@@ -159,6 +159,42 @@ beat_urls = {m["url"] for s in [PLAN["lead_story"]] + sup
              for b in s["beats"] for m in b["media"]}
 check("beat media pruned in lockstep (no orphans)", beat_urls - leftover, set())
 
+
+print()
+print("=" * 66)
+print("MEDIA SEED FLOOR (§2.4)")
+print("=" * 66)
+
+
+def st(headline, gif="", meme="", tmpl="", landing="a real emotional landing here"):
+    return {"headline": headline, "gif_concept": gif, "meme_concept": meme,
+            "meme_template": tmpl, "tweets": [],
+            "beats": [{"angle": "a", "landing": landing, "media": []}]}
+
+
+SEEDPLAN = {
+    "lead_story": st("Lead"),
+    "supporting_stories": [st("S0"), st("S1", gif="already here"),
+                           st("S2", landing="")],
+}
+a = G.audit_media_seeds(SEEDPLAN)
+check("counts gif seeds", a["gif"], 1)
+check("counts meme seeds", a["meme"], 0)
+check("reports gif shortfall", a["gif_short"], 2)
+check("reports meme shortfall", a["meme_short"], 3)
+
+filled = G.backfill_gif_seeds(SEEDPLAN)
+b = G.audit_media_seeds(SEEDPLAN)
+check("gif floor reached by backfill", b["gif_short"], 0)
+check("backfill stops AT the floor, no more", b["gif"], G.MIN_GIF_SEEDS)
+check("story with no beat landing left alone",
+      SEEDPLAN["supporting_stories"][2]["gif_concept"], "")
+check("backfilled seeds marked Tier 1",
+      all(s.get("gif_tier") == 1 for _h, _c in filled
+          for s in [SEEDPLAN["lead_story"]] + SEEDPLAN["supporting_stories"]
+          if s.get("gif_concept") == _c), True)
+check("memes NEVER fabricated (subject gate wins)", b["meme"], 0)
+
 print()
 print("=" * 66)
 print("ALL CHECKS PASSED — 0 API calls")
