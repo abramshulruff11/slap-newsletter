@@ -27,6 +27,7 @@ import anthropic
 # diff would never surface it.
 import plan_audit
 import meme_library
+import gif_library_select
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 load_dotenv(SCRIPT_DIR / ".env", override=True)
@@ -1646,6 +1647,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="SLAP Newsletter Generator")
     parser.add_argument("--no-editor", action="store_true", help="Skip Pass 6 editor")
     parser.add_argument("--no-gifs", action="store_true", help="Skip GIF embedding")
+    parser.add_argument("--max-search-gifs", type=int, default=3,
+                        help="Tier 3 (live Giphy search) GIFs allowed per issue")
     args = parser.parse_args()
 
     api_key = os.getenv("ANTHROPIC_API_KEY")
@@ -1773,8 +1776,43 @@ def main() -> None:
     elif not giphy_key:
         print("  ⚠ GIPHY_API_KEY not set — skipping GIF embedding")
     else:
+        # Curated library first. It consumes only the placeholders carrying
+        # data-library-category; anything the writer left as a plain
+        # "GIF: <search term>" falls through to the live-search path below,
+        # unchanged. Order matters: library placeholders must be resolved
+        # before embed_gifs_in_html() so the two never contend.
+        _hist = load_gif_history(SCRIPT_DIR)
+        body, _lib_entries, _lib_stats = gif_library_select.render_library_gifs(
+            body, giphy_key, _hist)
+        if _lib_entries:
+            save_gif_history(SCRIPT_DIR, _lib_entries, _hist)
+
+        # Tier 3 budget is enforced BEFORE the search runs, so an over-budget
+        # GIF costs nothing rather than being fetched and then discarded.
+        body, _search_stats = gif_library_select.enforce_search_budget(
+            body, args.max_search_gifs)
+
         body, _used_gifs = embed_gifs_in_html(body, giphy_key, repo_root=SCRIPT_DIR)
+        gif_library_select.report(_lib_stats, _search_stats["kept"])
+        try:
+            _planned, _seeds = gif_library_select.count_planned_tier3_from_plan(
+                json.loads(story_plan))
+        except (json.JSONDecodeError, TypeError):
+            _planned, _seeds = 0, []
+        gif_library_select.report_tiers(_lib_stats, _search_stats,
+                                        args.max_search_gifs, _planned, _seeds)
         print(f"  ✓ GIFs embedded in both output files")
+
+    # Nothing un-rendered may reach the output. On 2026-09-01 the writer emitted
+    # 7 data-library-category placeholders and prod had no consumer for them, so
+    # they shipped as invisible empty divs and the only log line was "No GIF
+    # placeholders found" — a silent media loss that read like an editorial
+    # choice. This is the backstop for that whole class: any placeholder no
+    # consumer claimed gets stripped and counted out loud.
+    body, _orphans = gif_library_select.strip_orphan_gif_placeholders(body)
+    if _orphans:
+        print(f"  ⚠ {len(_orphans)} GIF placeholder(s) reached the output "
+              f"un-rendered and were stripped: {', '.join(_orphans)}")
 
     # ── Meme Pipeline ──────────────────────────────────────
     print("\n── MEME PIPELINE ───────────────────────────────────")

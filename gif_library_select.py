@@ -252,6 +252,26 @@ def render_library_gifs(html: str, api_key: str, history: list) -> tuple[str, li
     return str(soup), new_entries, stats
 
 
+def strip_orphan_gif_placeholders(html: str) -> tuple[str, list]:
+    """
+    Remove any gif-placeholder div no consumer resolved, and name what was lost.
+
+    Returns (html, descriptions). A placeholder surviving this far means the
+    writer used a form the pipeline cannot render — a new attribute, an unknown
+    library category, or a tier whose consumer was never wired up.
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    orphans = []
+    for div in soup.find_all("div", class_="gif-placeholder"):
+        label = (div.get("data-library-category")
+                 or div.get_text(strip=True)[:40] or "(empty)")
+        orphans.append(label)
+        div.decompose()
+    if not orphans:
+        return html, []
+    return str(soup), orphans
+
+
 def enforce_search_budget(html: str, cap: int) -> tuple[str, dict]:
     """
     Hard-cap Tier 3 (live-search) GIFs per issue.
@@ -284,21 +304,21 @@ def enforce_search_budget(html: str, cap: int) -> tuple[str, dict]:
     return (str(soup) if stats["dropped"] else html), stats
 
 
-def count_planned_tier3(story_plan_path: Path) -> tuple[int, list]:
+def count_planned_tier3_from_plan(plan: dict) -> tuple[int, list]:
     """
     How many Tier 3 GIFs did Pass 1 actually ask for?
 
     This is the compliance baseline: if Pass 1 seeded 2 Tier 3 concepts and the
     writer produced 0 search placeholders, it silently downgraded them into
     generic library picks — the exact failure this tier field exists to stop.
-    """
-    if not story_plan_path.exists():
-        return 0, []
-    try:
-        plan = json.loads(story_plan_path.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError):
-        return 0, []
 
+    Takes the parsed plan so production can pass the plan it already holds in
+    memory. Production never writes story_plan.json — that file is a UAT-only
+    artifact for its Pass 1 cache — so the path-based wrapper below would always
+    report zero there, silently retiring this check on the one run that ships.
+    """
+    if not isinstance(plan, dict):
+        return 0, []
     stories = [plan.get("lead_story") or {}] + list(plan.get("supporting_stories") or [])
     seeds = []
     for s in stories:
@@ -307,6 +327,17 @@ def count_planned_tier3(story_plan_path: Path) -> tuple[int, list]:
         if int(s.get("gif_tier") or 1) == 3 and (s.get("gif_concept") or "").strip():
             seeds.append((s.get("headline", "(untitled)"), s["gif_concept"]))
     return len(seeds), seeds
+
+
+def count_planned_tier3(story_plan_path: Path) -> tuple[int, list]:
+    """Path-based wrapper over count_planned_tier3_from_plan (UAT call site)."""
+    if not story_plan_path.exists():
+        return 0, []
+    try:
+        plan = json.loads(story_plan_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return 0, []
+    return count_planned_tier3_from_plan(plan)
 
 
 def report_tiers(lib_stats: dict, search_stats: dict, cap: int,
