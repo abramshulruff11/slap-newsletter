@@ -19,6 +19,7 @@ Proves, in production code:
 """
 import os
 import sys
+import json
 import types
 from pathlib import Path
 
@@ -142,6 +143,92 @@ check("beat has angle/landing/media",
       sorted(beat_props) == ["angle", "landing", "media"], True)
 
 check("max_tokens raised for beats-shaped plans", p1["max_tokens"], 32768)
+
+# --- §2.1 video filter + the PURE UPDATE FILTER's forcing function -----------
+# Both of these existed only in UAT until 2026-09-03 while prod ran the SAME
+# prompt asserting them. Nothing could see it: promote.py diffs prompts only,
+# and no test looked at what Pass 1 was actually handed. These assertions are
+# that missing eye — they read the real payload prod built, not a copy of it.
+
+check("tool schema requires filter_stats",
+      "filter_stats" in p1["tools"][0]["input_schema"]["required"], True)
+check("filter_stats requires the rejection count",
+      p1["tools"][0]["input_schema"]["properties"]["filter_stats"]["required"],
+      ["update_tweets_rejected"])
+
+# pass1_story_selector.txt tells Pass 1 the count goes in this field. If the
+# schema ever stops defining it, the prompt is asking for a slot that does not
+# exist — which is exactly the state prod shipped in for five weeks.
+selector = GN.load_prompt("pass1_story_selector.txt")
+check("prompt and schema name the same field",
+      "filter_stats.update_tweets_rejected" in selector, True)
+
+# The video cut runs on media_kind, which fetch_content.py now tags. Replay it
+# against enriched, prod-shaped input and read the payload back out.
+enriched = GN.load_json(REPO / "uat" / "fixtures" / "raw_content_enriched.json")
+CAPTURED.clear()
+GN.run_pass1(enriched, [], client, game_state)
+sent = json.loads(CAPTURED["pass1"]["messages"][0]["content"].split(
+    "## TODAY'S RAW CONTENT\n\n", 1)[1].split("\n\n## RECENT STORY HISTORY", 1)[0])
+
+n_video = sum(1 for t in enriched["tweets"] if t.get("media_kind") == "video")
+check("fixture actually contains video tweets to cut", n_video > 0, True)
+check("no video tweet reaches Pass 1",
+      [t for t in sent["tweets"] if t["link"] in
+       {v["link"] for v in enriched["tweets"] if v.get("media_kind") == "video"}], [])
+check("§2.1 cut exactly the video tweets",
+      len(sent["tweets"]), len(enriched["tweets"]) - n_video)
+
+# GIF tweets are KEPT in prod. UAT cuts them (Pass 1B mines them for highlight
+# clips); prod has no Pass 1B, and pass1_story_selector.txt's very next section
+# says to PREFER GIF tweets because they autoplay inline. Cutting them here
+# would delete what the live prompt asks the model to choose.
+n_gif = sum(1 for t in enriched["tweets"] if t.get("media_kind") == "gif")
+check("fixture actually contains gif tweets", n_gif > 0, True)
+check("gif tweets survive the cut",
+      sum(1 for t in sent["tweets"] if t["link"] in
+          {g["link"] for g in enriched["tweets"] if g.get("media_kind") == "gif"}),
+      n_gif)
+
+# Media fields are routing information for the filter, not content. Leaking
+# them would change Pass 1's payload shape and burn tokens on every tweet.
+check("media fields stripped from the payload",
+      sorted({k for t in sent["tweets"] for k in t}),
+      ["account", "link", "pubDate", "text"])
+
+# The floor must count what Pass 1 is offered, not the raw list — otherwise a
+# thin, video-heavy day clears it on tweets the model never sees and then has
+# to invent its way to the schema's 10-tweet ATL minimum.
+thin = {"news_headlines": [], "tweets": (
+    [{"account": "a", "text": "t", "link": f"https://twitter.com/a/status/{i}",
+      "pubDate": "2026-09-03", "media_kind": "video", "has_video": True}
+     for i in range(9)]
+    + [{"account": "b", "text": "t", "link": "https://twitter.com/b/status/99",
+        "pubDate": "2026-09-03", "media_kind": "text", "has_video": False}])}
+# The backstop, exercised for real: hand Pass 1 back a plan naming a tweet it
+# was never offered. §2.1 has to mean video cannot ship, not just that the
+# model was not shown any — the whole point of this investigation was rules
+# that were advisory where they read as enforced.
+_video = next(t for t in enriched["tweets"] if t["media_kind"] == "video")
+_text = next(t for t in enriched["tweets"] if t["media_kind"] == "text")
+_slipped = dict(STORY_PLAN, lead_story=dict(
+    STORY_PLAN["lead_story"],
+    tweets=[{"account": _video["account"], "url": _video["link"]},
+            {"account": _text["account"], "url": _text["link"]}]))
+_orig, STORY_PLAN = STORY_PLAN, _slipped
+try:
+    _out = json.loads(GN.run_pass1(enriched, [], client, game_state))
+finally:
+    STORY_PLAN = _orig
+_kept = [t["url"] for t in _out["lead_story"]["tweets"]]
+check("backstop drops a video tweet Pass 1 was never offered",
+      _video["link"] in _kept, False)
+check("backstop leaves the legitimate tweet alone", _text["link"] in _kept, True)
+
+check("degraded floor counts usable, not raw",
+      (len(thin["tweets"]) >= GN.DEGRADED_TWEET_FLOOR,
+       len(GN.usable_tweets(thin)) < GN.DEGRADED_TWEET_FLOOR),
+      (True, True))
 
 print()
 print("=" * 70)

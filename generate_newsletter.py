@@ -61,6 +61,7 @@ from runner_common import (
     save_gif_history,
     save_story_log,
     strip_code_fences,
+    usable_tweets,
 )
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -250,7 +251,44 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
 
     raw_slim = dict(raw)
     raw_slim["news_headlines"] = [_slim_item(h) for h in raw.get("news_headlines", [])]
-    raw_slim["tweets"]         = [_slim_item(t) for t in raw.get("tweets", [])]
+
+    # §2.1 — video tweets render as dead grey boxes in email, so they are cut
+    # here and never reach the selector. This is the code half of a rule the
+    # prompt has stated since 0e093f2: pass1_story_selector.txt tells Pass 1
+    # "VIDEO TWEETS ARE ALREADY GONE ... you do not need to prefer, avoid, or
+    # reason about them", which was simply false in production until now — the
+    # prompt was promoted from UAT without the filter that made it true, so the
+    # model was told not to think about roughly a third of its own candidate
+    # pool. Nothing downstream mines the cut set (prod has no Pass 1B), so this
+    # is a deletion, not a hand-off.
+    #
+    # Deliberately narrower than UAT, which treats "gif" as video too: prod has
+    # no highlight pass to hand GIF tweets to, and the very next prompt section
+    # ("PREFER GIF TWEETS OVER VIDEO TWEETS") says GIFs autoplay inline and are
+    # the ones to keep. Filtering them here would cut what that rule prefers.
+    #
+    # The media fields are stripped rather than passed through: they are routing
+    # information for this filter, and Pass 1 selects by url + account only.
+    _tweets_in = raw.get("tweets", [])
+    _kept = usable_tweets(raw)
+    # has_video/detect_source are not written by fetch_content.py; they are
+    # stripped anyway so a UAT-shaped raw_content.json fed to prod (a replay, a
+    # fixture) still produces a payload identical to a live run's.
+    _media_fields = ("media_kind", "status_id", "has_video", "detect_source")
+    raw_slim["tweets"] = [
+        _slim_item({k: v for k, v in t.items() if k not in _media_fields})
+        for t in _kept
+    ]
+    _excluded = len(_tweets_in) - len(_kept)
+    if _tweets_in and not any("media_kind" in t for t in _tweets_in):
+        # raw_content.json predates the classifier (a stale file, or a fetch
+        # from an older revision). Say so: the filter is silently inert here,
+        # and that is exactly how this shipped unnoticed the first time.
+        print("  ⚠ §2.1 video filter INERT — raw_content.json carries no "
+              "media_kind; re-run fetch_content.py to tag it")
+    else:
+        print(f"  §2.1 video filter: {_excluded} video tweet(s) excluded, "
+              f"{len(_kept)} candidates remain")
 
     degraded_block = ""
     if degraded:
@@ -405,9 +443,36 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                     "type": "object",
                     "additionalProperties": {"type": "integer"},
                 },
+                # pass1_story_selector.txt has told the model to "report the
+                # total in filter_stats.update_tweets_rejected" since 0e093f2,
+                # but production's schema never defined the field — the prompt
+                # was promoted from UAT without it, so Pass 1 was being asked to
+                # fill in a slot its own tool did not have. Every archived prod
+                # story_plan.json is missing the key as a result.
+                #
+                # It is a forcing function, not telemetry: making the count a
+                # required output is what makes the model actually run the PURE
+                # UPDATE FILTER rather than skim past it. It is not trusted —
+                # §2.2 in plan_audit.py measures the same thing arithmetically
+                # on the finished draft — but a self-report that disagrees with
+                # the measurement is a useful signal, so it is logged, not read.
+                "filter_stats": {
+                    "type": "object",
+                    "properties": {
+                        "update_tweets_rejected": {
+                            "type": "integer",
+                            "description": (
+                                "How many candidate tweets you rejected under the "
+                                "PURE UPDATE FILTER because they only restated news "
+                                "the commentary already states."
+                            ),
+                        },
+                    },
+                    "required": ["update_tweets_rejected"],
+                },
             },
             "required": ["date", "story_log", "lead_story", "supporting_stories",
-                         "around_the_league", "account_distribution"],
+                         "around_the_league", "account_distribution", "filter_stats"],
         },
         "cache_control": {"type": "ephemeral"},
     }
@@ -529,12 +594,25 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                     _raw_by_sid[_sid] = _t
             _raw_url_set = set(_raw_by_sid)
 
+            _video_slipped = []
+
             def _filter_and_attach(tweets):
                 kept = []
                 for t in tweets:
                     sid = _status_id(t.get("url", ""))
                     src = _raw_by_sid.get(sid) if sid else None
                     if not src:
+                        continue
+                    # §2.1 backstop. _raw_by_sid is built from the FULL raw list
+                    # on purpose — it is the "does this tweet exist" index, and
+                    # narrowing it would start dropping real tweets. That leaves
+                    # a seam: a URL the model produced from somewhere other than
+                    # its candidate list still resolves here. Cheap to close, so
+                    # close it — §2.1 should mean video cannot ship, not merely
+                    # that Pass 1 was not offered any. An advisory guarantee is
+                    # what put us here.
+                    if src.get("media_kind") == "video":
+                        _video_slipped.append(t.get("url", ""))
                         continue
                     t["text"] = src.get("text", "") or t.get("text", "")
                     src_acct = src.get("account") or src.get("handle")
@@ -583,9 +661,19 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 plan["around_the_league"] = _atl
                 _fab_total += _n
 
-                if _fab_total:
-                    print(f"  \u26a0 Dropped {_fab_total} fabricated tweet(s) \u2014 URLs not in today's raw content")
-                else:
+                # _fab_total counts every drop _filter_and_attach made, and the
+                # §2.1 backstop shares that path — report them apart so a video
+                # slip is never filed under "fabricated URL" and chased as the
+                # wrong bug. That mislabelling is how the 2026-09-01 streaming
+                # outage stayed misdiagnosed as a JSON-escaping fault.
+                if _video_slipped:
+                    print(f"  \u26a0 \u00a72.1 backstop: dropped {len(_video_slipped)} video "
+                          f"tweet(s) Pass 1 selected without being offered them: "
+                          f"{', '.join(_video_slipped[:3])}")
+                _fab_only = _fab_total - len(_video_slipped)
+                if _fab_only > 0:
+                    print(f"  \u26a0 Dropped {_fab_only} fabricated tweet(s) \u2014 URLs not in today's raw content")
+                elif not _video_slipped:
                     print(f"  \u2713 All plan tweets verified against today's raw content")
 
             story_plan_raw = json.dumps(plan, ensure_ascii=False)
@@ -627,6 +715,16 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 print(f"  ⚠ Headliner account cap violations: {over_cap}")
             else:
                 print(f"  ✓ Account distribution within caps")
+
+            # Logged, never acted on. §2.2 in plan_audit.py measures redundancy
+            # on the finished draft; this is the model grading its own filter.
+            # A 0 here on a day §2.2 flags tweets means the PURE UPDATE FILTER
+            # is being skipped rather than applied and coming up empty — which
+            # is the distinction the count exists to make visible.
+            _fs = plan.get("filter_stats") or {}
+            if isinstance(_fs, dict) and "update_tweets_rejected" in _fs:
+                print(f"  · PURE UPDATE FILTER (self-reported): "
+                      f"{_fs['update_tweets_rejected']} tweet(s) rejected")
 
             atl = plan.get("around_the_league", {})
             atl_tweets = (
@@ -1037,15 +1135,27 @@ def main() -> None:
 
     headline_count = len(raw.get("news_headlines", []))
     tweet_count    = len(raw.get("tweets", []))
-    print(f"  {headline_count} headlines · {tweet_count} tweets")
+
+    # The degraded floor gates on what Pass 1 is actually offered, which is the
+    # post-§2.1 count — video tweets are cut before the selector sees them (see
+    # run_pass1). Gating on the raw count would let a thin day clear the floor
+    # on tweets that never reach the model, leaving it short of the schema's
+    # 10-tweet ATL minimum with fabrication as the only way to close the gap.
+    usable_count = len(usable_tweets(raw))
+    if usable_count != tweet_count:
+        print(f"  {headline_count} headlines · {tweet_count} tweets "
+              f"({usable_count} usable after the §2.1 video cut)")
+    else:
+        print(f"  {headline_count} headlines · {tweet_count} tweets")
 
     if headline_count == 0 and tweet_count == 0:
         raise SystemExit("No content. Run fetch_content.py first.")
 
-    degraded = tweet_count < DEGRADED_TWEET_FLOOR
+    degraded = usable_count < DEGRADED_TWEET_FLOOR
     if degraded:
-        print(f"  ⚠ DEGRADED MODE: only {tweet_count} tweet(s) (< {DEGRADED_TWEET_FLOOR}) — "
-              f"today's issue will be headline-only, no Around the League")
+        print(f"  ⚠ DEGRADED MODE: only {usable_count} usable tweet(s) "
+              f"(< {DEGRADED_TWEET_FLOOR}) — today's issue will be "
+              f"headline-only, no Around the League")
 
     client = anthropic.Anthropic(api_key=api_key)
 

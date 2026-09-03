@@ -34,11 +34,14 @@ two-job split. Beehiiv remains unused (post API is enterprise-only).
 ## Pipeline Architecture — 6 Passes
 
 ```
-fetch_content.py      → raw_content.json   (ESPN/CBS RSS + Nitter RSS tweets)
+fetch_content.py      → raw_content.json   (ESPN/CBS RSS + Nitter RSS tweets,
+                                           each tweet tagged with media_kind)
 fetch_sports_data.py  → game_state.json    (ESPN scores/standings/box scores — "ground truth")
         ↓
 generate_newsletter.py (orchestrates all passes via Claude API; injects game_state as ground truth)
         ↓
+        §2.1            → video tweets cut from the candidate list BEFORE Pass 1
+                            sees them (media_kind == "video"); GIF tweets kept
 Pass 1: Story Selector    → selects stories, emits beat skeletons, assigns tweets,
                             seeds GIF/meme concepts (tool_use: submit_story_plan)
         §2.3/§2.4       → plan_audit.py trims to the tweet budget and checks the
@@ -81,7 +84,7 @@ slap-newsletter/
 ├── highlights.py              ← injects MLB/NHL/World Cup highlight video embeds
 ├── build_email_html.py        ← builds the email HTML body
 ├── generate_memes.py          ← Imgflip meme generation
-├── runner_common.py            ← runner body shared by prod + UAT: 24 functions, models,
+├── runner_common.py            ← runner body shared by prod + UAT: 25 functions, models,
 │                                 PRICING, PASS_COSTS. configure(prompts_dir=) per runner
 ├── plan_audit.py               ← deterministic audits, SHARED by prod + UAT (see below)
 ├── meme_library.py             ← meme library access layer, shared
@@ -195,6 +198,31 @@ about itself; and editor CHECK 3 missed `@TomPelissero` (4x) and `@ESPN` (3x) wh
 account that appeared once. All three are arithmetic now in `plan_audit.py`. When adding a rule,
 decide where it is *enforced* — a prompt line with no check is not a rule.
 
+**§2.1 — video tweets never reach Pass 1, and the tagging is half the rule.**
+`fetch_content.py` classifies each Nitter RSS entry's `<summary>` into
+`media_kind` (video / gif / image / text); `run_pass1` cuts `media_kind ==
+"video"` before building Pass 1's payload, and a backstop in the
+cross-reference filter drops any video tweet that reaches the plan anyway.
+Prod keeps **GIF** tweets — UAT cuts them because Pass 1B mines them for
+highlight clips, and prod has no Pass 1B. Key on `media_kind`, never on a
+`has_video` boolean: UAT's fixtures set that flag for GIFs too, so a consumer
+reading the flag silently inherits whichever tagger wrote the file.
+The classifier and the filter are one rule in two files — a filter with no
+tagger is a silent no-op, which is exactly how this shipped broken. The
+degraded-mode floor counts `usable_tweets()`, i.e. post-§2.1, because gating
+on the raw count lets a video-heavy day clear the floor on tweets the model
+never sees and then fabricate its way to the 10-tweet ATL minimum.
+
+**A prompt promoted without its code is worse than neither.** From 0e093f2
+(2026-08-27) to 2026-09-03, `prompts/pass1_story_selector.txt` told production
+"VIDEO TWEETS ARE ALREADY GONE … you do not need to prefer, avoid, or reason
+about them" while prod had no filter — so Pass 1 was instructed not to think
+about ~37% of its own candidate pool. The same commit brought the line telling
+it to report `filter_stats.update_tweets_rejected`, a field prod's tool schema
+did not define. `promote.py` diffs prompts only, so both were invisible to it.
+**When promoting a prompt, ask what code makes its claims true, and promote
+that in the same commit.**
+
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
 
@@ -222,6 +250,9 @@ because it only diffs prompts.
 both runners until 2026-09-01, when two separate half-ports shipped on the same day (Pass 1's
 `max_tokens` raise without its streaming call; the GIF library prompts without their consumer).
 It also owns `MODEL_DEFAULT`, `MODEL_WRITER`, `PRICING` and the `PASS_COSTS` accumulator.
+`usable_tweets()` joined them on 2026-09-03: the post-§2.1 tweet count has two callers in prod
+(`run_pass1` and the degraded-mode gate in `main`), and both live in declared-divergent functions,
+which is precisely where a second copy would go unnoticed.
 
 Per-runner config is **injected, never assumed**: each runner calls
 `runner_common.configure(prompts_dir=...)` at import, because `PROMPTS_DIR` genuinely differs —
@@ -341,9 +372,11 @@ unstaged, which breaks `git pull --rebase`.
   `runner_common.py`, and `uat/tests/test_runner_drift.py` now fails on any undeclared
   divergence. Duplicated LOC across identical functions went 668 → 0. **Four functions remain
   duplicated and diverged** — `run_pass1`, `run_pass2`, `pre_edit`, `main` — and are declared in
-  that test's `KNOWN_DIVERGENT` ledger with reasons. `run_pass1` and `run_pass2` are diverged in
-  *both* directions (prod has degraded mode; UAT has the §2.1 video filter and Pass 1B), so
-  neither can be promoted by copying — they need a real merge. Until then, **any change to those
+  that test's `KNOWN_DIVERGENT` ledger with reasons. `run_pass2` is diverged in
+  *both* directions (prod has degraded mode; UAT has highlight-plan wiring), so neither can be
+  promoted by copying — it needs a real merge. `run_pass1` was merged on 2026-09-03 (§2.1 and
+  `filter_stats` went into prod alongside degraded mode, not over it); what still diverges there
+  is Pass 1B and the deliberately narrower GIF policy. Until then, **any change to those
   four must be applied to both copies in the same commit.**
 
 - **`Archive/` vs `archive/` case collision (open, real):** git's index holds 11 files under
@@ -465,6 +498,37 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-03 — §2.1 and the PURE UPDATE FILTER's forcing function reach production**
+- Both were UAT-only *code* behind a prompt that had been promoted to prod on 0e093f2, so for
+  five weeks production ran a Pass 1 prompt asserting things production did not do.
+- **§2.1 video filter.** Two pieces, and prod had neither. `fetch_content.py` never read the
+  Nitter entry's `<summary>` — the only place the media markup survives the feed — so prod
+  literally could not tell a video tweet from a text one; `raw_content.json` carried
+  `account/text/link/pubDate` and nothing else. It now classifies into `media_kind` and
+  `run_pass1` cuts video before Pass 1's payload is built. Copying UAT's filter alone would have
+  been a silent no-op: `has_video` was never a key in prod's data.
+- **Narrower than UAT on purpose.** UAT counts `gif` as video because Pass 1B mines that set for
+  highlight clips. Prod has no Pass 1B, and the prompt's very next section says to PREFER GIF
+  tweets because they autoplay inline — cutting them would delete what the live rule asks for.
+  Everything keys on `media_kind`, not a `has_video` flag, so prod's policy holds no matter who
+  tagged the file. The UAT fixture caught this: replayed through prod it cut 77, not 74.
+- **Degraded floor now counts `usable_tweets()`** (post-§2.1). Gating on the raw count let a
+  video-heavy day clear the floor on tweets Pass 1 never sees, leaving it short of the schema's
+  10-tweet ATL minimum with fabrication as the only way to close the gap.
+- **`filter_stats.update_tweets_rejected` added to prod's tool schema, required.** The prompt had
+  been telling the model to report the count into a field prod's tool did not define; every
+  archived prod `story_plan.json` is missing the key. It is a forcing function, not telemetry —
+  logged, never trusted, with §2.2 measuring the same thing arithmetically on the finished draft.
+- **A backstop, because §2.1 should be enforced rather than advisory.** The cross-reference index
+  is built from the full raw list on purpose (narrowing it would drop real tweets), which left a
+  seam for a URL the model produced from outside its candidate list. Video tweets are dropped
+  there too, and reported separately from "fabricated URL" so a slip is never chased as the wrong
+  bug — the way 09-01's streaming outage was misread as a JSON-escaping fault.
+- `uat/tests/test_prod_wiring_dryrun.py` now reads the payload prod actually builds and asserts
+  all of it, including that the prompt and schema name the same field. Nothing could see this
+  class of bug before: `promote.py` diffs prompts only, and no test looked at what Pass 1 was
+  handed.
 
 **2026-09-01 — Pass 1 streams; the first post-merge run had failed outright**
 - The 2026-09-01 scheduled run (168) died in Pass 1 with "Streaming is required for operations

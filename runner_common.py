@@ -180,6 +180,26 @@ def format_game_state_summary(game_state: dict) -> str:
     return "\n".join(lines)
 
 
+def usable_tweets(raw: dict) -> list:
+    """The tweets Pass 1 will actually be offered, i.e. after the §2.1 video cut.
+
+    Callers that gate on tweet SUPPLY (the degraded-mode floor) must count this,
+    not len(raw["tweets"]). Counting the raw list lets a thin day clear the floor
+    on tweets Pass 1 never sees: 10 raw of which 5 are video leaves 5 candidates
+    against a schema that demands exactly 10 Around the League tweets, and the
+    model closes that gap by inventing them -- precisely the failure the floor
+    exists to prevent.
+
+    Keyed on media_kind, not on a has_video flag: UAT's fixtures set that flag
+    for GIFs too, and prod keeps GIF tweets (see the §2.1 note in run_pass1).
+    Reading the kind means this answers prod's policy no matter who tagged the
+    file. Pre-classifier raw_content.json has no media_kind at all, so every
+    tweet counts as usable and this degrades to the old behaviour rather than
+    reporting zero.
+    """
+    return [t for t in raw.get("tweets", []) if t.get("media_kind") != "video"]
+
+
 def strip_code_fences(text: str) -> str:
     text = re.sub(r'^```(?:html|json)?\s*\n?', '', text.strip())
     text = re.sub(r'\n?```\s*$', '', text.strip())

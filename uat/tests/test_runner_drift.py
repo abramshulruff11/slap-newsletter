@@ -45,11 +45,15 @@ UAT = REPO / "uat" / "generate_newsletter_uat.py"
 # pinned: touch either copy and this test fails until you have looked at the
 # counterpart and deliberately re-recorded the hash.
 KNOWN_DIVERGENT = {
-    "run_pass1": dict(prod="000825e533b2", uat="7f7dea4672c0", reason=(
-        "Bidirectional. Prod has degraded mode (Nitter outage -> headline-only "
-        "newsletter); UAT has the §2.1 video-tweet filter and Pass 1B. Neither "
-        "is a superset, so no copy in either direction is safe — this one needs "
-        "a real merge."
+    "run_pass1": dict(prod="4ef8075df2a9", uat="7f7dea4672c0", reason=(
+        "Bidirectional, and now smaller. The §2.1 video filter and the required "
+        "filter_stats field were merged INTO prod (2026-09-03) rather than "
+        "copied — prod keeps degraded mode, and its §2.1 cut is deliberately "
+        "narrower than UAT's: UAT treats media_kind 'gif' as video because "
+        "Pass 1B mines that set for highlight clips, while prod has no Pass 1B "
+        "and its prompt says to PREFER GIF tweets, so prod cuts video only. "
+        "What still diverges: Pass 1B, and UAT's raw_content-shaped field list. "
+        "Do not reconcile by copying either direction."
     )),
     "run_pass2": dict(prod="719792321475", uat="257eed61581e", reason=(
         "Bidirectional. Prod carries degraded-mode wiring UAT lacks; UAT "
@@ -58,7 +62,7 @@ KNOWN_DIVERGENT = {
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
     )),
-    "main": dict(prod="a19c6885a9ce", uat="0e25f4ba71c9", reason=(
+    "main": dict(prod="1162be308580", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
         "5-line stub. Expected to stay divergent permanently."
     )),

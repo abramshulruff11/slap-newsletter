@@ -5,6 +5,7 @@ Filters everything to the last 24 hours and writes raw_content.json.
 
 import json
 import random
+import re
 import socket
 import time
 from datetime import datetime, timezone, timedelta
@@ -235,6 +236,31 @@ def fetch_news() -> list[dict]:
 
 # ── Fetch tweets via Nitter ──────────────────────────────────────────────────
 
+STATUS_RE = re.compile(r"/status/(\d+)")
+
+# Nitter renders a tweet's attached media as markup inside the RSS <summary>;
+# the <title> (which is all we used to keep) carries the text alone. So the
+# summary is the ONLY place the media kind survives the feed, and dropping it
+# is what left production unable to tell a video tweet from a text one.
+#
+# Video tweets render as dead grey boxes in email, so Pass 1 filters them out
+# (§2.1 in generate_newsletter.py). Animated GIFs are safe -- they autoplay
+# inline -- but Twitter serves them from the same video pipeline, hence the
+# separate `tweet_video_thumb` case below.
+_VIDEO_RE = re.compile(r">\s*Video\s*<|amplify_video_thumb|ext_tw_video")
+
+
+def classify(summary: str) -> str:
+    """Media kind of a Nitter RSS entry: video | gif | image | text."""
+    if _VIDEO_RE.search(summary):
+        return "video"
+    if "tweet_video_thumb" in summary:
+        return "gif"
+    if "<img" in summary:
+        return "image"
+    return "text"
+
+
 def nitter_to_twitter(url: str) -> str:
     """Convert a nitter URL -- from ANY configured base -- to twitter.com.
 
@@ -334,6 +360,7 @@ def fetch_tweets() -> list[dict]:
     tweets = []
     report: dict[str, list[str]] = {}
     dropped_rt_reply = 0
+    media_kinds: dict[str, int] = {}
 
     # Probe first: a handful of single-attempt fetches decide whether the FULL
     # per-handle retry ladder (up to 110s worst case) is worth running at all this
@@ -389,11 +416,27 @@ def fetch_tweets() -> list[dict]:
                 continue
             fresh += 1
             raw_link = entry.get("link", "")
+            link = nitter_to_twitter(raw_link)
+            kind = classify(str(entry.get("summary", "")))
+            status = STATUS_RE.search(link)
+            media_kinds[kind] = media_kinds.get(kind, 0) + 1
             tweets.append({
-                "account":  handle,
-                "text":     text,
-                "link":     nitter_to_twitter(raw_link),
-                "pubDate":  format_dt(pub_dt),
+                "account":    handle,
+                "text":       text,
+                "link":       link,
+                "pubDate":    format_dt(pub_dt),
+                # Media metadata. Consumed by generate_newsletter.py's §2.1
+                # video filter, which strips these fields again before Pass 1
+                # sees the payload -- they are routing information, not content.
+                #
+                # media_kind is deliberately the ONLY media verdict written. A
+                # parallel boolean is where this drifts: UAT's fixture writes
+                # has_video for video AND gif (Pass 1B mines both for highlight
+                # clips), so a consumer keying on the flag rather than the kind
+                # silently inherits whichever tagger wrote the file. One field,
+                # one meaning; every consumer states its own policy.
+                "media_kind": kind,
+                "status_id":  status.group(1) if status else "",
             })
 
         # An account that returned entries but none from the last 24h is healthy and
@@ -429,6 +472,16 @@ def fetch_tweets() -> list[dict]:
 
     if dropped_rt_reply:
         print(f"  -- dropped {dropped_rt_reply} retweet(s)/reply(ies)")
+
+    # Surfaced so a classifier that silently stops matching (a Nitter markup
+    # change, a mirror that strips media from its summaries) shows up as
+    # "0 video" in the log rather than as a filter that quietly does nothing.
+    if tweets:
+        mix = ", ".join(f"{n} {k}" for k, n in sorted(media_kinds.items(), key=lambda kv: -kv[1]))
+        print(f"  -- media mix: {mix}")
+        if not media_kinds.get("video"):
+            print("  !! No video tweets detected in ANY summary -- the media "
+                  "classifier may have stopped matching (§2.1 filter will be a no-op)")
 
     if dead:
         print(f"  !! DEAD HANDLES (fix TWITTER_HANDLES): {', '.join('@' + h for h in dead)}")
