@@ -86,13 +86,36 @@ check("@ESPN flagged", "INSIDER CAP — @ESPN appears 3x" in out, True)
 check("@TomPelissero flagged", "INSIDER CAP — @TomPelissero appears 2x" in out, True)
 check("@ghetto_gronk NOT flagged (2x, within cap)",
       "@ghetto_gronk appears" in out, False)
-check("BREAKING tweet flagged §2.2",
-      "REDUNDANT TWEET (§2.2) — @ShamsCharania" in out, True)
+# §2.2 CUTS as of 2026-09-03; it does not flag. Pass 6 actioned 0 of the 4
+# flags raised between 09-01 and 09-03 — all four tweets shipped with their own
+# flag sitting beside them — so the redundant tweet is now removed in Python.
+check("no §2.2 flag is emitted any more",
+      "REDUNDANT TWEET" in out, False)
+check("the redundant @ShamsCharania tweet is GONE",
+      "ShamsCharania" in out, False)
 
 atl = out.lower().index("around the league")
 check("no flag anywhere in ATL",
       any(k in out[atl:] for k in ("ACCOUNT CAP", "INSIDER CAP", "REDUNDANT")), False)
-check("no tweets destroyed", out.count('class="tweet"'), DRAFT.count('class="tweet"'))
+# §2.2 removes exactly what it reports and nothing else. Account-cap flags are
+# still comments, so only the redundancy cut may change the tweet count.
+_cut = len(G.audit_redundancy(DRAFT))
+check("only the redundant tweet(s) removed",
+      out.count('class="tweet"'), DRAFT.count('class="tweet"') - _cut)
+
+# A lead-in whose only job was to introduce the cut tweet goes with it; prose
+# that stands on its own must survive.
+_leadin = """<h1>Lead</h1>
+<p>The Jets traded Sauce Gardner to the Colts on Tuesday for two picks.</p>
+<p>The room went quiet:</p>
+<blockquote class="tweet"><strong>@ESPN</strong><br/>Jets traded Sauce Gardner Colts Tuesday picks<br/>
+<a href="https://twitter.com/ESPN/status/1">View tweet</a></blockquote>
+<h2>Around the League</h2>"""
+_out = G._audit_redundant_tweets(_leadin)
+check("orphaned colon lead-in removed with the tweet",
+      "The room went quiet:" in _out, False)
+check("self-standing prose survives",
+      "The Jets traded Sauce Gardner" in _out, True)
 
 print()
 print("=" * 66)

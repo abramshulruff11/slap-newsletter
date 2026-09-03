@@ -187,6 +187,26 @@ This landed in **production on 2026-09-01**, not 8/21. An earlier version of thi
 in conflict. It captures real failure patterns from published issues. Max 3 rules added per
 session. Rules are numbered (note: Rule 3 is missing — intentional gap from a removed rule).
 
+**§2.2 CUTS; it does not flag.** From 2026-09-01 to 09-03 the redundancy audit
+raised four `EDITOR FLAG: REDUNDANT TWEET` comments and Pass 6 actioned zero —
+all four tweets shipped with their own flag still beside them. The arithmetic was
+never wrong; asking a model to make an editorial choice ("cut the tweet or cut the
+prose") inside a pass whose other seven checks are mechanical was. `plan_audit.py`
+now removes the tweet, plus an immediately-preceding colon-terminated `<p>` when
+one exists (a lead-in whose only job was to introduce it). There is no §2.2 flag
+for the editor any more, and `editor_prompt.txt` says so in both trees.
+
+**The plan-stage version of §2.2 was measured and rejected — don't rebuild it.**
+Scoring each tweet against its own beat's `angle`/`landing` looks obvious and does
+not separate: on 2026-09-02 the two real restatements top the table (1.00, 0.86),
+but on 09-03 the one that shipped scores 0.67 at plan stage while two perfectly
+good tweets score 0.83 and 0.75. Beat landings are too short and too abstract to
+predict what the finished prose will duplicate. The signal only exists once the
+prose does, which is why the cut lives at Pass 5 and not beside §2.3.
+Pure-update *shapes* are a different matter and are already cut at plan stage by
+`enforce_tweet_budget` (§2.3, rule 3) — which is why all four measured flags read
+"restates section prose" and none read "pure-update shape".
+
 **pre_edit() is deterministic Python:** Runs between Pass 4 (Voice) and Pass 6 (Editor) as
 Pass 5. Splits HTML by h1/h2, maps sections to story plan by position, flags misassigned tweet
 URLs, over-cap accounts, and tweets that restate their own section's prose. Not a Claude call.
@@ -498,6 +518,23 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-03 — §2.2 enforces instead of asking**
+- §2.2 raised 4 flags across 09-01..03 and Pass 6 actioned 0 of them; every flagged
+  tweet shipped with its flag attached. It now cuts in Python, and takes an orphaned
+  colon-terminated lead-in with it (1 of the 4 sat behind one; the other three
+  followed a heading, another blockquote, or a sentence that reads fine alone).
+- **The plan-stage design was tried against the archived plans and dropped.** Beat
+  landings do not predict what the prose ends up duplicating: 09-02 separates
+  cleanly (1.00 / 0.86 for the real ones), 09-03 does not (0.67 for the offender,
+  0.83 and 0.75 for two that were fine). No threshold serves both days. Recorded in
+  the §2.2 rule above so it is not rebuilt from first principles later.
+- Fixed a latent bug the change promoted from harmless to serious: findings are
+  sorted most-redundant first, but `{f["account"]: f for f in findings}` kept the
+  LAST one per account — the least redundant. It picked which tweet to comment on
+  before; it picks which tweet to delete now.
+- `editor_prompt.txt` (both trees) no longer documents a REDUNDANT TWEET flag,
+  because none is emitted.
 
 **2026-09-03 — §2.1 and the PURE UPDATE FILTER's forcing function reach production**
 - Both were UAT-only *code* behind a prompt that had been promoted to prod on 0e093f2, so for

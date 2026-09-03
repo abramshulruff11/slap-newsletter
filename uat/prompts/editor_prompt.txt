@@ -146,7 +146,11 @@ uncapped and is never flagged):
 
 <!-- EDITOR FLAG: ACCOUNT CAP — @handle appears Nx in headliners (cap 2). Remove or replace K of them. -->
 <!-- EDITOR FLAG: INSIDER CAP — @handle appears Nx in headliners (cap 1). ... -->
-<!-- EDITOR FLAG: REDUNDANT TWEET (§2.2) — @handle ... -->
+
+There is no REDUNDANT TWEET flag to act on. Pass 5 used to raise one and ask
+you to choose; between 2026-09-01 and 09-03 it raised four and none were
+actioned, so §2.2 now removes the tweet itself in Python before you see the
+draft. A tweet that restates its own section's prose is already gone.
 
 Your job for each flag: pick which of that account's tweets to cut. Cut the
 one that carries the least — a bare news report over a joke, a stat, or a

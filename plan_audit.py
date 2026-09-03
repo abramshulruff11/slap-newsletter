@@ -162,43 +162,97 @@ def audit_redundancy(html: str) -> list:
     return sorted(findings, key=lambda f: -f["ratio"])
 
 
+# A lead-in whose only job was to introduce the tweet: "Vlad Guerrero Jr.
+# finally broke through:". Cutting the tweet and leaving that behind is worse
+# than shipping the redundancy, so the pair is removed together. Measured over
+# the four §2.2 flags of 2026-09-01..03, one of four sat behind such a lead-in;
+# the other three followed a heading, another blockquote, or a self-standing
+# sentence that reads fine alone.
+_LEADIN_RE = re.compile(r'<p[^>]*>(?:(?!</p>).)*:\s*</p>\s*$', re.DOTALL | re.IGNORECASE)
+
+
 def audit_redundant_tweets(html: str) -> str:
-    """Flag headliner tweets the surrounding prose already said."""
+    """Cut headliner tweets the surrounding prose already said.
+
+    This CUTS rather than flags, and that is the whole point of the 2026-09-03
+    change. From 2026-09-01 to 09-03 the audit inserted four EDITOR FLAG
+    comments and Pass 6 actioned exactly none of them — all four tweets shipped
+    with their own flag still attached beside them. The arithmetic was never the
+    problem; asking a model to make an editorial choice ("cut the tweet or cut
+    the prose") inside a pass whose other seven checks are mechanical was.
+
+    The plan-stage alternative was measured and rejected. Scoring each tweet
+    against its own beat's angle/landing separates cleanly on one day and not at
+    all on the next: 09-02's two real restatements top the table at 1.00 and
+    0.86, but 09-03's scores only 0.67 at plan stage while two tweets that were
+    fine score 0.83 and 0.75. Beat landings are too short and too abstract to
+    predict what the finished prose will end up duplicating. The signal only
+    exists once the prose exists, so the cut belongs here.
+
+    Pure-update SHAPES are already cut upstream by enforce_tweet_budget (§2.3,
+    rule 3) before Pass 2 writes. That is why all four flags in the measured
+    window read "restates section prose" and none read "pure-update shape" —
+    this function is now, in practice, the word-overlap rule's enforcement.
+    """
     findings = audit_redundancy(html)
     if not findings:
         print("  ✓ No redundant headliner tweets detected (§2.2)")
         return html
 
+    # findings are sorted most-redundant first, and a plain dict comprehension
+    # would let each later (LESS redundant) entry overwrite the earlier one --
+    # so an account with two findings would have had its BETTER tweet cut and
+    # its worse one kept. Harmless while this only wrote a comment; not harmless
+    # now that it decides which tweet is deleted.
+    flagged: dict = {}
     for f in findings:
-        print(f"  ⚠ §2.2 {f['account']} {f['reason']} "
-              f"({f['shared']}/{f['total']} words already in prose): {f['text'][:60]}…")
+        flagged.setdefault(f["account"], f)
+    cut: set = set()
+    dropped_leadins = 0
 
-    flagged = {f["account"]: f for f in findings}
-    marked: set = set()
-
-    def mark(m: re.Match) -> str:
+    def snip(m: re.Match) -> str:
+        nonlocal dropped_leadins
         block = m.group(0)
         handle = _tweet_handle(block)
         f = flagged.get(handle)
-        if not f or handle in marked:
+        # One per account, and only the exact block the audit measured --
+        # audit_redundancy reports at most one finding per handle, so matching
+        # the text guards against cutting a DIFFERENT tweet by the same account.
+        if not f or handle in cut:
             return block
         if _tweet_body(block)[:90] != f["text"]:
             return block
-        marked.add(handle)
-        return (
-            block
-            + f'\n<!-- EDITOR FLAG: REDUNDANT TWEET (§2.2) — {handle} '
-            f'{f["reason"]}; {f["shared"]} of {f["total"]} content words already '
-            f'appear in this section. Cut the tweet or cut the prose that '
-            f'duplicates it. -->'
-        )
+        cut.add(handle)
+        print(f"  ⚠ §2.2 CUT {handle} — {f['reason']} "
+              f"({f['shared']}/{f['total']} words already in prose): {f['text'][:60]}…")
+        return ""
 
     split = re.search(r'<h2[^>]*>\s*(?:<[^>]+>\s*)*around the league', html, re.IGNORECASE)
-    cut = split.start() if split else len(html)
-    head, tail = html[:cut], html[cut:]
-    head = re.sub(r'<blockquote[^>]*class="tweet"[^>]*>.*?</blockquote>',
-                  mark, head, flags=re.DOTALL | re.IGNORECASE)
-    print(f"  ⚠ {len(marked)} redundancy flag(s) inserted")
+    cut_at = split.start() if split else len(html)
+    head, tail = html[:cut_at], html[cut_at:]
+
+    out = []
+    last = 0
+    for m in re.finditer(r'<blockquote[^>]*class="tweet"[^>]*>.*?</blockquote>',
+                         head, re.DOTALL | re.IGNORECASE):
+        replacement = snip(m)
+        chunk = head[last:m.start()]
+        if replacement == "":
+            # Take the orphaned lead-in with it. Only a paragraph ending in a
+            # colon: anything else is prose that stands on its own and cutting
+            # it would remove writing the tweet was merely illustrating.
+            stripped = _LEADIN_RE.sub("", chunk)
+            if stripped != chunk:
+                dropped_leadins += 1
+            chunk = stripped
+        out.append(chunk)
+        out.append(replacement)
+        last = m.end()
+    out.append(head[last:])
+    head = "".join(out)
+
+    print(f"  ⚠ §2.2 removed {len(cut)} redundant tweet(s)"
+          + (f" and {dropped_leadins} orphaned lead-in(s)" if dropped_leadins else ""))
     return head + tail
 
 
