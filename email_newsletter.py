@@ -11,11 +11,15 @@ import os
 import re
 import smtplib
 import subprocess
+import sys
 from pathlib import Path
 from datetime import date
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import run_status  # noqa: E402 -- records whether delivery actually happened
 
 SCRIPT_DIR      = Path(__file__).resolve().parent
 SUBSTACK_PATH   = SCRIPT_DIR / "newsletter_substack.html"
@@ -126,11 +130,15 @@ def send_email():
 
     if not gmail_user or not gmail_pass:
         print("  ⚠ GMAIL_ADDRESS or GMAIL_PASSWORD not set — skipping email delivery")
-        return
+        run_status.record(email_sent=False,
+                          email_error="GMAIL_ADDRESS or GMAIL_PASSWORD not set")
+        return False
 
     if not SUBSTACK_PATH.exists():
         print("  ✗ newsletter_substack.html not found — skipping email delivery")
-        return
+        run_status.record(email_sent=False,
+                          email_error="newsletter_substack.html missing")
+        return False
 
     html_content = SUBSTACK_PATH.read_text(encoding="utf-8")
 
@@ -224,10 +232,25 @@ def send_email():
         print(f"  ✓ Email sent to {to_email}")
         print(f"  → Subject: {subject}")
         print(f"  → Open email, select all, copy, paste into Substack (images included)")
+        run_status.record(email_sent=True, email_error="", email_subject=subject)
+        return True
     except Exception as e:
         print(f"  ✗ Email failed: {e}")
+        # A Gmail app-password error looks exactly like a transient one in the
+        # log, and this failure went unnoticed from at least 2026-08-14: the
+        # exception was caught, printed, and the step exited 0.
+        if "5.7.9" in str(e) or "Application-specific password" in str(e):
+            print("    Gmail is rejecting the account password. With 2-step "
+                  "verification on, GMAIL_PASSWORD must be a 16-character APP "
+                  "password (Google Account -> Security -> App passwords).")
+        run_status.record(email_sent=False, email_error=f"{type(e).__name__}: {e}")
+        return False
 
 
 if __name__ == "__main__":
     print("\n── EMAIL DELIVERY ──────────────────────────────────")
-    send_email()
+    # Exit non-zero on failure. The workflow step carries continue-on-error so
+    # the Substack draft still gets created, and verify_run.py fails the JOB at
+    # the end -- delivery failing must colour the run, without blocking the
+    # other delivery path.
+    sys.exit(0 if send_email() else 1)

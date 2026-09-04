@@ -157,7 +157,13 @@ jobs:
           git pull --rebase -X theirs origin main
           git push
 
+      # continue-on-error because email_newsletter.py now EXITS NON-ZERO when
+      # delivery fails (it used to catch the SMTP error, print it, and exit 0 --
+      # which is how a broken email went unnoticed from at least 2026-08-14).
+      # A failed send must not skip the Substack path that follows; verify_run.py
+      # at the end of the job turns it into a red run.
       - name: Email newsletter
+        continue-on-error: true
         run: python email_newsletter.py
 
       # Create the Substack DRAFT (tweets embedded, GIFs/memes included, box scores
@@ -223,3 +229,16 @@ jobs:
             echo "Finished at $PRETTY, before 12:30 PM ET — leaving it to publish-substack.yml."
             echo "Draft created at $PRETTY; publish-substack.yml will post it at 12:30 PM ET." >> "$GITHUB_STEP_SUMMARY"
           fi
+
+      # Run-quality gate. Reads what the run actually produced (tweets, GIFs,
+      # memes, un-rendered placeholders, whether the email sent, whether any
+      # pass came back truncated), writes it to the run summary, and FAILS the
+      # job when the issue is not fit to send. Everything above has already
+      # happened by now, so failing here costs nothing but tells the truth.
+      #
+      # Verified against the archive: this gate fails 2026-09-01, the day seven
+      # GIFs shipped as invisible empty divs, and passes the five issues around
+      # it with warnings only.
+      - name: Verify run quality
+        if: always()
+        run: python verify_run.py

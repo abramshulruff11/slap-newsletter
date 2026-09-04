@@ -1,0 +1,79 @@
+name: Tests
+
+# The offline suites in uat/tests/ make ZERO API calls and take seconds, and
+# until 2026-09-05 no workflow ran them — they only fired when someone
+# remembered to. That is backwards: test_runner_drift.py exists specifically to
+# catch a change reaching one runner and not the other, which is what caused
+# the 2026-09-01 outage, and it can only do that if it runs before the code
+# lands on main.
+#
+# Every suite runs even if an earlier one fails, so one red suite does not hide
+# the others.
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  offline-suites:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # The real requirements file, not a hand-picked subset: the suites import
+      # the production modules, so they must run against what production runs.
+      # No `playwright install` — nothing here renders a browser.
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run the offline suites
+        env:
+          PYTHONUNBUFFERED: "1"
+          # The dry-run suites construct a stubbed Anthropic client, which still
+          # wants a key present. No request is ever made.
+          ANTHROPIC_API_KEY: "sk-offline-tests-not-a-real-key"
+        run: |
+          echo "### Offline suites" >> "$GITHUB_STEP_SUMMARY"
+          echo "| suite | result |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          failed=0
+          for t in uat/tests/test_*.py; do
+            name=$(basename "$t" .py)
+            if python -X utf8 "$t" > "/tmp/$name.log" 2>&1; then
+              echo "  PASS  $name"
+              echo "| \`$name\` | ✅ |" >> "$GITHUB_STEP_SUMMARY"
+            else
+              failed=$((failed + 1))
+              echo "  FAIL  $name"
+              echo "| \`$name\` | ❌ |" >> "$GITHUB_STEP_SUMMARY"
+              echo "::group::$name (failed)"
+              cat "/tmp/$name.log"
+              echo "::endgroup::"
+              echo "::error::$name failed"
+            fi
+          done
+          if [ "$failed" -ne 0 ]; then
+            echo "$failed suite(s) failed." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo "All suites passed, 0 API calls." >> "$GITHUB_STEP_SUMMARY"
+
+      # A prompt carrying a {{PLACEHOLDER}} the destination runner cannot
+      # substitute would ship raw template syntax to the model. promote.py
+      # already refuses such a copy; this makes the same check run on every push.
+      - name: Prompt status (read-only)
+        run: python -X utf8 uat/promote.py
