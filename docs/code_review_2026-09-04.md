@@ -8,7 +8,7 @@ of 8/14, 8/24, 8/31, 9/2, 9/3 and 9/4 plus the 9/3 publish run.
 Read Part 1 first. Those are not code-smell items; they are things that are
 broken today while every CI run shows green.
 
-## Status (updated 2026-09-04, evening)
+## Status (updated 2026-09-05)
 
 **Merged to `main` on 2026-09-04** as one revertible merge commit (`git revert
 -m 1 <merge>` undoes the whole batch). Eleven commits, ten offline suites, all
@@ -22,6 +22,10 @@ passing, zero API calls.
 | Editor flags | **Changed, not deleted.** The flag-only checks are gone (21.8 unread comments per issue down to 1.5). Stat verification stays and now cuts or corrects the claim instead of annotating it. See the correction note below. |
 | Email not sending | **Owner action.** Needs a Gmail app password in the `GMAIL_PASSWORD` secret. |
 | Meme findings (Part 2.1-2.3) | **Fixed, and worse than reported.** The library is now the only source of templates and caption counts. It also disagreed with *itself*: see the note below. |
+| Truncation undetected (3.1) | **Fixed 2026-09-05.** `stop_reason` checked on every pass; 4 and 6 fall back to their input; writer cap 8K → 16K, under the non-streaming ceiling. |
+| Tests never run in CI (3.7) | **Fixed 2026-09-05.** `tests.yml` runs all eleven suites on every push and PR. |
+| Nothing could fail for a bad issue | **Fixed 2026-09-05.** `verify_run.py` runs last, writes a step summary, and fails the job on an unshippable issue. Calibrated against the archive: fails 2026-09-01, passes the rest. |
+| SMTP failure exited 0 | **Fixed 2026-09-05.** `email_newsletter.py` exits non-zero and records the reason; the step is `continue-on-error` so Substack still runs, and the gate turns it red. |
 | UAT runner collapse | Open. |
 
 ### What the meme work turned up
@@ -325,6 +329,8 @@ working; the meme side is the weak half, for the reasons in 2.1-2.3.
 
 ### 3.1 Output truncation is undetected
 
+> **Fixed 2026-09-05** — `runner_common.was_truncated()` catches `max_tokens` and `pause_turn`; Passes 4 and 6 return their input; `MAX_TOKENS_WRITER = 16384`, re-bisected against the pinned SDK; Pass 2's `while True` loop is bounded at 8 turns.
+
 Passes 2, 4 and 6 run with `max_tokens=8192` and never check
 `stop_reason == "max_tokens"`. Recent output sizes: Pass 2 5.2K-7.0K tokens,
 Pass 4 3.4K, Pass 6 3.8K. A long day pushes Pass 2 over the cap, and a
@@ -337,7 +343,10 @@ streaming, since the SDK requires streaming above 21,333 anyway).
 
 `web_search` is a server tool. The `stop_reason == "tool_use"` branch never
 runs for it, `[SEARCH]` logging never fires (blocks are `server_tool_use`),
-and `pause_turn` is not handled, so a long search turn returns partial text.
+and `pause_turn` was not handled, so a long search turn returned partial text
+(the `pause_turn` half is closed as of 2026-09-05: it is treated as an
+incomplete pass rather than resumed, which is the honest reading — resuming
+correctly means continuing the assistant turn, which the loop does not do).
 `web_search_20250305` is also the legacy tool type; Opus 4.7 supports
 `web_search_20260209`. Minor today, but the loop is dead code that looks
 alive.
@@ -372,6 +381,8 @@ dispatch while the delayed scheduled run is in flight races on `main`, and
 both send email and both create a Substack draft.
 
 ### 3.7 Tests exist but CI never runs them
+
+> **Fixed 2026-09-05** — `.github/workflows/tests.yml`, all eleven suites, each independent.
 
 Five offline suites, zero API calls, seconds to run, all passing today. No
 workflow executes them. Add a `tests.yml` on push and pull request; the
