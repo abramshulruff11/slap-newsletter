@@ -249,6 +249,37 @@ comedic engine, so the planned joke survives with a different picture. A repeat 
 with no free alternative the original is kept and the run says so. Locked by
 `uat/tests/test_meme_rotation.py`.
 
+**A pass that returns incomplete output must never look finished (2026-09-05).** Nothing checked
+`stop_reason`. Pass 2 measured **7,029 output tokens on 2026-08-31 against a cap of 8,192** — 86% of
+the ceiling — so one busy Saturday truncates the draft mid-sentence. Passes 4 and 6 each rewrite the
+WHOLE draft, and the only guard was "did it come back as HTML?", which truncation cannot trip
+because it removes the END, not the `<h1>`. `runner_common.was_truncated()` now catches both
+`max_tokens` and `pause_turn`; Passes 4 and 6 fall back to their INPUT (an unedited draft beats a
+half-edited one) and Pass 2, which has no earlier draft to fall back to, records it for the run
+gate. `MAX_TOKENS_WRITER = 16384` — deliberately under the 21,333 non-streaming ceiling, re-bisected
+against `anthropic==1.2.0`, because Pass 2's tool loop would be awkward to stream. Pass 2's loop is
+also bounded at 8 turns now; it was `while True`.
+
+**The run says what it produced, and can fail (2026-09-05).** `verify_run.py` runs last and reads
+what actually shipped — tweets, GIFs, memes, un-rendered placeholders, whether the email sent,
+whether any pass came back truncated — writes it to the GitHub step summary, and **fails the job**
+when the issue is unfit to send. It warns, rather than failing, when the issue is merely thin: a
+quiet sports day is not a bug, and a job that goes red every time it is light trains you to ignore
+red. Calibrated against the archive: it **fails 2026-09-01**, the day seven GIFs shipped as invisible
+empty divs, and passes the five issues around it with warnings only.
+
+`run_status.json` (gitignored, reset at the top of each run) carries state between the separate
+processes — `email_newsletter.py` now records whether delivery happened and **exits non-zero**,
+which is why its workflow step carries `continue-on-error`: a failed send must colour the run
+without skipping the Substack path that follows. UAT repoints `run_status.STATUS_PATH` at its own
+output dir, so the sandbox never writes a production file.
+
+**The offline suites run in CI (2026-09-05).** `.github/workflows/tests.yml` runs all eleven on
+every push and pull request. They made zero API calls and took seconds, and until now nothing ran
+them — `test_runner_drift.py` exists to catch a change reaching one runner and not the other, which
+is exactly what caused the 2026-09-01 outage, and it could only do that if it ran before the code
+landed.
+
 **Rules the model is asked to follow must be checked in Python, not self-reported.** On
 2026-08-27 Pass 1 reported its own account-cap violation *accurately* and shipped anyway, because
 nothing acted on the number; the §2.2 "filter" was only ever printing a count the model wrote
@@ -504,6 +535,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
+| `tests.yml` | push + PR + dispatch | The eleven offline suites, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -512,8 +544,9 @@ Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API
 Daily pipeline steps: checkout → setup Python → `pip install -r requirements.txt` →
 `playwright install --with-deps chromium` → fetch content → fetch sports data → validate →
 generate newsletter → render box score PNGs → verify outputs → archive → **commit & push**
-(continue-on-error) → **email** → **create Substack draft** → commit handoff → publish now if
-already past 12:30 PM ET. A "check sports data health" step (continue-on-error) sits after the
+(continue-on-error) → **email** (continue-on-error; it exits non-zero on failure) → **create
+Substack draft** → commit handoff → publish now if already past 12:30 PM ET → **verify run quality**
+(`if: always()`, fails the job on an unshippable issue). A "check sports data health" step (continue-on-error) sits after the
 sports fetch; see the ESPN entry under Known Issues.
 
 Ordering notes: push is before email so the size-guard's hosted-URL fallback resolves when Gmail

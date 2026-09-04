@@ -33,3 +33,6 @@ uat/gif_decisions.json
 
 # GIF URL cache — build artifact, regenerated per run
 gif_url_cache.json
+
+# Per-run status, read by verify_run.py. Build artifact, regenerated each run.
+run_status.json

@@ -58,23 +58,27 @@ KNOWN_DIVERGENT = {
         "cooldown — the recent-slug block and the same-engine swap — was added "
         "to BOTH copies identically.)"
     )),
-    "run_pass2": dict(prod="df6ad694eb18", uat="d66b183684ec", reason=(
+    "run_pass2": dict(prod="bfabc3173843", uat="7db198bedbf7", reason=(
         "Bidirectional. Prod carries degraded-mode wiring UAT lacks; UAT "
         "carries highlight-plan wiring prod has no Pass 1B for. (2026-09-04: "
         "the {{MEME_SELECTOR_INDEX}} substitution was added to BOTH copies "
         "identically — the meme library is now the only template list the "
-        "writer sees.)"
+        "writer sees. 2026-09-05: the bounded tool loop, MAX_TOKENS_WRITER and "
+        "the was_truncated check likewise went into both.)"
     )),
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
     )),
-    "main": dict(prod="a64876f6c91a", uat="0e25f4ba71c9", reason=(
+    "main": dict(prod="585fb6a5e3fe", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
         "5-line stub. Expected to stay divergent permanently. (2026-09-04: prod "
         "now strips HTML comments from the published Substack file. Nothing to "
         "port — run_uat.py writes only the draft template; the UAT runner's "
         "SUBSTACK_OUTPUT_PATH is unused. It also now hands game_state to Pass 6 "
-        "for CHECK 8; run_uat.py does the same at its own call site.)"
+        "for CHECK 8; run_uat.py does the same at its own call site. 2026-09-05: "
+        "prod's main() calls run_status.reset(); UAT instead repoints "
+        "run_status.STATUS_PATH at its own output dir at import, so the sandbox "
+        "never writes prod's status file.)"
     )),
 }
 

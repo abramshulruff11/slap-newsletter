@@ -108,6 +108,52 @@ PRICING = {
 # it must be mutated in place (append), never rebound.
 PASS_COSTS: list[dict] = []
 
+# ---------------------------------------------------------------------------
+# Output ceilings, and detecting when a pass hits one
+# ---------------------------------------------------------------------------
+# Pass 2 measured 7,029 output tokens on 2026-08-31 against a cap of 8,192 --
+# 86% of the ceiling. One busy Saturday and the draft stops mid-sentence.
+# Nothing checked stop_reason, so a truncated pass shipped as a finished one.
+#
+# 16,384 is deliberate: the SDK refuses a NON-streaming request above 21,333
+# (bisected against anthropic==1.2.0), and Pass 2 runs a tool loop that
+# streaming would complicate. This doubles the headroom while staying under
+# that line. Anything above 21,333 must convert to streaming in the same
+# commit -- see the Pass 1 note in CLAUDE.md.
+MAX_TOKENS_WRITER = 16384    # Pass 2: writes the whole draft
+MAX_TOKENS_EDITOR = 8192     # Passes 4 and 6: rewrite a draft of ~3.5-5K tokens
+
+# stop_reasons that mean "this output is incomplete".
+#   max_tokens -- hit the ceiling above.
+#   pause_turn -- a server tool (web_search) paused a long turn. Resuming it
+#                 correctly means continuing the assistant turn, which we do
+#                 NOT do; so treat it as partial and say so rather than
+#                 shipping the fragment as if it were the finished draft.
+INCOMPLETE_STOP_REASONS = ("max_tokens", "pause_turn")
+
+
+def was_truncated(response, label: str) -> bool:
+    """True when a pass returned an incomplete response. Logs and records it.
+
+    The caller decides what to do about it: an editing pass can fall back to
+    its input, but Pass 2 has no earlier draft to fall back to, so there the
+    only honest move is to make the run say so.
+    """
+    stop = getattr(response, "stop_reason", None)
+    if stop not in INCOMPLETE_STOP_REASONS:
+        return False
+    why = ("hit its max_tokens ceiling" if stop == "max_tokens"
+           else "was paused mid-turn by a server tool and not resumed")
+    print(f"  \u2717 {label} {why} \u2014 the output is INCOMPLETE "
+          f"(stop_reason={stop!r}).")
+    try:
+        import run_status
+        run_status.append("incomplete_passes", f"{label} ({stop})")
+    except Exception as e:  # noqa: BLE001 -- reporting must never break a run
+        print(f"    (could not record run status: {type(e).__name__})")
+    return True
+
+
 
 def load_prompt(filename: str) -> str:
     path = _require_prompts_dir() / filename
@@ -747,7 +793,7 @@ def run_pass4(draft_html: str, client: anthropic.Anthropic) -> str:
 
     response = client.messages.create(
         model=MODEL_DEFAULT,
-        max_tokens=8192,
+        max_tokens=MAX_TOKENS_EDITOR,
         system=system_blocks,
         messages=[{
             "role": "user",
@@ -762,6 +808,13 @@ def run_pass4(draft_html: str, client: anthropic.Anthropic) -> str:
     cache_read  = getattr(response.usage, "cache_read_input_tokens", 0)
     cache_write = getattr(response.usage, "cache_creation_input_tokens", 0)
     cost_summary("PASS 4", MODEL_DEFAULT, response.usage.input_tokens, response.usage.output_tokens, cache_read, cache_write)
+
+    # A truncated rewrite is a draft with its ending missing. The existing
+    # "did it come back as HTML?" gate cannot catch it -- truncation removes
+    # the END, so the <h1> it looks for is still there. Keep the input.
+    if was_truncated(response, "PASS 4"):
+        print("    Keeping the pre-voice draft rather than a half-rewritten one.")
+        return draft_html
 
     return strip_code_fences(extract_text(response))
 
@@ -827,7 +880,7 @@ def run_pass6(draft_html: str, recent_output: dict, client: anthropic.Anthropic,
 
     response = client.messages.create(
         model=MODEL_DEFAULT,
-        max_tokens=8192,
+        max_tokens=MAX_TOKENS_EDITOR,
         system=system_blocks,
         messages=[{
             "role": "user",
@@ -840,6 +893,12 @@ def run_pass6(draft_html: str, recent_output: dict, client: anthropic.Anthropic,
     cache_read  = getattr(response.usage, "cache_read_input_tokens", 0)
     cache_write = getattr(response.usage, "cache_creation_input_tokens", 0)
     cost_summary("PASS 6", MODEL_DEFAULT, response.usage.input_tokens, response.usage.output_tokens, cache_read, cache_write)
+
+    # As in Pass 4: a truncated edit silently drops the end of the newsletter,
+    # Around the League included. The unedited draft is the better outcome.
+    if was_truncated(response, "PASS 6"):
+        print("    Keeping the pre-editor draft rather than a truncated edit.")
+        return draft_html
 
     edited = strip_code_fences(extract_text(response))
 

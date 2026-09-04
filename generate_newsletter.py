@@ -34,9 +34,11 @@ import gif_library_select
 # on 2026-09-01 two changes reached one runner and not the other and both
 # shipped, because promote.py diffs prompts only. See runner_common.py and
 # uat/tests/test_runner_drift.py.
+import run_status
 import runner_common
 from runner_common import (
     MODEL, MODEL_DEFAULT, MODEL_WRITER, PASS_COSTS, PRICING,
+    MAX_TOKENS_WRITER, MAX_TOKENS_EDITOR, was_truncated,
     _normalize_tweet_url,
     blockquotes_to_substack_urls,
     clean_giphy_search,
@@ -885,10 +887,14 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
     messages = [{"role": "user", "content": user_message}]
     total_in = total_out = total_cache_read = total_cache_write = 0
 
-    while True:
+    # Bounded, so a tool loop that never settles cannot spin against the API
+    # until the job's 30-minute cap kills it. Eight is far above the one or two
+    # turns a normal run takes.
+    MAX_TURNS = 8
+    for _turn in range(1, MAX_TURNS + 1):
         response = client.messages.create(
             model=MODEL_WRITER,
-            max_tokens=8192,
+            max_tokens=MAX_TOKENS_WRITER,
             system=system_blocks,
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=messages,
@@ -910,8 +916,20 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
             messages.append({"role": "user", "content": tool_results})
         else:
             break
+    else:
+        print(f"  \u26a0 Pass 2 stopped at the {MAX_TURNS}-turn ceiling "
+              f"\u2014 the draft may be incomplete")
+        run_status.append("incomplete_passes", f"PASS 2 (turn ceiling)")
 
     cost_summary("PASS 2", MODEL_WRITER, total_in, total_out, total_cache_read, total_cache_write)
+
+    # Unlike Passes 4 and 6, there is no earlier draft to fall back to here --
+    # Pass 2 IS the draft. Record it so verify_run.py fails the run rather than
+    # letting a newsletter that stops mid-sentence go out looking finished.
+    if was_truncated(response, "PASS 2"):
+        print("    The draft is cut off. Raise MAX_TOKENS_WRITER (and convert "
+              "this call to streaming above 21,333) if this recurs.")
+
     return strip_leading_narration(strip_code_fences(extract_text(response)))
 
 
@@ -1099,6 +1117,10 @@ def main() -> None:
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
         raise SystemExit("Error: ANTHROPIC_API_KEY not set in .env")
+
+    # Clear yesterday's status before anything can record into it. Without
+    # this, a stale "email_sent: true" would sit there while today's send fails.
+    run_status.reset()
 
     print(f"Loading content...")
     raw            = load_json(RAW_CONTENT_PATH)
