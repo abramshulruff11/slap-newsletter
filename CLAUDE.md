@@ -189,23 +189,34 @@ session. Rules are numbered (note: Rule 3 is missing — intentional gap from a 
 Pass 5. Splits HTML by h1/h2, maps sections to story plan by position, flags misassigned tweet
 URLs, over-cap accounts, and tweets that restate their own section's prose. Not a Claude call.
 
-**The editor never writes a flag for a human to read (2026-09-04).** Checks 2, 6 and 8 were
-removed from `editor_prompt.txt`: all three only inserted an HTML comment, and nobody read them.
-Measured across the last 8 archived issues that was **21.8 flags per issue** — 15.4 of them
-`VERIFY STAT` — invisible in Gmail, stripped before Substack, and costing roughly half of Pass 6's
-output tokens. The check NUMBERS are left as gaps on purpose so references here and in
-`plan_audit.py` still point at the right check. What remains either fixes the draft (1, 4, 5, 7)
-or acts on a flag Python already computed (3 = account caps and §2.2 from `plan_audit.py`,
-9 = `FACT FLAG`/`COHERENCE FLAG` from `claim_validator.py`). New **Check 9** exists because Pass 3
-had been injecting ground-truth contradictions that no prompt ever told the editor to act on — it
-was writing flags nobody read either. The remaining ~1.5 flags per issue are working notes: they
-stay in the archived `newsletter_draft.html` and are **stripped from
-`newsletter_substack.html`**, which is the file that gets emailed and published.
+**The editor never writes a flag for a human to read — but it still verifies (2026-09-04).**
+Nobody reads HTML comments: they are invisible in Gmail and stripped before Substack, and across
+the last 8 archived issues Pass 6 was writing **21.8 of them per issue** (15.4 `VERIFY STAT`) for
+no reader. The fix is that every check must ACT. Checks 2 and 6 were deleted outright — both were
+flag-only, and 6 was redundant with `drop_fabricated_tweets()` besides.
 
-Fact-checking now rests on Pass 2's mandatory web-search verification, `rolling_feedback.txt`
-Rule 3, and Pass 3's deterministic cross-check — not on an LLM annotating its own output. If
-unverified stats start shipping, the fix is to make Pass 6 *cut* an unsourced number, not to
-restore a flag nobody reads.
+**Check 8 was deleted the same day and put straight back. That deletion was a mistake worth
+recording:** "the flag is useless" was confused with "the check is useless", and factual
+verification is the most valuable thing this pass does. Check 8 now **fixes or cuts** instead of
+annotating — it strips an unverifiable conference placement or title claim, downgrades a specific
+year or streak to relative framing (`rolling_feedback.txt` RULE 3, enforced rather than hoped
+for), and cuts an unsourced number while keeping the sentence. Two things make a claim SOURCED and
+therefore untouchable: a tweet in the same section carrying it, or the ground-truth block.
+
+**That second source only became real on 2026-09-04.** `run_pass6()` had never been given
+`game_state`, so the editor could only compare a number against the tweets next to it. It now
+takes `game_state` and puts the ground-truth summary in the USER message (not the cached system
+block, which would thrash the cache daily). Both runners pass it. A check that cites evidence it
+was never given is worse than no check.
+
+The check NUMBERS are left as gaps on purpose so references here and in `plan_audit.py` still
+point at the right check. What remains either fixes the draft (1, 4, 5, 7, 8) or acts on a flag
+Python already computed (3 = account caps and §2.2 from `plan_audit.py`, 9 = `FACT FLAG` /
+`COHERENCE FLAG` from `claim_validator.py`). **Check 9 is new** and exists because Pass 3 had the
+same disease: it had been injecting deterministic ground-truth contradictions that no prompt ever
+told the editor to act on. The ~1.5 remaining flags per issue are working notes — they stay in the
+archived `newsletter_draft.html` and are **stripped from `newsletter_substack.html`**, the file
+that gets emailed and published. Locked by `uat/tests/test_editor_checks.py`.
 
 **Rules the model is asked to follow must be checked in Python, not self-reported.** On
 2026-08-27 Pass 1 reported its own account-cap violation *accurately* and shipped anyway, because

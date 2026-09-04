@@ -1175,7 +1175,7 @@ def main() -> None:
         print("  \u26a0 Skipped via --no-editor flag")
         final_html = audited_html
     else:
-        final_html = run_pass6(audited_html, recent_output, client)
+        final_html = run_pass6(audited_html, recent_output, client, game_state)
 
     # Embed media once into the shared body (below), then write both files
     # from it. This keeps GIF/meme history from being logged twice per run

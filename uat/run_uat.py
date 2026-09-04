@@ -426,7 +426,7 @@ def main() -> None:
 
     # ---- Pass 6 ----------------------------------------------------------
     if "6" in passes:
-        html = G.run_pass6(html, recent_output, client)
+        html = G.run_pass6(html, recent_output, client, game_state)
 
     # ---- Pass 7 — media render ------------------------------------------
     if "7" in passes:
