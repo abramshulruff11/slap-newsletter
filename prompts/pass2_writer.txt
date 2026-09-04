@@ -374,30 +374,17 @@ HIGHLIGHT: [description]
 Use ONLY the ids given to you in the HIGHLIGHT PLAN below. Never invent one. If
 the plan is empty, place no highlights.
 
-Separate panels with `||`. The number of captions you write depends on the template:
+Separate panels with `||`.
 
-| Captions you write | Templates |
-|---|---|
-| 2 (top \|\| bottom) | drake, distracted-boyfriend, left-exit-12-off-ramp, two-buttons, corporates-want-you-to-find-the-difference, buff-doge-vs-cheems, epic-handshake, this-is-fine, change-my-mind, hide-the-pain-harold, bernie-i-am-once-again-asking, surprised-pikachu, always-has-been, monkey-puppet, mocking-spongebob, first-time, trade-offer, waiting-skeleton, one-does-not-simply, spider-man-pointing-at-spider-man, eric-andre-shooting, is-this-a-pigeon, woman-yelling-at-cat, ight-imma-head-out |
-| 3 (step1 \|\| step2 \|\| flaw) | gru-plan *(code auto-repeats flaw as panel 4)*, expanding-brain, vince-mcmahon-reaction, clown-applying-makeup |
-| 3 (panik \|\| kalm \|\| panik) | panik-kalm-panik |
-| 2 (anakin \|\| padme) | anakin-padme *(code fills the blank/repeat panels)* |
+HOW MANY PANELS: read the box count off the MEME TEMPLATE INDEX in
+meme_reference.txt, or off the full spec in today's message when the plan
+seeded that template. Those come from the meme library and match what the
+pipeline enforces. Do not work from memory and do not look for a table here —
+there used to be one, it disagreed with the library on 13 of 30 templates, and
+the memes built from it were dropped for having too few captions.
 
-The `data-template` value must be one of the exact slugs from `meme_reference.txt`:
-
-Comparison/Preference: `drake`, `distracted-boyfriend`, `left-exit-12-off-ramp`, `two-buttons`, `corporates-want-you-to-find-the-difference`, `buff-doge-vs-cheems`, `epic-handshake`
-
-Escalation/Levels: `expanding-brain`, `vince-mcmahon-reaction`, `gru-plan`, `clown-applying-makeup`, `panik-kalm-panik`
-
-Denial/Copium: `this-is-fine`, `hide-the-pain-harold`, `anakin-padme`, `bernie-i-am-once-again-asking`, `change-my-mind`
-
-Reaction/Surprise: `surprised-pikachu`, `always-has-been`, `monkey-puppet`, `mocking-spongebob`, `first-time`
-
-Domination/Superiority: `trade-offer`, `one-does-not-simply`, `waiting-skeleton`
-
-Betrayal/Self-destruction: `spider-man-pointing-at-spider-man`, `eric-andre-shooting`, `is-this-a-pigeon`, `woman-yelling-at-cat`
-
-Resignation: `ight-imma-head-out`
+WHICH SLUGS EXIST: the same index. It is the complete list. An unknown slug is
+skipped silently.
 
 Keep caption text short — 5-10 words per line. ALL CAPS standard.
 
@@ -435,16 +422,18 @@ it are HARD — a caption set that breaks either produces a meme with no joke in
 it, no matter how good the wording is:
 
 1. THE VALENCE RULE. Each template states the required relationship between its
-   boxes, and it is usually NOT "box 1 is better." On drake, left-exit and
-   distracted-boyfriend the second option is the WORSE one the subject actually
-   chose — that bad decision IS the joke. Writing box 1 as the smarter choice
-   inverts it into an endorsement and kills it. Read the rule; do not assume.
+   boxes, and it is usually NOT "the first box is the good one." In several
+   templates the option the subject actually took is the WORSE one — that bad
+   decision IS the joke, and writing it as the smart choice inverts the meme
+   into an endorsement. Read the template's own rule. Do not assume, and do not
+   generalise from another template.
 
 2. THE SUBJECT RULE. Every meme is ABOUT a specific named person or team. The
    spec says where that name goes:
-   - placement "box:N" — the subject MUST be captioned in that box. Do not
-     leave it blank. (distracted-boyfriend: box 3 is the middle figure, the
-     person or team making the decision. It takes THREE captions.)
+   - placement "box:N" — the subject MUST be captioned in that box, and N is
+     zero-indexed: box 0 is the first caption you write. Do not leave it blank.
+     The box that carries the subject is the one writers most often drop, and
+     without it the meme has no protagonist.
    - placement "copy" — the subject MUST be named in the sentence immediately
      before or after the meme. The boxes hold only the options.
    If you cannot name a subject, do not place that meme at all. A meme about an

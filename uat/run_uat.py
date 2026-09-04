@@ -44,6 +44,7 @@ if str(UAT_DIR) not in sys.path:
 import generate_newsletter_uat as G          # noqa: E402
 import highlight_to_gif as H                 # noqa: E402
 import meme_box_check as MB                  # noqa: E402
+import meme_library                          # noqa: E402
 import gif_library_select as GL              # noqa: E402
 
 # ---------------------------------------------------------------------------
@@ -312,7 +313,10 @@ def main() -> None:
 
     # ---- Pass 1 ----------------------------------------------------------
     if "1" in passes:
-        story_plan = G.run_pass1(raw, recent_output, client, game_state)
+        _meme_hist = G.load_json(G.OUTPUT_DIR / "meme_history.json") or []
+        _cooled = meme_library.recently_used_slugs(_meme_hist)
+        story_plan = G.run_pass1(raw, recent_output, client, game_state,
+                                 recent_meme_slugs=_cooled)
         recent_output = G.save_story_log(story_plan, recent_output, G.RECENT_OUTPUT_PATH)
         try:
             update_rejected = (json.loads(story_plan)

@@ -28,6 +28,18 @@ sys.path.insert(0, str(REPO))
 
 import anthropic  # noqa: E402
 
+def _has_meme_index(text: str) -> bool:
+    """The injected library index, identified by content rather than its title.
+
+    Requires a real engine heading AND at least one 'slug (N boxes, subject: ...)'
+    line — a renamed header stays green, an empty or unsubstituted placeholder
+    does not.
+    """
+    import re as _re
+    return (_re.search(r'^## [a-z_]+$', text, _re.M) is not None
+            and _re.search(r'^\s+- [a-z0-9-]+ \(\d+ boxes, subject: ', text, _re.M) is not None
+            and "{{MEME_SELECTOR_INDEX}}" not in text)
+
 CAPTURED = {"pass1": None, "pass2": None}
 
 
@@ -131,7 +143,7 @@ plan_json = GN.run_pass1(raw, [], client, game_state)
 
 p1 = CAPTURED["pass1"]
 systext = "".join(b["text"] if isinstance(b, dict) else str(b) for b in p1["system"])
-check("meme selector index in system prompt", "MEME SELECTOR INDEX" in systext, True)
+check("meme library index in Pass 1 system prompt", _has_meme_index(systext), True)
 check("engines listed", "subject_abandons_sensible_for_funky" in systext, True)
 
 props = p1["tools"][0]["input_schema"]["properties"]["lead_story"]["properties"]
@@ -160,6 +172,18 @@ check("unchosen template absent", "### drake" in um, False)
 p2sys = "".join(b["text"] for b in p2["system"])
 check("GIF library menu substituted into writer prompt",
       "{{GIF_LIBRARY_CATEGORIES}}" in p2sys, False)
+check("meme template index substituted into writer prompt",
+      "{{MEME_SELECTOR_INDEX}}" in p2sys, False)
+check("meme library index actually present in the writer prompt",
+      _has_meme_index(p2sys), True)
+# The index is static, so it belongs in the cached block; the per-run spec does
+# not. Both are asserted because putting them the wrong way round either
+# thrashes the cache daily or caches a selection that changes every run.
+check("index is in the CACHED system block (it never changes)",
+      any(_has_meme_index(b["text"]) and b.get("cache_control")
+          for b in p2["system"]), True)
+check("no hand-written caption table survives in the writer prompt",
+      "Captions you write" in p2sys, False)
 check("GIF categories actually present", "CATEGORY:" in p2sys or "category" in p2sys.lower(), True)
 check("per-run spec NOT in cached system block",
       "### distracted-boyfriend" in p2sys, False)

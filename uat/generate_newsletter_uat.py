@@ -258,7 +258,8 @@ import time
 # Pass 1 — Story Selector
 # ---------------------------------------------------------------------------
 
-def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_state: dict | None = None) -> str:
+def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_state: dict | None = None,
+              recent_meme_slugs: set | None = None) -> str:
     print("\n── PASS 1: Story Selector ──────────────────────────")
 
     selector_prompt = load_prompt("pass1_story_selector.txt")
@@ -306,8 +307,12 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
           f"{len(_kept)} candidates remain")
 
     game_state_block = format_game_state_summary(game_state or {})
+    # Rotation is decided HERE, where the template is chosen — not left to a
+    # warning printed after the meme has already been rendered.
+    cooldown_block = meme_library.format_cooldown_block(recent_meme_slugs or set())
     user_content = (
         (game_state_block + "\n\n" if game_state_block else "")
+        + cooldown_block
         + "## TODAY'S RAW CONTENT\n\n"
         + json.dumps(raw_slim, ensure_ascii=False)
         + "\n\n## RECENT STORY HISTORY — last 14 days\n"
@@ -635,6 +640,18 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 else:
                     print(f"  \u2713 All plan tweets verified against today's raw content")
 
+            # Backstop for the cooldown block above: swap anything Pass 1
+            # still picked from the last 7 days for another template driven by
+            # the SAME comedic engine, so the planned joke survives with a
+            # different picture. Pass 2 receives the replacement's full spec.
+            for _headline, _old, _new in meme_library.swap_cooled_templates(
+                    plan, recent_meme_slugs or set()):
+                if _new:
+                    print(f"  ♻ meme rotation: {_old} → {_new}  ({_headline})")
+                else:
+                    print(f"  ⚠ meme rotation: {_old} used in the last 7 days and "
+                          f"its engine has no free alternative — kept ({_headline})")
+
             story_plan_raw = json.dumps(plan, ensure_ascii=False)
 
             # Fix malformed tweet URLs where model writes status= instead of status/
@@ -961,6 +978,22 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
         import gif_library_select as _GL
         gif_reference = gif_reference.replace(
             "{{GIF_LIBRARY_CATEGORIES}}", _GL.category_prompt_block())
+
+    # The meme template index is injected from the library at load time, for the
+    # same reason the GIF categories are: a hand-kept copy in the prompt file
+    # drifts. It did — meme_reference.txt and pass2_writer.txt disagreed with
+    # the library on 13 of 30 box counts, and a meme built from the wrong count
+    # is dropped by meme_box_check rather than shipped, so the writer lost the
+    # meme for following its own instructions.
+    if "{{MEME_SELECTOR_INDEX}}" in meme_reference:
+        _index = meme_library.load_selector_index()
+        if _index:
+            meme_reference = meme_reference.replace("{{MEME_SELECTOR_INDEX}}", _index)
+        else:
+            # Never let raw template syntax reach the model; say so loudly,
+            # because the writer now has no list of templates to choose from.
+            meme_reference = meme_reference.replace("{{MEME_SELECTOR_INDEX}}", "")
+            print("  ⚠ meme selector index empty — Pass 2 has NO template list this run")
 
     # Voice examples load FIRST so the model reads the target before the rules.
     # This matches how Pass 4 (Voice Editor) works and weights imitation over instruction.

@@ -5,14 +5,27 @@ The library documents, per Imgflip template: which comedic engine it belongs to,
 who the meme must be ABOUT (subject), the required valence relationship between
 its caption boxes, and a worked/anti example pair.
 
-It is consumed in two projections rather than injected wholesale — at 30 full
+As of 2026-09-04 this file is the ONLY description of meme templates the model
+ever sees. meme_reference.txt and pass2_writer.txt each used to carry their own
+hand-kept catalogue and caption-count table; they disagreed with this library on
+13 of 30 box counts, and a meme built from a wrong count is DROPPED by
+meme_box_check rather than shipped — so the writer lost memes for following its
+own instructions. Both tables are gone, replaced by projections of this file.
+
+It is consumed in projections rather than injected wholesale — at 30 full
 entries the file is ~20K tokens, which would crowd voice_examples.txt out of the
 writer's attention:
 
   Pass 1 (selector)  → load_selector_index(): a compact ~2K-token index, one line
                        per template, grouped by engine. Pass 1 picks a slug.
-  Pass 2 (writer)    → format_meme_specs(slugs): the FULL entry for only the 1-2
+  Pass 2 (writer)    → the same index, substituted into meme_reference.txt at
+                       {{MEME_SELECTOR_INDEX}} (it may place a meme the plan did
+                       not seed, and needs the real box counts to do it), PLUS
+                       format_meme_specs(slugs): the FULL entry for the
                        templates Pass 1 actually chose.
+
+  Rotation           → recently_used_slugs() / format_cooldown_block() /
+                       swap_cooled_templates(): see the Rotation section below.
 
 The library is deliberately NOT forked into uat/prompts/. It is structured data
 rather than voice-bearing prose, and a fork would reproduce the UAT prompt-drift
@@ -161,6 +174,107 @@ def format_meme_specs(slugs, path: Path | None = None) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Rotation
+#
+# Pass 1 chooses the template, and until 2026-09-04 it chose without ever being
+# shown what ran recently — only Pass 2 got the "RECENTLY USED MEDIA" block, and
+# by then the slug was already fixed. The result was the log line
+# "[memes] ⚠ 'drake' used in last 7 days — consider varying template", printed
+# after the meme was already made. Advisory, and ignored.
+#
+# Two changes: Pass 1 is now told what is cooling down, and anything it still
+# picks from that list is swapped here. The swap stays inside the template's own
+# ENGINE — the comedic mechanism the selector chose — so the joke it planned
+# still works; only the picture changes. Pass 2 is handed the replacement's full
+# spec, so it writes captions to the new box count.
+#
+# A repeat beats no meme: when the engine has no free alternative, the original
+# is kept and the report says so.
+# ---------------------------------------------------------------------------
+
+def recently_used_slugs(history: list, days: int = 7) -> set:
+    """Template slugs used within the last `days`, from meme_history.json rows."""
+    from datetime import date, timedelta
+    cutoff = date.today() - timedelta(days=days)
+    out = set()
+    for entry in history or []:
+        if not isinstance(entry, dict):
+            continue
+        slug = entry.get("slug")
+        if not slug:
+            continue
+        try:
+            if date.fromisoformat(entry.get("date", "")) >= cutoff:
+                out.add(slug)
+        except (TypeError, ValueError):
+            continue
+    return out
+
+
+def engine_alternatives(slug: str, exclude: set | None = None,
+                        path: Path | None = None) -> list:
+    """Other slugs driven by the same comedic engine, excluding `exclude`."""
+    t = get_template(slug, path)
+    if not t:
+        return []
+    engine = t.get("engine")
+    if not engine:
+        return []
+    exclude = (exclude or set()) | {slug}
+    return [o["slug"] for o in load_meme_library(path).get("templates", [])
+            if o.get("engine") == engine and o["slug"] not in exclude]
+
+
+def format_cooldown_block(cooled: set) -> str:
+    """The 'do not pick these' block for Pass 1's user message. "" when empty."""
+    if not cooled:
+        return ""
+    return (
+        "## MEME TEMPLATES USED IN THE LAST 7 DAYS — CHOOSE DIFFERENT ONES\n"
+        + ", ".join(sorted(cooled)) + "\n"
+        "Picking one of these does not get you that template: a slug repeated "
+        "inside 7 days is swapped automatically for another one in the same "
+        "engine, so the choice is made for you. Pick the alternative yourself — "
+        "you know which story it is for.\n\n"
+    )
+
+
+def swap_cooled_templates(plan: dict, cooled: set, path: Path | None = None) -> list:
+    """
+    Replace cooled-down meme_template slugs in place, within the same engine.
+
+    Returns [(headline, old_slug, new_slug_or_None)] — new is None when the
+    engine had nothing free and the original was kept.
+    """
+    if not cooled or not isinstance(plan, dict):
+        return []
+    stories = [plan.get("lead_story") or {}]
+    stories += [s or {} for s in (plan.get("supporting_stories") or [])]
+
+    used_this_issue = {(s.get("meme_template") or "").strip()
+                       for s in stories if isinstance(s, dict)}
+    used_this_issue.discard("")
+    swaps = []
+    for s in stories:
+        if not isinstance(s, dict):
+            continue
+        slug = (s.get("meme_template") or "").strip()
+        if not slug or slug not in cooled:
+            continue
+        # Never swap in something already cooling down, and never duplicate a
+        # template inside one issue.
+        alts = engine_alternatives(slug, cooled | used_this_issue, path)
+        headline = str(s.get("headline", "?"))[:44]
+        if alts:
+            s["meme_template"] = alts[0]
+            used_this_issue.add(alts[0])
+            swaps.append((headline, slug, alts[0]))
+        else:
+            swaps.append((headline, slug, None))
+    return swaps
+
+
+# ---------------------------------------------------------------------------
 # Selector-index generation
 #
 # prompts/meme_selector_index.txt says "do not hand-edit" but shipped without a
@@ -170,10 +284,14 @@ def format_meme_specs(slugs, path: Path | None = None) -> str:
 # ---------------------------------------------------------------------------
 
 INDEX_HEADER = (
-    "# MEME SELECTOR INDEX -- one line per template, for Pass 1 slug selection.\n"
+    "# MEME TEMPLATE INDEX -- one line per template. The COMPLETE list; there is\n"
+    "# no other. Pass 1 picks a slug from here; Pass 2 receives the same index\n"
+    "# (substituted into meme_reference.txt) plus the FULL spec for whichever\n"
+    "# templates the plan seeded.\n"
     "# Derived from prompts/meme_library.DRAFT.json. Do not hand-edit.\n"
     "# Regenerate: python -c \"import meme_library; meme_library.write_selector_index()\"\n"
-    "# Pass 1 picks a slug; Pass 2 receives that template's full entry for caption writing.\n"
+    "# The box count printed here is what the pipeline enforces: supply fewer\n"
+    "# captions and meme_box_check.py drops the meme rather than ship a blank panel.\n"
 )
 
 
