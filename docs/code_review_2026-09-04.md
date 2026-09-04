@@ -21,8 +21,43 @@ is merged to `main` yet.
 | Auto-publish missing 12:30 PM ET | **Fixed.** Polls every 30 minutes and publishes at the first slot past 12:30 ET; the daily run publishes immediately if it finishes late. |
 | Editor flags | **Changed, not deleted.** The flag-only checks are gone (21.8 unread comments per issue down to 1.5). Stat verification stays and now cuts or corrects the claim instead of annotating it. See the correction note below. |
 | Email not sending | **Owner action.** Needs a Gmail app password in the `GMAIL_PASSWORD` secret. |
-| Meme findings (Part 2.1-2.3) | Next, on Abram's instruction to finish the above first. |
+| Meme findings (Part 2.1-2.3) | **Fixed, and worse than reported.** The library is now the only source of templates and caption counts. It also disagreed with *itself*: see the note below. |
 | UAT runner collapse | Open. |
+
+### What the meme work turned up
+
+The review said two hand-written tables disagreed with the meme library on 13 of
+30 templates. That was right, and both are now gone: the template list and every
+box count come from the library, injected the same way the GIF categories
+already were.
+
+The bigger problem was inside the library. Panel order and box counts were
+corrected against real Imgflip renders on August 27 and September 1. Those
+corrections updated four fields per template and left two behind.
+
+- Three valence rules still described the old panel mapping. For distracted
+  boyfriend the writer was told "box 2 must name the subject" one line above
+  "box 1: the subject", and the valence rule is the one the writer prompt calls
+  a hard requirement.
+- Nine worked examples demonstrated a caption set shorter than the template, and
+  four of those had captions in the wrong slots. The writer is told the example
+  shows the shape. Copy that shape and the caption count is short, and a short
+  caption set is dropped rather than shipped, so the meme is lost.
+- Two templates marked the subject box in lowercase, so the single box writers
+  most often forget did not stand out in the spec at all.
+
+That is the same failure as the runner half-ports: a correction applied to some
+fields and not the others, with nothing comparing them. A test now fails on any
+disagreement between the valence rule, the examples, the subject placement and
+the box list.
+
+Rotation was the third piece. The selector picked templates without ever seeing
+the seven-day history, and the only rotation signal in the pipeline was a
+warning printed after the meme had already been made. It fired on August 31 and
+twice on September 4, and nothing acted on it any of those times. The selector
+now sees what is cooling down, and anything it still picks is swapped for
+another template driven by the same comedic engine, so the joke survives with a
+different picture.
 
 ### Correction, same evening
 
