@@ -19,10 +19,37 @@ is merged to `main` yet.
 | ESPN blocked (scores + headlines) | **Fixed.** Direct call first, residential proxy on a 403. New CI health check fails loudly without blocking delivery. |
 | Video tweets in written sections | **Fixed.** Tagged at fetch time, removed from every headliner section and beat, kept in Around the League. |
 | Auto-publish missing 12:30 PM ET | **Fixed.** Polls every 30 minutes and publishes at the first slot past 12:30 ET; the daily run publishes immediately if it finishes late. |
-| Editor VERIFY flags | **Removed.** 21.8 flags per issue down to 1.5, and every survivor is one Python computed and the editor acts on. |
+| Editor flags | **Changed, not deleted.** The flag-only checks are gone (21.8 unread comments per issue down to 1.5). Stat verification stays and now cuts or corrects the claim instead of annotating it. See the correction note below. |
 | Email not sending | **Owner action.** Needs a Gmail app password in the `GMAIL_PASSWORD` secret. |
 | Meme findings (Part 2.1-2.3) | Next, on Abram's instruction to finish the above first. |
 | UAT runner collapse | Open. |
+
+### Correction, same evening
+
+My first pass at the editor removed Check 8, the factual verification, along
+with the flags. That was wrong. Abram caught it. The instruction was that
+nobody reads the flags; I treated that as meaning the check had no value, when
+it meant the output format had no value. A check that finds a risky claim and
+writes an invisible comment about it leaves the claim in the newsletter.
+
+Check 8 is restored and now acts on what it finds:
+
+- An unverifiable conference or division placement is cut, and the sentence
+  keeps going.
+- A title claim (defending, reigning, back-to-back) loses the title phrase.
+- A specific year or streak becomes relative framing, which cannot be
+  factually wrong. "First since 1987" becomes "their first in decades". This
+  is the historical-claims rule enforced rather than hoped for.
+- An unsourced number is cut and the sentence stands. When the number is the
+  whole sentence, the sentence goes.
+
+Two things make a claim sourced and therefore untouchable: a tweet in the same
+section carrying it, or the ground-truth block from ESPN.
+
+That second source was fiction until today. The editor had never been given
+the ground truth, so it could only compare a number against the tweets beside
+it. It was being asked to check claims against evidence it did not have. It
+now receives the ground-truth summary in its message.
 
 On pull requests: with no second reviewer a PR buys nothing here. The branch
 plus offline tests plus a revertible history is the safety net. Merge straight
