@@ -45,11 +45,16 @@ UAT = REPO / "uat" / "generate_newsletter_uat.py"
 # pinned: touch either copy and this test fails until you have looked at the
 # counterpart and deliberately re-recorded the hash.
 KNOWN_DIVERGENT = {
-    "run_pass1": dict(prod="000825e533b2", uat="7f7dea4672c0", reason=(
-        "Bidirectional. Prod has degraded mode (Nitter outage -> headline-only "
-        "newsletter); UAT has the §2.1 video-tweet filter and Pass 1B. Neither "
-        "is a superset, so no copy in either direction is safe — this one needs "
-        "a real merge."
+    "run_pass1": dict(prod="520f626dc852", uat="7f7dea4672c0", reason=(
+        "Bidirectional, and the two now hold DIFFERENT video policies on "
+        "purpose. Prod (2026-09-04): video tweets are tagged by fetch_content, "
+        "marked for Pass 1 in the payload, and removed from the headliners by "
+        "plan_audit.enforce_video_policy — Around the League keeps them, "
+        "because a clip there interrupts no writing. UAT: video tweets are "
+        "dropped from Pass 1's candidate list entirely (§2.1), because Pass 1B "
+        "turns them into highlight GIFs and prod has no Pass 1B. Prod also has "
+        "degraded mode (Nitter outage -> headline-only). Neither side is a "
+        "superset, so no copy in either direction is safe."
     )),
     "run_pass2": dict(prod="719792321475", uat="257eed61581e", reason=(
         "Bidirectional. Prod carries degraded-mode wiring UAT lacks; UAT "

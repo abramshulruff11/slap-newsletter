@@ -248,9 +248,23 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             d = {**d, "pubDate": pd[:10]}
         return d
 
+    # Tweets carry two extra fields from fetch_content.py. media_kind is for
+    # operators, not the model, so it is dropped here; has_video is kept ONLY
+    # when true, so the flag reads as a marker on the handful of tweets it
+    # applies to instead of ~270 lines of "has_video": false. Pass 1's prompt
+    # tells it what the marker means; plan_audit enforces it afterwards.
+    def _slim_tweet(d):
+        d = _slim_item(d)
+        if not isinstance(d, dict):
+            return d
+        d = {k: v for k, v in d.items() if k != "media_kind"}
+        if not d.get("has_video"):
+            d.pop("has_video", None)
+        return d
+
     raw_slim = dict(raw)
     raw_slim["news_headlines"] = [_slim_item(h) for h in raw.get("news_headlines", [])]
-    raw_slim["tweets"]         = [_slim_item(t) for t in raw.get("tweets", [])]
+    raw_slim["tweets"]         = [_slim_tweet(t) for t in raw.get("tweets", [])]
 
     degraded_block = ""
     if degraded:
@@ -587,6 +601,28 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                     print(f"  \u26a0 Dropped {_fab_total} fabricated tweet(s) \u2014 URLs not in today's raw content")
                 else:
                     print(f"  \u2713 All plan tweets verified against today's raw content")
+
+            # §2.1 — video tweets are Around the League only. Enforced here
+            # rather than trusted to the prompt: on 2026-08-27 Pass 1 reported
+            # its own account-cap violation accurately and shipped anyway.
+            # A headliner beat left with no media is the expected outcome —
+            # that is the case a GIF or meme fills.
+            _vid_rep = plan_audit.enforce_video_policy(
+                plan, plan_audit.video_status_ids(raw))
+            if _vid_rep["dropped"]:
+                _by_section: dict = {}
+                for _sec, _acct in _vid_rep["dropped"]:
+                    _by_section.setdefault(_sec, []).append(_acct)
+                print(f"  §2.1 video filter: {len(_vid_rep['dropped'])} video tweet(s) "
+                      f"removed from headliners "
+                      f"({_vid_rep['atl_kept']} kept in Around the League)")
+                for _sec, _accts in _by_section.items():
+                    _before, _after = _vid_rep["sections"].get(_sec, ("?", "?"))
+                    print(f"       {_sec}: {_before} → {_after} tweet(s) — "
+                          f"{', '.join(_accts)}")
+            else:
+                print(f"  ✓ §2.1 no video tweets in headliners "
+                      f"({_vid_rep['atl_kept']} in Around the League)")
 
             story_plan_raw = json.dumps(plan, ensure_ascii=False)
 
