@@ -190,3 +190,36 @@ jobs:
           git commit -m "Substack draft handoff for $(date -u +%Y-%m-%d)" || echo "No handoff change to commit"
           git pull --rebase -X theirs origin main
           git push
+
+      # The other half of the 12:30 PM ET target. publish-substack.yml polls
+      # every 30 minutes and publishes at the first slot past 12:30 ET -- but
+      # that only works if the draft EXISTS by then. GitHub delays this workflow
+      # by hours (measured +5h05m over three days), and on 2026-08-28 the handoff
+      # committed at 19:01 UTC = 3 PM ET, after the publish job had already run
+      # and skipped, so the issue never went out that day.
+      #
+      # So: if this run itself finished past 12:30 ET, publish now instead of
+      # leaving it for tomorrow. Publishing twice is not a hazard -- a later slot
+      # finds is_published and skips.
+      #
+      # SUBSTACK_SEND_EMAIL must be set explicitly: publish.py defaults to
+      # web-only (no subscriber email) when the variable is absent, which would
+      # silently publish a SILENT issue.
+      - name: Publish now if this run finished after 12:30 PM ET
+        env:
+          SUBSTACK_COOKIES_STRING: ${{ secrets.SUBSTACK_COOKIES_STRING }}
+          SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
+          PROXY_URL: ${{ secrets.PROXY_URL }}
+          SUBSTACK_SEND_EMAIL: 'true'
+        run: |
+          NOW_ET=$(TZ=America/New_York date '+%H%M')
+          PRETTY=$(TZ=America/New_York date '+%I:%M %p %Z')
+          if [ "$((10#$NOW_ET))" -ge 1230 ]; then
+            echo "This run finished at $PRETTY, past the 12:30 PM ET slot — publishing now."
+            python substack_poc/publish.py --publish-existing \
+              --state-in substack_post_state.json
+            echo "Ran late ($PRETTY) — published immediately rather than waiting." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Finished at $PRETTY, before 12:30 PM ET — leaving it to publish-substack.yml."
+            echo "Draft created at $PRETTY; publish-substack.yml will post it at 12:30 PM ET." >> "$GITHUB_STEP_SUMMARY"
+          fi

@@ -17,7 +17,8 @@ Moving off it — and earlier — buys several hours of buffer before the mornin
    whole issue, images included.
 2. **Substack auto-post** — the morning run creates a **draft** via `substack_poc/publish.py`
    and commits a handoff file naming today's draft id. A separate workflow
-   (`publish-substack.yml`) fires at **12:30 PM ET** and publishes that draft, unless it was
+   (`publish-substack.yml`) polls every 30 minutes and publishes that draft at the first slot
+   at or after **12:30 PM ET**, unless it was
    already published, edited away, or deleted. Every "nothing to do" case is a graceful skip.
 
 Auto-post **is live**. It was blocked by Cloudflare (403) through May; the fix was routing
@@ -322,14 +323,20 @@ unstaged, which breaks `git pull --rebase`.
 
 ## Known Issues / TODO
 
-- **Scheduled runs are landing 6-13 hours late (open, 2026-09-01):** the cron is `17 6 * * *` UTC
-  but recent runs committed at 12:08, 12:52, 14:11 and 19:00 UTC — delays of +5h51m to +12h43m.
-  The 2:17 AM slot was chosen to buy buffer before the morning review; that buffer is gone, and
-  the newsletter now lands between roughly 8 AM and 3 PM ET. Worse, `publish-substack.yml` fires
-  at a fixed 16:30 UTC: on 2026-08-28 the draft handoff committed at 19:01 UTC, **after** the
-  publish job had already run and skipped. Every "nothing to do" case is a graceful skip, so this
-  fails silently. The durable fix is triggering the publish off the draft's existence rather than
-  a wall clock.
+- **Scheduled runs land hours late (WORKED AROUND 2026-09-04; the delay itself is GitHub's):**
+  measured over three consecutive days, `daily-newsletter.yml` fired +5h05m after its 06:17 UTC
+  cron (11:20–11:24 UTC) and `publish-substack.yml` +2h50m after its 16:30 UTC cron (19:20–19:27
+  UTC), so the "12:30 PM ET" publish was landing near 3:20 PM ET — and on 9/3 it found the issue
+  already published by hand. A punctual cron is not available to us, so the publish no longer
+  depends on one: `publish-substack.yml` now fires **every 30 minutes from 11:30 to 20:00 UTC**
+  and a **time gate inside the job** publishes only at or after 12:30 PM ET (read in
+  `America/New_York`, so DST is handled). The issue goes out on the first firing past 12:30 ET,
+  punctual or five hours late. The other half: if the daily run itself finishes past 12:30 ET
+  (2026-08-28 committed its handoff at 19:01 UTC = 3 PM ET, after the publish job had run and
+  skipped), its last step publishes immediately rather than waiting for tomorrow.
+  **Do NOT "fix" the delay by moving the daily cron earlier.** The 11:20 UTC landing is what
+  aligns `yesterday` with last night's games; firing at, say, 02:00 UTC would compute
+  `yesterday` while those games were still being played.
 
 - **`anthropic` pinned (RESOLVED 2026-09-02):** now `anthropic==1.2.0`, the version run 169
   proved green end to end. It was a bare `anthropic`, so CI resolved whatever was newest — and
@@ -435,7 +442,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | Workflow | Trigger | Job |
 |---|---|---|
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
-| `publish-substack.yml` | `30 16 * * *` UTC (12:30 PM EDT) + dispatch | Publishes today's draft |
+| `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
@@ -445,15 +452,18 @@ Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API
 Daily pipeline steps: checkout → setup Python → `pip install -r requirements.txt` →
 `playwright install --with-deps chromium` → fetch content → fetch sports data → validate →
 generate newsletter → render box score PNGs → verify outputs → archive → **commit & push**
-(continue-on-error) → **email** → **create Substack draft** → commit handoff.
+(continue-on-error) → **email** → **create Substack draft** → commit handoff → publish now if
+already past 12:30 PM ET. A "check sports data health" step (continue-on-error) sits after the
+sports fetch; see the ESPN entry under Known Issues.
 
 Ordering notes: push is before email so the size-guard's hosted-URL fallback resolves when Gmail
 fetches it. The Substack draft step runs **last**, deliberately without `continue-on-error` — the
 email (the product) has already gone out, so a red run there surfaces the failure without ever
 blocking delivery.
 
-DST caveat: GitHub cron is UTC and ignores DST. In winter (EST) the two jobs fire at 1:17 AM and
-11:30 AM ET respectively.
+DST caveat: GitHub cron is UTC and ignores DST, so `daily-newsletter.yml` fires an hour earlier
+in ET each winter (1:17 AM EST). The **publish job no longer has this problem** — its gate reads
+`America/New_York`, so 12:30 PM ET is 12:30 PM ET year round.
 
 **Re-running a failed run does NOT pick up a fix.** GitHub's "Re-run jobs" replays the run at its
 *original* commit, so a run that failed before a fix was pushed fails again identically. To run

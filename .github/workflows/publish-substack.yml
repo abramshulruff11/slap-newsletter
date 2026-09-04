@@ -2,25 +2,55 @@ name: Publish SLAP Substack (12:30 PM ET)
 
 # Midday half of the two-job Substack auto-post. The morning daily-newsletter.yml
 # run creates a DRAFT and commits a handoff file (substack_post_state.json) naming
-# today's draft id. This job fires at ~12:30 PM ET and publishes that draft -- but
-# ONLY if it still exists and Abram hasn't already published, scheduled, or deleted
-# it. Every "nothing to do" case is a graceful skip (green run); only an unexpected
-# error fails the run. (Substack removed its native /schedule API endpoint, so we
-# "schedule" by running our own cron + an immediate publish.)
+# today's draft id. This job publishes that draft -- but ONLY if it still exists
+# and Abram hasn't already published, scheduled, or deleted it. Every "nothing to
+# do" case is a graceful skip (green run); only an unexpected error fails the run.
+# (Substack removed its native /schedule API endpoint, so we "schedule" by running
+# our own cron + an immediate publish.)
+#
+# WHY MANY SLOTS AND A TIME GATE (rewritten 2026-09-04)
+# A single cron cannot hit 12:30 PM ET. GitHub queues scheduled workflows under
+# load, and this repo's delays are large and variable -- measured over three
+# consecutive days:
+#
+#     publish-substack   cron 16:30 UTC  ->  fired 19:20, 19:25, 19:20  (+2h50m)
+#     daily-newsletter   cron 06:17 UTC  ->  fired 11:20, 11:24, 11:24  (+5h05m)
+#
+# So the "12:30 PM ET" job was actually landing around 3:20 PM ET, and on 9/3 it
+# found the draft already published by hand. Waiting on a cron to be punctual is
+# not a fix available to us.
+#
+# Instead: fire every 30 minutes across a wide window and let the JOB decide.
+# The gate below publishes only at or after 12:30 PM ET, so the issue goes out on
+# the first firing past that line -- within ~30 minutes of the target whether
+# GitHub is punctual or five hours behind. Earlier firings cost a few seconds and
+# exit. This repo is public, so Actions minutes are free; the only real cost is a
+# busier Actions tab, and a skipped run is labelled as such in its summary.
+#
+# The gate reads the clock in America/New_York, which also retires the old DST
+# caveat: 12:30 PM ET stays 12:30 PM ET in both EST and EDT.
 on:
   schedule:
-    # 16:30 UTC = 12:30 PM EDT. NOTE: GitHub cron is UTC and ignores DST, so in
-    # winter (EST) this fires at 11:30 AM ET. Adjust to '30 17 * * *' if you want
-    # 12:30 ET year-round during standard time.
-    - cron: '30 16 * * *'
+    # 11:30 UTC through 20:00 UTC, every 30 minutes. Written as three entries;
+    # GitHub expands the ranges. The early slots exist for the days GitHub runs
+    # hours late -- an 11:30 UTC slot delayed by five hours lands at 12:30 ET.
+    - cron: '30 11 * * *'
+    - cron: '0,30 12-19 * * *'
+    - cron: '0 20 * * *'
   workflow_dispatch:
     inputs:
       send_email:
         description: 'Email Substack subscribers on publish (uncheck for a silent web-only test)'
         type: boolean
         default: true
+      ignore_time_gate:
+        description: 'Publish now even if it is before 12:30 PM ET'
+        type: boolean
+        default: true
 
-# Avoid two overlapping publishes (e.g. a manual dispatch during the scheduled run).
+# Avoid two overlapping publishes (e.g. a manual dispatch during a scheduled run,
+# or two delayed slots landing together). cancel-in-progress stays false: a
+# publish in flight must finish rather than be killed halfway.
 concurrency:
   group: publish-substack
   cancel-in-progress: false
@@ -31,18 +61,40 @@ jobs:
     timeout-minutes: 10
 
     steps:
+      # FIRST, and before checkout: on most firings this is the whole job.
+      - name: Time gate — only publish at or after 12:30 PM ET
+        id: gate
+        run: |
+          NOW_ET=$(TZ=America/New_York date '+%H%M')
+          PRETTY=$(TZ=America/New_York date '+%Y-%m-%d %I:%M %p %Z')
+          IGNORE="${{ github.event.inputs.ignore_time_gate }}"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "$IGNORE" != "false" ]; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "Manual run at $PRETTY — time gate bypassed." | tee -a "$GITHUB_STEP_SUMMARY"
+          elif [ "$((10#$NOW_ET))" -ge 1230 ]; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "It is $PRETTY — at or after 12:30 PM ET, checking for today's draft." | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "It is $PRETTY — before 12:30 PM ET. Skipping; a later slot will publish." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
       - name: Checkout repo (latest main = today's committed handoff)
+        if: steps.gate.outputs.publish == 'true'
         uses: actions/checkout@v4
 
       - name: Set up Python 3.12
+        if: steps.gate.outputs.publish == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
       - name: Install Substack deps
+        if: steps.gate.outputs.publish == 'true'
         run: pip install python-substack==0.1.22 curl_cffi python-dotenv requests
 
       - name: Auto-publish today's draft if still unpublished
+        if: steps.gate.outputs.publish == 'true'
         env:
           SUBSTACK_COOKIES_STRING: ${{ secrets.SUBSTACK_COOKIES_STRING }}
           SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
@@ -54,4 +106,10 @@ jobs:
           SUBSTACK_SEND_EMAIL: ${{ github.event.inputs.send_email || 'true' }}
         run: |
           python substack_poc/publish.py --publish-existing \
-            --state-in substack_post_state.json
+            --state-in substack_post_state.json | tee publish.log
+          # Surface the outcome on the run page instead of only in the log.
+          if grep -q '^PUBLISHED' publish.log; then
+            echo "✅ Published today's draft." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "ℹ️ Nothing to publish: $(grep -m1 '^\[skip\]' publish.log || echo 'see log')" >> "$GITHUB_STEP_SUMMARY"
+          fi
