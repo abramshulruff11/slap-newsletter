@@ -10,9 +10,9 @@ broken today while every CI run shows green.
 
 ## Status (updated 2026-09-04, evening)
 
-Four of the six answers from the first read-through are now built and pushed to
-`claude/newsletter-code-quality-j6ov6s`. All eight offline suites pass. Nothing
-is merged to `main` yet.
+**Merged to `main` on 2026-09-04** as one revertible merge commit (`git revert
+-m 1 <merge>` undoes the whole batch). Eleven commits, ten offline suites, all
+passing, zero API calls.
 
 | Item | State |
 |---|---|
