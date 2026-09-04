@@ -63,9 +63,12 @@ KNOWN_DIVERGENT = {
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
     )),
-    "main": dict(prod="a19c6885a9ce", uat="0e25f4ba71c9", reason=(
+    "main": dict(prod="8e5671e33682", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
-        "5-line stub. Expected to stay divergent permanently."
+        "5-line stub. Expected to stay divergent permanently. (2026-09-04: prod "
+        "now strips HTML comments from the published Substack file. Nothing to "
+        "port — run_uat.py writes only the draft template; the UAT runner's "
+        "SUBSTACK_OUTPUT_PATH is unused.)"
     )),
 }
 

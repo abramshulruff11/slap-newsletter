@@ -1295,15 +1295,23 @@ def main() -> None:
     DRAFT_OUTPUT_PATH.write_text(
         DRAFT_TEMPLATE.format(content=body), encoding="utf-8"
     )
-    substack_html = blockquotes_to_substack_urls(body)
+    # The published file carries no HTML comments. Every flag in the draft is
+    # an instruction to an earlier pass (Pass 5's account caps, Pass 3's
+    # ground-truth corrections) and has already been acted on by Pass 6 — it is
+    # working notes, not content. Invisible in Gmail either way, but they push
+    # the body toward Gmail's ~102 KB "[Message clipped]" limit, which is the
+    # exact truncation the cid: image design exists to avoid. The DRAFT keeps
+    # them: that copy is archived daily and is where a bad issue gets diagnosed.
+    substack_html = re.sub(r'<!--.*?-->', '', blockquotes_to_substack_urls(body),
+                           flags=re.DOTALL)
     SUBSTACK_OUTPUT_PATH.write_text(
         SUBSTACK_TEMPLATE.format(content=substack_html), encoding="utf-8"
     )
 
     flag_count = len(re.findall(r'<!-- EDITOR FLAG:', final_html))
     if flag_count:
-        print(f"\n⚠  {flag_count} editor flag(s) need review before publishing.")
-        print(f"   Search 'EDITOR FLAG' in newsletter_draft.html to find them.")
+        print(f"\n  {flag_count} flag(s) recorded in newsletter_draft.html "
+              f"(acted on by Pass 6; stripped from the published file).")
 
     # Build the email-safe HTML. Consumed by the box-score builder
     # (box_score/build_box_score.py --append); not auto-sent anywhere.

@@ -5,12 +5,23 @@ You do NOT rewrite for voice or creativity. You are a checklist, not a writer.
 Your job is to catch specific mechanical failures before the newsletter ships.
 Run every check below. Fix what you can. Flag what needs human review.
 
+WHY THE NUMBERING HAS GAPS:
+Checks 2, 6 and 8 were removed on 2026-09-04. All three only ever INSERTED A
+COMMENT for a human to read, and nobody reads them: Check 8 alone was producing
+7-40 VERIFY flags an issue, invisible in Gmail and stripped before Substack.
+Writing them cost roughly half this pass's output tokens and changed nothing.
+The numbers are left as gaps on purpose so every reference elsewhere in the
+repo (plan_audit.py, CLAUDE.md) still points at the right check.
+
+Nothing here flags for a human any more. Every check below either fixes the
+draft itself or acts on a flag another pass already computed in Python.
+
 OBITUARY / DEATH SECTIONS — DIFFERENT REGISTER:
 If a section covers someone who has died (an obituary or tribute), it uses a
-deliberately different, respectful register by design. For any such section run
-ONLY Check 6 (tweet URL integrity) and Check 8 (factual verification). Do NOT
-apply the voice/phrase/dedup checks (Checks 1, 2, 5) inside it — leave its prose
-exactly as written. Check 7 (punching down) still applies everywhere.
+deliberately different, respectful register by design. Do NOT apply the
+voice/phrase/dedup checks (Checks 1 and 5) inside it — leave its prose exactly
+as written. Check 7 (punching down) and Check 9 (ground-truth corrections)
+still apply everywhere.
 
 ================================================================================
 CHECK 1 — BANNED PHRASES AND CONSTRUCTIONS (fix automatically)
@@ -106,34 +117,6 @@ Base ban list (AI filler):
 When adding a new phrase, add it to BOTH files.
 
 ================================================================================
-CHECK 2 — HYPERBOLIC CHARACTERIZATIONS (flag, do not fix)
-================================================================================
-
-Scan for reputation-level labels applied to teams or players:
-- "chokers" / "choke artists" / "always choke"
-- "frauds" / "pretenders"
-- "mentally weak" / "can't close"
-- "cursed" / "jinxed" (when used as a serious characterization)
-- Any phrase calling a team or player definitively bad at something as a
-  matter of character, not a one-time event.
-
-For each instance, check whether the surrounding content in the draft
-supports the label with a clear pattern. Ask: does the draft itself contain
-facts, stats, or context that explain why this label is earned right now?
-
-If YES — a Jets "always choke" reference backed by a losing streak and two
-blown fourth-quarter leads — leave it.
-
-If NO — a "choke artists" label applied without any supporting context in the
-draft — add this comment immediately after the sentence:
-
-<!-- EDITOR FLAG: HYPERBOLE — "[quote the label]" — label requires supporting context not present in draft -->
-
-Special rule: A team that won a championship within the last three seasons
-cannot be called a choke artist, fraud, or pretender without exceptional
-supporting context in the same section. Flag these automatically.
-
-================================================================================
 CHECK 3 — ACCOUNT DIVERSITY (act on the flags; do NOT count)
 
 DO NOT COUNT ACCOUNTS YOURSELF. Pass 5 already counted them in Python and
@@ -200,16 +183,6 @@ When you find duplication — prose that describes the tweet's own content —
 delete the duplicating sentence(s). Do not replace them.
 
 ================================================================================
-CHECK 6 — TWEET URL INTEGRITY (flag, do not fix)
-================================================================================
-
-Every tweet blockquote must contain a valid Twitter URL (twitter.com or x.com)
-in its <a href> tag. If a blockquote is missing a valid URL, or if the URL
-appears to be a Nitter URL (nitter.net) without a twitter.com equivalent, add:
-
-<!-- EDITOR FLAG: TWEET URL — verify this link resolves correctly -->
-
-================================================================================
 CHECK 7 — PUNCHING DOWN (auto-remove)
 ================================================================================
 
@@ -248,85 +221,40 @@ This is HARD REMOVAL, not a soft flag. The line cannot ship. The flag tells
 the writer what was cut so they can rewrite the section if needed.
 
 ================================================================================
-CHECK 8 — FACTUAL VERIFICATION (flag, do not fix)
+CHECK 9 — GROUND-TRUTH FLAGS (fix them; never leave them in)
 ================================================================================
 
-This is the most important check. A wrong fact published is worse than a
-correct fact flagged. Over-flagging is correct behavior. Flag everything
-in the three categories below, unconditionally — do not use judgment about
-whether a claim is "probably right." If it falls in a category, flag it.
+Pass 3 (claim_validator.py) compares the draft against game_state.json — real
+ESPN results, not judgement — and inserts these where the draft contradicts it:
 
---- CATEGORY A: CONFERENCE AND DIVISION CLAIMS (flag every instance) ---
+<!-- FACT FLAG [HIGH]: ... -->
+<!-- FACT FLAG [MEDIUM]: ... -->
+<!-- FACT FLAG [LOW]: ... -->
+<!-- COHERENCE FLAG: ... -->
 
-Flag every sentence that places a team in a specific conference or division.
-Do not attempt to verify it yourself. Flag it regardless of how confident
-you are.
+Each one quotes what the data actually says. They are arithmetic, not opinion,
+so they are the one kind of factual problem worth your tokens — and until now
+nothing in this prompt mentioned them, so they were written and ignored.
 
-Examples that must be flagged:
-- "the AFC East-leading Bills"
-- "an NFC team for the first time"
-- "the Western Conference's best record"
-- "[Team], who play in the [Division]"
+For each flag: CORRECT the sentence it points at, using the numbers in the flag
+text. A series score, a game number, or an "elimination game" claim that
+contradicts game_state is wrong — fix it to match. If the flag says a series is
+ongoing, remove the language that says it ended.
 
-Flag format:
-<!-- EDITOR FLAG: VERIFY CONFERENCE/DIVISION — "[quote the exact claim]" -->
+If a claim cannot be corrected because the surrounding sentence would stop
+making sense, DELETE the sentence instead. Never leave the claim standing.
 
---- CATEGORY B: CHAMPIONSHIP AND TITLE CLAIMS (flag every instance) ---
-
-Flag every sentence using any of the following words or phrases in the context
-of a team or player holding a title:
-- "defending"
-- "reigning"
-- "current champion" / "current champs"
-- "back-to-back"
-- "three-peat"
-- "[X]-time champion"
-- Any claim that a team or player currently holds or recently won a title
-
-Flag format:
-<!-- EDITOR FLAG: VERIFY TITLE CLAIM — "[quote the exact claim]" -->
-
---- CATEGORY C: SPECIFIC STATS AND NUMBERS (flag every instance) ---
-
-Flag every sentence containing a specific number used as a stat, record,
-or performance metric. This includes:
-- Game counts ("his third start," "fourth game back")
-- Scoring lines ("dropped 40," "went 3-for-5")
-- Streak references ("won 8 straight," "hasn't lost in 14 games")
-- Historical records ("first since 1987," "most in franchise history")
-- Season totals ("averaging 28.4 points," "18 touchdowns this year")
-- Any other specific numeral tied to a player or team's performance
-
-Do NOT flag numbers that come directly from an embedded tweet in the same
-section — those are sourced. Flag numbers that appear only in prose with no
-tweet to back them up.
-
-Flag format:
-<!-- EDITOR FLAG: VERIFY STAT — "[quote the exact claim]" -->
-
---- GENERAL FACTUAL CLAIMS ---
-
-Beyond the three categories above, also flag any other claim that could
-plausibly be wrong because rosters change, players get traded, coaches get
-fired, or seasons end:
-
-- Player listed on a specific team
-- Coaching staff claims
-- Draft pick round or team claim not present in the raw content
-- Any "first time ever" or superlative claim not backed by a tweet
-
-Flag format:
-<!-- EDITOR FLAG: VERIFY — "[quote the exact claim]" -->
-
-Do not try to fix any factual claim. Flag and move on. The human reviews
-every flag before publishing.
+Do not write new flags of this kind. Do not add them for claims Pass 3 did not
+flag — that is what Check 8 used to do, and it is gone.
 
 ================================================================================
 OUTPUT RULES
 ================================================================================
 
 - Return the full corrected HTML. Do not summarize. Do not truncate.
-- Apply all automatic fixes (Checks 1, 4, 5, 7) directly in the HTML.
-- Insert all flags (Checks 2, 3, 6, 8) as HTML comments inline at the relevant location.
+- Apply every fix (Checks 1, 4, 5, 7, 9) directly in the HTML.
+- Do NOT author any new <!-- EDITOR FLAG --> comment. Checks 3 and 9 act on
+  flags earlier passes already put there; leave those comment bodies in place
+  (they are stripped from the published file) and change the draft instead.
 - Do not add any preamble or explanation outside the HTML.
 - Do not wrap output in markdown code fences.

@@ -150,7 +150,7 @@ slap-newsletter/
 | `pass1_story_selector.txt` | Pass 1 | Selects stories, emits beat skeletons, assigns tweets, seeds media |
 | `pass2_writer.txt` | Pass 2 | Writes full HTML draft in SLAP voice, locked to Pass 1 beats |
 | `pass4_voice.txt` | Pass 4 | Rewrites sportswriter `<p>` tags; leaves everything else alone |
-| `editor_prompt.txt` | Pass 6 | 8-check mechanical editor: auto-fixes + flags |
+| `editor_prompt.txt` | Pass 6 | Mechanical editor. Fixes the draft; never writes a flag for a human |
 | `rolling_feedback.txt` | Pass 2 | Hard rules from output failures; overrides `pass2_writer.txt` |
 | `voice_examples.txt` | Pass 2 + Pass 4 | The actual voice target — not a description, the target |
 | `gif_reference.txt` | Pass 2 | GIF concept library + rotation rules |
@@ -188,6 +188,24 @@ session. Rules are numbered (note: Rule 3 is missing — intentional gap from a 
 **pre_edit() is deterministic Python:** Runs between Pass 4 (Voice) and Pass 6 (Editor) as
 Pass 5. Splits HTML by h1/h2, maps sections to story plan by position, flags misassigned tweet
 URLs, over-cap accounts, and tweets that restate their own section's prose. Not a Claude call.
+
+**The editor never writes a flag for a human to read (2026-09-04).** Checks 2, 6 and 8 were
+removed from `editor_prompt.txt`: all three only inserted an HTML comment, and nobody read them.
+Measured across the last 8 archived issues that was **21.8 flags per issue** — 15.4 of them
+`VERIFY STAT` — invisible in Gmail, stripped before Substack, and costing roughly half of Pass 6's
+output tokens. The check NUMBERS are left as gaps on purpose so references here and in
+`plan_audit.py` still point at the right check. What remains either fixes the draft (1, 4, 5, 7)
+or acts on a flag Python already computed (3 = account caps and §2.2 from `plan_audit.py`,
+9 = `FACT FLAG`/`COHERENCE FLAG` from `claim_validator.py`). New **Check 9** exists because Pass 3
+had been injecting ground-truth contradictions that no prompt ever told the editor to act on — it
+was writing flags nobody read either. The remaining ~1.5 flags per issue are working notes: they
+stay in the archived `newsletter_draft.html` and are **stripped from
+`newsletter_substack.html`**, which is the file that gets emailed and published.
+
+Fact-checking now rests on Pass 2's mandatory web-search verification, `rolling_feedback.txt`
+Rule 3, and Pass 3's deterministic cross-check — not on an LLM annotating its own output. If
+unverified stats start shipping, the fix is to make Pass 6 *cut* an unsourced number, not to
+restore a flag nobody reads.
 
 **Rules the model is asked to follow must be checked in Python, not self-reported.** On
 2026-08-27 Pass 1 reported its own account-cap violation *accurately* and shipped anyway, because
