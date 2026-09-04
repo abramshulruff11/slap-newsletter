@@ -8,27 +8,25 @@ of 8/14, 8/24, 8/31, 9/2, 9/3 and 9/4 plus the 9/3 publish run.
 Read Part 1 first. Those are not code-smell items; they are things that are
 broken today while every CI run shows green.
 
-## Status (updated 2026-09-04, afternoon)
+## Status (updated 2026-09-04, evening)
 
-Decisions from the first read-through, and what has shipped on the review
-branch since:
+Four of the six answers from the first read-through are now built and pushed to
+`claude/newsletter-code-quality-j6ov6s`. All eight offline suites pass. Nothing
+is merged to `main` yet.
 
-- **Email:** known. The current error (534, "application-specific password
-  required") means the secret holds the regular Gmail password; Gmail with
-  2-step verification needs a 16-character app password. Owner action.
-- **Publish timing:** auto-publish stays, and it should land at 12:30 ET.
-  Plan: publish job on several cron slots (it already skips when there is
-  nothing to do) plus an immediate publish from the morning run when it
-  finishes after 12:30 ET. Not built yet.
-- **ESPN:** FIXED on this branch. Direct call first, then the residential
-  proxy on a 403 (scores, box scores, ESPN RSS, highlight player lookups).
-  `game_state.json` now records how it was fetched, and a new CI step fails
-  loudly, without blocking delivery, when the fetch was blocked. Offline test
-  added; the live proxy path runs for the first time on the next CI run.
-- **Video tweets:** remove from every section except Around the League. Not
-  built yet (needs the `has_video` tagging ported into production).
-- **Editor flags:** nobody reads them. Remove Check 8. Not built yet.
-- **UAT runner:** explained; collapse into configuration is still open.
+| Item | State |
+|---|---|
+| ESPN blocked (scores + headlines) | **Fixed.** Direct call first, residential proxy on a 403. New CI health check fails loudly without blocking delivery. |
+| Video tweets in written sections | **Fixed.** Tagged at fetch time, removed from every headliner section and beat, kept in Around the League. |
+| Auto-publish missing 12:30 PM ET | **Fixed.** Polls every 30 minutes and publishes at the first slot past 12:30 ET; the daily run publishes immediately if it finishes late. |
+| Editor VERIFY flags | **Removed.** 21.8 flags per issue down to 1.5, and every survivor is one Python computed and the editor acts on. |
+| Email not sending | **Owner action.** Needs a Gmail app password in the `GMAIL_PASSWORD` secret. |
+| Meme findings (Part 2.1-2.3) | Next, on Abram's instruction to finish the above first. |
+| UAT runner collapse | Open. |
+
+On pull requests: with no second reviewer a PR buys nothing here. The branch
+plus offline tests plus a revertible history is the safety net. Merge straight
+to `main`.
 
 ---
 
