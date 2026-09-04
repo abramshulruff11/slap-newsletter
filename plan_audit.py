@@ -246,6 +246,82 @@ def count_headliner_accounts(html: str) -> dict:
     return counts
 
 
+# --- §2.1 Video tweets: Around the League only --------------------------------
+# A video embed renders as a dead grey box in email and stops the read, so a
+# video tweet has no place inside a written story. In Around the League it is
+# fine: that section is quick hitters with no prose to interrupt, and a reader
+# who wants the play can tap it.
+#
+# fetch_content.py tags every tweet with has_video from the Nitter RSS
+# description. Pass 1's prompt states the rule; this enforces it, because a
+# prompt line with no check is not a rule (see CLAUDE.md). Both places a tweet
+# can hide are pruned: story["tweets"] and every beat's media[] — Pass 2 is
+# locked to the beats, so pruning one without the other just moves the problem.
+
+_STATUS_ID_RE = re.compile(r'/status/(\d+)')
+
+
+def status_id(url: str) -> str:
+    """The numeric status ID in a tweet URL — the only invariant across
+    nitter/twitter/x hosts, #m suffixes and query strings. "" when absent."""
+    m = _STATUS_ID_RE.search(url or "")
+    return m.group(1) if m else ""
+
+
+def video_status_ids(raw: dict) -> set:
+    """Status IDs of every video-carrying tweet in today's raw content."""
+    out = set()
+    for t in (raw or {}).get("tweets", []) or []:
+        if isinstance(t, dict) and t.get("has_video"):
+            sid = status_id(t.get("link") or t.get("url") or "")
+            if sid:
+                out.add(sid)
+    return out
+
+
+def enforce_video_policy(plan: dict, video_ids: set) -> dict:
+    """Strip video tweets from the headliners. ATL keeps them. Mutates `plan`.
+
+    Returns {"dropped": [(section, @account)], "atl_kept": n, "sections": {}}.
+    A story emptied by this is not a failure: an empty media[] is exactly the
+    case the beats system covers with a GIF, a meme, or prose.
+    """
+    report: dict = {"dropped": [], "atl_kept": 0, "sections": {}}
+    if not video_ids:
+        return report
+
+    for label, story, _floor in _plan_sections(plan):
+        tweets = story.get("tweets", []) or []
+        kept = []
+        for t in tweets:
+            sid = status_id(t.get("url", "")) if isinstance(t, dict) else ""
+            if sid and sid in video_ids:
+                report["dropped"].append(
+                    (label, "@" + str(t.get("account", "?")).lstrip("@"))
+                )
+            else:
+                kept.append(t)
+        if len(kept) != len(tweets):
+            report["sections"][label] = (len(tweets), len(kept))
+        story["tweets"] = kept
+
+        for beat in story.get("beats", []) or []:
+            if isinstance(beat, dict) and isinstance(beat.get("media"), list):
+                beat["media"] = [
+                    m for m in beat["media"]
+                    if not (isinstance(m, dict)
+                            and status_id(m.get("url", "")) in video_ids)
+                ]
+
+    atl = plan.get("around_the_league", {})
+    atl_tweets = (atl.get("tweets", []) if isinstance(atl, dict) else atl) or []
+    report["atl_kept"] = sum(
+        1 for t in atl_tweets
+        if isinstance(t, dict) and status_id(t.get("url", "")) in video_ids
+    )
+    return report
+
+
 # --- Media seed floor ---------------------------------------------------------
 # Pass 1 seeded 4 memes on one run and 2 on the next from the SAME input, which
 # is what left the media share at 33%. The prompt now states a floor; this

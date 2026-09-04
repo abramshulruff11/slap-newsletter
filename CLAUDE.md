@@ -17,7 +17,8 @@ Moving off it — and earlier — buys several hours of buffer before the mornin
    whole issue, images included.
 2. **Substack auto-post** — the morning run creates a **draft** via `substack_poc/publish.py`
    and commits a handoff file naming today's draft id. A separate workflow
-   (`publish-substack.yml`) fires at **12:30 PM ET** and publishes that draft, unless it was
+   (`publish-substack.yml`) polls every 30 minutes and publishes that draft at the first slot
+   at or after **12:30 PM ET**, unless it was
    already published, edited away, or deleted. Every "nothing to do" case is a graceful skip.
 
 Auto-post **is live**. It was blocked by Cloudflare (403) through May; the fix was routing
@@ -149,11 +150,11 @@ slap-newsletter/
 | `pass1_story_selector.txt` | Pass 1 | Selects stories, emits beat skeletons, assigns tweets, seeds media |
 | `pass2_writer.txt` | Pass 2 | Writes full HTML draft in SLAP voice, locked to Pass 1 beats |
 | `pass4_voice.txt` | Pass 4 | Rewrites sportswriter `<p>` tags; leaves everything else alone |
-| `editor_prompt.txt` | Pass 6 | 8-check mechanical editor: auto-fixes + flags |
+| `editor_prompt.txt` | Pass 6 | Mechanical editor. Fixes the draft; never writes a flag for a human |
 | `rolling_feedback.txt` | Pass 2 | Hard rules from output failures; overrides `pass2_writer.txt` |
 | `voice_examples.txt` | Pass 2 + Pass 4 | The actual voice target — not a description, the target |
 | `gif_reference.txt` | Pass 2 | GIF concept library + rotation rules |
-| `meme_reference.txt` | Pass 2 | Imgflip template slugs + use-case rules |
+| `meme_reference.txt` | Pass 2 | Meme-vs-GIF judgement + HTML syntax. Template list injected from the library |
 | `base_prompt.txt` | *(none)* | Project knowledge for claude.ai. Never sent to the API |
 
 `editorial_annotations.txt` is **retired** — its selection logic was folded into
@@ -187,6 +188,66 @@ session. Rules are numbered (note: Rule 3 is missing — intentional gap from a 
 **pre_edit() is deterministic Python:** Runs between Pass 4 (Voice) and Pass 6 (Editor) as
 Pass 5. Splits HTML by h1/h2, maps sections to story plan by position, flags misassigned tweet
 URLs, over-cap accounts, and tweets that restate their own section's prose. Not a Claude call.
+
+**The editor never writes a flag for a human to read — but it still verifies (2026-09-04).**
+Nobody reads HTML comments: they are invisible in Gmail and stripped before Substack, and across
+the last 8 archived issues Pass 6 was writing **21.8 of them per issue** (15.4 `VERIFY STAT`) for
+no reader. The fix is that every check must ACT. Checks 2 and 6 were deleted outright — both were
+flag-only, and 6 was redundant with `drop_fabricated_tweets()` besides.
+
+**Check 8 was deleted the same day and put straight back. That deletion was a mistake worth
+recording:** "the flag is useless" was confused with "the check is useless", and factual
+verification is the most valuable thing this pass does. Check 8 now **fixes or cuts** instead of
+annotating — it strips an unverifiable conference placement or title claim, downgrades a specific
+year or streak to relative framing (`rolling_feedback.txt` RULE 3, enforced rather than hoped
+for), and cuts an unsourced number while keeping the sentence. Two things make a claim SOURCED and
+therefore untouchable: a tweet in the same section carrying it, or the ground-truth block.
+
+**That second source only became real on 2026-09-04.** `run_pass6()` had never been given
+`game_state`, so the editor could only compare a number against the tweets next to it. It now
+takes `game_state` and puts the ground-truth summary in the USER message (not the cached system
+block, which would thrash the cache daily). Both runners pass it. A check that cites evidence it
+was never given is worse than no check.
+
+The check NUMBERS are left as gaps on purpose so references here and in `plan_audit.py` still
+point at the right check. What remains either fixes the draft (1, 4, 5, 7, 8) or acts on a flag
+Python already computed (3 = account caps and §2.2 from `plan_audit.py`, 9 = `FACT FLAG` /
+`COHERENCE FLAG` from `claim_validator.py`). **Check 9 is new** and exists because Pass 3 had the
+same disease: it had been injecting deterministic ground-truth contradictions that no prompt ever
+told the editor to act on. The ~1.5 remaining flags per issue are working notes — they stay in the
+archived `newsletter_draft.html` and are **stripped from `newsletter_substack.html`**, the file
+that gets emailed and published. Locked by `uat/tests/test_editor_checks.py`.
+
+**The meme library is the ONLY source of meme templates (2026-09-04).**
+`prompts/meme_library.DRAFT.json` decides which templates exist, how many caption boxes each
+has, where the subject goes, and what each box is for. Nothing else may state those facts.
+`meme_reference.txt` and `pass2_writer.txt` each used to carry a hand-kept catalogue and
+caption-count table; they disagreed with the library on **13 of 30 templates**, and since
+`meme_box_check.py` DROPS a short caption set rather than shipping a blank panel, the writer was
+losing memes for following its own prompt. Both tables are gone. The index is generated by
+`meme_library.build_selector_index()` and substituted into `meme_reference.txt` at
+`{{MEME_SELECTOR_INDEX}}` — same pattern as `{{GIF_LIBRARY_CATEGORIES}}`, and `promote.py`
+already refuses to install a prompt whose placeholder the destination runner cannot substitute.
+
+**The library also has to agree with itself.** The 2026-08-27 and 2026-09-01 render corrections
+updated `box_count`, `boxes[]`, `subject` and `selector_line` — and left `valence` and
+`worked_example` describing the OLD panel mapping. `format_meme_specs()` prints all of them, and
+`pass2_writer.txt` calls the VALENCE RULE hard, so for `distracted-boyfriend` the writer was told
+"box 2 MUST name the subject" one line above "box 1: the SUBJECT". Nine worked examples also
+demonstrated a caption shape SHORTER than their template, four of them with captions in the wrong
+boxes. All fixed 2026-09-04; `uat/tests/test_meme_library.py` now fails on any disagreement
+between `valence`, the examples, `subject.placement` and `boxes[]`. Same class of failure as the
+runner half-ports: a correction applied to some fields and not the others.
+
+**Meme rotation is decided at selection, not reported after rendering.** Pass 1 used to pick a
+template without ever seeing the 7-day history — only Pass 2 got the "RECENTLY USED MEDIA" block,
+by which point the slug was fixed. The only rotation signal was `[memes] ⚠ '<slug>' used in last
+7 days — consider varying template`, printed *after* the meme was made; it fired on 8/31 and
+twice on 9/4 and nothing acted on it. Pass 1 now receives the cooled slugs, and anything it still
+picks is swapped by `meme_library.swap_cooled_templates()` for another template in the SAME
+comedic engine, so the planned joke survives with a different picture. A repeat beats no meme:
+with no free alternative the original is kept and the run says so. Locked by
+`uat/tests/test_meme_rotation.py`.
 
 **Rules the model is asked to follow must be checked in Python, not self-reported.** On
 2026-08-27 Pass 1 reported its own account-cap violation *accurately* and shipped anyway, because
@@ -239,7 +300,7 @@ the deterministic audits, `test_runner_drift.py` locks prod-vs-UAT runner diverg
 `test_history_dedup.py` the GIF/meme history writers,
 `test_meme_wiring_dryrun.py` the UAT meme wiring, and
 `test_prod_wiring_dryrun.py` exercises the real production path with the Anthropic client
-stubbed. Run all three before changing a prompt or a pass.
+stubbed, and `test_proxy_fallback.py` locks the ESPN 403 / RSS bot-wall proxy fallback. Run all three before changing a prompt or a pass.
 
 ---
 
@@ -322,14 +383,20 @@ unstaged, which breaks `git pull --rebase`.
 
 ## Known Issues / TODO
 
-- **Scheduled runs are landing 6-13 hours late (open, 2026-09-01):** the cron is `17 6 * * *` UTC
-  but recent runs committed at 12:08, 12:52, 14:11 and 19:00 UTC — delays of +5h51m to +12h43m.
-  The 2:17 AM slot was chosen to buy buffer before the morning review; that buffer is gone, and
-  the newsletter now lands between roughly 8 AM and 3 PM ET. Worse, `publish-substack.yml` fires
-  at a fixed 16:30 UTC: on 2026-08-28 the draft handoff committed at 19:01 UTC, **after** the
-  publish job had already run and skipped. Every "nothing to do" case is a graceful skip, so this
-  fails silently. The durable fix is triggering the publish off the draft's existence rather than
-  a wall clock.
+- **Scheduled runs land hours late (WORKED AROUND 2026-09-04; the delay itself is GitHub's):**
+  measured over three consecutive days, `daily-newsletter.yml` fired +5h05m after its 06:17 UTC
+  cron (11:20–11:24 UTC) and `publish-substack.yml` +2h50m after its 16:30 UTC cron (19:20–19:27
+  UTC), so the "12:30 PM ET" publish was landing near 3:20 PM ET — and on 9/3 it found the issue
+  already published by hand. A punctual cron is not available to us, so the publish no longer
+  depends on one: `publish-substack.yml` now fires **every 30 minutes from 11:30 to 20:00 UTC**
+  and a **time gate inside the job** publishes only at or after 12:30 PM ET (read in
+  `America/New_York`, so DST is handled). The issue goes out on the first firing past 12:30 ET,
+  punctual or five hours late. The other half: if the daily run itself finishes past 12:30 ET
+  (2026-08-28 committed its handoff at 19:01 UTC = 3 PM ET, after the publish job had run and
+  skipped), its last step publishes immediately rather than waiting for tomorrow.
+  **Do NOT "fix" the delay by moving the daily cron earlier.** The 11:20 UTC landing is what
+  aligns `yesterday` with last night's games; firing at, say, 02:00 UTC would compute
+  `yesterday` while those games were still being played.
 
 - **`anthropic` pinned (RESOLVED 2026-09-02):** now `anthropic==1.2.0`, the version run 169
   proved green end to end. It was a bare `anthropic`, so CI resolved whatever was newest — and
@@ -352,7 +419,15 @@ unstaged, which breaks `git pull --rebase`.
   `Archive/`, git **also silently ignores `archive/` locally** — new daily archive dirs never
   appear in local `git status`. CI is Linux (case-sensitive), so it commits them fine. Fix is to
   rename one side; until then, don't trust local `git status` for `archive/`.
-- **`game_state.json` freshness — no guard (open):** `fetch_sports_data.py` always stamps the file
+- **ESPN blocked from CI (FIXED 2026-09-04, first live run pending):** every scoreboard call
+  returned 403 to the GitHub runner's IP from at least 8/14 to 9/4 (standings still loaded, so
+  the file looked fresh with zero games), and the ESPN RSS feeds answered 202 (a bot wall)
+  since 7/15. `fetch_sports_data.py`, `fetch_content.py` and `highlights.py` now retry a
+  blocked request through `PROXY_URL` (`proxy_session.py`, the Substack trick). `PROXY_URL`
+  is job-level in `daily-newsletter.yml`. `game_state.json` carries a `fetch_health` block and
+  `check_game_state.py` (continue-on-error step) fails loudly on a blocked fetch. Offline test:
+  `uat/tests/test_proxy_fallback.py`. Full review: `docs/code_review_2026-09-04.md`.
+- **`game_state.json` freshness — guard added (see above):** `fetch_sports_data.py` always stamps the file
   with today's date, even if every ESPN call silently fails (each is wrapped in try/except
   returning empty). A today-stamped but *hollow* file degrades silently — the newsletter loses its
   ground-truth block (`format_game_state_summary` returns "" on empty) and box scores thin out,
@@ -427,7 +502,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | Workflow | Trigger | Job |
 |---|---|---|
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
-| `publish-substack.yml` | `30 16 * * *` UTC (12:30 PM EDT) + dispatch | Publishes today's draft |
+| `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
@@ -437,15 +512,18 @@ Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API
 Daily pipeline steps: checkout → setup Python → `pip install -r requirements.txt` →
 `playwright install --with-deps chromium` → fetch content → fetch sports data → validate →
 generate newsletter → render box score PNGs → verify outputs → archive → **commit & push**
-(continue-on-error) → **email** → **create Substack draft** → commit handoff.
+(continue-on-error) → **email** → **create Substack draft** → commit handoff → publish now if
+already past 12:30 PM ET. A "check sports data health" step (continue-on-error) sits after the
+sports fetch; see the ESPN entry under Known Issues.
 
 Ordering notes: push is before email so the size-guard's hosted-URL fallback resolves when Gmail
 fetches it. The Substack draft step runs **last**, deliberately without `continue-on-error` — the
 email (the product) has already gone out, so a red run there surfaces the failure without ever
 blocking delivery.
 
-DST caveat: GitHub cron is UTC and ignores DST. In winter (EST) the two jobs fire at 1:17 AM and
-11:30 AM ET respectively.
+DST caveat: GitHub cron is UTC and ignores DST, so `daily-newsletter.yml` fires an hour earlier
+in ET each winter (1:17 AM EST). The **publish job no longer has this problem** — its gate reads
+`America/New_York`, so 12:30 PM ET is 12:30 PM ET year round.
 
 **Re-running a failed run does NOT pick up a fix.** GitHub's "Re-run jobs" replays the run at its
 *original* commit, so a run that failed before a fix was pushed fails again identically. To run

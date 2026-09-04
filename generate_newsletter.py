@@ -217,7 +217,8 @@ import time
 # ---------------------------------------------------------------------------
 
 def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_state: dict | None = None,
-              degraded: bool = False) -> str:
+              degraded: bool = False,
+              recent_meme_slugs: set | None = None) -> str:
     print("\n── PASS 1: Story Selector ──────────────────────────")
 
     selector_prompt = load_prompt("pass1_story_selector.txt")
@@ -248,9 +249,23 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             d = {**d, "pubDate": pd[:10]}
         return d
 
+    # Tweets carry two extra fields from fetch_content.py. media_kind is for
+    # operators, not the model, so it is dropped here; has_video is kept ONLY
+    # when true, so the flag reads as a marker on the handful of tweets it
+    # applies to instead of ~270 lines of "has_video": false. Pass 1's prompt
+    # tells it what the marker means; plan_audit enforces it afterwards.
+    def _slim_tweet(d):
+        d = _slim_item(d)
+        if not isinstance(d, dict):
+            return d
+        d = {k: v for k, v in d.items() if k != "media_kind"}
+        if not d.get("has_video"):
+            d.pop("has_video", None)
+        return d
+
     raw_slim = dict(raw)
     raw_slim["news_headlines"] = [_slim_item(h) for h in raw.get("news_headlines", [])]
-    raw_slim["tweets"]         = [_slim_item(t) for t in raw.get("tweets", [])]
+    raw_slim["tweets"]         = [_slim_tweet(t) for t in raw.get("tweets", [])]
 
     degraded_block = ""
     if degraded:
@@ -270,9 +285,13 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         )
 
     game_state_block = format_game_state_summary(game_state or {})
+    # Rotation is decided HERE, where the template is chosen — not left to a
+    # warning printed after the meme has already been rendered.
+    cooldown_block = meme_library.format_cooldown_block(recent_meme_slugs or set())
     user_content = (
         degraded_block
         + (game_state_block + "\n\n" if game_state_block else "")
+        + cooldown_block
         + "## TODAY'S RAW CONTENT\n\n"
         + json.dumps(raw_slim, ensure_ascii=False)
         + "\n\n## RECENT STORY HISTORY — last 14 days\n"
@@ -588,6 +607,40 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 else:
                     print(f"  \u2713 All plan tweets verified against today's raw content")
 
+            # §2.1 — video tweets are Around the League only. Enforced here
+            # rather than trusted to the prompt: on 2026-08-27 Pass 1 reported
+            # its own account-cap violation accurately and shipped anyway.
+            # A headliner beat left with no media is the expected outcome —
+            # that is the case a GIF or meme fills.
+            _vid_rep = plan_audit.enforce_video_policy(
+                plan, plan_audit.video_status_ids(raw))
+            if _vid_rep["dropped"]:
+                _by_section: dict = {}
+                for _sec, _acct in _vid_rep["dropped"]:
+                    _by_section.setdefault(_sec, []).append(_acct)
+                print(f"  §2.1 video filter: {len(_vid_rep['dropped'])} video tweet(s) "
+                      f"removed from headliners "
+                      f"({_vid_rep['atl_kept']} kept in Around the League)")
+                for _sec, _accts in _by_section.items():
+                    _before, _after = _vid_rep["sections"].get(_sec, ("?", "?"))
+                    print(f"       {_sec}: {_before} → {_after} tweet(s) — "
+                          f"{', '.join(_accts)}")
+            else:
+                print(f"  ✓ §2.1 no video tweets in headliners "
+                      f"({_vid_rep['atl_kept']} in Around the League)")
+
+            # Backstop for the cooldown block above: swap anything Pass 1
+            # still picked from the last 7 days for another template driven by
+            # the SAME comedic engine, so the planned joke survives with a
+            # different picture. Pass 2 receives the replacement's full spec.
+            for _headline, _old, _new in meme_library.swap_cooled_templates(
+                    plan, recent_meme_slugs or set()):
+                if _new:
+                    print(f"  ♻ meme rotation: {_old} → {_new}  ({_headline})")
+                else:
+                    print(f"  ⚠ meme rotation: {_old} used in the last 7 days and "
+                          f"its engine has no free alternative — kept ({_headline})")
+
             story_plan_raw = json.dumps(plan, ensure_ascii=False)
 
             # Fix malformed tweet URLs where model writes status= instead of status/
@@ -739,6 +792,22 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
         import gif_library_select as _GL
         gif_reference = gif_reference.replace(
             "{{GIF_LIBRARY_CATEGORIES}}", _GL.category_prompt_block())
+
+    # The meme template index is injected from the library at load time, for the
+    # same reason the GIF categories are: a hand-kept copy in the prompt file
+    # drifts. It did — meme_reference.txt and pass2_writer.txt disagreed with
+    # the library on 13 of 30 box counts, and a meme built from the wrong count
+    # is dropped by meme_box_check rather than shipped, so the writer lost the
+    # meme for following its own instructions.
+    if "{{MEME_SELECTOR_INDEX}}" in meme_reference:
+        _index = meme_library.load_selector_index()
+        if _index:
+            meme_reference = meme_reference.replace("{{MEME_SELECTOR_INDEX}}", _index)
+        else:
+            # Never let raw template syntax reach the model; say so loudly,
+            # because the writer now has no list of templates to choose from.
+            meme_reference = meme_reference.replace("{{MEME_SELECTOR_INDEX}}", "")
+            print("  ⚠ meme selector index empty — Pass 2 has NO template list this run")
 
     # Voice examples load FIRST so the model reads the target before the rules.
     # This matches how Pass 4 (Voice Editor) works and weights imitation over instruction.
@@ -1056,7 +1125,15 @@ def main() -> None:
     else:
         print("  ⚠ game_state.json not found — run fetch_sports_data.py first")
 
-    story_plan    = run_pass1(raw, recent_output, client, game_state, degraded=degraded)
+    # Templates used in the last 7 days, so Pass 1 can avoid them rather than
+    # being told off afterwards by the meme pipeline.
+    _meme_hist = load_json(SCRIPT_DIR / "meme_history.json") or []
+    _cooled = meme_library.recently_used_slugs(_meme_hist)
+    if _cooled:
+        print(f"  meme cooldown: {len(_cooled)} template(s) used in the last 7 days")
+
+    story_plan    = run_pass1(raw, recent_output, client, game_state, degraded=degraded,
+                              recent_meme_slugs=_cooled)
     recent_output = save_story_log(story_plan, recent_output, RECENT_OUTPUT_PATH)
 
     # §2.4 — verify the media seed floor the Pass 1 prompt asks for. GIF
@@ -1139,7 +1216,7 @@ def main() -> None:
         print("  \u26a0 Skipped via --no-editor flag")
         final_html = audited_html
     else:
-        final_html = run_pass6(audited_html, recent_output, client)
+        final_html = run_pass6(audited_html, recent_output, client, game_state)
 
     # Embed media once into the shared body (below), then write both files
     # from it. This keeps GIF/meme history from being logged twice per run
@@ -1259,15 +1336,23 @@ def main() -> None:
     DRAFT_OUTPUT_PATH.write_text(
         DRAFT_TEMPLATE.format(content=body), encoding="utf-8"
     )
-    substack_html = blockquotes_to_substack_urls(body)
+    # The published file carries no HTML comments. Every flag in the draft is
+    # an instruction to an earlier pass (Pass 5's account caps, Pass 3's
+    # ground-truth corrections) and has already been acted on by Pass 6 — it is
+    # working notes, not content. Invisible in Gmail either way, but they push
+    # the body toward Gmail's ~102 KB "[Message clipped]" limit, which is the
+    # exact truncation the cid: image design exists to avoid. The DRAFT keeps
+    # them: that copy is archived daily and is where a bad issue gets diagnosed.
+    substack_html = re.sub(r'<!--.*?-->', '', blockquotes_to_substack_urls(body),
+                           flags=re.DOTALL)
     SUBSTACK_OUTPUT_PATH.write_text(
         SUBSTACK_TEMPLATE.format(content=substack_html), encoding="utf-8"
     )
 
     flag_count = len(re.findall(r'<!-- EDITOR FLAG:', final_html))
     if flag_count:
-        print(f"\n⚠  {flag_count} editor flag(s) need review before publishing.")
-        print(f"   Search 'EDITOR FLAG' in newsletter_draft.html to find them.")
+        print(f"\n  {flag_count} flag(s) recorded in newsletter_draft.html "
+              f"(acted on by Pass 6; stripped from the published file).")
 
     # Build the email-safe HTML. Consumed by the box-score builder
     # (box_score/build_box_score.py --append); not auto-sent anywhere.

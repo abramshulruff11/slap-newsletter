@@ -14,8 +14,24 @@ from pathlib import Path
 from urllib.request import urlopen, Request
 from urllib.error import URLError, HTTPError
 
+import proxy_session
+
 SCRIPT_DIR  = Path(__file__).resolve().parent
 OUTPUT_PATH = SCRIPT_DIR / "game_state.json"
+
+# Per-run fetch health, written into game_state.json as "fetch_health" so a
+# hollow file is distinguishable from a quiet day. ESPN's scoreboard API
+# returned 403 to GitHub's datacenter IP on every CI run from at least
+# 2026-08-14 to 2026-09-04; standings still loaded, so the file was stamped
+# with today's date and looked fine while carrying zero games. Nothing
+# downstream could tell. check_game_state.py reads this block in CI.
+FETCH_HEALTH = {
+    "direct_ok":  0,   # answered directly
+    "proxy_ok":   0,   # blocked directly, answered via PROXY_URL
+    "failed":     0,   # no answer either way
+    "blocked_no_proxy": 0,   # 403 and PROXY_URL unset — the CI failure mode
+    "failed_urls": [],
+}
 
 ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports"
 
@@ -117,28 +133,69 @@ def _browser_headers(url: str) -> dict:
     }
 
 
+def _fetch_via_proxy(url: str) -> dict | None:
+    """
+    The 403 fallback. ESPN blocks GitHub Actions' datacenter IP, not the
+    request shape — the same block that stopped Substack until publish.py was
+    routed through the residential proxy in PROXY_URL. Direct first (free),
+    proxy only when blocked, so proxy bandwidth is spent on the calls that
+    need it.
+    """
+    if not proxy_session.proxy_url():
+        FETCH_HEALTH["blocked_no_proxy"] += 1
+        print("      ✗ 403 and PROXY_URL is not set — cannot route around the block")
+        return None
+    resp = proxy_session.get_via_proxy(url, timeout=20, headers=_browser_headers(url))
+    if resp is None:
+        return None
+    if resp.status_code != 200:
+        print(f"      ✗ proxy path answered HTTP {resp.status_code}")
+        return None
+    try:
+        data = resp.json()
+    except Exception as e:  # noqa: BLE001
+        print(f"      ✗ proxy path returned non-JSON: {e}")
+        return None
+    FETCH_HEALTH["proxy_ok"] += 1
+    return data
+
+
+def _record_failure(url: str) -> None:
+    FETCH_HEALTH["failed"] += 1
+    FETCH_HEALTH["failed_urls"].append(url)
+
+
 def fetch_url(url: str) -> dict | None:
-    """Fetch a JSON endpoint with retries. Auto-retries with browser UA on 403."""
+    """Fetch a JSON endpoint with retries. On 403: browser UA, then the proxy."""
     for attempt in range(1, RETRY_ATTEMPTS + 1):
         try:
             req = Request(url, headers={"User-Agent": _next_ua()})
             with urlopen(req, timeout=15) as resp:
-                return json.loads(resp.read().decode("utf-8"))
+                data = json.loads(resp.read().decode("utf-8"))
+                FETCH_HEALTH["direct_ok"] += 1
+                return data
         except HTTPError as e:
             if e.code == 403:
                 # ESPN bot detection — retry immediately with full browser headers
                 try:
                     req2 = Request(url, headers=_browser_headers(url))
                     with urlopen(req2, timeout=15) as resp:
-                        return json.loads(resp.read().decode("utf-8"))
+                        data = json.loads(resp.read().decode("utf-8"))
+                        FETCH_HEALTH["direct_ok"] += 1
+                        return data
                 except Exception as e2:
                     print(f"      ✗ 403 even with browser UA: {e2}")
-                    return None
+                # IP-level block — go through the residential proxy.
+                data = _fetch_via_proxy(url)
+                if data is None:
+                    _record_failure(url)
+                return data
             if attempt < RETRY_ATTEMPTS:
                 print(f"      Retry {attempt} (HTTP {e.code}): {url}")
                 time.sleep(RETRY_DELAY)
             else:
                 print(f"      ✗ Failed after {RETRY_ATTEMPTS} attempts (HTTP {e.code})")
+                _record_failure(url)
                 return None
         except URLError as e:
             if attempt < RETRY_ATTEMPTS:
@@ -146,10 +203,13 @@ def fetch_url(url: str) -> dict | None:
                 time.sleep(RETRY_DELAY)
             else:
                 print(f"      ✗ Failed after {RETRY_ATTEMPTS} attempts: {e}")
+                _record_failure(url)
                 return None
         except json.JSONDecodeError as e:
             print(f"      ✗ JSON parse error: {e}")
+            _record_failure(url)
             return None
+    _record_failure(url)
     return None
 
 
@@ -1378,6 +1438,19 @@ def main() -> None:
     output["golf"]   = golf_data
     output["tennis"] = tennis_data
 
+    # Health block: how the file was fetched, not just what it holds. A file
+    # with standings but zero games AND failed scoreboard calls is a blocked
+    # fetch; the same file with zero failures is an off day. Downstream
+    # (check_game_state.py in CI) needs to tell those apart.
+    health = {k: v for k, v in FETCH_HEALTH.items() if k != "failed_urls"}
+    health["failed_urls"] = FETCH_HEALTH["failed_urls"][:20]
+    health["proxy_configured"] = bool(proxy_session.proxy_url())
+    health["per_sport_completed"] = {
+        key: sum(1 for g in s.get("yesterday_games", []) if g.get("completed"))
+        for key, s in output["sports"].items()
+    }
+    output["fetch_health"] = health
+
     OUTPUT_PATH.write_text(
         json.dumps(output, indent=2, ensure_ascii=False),
         encoding="utf-8",
@@ -1385,6 +1458,10 @@ def main() -> None:
 
     print(f"\n✓ game_state.json saved")
     print(f"  {active_count} active sport(s) · {total_games} completed game(s) from yesterday")
+    print(f"  fetch health: {health['direct_ok']} direct · {health['proxy_ok']} via proxy · "
+          f"{health['failed']} failed"
+          + (f" · {health['blocked_no_proxy']} blocked with no PROXY_URL"
+             if health["blocked_no_proxy"] else ""))
     if series_moments:
         print(f"  Series activity: {len(series_moments)} clincher/elimination game(s)")
 

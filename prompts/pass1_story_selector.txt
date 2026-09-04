@@ -162,11 +162,23 @@ Barstool's internal culture or cast of characters, cut it.
 TWEET SELECTION & PLACEMENT
 ================================================================================
 
-VIDEO TWEETS ARE ALREADY GONE:
-Video tweets render as dead grey boxes in email, so they are filtered out of
-your candidate list before you see it. You do not need to prefer, avoid, or
-reason about them — every tweet you have been given is safe to place. The best
-video moments come back separately as highlight clips, chosen by a later pass.
+VIDEO TWEETS — AROUND THE LEAGUE ONLY:
+A tweet carrying a video or a looping GIF is marked "has_video": true in today's
+raw content. Unmarked tweets have no video. A video embed renders as a dead grey
+box in email and stops the read cold, so:
+
+- NEVER assign a "has_video" tweet to the lead story or to a supporting story,
+  and never put one in a beat's media[]. This is enforced in code after you
+  submit: a video tweet in a headliner is deleted, and the beat it anchored is
+  left with nothing. Picking one does not get you the tweet, it costs you the
+  slot.
+- AROUND THE LEAGUE is the exception — video tweets are welcome there, and a
+  genuinely great clip belongs there rather than nowhere. ATL is a reel of
+  quick hitters with no prose around it, so a clip interrupts nothing and a
+  reader who wants the play can tap it.
+- When a headliner beat's best material is a video tweet: use a different tweet,
+  or leave media[] empty and seed a gif_concept or meme_concept for that story
+  instead. An empty media[] is a normal, expected answer — not a gap to fill.
 
 PURE UPDATE FILTER:
 Reject any tweet that only restates news the surrounding commentary already
@@ -185,12 +197,6 @@ If the commentary states it, cut the tweet.
 
 Count every tweet you reject under this rule and report the total in
 filter_stats.update_tweets_rejected when you call submit_story_plan.
-
-PREFER GIF TWEETS OVER VIDEO TWEETS:
-When two tweets cover the same beat, assign the one containing a GIF over the
-one containing a video. GIFs autoplay inline in Substack; videos require a
-click. If only a video tweet exists for a beat, still include it — this rule
-only fires when there is a choice.
 
 TWEETS MUST OVERLAP THE STORY THEY SIT UNDER:
 Every tweet you assign to a story section must reference the same team, player,

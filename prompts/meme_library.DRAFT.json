@@ -6,7 +6,7 @@
     "status_field": "'status' tracks review state of the SEMANTICS ONLY -- not the template_id. Every entry is 'candidate' (AI-authored, awaiting review). No 'verified' tier exists yet.",
     "subject_is_mandatory": "Every template requires a subject -- the person/team/org the meme is about. subject.placement is either 'box:N' (a caption box names them) or 'copy' (the surrounding prose must). Where placement is 'copy', subject.rule is a HARD requirement: the subject must be named in the sentence immediately before or after the meme, and if no specific subject can be named the template must not be used. ENFORCEMENT GAP: pass2_writer.txt does not currently carry this rule and nothing validates it. See open_questions_for_review.",
     "engine_axis": "'engine' is the shared comedic mechanism -- templates in one engine share comedic_engine, valence_rule, key_test and failure_mode (defined once under _meta.engines). 'pattern_type' is the separate structural axis: how captions map onto physical panels. Two templates can share an engine but differ in pattern_type (drake vs distracted-boyfriend) or vice versa. The taxonomy is open -- add a new engine rather than force a bad fit.",
-    "examples_are_illustrative": "worked_example and anti_example captions demonstrate SHAPE ONLY. They are NOT factual claims and must never be reused as source material. Real captions must be built from game_state.json ground truth.",
+    "examples_are_illustrative": "worked_example and anti_example captions demonstrate SHAPE ONLY. They are NOT factual claims and must never be reused as source material. Real captions must be built from game_state.json ground truth. Corrected 2026-09-04: nine worked examples still carried the caption shape from BEFORE the 2026-08-27 / 2026-09-01 render corrections -- five were simply short, and four (epic-handshake, eric-andre-shooting, is-this-a-pigeon, surprised-pikachu) had captions in the wrong boxes. Three valence rules had the same problem. uat/tests/test_meme_library.py now fails on any disagreement between valence, the examples, and boxes[].",
     "box_count_convention": "box_count is the template's TRUE physical caption count, taken from Imgflip's live get_memes API on 2026-08-27 (authoritative). Entries carrying box_count_source were corrected against it. Boxes flagged role_unverified have a correct COUNT but an inferred panel ORDER -- a single real render settles each.",
     "open_questions_for_review": "Panel ORDER verified by render 2026-08-27 for 11 of 12 flagged templates. Confirmed as inferred: left-exit-12-off-ramp, is-this-a-pigeon, buff-doge-vs-cheems, first-time, ight-imma-head-out. CORRECTED: eric-andre-shooting (subject box:2->box:0), trade-offer (subject box:0->box:2), epic-handshake (clasp is box 0, not box 2), surprised-pikachu (3 stacked caption lines, face uncaptioned), corporates-want-you-to-find-the-difference (box 2 is the observer; the verdict line is pre-printed), vince-mcmahon-reaction (box_count 4 -> 5; the old 4 shipped a blank payoff panel). spider-man-pointing-at-spider-man resolved 2026-09-01: exactly 2 boxes (top/bottom, centre-aligned, not on the figures). The earlier probes looked incoherent because Imgflip renders only the first and last of an over-long box list. No panel-order questions remain open. On 2026-09-01 the last three caveats were settled by render: two-buttons confirmed as written (subject box:2); distracted-boyfriend CORRECTED -- subject is box 1, not box 2, and boxes 0/2 were reversed (0 is the new temptation, 2 the established thing); spider-man-pointing-at-spider-man confirmed at 2 boxes. No panel-order questions remain.",
     "engines": {
@@ -262,7 +262,7 @@
         "note": "Unlike drake, the subject IS captioned here: the guy in the middle is the person/team making the decision."
       },
       "comedic_engine": "The subject is visibly turning away, in public, from the thing they were committed to -- and everyone can see them doing it.",
-      "valence": "Box 0 MUST be the established commitment being left behind. Box 1 is the new object of attention -- it does NOT have to be worse, but it must be notable that the subject is moving on. Box 2 MUST name the subject.",
+      "valence": "Box 0 MUST be the NEW thing catching the subject's eye. It does not have to be worse -- the subject visibly turning toward it, in public, is the joke. Box 1 MUST name the SUBJECT: the figure in the middle doing the turning. Box 2 MUST be the established commitment being neglected. (Corrected 2026-09-04 to match the render-verified boxes[] below; this rule previously described the pre-2026-09-01 mapping and contradicted them.)",
       "boxes": [
         {
           "index": 0,
@@ -342,7 +342,7 @@
         },
         {
           "index": 2,
-          "purpose": "the subject -- the swerving car/driver making the choice",
+          "purpose": "the SUBJECT -- the swerving car/driver making the choice",
           "valence": "neutral -- a label, not a judgment"
         }
       ],
@@ -352,9 +352,10 @@
         "subject": "A front office at the trade deadline",
         "boxes": [
           "RUN IT BACK WITH A HEALTHY ROSTER",
-          "TRADE THREE FIRSTS AN HOUR BEFORE THE DEADLINE"
+          "TRADE THREE FIRSTS AN HOUR BEFORE THE DEADLINE",
+          "THE FRONT OFFICE"
         ],
-        "why_it_lands": "Box 0 is the plan they were already on; box 1 is the last-second swerve. The deadline timing earns this template over drake.",
+        "why_it_lands": "Box 0 is the sensible road, box 1 the swerve actually taken, box 2 names who is driving. Without box 2 nobody is behind the wheel.",
         "timing": "Best same-day as the abrupt move."
       },
       "anti_example": {
@@ -408,7 +409,7 @@
         },
         {
           "index": 2,
-          "purpose": "the subject -- the sweating figure who must choose",
+          "purpose": "the SUBJECT -- the sweating figure who must choose",
           "valence": "neutral -- a label, not a judgment"
         }
       ],
@@ -483,9 +484,10 @@
         "subject": "A rebranding front office",
         "boxes": [
           "A REBUILD",
-          "A RETOOL"
+          "A RETOOL",
+          "EVERY FAN IN THE BUILDING"
         ],
-        "why_it_lands": "Two names for the identical roster teardown, which is exactly the false distinction being sold."
+        "why_it_lands": "Boxes 0 and 1 are the two supposedly different things; box 2 is the observer who can see they are the same. The verdict line is pre-printed on the image."
       },
       "anti_example": {
         "boxes": [
@@ -549,10 +551,12 @@
       "worked_example": {
         "subject": "Two eras of the same franchise",
         "boxes": [
-          "THE DEFENSE THAT ALLOWED 10 A GAME",
-          "THE ONE THAT BLEW A 17-POINT LEAD TO A BACKUP"
+          "THE 2023 DEFENSE",
+          "THIS YEAR'S DEFENSE",
+          "ALLOWED TEN POINTS A GAME",
+          "BLEW A SEVENTEEN-POINT LEAD TO A BACKUP"
         ],
-        "why_it_lands": "Same franchise, wildly lopsided toughness gap between eras."
+        "why_it_lands": "Boxes 0 and 1 label the strong past and weak present of the SAME subject; boxes 2 and 3 are what each version did. Four boxes, not two."
       },
       "anti_example": {
         "boxes": [
@@ -612,10 +616,11 @@
       "worked_example": {
         "subject": "Two rival fanbases",
         "boxes": [
-          "FANBASE A",
-          "FANBASE B"
+          "WANTING THE HEAD COACH FIRED",
+          "THE FANBASE",
+          "THE LOCKER ROOM"
         ],
-        "why_it_lands": "Works only when the copy names the specific thing they both want -- e.g. both wanting the same coach fired.",
+        "why_it_lands": "Box 0 is the CLASP -- the one thing both sides agree on. Boxes 1 and 2 are the two parties who normally agree on nothing.",
         "timing": "Needs the shared grievance named in the surrounding sentence."
       },
       "anti_example": {
@@ -758,9 +763,10 @@
           "A PLAYOFF BERTH",
           "A HOME PLAYOFF GAME",
           "A FIRST-ROUND BYE",
-          "WINNING IT ALL AS THE 7 SEED"
+          "WINNING IT ALL AS THE SEVEN SEED",
+          "WINNING IT ALL WITH THE BACKUP QB"
         ],
-        "why_it_lands": "One thread, four escalating versions, peak at the end."
+        "why_it_lands": "Five stages, five boxes. Supplying four leaves the final, most unhinged panel blank -- which is the one the whole meme builds toward."
       },
       "anti_example": {
         "boxes": [
@@ -1251,9 +1257,10 @@
         "subject": "A team that let its o-line walk",
         "boxes": [
           "LET ALL FIVE LINEMEN LEAVE IN FREE AGENCY",
-          "QB SACKED SEVEN TIMES IN WEEK 1"
+          "START A ROOKIE QB BEHIND THEM",
+          "QB SACKED SEVEN TIMES IN WEEK ONE"
         ],
-        "why_it_lands": "The consequence follows directly and obviously from the action in box 0."
+        "why_it_lands": "Three stacked lines above the face: the setup, the action, and the entirely predictable result. The face itself carries no caption."
       },
       "anti_example": {
         "boxes": [
@@ -1540,9 +1547,10 @@
         "subject": "A rival GM",
         "boxes": [
           "I RECEIVE: YOUR ALL-PRO EDGE RUSHER",
-          "YOU RECEIVE: A CONDITIONAL SEVENTH"
+          "YOU RECEIVE: A CONDITIONAL SEVENTH",
+          "THE TEAM WITH NO CAP SPACE"
         ],
-        "why_it_lands": "The formal I-receive/you-receive framing makes the lopsidedness funnier."
+        "why_it_lands": "Box 0 must clearly outweigh box 1, and box 2 names who is making the offer. A fair trade has no joke."
       },
       "anti_example": {
         "boxes": [
@@ -1747,7 +1755,7 @@
         "note": "Both figures are the SAME subject -- shooter and questioner."
       },
       "comedic_engine": "The subject shot it, then asked who could possibly have done this. The feigned innocence is the joke, not the damage.",
-      "valence": "Box 0 MUST be the subject's own action that caused the harm. Box 1 MUST be that same subject performing confusion about it.",
+      "valence": "Box 0 MUST name the SUBJECT who caused the harm. Box 1 MUST name what got harmed -- and it has to be the subject's OWN team, project or fanbase, or there is no self-sabotage. Box 2 MUST be the feigned question about who could possibly have done it. (Corrected 2026-09-04: this rule described a two-box shape and contradicted the three render-verified boxes[] below.)",
       "boxes": [
         {
           "index": 0,
@@ -1770,10 +1778,11 @@
       "worked_example": {
         "subject": "An owner who fired the coach midseason",
         "boxes": [
-          "FIRING THE COACH IN WEEK 6",
-          "WHY IS THIS LOCKER ROOM SO UNSTABLE"
+          "THE FRONT OFFICE",
+          "ITS OWN LOCKER ROOM",
+          "WHY IS THIS TEAM SO UNSTABLE?"
         ],
-        "why_it_lands": "Same subject in both boxes: the action and the performed bewilderment about its obvious consequence."
+        "why_it_lands": "Box 0 is the subject who pulled the trigger, box 1 is what they shot -- their own room -- and box 2 is the performed bewilderment."
       },
       "anti_example": {
         "boxes": [
@@ -1811,7 +1820,7 @@
         "note": "v1 filed this under betrayal/self-destruction; recategorized -- it is a perception gag with no betrayal in it."
       },
       "comedic_engine": "Confident, cheerful wrongness. The subject is not confused -- they are certain, and certainly wrong.",
-      "valence": "Box 0 MUST be the thing being looked at (or the one looking). Box 1 MUST be the absurdly wrong label. The real answer must be obvious to everyone else.",
+      "valence": "Box 0 MUST name the SUBJECT doing the misidentifying. Box 1 MUST be what the thing plainly actually is. Box 2 MUST be the confidently wrong question. The real answer has to be obvious to everyone except the subject. (Corrected 2026-09-04 to match the render-verified boxes[] below.)",
       "boxes": [
         {
           "index": 0,
@@ -1834,10 +1843,11 @@
       "worked_example": {
         "subject": "A national broadcast crew",
         "boxes": [
-          "A 6-10 TEAM WITH A WINNING RECORD IN ONE MONTH",
+          "NATIONAL MEDIA IN OCTOBER",
+          "A SIX-AND-TEN TEAM ON A ONE-MONTH HOT STREAK",
           "IS THIS A CONTENDER?"
         ],
-        "why_it_lands": "Everyone can see it is not; the confidence of the label is the joke."
+        "why_it_lands": "Box 0 is who is confused, box 1 is what the thing actually is, box 2 is the confidently wrong label."
       },
       "anti_example": {
         "boxes": [

@@ -1,7 +1,11 @@
-# MEME SELECTOR INDEX -- one line per template, for Pass 1 slug selection.
+# MEME TEMPLATE INDEX -- one line per template. The COMPLETE list; there is
+# no other. Pass 1 picks a slug from here; Pass 2 receives the same index
+# (substituted into meme_reference.txt) plus the FULL spec for whichever
+# templates the plan seeded.
 # Derived from prompts/meme_library.DRAFT.json. Do not hand-edit.
 # Regenerate: python -c "import meme_library; meme_library.write_selector_index()"
-# Pass 1 picks a slug; Pass 2 receives that template's full entry for caption writing.
+# The box count printed here is what the pipeline enforces: supply fewer
+# captions and meme_box_check.py drops the meme rather than ship a blank panel.
 
 ## subject_abandons_sensible_for_funky
    A named subject faces an obviously correct option and visibly goes with the worse, pettier, or stranger one.

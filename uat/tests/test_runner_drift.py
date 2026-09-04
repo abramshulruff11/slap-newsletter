@@ -45,22 +45,36 @@ UAT = REPO / "uat" / "generate_newsletter_uat.py"
 # pinned: touch either copy and this test fails until you have looked at the
 # counterpart and deliberately re-recorded the hash.
 KNOWN_DIVERGENT = {
-    "run_pass1": dict(prod="000825e533b2", uat="7f7dea4672c0", reason=(
-        "Bidirectional. Prod has degraded mode (Nitter outage -> headline-only "
-        "newsletter); UAT has the §2.1 video-tweet filter and Pass 1B. Neither "
-        "is a superset, so no copy in either direction is safe — this one needs "
-        "a real merge."
+    "run_pass1": dict(prod="e22669a9998d", uat="19da9bdf0a57", reason=(
+        "Bidirectional, and the two now hold DIFFERENT video policies on "
+        "purpose. Prod (2026-09-04): video tweets are tagged by fetch_content, "
+        "marked for Pass 1 in the payload, and removed from the headliners by "
+        "plan_audit.enforce_video_policy — Around the League keeps them, "
+        "because a clip there interrupts no writing. UAT: video tweets are "
+        "dropped from Pass 1's candidate list entirely (§2.1), because Pass 1B "
+        "turns them into highlight GIFs and prod has no Pass 1B. Prod also has "
+        "degraded mode (Nitter outage -> headline-only). Neither side is a "
+        "superset, so no copy in either direction is safe. (2026-09-04: meme "
+        "cooldown — the recent-slug block and the same-engine swap — was added "
+        "to BOTH copies identically.)"
     )),
-    "run_pass2": dict(prod="719792321475", uat="257eed61581e", reason=(
+    "run_pass2": dict(prod="df6ad694eb18", uat="d66b183684ec", reason=(
         "Bidirectional. Prod carries degraded-mode wiring UAT lacks; UAT "
-        "carries highlight-plan wiring prod has no Pass 1B for."
+        "carries highlight-plan wiring prod has no Pass 1B for. (2026-09-04: "
+        "the {{MEME_SELECTOR_INDEX}} substitution was added to BOTH copies "
+        "identically — the meme library is now the only template list the "
+        "writer sees.)"
     )),
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
     )),
-    "main": dict(prod="a19c6885a9ce", uat="0e25f4ba71c9", reason=(
+    "main": dict(prod="a64876f6c91a", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
-        "5-line stub. Expected to stay divergent permanently."
+        "5-line stub. Expected to stay divergent permanently. (2026-09-04: prod "
+        "now strips HTML comments from the published Substack file. Nothing to "
+        "port — run_uat.py writes only the draft template; the UAT runner's "
+        "SUBSTACK_OUTPUT_PATH is unused. It also now hands game_state to Pass 6 "
+        "for CHECK 8; run_uat.py does the same at its own call site.)"
     )),
 }
 

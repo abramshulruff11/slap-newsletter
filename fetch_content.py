@@ -5,12 +5,15 @@ Filters everything to the last 24 hours and writes raw_content.json.
 
 import json
 import random
+import re
 import socket
 import time
 from datetime import datetime, timezone, timedelta
 from time import mktime
 
 import feedparser
+
+import proxy_session
 
 # feedparser's fetch has no timeout of its own; a single stalled Nitter
 # connection can hang the whole run until the CI job's 30-minute cap kills it.
@@ -194,12 +197,57 @@ def is_retweet_or_reply(text: str) -> bool:
     return t.startswith("RT by @") or t.startswith("R to @")
 
 
+def classify_media(summary: str) -> str:
+    """Map a Nitter RSS <description> to a media kind: video | gif | image | text.
+
+    The description is the only place the media markup appears, and this file
+    used to discard it — which is why production could not tell a video tweet
+    from a text one, and why the Pass 1 prompt's claim that video tweets were
+    "already filtered out" was true only in UAT.
+
+    Video embeds render as a dead grey box in email, so downstream the flag
+    keeps them out of the headliner sections (see plan_audit.enforce_video_policy).
+    Twitter's native looping GIF counts as video for that purpose: it is the
+    same embed. Verified against 206 real tweets in uat/fixtures — every one
+    resolved from RSS alone, no guessing needed.
+    """
+    if re.search(r">\s*Video\s*<|amplify_video_thumb|ext_tw_video", summary or ""):
+        return "video"
+    if "tweet_video_thumb" in (summary or ""):      # Twitter's native looping GIF
+        return "gif"
+    if "<img" in (summary or ""):
+        return "image"
+    return "text"
+
+
 def is_spam_headline(title: str, description: str) -> bool:
     blob = f"{title} {description}".lower()
     return any(kw in blob for kw in NEWS_SPAM_KEYWORDS)
 
 
 # ── Fetch news headlines ─────────────────────────────────────────────────────
+
+def _blocked_feed(feed) -> bool:
+    """A feed answer that is a bot wall rather than a feed.
+
+    ESPN answered every CI request from 2026-07-15 to 2026-09-04 with HTTP 202
+    and an empty body — a challenge page, not RSS — so feedparser saw zero
+    entries and the run carried on with CBS as the only headline source. 403
+    is the same block stated plainly. A real empty feed is HTTP 200 with a
+    parseable document, which this does not match.
+    """
+    status = getattr(feed, "status", None)
+    return (not feed.entries) and (status in (202, 403, 429) or feed.bozo)
+
+
+def _parse_feed_via_proxy(url: str):
+    """Fetch the feed body through PROXY_URL and parse it. None when unavailable."""
+    resp = proxy_session.get_via_proxy(url, timeout=20, headers={"User-Agent": BROWSER_UA})
+    if resp is None or resp.status_code != 200:
+        return None
+    feed = feedparser.parse(resp.content)
+    return feed if feed.entries else None
+
 
 def fetch_news() -> list[dict]:
     headlines = []
@@ -208,6 +256,13 @@ def fetch_news() -> list[dict]:
         feed = feedparser.parse(url, agent=BROWSER_UA)
         # Surface silent feed failures — ESPN was returning zero entries
         # and nobody noticed because feedparser fails quietly.
+        if _blocked_feed(feed):
+            via_proxy = _parse_feed_via_proxy(url)
+            if via_proxy is not None:
+                print(f"  {source_name}: blocked directly (HTTP "
+                      f"{getattr(feed, 'status', '?')}), {len(via_proxy.entries)} "
+                      f"entries via proxy")
+                feed = via_proxy
         if feed.bozo or not feed.entries:
             print(f"  ⚠ {source_name}: {len(feed.entries)} entries "
                   f"(bozo={feed.bozo}, status={getattr(feed, 'status', '?')})")
@@ -389,11 +444,18 @@ def fetch_tweets() -> list[dict]:
                 continue
             fresh += 1
             raw_link = entry.get("link", "")
+            kind = classify_media(str(entry.get("summary", "")))
             tweets.append({
                 "account":  handle,
                 "text":     text,
                 "link":     nitter_to_twitter(raw_link),
                 "pubDate":  format_dt(pub_dt),
+                # Media kind from the RSS description. has_video drives the
+                # headliner exclusion in plan_audit.enforce_video_policy; ATL
+                # keeps video tweets, where a clip is a quick hitter rather
+                # than an interruption.
+                "media_kind": kind,
+                "has_video":  kind in ("video", "gif"),
             })
 
         # An account that returned entries but none from the last 24h is healthy and
@@ -429,6 +491,11 @@ def fetch_tweets() -> list[dict]:
 
     if dropped_rt_reply:
         print(f"  -- dropped {dropped_rt_reply} retweet(s)/reply(ies)")
+
+    n_video = sum(1 for t in tweets if t.get("has_video"))
+    if tweets:
+        print(f"  -- {n_video}/{len(tweets)} carry video (Around the League only; "
+              f"see plan_audit.enforce_video_policy)")
 
     if dead:
         print(f"  !! DEAD HANDLES (fix TWITTER_HANDLES): {', '.join('@' + h for h in dead)}")

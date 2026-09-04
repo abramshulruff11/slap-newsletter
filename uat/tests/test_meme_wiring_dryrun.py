@@ -19,6 +19,18 @@ sys.path.insert(0, str(REPO / "uat"))
 
 import anthropic
 
+def _has_meme_index(text: str) -> bool:
+    """The injected library index, identified by content rather than its title.
+
+    Requires a real engine heading AND at least one 'slug (N boxes, subject: ...)'
+    line — a renamed header stays green, an empty or unsubstituted placeholder
+    does not.
+    """
+    import re as _re
+    return (_re.search(r'^## [a-z_]+$', text, _re.M) is not None
+            and _re.search(r'^\s+- [a-z0-9-]+ \(\d+ boxes, subject: ', text, _re.M) is not None
+            and "{{MEME_SELECTOR_INDEX}}" not in text)
+
 CAPTURED = {"pass1": None, "pass2": None}
 
 class _Blk:
@@ -88,7 +100,7 @@ p1  = CAPTURED["pass1"]
 sysblocks = p1["system"]
 systext = "".join(b["text"] if isinstance(b,dict) else str(b) for b in sysblocks)
 print(f"  system prompt: {len(systext):,} chars")
-assert "MEME SELECTOR INDEX" in systext, "index NOT in Pass 1 system prompt"
+assert _has_meme_index(systext), "library index NOT in Pass 1 system prompt"
 assert "subject_abandons_sensible_for_funky" in systext
 assert "TEST:" in systext
 print("  ✓ selector index present in Pass 1 system prompt")

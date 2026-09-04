@@ -775,7 +775,16 @@ def _normalize_tweet_url(url: str) -> str:
     return url.lower()
 
 
-def run_pass6(draft_html: str, recent_output: dict, client: anthropic.Anthropic) -> str:
+def run_pass6(draft_html: str, recent_output: dict, client: anthropic.Anthropic,
+              game_state: dict | None = None) -> str:
+    """
+    The editor pass. `game_state` is what makes CHECK 8 real rather than a
+    guess: that check leaves a claim alone when an embedded tweet OR the
+    ground-truth block sources it, and until 2026-09-04 the editor was never
+    shown the ground truth at all — it could only compare a number against the
+    tweets next to it. Optional so an older caller still works, but every
+    caller in this repo passes it.
+    """
     print("\n── PASS 6: Editor ──────────────────────────────────")
 
     editor_prompt = load_prompt("editor_prompt.txt")
@@ -805,13 +814,26 @@ def run_pass6(draft_html: str, recent_output: dict, client: anthropic.Anthropic)
         )
         system_blocks.append({"type": "text", "text": media_note})
 
+    # Ground truth rides in the USER message, not the cached system block: it
+    # changes daily and would thrash the cache. CHECK 8 names it as one of the
+    # two things that can source a claim, so it has to be here — a check that
+    # cites evidence it was never given is worse than no check.
+    ground_truth = format_game_state_summary(game_state or {})
+    if ground_truth:
+        print(f"  ground truth supplied to CHECK 8 ({len(ground_truth):,} chars)")
+    else:
+        print("  ⚠ no ground truth available — CHECK 8 can only source claims "
+              "from the tweets in each section")
+
     response = client.messages.create(
         model=MODEL_DEFAULT,
         max_tokens=8192,
         system=system_blocks,
         messages=[{
             "role": "user",
-            "content": f"Edit this newsletter draft and return the corrected HTML:\n\n{draft_html}"
+            "content": (
+                (ground_truth + "\n\n") if ground_truth else ""
+            ) + f"Edit this newsletter draft and return the corrected HTML:\n\n{draft_html}"
         }]
     )
 
