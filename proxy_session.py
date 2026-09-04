@@ -28,19 +28,35 @@ def proxy_url() -> str:
     return (os.getenv("PROXY_URL") or "").strip()
 
 
+_UNAVAILABLE = False
+
+
 def get_session():
-    """A curl_cffi Session routed through PROXY_URL, or None if unset."""
-    global _SESSION, _LOGGED
+    """A curl_cffi Session routed through PROXY_URL, or None if unavailable.
+
+    Never raises. This is a FALLBACK path: the callers work without it, and a
+    missing dependency or a bad PROXY_URL must degrade to "no proxy today"
+    rather than take down the whole content fetch, which is what a raised
+    ImportError from here would do.
+    """
+    global _SESSION, _LOGGED, _UNAVAILABLE
     proxy = proxy_url()
-    if not proxy:
+    if not proxy or _UNAVAILABLE:
         return None
     if _SESSION is None:
-        from curl_cffi import requests as creq  # listed in requirements.txt
+        try:
+            from curl_cffi import requests as creq  # listed in requirements.txt
 
-        _SESSION = creq.Session(
-            impersonate="chrome",
-            proxies={"http": proxy, "https": proxy},
-        )
+            _SESSION = creq.Session(
+                impersonate="chrome",
+                proxies={"http": proxy, "https": proxy},
+            )
+        except Exception as e:  # noqa: BLE001 -- missing dep, bad proxy string
+            _UNAVAILABLE = True
+            print(f"  [proxy] PROXY_URL is set but the proxy session could not be "
+                  f"built ({type(e).__name__}: {str(e)[:80]}). Continuing WITHOUT "
+                  f"the proxy — blocked requests will stay blocked.")
+            return None
         if not _LOGGED:
             print("  [proxy] PROXY_URL set — blocked requests will retry via the residential proxy")
             _LOGGED = True

@@ -42,7 +42,12 @@ def main() -> int:
     if not GAME_STATE.exists():
         print("::error::game_state.json missing — fetch_sports_data.py did not run")
         return 1
-    data = json.loads(GAME_STATE.read_text(encoding="utf-8"))
+    try:
+        data = json.loads(GAME_STATE.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"::error::game_state.json is unreadable ({type(e).__name__}: {e}) — "
+              f"every downstream pass will treat the ground truth as empty")
+        return 1
     health = data.get("fetch_health") or {}
     sports = data.get("sports") or {}
 
@@ -73,10 +78,20 @@ def main() -> int:
         print(f"::error::{msg}")
         _summary_line(f"> ❌ {msg}")
         return 1
-    if failed and not (direct or via_proxy):
-        msg = f"every ESPN request failed ({failed}); game_state.json has no real data"
+    # The actual symptom of the 3-week outage: requests failed AND the file
+    # came out with no games. Standings and leaders kept answering the whole
+    # time, so "some call succeeded" is not evidence of health — this has to
+    # key on the games themselves, and it fires whether or not a proxy is
+    # configured (a proxy that is itself blocked leaves the file just as hollow).
+    if failed and total_games == 0:
+        msg = (f"{failed} ESPN request(s) failed and NO completed games were "
+               f"captured — game_state.json is hollow. The newsletter loses its "
+               f"ground-truth block, Pass 3 has nothing to check, and the box "
+               f"scores carry no scores.")
         print(f"::error::{msg}")
         _summary_line(f"> ❌ {msg}")
+        for u in (health.get("failed_urls") or [])[:5]:
+            print(f"    failed: {u}")
         return 1
     if failed:
         msg = f"{failed} ESPN request(s) failed — game_state.json is partial"

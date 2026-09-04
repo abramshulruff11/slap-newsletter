@@ -105,6 +105,10 @@ jobs:
           # silent web-only test (then it resolves to the string 'false').
           SUBSTACK_SEND_EMAIL: ${{ github.event.inputs.send_email || 'true' }}
         run: |
+          # pipefail is REQUIRED here: without it the pipeline's exit status is
+          # tee's, so a publish.py crash would be reported as a green run — the
+          # exact class of silent failure this whole branch exists to remove.
+          set -o pipefail
           python substack_poc/publish.py --publish-existing \
             --state-in substack_post_state.json | tee publish.log
           # Surface the outcome on the run page instead of only in the log.
