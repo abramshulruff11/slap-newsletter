@@ -39,6 +39,12 @@ jobs:
       IMGFLIP_PASSWORD: ${{ secrets.IMGFLIP_PASSWORD }}
       GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
       GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+      # Residential proxy. ESPN's scoreboard API returned 403 to this runner's
+      # datacenter IP on every run from at least 2026-08-14 to 2026-09-04, and
+      # the ESPN RSS feeds answered 202 (a bot wall) since 2026-07-15. Both
+      # fetchers now retry blocked requests through PROXY_URL — the same fix
+      # that unblocked Substack in June. Job-level so every step can use it.
+      PROXY_URL: ${{ secrets.PROXY_URL }}
 
     steps:
       - name: Checkout repo
@@ -60,6 +66,14 @@ jobs:
 
       - name: Fetch sports data
         run: python fetch_sports_data.py
+
+      # Loud, not blocking: a blocked ESPN fetch fails THIS step and annotates
+      # the run, but the newsletter, email and Substack draft still go out —
+      # they do not need scores to ship. Before this step existed a hollow
+      # game_state.json (standings, zero games) passed as healthy for weeks.
+      - name: Check sports data health
+        continue-on-error: true
+        run: python check_game_state.py
 
       - name: Validate raw content
         run: |

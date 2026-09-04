@@ -8,6 +8,28 @@ of 8/14, 8/24, 8/31, 9/2, 9/3 and 9/4 plus the 9/3 publish run.
 Read Part 1 first. Those are not code-smell items; they are things that are
 broken today while every CI run shows green.
 
+## Status (updated 2026-09-04, afternoon)
+
+Decisions from the first read-through, and what has shipped on the review
+branch since:
+
+- **Email:** known. The current error (534, "application-specific password
+  required") means the secret holds the regular Gmail password; Gmail with
+  2-step verification needs a 16-character app password. Owner action.
+- **Publish timing:** auto-publish stays, and it should land at 12:30 ET.
+  Plan: publish job on several cron slots (it already skips when there is
+  nothing to do) plus an immediate publish from the morning run when it
+  finishes after 12:30 ET. Not built yet.
+- **ESPN:** FIXED on this branch. Direct call first, then the residential
+  proxy on a 403 (scores, box scores, ESPN RSS, highlight player lookups).
+  `game_state.json` now records how it was fetched, and a new CI step fails
+  loudly, without blocking delivery, when the fetch was blocked. Offline test
+  added; the live proxy path runs for the first time on the next CI run.
+- **Video tweets:** remove from every section except Around the League. Not
+  built yet (needs the `has_video` tagging ported into production).
+- **Editor flags:** nobody reads them. Remove Check 8. Not built yet.
+- **UAT runner:** explained; collapse into configuration is still open.
+
 ---
 
 ## Part 1 — Broken right now, silently

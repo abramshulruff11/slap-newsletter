@@ -32,6 +32,7 @@ import os
 import re
 import unicodedata
 import urllib.parse
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from typing import Dict, List, Optional, Set, Tuple
@@ -67,6 +68,19 @@ def _get(url: str) -> Optional[Dict]:
         req = urllib.request.Request(url, headers={"User-Agent": _UA})
         with urllib.request.urlopen(req, timeout=20) as resp:
             return json.load(resp)
+    except urllib.error.HTTPError as e:
+        if e.code == 403 and "espn.com" in url:
+            # ESPN blocks the CI runner's IP; same fallback as
+            # fetch_sports_data.fetch_url. YouTube calls never take this path.
+            import proxy_session
+            resp = proxy_session.get_via_proxy(url, timeout=20, headers={"User-Agent": _UA})
+            if resp is not None and resp.status_code == 200:
+                try:
+                    return resp.json()
+                except Exception:  # noqa: BLE001
+                    pass
+        print(f"      fetch failed: HTTPError: {str(e)[:60]}")
+        return None
     except Exception as e:  # noqa: BLE001
         print(f"      fetch failed: {type(e).__name__}: {str(e)[:60]}")
         return None

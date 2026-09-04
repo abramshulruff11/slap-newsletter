@@ -239,7 +239,7 @@ the deterministic audits, `test_runner_drift.py` locks prod-vs-UAT runner diverg
 `test_history_dedup.py` the GIF/meme history writers,
 `test_meme_wiring_dryrun.py` the UAT meme wiring, and
 `test_prod_wiring_dryrun.py` exercises the real production path with the Anthropic client
-stubbed. Run all three before changing a prompt or a pass.
+stubbed, and `test_proxy_fallback.py` locks the ESPN 403 / RSS bot-wall proxy fallback. Run all three before changing a prompt or a pass.
 
 ---
 
@@ -352,7 +352,15 @@ unstaged, which breaks `git pull --rebase`.
   `Archive/`, git **also silently ignores `archive/` locally** — new daily archive dirs never
   appear in local `git status`. CI is Linux (case-sensitive), so it commits them fine. Fix is to
   rename one side; until then, don't trust local `git status` for `archive/`.
-- **`game_state.json` freshness — no guard (open):** `fetch_sports_data.py` always stamps the file
+- **ESPN blocked from CI (FIXED 2026-09-04, first live run pending):** every scoreboard call
+  returned 403 to the GitHub runner's IP from at least 8/14 to 9/4 (standings still loaded, so
+  the file looked fresh with zero games), and the ESPN RSS feeds answered 202 (a bot wall)
+  since 7/15. `fetch_sports_data.py`, `fetch_content.py` and `highlights.py` now retry a
+  blocked request through `PROXY_URL` (`proxy_session.py`, the Substack trick). `PROXY_URL`
+  is job-level in `daily-newsletter.yml`. `game_state.json` carries a `fetch_health` block and
+  `check_game_state.py` (continue-on-error step) fails loudly on a blocked fetch. Offline test:
+  `uat/tests/test_proxy_fallback.py`. Full review: `docs/code_review_2026-09-04.md`.
+- **`game_state.json` freshness — guard added (see above):** `fetch_sports_data.py` always stamps the file
   with today's date, even if every ESPN call silently fails (each is wrapped in try/except
   returning empty). A today-stamped but *hollow* file degrades silently — the newsletter loses its
   ground-truth block (`format_game_state_summary` returns "" on empty) and box scores thin out,

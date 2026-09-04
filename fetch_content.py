@@ -12,6 +12,8 @@ from time import mktime
 
 import feedparser
 
+import proxy_session
+
 # feedparser's fetch has no timeout of its own; a single stalled Nitter
 # connection can hang the whole run until the CI job's 30-minute cap kills it.
 FEED_TIMEOUT_SECONDS = 15
@@ -201,6 +203,28 @@ def is_spam_headline(title: str, description: str) -> bool:
 
 # ── Fetch news headlines ─────────────────────────────────────────────────────
 
+def _blocked_feed(feed) -> bool:
+    """A feed answer that is a bot wall rather than a feed.
+
+    ESPN answered every CI request from 2026-07-15 to 2026-09-04 with HTTP 202
+    and an empty body — a challenge page, not RSS — so feedparser saw zero
+    entries and the run carried on with CBS as the only headline source. 403
+    is the same block stated plainly. A real empty feed is HTTP 200 with a
+    parseable document, which this does not match.
+    """
+    status = getattr(feed, "status", None)
+    return (not feed.entries) and (status in (202, 403, 429) or feed.bozo)
+
+
+def _parse_feed_via_proxy(url: str):
+    """Fetch the feed body through PROXY_URL and parse it. None when unavailable."""
+    resp = proxy_session.get_via_proxy(url, timeout=20, headers={"User-Agent": BROWSER_UA})
+    if resp is None or resp.status_code != 200:
+        return None
+    feed = feedparser.parse(resp.content)
+    return feed if feed.entries else None
+
+
 def fetch_news() -> list[dict]:
     headlines = []
     dropped_spam = 0
@@ -208,6 +232,13 @@ def fetch_news() -> list[dict]:
         feed = feedparser.parse(url, agent=BROWSER_UA)
         # Surface silent feed failures — ESPN was returning zero entries
         # and nobody noticed because feedparser fails quietly.
+        if _blocked_feed(feed):
+            via_proxy = _parse_feed_via_proxy(url)
+            if via_proxy is not None:
+                print(f"  {source_name}: blocked directly (HTTP "
+                      f"{getattr(feed, 'status', '?')}), {len(via_proxy.entries)} "
+                      f"entries via proxy")
+                feed = via_proxy
         if feed.bozo or not feed.entries:
             print(f"  ⚠ {source_name}: {len(feed.entries)} entries "
                   f"(bozo={feed.bozo}, status={getattr(feed, 'status', '?')})")
