@@ -342,7 +342,17 @@ def fetch_one_handle(handle: str, max_attempts: int = TWEET_FETCH_ATTEMPTS) -> t
     for attempt in range(1, max_attempts + 1):
         for base in bases:
             primary = base == NITTER_BASE
-            feed = feedparser.parse(f"{base}/{handle}/rss?limit=50", agent=BROWSER_UA)
+            try:
+                feed = feedparser.parse(f"{base}/{handle}/rss?limit=50", agent=BROWSER_UA)
+            except OSError as e:
+                # feedparser doesn't catch transport failures itself -- a stalled
+                # connection past FEED_TIMEOUT_SECONDS raises a raw TimeoutError
+                # (and other transport errors surface as OSError/URLError, both
+                # OSError subclasses) straight out of parse(), uncaught, which
+                # used to crash the whole run instead of just this one attempt.
+                print(f"     .. {base} transport error for @{handle}: {e}")
+                last = "error"
+                continue
             status = getattr(feed, "status", None)
 
             # 404/403 are facts about the ACCOUNT only from the primary. A mirror
