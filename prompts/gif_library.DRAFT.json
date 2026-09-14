@@ -1433,6 +1433,27 @@
           "status": "verified",
           "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Small channel (@Carrson_Peterson_); slug is literally sports-trash-talk-blowout.",
           "tags": ["domination", "blowout"]
+        },
+        {
+          "id": "3iLisDUozEvfIRyf9X",
+          "label": "UFC knockout",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (gif_library_expand_probe.py could not run this session -- no GIPHY_API_KEY and api.giphy.com is blocked by this session's network egress policy, so this is web-search sourcing, not the live Giphy API). NOT yet eyeballed by Abram. Official @ufc upload; a knockout is as one-sided as a sports outcome gets, fits the 'rout' register directly.",
+          "tags": ["domination", "blowout"]
+        },
+        {
+          "id": "3ohhwssY8BhybLFeDe",
+          "label": "Boxing knockout punch (SHOWTIME Sports)",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (see network-access note on the UFC entry above). NOT yet eyeballed by Abram. Official @showtimesports upload.",
+          "tags": ["domination", "blowout"]
+        },
+        {
+          "id": "PZ58x6tqfRkrwyFlrw",
+          "label": "'Shut up' - BYU volleyball shutout energy",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (see network-access note on the UFC entry above). NOT yet eyeballed by Abram. Official @BYUCougars upload -- a college athletics account, but the title/slug is generic ('Sport Shut Up') so the specific play context is unconfirmed; eyeball before trusting the fit.",
+          "tags": ["domination", "shutout"]
         }
       ]
     },
@@ -1469,6 +1490,20 @@
           "status": "verified",
           "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Small channel (@okjessofficial).",
           "tags": ["denial", "cope"]
+        },
+        {
+          "id": "kT46ZFdf9GkJJPE9NM",
+          "label": "Nervous 'everything is fine'",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (gif_library_expand_probe.py could not run this session -- no GIPHY_API_KEY and api.giphy.com is blocked by this session's network egress policy). NOT yet eyeballed by Abram. Official @HollerStudios channel; visibly nervous while insisting everything's fine is a near-literal match for this category's spin/cope register.",
+          "tags": ["denial", "cope", "spin"]
+        },
+        {
+          "id": "fFaqJTYFJ2SaokSSZB",
+          "label": "'Everything is fine, relax'",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (see network-access note on the Holler Studios entry above). NOT yet eyeballed by Abram. Official @JestersAnimation channel.",
+          "tags": ["denial", "spin"]
         }
       ]
     },
@@ -1512,6 +1547,27 @@
           "status": "verified",
           "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Small channel (@blakelivelyfan); slug well-actually-um.",
           "tags": ["debate"]
+        },
+        {
+          "id": "JpMsFaD0IThH6wLi3S",
+          "label": "Stephen A. Smith - laughing off a take",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (gif_library_expand_probe.py could not run this session -- no GIPHY_API_KEY and api.giphy.com is blocked by this session's network egress policy). NOT yet eyeballed by Abram. Official @espn upload. These are reaction shots of sports-talk's most recognizable hot-take personality rather than a 'delivering the take' pose -- close but not a literal match, worth an eyeball for fit.",
+          "tags": ["debate", "hot-take"]
+        },
+        {
+          "id": "U1xERzPdSQA2leN6xp",
+          "label": "Stephen A. Smith - 'smh, unbelievable'",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (see network-access note on the Stephen A. Smith laughing entry above). NOT yet eyeballed by Abram. Official @espn upload.",
+          "tags": ["debate", "hot-take"]
+        },
+        {
+          "id": "Rf51wBC75B4BNEnuBG",
+          "label": "Stephen A. Smith - angry take",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (see network-access note on the Stephen A. Smith laughing entry above). NOT yet eyeballed by Abram. Official @espn upload.",
+          "tags": ["debate", "hot-take"]
         }
       ]
     },
@@ -1554,6 +1610,27 @@
           "label": "Leon Edwards (UFC)",
           "status": "retired",
           "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Official @ufc upload, but the title gives no context beyond the fighter's name - genuinely uncertain whether the clip fits this category's meaning. Eyeball carefully; may not belong.",
+          "tags": ["betrayal", "self-sabotage"]
+        },
+        {
+          "id": "UWWPZHlfK8qFHlLyAB",
+          "label": "Beastie Boys - 'Sabotage'",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (gif_library_expand_probe.py could not run this session -- no GIPHY_API_KEY and api.giphy.com is blocked by this session's network egress policy). NOT yet eyeballed by Abram. Official @beastieboys channel; same 'famous-anthem-as-the-beat' logic as the existing Queen 'Another One Bites the Dust' entry elsewhere in this library.",
+          "tags": ["betrayal", "self-sabotage"]
+        },
+        {
+          "id": "tvHZw8ikhu534Mlga8",
+          "label": "Sabotage (JAWNY)",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (see network-access note on the Beastie Boys entry above). NOT yet eyeballed by Abram. Official @jawny artist channel.",
+          "tags": ["betrayal", "self-sabotage"]
+        },
+        {
+          "id": "1lxrr26sIusckWPJtU",
+          "label": "'Self destruction, omg' (Boogie)",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (see network-access note on the Beastie Boys entry above). NOT yet eyeballed by Abram. Official @ws (Boogie) channel; generic self-destruction beat, verify tone before use.",
           "tags": ["betrayal", "self-sabotage"]
         }
       ]
@@ -1605,6 +1682,27 @@
           "status": "verified",
           "note": "AI-sourced 2026-08-25 via targeted Giphy probe (fatigue category seed). NOT yet eyeballed by Abram. Official @fxnetworks upload.",
           "tags": ["fatigue", "weary", "over-it"]
+        },
+        {
+          "id": "nFzZ3X5D3fyb4WTRz4",
+          "label": "'Bored, here we go again' (Liverpool FC)",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (gif_library_expand_probe.py could not run this session -- no GIPHY_API_KEY and api.giphy.com is blocked by this session's network egress policy). NOT yet eyeballed by Abram. Official @lfc upload -- sports-native and the title is a literal match for narrative fatigue.",
+          "tags": ["fatigue", "over-it"]
+        },
+        {
+          "id": "eKsDAtyWPxkGRpEEtU",
+          "label": "'Here we go again' (Hulu, Little Fires Everywhere)",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (see network-access note on the Liverpool FC entry above). NOT yet eyeballed by Abram. Official @hulu upload.",
+          "tags": ["fatigue", "over-it"]
+        },
+        {
+          "id": "UnCXCkq3cs1uCv6uy2",
+          "label": "'Ah, here we go again' (BuzzFeed)",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-14 via web search (see network-access note on the Liverpool FC entry above). NOT yet eyeballed by Abram. Official @buzzfeed upload.",
+          "tags": ["fatigue", "over-it", "weary"]
         }
       ]
     }
