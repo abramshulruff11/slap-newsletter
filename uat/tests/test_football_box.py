@@ -157,6 +157,32 @@ check(len(plays) == 2 and plays[0]["team"] == "KC" and plays[0]["quarter"] == 1,
 check(fsd.parse_box_score({}, "nfl")["linescore"]["period_labels"] == [],
       "empty summary degrades instead of raising")
 
+# ESPN routinely sends an explicit null where a dict is expected, and
+# .get(k, {}) hands back that null rather than the default. The whole
+# newsletter hangs off game_state.json, so a payload shape this parser has
+# never seen must cost one box score, not the entire sports fetch.
+MALFORMED = [
+    {}, {"boxscore": None}, {"boxscore": {"players": None}},
+    {"boxscore": {"players": [None]}},
+    {"boxscore": {"players": [{"team": None, "statistics": None}]}},
+    {"boxscore": {"players": [{"homeAway": None, "team": {}, "statistics": [
+        {"name": "passing", "labels": None, "athletes": [None]}]}]}},
+    {"boxscore": {"players": [{"homeAway": "home", "team": {"abbreviation": "X"}, "statistics": [
+        {"name": "rushing", "labels": ["CAR", "YDS", "TD", "LONG"],
+         "athletes": [{"athlete": {"shortName": "A", "position": None},
+                       "stats": ["5", "20", "1", "9"]}]}]}]}},
+    {"scoringPlays": [None, {"period": None, "team": None, "text": "TD"}]},
+]
+survived = 0
+for payload in MALFORMED:
+    try:
+        fsd.parse_box_score(payload, "ncaafb")
+        survived += 1
+    except Exception:
+        pass
+check(survived == len(MALFORMED),
+      f"all {len(MALFORMED)} malformed/null payload shapes parse without raising")
+
 
 # ---------------------------------------------------------------------------
 # 2. Ranked-matchup filtering (CFB)

@@ -1039,7 +1039,8 @@ def _parse_football_scoring(summary: dict) -> list[dict]:
     clock, scoring team and the running score after the play.
     """
     plays: list[dict] = []
-    for sp in summary.get("scoringPlays", []):
+    for sp in summary.get("scoringPlays") or []:
+        sp = sp or {}
         period = (sp.get("period", {}) or {}).get("number")
         clock  = (sp.get("clock", {}) or {}).get("displayValue", "")
         team   = (sp.get("team", {}) or {}).get("abbreviation", "")
@@ -1075,18 +1076,20 @@ def _parse_football_box(summary: dict) -> dict:
     """
     result: dict = {}
 
-    for i, team_entry in enumerate(summary.get("boxscore", {}).get("players", [])):
-        side_raw = team_entry.get("homeAway", "").lower()
+    boxscore = summary.get("boxscore") or {}
+    for i, team_entry in enumerate(boxscore.get("players") or []):
+        team_entry = team_entry or {}
+        side_raw = (team_entry.get("homeAway") or "").lower()
         if side_raw in ("away", "visitor", "visitors"):
             side = "away"
         elif side_raw == "home":
             side = "home"
         else:
             side = "away" if i == 0 else "home"
-        team_abbr = team_entry.get("team", {}).get("abbreviation", "")
+        team_abbr = (team_entry.get("team") or {}).get("abbreviation", "")
         side_data: dict = {"team": team_abbr, "passing": [], "rushing": [], "receiving": []}
 
-        for sg in team_entry.get("statistics", []):
+        for sg in team_entry.get("statistics") or []:
             type_raw  = sg.get("type", "")
             type_text = (type_raw.get("text", "").lower()
                          if isinstance(type_raw, dict) else str(type_raw).lower())
@@ -1094,9 +1097,9 @@ def _parse_football_box(summary: dict) -> dict:
             keys  = _FB_GROUP_KEYS.get(group)
             if not keys:
                 continue
-            labels = sg.get("labels", sg.get("names", []))
-            for ae in sg.get("athletes", []):
-                raw = ae.get("stats", [])
+            labels = sg.get("labels") or sg.get("names") or []
+            for ae in sg.get("athletes") or []:
+                raw = (ae or {}).get("stats") or []
                 if not raw:
                     continue
                 stats = {
@@ -1110,10 +1113,10 @@ def _parse_football_box(summary: dict) -> dict:
                 # ball shows up as all zeros and only costs vertical space).
                 if all(str(v).strip() in ("0", "0/0", "--", "", "-") for v in stats.values()):
                     continue
-                ath = ae.get("athlete", {})
+                ath = ae.get("athlete") or {}
                 side_data[group].append({
-                    "name":  ath.get("shortName", ath.get("displayName", "?")),
-                    "pos":   ath.get("position", {}).get("abbreviation", ""),
+                    "name":  ath.get("shortName") or ath.get("displayName") or "?",
+                    "pos":   (ath.get("position") or {}).get("abbreviation", ""),
                     "stats": stats,
                 })
 
@@ -1658,8 +1661,17 @@ def main() -> None:
             for game in eligible:
                 summary = fetch_game_summary(sport, league, game["game_id"])
                 if summary:
-                    game["box_score"] = parse_box_score(summary, key)
-                    box_count += 1
+                    # A parser surprise must cost one box score, not the run.
+                    # Everything downstream — the ground-truth block the writer
+                    # and the editor read, the claim validator, every other
+                    # sport's box scores — hangs off game_state.json, so an
+                    # unexpected payload shape here used to take all of it down.
+                    try:
+                        game["box_score"] = parse_box_score(summary, key)
+                        box_count += 1
+                    except Exception as exc:
+                        print(f"    ✗ box score failed for {game.get('matchup', game['game_id'])}: "
+                              f"{type(exc).__name__}: {exc}")
                 time.sleep(0.25)
         if box_count:
             print(f"    {box_count} box score(s) fetched")
