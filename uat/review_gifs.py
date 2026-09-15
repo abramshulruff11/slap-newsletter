@@ -16,12 +16,22 @@ status changes into prompts/gif_library.DRAFT.json.
 This generator script itself does NOT modify the library — it only reads it
 and produces the review page.
 
+--no-api renders each entry as Giphy's keyless iframe embed
+(giphy.com/embed/<id>) instead of resolving a thumbnail URL, so the page can
+be generated with no GIPHY_API_KEY and no network at all — the browser loads
+the GIFs when you open it. Use it when you only need to eyeball the library
+(regenerating the normal way costs one API call per entry, which is what
+exhausted the daily quota on 2026-08-26 and blanked a UAT run), or from an
+environment that cannot reach api.giphy.com.
+
 Usage:
     python uat/review_gifs.py
+    python uat/review_gifs.py --no-api
 Output:
     uat/gif_review.html  (open this file in your browser)
 """
 
+import argparse
 import json
 import time
 import urllib.request
@@ -29,7 +39,7 @@ import urllib.error
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import gif_url_cache as GC  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -66,17 +76,26 @@ def resolve_gif(gif_id: str, api_key: str) -> dict | None:
 
 
 def main():
-    api_key = load_giphy_key()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--no-api", action="store_true",
+                        help="Render keyless giphy.com/embed iframes instead of "
+                             "resolving thumbnails (no API key, no network needed)")
+    args = parser.parse_args()
+
+    api_key = None if args.no_api else load_giphy_key()
     library = json.loads(LIBRARY_PATH.read_text(encoding="utf-8"))
     categories = library.get("categories", {})
 
     total = sum(len(c.get("gifs", [])) for c in categories.values())
-    print(f"Resolving {total} GIF(s) via Giphy API...")
+    if args.no_api:
+        print(f"Building page for {total} GIF(s) as iframe embeds (no API calls)...")
+    else:
+        print(f"Resolving {total} GIF(s) via Giphy API...")
 
     sections_html = []
     resolved_count = 0
     failed_count = 0
-    url_cache = GC.load_cache()
+    url_cache = {} if args.no_api else GC.load_cache()
     source_counts: dict = {}
 
     for cat_key, cat in categories.items():
@@ -101,15 +120,25 @@ def main():
                 return (images.get("downsized_medium", {}).get("url")
                         or images.get("original", {}).get("url") or None)
 
-            img_url, source = GC.resolve(gif_id, _fetch, url_cache)
-            source_counts[source] = source_counts.get(source, 0) + 1
-
-            if img_url:
-                resolved_count += 1
-                img_html = f'<img src="{img_url}" loading="lazy" alt="{label}">'
+            if args.no_api:
+                if gif_id.startswith("PLACEHOLDER"):
+                    failed_count += 1
+                    img_html = '<div class="broken">⚠ placeholder id — nothing to render</div>'
+                else:
+                    resolved_count += 1
+                    img_html = (f'<div class="embed-wrap"><iframe loading="lazy" '
+                                f'src="https://giphy.com/embed/{gif_id}" '
+                                f'title="{label}" allowfullscreen></iframe></div>')
             else:
-                failed_count += 1
-                img_html = '<div class="broken">⚠ could not resolve</div>'
+                img_url, source = GC.resolve(gif_id, _fetch, url_cache)
+                source_counts[source] = source_counts.get(source, 0) + 1
+
+                if img_url:
+                    resolved_count += 1
+                    img_html = f'<img src="{img_url}" loading="lazy" alt="{label}">'
+                else:
+                    failed_count += 1
+                    img_html = '<div class="broken">⚠ could not resolve</div>'
 
             note_html = f'<div class="note">{note}</div>' if note else ""
 
@@ -140,6 +169,12 @@ def main():
         </section>
         """)
 
+    if args.no_api:
+        stats_line = (f"{resolved_count} embedded · {failed_count} unrenderable · "
+                      f"{total} total — iframe mode, GIFs load from Giphy in your browser")
+    else:
+        stats_line = f"{resolved_count} resolved · {failed_count} failed · {total} total"
+
     html = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -162,6 +197,8 @@ def main():
   .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }}
   .card {{ background: #1a1a1a; border-radius: 8px; overflow: hidden; border: 1px solid #2a2a2a; }}
   .card img {{ width: 100%; display: block; background: #000; }}
+  .embed-wrap {{ position: relative; width: 100%; aspect-ratio: 4 / 3; background: #000; }}
+  .embed-wrap iframe {{ position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }}
   .broken {{ padding: 40px 10px; text-align: center; color: #f66; font-size: 12px; }}
   .meta {{ padding: 10px; }}
   .badge {{ display: inline-block; font-size: 10px; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; color: #111; font-weight: 600; margin-bottom: 6px; }}
@@ -181,7 +218,7 @@ def main():
 </head>
 <body>
 <h1>SLAP GIF Library Review</h1>
-<div class="stats">{resolved_count} resolved · {failed_count} failed · {total} total</div>
+<div class="stats">{stats_line}</div>
 <div class="toolbar">
   <div class="filters">
     <button class="active" onclick="filterStatus('all', this)">All</button>
@@ -309,9 +346,12 @@ applyStoredDecisions();
 """
 
     OUTPUT_PATH.write_text(html, encoding="utf-8")
-    GC.save_cache(url_cache)
-    print(f"\nDone. {resolved_count}/{total} resolved, {failed_count} failed.")
-    print(f"URL source: {GC.summarize(source_counts)}")
+    if not args.no_api:
+        GC.save_cache(url_cache)
+        print(f"\nDone. {resolved_count}/{total} resolved, {failed_count} failed.")
+        print(f"URL source: {GC.summarize(source_counts)}")
+    else:
+        print(f"\nDone. {resolved_count}/{total} embedded, {failed_count} unrenderable. 0 API calls.")
     print(f"Open: {OUTPUT_PATH}")
 
 
