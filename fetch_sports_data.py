@@ -1426,7 +1426,9 @@ def fetch_cfb_rankings() -> list[dict]:
     ranked-matchup filter.
 
     Prefers the CFP rankings once they exist (December), else the AP poll.
-    Returns [{rank, team, abbr, record, previous, points}, ...].
+    Returns [{rank, team, display_name, abbr, record, previous, points}, ...],
+    where `team` is the short nickname the poll table renders and
+    `display_name` is the full name used to identify the team.
     """
     url = f"{ESPN_BASE}/football/college-football/rankings"
     data = fetch_url(url)
@@ -1450,12 +1452,13 @@ def fetch_cfb_rankings() -> list[dict]:
     for entry in poll.get("ranks", [])[:POLL_SIZE]:
         team = entry.get("team", {}) or {}
         out.append({
-            "rank":     entry.get("current", ""),
-            "team":     team.get("nickname") or team.get("name") or team.get("displayName", "?"),
-            "abbr":     team.get("abbreviation", ""),
-            "record":   entry.get("recordSummary", ""),
-            "previous": entry.get("previous", ""),
-            "points":   entry.get("points", ""),
+            "rank":         entry.get("current", ""),
+            "team":         team.get("nickname") or team.get("name") or team.get("displayName", "?"),
+            "display_name": team.get("displayName", ""),
+            "abbr":         team.get("abbreviation", ""),
+            "record":       entry.get("recordSummary", ""),
+            "previous":     entry.get("previous", ""),
+            "points":       entry.get("points", ""),
         })
     if out:
         print(f"      Rankings: {poll.get('shortName', poll.get('name', 'poll'))}, {len(out)} teams")
@@ -1474,18 +1477,23 @@ def _ranked_game_ids(games: list[dict], rankings: list[dict]) -> set[str]:
 
     Rank comes from the scoreboard's curatedRank where present; the poll is a
     fallback for the days ESPN omits it from the scoreboard payload, matched on
-    abbreviation and on the team nickname carried in displayName.
+    abbreviation or on the full display name.
+
+    Matching is EXACT on the full name, never a substring of the nickname:
+    college football nicknames are duplicated across dozens of schools, so
+    "Bulldogs" would make Louisiana Tech vs Fresno State — a game with no
+    ranked team in it — read as ranked because Georgia is #4.
     """
     ranked_abbrs = {r["abbr"] for r in rankings if r.get("abbr")}
-    ranked_names = {str(r["team"]).lower() for r in rankings if r.get("team")}
+    ranked_names = {str(r["display_name"]).strip().lower()
+                    for r in rankings if r.get("display_name")}
 
     def _is_ranked(game: dict, side: str) -> bool:
         if game.get(f"{side}_rank") is not None:
             return True
         if game.get(f"{side}_abbr", "") in ranked_abbrs:
             return True
-        name = str(game.get(f"{side}_team", "")).lower()
-        return any(n and n in name for n in ranked_names)
+        return str(game.get(f"{side}_team", "")).strip().lower() in ranked_names
 
     out: set[str] = set()
     for g in games:

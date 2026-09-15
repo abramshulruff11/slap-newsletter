@@ -1092,8 +1092,14 @@ def _football_summary_sections(sport_key, sport_data, label=None):
     label     = label or sport_data.get("label", sport_key.upper())
 
     html = ""
-    if sport_key == "ncaafb" and rankings:
-        html += _mi_rule("AP Top 25") + _mi_rankings(rankings)
+    if sport_key == "ncaafb":
+        # Never fall back to conference standings here. _drill_for_entries()
+        # returns whichever group it finds first, so a CFB "standings" list is
+        # one arbitrary conference out of ~10, with stat field names ESPN does
+        # not use for this league — that is what shipped W=0, L=?, Pct=? on
+        # every CFB page. If the poll is missing, show no table at all.
+        if rankings:
+            html += _mi_rule("AP Top 25") + _mi_rankings(rankings)
     elif isinstance(standings, list) and standings:
         html += _mi_rule(f"{label} Standings") + _mi_simple_standings(standings)
     ldr = _mi_leaders_half(leaders, None, _FB_LEAD)

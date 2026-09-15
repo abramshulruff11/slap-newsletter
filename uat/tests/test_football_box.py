@@ -170,8 +170,10 @@ check(fsd._competitor_rank({"rank": 3}) == 3, "bare rank field read")
 check(fsd._competitor_rank({}) is None, "missing rank is unranked")
 check(fsd._competitor_rank({"curatedRank": {"current": 26}}) is None, "26 is outside the poll")
 
-rankings = [{"rank": 1, "team": "Longhorns", "abbr": "TEX", "record": "2-0"},
-            {"rank": 3, "team": "Buckeyes", "abbr": "OSU", "record": "2-0"}]
+rankings = [{"rank": 1, "team": "Longhorns", "display_name": "Texas Longhorns",
+             "abbr": "TEX", "record": "2-0"},
+            {"rank": 3, "team": "Buckeyes", "display_name": "Ohio State Buckeyes",
+             "abbr": "OSU", "record": "2-0"}]
 games = [
     {"game_id": "ranked-both", "home_abbr": "TEX", "away_abbr": "OSU",
      "home_team": "Texas Longhorns", "away_team": "Ohio State Buckeyes"},
@@ -204,6 +206,28 @@ check([fsd._best_rank(g) for g in ordered] == [1, 7, 12, 26],
       "capping keeps the marquee matchups, not the first N")
 check(fsd.MAX_FOOTBALL_BOX_FETCHES > 0 and fsd.CFB_REQUIRE_BOTH_RANKED is False,
       "ranked-only policy constants are set as documented")
+
+# Nicknames are duplicated across dozens of FBS schools, so matching the poll's
+# short name as a SUBSTRING of a team name let entirely unranked games through:
+# "Louisiana Tech Bulldogs vs Fresno State Bulldogs" matched #4 Georgia.
+collide_poll = [{"rank": 4, "team": "Bulldogs", "display_name": "Georgia Bulldogs", "abbr": "UGA"},
+                {"rank": 7, "team": "Tigers", "display_name": "LSU Tigers", "abbr": "LSU"},
+                {"rank": 11, "team": "Wildcats", "display_name": "Kansas State Wildcats", "abbr": "KSU"}]
+collide_games = [
+    {"game_id": "nickname-collision", "home_team": "Louisiana Tech Bulldogs",
+     "away_team": "Fresno State Bulldogs", "home_abbr": "LT", "away_abbr": "FRES"},
+    {"game_id": "nickname-collision-2", "home_team": "Memphis Tigers",
+     "away_team": "Villanova Wildcats", "home_abbr": "MEM", "away_abbr": "NOVA"},
+    {"game_id": "genuinely-ranked", "home_team": "Georgia Bulldogs",
+     "away_team": "Rice Owls", "home_abbr": "UGA", "away_abbr": "RICE"},
+    {"game_id": "ranked-by-abbr", "home_team": "Some School", "away_team": "Another",
+     "home_abbr": "LSU", "away_abbr": "XX"},
+]
+collide_keep = fsd._ranked_game_ids(collide_games, collide_poll)
+check("nickname-collision" not in collide_keep and "nickname-collision-2" not in collide_keep,
+      "duplicated nicknames do not fake a ranked matchup (Bulldogs/Tigers/Wildcats)")
+check("genuinely-ranked" in collide_keep, "an actual ranked team still matches on full name")
+check("ranked-by-abbr" in collide_keep, "abbreviation match still works")
 
 
 # ---------------------------------------------------------------------------
@@ -278,6 +302,16 @@ cfb = state("ncaafb", cfb_games, rankings=rankings)
 cfb_blocks = bbs.build_chunk_blocks(cfb, "ncaafb", bare=True)
 check(len(cfb_blocks) == 1 + 2, f"4 ranked games at 3/chunk → summary + 2 (got {len(cfb_blocks)})")
 check("AP Top 25" in cfb_blocks[0], "CFB summary leads with the poll, not a random conference")
+# If the poll fetch fails, showing one arbitrary conference's broken standings
+# is worse than showing no table — that is the page this change removed.
+no_poll_cfb = state("ncaafb", cfb_games, rankings=[],
+                    standings=[{"team": "South Florida Bulls", "wins": "0", "losses": "?",
+                                "win_pct": "?", "games_behind": "-", "streak": "-"}])
+no_poll_html = bbs._football_summary_sections("ncaafb", no_poll_cfb["sports"]["ncaafb"])
+check("South Florida" not in no_poll_html,
+      "CFB never falls back to conference standings when the poll is missing")
+check("Yesterday" in no_poll_html and "Ranked Matchups" not in no_poll_html,
+      "it still shows the results strip with no poll, just no standings table")
 check("Ranked Matchups" in "".join(cfb_blocks[1:]),
       "the label says the other 60 games were left out on purpose")
 body = "".join(cfb_blocks)

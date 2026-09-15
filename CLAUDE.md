@@ -370,7 +370,12 @@ and a scoring summary (the agate equivalent), through `_render_football_sections
 MLB's 15 — it would run to twenty images and blow the email size guard every Saturday. "Ranked"
 means **at least one** team in the top 25, not both (`CFB_REQUIRE_BOTH_RANKED = False`): an
 unranked team beating a top-10 team is the story of the week, and requiring both would drop
-exactly that game. `MAX_FOOTBALL_BOX_FETCHES = 16` caps the summary requests per sport per run.
+exactly that game. `MAX_FOOTBALL_BOX_FETCHES = 16` caps the summary requests per sport per run (CFB sorts by
+best rank first, so the cap keeps the marquee games). **Rank matching is exact on the full team
+name or the abbreviation, never a substring of the poll nickname** — FBS nicknames are duplicated
+across dozens of schools, so "Bulldogs" made Louisiana Tech vs Fresno State read as ranked because
+Georgia is #4. If the poll fetch fails, CFB shows **no** table rather than falling back to the
+one-arbitrary-conference standings this change removed.
 The results strip still carries the **full** slate — only the box scores are filtered — and the
 first CFB box score image is labelled `Box Scores — Ranked Matchups` *even in bare mode*, breaking
 the MLB rule that bare chunks carry no label, because otherwise the reader cannot tell the other
@@ -624,7 +629,7 @@ for …") omitted.
   the old name kept as a wrapper; `_mi_stat_table()`'s row label was hardcoded to `Batter`/
   `Pitcher` and now comes from `_STAT_TABLE_LABELS`; `_mi_cat()` accepts `team_set=None` for
   leagues with no AL/NL split.
-- `uat/tests/test_football_box.py` — 60 offline checks, 0 API calls. Verified end to end by
+- `uat/tests/test_football_box.py` — 65 offline checks, 0 API calls. Verified end to end by
   rendering a real 13-game NFL Sunday and a 64-game CFB Saturday through the actual CLI and
   Playwright: 6 NFL images and 3 CFB images, each in the same size class as an MLB chunk.
 
