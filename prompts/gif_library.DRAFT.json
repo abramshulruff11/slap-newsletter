@@ -1454,6 +1454,20 @@
           "status": "candidate",
           "note": "AI-sourced 2026-09-14 via web search (see network-access note on the UFC entry above). NOT yet eyeballed by Abram. Official @BYUCougars upload -- a college athletics account, but the title/slug is generic ('Sport Shut Up') so the specific play context is unconfirmed; eyeball before trusting the fit.",
           "tags": ["domination", "shutout"]
+        },
+        {
+          "id": "fZEz565zA4ARwUDawo",
+          "label": "UFC knockout win (round 2)",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-15 via web search (same network constraint as the 2026-09-14 round: no GIPHY_API_KEY, api.giphy.com/imgflip.com blocked by this session's egress policy). NOT yet eyeballed by Abram. Official @ufc upload; a second, distinct KO clip to rotate against the one added 2026-09-14 without repeating the same GIF.",
+          "tags": ["domination", "blowout"]
+        },
+        {
+          "id": "ToMjGpvgavpSggthPNe",
+          "label": "'One-sided fight'",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-15 via web search (see network-access note on the UFC round-2 entry above). NOT yet eyeballed by Abram. Small studio channel (@GoPop/actionpop); title is a literal, on-the-nose match for this category's whole description, but confirm content given the smaller uploader.",
+          "tags": ["domination", "blowout"]
         }
       ]
     },
@@ -1490,6 +1504,20 @@
           "status": "verified",
           "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Small channel (@okjessofficial).",
           "tags": ["denial", "cope"]
+        },
+        {
+          "id": "3oz8xVyxeOgWj5rcSA",
+          "label": "Head in the sand (South Park)",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-15 via web search (same network constraint as the 2026-09-14 round: no GIPHY_API_KEY, api.giphy.com/imgflip.com blocked by this session's egress policy). NOT yet eyeballed by Abram. Official @southparkgifs upload; the literal 'ostrich effect' denial visual.",
+          "tags": ["denial", "cope"]
+        },
+        {
+          "id": "5A8bhUY07NH5FDNg5M",
+          "label": "'This is fine, no worries, nothing to see here'",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-15 via web search (see network-access note on the South Park entry above). NOT yet eyeballed by Abram. Small/anonymous uploader (michaelmarczewski) -- confirm it's clean before trusting it.",
+          "tags": ["denial", "spin", "cope"]
         },
         {
           "id": "kT46ZFdf9GkJJPE9NM",
@@ -1610,6 +1638,13 @@
           "label": "Leon Edwards (UFC)",
           "status": "retired",
           "note": "AI-sourced 2026-08-25 via targeted Giphy probe (new category, round 5). NOT yet eyeballed by Abram. Official @ufc upload, but the title gives no context beyond the fighter's name - genuinely uncertain whether the clip fits this category's meaning. Eyeball carefully; may not belong.",
+          "tags": ["betrayal", "self-sabotage"]
+        },
+        {
+          "id": "5tmSaZQCBSsWBbK660",
+          "label": "'Own worst enemy, FML' (You've Been Framed!)",
+          "status": "candidate",
+          "note": "AI-sourced 2026-09-15 via web search (same network constraint as the 2026-09-14 round: no GIPHY_API_KEY, api.giphy.com/imgflip.com blocked by this session's egress policy). NOT yet eyeballed by Abram. Official @youvebeenframedtv (a real UK blooper TV show) upload; the phrase 'own worst enemy' is a near-literal match for this category.",
           "tags": ["betrayal", "self-sabotage"]
         },
         {
