@@ -97,6 +97,7 @@ def main():
     failed_count = 0
     url_cache = {} if args.no_api else GC.load_cache()
     source_counts: dict = {}
+    bucket_counts: dict = {}
 
     for cat_key, cat in categories.items():
         cards = []
@@ -142,9 +143,19 @@ def main():
 
             note_html = f'<div class="note">{note}</div>' if note else ""
 
+            # An entry whose own note says it was never looked at, but whose
+            # status says verified, is LIVE in selection while unreviewed —
+            # the highest-priority review bucket, and invisible in a plain
+            # status filter because it sits among the genuinely-checked ones.
+            eyeballed = "no" if "not yet eyeballed" in note.lower() else "yes"
+            bucket_counts[status] = bucket_counts.get(status, 0) + 1
+            if eyeballed == "no" and status == "verified":
+                bucket_counts["unreviewed"] = bucket_counts.get("unreviewed", 0) + 1
+
             cards.append(f"""
             <div class="card" data-id="{gif_id}" data-category="{cat_key}"
-                 data-orig-status="{status}" data-status="{status}">
+                 data-orig-status="{status}" data-status="{status}"
+                 data-eyeballed="{eyeballed}">
                 {img_html}
                 <div class="meta">
                     <span class="badge">{status}</span>
@@ -208,6 +219,10 @@ def main():
   .note {{ font-size: 11px; color: #999; line-height: 1.4; margin-top: 4px; }}
   .card[data-status="retired"] {{ opacity: 0.4; }}
   .card.changed {{ border-color: #7ab8ff; }}
+  /* live in selection but its own note says nobody ever looked at it */
+  .card[data-status="verified"][data-eyeballed="no"] {{ border-color: #7a3b33; }}
+  .card[data-status="verified"][data-eyeballed="no"].changed {{ border-color: #7ab8ff; }}
+  .filters button.urgent {{ border-color: #c0392b; color: #ff9b8f; }}
   .hidden {{ display: none !important; }}
   .actions {{ margin-top: 8px; display: flex; gap: 6px; }}
   .act-btn {{ flex: 1; font-size: 10px; padding: 5px 4px; border-radius: 4px; border: 1px solid #444; background: #222; color: #ccc; cursor: pointer; }}
@@ -221,10 +236,11 @@ def main():
 <div class="stats">{stats_line}</div>
 <div class="toolbar">
   <div class="filters">
-    <button class="active" onclick="filterStatus('all', this)">All</button>
-    <button onclick="filterStatus('verified', this)">Verified</button>
-    <button onclick="filterStatus('candidate', this)">Candidate (needs review)</button>
-    <button onclick="filterStatus('retired', this)">Retired</button>
+    <button class="active" onclick="filterStatus('all', this)">All ({total})</button>
+    <button class="urgent" onclick="filterStatus('unreviewed', this)">⚠ Never eyeballed &amp; LIVE ({bucket_counts.get('unreviewed', 0)})</button>
+    <button onclick="filterStatus('candidate', this)">Candidate ({bucket_counts.get('candidate', 0)})</button>
+    <button onclick="filterStatus('verified', this)">Verified ({bucket_counts.get('verified', 0)})</button>
+    <button onclick="filterStatus('retired', this)">Retired ({bucket_counts.get('retired', 0)})</button>
   </div>
   <button class="export-btn" onclick="exportDecisions()">⬇ Export Decisions</button>
   <button class="clear-btn" onclick="clearDecisions()">Clear saved decisions</button>
@@ -263,12 +279,9 @@ function updateCardUI(card, status) {{
   badge.textContent = status;
   const colors = {{ verified: '#1e8e3e', candidate: '#e8a33d', retired: '#999999' }};
   badge.style.background = colors[status] || '#666';
-  const origStatus = card.dataset.origStatus;
-  if (status !== origStatus) {{
-    card.classList.add('changed');
-  }} else {{
-    card.classList.remove('changed');
-  }}
+  // Highlight on "has a pending decision", not "status differs" — confirming a
+  // never-eyeballed entry is a real decision that leaves the status unchanged.
+  card.classList.toggle('changed', !!loadDecisions()[card.dataset.id]);
 }}
 
 function setStatus(btn, newStatus) {{
@@ -279,10 +292,17 @@ function setStatus(btn, newStatus) {{
   const label = card.querySelector('.label').textContent;
 
   const decisions = loadDecisions();
-  if (newStatus === origStatus) {{
+  // A no-change click on a never-eyeballed entry is still a decision: it means
+  // "I looked at this and it's fine", which is what clears the 'NOT yet
+  // eyeballed' marker from its note. Without this, confirming any of the
+  // already-verified backlog would be a silent no-op and they'd stay queued
+  // for review forever. Use Reset to actually clear a decision.
+  const neverEyeballed = card.dataset.eyeballed === 'no';
+  if (newStatus === origStatus && !neverEyeballed) {{
     delete decisions[id];
   }} else {{
-    decisions[id] = {{ id, category, label, old_status: origStatus, new_status: newStatus }};
+    decisions[id] = {{ id, category, label, old_status: origStatus,
+                      new_status: newStatus, confirmed: newStatus === origStatus }};
   }}
   saveDecisions(decisions);
   updateCardUI(card, newStatus);
@@ -291,7 +311,11 @@ function setStatus(btn, newStatus) {{
 
 function resetStatus(btn) {{
   const card = btn.closest('.card');
-  setStatus(btn, card.dataset.origStatus);
+  const decisions = loadDecisions();
+  delete decisions[card.dataset.id];
+  saveDecisions(decisions);
+  updateCardUI(card, card.dataset.origStatus);
+  updatePendingCount();
 }}
 
 function updatePendingCount() {{
@@ -331,11 +355,19 @@ function filterStatus(status, btn) {{
   document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('.card').forEach(card => {{
-    if (status === 'all' || card.dataset.status === status) {{
-      card.classList.remove('hidden');
-    }} else {{
-      card.classList.add('hidden');
-    }}
+    // 'unreviewed' is not a status — it's verified-but-never-eyeballed,
+    // i.e. live in selection without anyone having confirmed the clip.
+    const match = status === 'all'
+      ? true
+      : status === 'unreviewed'
+        ? (card.dataset.status === 'verified' && card.dataset.eyeballed === 'no')
+        : card.dataset.status === status;
+    card.classList.toggle('hidden', !match);
+  }});
+  // Empty categories are just noise once a filter is on.
+  document.querySelectorAll('section').forEach(sec => {{
+    const anyVisible = sec.querySelector('.card:not(.hidden)');
+    sec.classList.toggle('hidden', !anyVisible);
   }});
 }}
 
