@@ -55,7 +55,7 @@ Pass 6: Editor            → mechanical checklist (flags + auto-fixes)
         ↓ build_email_html.py builds the email body
 newsletter_draft.html / newsletter_substack.html / newsletter_email.html
         ↓
-box_score/build_box_score.py --per-sport  → per-sport HTML (MLB chunked ~4 games)
+box_score/build_box_score.py --per-sport  → per-sport HTML (MLB ~4 games/image, football ~3)
 box_score/render_pngs.py                   → cropped PNGs (Chromium screenshot + Pillow trim)
         ↓
 push (continue-on-error) → email_newsletter.py → substack_poc/publish.py --draft
@@ -342,10 +342,11 @@ A "The Box Score" newspaper-style section appended after Around the League. Buil
 paste cleanly into Substack as HTML.
 
 **How it works:**
-- `build_box_score.py --per-sport` writes one standalone HTML per sport that has data. MLB has a
-  full daily slate, so it's split: a summary image (standings + leaders + results + today's games)
-  plus box scores chunked **~4 games per image** (`build_mlb_chunk_blocks`). Other sports = one
-  image each.
+- `build_box_score.py --per-sport` writes one standalone HTML per sport that has data. Sports with
+  a full daily slate are split: a summary image (standings/poll + leaders + results + today's
+  games) plus box scores chunked per `CHUNK_SIZES` (`build_chunk_blocks`) — **MLB 4 games per
+  image, NFL and CFB 3** (a football box score is three tables per side against baseball's two).
+  Other sports = one image each.
 - `render_pngs.py` screenshots each HTML with **Chromium via Playwright** (full-page, locked 400px
   width, 2× scale for crisp text), then **Pillow** trims top/bottom whitespace. Prefers system
   Chrome locally; uses Playwright's bundled Chromium in CI. Output is **PNG** (lossless — crisper
@@ -353,6 +354,43 @@ paste cleanly into Substack as HTML.
 - `email_newsletter.py` embeds the `box_score_sport_*.png` files **inline in the email body** under
   the "Box Scores" header — not as attachments — so one copy/paste carries them.
 - `substack_poc/publish.py` uploads the same images into the Substack draft.
+
+**Football box scores (added 2026-09-15) — MLB was the only sport that had any.** Three gaps
+stacked: `box_sports` in `fetch_sports_data.py` excluded `nfl`/`ncaafb` so no summary was ever
+requested; `parse_box_score()` had no football branch; and `_render_sport_inline()`'s
+regular-season path emitted standings plus a one-line-per-game scores strip and never called a
+per-game renderer at all — MLB escaped it only because `_render_mlb_sections()` is a separate
+function. Measured across the 8 issues shipped 09-08 → 09-15: MLB rendered 10–15 box score tables
+a day, NFL and CFB rendered **0 every single day**. The best football day (09-14, the 13-game
+Sunday slate) shipped `Buccaneers 27, Bengals 33` and nothing else; 09-13 put **80 CFB games** in
+one unchunked image. Football now renders passing/rushing/receiving per side, a quarter linescore
+and a scoring summary (the agate equivalent), through `_render_football_sections()`.
+
+**CFB ships box scores for RANKED matchups only.** 80 full box scores is a different product from
+MLB's 15 — it would run to twenty images and blow the email size guard every Saturday. "Ranked"
+means **at least one** team in the top 25, not both (`CFB_REQUIRE_BOTH_RANKED = False`): an
+unranked team beating a top-10 team is the story of the week, and requiring both would drop
+exactly that game. `MAX_FOOTBALL_BOX_FETCHES = 16` caps the summary requests per sport per run (CFB sorts by
+best rank first, so the cap keeps the marquee games). **Rank matching is exact on the full team
+name or the abbreviation, never a substring of the poll nickname** — FBS nicknames are duplicated
+across dozens of schools, so "Bulldogs" made Louisiana Tech vs Fresno State read as ranked because
+Georgia is #4. If the poll fetch fails, CFB shows **no** table rather than falling back to the
+one-arbitrary-conference standings this change removed.
+The results strip still carries the **full** slate — only the box scores are filtered — and the
+first CFB box score image is labelled `Box Scores — Ranked Matchups` *even in bare mode*, breaking
+the MLB rule that bare chunks carry no label, because otherwise the reader cannot tell the other
+60 games were filtered rather than lost.
+
+**CFB standings were replaced by the AP poll.** `_drill_for_entries()` returns whichever group it
+finds first, so the shipped page carried one arbitrary conference (the AAC) out of ~130 teams —
+and `_parse_entries` matched none of college football's stat field names, so every row read
+`W=0, L=?, Pct=?`. `fetch_cfb_rankings()` now supplies `sports.ncaafb.rankings` (CFP once it
+exists in December, else AP), which is both the right furniture and the rank source the
+ranked-matchup filter falls back to. `_mi_simple_standings()` also scrubs the `?` sentinel, so a
+league whose field names ESPN changes degrades to blanks instead of shipping punctuation.
+
+`PLAYOFF_WINDOWS` gained `"nfl": (1, 2)` — it had no NFL entry, so the Jan/Feb playoffs never
+triggered the playoff branch or bracket rendering. Locked by `uat/tests/test_football_box.py`.
 
 **Ordering:** files use a zero-padded numeric prefix (`box_score_sport_01_nba.png`, `02_nhl`, …)
 so the email and shell glob attach them in a fixed order: **playoffs first** (per `SPORT_ORDER`),
@@ -576,6 +614,24 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-15 — NFL and college football get box scores; CFB is ranked-only**
+- Football had never produced a box score. Not a regression — the code path did not exist, in
+  three places at once (fetch, parse, render), and the renderer gap covers NBA and NHL in the
+  regular season too. See the Box Score System section for the measured before/after.
+- `fetch_sports_data.py`: `nfl`/`ncaafb` added to `box_sports`; `_parse_football_box()` +
+  `_parse_football_scoring()`; `parse_game()` now captures `home_rank`/`away_rank` from
+  `curatedRank` (99 is ESPN's unranked sentinel); `fetch_cfb_rankings()` and `_ranked_game_ids()`;
+  football entries in `_LEADERS_CONFIG` and `_STAT_LABELS`.
+- `box_score/build_box_score.py`: `_mi_football_game()`, `_mi_football_side()`,
+  `_mi_football_scoring()`, `_mi_rankings()`, `_render_football_sections()`;
+  `build_mlb_chunk_blocks()` generalized to `build_chunk_blocks(game_state, sport_key, …)` with
+  the old name kept as a wrapper; `_mi_stat_table()`'s row label was hardcoded to `Batter`/
+  `Pitcher` and now comes from `_STAT_TABLE_LABELS`; `_mi_cat()` accepts `team_set=None` for
+  leagues with no AL/NL split.
+- `uat/tests/test_football_box.py` — 65 offline checks, 0 API calls. Verified end to end by
+  rendering a real 13-game NFL Sunday and a 64-game CFB Saturday through the actual CLI and
+  Playwright: 6 NFL images and 3 CFB images, each in the same size class as an MLB chunk.
 
 **2026-09-01 — Pass 1 streams; the first post-merge run had failed outright**
 - The 2026-09-01 scheduled run (168) died in Pass 1 with "Streaming is required for operations

@@ -319,6 +319,24 @@ def parse_series(competition: dict, home_abbr: str, away_abbr: str) -> dict | No
     }
 
 
+# Ranked-team detection (college football). ESPN exposes a poll rank on the
+# scoreboard competitor as curatedRank.current, using the sentinel 99 for an
+# unranked team; some payloads carry a bare "rank" instead. Anything outside
+# 1..25 is unranked as far as we are concerned.
+POLL_SIZE = 25
+
+
+def _competitor_rank(competitor: dict) -> int | None:
+    """AP/CFP poll rank for one scoreboard competitor, or None if unranked."""
+    raw = (competitor.get("curatedRank", {}) or {}).get("current",
+                                                        competitor.get("rank"))
+    try:
+        rank = int(raw)
+    except (ValueError, TypeError):
+        return None
+    return rank if 1 <= rank <= POLL_SIZE else None
+
+
 def parse_game(event: dict) -> dict | None:
     """Parse a single ESPN event into a clean, flat game dict."""
     competitions = event.get("competitions", [])
@@ -372,6 +390,8 @@ def parse_game(event: dict) -> dict | None:
 
     return {
         "game_id":    event.get("id", ""),
+        "home_rank":  _competitor_rank(home),
+        "away_rank":  _competitor_rank(away),
         "date":       event.get("date", ""),
         "matchup":    f"{away_team} @ {home_team}",
         "home_team":  home_team,
@@ -1000,6 +1020,126 @@ def _parse_nhl_box(summary: dict) -> dict:
     return result
 
 
+# Football stat columns we keep. ESPN returns far more per group, but the box
+# score renders into a 400px-wide image, so each table is trimmed to the
+# columns a reader actually scans. Labels are ESPN's own, verbatim.
+_FB_GROUP_KEYS = {
+    "passing":   ["C/ATT", "YDS", "TD", "INT"],
+    "rushing":   ["CAR", "YDS", "TD", "LONG"],
+    "receiving": ["REC", "YDS", "TD", "LONG"],
+}
+
+
+def _parse_football_scoring(summary: dict) -> list[dict]:
+    """
+    Football scoring summary — the agate equivalent of MLB's scoring plays.
+
+    Unlike MLB (where we filter plays[] by scoringPlay), football summaries
+    carry a top-level scoringPlays[] already filtered, each with the quarter,
+    clock, scoring team and the running score after the play.
+    """
+    plays: list[dict] = []
+    for sp in summary.get("scoringPlays") or []:
+        sp = sp or {}
+        period = (sp.get("period", {}) or {}).get("number")
+        clock  = (sp.get("clock", {}) or {}).get("displayValue", "")
+        team   = (sp.get("team", {}) or {}).get("abbreviation", "")
+        away_s = sp.get("awayScore")
+        home_s = sp.get("homeScore")
+        score  = ""
+        if away_s is not None and home_s is not None:
+            score = f"{away_s}-{home_s}"
+        text = sp.get("text", "") or ""
+        if not text:
+            continue
+        plays.append({
+            "quarter": period,
+            "clock":   clock,
+            "team":    team,
+            "score":   score,
+            "text":    text,
+        })
+    return plays
+
+
+def _parse_football_box(summary: dict) -> dict:
+    """
+    Parse an NFL / college-football summary into:
+      home/away: {team, passing: [...], rushing: [...], receiving: [...]}
+      linescore: {period_labels, away_periods, home_periods}
+      agate:     {scoring_plays: [...]}
+      notes:     [str, ...]
+
+    Football groups its boxscore.players[].statistics[] by unit, keyed on
+    "name" ("passing"/"rushing"/"receiving"/"defensive"/...) rather than the
+    dict-or-string "type" that MLB and NBA use, so match on either.
+    """
+    result: dict = {}
+
+    boxscore = summary.get("boxscore") or {}
+    for i, team_entry in enumerate(boxscore.get("players") or []):
+        team_entry = team_entry or {}
+        side_raw = (team_entry.get("homeAway") or "").lower()
+        if side_raw in ("away", "visitor", "visitors"):
+            side = "away"
+        elif side_raw == "home":
+            side = "home"
+        else:
+            side = "away" if i == 0 else "home"
+        team_abbr = (team_entry.get("team") or {}).get("abbreviation", "")
+        side_data: dict = {"team": team_abbr, "passing": [], "rushing": [], "receiving": []}
+
+        for sg in team_entry.get("statistics") or []:
+            type_raw  = sg.get("type", "")
+            type_text = (type_raw.get("text", "").lower()
+                         if isinstance(type_raw, dict) else str(type_raw).lower())
+            group = str(sg.get("name", "")).lower() or type_text
+            keys  = _FB_GROUP_KEYS.get(group)
+            if not keys:
+                continue
+            labels = sg.get("labels") or sg.get("names") or []
+            for ae in sg.get("athletes") or []:
+                raw = (ae or {}).get("stats") or []
+                if not raw:
+                    continue
+                stats = {
+                    k: raw[labels.index(k)]
+                    for k in keys
+                    if k in labels and labels.index(k) < len(raw)
+                }
+                if not stats:
+                    continue
+                # Drop empty stat lines (a listed player who never touched the
+                # ball shows up as all zeros and only costs vertical space).
+                if all(str(v).strip() in ("0", "0/0", "--", "", "-") for v in stats.values()):
+                    continue
+                ath = ae.get("athlete") or {}
+                side_data[group].append({
+                    "name":  ath.get("shortName") or ath.get("displayName") or "?",
+                    "pos":   (ath.get("position") or {}).get("abbreviation", ""),
+                    "stats": stats,
+                })
+
+        result[side] = side_data
+
+    # Quarter scores. Overtime periods append as OT1, OT2, ... exactly as the
+    # NBA parser does for its own 4-quarter base.
+    periods = _parse_period_scores(summary)
+    n = periods["count"]
+    if n <= 4:
+        labels = ["Q1", "Q2", "Q3", "Q4"][:n]
+    else:
+        labels = ["Q1", "Q2", "Q3", "Q4"] + [f"OT{i}" for i in range(1, n - 3)]
+    result["linescore"] = {
+        "period_labels": labels,
+        "away_periods":  periods["away_periods"],
+        "home_periods":  periods["home_periods"],
+    }
+    result["agate"] = {"scoring_plays": _parse_football_scoring(summary)}
+    result["notes"] = _parse_game_notes(summary)
+    return result
+
+
 def parse_box_score(summary: dict, sport_key: str) -> dict:
     """Dispatch to the correct sport parser."""
     if sport_key == "nba" or sport_key == "wnba":
@@ -1008,6 +1148,8 @@ def parse_box_score(summary: dict, sport_key: str) -> dict:
         return _parse_mlb_box(summary)
     if sport_key == "nhl":
         return _parse_nhl_box(summary)
+    if sport_key in ("nfl", "ncaafb"):
+        return _parse_football_box(summary)
     return {}
 
 
@@ -1027,6 +1169,13 @@ _LEADERS_CONFIG = {
     "nhl": {
         "skaters":  ["points", "goals", "assists"],
         "goalies":  ["goalsAgainstAverage", "savePct"],
+    },
+    "nfl": {
+        "offense":  ["passingYards", "rushingYards", "receivingYards"],
+        "defense":  ["sacks", "interceptions"],
+    },
+    "ncaafb": {
+        "offense":  ["passingYards", "rushingYards", "receivingYards"],
     },
 }
 
@@ -1053,6 +1202,12 @@ _STAT_LABELS = {
     "goals":             "G",
     "goalsAgainstAverage":"GAA",
     "savePct":           "SV%",
+    # Football
+    "passingYards":      "YDS",
+    "rushingYards":      "YDS",
+    "receivingYards":    "YDS",
+    "sacks":             "SK",
+    "interceptions":     "INT",
 }
 
 
@@ -1244,6 +1399,115 @@ def fetch_league_leaders(sport: str, league: str, sport_key: str) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# College football rankings + ranked-matchup filtering
+# ---------------------------------------------------------------------------
+
+# A college-football Saturday is ~80 games. Fetching and rendering a box score
+# for every one of them is a different product from MLB's 15 — it would run to
+# twenty images and blow past the email size guard every week. So CFB ships box
+# scores for RANKED matchups only.
+#
+# "Ranked" here means at least one team in the top 25, not both: an unranked
+# team beating a top-10 team is the story of the week in college football, and
+# requiring both ranks would drop exactly that game. Flip the flag below to
+# require both.
+CFB_REQUIRE_BOTH_RANKED = False
+
+# Hard ceiling on football box-score fetches per sport per run. Each one is an
+# extra ESPN summary request through the proxy; this bounds a runaway slate.
+MAX_FOOTBALL_BOX_FETCHES = 16
+
+
+def fetch_cfb_rankings() -> list[dict]:
+    """
+    AP Top 25 for college football.
+
+    Conference standings are the wrong furniture for CFB — there are ~130 teams
+    across ~10 conferences, and _drill_for_entries() returns whichever group it
+    finds first, so the shipped page carried one arbitrary conference. The poll
+    is what a reader actually wants, and it doubles as the rank source for the
+    ranked-matchup filter.
+
+    Prefers the CFP rankings once they exist (December), else the AP poll.
+    Returns [{rank, team, display_name, abbr, record, previous, points}, ...],
+    where `team` is the short nickname the poll table renders and
+    `display_name` is the full name used to identify the team.
+    """
+    url = f"{ESPN_BASE}/football/college-football/rankings"
+    data = fetch_url(url)
+    if not data:
+        return []
+
+    polls = [r for r in data.get("rankings", []) if isinstance(r, dict)]
+    if not polls:
+        return []
+
+    def _score(poll: dict) -> int:
+        name = (poll.get("shortName") or poll.get("name") or "").lower()
+        if "playoff" in name or "cfp" in name:
+            return 2
+        if name.startswith("ap") or "associated press" in name:
+            return 1
+        return 0
+
+    poll = max(polls, key=_score)
+    out: list[dict] = []
+    for entry in poll.get("ranks", [])[:POLL_SIZE]:
+        team = entry.get("team", {}) or {}
+        out.append({
+            "rank":         entry.get("current", ""),
+            "team":         team.get("nickname") or team.get("name") or team.get("displayName", "?"),
+            "display_name": team.get("displayName", ""),
+            "abbr":         team.get("abbreviation", ""),
+            "record":       entry.get("recordSummary", ""),
+            "previous":     entry.get("previous", ""),
+            "points":       entry.get("points", ""),
+        })
+    if out:
+        print(f"      Rankings: {poll.get('shortName', poll.get('name', 'poll'))}, {len(out)} teams")
+    return out
+
+
+def _best_rank(game: dict) -> int:
+    """Sort key: the better (lower) of the two teams' poll ranks, unranked last."""
+    ranks = [r for r in (game.get("home_rank"), game.get("away_rank")) if r]
+    return min(ranks) if ranks else POLL_SIZE + 1
+
+
+def _ranked_game_ids(games: list[dict], rankings: list[dict]) -> set[str]:
+    """
+    Game ids for matchups involving a ranked team.
+
+    Rank comes from the scoreboard's curatedRank where present; the poll is a
+    fallback for the days ESPN omits it from the scoreboard payload, matched on
+    abbreviation or on the full display name.
+
+    Matching is EXACT on the full name, never a substring of the nickname:
+    college football nicknames are duplicated across dozens of schools, so
+    "Bulldogs" would make Louisiana Tech vs Fresno State — a game with no
+    ranked team in it — read as ranked because Georgia is #4.
+    """
+    ranked_abbrs = {r["abbr"] for r in rankings if r.get("abbr")}
+    ranked_names = {str(r["display_name"]).strip().lower()
+                    for r in rankings if r.get("display_name")}
+
+    def _is_ranked(game: dict, side: str) -> bool:
+        if game.get(f"{side}_rank") is not None:
+            return True
+        if game.get(f"{side}_abbr", "") in ranked_abbrs:
+            return True
+        return str(game.get(f"{side}_team", "")).strip().lower() in ranked_names
+
+    out: set[str] = set()
+    for g in games:
+        home, away = _is_ranked(g, "home"), _is_ranked(g, "away")
+        hit = (home and away) if CFB_REQUIRE_BOTH_RANKED else (home or away)
+        if hit and g.get("game_id"):
+            out.add(g["game_id"])
+    return out
+
+
+# ---------------------------------------------------------------------------
 # Playoff Bracket
 # ---------------------------------------------------------------------------
 
@@ -1363,18 +1627,52 @@ def main() -> None:
         today_games     = fetch_scoreboard(sport, league, today)
         standings       = fetch_standings(sport, league, sport_key=key)
 
+        # College football ships box scores for ranked matchups only, and the
+        # poll replaces conference standings on the page, so it has to be
+        # fetched before the box-score loop that consumes it.
+        rankings: list[dict] = []
+        if key == "ncaafb":
+            rankings = fetch_cfb_rankings()
+
         # Fetch individual game box scores (player stats)
-        # NHL and NBA get box scores; MLB gets box scores + linescore + notes
-        box_sports = {"nba", "mlb", "nhl", "wnba"}
+        # NHL and NBA get box scores; MLB gets box scores + linescore + notes;
+        # NFL and CFB get passing/rushing/receiving + a quarter linescore.
+        box_sports = {"nba", "mlb", "nhl", "wnba", "nfl", "ncaafb"}
         box_count = 0
         if key in box_sports:
-            for game in yesterday_games:
-                if game.get("completed") and game.get("game_id"):
-                    summary = fetch_game_summary(sport, league, game["game_id"])
-                    if summary:
+            eligible = [g for g in yesterday_games
+                        if g.get("completed") and g.get("game_id")]
+            if key == "ncaafb":
+                keep = _ranked_game_ids(eligible, rankings)
+                skipped = len(eligible) - len(keep)
+                eligible = [g for g in eligible if g["game_id"] in keep]
+                if skipped:
+                    print(f"    {skipped} unranked matchup(s) skipped "
+                          f"(box scores are ranked-only for {label})")
+            if key in ("nfl", "ncaafb") and len(eligible) > MAX_FOOTBALL_BOX_FETCHES:
+                # A big CFB Saturday can put 20+ ranked teams on the field, so
+                # the cap has to keep the BEST games, not the first ones ESPN
+                # happens to list. Rank by the better-ranked side.
+                if key == "ncaafb":
+                    eligible.sort(key=_best_rank)
+                print(f"    Capping box scores at {MAX_FOOTBALL_BOX_FETCHES} "
+                      f"(slate had {len(eligible)})")
+                eligible = eligible[:MAX_FOOTBALL_BOX_FETCHES]
+            for game in eligible:
+                summary = fetch_game_summary(sport, league, game["game_id"])
+                if summary:
+                    # A parser surprise must cost one box score, not the run.
+                    # Everything downstream — the ground-truth block the writer
+                    # and the editor read, the claim validator, every other
+                    # sport's box scores — hangs off game_state.json, so an
+                    # unexpected payload shape here used to take all of it down.
+                    try:
                         game["box_score"] = parse_box_score(summary, key)
                         box_count += 1
-                    time.sleep(0.25)
+                    except Exception as exc:
+                        print(f"    ✗ box score failed for {game.get('matchup', game['game_id'])}: "
+                              f"{type(exc).__name__}: {exc}")
+                time.sleep(0.25)
         if box_count:
             print(f"    {box_count} box score(s) fetched")
 
@@ -1397,6 +1695,7 @@ def main() -> None:
             "yesterday_games": yesterday_games,
             "today_games":     today_games,
             "standings":       standings,
+            "rankings":        rankings,
             "bracket":         bracket,
             "leaders":         leaders,
         }

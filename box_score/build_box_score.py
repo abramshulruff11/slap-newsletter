@@ -34,6 +34,7 @@ PLAYOFF_WINDOWS = {
     "nhl":    (4, 6),    # April-June (Cup Final ends mid-June)
     "wnba":   (9, 10),   # Sept-Oct
     "mlb":    (10, 11),  # World Series window
+    "nfl":    (1, 2),    # Wild Card through the Super Bowl
     "ncaafb": (12, 1),   # CFP wraps Dec-Jan (year-wrap)
     "ncaamb": (3, 4),    # March Madness
 }
@@ -513,7 +514,8 @@ def _mi_std_half(standings, div_set):
 def _mi_cat(leaders, key, title, abbr, team_set):
     cat = leaders.get(key)
     if not cat: return ""
-    picks = [p for p in cat.get("leaders",[]) if p.get("team","") in team_set][:5]
+    picks = [p for p in cat.get("leaders",[])
+             if team_set is None or p.get("team","") in team_set][:5]
     if not picks: return ""
     rows = "".join(
         f'<div style="display:flex;justify-content:space-between;padding:1px 0;'
@@ -564,6 +566,15 @@ def _mi_linescore(g):
     return (f'<div style="overflow-x:auto;margin:6px 0;">'
             f'<table style="border-collapse:collapse;min-width:320px;">{hdr}{body}</table></div>')
 
+# Row-header noun for each stat table, by unit. Anything unlisted says "Player".
+_STAT_TABLE_LABELS = {
+    "Batting":   "Batter",
+    "Pitching":  "Pitcher",
+    "Passing":   "Passer",
+    "Rushing":   "Rusher",
+    "Receiving": "Receiver",
+}
+
 def _mi_stat_table(abbr, players, keys, kind):
     if not players: return ""
     # Newspaper style: white background, black text, ruled headers (no filled blocks).
@@ -576,7 +587,7 @@ def _mi_stat_table(abbr, players, keys, kind):
            f'font-family:{_MONO};font-size:11px;color:{_I};')
     td0 = (f'padding:1px 4px;text-align:left;border-bottom:.5px solid {_H};'
            f'font-family:{_SANS};font-size:11px;color:{_I};white-space:nowrap;')
-    lbl = "Batter" if kind == "Batting" else "Pitcher"
+    lbl = _STAT_TABLE_LABELS.get(kind, "Player")
     head = (f'<tr><td style="{cap}" colspan="{len(keys)+1}">{abbr} &mdash; {kind}</td></tr>'
             f'<tr><th style="{th};text-align:left;">{lbl}</th>'
             + "".join(f'<th style="{th}">{k}</th>' for k in keys) + '</tr>')
@@ -845,6 +856,96 @@ def _mi_generic_game(g):
               + _mi_nhl_player_table(hm_a, home_side.get("players",[])))
     return f'<div style="margin-bottom:20px;">{headline}{snote}{ls}{tables}</div>'
 
+# Football stat columns, matching the groups _parse_football_box() emits.
+_FB_PASS = ["C/ATT", "YDS", "TD", "INT"]
+_FB_RUSH = ["CAR", "YDS", "TD", "LONG"]
+_FB_RECV = ["REC", "YDS", "TD", "LONG"]
+
+# Leaders categories for the football summary page. Football has no AL/NL split,
+# so these render against the whole league (team_set=None).
+_FB_LEAD = [("passingYards",   "Passing Yards",   "YDS"),
+            ("rushingYards",   "Rushing Yards",   "YDS"),
+            ("receivingYards", "Receiving Yards", "YDS"),
+            ("sacks",          "Sacks",           "SK"),
+            ("interceptions",  "Interceptions",   "INT")]
+
+# Only the leading few contributors per unit — a full football participation
+# list runs to 40+ names and the image is 400px wide.
+_FB_MAX_ROWS = {"passing": 3, "rushing": 4, "receiving": 5}
+
+def _mi_football_scoring(g):
+    """Scoring summary — football's equivalent of the MLB agate block."""
+    plays = g.get("box_score",{}).get("agate",{}).get("scoring_plays",[])
+    if not plays: return ""
+    rows = ""
+    for sp in plays:
+        q = sp.get("quarter"); clock = sp.get("clock",""); team = sp.get("team","")
+        when = f'Q{q}' if q else ""
+        if clock: when = f'{when} {clock}'.strip()
+        score = sp.get("score","")
+        rows += (f'<div style="padding:2px 0;border-bottom:.5px solid {_H};'
+                 f'font-family:{_SANS};font-size:11px;color:{_I};line-height:1.35;">'
+                 f'<span style="font-family:{_MONO};color:{_M};">{when}</span> '
+                 f'<span style="font-weight:bold;">{team}</span> {sp.get("text","")}'
+                 + (f' <span style="font-family:{_MONO};color:{_M};">({score})</span>' if score else "")
+                 + '</div>')
+    hdr = (f'<div style="font-family:{_SANS};font-size:11px;font-weight:bold;color:{_I};'
+           f'border-bottom:1px solid {_I};padding-bottom:1px;margin:10px 0 2px;'
+           f'text-transform:uppercase;letter-spacing:.05em;">Scoring Summary</div>')
+    return f'<div style="margin-top:6px;">{hdr}{rows}</div>'
+
+def _mi_football_side(abbr, side_data):
+    """Passing / rushing / receiving tables for one team."""
+    if not side_data: return ""
+    return (_mi_stat_table(abbr, side_data.get("passing",[])[:_FB_MAX_ROWS["passing"]],
+                           _FB_PASS, "Passing")
+            + _mi_stat_table(abbr, side_data.get("rushing",[])[:_FB_MAX_ROWS["rushing"]],
+                             _FB_RUSH, "Rushing")
+            + _mi_stat_table(abbr, side_data.get("receiving",[])[:_FB_MAX_ROWS["receiving"]],
+                             _FB_RECV, "Receiving"))
+
+def _mi_football_game(g):
+    """NFL / CFB: headline + quarter linescore + unit tables + scoring summary."""
+    box = g.get("box_score",{})
+    away = g.get("away_team","").split()[-1]; home = g.get("home_team","").split()[-1]
+    aw_a = g.get("away_abbr",""); hm_a = g.get("home_abbr","")
+    as_ = g.get("away_score",0); hs = g.get("home_score",0)
+    ot = " (OT)" if g.get("overtime") else ""
+    # Rank prefixes are the point of a college matchup line.
+    ar = g.get("away_rank"); hr = g.get("home_rank")
+    away_l = f'#{ar} {away}' if ar else away
+    home_l = f'#{hr} {home}' if hr else home
+    head = (f"{away_l} {as_}, {home_l} {hs}{ot}" if as_ >= hs
+            else f"{home_l} {hs}, {away_l} {as_}{ot}")
+    headline = (f'<div style="font-family:{_SANS};font-size:15px;font-weight:bold;color:{_I};'
+                f'border-bottom:2px solid {_I};padding-bottom:3px;margin-bottom:4px;">{head}</div>')
+    snote = _mi_series_note(g.get("series"), g.get("winner",""))
+    ls = _mi_period_linescore(g, ["Q1","Q2","Q3","Q4"])
+    tables = (_mi_football_side(aw_a, box.get("away",{}))
+              + _mi_football_side(hm_a, box.get("home",{})))
+    return (f'<div style="margin-bottom:24px;">{headline}{snote}{ls}{tables}'
+            f'{_mi_football_scoring(g)}</div>')
+
+def _mi_rankings(rankings):
+    """AP / CFP poll table — CFB's replacement for conference standings."""
+    if not rankings: return ""
+    th = (f'padding:2px 4px;border-bottom:1px solid {_I};font-family:{_SANS};font-size:10px;'
+          f'font-weight:bold;color:{_M};text-align:right;white-space:nowrap;')
+    th0 = th + 'text-align:left;'
+    td  = f'padding:1px 4px;border-bottom:.5px solid {_H};font-family:{_MONO};font-size:11px;text-align:right;color:{_I};white-space:nowrap;'
+    td0 = f'padding:1px 4px;border-bottom:.5px solid {_H};font-family:{_SANS};font-size:12px;text-align:left;color:{_I};white-space:nowrap;'
+    tdr = f'{td}text-align:left;width:26px;font-weight:bold;'
+    hdr = (f'<tr><th style="{th0}">#</th><th style="{th0}">Team</th>'
+           f'<th style="{th}">Rec</th><th style="{th}">Prev</th></tr>')
+    rows = ""
+    for r in rankings[:25]:
+        prev = str(r.get("previous","") or ""); prev = "" if prev in ("0","?") else prev
+        rows += (f'<tr><td style="{tdr}">{r.get("rank","")}</td>'
+                 f'<td style="{td0}">{r.get("team","?")}</td>'
+                 f'<td style="{td}">{r.get("record","")}</td>'
+                 f'<td style="{td}">{prev}</td></tr>')
+    return f'<table style="border-collapse:collapse;width:100%;margin-bottom:8px;">{hdr}{rows}</table>'
+
 def _mi_bracket(bracket_data):
     if not bracket_data: return ""
     rounds = ""
@@ -910,13 +1011,16 @@ def _mi_simple_standings(teams):
     td0 = f'padding:1px 4px;border-bottom:.5px solid {_H};font-family:{_SANS};font-size:12px;text-align:left;color:{_I};white-space:nowrap;'
     hdr = (f'<tr><th style="{th0}">Team</th><th style="{th}">W</th><th style="{th}">L</th>'
            f'<th style="{th}">Pct</th><th style="{th}">GB</th><th style="{th}">Strk</th></tr>')
+    def _v(team, field):
+        val = str(team.get(field, "") or "")
+        return "" if val in ("?", "-") else val
     rows = ""
     for t in teams[:16]:
-        gb = str(t.get("games_behind","")); gb = "" if gb in ("-","0","0.0","") else gb
+        gb = _v(t,"games_behind"); gb = "" if gb in ("0","0.0") else gb
         rows += (f'<tr><td style="{td0}">{t.get("team","?")}</td>'
-                 f'<td style="{td}">{t.get("wins","")}</td><td style="{td}">{t.get("losses","")}</td>'
-                 f'<td style="{td}">{t.get("win_pct","")}</td><td style="{td}">{gb}</td>'
-                 f'<td style="{td}">{t.get("streak","")}</td></tr>')
+                 f'<td style="{td}">{_v(t,"wins")}</td><td style="{td}">{_v(t,"losses")}</td>'
+                 f'<td style="{td}">{_v(t,"win_pct")}</td><td style="{td}">{gb}</td>'
+                 f'<td style="{td}">{_v(t,"streak")}</td></tr>')
     return f'<table style="border-collapse:collapse;width:100%;margin-bottom:8px;">{hdr}{rows}</table>'
 
 def _render_mlb_sections(sport_data):
@@ -960,6 +1064,64 @@ def _render_mlb_sections(sport_data):
         html += _mi_today_games(today_sched)
     return html
 
+FOOTBALL_KEYS = ("nfl", "ncaafb")
+
+def _football_boxed_games(sport_data):
+    """Completed games that actually carry box score data.
+
+    For CFB that is the ranked subset the fetcher chose; for the NFL it is the
+    whole slate. Games without a box score still appear in the results strip.
+    """
+    return [g for g in sport_data.get("yesterday_games",[])
+            if g.get("completed") and g.get("box_score")]
+
+def _football_box_label(sport_key):
+    """CFB says so on the tin: the absence of the other 60 games is deliberate."""
+    return "Box Scores \u2014 Ranked Matchups" if sport_key == "ncaafb" else "Box Scores"
+
+def _football_summary_sections(sport_key, sport_data, label=None):
+    """
+    The football summary page: table (standings or poll) + leaders + results.
+    Mirrors the first MLB image. Box scores are appended separately so the
+    section can head a chunked sequence.
+    """
+    standings = sport_data.get("standings",{})
+    rankings  = sport_data.get("rankings",[])
+    leaders   = sport_data.get("leaders",{})
+    games     = [g for g in sport_data.get("yesterday_games",[]) if g.get("completed")]
+    label     = label or sport_data.get("label", sport_key.upper())
+
+    html = ""
+    if sport_key == "ncaafb":
+        # Never fall back to conference standings here. _drill_for_entries()
+        # returns whichever group it finds first, so a CFB "standings" list is
+        # one arbitrary conference out of ~10, with stat field names ESPN does
+        # not use for this league — that is what shipped W=0, L=?, Pct=? on
+        # every CFB page. If the poll is missing, show no table at all.
+        if rankings:
+            html += _mi_rule("AP Top 25") + _mi_rankings(rankings)
+    elif isinstance(standings, list) and standings:
+        html += _mi_rule(f"{label} Standings") + _mi_simple_standings(standings)
+    ldr = _mi_leaders_half(leaders, None, _FB_LEAD)
+    if ldr:
+        html += _mi_rule(f"{label} Leaders") + ldr
+    if games:
+        html += _mi_rule("Yesterday\'s Results") + _mi_yesterday_strip(games)
+    return html
+
+def _render_football_sections(sport_key, sport_data):
+    """Single-image football section: summary + box scores + today's games."""
+    html   = _football_summary_sections(sport_key, sport_data)
+    boxed  = _football_boxed_games(sport_data)
+    today  = [g for g in sport_data.get("today_games",[]) if not g.get("completed")]
+    if boxed:
+        html += _mi_rule(_football_box_label(sport_key))
+        for g in boxed:
+            html += _mi_football_game(g)
+    if today:
+        html += _mi_rule("Today\'s Games") + _mi_today_games(today)
+    return html
+
 def _date_display(game_state):
     yesterday=game_state.get("yesterday_date","")
     try:
@@ -991,7 +1153,8 @@ def _sport_has_data(data, sport_key=None):
         or bool(data.get("bracket",[]))
         or (sport_key is not None and _in_playoff_window(sport_key))
     )
-    return in_playoffs, bool(in_playoffs or completed or data.get("standings"))
+    return in_playoffs, bool(in_playoffs or completed
+                             or data.get("standings") or data.get("rankings"))
 
 def _ordered_sport_keys(game_state):
     """Sport keys with data, ordered playoffs-first then regular season, each
@@ -1023,6 +1186,10 @@ def build_box_score_block_for_sport(game_state, sport_key, bare=False):
         return ""
     if sport_key=="mlb":
         content=_render_mlb_sections(data) if bare else _mi_sport_divider("MLB")+_render_mlb_sections(data)
+    elif sport_key in FOOTBALL_KEYS:
+        label=data.get("label",sport_key.upper())
+        content=_render_football_sections(sport_key,data)
+        if not bare: content=_mi_sport_divider(label)+content
     else:
         content=_render_sport_inline(sport_key,data,in_playoffs=in_playoffs)
     if not content.strip():
@@ -1045,14 +1212,78 @@ def build_golf_tennis_block(game_state, bare=False):
     masthead=_masthead(_date_display(game_state), subtitle="Golf &amp; Tennis")
     return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{masthead}{content}{_footer()}</div>'
 
-def build_mlb_chunk_blocks(game_state, games_per_chunk=4, bare=False):
-    """MLB has a full daily slate, so a single image would be enormous. Split it
-    into: one summary image (standings + leaders + results strip + today's
-    games) and box scores chunked ~games_per_chunk per image. Returns a list of
-    complete standalone-ready blocks.
+# Games per box-score image, by sport. A football box score is three tables per
+# side against baseball's two, so football chunks smaller to keep each rendered
+# PNG in the same size class as an MLB chunk.
+CHUNK_SIZES = {"mlb": 4, "nfl": 3, "ncaafb": 3}
 
-    bare=True omits the masthead/footer chrome and the per-chunk "MLB Box Scores
+def build_chunk_blocks(game_state, sport_key, games_per_chunk=None, bare=False):
+    """A full daily slate in one image would be enormous, so split it into: one
+    summary image (standings/poll + leaders + results strip + today's games) and
+    box scores chunked ~games_per_chunk per image. Returns a list of complete
+    standalone-ready blocks.
+
+    Handles MLB and both football leagues; the only differences are which
+    summary sections head the sequence and which per-game renderer runs.
+
+    bare=True omits the masthead/footer chrome and the per-chunk "Box Scores
     (n/N)" label, leaving only the tables (the newsletter carries the header)."""
+    if sport_key == "mlb":
+        return _build_mlb_chunk_blocks(game_state, games_per_chunk, bare)
+    if sport_key in FOOTBALL_KEYS:
+        return _build_football_chunk_blocks(game_state, sport_key, games_per_chunk, bare)
+    return []
+
+def _build_football_chunk_blocks(game_state, sport_key, games_per_chunk=None, bare=False):
+    sports=game_state.get("sports",{})
+    if sport_key not in sports: return []
+    data=sports[sport_key]
+    label=data.get("label",sport_key.upper())
+    per=games_per_chunk or CHUNK_SIZES.get(sport_key,3)
+    boxed=_football_boxed_games(data)
+    today_sched=[g for g in data.get("today_games",[]) if not g.get("completed")]
+    date_display=_date_display(game_state)
+
+    def _wrap(subtitle, inner):
+        if bare:
+            return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{inner}</div>'
+        return f'<div style="max-width:600px;margin:0 auto;background:#fff;">{_masthead(date_display, subtitle=subtitle)}{inner}{_footer()}</div>'
+
+    # The sport band goes on the FIRST image only — the rest are continuations
+    # of one photo split for size. Same rule as MLB.
+    hdr=_mi_sport_divider(label) if bare else ""
+
+    blocks=[]
+    summary=_football_summary_sections(sport_key,data,label=label)
+    if today_sched: summary+=_mi_rule("Today\'s Games")+_mi_today_games(today_sched)
+    if summary.strip():
+        blocks.append(_wrap(f"{label} — Standings & Leaders", hdr+summary)); hdr=""
+
+    total=len(boxed)
+    if total:
+        base=_football_box_label(sport_key)
+        # bare=True drops the per-chunk label, which is right for MLB (the chunks
+        # are one photo split for size). For CFB it is not: the page shows a
+        # handful of games out of a 64-game Saturday, and without the label the
+        # reader cannot tell the rest were filtered rather than lost. Keep the
+        # disclosure on the first box-score image even in bare mode.
+        disclose=bare and sport_key=="ncaafb"
+        nchunks=(total+per-1)//per
+        for i in range(0,total,per):
+            idx=i//per+1
+            lbl=f"{base} ({idx}/{nchunks})" if nchunks>1 else base
+            rule=_mi_rule(lbl) if not bare else (_mi_rule(base) if disclose else "")
+            disclose=False
+            inner=hdr+rule+"".join(_mi_football_game(g) for g in boxed[i:i+per]); hdr=""
+            blocks.append(_wrap(f"{label} {lbl}", inner))
+    return blocks
+
+def build_mlb_chunk_blocks(game_state, games_per_chunk=4, bare=False):
+    """Back-compatible MLB entry point. New callers should use build_chunk_blocks."""
+    return _build_mlb_chunk_blocks(game_state, games_per_chunk, bare)
+
+def _build_mlb_chunk_blocks(game_state, games_per_chunk=None, bare=False):
+    games_per_chunk=games_per_chunk or CHUNK_SIZES["mlb"]
     sports=game_state.get("sports",{})
     if "mlb" not in sports: return []
     data=sports["mlb"]
@@ -1109,7 +1340,7 @@ def build_box_score_block(game_state):
         inp, _has = _sport_has_data(data, sport_key=key)
         completed=[g for g in data.get("yesterday_games",[]) if g.get("completed")]
         if inp: playoff_keys.append(key)
-        elif completed or data.get("standings"): regular_keys.append(key)
+        elif completed or data.get("standings") or data.get("rankings"): regular_keys.append(key)
     content=""
     if playoff_keys:
         content+=_mi_section_band("Playoffs")
@@ -1120,6 +1351,9 @@ def build_box_score_block(game_state):
             if key=="mlb":
                 content+=_mi_sport_divider("MLB")
                 content+=_render_mlb_sections(sports[key])
+            elif key in FOOTBALL_KEYS:
+                content+=_mi_sport_divider(sports[key].get("label",key.upper()))
+                content+=_render_football_sections(key,sports[key])
             else: content+=_render_sport_inline(key,sports[key],in_playoffs=False)
     if golf or tennis:
         content+=_mi_section_band("Golf &amp; Tennis")
@@ -1156,10 +1390,13 @@ def main():
             out=SCRIPT_DIR/f"box_score_sport_{seq:02d}_{key_label}.html"; seq+=1
             out.write_text(build_standalone(blk),encoding="utf-8"); written.append(out.name); print(f"✓ {out}")
         for key in _ordered_sport_keys(game_state):
-            if key=="mlb":
-                # MLB: summary image + box scores chunked ~4 games per image.
-                for blk in build_mlb_chunk_blocks(game_state,bare=True):
-                    _write("mlb", blk)
+            if key=="mlb" or key in FOOTBALL_KEYS:
+                # Summary image + box scores chunked per CHUNK_SIZES. Football
+                # slates are as big as baseball's (an NFL Sunday is 13 games, a
+                # CFB Saturday 80 before the ranked filter), so they split the
+                # same way rather than rendering one unreadable strip.
+                for blk in build_chunk_blocks(game_state,key,bare=True):
+                    _write(key, blk)
                 continue
             blk=build_box_score_block_for_sport(game_state,key,bare=True)
             if blk: _write(key, blk)
