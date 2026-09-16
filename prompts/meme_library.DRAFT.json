@@ -1065,7 +1065,7 @@
         "rule": "MUST be named in the sentence immediately before or after the meme. If you cannot name a specific subject, do not use this template."
       },
       "comedic_engine": "Composure inside a burning room. The calmer the insistence, the funnier the flames.",
-      "valence": "Box 0 MUST be a visible, escalating disaster. Box 1 MUST be the subject's calm reassurance. If they admit the problem, the engine collapses.",
+      "valence": "Box 0 MUST be a visible, escalating disaster. Box 1 MUST be the specific phrase the subject is actually using to avoid naming it -- coachspeak, a process line, a 'developmentally' -- and MUST NOT restate the pre-printed 'THIS IS FINE.', which is already in the picture. If the subject admits the problem, the engine collapses.",
       "boxes": [
         {
           "index": 0,
@@ -1074,8 +1074,8 @@
         },
         {
           "index": 1,
-          "purpose": "the in-denial reassurance that everything is fine",
-          "valence": "calm -- the denial"
+          "purpose": "the specific euphemism the subject is using instead of admitting it -- never a restatement of the pre-printed 'THIS IS FINE.'",
+          "valence": "calm -- the denial, in their own particular words"
         }
       ],
       "use_when": "Someone calmly insists things are fine while an obvious catastrophe unfolds around them.",
@@ -1095,8 +1095,8 @@
         ],
         "why_it_fails": "The subject agrees it is bad. No denial, so no gap to laugh at."
       },
-      "special_handling": null,
-      "selector_line": "Subject calmly insists all is fine while a visible disaster burns. Denial is required.",
+      "special_handling": "Panel 2's speech bubble reads 'THIS IS FINE.' and is PRE-PRINTED into the template -- it is not one of the two writable boxes. Box 0 is the top of panel 1, box 1 the bottom of panel 2, beneath that bubble. A box 1 caption meaning 'everything is fine' duplicates the artwork; it has to be the subject's own particular euphemism instead. Verified by render 2026-09-16.",
+      "selector_line": "Subject calmly insists all is fine while a visible disaster burns. Box 1 is their specific euphemism -- 'this is fine' is already printed on the meme.",
       "tags": [
         "denial",
         "copium",
