@@ -44,3 +44,8 @@ gif_url_cache.json
 
 # Per-run status, read by verify_run.py. Build artifact, regenerated each run.
 run_status.json
+
+# library_studio_server.py keeps a .bak beside each library it writes, and
+# writes through a .tmp. Neither belongs in git — the library itself is the record.
+prompts/*.bak
+prompts/*.tmp

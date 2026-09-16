@@ -178,11 +178,21 @@ check("library covers every curated slug",
       sorted(set(gm.CURATED_TEMPLATES) - {t["slug"] for t in TEMPLATES}), [])
 check("library adds no slug the code cannot render",
       sorted({t["slug"] for t in TEMPLATES} - set(gm.CURATED_TEMPLATES)), [])
+# CURATED_TEMPLATES is derived from this same library, so the three checks above
+# are only meaningful if the derivation produced anything at all. An unreadable
+# library degrades to {} by design (a broken library must not kill the
+# newsletter) -- which would make every check above pass against nothing.
+check("CURATED_TEMPLATES derived a non-empty mapping", len(gm.CURATED_TEMPLATES), len(TEMPLATES))
 
-# --- 6. the generated selector index is in sync -----------------------------
-on_disk = (REPO / "prompts" / "meme_selector_index.txt").read_text(encoding="utf-8")
-check("meme_selector_index.txt is freshly generated from the library",
+# --- 6. the selector index Pass 1 actually receives -------------------------
+# This used to compare prompts/meme_selector_index.txt on disk against the
+# generator. That file is gone: load_selector_index() now BUILDS the index at
+# the point of use, so it cannot be stale and there is nothing to diff. What is
+# still worth checking is that the thing Pass 1 is handed covers every template.
+on_disk = meme_library.load_selector_index()
+check("load_selector_index() returns the freshly built index",
       on_disk == meme_library.build_selector_index(), True)
+check("the index Pass 1 receives is non-empty", bool(on_disk.strip()), True)
 
 idx_slugs = set(re.findall(r'^\s+- (\S+) \(\d+ boxes', on_disk, re.M))
 check("every template appears in the index",

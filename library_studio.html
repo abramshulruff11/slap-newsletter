@@ -1,0 +1,964 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>SLAP Library Studio</title>
+<!--
+  SLAP Library Studio — open this file in Chrome or Edge. No server, no Python.
+
+  HOW TO OPEN IT
+    Double-click library_studio.bat. NOT this .html file.
+
+    The reason is not a preference. A page can only write back to a file
+    through the File System Access API, and that API requires a SECURE
+    CONTEXT — file:// is not one, in any browser. Opened directly, this page
+    can read a library but can only hand you back a downloaded copy to move
+    over the original yourself, which is the shuffling it exists to remove.
+
+    library_studio.bat starts library_studio_server.py, which serves the repo
+    on http://localhost (a secure context) and adds a PUT endpoint. In that
+    mode both libraries load themselves on startup and Save writes straight to
+    disk — no picker, no permission prompt, no second command.
+
+  WHAT IT IS
+    A single page for reviewing, adding, editing and deleting entries in the
+    two curated libraries:
+        prompts/meme_library.DRAFT.json
+        prompts/gif_library.DRAFT.json
+
+  WHY IT CAN BE THE ONLY TOOL
+    Both files used to have derived companions that went stale the moment the
+    JSON changed by hand — CURATED_TEMPLATES in generate_memes.py, and
+    prompts/meme_selector_index.txt. Both are generated at run time now, so the
+    JSON this page writes is the whole truth.
+
+  THE ROUND-TRIP GUARD
+    library_json.py exists because the first GIF applier reflowed the file and
+    turned 19 status changes into a 2,175-line diff. This page reimplements that
+    formatter in JS, and on load it re-serialises the file it just read and
+    checks the result is byte-for-byte identical to the bytes on disk. If it is
+    not, saving is blocked — a reflowed diff destroys the only record of what a
+    review pass decided.
+
+  VALIDATION
+    The meme checks from uat/tests/test_meme_library.py run here, live. Save is
+    disabled while anything fails, so the page cannot write a library that
+    red-lights CI.
+
+  IMGFLIP
+    api.imgflip.com sends Access-Control-Allow-Origin: *, so this page renders
+    real previews itself. Credentials are optional, stored only in this
+    browser's localStorage, and used for nothing but caption_image.
+-->
+<style>
+  :root{
+    --bg:#f6f6f4; --panel:#fff; --ink:#1a1a18; --muted:#6b6b63; --line:#e0e0d8;
+    --accent:#2d6a4f; --warn:#9a3412; --bad:#b4232c; --ok:#2d6a4f;
+    --chip:#efefe9; --focus:#dbeafe;
+  }
+  :root:not([data-theme="light"]){ }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#16161a; --panel:#1e1e23; --ink:#ecece6; --muted:#9a9a90; --line:#33333b;
+      --accent:#74c69d; --warn:#fb923c; --bad:#f87171; --ok:#74c69d;
+      --chip:#2a2a31; --focus:#1e3a5f;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#16161a; --panel:#1e1e23; --ink:#ecece6; --muted:#9a9a90; --line:#33333b;
+    --accent:#74c69d; --warn:#fb923c; --bad:#f87171; --ok:#74c69d;
+    --chip:#2a2a31; --focus:#1e3a5f;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font:14px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0}
+  .wrap{padding-block:16px;padding-left:16px;padding-right:16px;max-width:1400px;margin:0 auto}
+  h1{font-size:18px;margin:0;letter-spacing:-.01em}
+  h2{font-size:15px;margin:22px 0 8px}
+  header.top{display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+    border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:14px}
+  .grow{flex:1 1 auto}
+  button{font:inherit;padding:6px 12px;border:1px solid var(--line);background:var(--panel);
+    color:var(--ink);border-radius:7px;cursor:pointer}
+  button:hover:not(:disabled){border-color:var(--muted)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  button.danger{color:var(--bad);border-color:var(--bad)}
+  .tabs{display:flex;gap:6px}
+  .tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .cols{display:grid;grid-template-columns:330px 1fr;gap:16px;align-items:start}
+  @media (max-width:900px){ .cols{grid-template-columns:1fr} }
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .list{max-height:74vh;overflow:auto;margin:0;padding:0;list-style:none}
+  .list li{padding:7px 9px;border-radius:7px;cursor:pointer;display:flex;gap:8px;align-items:center}
+  .list li:hover{background:var(--chip)}
+  .list li[aria-current="true"]{background:var(--focus)}
+  .list .nm{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .dot{width:8px;height:8px;border-radius:50%;flex:none}
+  .dot.candidate{background:#d99a00}.dot.verified{background:var(--ok)}.dot.retired{background:var(--muted)}
+  .grp{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);
+    margin:12px 0 4px;padding-left:9px}
+  label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--muted);margin:12px 0 3px}
+  input[type=text],textarea,select{width:100%;font:inherit;padding:7px 9px;border:1px solid var(--line);
+    border-radius:7px;background:var(--bg);color:var(--ink)}
+  textarea{resize:vertical;min-height:60px}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row>div{flex:1 1 180px;min-width:0}
+  .chip{display:inline-block;background:var(--chip);border-radius:999px;padding:2px 9px;font-size:12px}
+  .msg{padding:9px 12px;border-radius:8px;margin:10px 0;font-size:13px}
+  .msg.bad{background:color-mix(in srgb,var(--bad) 14%,transparent);border:1px solid var(--bad)}
+  .msg.ok{background:color-mix(in srgb,var(--ok) 13%,transparent);border:1px solid var(--ok)}
+  .msg.warn{background:color-mix(in srgb,var(--warn) 14%,transparent);border:1px solid var(--warn)}
+  .msg ul{margin:6px 0 0 18px;padding:0}
+  .boxrow{display:grid;grid-template-columns:34px 1fr 190px;gap:8px;align-items:start;margin-bottom:7px}
+  .boxrow .ix{text-align:center;padding-top:8px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .prev{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start}
+  .prev img{max-width:100%;width:300px;border-radius:8px;border:1px solid var(--line);background:var(--chip)}
+  .hint{font-size:12px;color:var(--muted);margin-top:4px}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:grid;place-items:center;padding:16px;z-index:20}
+  .modal .panel{max-width:820px;width:100%;max-height:86vh;overflow:auto}
+  .cand{display:grid;grid-template-columns:70px 1fr auto;gap:10px;align-items:center;
+    padding:7px;border-radius:8px;cursor:pointer}
+  .cand:hover{background:var(--chip)}
+  .cand img{width:70px;height:70px;object-fit:cover;border-radius:6px;background:var(--chip)}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+  .tagline{font-size:12px;color:var(--muted)}
+  .sticky{position:sticky;top:0;background:var(--panel);padding-bottom:8px;z-index:2}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <h1>SLAP Library Studio</h1>
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tab-meme" aria-selected="true">Memes</button>
+    <button role="tab" id="tab-gif" aria-selected="false">GIFs</button>
+  </div>
+  <div class="grow"></div>
+  <span id="fileState" class="tagline"></span>
+  <button id="btnOpen">Open library…</button>
+  <button id="btnSave" class="primary" disabled>Save</button>
+</header>
+
+<div id="banner"></div>
+
+<div class="cols">
+  <div class="panel">
+    <div class="sticky">
+      <input type="text" id="search" placeholder="Search…">
+      <div class="row" style="margin-top:8px">
+        <div><select id="fStatus">
+          <option value="">all statuses</option>
+          <option value="candidate">candidate</option>
+          <option value="verified">verified</option>
+          <option value="retired">retired</option>
+        </select></div>
+        <div><select id="fGroup"><option value="">all groups</option></select></div>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button id="btnAdd" style="flex:1 1 auto">+ Add</button>
+        <button id="btnDel" class="danger" disabled>Delete</button>
+      </div>
+      <div id="counts" class="tagline" style="margin-top:8px"></div>
+    </div>
+    <ul class="list" id="list"></ul>
+  </div>
+
+  <div class="panel" id="editor"><p class="tagline">Open a library to begin.</p></div>
+</div>
+</div>
+
+<script>
+"use strict";
+
+/* ===================================================================
+   1. JSON formatting — a JS port of library_json.py.
+   The GIF library keeps short string arrays on one line; the meme library
+   does not. Writing the wrong one reflows the file and buries the real edit.
+   =================================================================== */
+const STRING_ARRAY = /\[\n((?:\s*"(?:[^"\\]|\\.)*",?\n)+)\s*\]/g;
+const INLINE_ARRAY = /:\s*\["(?:[^"\\]|\\.)*"(?:,\s*"(?:[^"\\]|\\.)*")*\]/;
+
+function compact(text){
+  return text.replace(STRING_ARRAY, (m, inner) =>
+    "[" + inner.split("\n").map(l => l.trim()).filter(Boolean).join(" ") + "]");
+}
+const usesCompactArrays = original => INLINE_ARRAY.test(original);
+
+// Both libraries are CRLF in the working tree (.gitattributes is `* text=auto`,
+// and Python's write_text translates newlines on Windows). JSON.stringify emits
+// LF, so writing naively would rewrite every line of the file and bury the real
+// edit. Match whatever the file already uses, exactly as with compact arrays.
+const eolOf = original => original.includes("\r\n") ? "\r\n" : "\n";
+
+function dumpsMatchingStyle(obj, original){
+  const text = JSON.stringify(obj, null, 2);
+  const out = usesCompactArrays(original) ? compact(text) : text;
+  return eolOf(original) === "\r\n" ? out.replace(/\n/g, "\r\n") : out;
+}
+
+/* ===================================================================
+   2. State
+   =================================================================== */
+const S = {
+  tab: "meme",
+  meme: {handle:null, name:"", raw:"", data:null, sel:null, dirty:false, roundTrip:null},
+  gif:  {handle:null, name:"", raw:"", data:null, sel:null, dirty:false, roundTrip:null},
+  candidates: null,     // Imgflip get_memes, fetched on demand
+};
+const cur = () => S[S.tab];
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ===================================================================
+   3. Meme validation — the checks from uat/tests/test_meme_library.py.
+   Kept in the same order and with the same names so a failure here reads
+   the same as a failure in CI.
+   =================================================================== */
+
+// Port of generate_memes._expand_boxes: two templates have more physical
+// panels than the writer supplies captions for.
+function expandBoxes(slug, lines){
+  if (slug === "gru-plan" && lines.length >= 3) return [lines[0],lines[1],lines[2],lines[2]];
+  if (slug === "anakin-padme" && lines.length >= 2) return [lines[0],lines[1],lines[1]];
+  return lines;
+}
+const subjectBoxFromPlacement = t => {
+  const m = /^box:(\d+)$/.exec((t.subject||{}).placement||"");
+  return m ? +m[1] : null;
+};
+const subjectBoxesFromPurposes = t =>
+  new Set((t.boxes||[]).filter(b => (b.purpose||"").includes("SUBJECT")).map(b => b.index));
+function subjectBoxesFromValence(t){
+  const out = new Set();
+  const re = /[Bb]ox (\d+)[^.;]{0,40}?\bMUST (?:be|name) the SUBJECT/g;
+  let m; while ((m = re.exec(t.valence||""))) out.add(+m[1]);
+  return out;
+}
+const sameSet = (a,b) => a.size===b.size && [...a].every(x => b.has(x));
+
+function validateMemes(data){
+  const errs = [];
+  const ts = (data && data.templates) || [];
+  const engines = ((data||{})._meta||{}).engines || {};
+  const seen = new Set();
+
+  for (const t of ts){
+    const id = t.slug || "(no slug)";
+    if (!t.slug || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(t.slug))
+      errs.push(`${id}: slug must be non-empty kebab-case`);
+    if (seen.has(t.slug)) errs.push(`${id}: duplicate slug`);
+    seen.add(t.slug);
+    if (!/^\d+$/.test(String(t.template_id||"")))
+      errs.push(`${id}: template_id must be the numeric Imgflip id`);
+    if (t.engine && !engines[t.engine])
+      errs.push(`${id}: engine "${t.engine}" is not defined in _meta.engines`);
+
+    const boxes = t.boxes || [];
+    if (boxes.length !== t.box_count)
+      errs.push(`${id}: box_count=${t.box_count} but ${boxes.length} boxes[]`);
+    if (boxes.some((b,i) => b.index !== i))
+      errs.push(`${id}: box indexes must be 0..n-1 with no gaps`);
+    if (boxes.some(b => !(b.purpose||"").trim()))
+      errs.push(`${id}: every box needs a purpose`);
+
+    // valence, boxes[] and subject.placement must agree on the subject slot
+    const placed = subjectBoxFromPlacement(t);
+    const fromBoxes = subjectBoxesFromPurposes(t);
+    const fromValence = subjectBoxesFromValence(t);
+    if (placed === null){
+      if (fromBoxes.size)
+        errs.push(`${id}: placement is "copy" but box ${[...fromBoxes].join(",")} claims the SUBJECT slot`);
+    } else {
+      if (!sameSet(fromBoxes, new Set([placed])))
+        errs.push(`${id}: placement says box ${placed}, boxes[] marks ${[...fromBoxes].join(",")||"none"} — `
+                + `the subject box's purpose must contain the word SUBJECT in capitals`);
+      if (fromValence.size && !sameSet(fromValence, new Set([placed])))
+        errs.push(`${id}: valence puts the SUBJECT in box ${[...fromValence].join(",")}, placement says ${placed}`);
+      if (placed >= (t.box_count||0)) errs.push(`${id}: placement box:${placed} does not exist`);
+    }
+    const cited = new Set([...(t.valence||"").matchAll(/[Bb]ox (\d+)/g)].map(m => +m[1]));
+    const over = [...cited].filter(i => i >= (t.box_count||0));
+    if (over.length) errs.push(`${id}: valence cites box ${over.join(",")} of ${t.box_count}`);
+
+    // a worked example that is short would be DROPPED by meme_box_check.py
+    const we = (t.worked_example||{}).boxes;
+    if (we && we.length){
+      const n = expandBoxes(t.slug, we).length;
+      if (n !== t.box_count)
+        errs.push(`${id}: worked example gives ${we.length} caption(s) -> ${n} panel(s), template has ${t.box_count}`);
+    }
+  }
+  return errs;
+}
+
+function validateGifs(data){
+  const errs = [];
+  const cats = (data||{}).categories || {};
+  const seen = new Map();
+  for (const [cat, c] of Object.entries(cats)){
+    for (const g of (c.gifs||[])){
+      // Retired entries are tombstones -- kept so an expansion round never
+      // re-proposes them -- and PLACEHOLDER_AFFLECK never had a real Giphy id.
+      // Only something still in rotation has to resolve.
+      if (g.status !== "retired" && !/^[A-Za-z0-9]+$/.test(String(g.id||"")))
+        errs.push(`${cat}/${g.id||"(no id)"}: Giphy id must be alphanumeric`);
+      if (!(g.label||"").trim()) errs.push(`${cat}/${g.id}: needs a label`);
+      if (!["candidate","verified","retired"].includes(g.status))
+        errs.push(`${cat}/${g.id}: status must be candidate, verified or retired`);
+      if (seen.has(g.id)) errs.push(`${g.id}: appears in both ${seen.get(g.id)} and ${cat}`);
+      else seen.set(g.id, cat);
+    }
+  }
+  return errs;
+}
+const validate = () => S.tab === "meme" ? validateMemes(cur().data) : validateGifs(cur().data);
+
+/* ===================================================================
+   4. File open / save — File System Access API, with a fallback.
+   =================================================================== */
+const HAS_FS = typeof window.showOpenFilePicker === "function";
+
+// The File System Access API needs a SECURE CONTEXT, and file:// is not one —
+// so double-clicking the .html gives no save-in-place, only a downloaded copy.
+// library_studio.bat serves the repo on http://localhost, which IS a secure
+// context, and adds a PUT endpoint. When we are served, both libraries load
+// themselves and Save writes straight to disk with no picker at all.
+const SERVED = location.protocol === "http:" || location.protocol === "https:";
+const LIB_PATHS = {
+  meme: "prompts/meme_library.DRAFT.json",
+  gif:  "prompts/gif_library.DRAFT.json",
+};
+
+// One place where a loaded file becomes state, so the round-trip guard cannot
+// be skipped by whichever path the bytes arrived through.
+function ingest(kind, {name, text, handle = null, path = null}){
+  let data;
+  try{ data = JSON.parse(text); }
+  catch(e){ banner("bad", `${esc(name)} is not valid JSON: ${esc(e.message)}`); return false; }
+
+  const actual = data.templates ? "meme" : data.categories ? "gif" : null;
+  if (!actual){
+    banner("bad", `${esc(name)} is neither library — expected a top-level "templates" (meme) `
+                + `or "categories" (GIF) key.`);
+    return false;
+  }
+  // Re-serialise what we just read and demand the bytes back unchanged, or a
+  // save would reflow the file and bury the real diff. NB both library files
+  // end WITHOUT a trailing newline: library_json.py writes
+  // dumps_matching_style() straight out and adds nothing.
+  const roundTrip = dumpsMatchingStyle(data, text) === text;
+  S[actual] = {handle, path, name, raw:text, data, sel:null, dirty:false, roundTrip};
+  return actual;
+}
+
+function reportLoad(kind){
+  const c = S[kind];
+  if (c.roundTrip) return;
+  banner("warn",
+    `Loaded ${esc(c.name)}, but re-serialising it does NOT reproduce the file byte-for-byte. `
+    + `Saving would reflow the whole file and bury the real changes in the diff, so saving is `
+    + `disabled. The file's formatting has drifted from what library_json.py produces — run one `
+    + `of the Python appliers once to normalise it.`);
+}
+
+// Served mode: pull both libraries straight off the server at startup.
+async function autoLoad(){
+  const loaded = [];
+  for (const [kind, path] of Object.entries(LIB_PATHS)){
+    try{
+      const r = await fetch(path + "?t=" + Date.now());
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const text = await r.text();
+      if (ingest(kind, {name: path.split("/").pop(), text, path})) loaded.push(kind);
+    }catch(e){
+      banner("warn", `Could not load ${esc(path)}: ${esc(e.message)}. Use “Open library…”.`);
+    }
+  }
+  if (!loaded.length) return;
+  selectTab(loaded.includes("meme") ? "meme" : loaded[0]);
+  const bad = loaded.filter(k => !S[k].roundTrip);
+  if (bad.length) return reportLoad(bad[0]);
+  banner("ok", `Loaded ${loaded.map(k => esc(LIB_PATHS[k].split("/").pop())).join(" and ")}. `
+    + `Both round-trip byte-for-byte, so a save shows only your edits. Save writes straight to disk.`);
+}
+
+async function openLibrary(){
+  let text, name, handle = null;
+  if (HAS_FS){
+    let h;
+    try{
+      [h] = await window.showOpenFilePicker({
+        types:[{description:"Library JSON", accept:{"application/json":[".json"]}}]
+      });
+    }catch(e){ return; }                     // user cancelled
+    handle = h; name = h.name;
+    text = await (await h.getFile()).text();
+  } else {
+    const inp = Object.assign(document.createElement("input"), {type:"file", accept:".json"});
+    const file = await new Promise(res => { inp.onchange = () => res(inp.files[0]); inp.click(); });
+    if (!file) return;
+    name = file.name; text = await file.text();
+  }
+  const kind = ingest(null, {name, text, handle});
+  if (!kind) return;
+  selectTab(kind);
+  if (S[kind].roundTrip)
+    banner("ok", `Loaded ${esc(name)} — round-trip is byte-identical, so a save will show only your edits.`);
+  else reportLoad(kind);
+}
+
+async function saveLibrary(){
+  const c = cur();
+  if (!c.data) return;
+  if (c.roundTrip === false) return banner("bad", "Save blocked: this file does not round-trip cleanly.");
+  const errs = validate();
+  if (errs.length) return banner("bad", "Save blocked — fix the validation errors first.");
+
+  if (S.tab === "meme" && c.data._meta) c.data._meta.template_count = c.data.templates.length;
+  const text = dumpsMatchingStyle(c.data, c.raw);   // no trailing newline: see openLibrary
+
+  if (SERVED && c.path){
+    // The one-click path: PUT straight back to the file the page loaded from.
+    // The server re-checks the formatting and writes atomically with a .bak.
+    try{
+      const r = await fetch(c.path, {method:"PUT",
+        headers:{"Content-Type":"application/json"}, body:text});
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) throw new Error(j.error || `HTTP ${r.status}`);
+    }catch(e){ return banner("bad", `Could not write ${esc(c.path)}: ${esc(e.message)}`); }
+  } else if (c.handle){
+    try{
+      const w = await c.handle.createWritable();
+      await w.write(text); await w.close();
+    }catch(e){ return banner("bad", `Could not write the file: ${esc(e.message)}`); }
+  } else {
+    const a = Object.assign(document.createElement("a"), {
+      href: URL.createObjectURL(new Blob([text], {type:"application/json"})), download: c.name});
+    a.click(); URL.revokeObjectURL(a.href);
+    banner("warn", `This browser cannot write files in place, so ${esc(c.name)} was downloaded instead. `
+                 + `Move it over the original. Use Chrome or Edge to save directly.`);
+  }
+  c.raw = text; c.dirty = false;
+  render();
+  if (SERVED && c.path) banner("ok", `Saved ${esc(c.path)} — a .bak of the previous version is beside it.`);
+  else if (c.handle) banner("ok", `Saved ${esc(c.name)}.`);
+}
+
+// `tag` marks who wrote the banner. Validation messages must clear themselves
+// the moment the errors are fixed -- otherwise a red "1 validation error" sits
+// there next to an enabled Save button, which is worse than no message at all.
+// Messages from open/save are not tagged, so they survive a re-render.
+function banner(kind, html, tag){
+  $("banner").innerHTML = `<div class="msg ${kind}"${tag ? ` data-tag="${tag}"` : ""}>${html}</div>`;
+}
+function clearBanner(tag){
+  const el = $("banner").firstElementChild;
+  if (el && el.dataset.tag === tag) $("banner").innerHTML = "";
+}
+
+/* ===================================================================
+   5. Rendering
+   =================================================================== */
+function selectTab(tab){
+  S.tab = tab;
+  $("tab-meme").setAttribute("aria-selected", tab==="meme");
+  $("tab-gif").setAttribute("aria-selected", tab==="gif");
+  render();
+}
+
+function memeRows(){
+  const d = cur().data; if (!d) return [];
+  return d.templates.map((t,i) => ({
+    i, key:t.slug, name:t.slug, group:t.engine||"_ungrouped",
+    status:t.status||"candidate", hay:[t.slug,t.engine,t.selector_line,(t.tags||[]).join(" ")].join(" ").toLowerCase()
+  }));
+}
+function gifRows(){
+  const d = cur().data; if (!d) return [];
+  const out = [];
+  for (const [cat,c] of Object.entries(d.categories))
+    (c.gifs||[]).forEach((g,j) => out.push({
+      i:`${cat}|${j}`, key:g.id, name:g.label||g.id, group:cat,
+      status:g.status||"candidate", hay:[g.id,g.label,g.note,(g.tags||[]).join(" ")].join(" ").toLowerCase()
+    }));
+  return out;
+}
+
+function render(){
+  const c = cur();
+  $("fileState").textContent = c.name
+    ? `${c.name}${c.dirty ? " • unsaved changes" : ""}` : "no file open";
+
+  const rows = S.tab === "meme" ? memeRows() : gifRows();
+  const q = $("search").value.trim().toLowerCase();
+  const fs = $("fStatus").value, fg = $("fGroup").value;
+
+  // group filter options
+  const groups = [...new Set(rows.map(r => r.group))].sort();
+  const keep = $("fGroup").value;
+  $("fGroup").innerHTML = `<option value="">all groups</option>` +
+    groups.map(g => `<option${g===keep?" selected":""}>${esc(g)}</option>`).join("");
+
+  const shown = rows.filter(r =>
+    (!q || r.hay.includes(q)) && (!fs || r.status===fs) && (!fg || r.group===fg));
+
+  const byGroup = {};
+  for (const r of shown) (byGroup[r.group] ||= []).push(r);
+  $("list").innerHTML = Object.keys(byGroup).sort().map(g =>
+    `<li class="grp">${esc(g)} <span class="tagline">(${byGroup[g].length})</span></li>` +
+    byGroup[g].map(r =>
+      `<li data-i="${esc(r.i)}" aria-current="${String(r.i)===String(c.sel)}">
+         <span class="dot ${r.status}" title="${r.status}"></span>
+         <span class="nm">${esc(r.name)}</span></li>`).join("")
+  ).join("") || `<li class="tagline" style="padding:9px">Nothing matches.</li>`;
+
+  const counts = rows.reduce((a,r)=>(a[r.status]=(a[r.status]||0)+1,a),{});
+  $("counts").textContent = `${rows.length} entries · ` +
+    ["candidate","verified","retired"].map(s=>`${counts[s]||0} ${s}`).join(" · ");
+
+  const errs = c.data ? validate() : [];
+  $("btnSave").disabled = !c.data || errs.length > 0 || c.roundTrip === false;
+  $("btnDel").disabled = c.sel === null;
+  $("btnAdd").disabled = !c.data;
+
+  if (errs.length){
+    const where = S.tab === "meme" ? "uat/tests/test_meme_library.py" : "the GIF library rules";
+    banner("bad", `<strong>${errs.length} validation error${errs.length>1?"s":""}</strong> in `
+      + `${esc(c.name)} — these are the checks ${esc(where)} runs in CI.`
+      + `<ul>${errs.slice(0,12).map(e=>`<li>${esc(e)}</li>`).join("")}`
+      + `${errs.length>12?`<li>…and ${errs.length-12} more</li>`:""}</ul>`, "validation");
+  } else {
+    clearBanner("validation");
+  }
+  drawEditor();
+}
+
+/* --- the editor ---------------------------------------------------- */
+const field = (label, val, path, ml) => `
+  <label>${esc(label)}</label>
+  ${ml ? `<textarea data-path="${esc(path)}">${esc(val)}</textarea>`
+       : `<input type="text" data-path="${esc(path)}" value="${esc(val)}">`}`;
+
+function drawEditor(){
+  const c = cur(), host = $("editor");
+  if (!c.data) return host.innerHTML = `<p class="tagline">Open a library to begin.</p>`;
+  if (c.sel === null) return host.innerHTML = `<p class="tagline">Select an entry on the left, or add one.</p>`;
+  host.innerHTML = S.tab === "meme" ? memeEditor() : gifEditor();
+}
+
+const selMeme = () => cur().data.templates[cur().sel];
+function selGif(){
+  const [cat,j] = String(cur().sel).split("|");
+  return {cat, g: cur().data.categories[cat].gifs[+j]};
+}
+
+function statusButtons(val, path){
+  return ["candidate","verified","retired"].map(s =>
+    `<button data-set="${esc(path)}" data-val="${s}"${s===val?' class="primary"':''}>${s}</button>`).join(" ");
+}
+
+function memeEditor(){
+  const t = selMeme();
+  const engines = Object.keys((cur().data._meta||{}).engines||{});
+  const blank = `https://i.imgflip.com/${t.template_id}.jpg`;
+  return `
+  <div class="row" style="align-items:center">
+    <div style="flex:0 0 auto"><span class="chip mono">${esc(t.template_id)}</span></div>
+    <div style="flex:0 0 auto">${statusButtons(t.status||"candidate","status")}</div>
+  </div>
+  ${field("slug", t.slug, "slug")}
+  <div class="row">
+    <div><label>engine</label>
+      <select data-path="engine">${engines.map(e=>
+        `<option${e===t.engine?" selected":""}>${esc(e)}</option>`).join("")}</select></div>
+    <div>${field("category", t.category||"", "category")}</div>
+    <div>${field("pattern type", t.pattern_type||"", "pattern_type")}</div>
+  </div>
+
+  <h2>Caption boxes <span class="tagline">(${t.box_count})</span></h2>
+  <div class="hint">Panel order is whatever Imgflip's index says, not top-to-bottom. The box that
+    names the subject must carry the word SUBJECT in capitals in its purpose.</div>
+  ${(t.boxes||[]).map(b => `
+    <div class="boxrow">
+      <div class="ix">${b.index}</div>
+      <div><input type="text" data-path="boxes.${b.index}.purpose" value="${esc(b.purpose)}"></div>
+      <div><input type="text" data-path="boxes.${b.index}.valence" value="${esc(b.valence||"")}"
+             placeholder="valence"></div>
+    </div>`).join("")}
+  <div class="row">
+    <button data-act="box-add">+ box</button>
+    <button data-act="box-del" class="danger"${(t.boxes||[]).length<=1?" disabled":""}>− box</button>
+  </div>
+
+  <h2>Subject</h2>
+  <div class="row">
+    <div><label>placement</label>
+      <select data-path="subject.placement">
+        <option value="copy"${(t.subject||{}).placement==="copy"?" selected":""}>copy (named in the prose)</option>
+        ${(t.boxes||[]).map(b=>`<option value="box:${b.index}"${
+          (t.subject||{}).placement===`box:${b.index}`?" selected":""}>box:${b.index}</option>`).join("")}
+      </select></div>
+    <div>${field("who", (t.subject||{}).who||"", "subject.who")}</div>
+  </div>
+  ${field("rule", (t.subject||{}).rule||"", "subject.rule", true)}
+  ${field("note", (t.subject||{}).note||"", "subject.note", true)}
+
+  <h2>The joke</h2>
+  ${field("the laugh comes from", t.comedic_engine||"", "comedic_engine", true)}
+  ${field("VALENCE RULE (hard requirement given to the writer)", t.valence||"", "valence", true)}
+  ${field("use when", t.use_when||"", "use_when", true)}
+  ${field("do NOT use when", t.do_not_use_when||"", "do_not_use_when", true)}
+  ${field("selector line (the one line Pass 1 sees)", t.selector_line||"", "selector_line", true)}
+  ${field("special handling (pipeline note, blank if none)", t.special_handling||"", "special_handling", true)}
+  ${field("tags (comma separated)", (t.tags||[]).join(", "), "tags")}
+  ${field("note", t.note||"", "note", true)}
+
+  <h2>Worked example <span class="tagline">— shape only, never reused as fact</span></h2>
+  ${field("subject", (t.worked_example||{}).subject||"", "worked_example.subject")}
+  ${((t.worked_example||{}).boxes||[]).map((b,i)=>`
+    <div class="boxrow"><div class="ix">${i}</div>
+      <div style="grid-column:2/4"><input type="text" data-path="worked_example.boxes.${i}" value="${esc(b)}"></div>
+    </div>`).join("")}
+  ${field("why it lands", (t.worked_example||{}).why_it_lands||"", "worked_example.why_it_lands", true)}
+
+  <h2>Anti-example <span class="tagline">— do not write this</span></h2>
+  ${((t.anti_example||{}).boxes||[]).map((b,i)=>`
+    <div class="boxrow"><div class="ix">${i}</div>
+      <div style="grid-column:2/4"><input type="text" data-path="anti_example.boxes.${i}" value="${esc(b)}"></div>
+    </div>`).join("")}
+  ${field("why it fails", (t.anti_example||{}).why_it_fails||"", "anti_example.why_it_fails", true)}
+
+  <h2>Preview</h2>
+  <div class="prev">
+    <div><img src="${blank}" alt="blank template" loading="lazy">
+      <div class="hint">blank template</div></div>
+    <div><img id="renderImg" alt="rendered worked example" loading="lazy"
+           style="display:none">
+      <div><button data-act="render">Render worked example</button></div>
+      <div class="hint" id="renderHint">Captions the template with the worked example above, via Imgflip.
+        Needs your Imgflip login once; it is kept in this browser only.</div></div>
+  </div>`;
+}
+
+function gifEditor(){
+  const {cat, g} = selGif();
+  const c = cur().data.categories[cat];
+  return `
+  <div class="row" style="align-items:center">
+    <div style="flex:0 0 auto"><span class="chip mono">${esc(g.id)}</span></div>
+    <div style="flex:0 0 auto">${statusButtons(g.status||"candidate","status")}</div>
+  </div>
+  ${field("label", g.label||"", "label")}
+  ${field("note", g.note||"", "note", true)}
+  <div class="row">
+    <div>${field("tags (comma separated)", (g.tags||[]).join(", "), "tags")}</div>
+    <div>${field("cooldown days (blank = default)", g.cooldown_days ?? "", "cooldown_days")}</div>
+  </div>
+
+  <h2>Preview</h2>
+  <div class="prev">
+    <img src="https://i.giphy.com/${esc(g.id)}.gif" alt="${esc(g.label||g.id)}" loading="lazy"
+         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'msg bad',textContent:'This Giphy id does not resolve — the GIF has been removed or the id is wrong.'}))">
+  </div>
+
+  <h2>Category: ${esc(cat)}</h2>
+  <div class="hint">These three fields apply to every GIF in the category.</div>
+  ${field("description", c.description||"", "@cat.description", true)}
+  ${field("use when", c.use_when||"", "@cat.use_when", true)}
+  ${field("do NOT use when", c.do_not_use_when||"", "@cat.do_not_use_when", true)}`;
+}
+
+/* --- writing edits back into the object ----------------------------- */
+function setPath(obj, path, value){
+  const parts = path.split(".");
+  let o = obj;
+  for (let i=0;i<parts.length-1;i++){
+    const k = /^\d+$/.test(parts[i]) ? +parts[i] : parts[i];
+    if (o[k] === undefined || o[k] === null) o[k] = /^\d+$/.test(parts[i+1]) ? [] : {};
+    o = o[k];
+  }
+  const last = /^\d+$/.test(parts.at(-1)) ? +parts.at(-1) : parts.at(-1);
+  o[last] = value;
+}
+
+function applyEdit(path, raw){
+  const c = cur();
+  let target, value = raw;
+  if (S.tab === "meme"){
+    target = selMeme();
+    if (path === "tags") value = raw.split(",").map(s=>s.trim()).filter(Boolean);
+    if (path === "special_handling" && !raw.trim()) value = null;
+  } else {
+    const {cat, g} = selGif();
+    if (path.startsWith("@cat.")) { setPath(c.data.categories[cat], path.slice(5), raw); c.dirty = true; return; }
+    target = g;
+    if (path === "tags") value = raw.split(",").map(s=>s.trim()).filter(Boolean);
+    if (path === "cooldown_days"){
+      if (!raw.trim()) { delete g.cooldown_days; c.dirty = true; return; }
+      value = +raw;
+    }
+  }
+  setPath(target, path, value);
+  if (S.tab === "meme") target.box_count = (target.boxes||[]).length;
+  c.dirty = true;
+}
+
+/* ===================================================================
+   6. Add / delete
+   =================================================================== */
+async function imgflipCandidates(){
+  if (S.candidates) return S.candidates;
+  const r = await fetch("https://api.imgflip.com/get_memes");
+  const j = await r.json();
+  if (!j.success) throw new Error("Imgflip get_memes failed");
+  S.candidates = j.data.memes;
+  return S.candidates;
+}
+
+async function addEntry(){
+  if (S.tab === "gif") return addGifModal();
+  let memes;
+  try{ memes = await imgflipCandidates(); }
+  catch(e){ return banner("bad", `Could not reach Imgflip: ${esc(e.message)}. `
+    + `Adding a meme needs the live template list so the id and box count are real, not guessed.`); }
+
+  const have = new Set(cur().data.templates.map(t => String(t.template_id)));
+  const fresh = memes.filter(m => !have.has(String(m.id)));
+  modal(`<h2 style="margin-top:0">Add a meme template</h2>
+    <p class="tagline">Imgflip's 100 most-captioned templates, minus the ${have.size} already in the
+      library. The id and box count come straight from the API, so they are never guessed.</p>
+    <input type="text" id="candSearch" placeholder="Search templates…">
+    <div id="candList" style="margin-top:10px">${fresh.map(m=>`
+      <div class="cand" data-id="${esc(m.id)}" data-nm="${esc(m.name.toLowerCase())}">
+        <img src="${esc(m.url)}" loading="lazy" alt="">
+        <div><strong>${esc(m.name)}</strong>
+          <div class="tagline mono">id ${esc(m.id)} · ${m.box_count} boxes</div></div>
+        <button class="primary">Add</button>
+      </div>`).join("")}</div>`,
+    host => {
+      host.querySelector("#candSearch").oninput = e => {
+        const q = e.target.value.trim().toLowerCase();
+        host.querySelectorAll(".cand").forEach(el =>
+          el.hidden = q && !el.dataset.nm.includes(q));
+      };
+      host.querySelector("#candList").onclick = e => {
+        const card = e.target.closest(".cand"); if (!card) return;
+        const m = fresh.find(x => String(x.id) === card.dataset.id);
+        newMemeTemplate(m); closeModal();
+      };
+    });
+}
+
+function newMemeTemplate(m){
+  const c = cur();
+  const slugBase = m.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  let slug = slugBase, n = 2;
+  while (c.data.templates.some(t => t.slug === slug)) slug = `${slugBase}-${n++}`;
+  const engines = Object.keys((c.data._meta||{}).engines||{});
+  const t = {
+    slug, template_id: String(m.id), status: "candidate",
+    category: "", engine: engines[0]||"", pattern_type: "",
+    box_count: m.box_count,
+    subject: {required:true, who:"", placement:"copy",
+      rule:"MUST be named in the sentence immediately before or after the meme."},
+    comedic_engine: "", valence: "",
+    boxes: Array.from({length:m.box_count}, (_,i) => ({index:i, purpose:"", valence:""})),
+    use_when: "", do_not_use_when: "",
+    worked_example: {subject:"", boxes:Array(m.box_count).fill(""), why_it_lands:""},
+    anti_example: {boxes:Array(m.box_count).fill(""), why_it_fails:""},
+    special_handling: null, selector_line: "", tags: [],
+    note: `Added ${new Date().toISOString().slice(0,10)} via library_studio.html. `
+        + `box_count ${m.box_count} from Imgflip's live API; panel ORDER not yet confirmed — `
+        + `render it with marker captions before trusting the box order.`
+  };
+  c.data.templates.push(t);
+  c.sel = c.data.templates.length - 1;
+  c.dirty = true;
+  render();
+  banner("warn", `Added <strong>${esc(slug)}</strong>. It will fail validation until you fill in the `
+    + `box purposes, the valence rule and a worked example with ${m.box_count} captions — that is `
+    + `deliberate: an empty template would ship a meme with no joke in it. `
+    + `Panel order is NOT verified yet.`);
+}
+
+function addGifModal(){
+  const cats = Object.keys(cur().data.categories).sort();
+  modal(`<h2 style="margin-top:0">Add a GIF</h2>
+    <p class="tagline">Paste a Giphy URL or id. The preview confirms the id resolves before you add it.</p>
+    <label>Giphy URL or id</label>
+    <input type="text" id="gid" placeholder="https://giphy.com/gifs/… or dZQR7P1lxgi4mUmsjY">
+    <label>Category</label>
+    <select id="gcat">${cats.map(c=>`<option>${esc(c)}</option>`).join("")}</select>
+    <label>Label</label>
+    <input type="text" id="glabel" placeholder="Anchorman — 'that escalated quickly'">
+    <div id="gprev" style="margin-top:12px"></div>
+    <div class="row" style="margin-top:12px">
+      <button id="gadd" class="primary" disabled>Add to library</button>
+    </div>`,
+    host => {
+      const idIn = host.querySelector("#gid"), prev = host.querySelector("#gprev");
+      const btn = host.querySelector("#gadd");
+      let ok = null;
+      idIn.oninput = () => {
+        const raw = idIn.value.trim();
+        const m = /([A-Za-z0-9]{6,})\s*$/.exec(raw.replace(/\/+$/,""));
+        ok = m ? m[1] : null;
+        btn.disabled = true;
+        if (!ok) return prev.innerHTML = `<p class="tagline">Waiting for a valid id…</p>`;
+        const dup = Object.entries(cur().data.categories)
+          .find(([,c]) => (c.gifs||[]).some(g => g.id === ok));
+        if (dup) { ok = null; return prev.innerHTML =
+          `<div class="msg bad">Already in the library, under <strong>${esc(dup[0])}</strong>.</div>`; }
+        prev.innerHTML = `<img src="https://i.giphy.com/${ok}.gif" style="width:260px;border-radius:8px"
+          onload="document.getElementById('gadd').disabled=false"
+          onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'msg bad',textContent:'That id does not resolve on Giphy.'}))">`;
+      };
+      btn.onclick = () => {
+        const c = cur(), cat = host.querySelector("#gcat").value;
+        c.data.categories[cat].gifs.push({
+          id: ok, label: host.querySelector("#glabel").value.trim() || ok,
+          status: "candidate",
+          note: `Added ${new Date().toISOString().slice(0,10)} via library_studio.html.`,
+          tags: [cat]});
+        c.sel = `${cat}|${c.data.categories[cat].gifs.length-1}`;
+        c.dirty = true; closeModal(); render();
+        banner("ok", `Added to <strong>${esc(cat)}</strong> as a candidate.`);
+      };
+    });
+}
+
+function deleteEntry(){
+  const c = cur();
+  if (S.tab === "meme"){
+    const t = selMeme();
+    if (!confirm(`Delete the template "${t.slug}" outright?\n\n`
+      + `Retiring it instead keeps the entry and its reasoning, and still removes it from what `
+      + `Pass 1 can pick. Deleting throws away the record.`)) return;
+    c.data.templates.splice(c.sel, 1);
+  } else {
+    const {cat, g} = selGif();
+    if (!confirm(`Delete "${g.label||g.id}" from ${cat} outright?\n\n`
+      + `Retiring it instead keeps the entry and still stops it being used.`)) return;
+    const j = +String(c.sel).split("|")[1];
+    c.data.categories[cat].gifs.splice(j, 1);
+  }
+  c.sel = null; c.dirty = true; render();
+}
+
+/* --- Imgflip render ------------------------------------------------- */
+async function renderWorked(){
+  const t = selMeme();
+  const boxes = expandBoxes(t.slug, ((t.worked_example||{}).boxes||[]).map(b => (b||"").toUpperCase()));
+  if (boxes.length !== t.box_count)
+    return banner("bad", `The worked example has ${boxes.length} caption(s) but the template has ${t.box_count}. `
+      + `Imgflip would render a blank panel, and meme_box_check.py would drop the meme.`);
+
+  let user = localStorage.getItem("imgflip_user"), pw = localStorage.getItem("imgflip_pw");
+  if (!user || !pw){
+    user = prompt("Imgflip username (stored in this browser only):", user||""); if (!user) return;
+    pw = prompt("Imgflip password (stored in this browser only):"); if (!pw) return;
+    localStorage.setItem("imgflip_user", user); localStorage.setItem("imgflip_pw", pw);
+  }
+  const body = new URLSearchParams({template_id:String(t.template_id), username:user, password:pw});
+  boxes.forEach((b,i) => body.append(`boxes[${i}][text]`, b));
+  $("renderHint").textContent = "Rendering…";
+  try{
+    const j = await (await fetch("https://api.imgflip.com/caption_image",
+      {method:"POST", body})).json();
+    if (!j.success) throw new Error(j.error_message||"unknown error");
+    const img = $("renderImg");
+    img.src = j.data.url; img.style.display = "";
+    $("renderHint").textContent = "Rendered just now. Check each caption landed in the panel its purpose describes.";
+  }catch(e){
+    $("renderHint").textContent = "";
+    banner("bad", `Imgflip render failed: ${esc(e.message)}. If it is an auth error, `
+      + `<button onclick="localStorage.removeItem('imgflip_user');localStorage.removeItem('imgflip_pw');">clear the saved login</button> and retry.`);
+  }
+}
+
+/* ===================================================================
+   7. Modal + wiring
+   =================================================================== */
+function modal(html, init){
+  const el = Object.assign(document.createElement("div"), {className:"modal"});
+  el.innerHTML = `<div class="panel">${html}
+    <div style="margin-top:14px"><button data-close>Close</button></div></div>`;
+  el.onclick = e => { if (e.target === el || e.target.hasAttribute("data-close")) closeModal(); };
+  document.body.appendChild(el);
+  init && init(el);
+}
+const closeModal = () => document.querySelector(".modal")?.remove();
+
+$("btnOpen").onclick = openLibrary;
+$("btnSave").onclick = saveLibrary;
+$("btnAdd").onclick = addEntry;
+$("btnDel").onclick = deleteEntry;
+$("tab-meme").onclick = () => selectTab("meme");
+$("tab-gif").onclick  = () => selectTab("gif");
+for (const id of ["search","fStatus","fGroup"]) $(id).oninput = render;
+
+$("list").onclick = e => {
+  const li = e.target.closest("li[data-i]"); if (!li) return;
+  const raw = li.dataset.i;
+  cur().sel = /^\d+$/.test(raw) ? +raw : raw;
+  render();
+};
+
+$("editor").addEventListener("input", e => {
+  const p = e.target.dataset.path; if (!p) return;
+  applyEdit(p, e.target.value);
+  // Re-validate without redrawing: redrawing on every keystroke would steal focus.
+  // The banner still has to track the errors, or typing a fix leaves the old
+  // complaint on screen.
+  const errs = validate();
+  $("btnSave").disabled = errs.length > 0 || cur().roundTrip === false;
+  if (errs.length){
+    banner("bad", `<strong>${errs.length} validation error${errs.length>1?"s":""}</strong>`
+      + `<ul>${errs.slice(0,6).map(x=>`<li>${esc(x)}</li>`).join("")}`
+      + `${errs.length>6?`<li>…and ${errs.length-6} more</li>`:""}</ul>`, "validation");
+  } else {
+    clearBanner("validation");
+  }
+  $("fileState").textContent = `${cur().name} • unsaved changes`;
+});
+$("editor").addEventListener("change", e => {
+  if (e.target.dataset.path && e.target.tagName === "SELECT") render();
+});
+$("editor").addEventListener("click", e => {
+  const t = cur().data && S.tab === "meme" ? selMeme() : null;
+  if (e.target.dataset.set){
+    applyEdit(e.target.dataset.set, e.target.dataset.val); render(); return;
+  }
+  const act = e.target.dataset.act;
+  if (act === "box-add" && t){
+    t.boxes.push({index:t.boxes.length, purpose:"", valence:""});
+    (t.worked_example.boxes ||= []).push(""); (t.anti_example.boxes ||= []).push("");
+    t.box_count = t.boxes.length; cur().dirty = true; render();
+  }
+  if (act === "box-del" && t){
+    t.boxes.pop(); t.worked_example.boxes?.pop(); t.anti_example.boxes?.pop();
+    t.box_count = t.boxes.length; cur().dirty = true; render();
+  }
+  if (act === "render") renderWorked();
+});
+
+window.addEventListener("beforeunload", e => {
+  if (S.meme.dirty || S.gif.dirty){ e.preventDefault(); e.returnValue = ""; }
+});
+
+if (SERVED){
+  render();
+  autoLoad();
+} else {
+  // file:// — the File System Access API is unavailable here no matter the
+  // browser, because it requires a secure context. Say so plainly rather than
+  // letting the first Save produce a mystery download.
+  banner("warn",
+    `<strong>Opened from a file:// URL, so saving in place is not possible.</strong> `
+    + `The File System Access API needs a secure context and file:// is not one — in this mode `
+    + `Save downloads a copy you would have to move over the original yourself.<br><br>`
+    + `Close this and <strong>double-click <span class="mono">library_studio.bat</span></strong> `
+    + `instead. It serves the repo on <span class="mono">http://localhost</span>, which IS a secure `
+    + `context: both libraries load automatically and Save writes straight to disk. Same one gesture, `
+    + `no terminal.`);
+  render();
+}
+</script>

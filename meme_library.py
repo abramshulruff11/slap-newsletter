@@ -40,7 +40,7 @@ from pathlib import Path
 
 REPO_ROOT    = Path(__file__).resolve().parent
 LIBRARY_PATH = REPO_ROOT / "prompts" / "meme_library.DRAFT.json"
-INDEX_PATH   = REPO_ROOT / "prompts" / "meme_selector_index.txt"
+INDEX_PATH   = REPO_ROOT / "prompts" / "meme_selector_index.txt"  # optional human-readable snapshot only
 
 _cache = {}
 
@@ -59,12 +59,18 @@ def load_meme_library(path: Path | None = None) -> dict:
 
 
 def load_selector_index(path: Path | None = None) -> str:
-    """The compact per-template index for Pass 1. Empty string if unavailable."""
-    p = Path(path) if path else INDEX_PATH
+    """The compact per-template index for Pass 1, BUILT from the library.
+
+    This used to read prompts/meme_selector_index.txt off disk, which made the
+    index a second artifact that could disagree with the library — and it did,
+    silently, the moment box counts were corrected. The file is gone; the index
+    is generated at the point of use, so it cannot be stale. `path` still
+    selects which LIBRARY to build from, which is what UAT needs.
+    """
     try:
-        return p.read_text(encoding="utf-8")
+        return build_selector_index(path)
     except Exception as e:
-        print(f"[memelib] WARNING: could not load {p}: {e}")
+        print(f"[memelib] WARNING: could not build the selector index: {e}")
         return ""
 
 

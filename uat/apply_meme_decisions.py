@@ -135,7 +135,7 @@ def main() -> int:
     # load_meme_library caches by path, so drop the cache before regenerating
     # or the index would be rebuilt from the pre-write copy.
     meme_library._cache.clear()
-    index_path = meme_library.write_selector_index()
+    index_path = meme_library.write_selector_index()  # snapshot only; Pass 1 builds its own
     try:
         shown = index_path.relative_to(REPO_ROOT)
     except ValueError:  # a redirected path (tests) must not fail a completed write
