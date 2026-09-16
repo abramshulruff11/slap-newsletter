@@ -64,10 +64,27 @@ class Handler(SimpleHTTPRequestHandler):
         if self.command == "PUT" or "library_studio" in self.path:
             sys.stderr.write(f"  {self.command} {self.path} — {fmt % args}\n")
 
+    def send_head(self):
+        # Stamp every served library with the file's mtime, so the page can tell
+        # on save whether the file changed underneath it. Two windows on the same
+        # library -- or a session editing the file while a tab holds an older
+        # copy in memory -- otherwise clobber each other silently.
+        rel = self.path.lstrip("/").split("?")[0]
+        self._version = None
+        if rel in WRITABLE:
+            try:
+                self._version = str((REPO / rel).stat().st_mtime_ns)
+            except OSError:
+                pass
+        return super().send_head()
+
     def end_headers(self):
         # The page is re-read every time; a cached copy of an edited library
         # would silently show stale data.
         self.send_header("Cache-Control", "no-store")
+        version = getattr(self, "_version", None)
+        if version:
+            self.send_header("X-Library-Version", version)
         super().end_headers()
 
     def _refuse(self, code, msg):
@@ -88,6 +105,22 @@ class Handler(SimpleHTTPRequestHandler):
             raw = self.rfile.read(n).decode("utf-8")
         except Exception as e:
             return self._refuse(400, f"could not read the body: {e}")
+
+        # Refuse to overwrite a file that changed since the page loaded it.
+        # Without this, a tab holding a pre-edit copy silently reverts whatever
+        # happened on disk in between -- which is a real scenario here, because
+        # a Claude session edits these files too.
+        expected = self.headers.get("If-Match")
+        if expected:
+            try:
+                current = str((REPO / rel).stat().st_mtime_ns)
+            except OSError:
+                current = None
+            if current and current != expected:
+                return self._refuse(
+                    409, "STALE: this file changed on disk after the page loaded it. "
+                         "Nothing was written. Reload to pick up the newer version "
+                         "(your unsaved edits in this tab will be lost), or save a copy first.")
 
         try:
             obj = json.loads(raw)
@@ -129,7 +162,12 @@ class Handler(SimpleHTTPRequestHandler):
         except Exception as e:
             return self._refuse(500, f"write failed: {e}")
 
-        body = json.dumps({"ok": True, "bytes": len(raw.encode("utf-8"))}).encode("utf-8")
+        try:
+            version = str(dest.stat().st_mtime_ns)
+        except OSError:
+            version = None
+        body = json.dumps({"ok": True, "bytes": len(raw.encode("utf-8")),
+                           "version": version}).encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(body)))

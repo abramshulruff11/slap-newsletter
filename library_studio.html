@@ -362,7 +362,7 @@ const LIB_PATHS = {
 
 // One place where a loaded file becomes state, so the round-trip guard cannot
 // be skipped by whichever path the bytes arrived through.
-function ingest(kind, {name, text, handle = null, path = null}){
+function ingest(kind, {name, text, handle = null, path = null, version = null}){
   let data;
   try{ data = JSON.parse(text); }
   catch(e){ banner("bad", `${esc(name)} is not valid JSON: ${esc(e.message)}`); return false; }
@@ -378,7 +378,7 @@ function ingest(kind, {name, text, handle = null, path = null}){
   // end WITHOUT a trailing newline: library_json.py writes
   // dumps_matching_style() straight out and adds nothing.
   const roundTrip = dumpsMatchingStyle(data, text) === text;
-  S[actual] = {handle, path, name, raw:text, data, sel:null, dirty:false, roundTrip};
+  S[actual] = {handle, path, name, version, raw:text, data, sel:null, dirty:false, roundTrip};
   return actual;
 }
 
@@ -400,7 +400,8 @@ async function autoLoad(){
       const r = await fetch(path + "?t=" + Date.now());
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const text = await r.text();
-      if (ingest(kind, {name: path.split("/").pop(), text, path})) loaded.push(kind);
+      const version = r.headers.get("X-Library-Version");
+      if (ingest(kind, {name: path.split("/").pop(), text, path, version})) loaded.push(kind);
     }catch(e){
       banner("warn", `Could not load ${esc(path)}: ${esc(e.message)}. Use “Open library…”.`);
     }
@@ -459,9 +460,10 @@ async function openLibrary(){
   else reportLoad(kind);
 }
 
-async function saveLibrary(){
+async function saveLibrary({auto = false} = {}){
   const c = cur();
   if (!c.data) return;
+  clearTimeout(autoSaveTimer);
   if (c.roundTrip === false) return banner("bad", "Save blocked: this file does not round-trip cleanly.");
   const errs = validate();
   if (errs.length) return banner("bad", "Save blocked — fix the validation errors first.");
@@ -473,11 +475,23 @@ async function saveLibrary(){
     // The one-click path: PUT straight back to the file the page loaded from.
     // The server re-checks the formatting and writes atomically with a .bak.
     try{
-      const r = await fetch(c.path, {method:"PUT",
-        headers:{"Content-Type":"application/json"}, body:text});
+      const headers = {"Content-Type":"application/json"};
+      if (c.version) headers["If-Match"] = c.version;
+      const r = await fetch(c.path, {method:"PUT", headers, body:text});
       const j = await r.json().catch(() => ({}));
       if (!r.ok || !j.ok) throw new Error(j.error || `HTTP ${r.status}`);
-    }catch(e){ return banner("bad", `Could not write ${esc(c.path)}: ${esc(e.message)}`); }
+      c.version = j.version || null;
+    }catch(e){
+      if (String(e.message).startsWith("STALE")){
+        return banner("bad",
+          `<strong>${esc(c.name)} changed on disk since this tab loaded it — nothing was written.</strong><br>`
+          + `Your edits are still here, unsaved. Something else (another window, or a Claude session) `
+          + `wrote to the file. Reloading takes the newer version and loses what is in this tab; `
+          + `<button onclick="location.reload()">Reload and lose my edits</button> `
+          + `<button data-force-save>Overwrite the file with what I have</button>`);
+      }
+      return banner("bad", `Could not write ${esc(c.path)}: ${esc(e.message)}`);
+    }
   } else if (c.handle){
     try{
       const w = await c.handle.createWritable();
@@ -492,14 +506,35 @@ async function saveLibrary(){
   }
   c.raw = text; c.dirty = false;
   render();
-  if (SERVED && c.path) banner("ok", `Saved ${esc(c.path)} — a .bak of the previous version is beside it.`);
-  else if (c.handle) banner("ok", `Saved ${esc(c.name)}.`);
+  const at = new Date().toLocaleTimeString();
+  if (SERVED && c.path)
+    banner("ok", `Saved ${esc(c.path)} at ${at}${auto ? " (automatic)" : ""} — `
+               + `a .bak of the previous version is beside it.`, auto ? "autosave" : undefined);
+  else if (c.handle) banner("ok", `Saved ${esc(c.name)} at ${at}.`);
 }
 
 // `tag` marks who wrote the banner. Validation messages must clear themselves
 // the moment the errors are fixed -- otherwise a red "1 validation error" sits
 // there next to an enabled Save button, which is worse than no message at all.
 // Messages from open/save are not tagged, so they survive a re-render.
+// A verdict that is one click away from being lost is a verdict that WILL be
+// lost across 44 templates. Saving is a local, atomic PUT that keeps a .bak, so
+// there is no reason to make it manual: write shortly after every change, and
+// skip silently while the library is invalid (the validation banner already
+// explains that case).
+let autoSaveTimer = null;
+function scheduleAutoSave(){
+  const c = cur();
+  if (!c.data || !c.dirty) return;
+  if (!(SERVED && c.path) && !c.handle) return;   // download mode: never automatic
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => {
+    const cc = cur();
+    if (!cc.dirty || cc.roundTrip === false || validate().length) return;
+    saveLibrary({auto:true});
+  }, 1200);
+}
+
 function banner(kind, html, tag){
   $("banner").innerHTML = `<div class="msg ${kind}"${tag ? ` data-tag="${tag}"` : ""}>${html}</div>`;
 }
@@ -539,7 +574,8 @@ function gifRows(){
 function render(){
   const c = cur();
   $("fileState").textContent = c.name
-    ? `${c.name}${c.dirty ? " • unsaved changes" : ""}` : "no file open";
+    ? `${c.name}${c.dirty ? " • unsaved — saving…" : " • saved"}` : "no file open";
+  $("fileState").style.color = c.dirty ? "var(--warn)" : "var(--muted)";
 
   const rows = S.tab === "meme" ? memeRows() : gifRows();
   const q = $("search").value.trim().toLowerCase();
@@ -1007,14 +1043,40 @@ $("editor").addEventListener("input", e => {
     clearBanner("validation");
   }
   $("fileState").textContent = `${cur().name} • unsaved changes`;
+  scheduleAutoSave();
 });
 $("editor").addEventListener("change", e => {
   if (e.target.dataset.path && e.target.tagName === "SELECT") render();
 });
+$("banner").addEventListener("click", e => {
+  if (!e.target.hasAttribute("data-force-save")) return;
+  cur().version = null;
+  saveLibrary();
+});
+
 $("editor").addEventListener("click", e => {
   const t = cur().data && S.tab === "meme" ? selMeme() : null;
+  if (e.target.hasAttribute("data-force-save")){
+    cur().version = null;          // drop the guard for this one deliberate write
+    saveLibrary(); return;
+  }
   if (e.target.dataset.set){
-    applyEdit(e.target.dataset.set, e.target.dataset.val); render(); return;
+    applyEdit(e.target.dataset.set, e.target.dataset.val);
+    // "A note that says nobody looked is not proof nobody looked": 149 GIF
+    // entries sat at status verified while their own note still read "NOT yet
+    // eyeballed by Abram", because the old applier wrote status and left the
+    // note alone. Reviewing an entry makes that sentence false, so drop it.
+    if (e.target.dataset.set === "status" && e.target.dataset.val !== "candidate"){
+      const obj = S.tab === "meme" ? selMeme() : selGif().g;
+      if (obj && typeof obj.note === "string"){
+        const cleaned = obj.note
+          .replace(/AI-authored box semantics,\s*not yet reviewed by Abram\.\s*/i, "")
+          .replace(/NOT yet eyeballed by Abram\.?\s*/i, "")
+          .replace(/\s{2,}/g, " ").trim();
+        if (cleaned !== obj.note){ obj.note = cleaned; }
+      }
+    }
+    render(); scheduleAutoSave(); return;
   }
   const act = e.target.dataset.act;
   if (act === "box-add" && t){

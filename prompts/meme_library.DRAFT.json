@@ -2269,9 +2269,9 @@
         "subject-in-box",
         "schadenfreude"
       ],
-      "status": "candidate",
+      "status": "verified",
       "special_handling": null,
-      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+      "note": "Panel order confirmed by render 2026-09-15."
     },
     {
       "slug": "uno-draw-25-cards",
