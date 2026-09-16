@@ -254,11 +254,16 @@ def _rehost_image(api, url: str) -> str:
 def hydrate_tweets(blocks: List[Dict], api=None) -> Dict[str, Dict]:
     """Fetch metadata for every tweet block so embeds render fully.
 
-    When `api` is given, the link-card thumbnail is rehosted onto Substack's CDN
-    (see _rehost_image): a raw pbs.twimg.com/card_img url renders blank inside the
-    embed, so we mirror what Substack does on paste and upload it. Tweet PHOTOS need
-    no upload -- they render from a pbs.substack.com mirror url set in tweets._media.
-    A rehost failure falls back to the raw url."""
+    When `api` is given, both the link-card thumbnail AND every tweet photo are
+    rehosted onto Substack's CDN (see _rehost_image) -- a raw pbs.twimg.com url
+    renders blank/broken inside a programmatically-built embed. Tweet photos used
+    to skip this and instead point at a pbs.substack.com host-swap of the same url,
+    relying on Substack's proxy to fetch it on demand; that stopped rendering
+    reliably (broken-image icons in the published post, first seen 2026-09-16) even
+    though hydration itself succeeded -- the syndication fetch and full_text were
+    fine, so the per-tweet 'ok' log below never caught it. Uploading through the
+    same api.get_image() path already proven for card images and box scores fixes
+    it. A rehost failure falls back to the raw url (same as the card-image case)."""
     from tweets import fetch_tweet_attrs
 
     urls = [b["url"] for b in blocks if b["type"] == "tweet"]
@@ -267,12 +272,18 @@ def hydrate_tweets(blocks: List[Dict], api=None) -> Dict[str, Dict]:
     sess = _syndication_session()
     for i, url in enumerate(urls, 1):
         attrs = fetch_tweet_attrs(url, session=sess)
+        photo_count = len(attrs.get("photos") or [])
         if api:
             card = attrs.get("expanded_url")
             if card and card.get("image"):
                 card["image"] = _rehost_image(api, card["image"])
+            for photo in attrs.get("photos") or []:
+                if photo.get("img_url"):
+                    photo["img_url"] = _rehost_image(api, photo["img_url"])
         out[url] = attrs
-        print(f"  [{i}/{len(urls)}] {'ok   ' if attrs['full_text'] else 'EMPTY'} {url}")
+        status = "ok   " if attrs["full_text"] else "EMPTY"
+        media_note = f" ({photo_count} photo{'s' if photo_count != 1 else ''})" if photo_count else ""
+        print(f"  [{i}/{len(urls)}] {status} {url}{media_note}")
     return out
 
 
