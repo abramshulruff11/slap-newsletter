@@ -298,6 +298,16 @@ rule updates, or audit recent newsletters, read `feedback_log.md` first. The fil
 review ritual (instructions for Claude) and the active log of unresolved observations. Do not
 edit `rolling_feedback.txt` directly during review — propose changes for the user to integrate.
 
+**GIF/meme library work starts at `docs/library_expansion_handoff.md`:** read it before touching
+`prompts/gif_library.DRAFT.json`, `prompts/meme_library.DRAFT.json` or anything named
+`*_expand_probe.py` / `review_*.py` / `apply_*_decisions.py`. It carries the tooling map (all of
+it already exists — a session nearly rebuilt `review_gifs.py` from scratch by not checking), which
+steps need network to Giphy/Imgflip and so cannot run from a cloud session, and the failure modes
+worth not re-learning: the two library files use different JSON formatting and must be written
+through `library_json.dumps_matching_style()`; meme `status` gates nothing until
+`active_templates()` is respected; and a decisions export replays every verdict ever stored in that
+browser, so its row count is not the size of the review.
+
 **UAT before prod:** `uat/` has its own prompt copies. Changes are tested there, then promoted
 with `python -X utf8 uat/promote.py` — never by hand-copying, which is how the two trees drifted
 for months. It classifies each pair (identical / eol-only / uat-ahead / prod-ahead / diverged),
