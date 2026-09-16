@@ -16,32 +16,13 @@ Usage:
 
 import argparse
 import json
-import re
 import shutil
+import sys
 from datetime import datetime
 from pathlib import Path
 
-# Matches a JSON array whose every element is a plain string, as json.dumps
-# renders it across multiple lines. An array of objects opens with '{' and so
-# never matches.
-_STRING_ARRAY = re.compile(r'\[\n((?:\s*"(?:[^"\\]|\\.)*",?\n)+)\s*\]')
-
-
-def dumps_preserving_style(obj) -> str:
-    """json.dumps(indent=2), but keep arrays of plain strings on one line.
-
-    The library is hand-formatted with compact tags[]. Letting json.dumps
-    expand them turns a 19-status-change edit into a 2,000-line reflow that
-    buries what actually changed — and the diff is the only record of a
-    review pass.
-    """
-    text = json.dumps(obj, indent=2, ensure_ascii=False)
-
-    def collapse(match):
-        items = [line.strip() for line in match.group(1).splitlines() if line.strip()]
-        return "[" + " ".join(items) + "]"
-
-    return _STRING_ARRAY.sub(collapse, text)
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from library_json import dumps_matching_style  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 LIBRARY_PATH = REPO_ROOT / "prompts" / "gif_library.DRAFT.json"
@@ -85,7 +66,8 @@ def main():
         print("Decisions file has no entries — nothing to do.")
         return
 
-    library = json.loads(LIBRARY_PATH.read_text(encoding="utf-8"))
+    raw = LIBRARY_PATH.read_text(encoding="utf-8")
+    library = json.loads(raw)
     categories = library.get("categories", {})
 
     # Index every gif entry by id for fast lookup
@@ -140,7 +122,7 @@ def main():
     shutil.copy2(LIBRARY_PATH, backup_path)
     print(f"Backup written: {backup_path.name}")
 
-    LIBRARY_PATH.write_text(dumps_preserving_style(library), encoding="utf-8")
+    LIBRARY_PATH.write_text(dumps_matching_style(library, raw), encoding="utf-8")
     print(f"Applied {len(applied)} change(s) to {LIBRARY_PATH}")
 
 

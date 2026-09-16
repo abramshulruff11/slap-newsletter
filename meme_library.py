@@ -78,8 +78,21 @@ def get_template(slug: str, path: Path | None = None) -> dict | None:
     return None
 
 
+def active_templates(path: Path | None = None) -> list:
+    """Templates the model may still be offered.
+
+    A 'retired' template must disappear from the Pass 1 menu, from slug
+    validation and from rotation swaps — otherwise retiring one in the review
+    tool changes nothing and it keeps shipping, which is the same
+    flag-nobody-acts-on failure this repo keeps re-learning. get_template()
+    stays permissive on purpose: an already-planned slug must still resolve.
+    """
+    return [t for t in load_meme_library(path).get("templates", [])
+            if t.get("status") != "retired"]
+
+
 def valid_slugs(path: Path | None = None) -> set:
-    return {t["slug"] for t in load_meme_library(path).get("templates", [])}
+    return {t["slug"] for t in active_templates(path)}
 
 
 def collect_meme_slugs(story_plan: dict) -> list:
@@ -221,7 +234,7 @@ def engine_alternatives(slug: str, exclude: set | None = None,
     if not engine:
         return []
     exclude = (exclude or set()) | {slug}
-    return [o["slug"] for o in load_meme_library(path).get("templates", [])
+    return [o["slug"] for o in active_templates(path)
             if o.get("engine") == engine and o["slug"] not in exclude]
 
 
@@ -300,7 +313,7 @@ def build_selector_index(path: Path | None = None) -> str:
     data = load_meme_library(path)
     engines = data.get("_meta", {}).get("engines", {})
     by_engine: dict = {}
-    for t in data.get("templates", []):
+    for t in active_templates(path):
         by_engine.setdefault(t.get("engine", "_ungrouped"), []).append(t)
 
     out = [INDEX_HEADER]
