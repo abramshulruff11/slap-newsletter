@@ -210,6 +210,14 @@ const S = {
   // get_memes is the only thing that knows the mapping.
   templateImages: {},
 
+  // template_id -> Imgflip's OWN declared box_count. This is authoritative and
+  // is NOT ours to choose: meme_box_check.py checks the writer's captions
+  // against this number (live API first, library only as a fallback), and DROPS
+  // any meme that comes up short rather than shipping a blank panel. A library
+  // that says fewer boxes than Imgflip does therefore loses the meme silently.
+  // 16 templates were corrected for exactly this class of mismatch in Aug/Sep.
+  templateBoxCounts: {},
+
   // slug -> a real render of that template's worked example, from
   // uat/meme_review_cache.json (written by uat/review_memes.py --with-renders).
   // Better than a blank template for review: you see the joke, not the picture.
@@ -246,7 +254,10 @@ function subjectBoxesFromValence(t){
 }
 const sameSet = (a,b) => a.size===b.size && [...a].every(x => b.has(x));
 
-function validateMemes(data){
+// `liveCounts` is template_id -> Imgflip's declared box_count. Optional so the
+// offline Node suite can call this with no network; when supplied (always, in
+// the browser) it catches the most consequential meme bug this repo has.
+function validateMemes(data, liveCounts = {}){
   const errs = [];
   const ts = (data && data.templates) || [];
   const engines = ((data||{})._meta||{}).engines || {};
@@ -266,6 +277,14 @@ function validateMemes(data){
     const boxes = t.boxes || [];
     if (boxes.length !== t.box_count)
       errs.push(`${id}: box_count=${t.box_count} but ${boxes.length} boxes[]`);
+
+    const live = liveCounts[String(t.template_id)];
+    if (live !== undefined && live !== t.box_count)
+      errs.push(`${id}: Imgflip says this template has ${live} caption boxes, `
+              + `the library says ${t.box_count}. Imgflip wins — meme_box_check.py checks the `
+              + `writer's captions against Imgflip's count and DROPS the meme if it is short, `
+              + `so this mismatch loses every ${id} meme silently. Set it back to ${live} and `
+              + `change the box's PURPOSE instead if a box is doing the wrong job.`);
     if (boxes.some((b,i) => b.index !== i))
       errs.push(`${id}: box indexes must be 0..n-1 with no gaps`);
     if (boxes.some(b => !(b.purpose||"").trim()))
@@ -321,7 +340,9 @@ function validateGifs(data){
   }
   return errs;
 }
-const validate = () => S.tab === "meme" ? validateMemes(cur().data) : validateGifs(cur().data);
+const validate = () => S.tab === "meme"
+  ? validateMemes(cur().data, S.templateBoxCounts)
+  : validateGifs(cur().data);
 
 /* ===================================================================
    4. File open / save — File System Access API, with a fallback.
@@ -398,6 +419,7 @@ async function loadPreviewSources(){
   try{
     const memes = await imgflipCandidates();
     S.templateImages = Object.fromEntries(memes.map(m => [String(m.id), m.url]));
+    S.templateBoxCounts = Object.fromEntries(memes.map(m => [String(m.id), m.box_count]));
   }catch(e){
     console.warn("blank template images unavailable:", e.message);
   }
@@ -592,6 +614,7 @@ function memeEditor(){
   const engines = Object.keys((cur().data._meta||{}).engines||{});
   const blank = S.templateImages[String(t.template_id)] || "";
   const cached = S.renderCache[t.slug] || "";
+  const live = S.templateBoxCounts[String(t.template_id)];
   return `
   <div class="row" style="align-items:center">
     <div style="flex:0 0 auto"><span class="chip mono">${esc(t.template_id)}</span></div>
@@ -607,8 +630,16 @@ function memeEditor(){
   </div>
 
   <h2>Caption boxes <span class="tagline">(${t.box_count})</span></h2>
-  <div class="hint">Panel order is whatever Imgflip's index says, not top-to-bottom. The box that
-    names the subject must carry the word SUBJECT in capitals in its purpose.</div>
+  <div class="hint">
+    ${live === undefined
+      ? `Imgflip's live list does not cover this template, so its box count cannot be confirmed here.`
+      : live === t.box_count
+        ? `<strong>Imgflip says ${live} — matching.</strong> The count is the template's, not ours:
+           production checks the writer's captions against Imgflip's number and drops the meme if
+           it is short. To change what a box DOES, edit its purpose; do not remove it.`
+        : `<strong>Imgflip says ${live}, the library says ${t.box_count} — these must match.</strong>`}
+    Panel order is whatever Imgflip's index says, not top-to-bottom. The box that names the
+    subject must carry the word SUBJECT in capitals in its purpose.</div>
   ${(t.boxes||[]).map(b => `
     <div class="boxrow">
       <div class="ix">${b.index}</div>
@@ -617,9 +648,17 @@ function memeEditor(){
              placeholder="valence"></div>
     </div>`).join("")}
   <div class="row">
-    <button data-act="box-add">+ box</button>
-    <button data-act="box-del" class="danger"${(t.boxes||[]).length<=1?" disabled":""}>− box</button>
+    <button data-act="box-add"${live !== undefined && t.box_count >= live
+      ? ` disabled title="Imgflip says this template has ${live} boxes. Adding one would render nothing."`
+      : ""}>+ box</button>
+    <button data-act="box-del" class="danger"${
+      (t.boxes||[]).length <= 1 || (live !== undefined && t.box_count <= live)
+        ? ` disabled title="Imgflip says this template has ${live} boxes. Removing one makes production drop every ${t.slug} meme. Edit the box's purpose instead."`
+        : ""}>− box</button>
   </div>
+  ${live !== undefined && t.box_count === live ? `<div class="hint">
+    The box buttons are disabled because this template already matches Imgflip. That is the
+    correct state — a box doing the wrong job is fixed by rewriting its purpose above.</div>` : ""}
 
   <h2>Subject</h2>
   <div class="row">
@@ -960,7 +999,7 @@ $("editor").addEventListener("input", e => {
   // complaint on screen.
   const errs = validate();
   $("btnSave").disabled = errs.length > 0 || cur().roundTrip === false;
-  if (errs.length){
+  if (errs.length){  // eslint-disable-line
     banner("bad", `<strong>${errs.length} validation error${errs.length>1?"s":""}</strong>`
       + `<ul>${errs.slice(0,6).map(x=>`<li>${esc(x)}</li>`).join("")}`
       + `${errs.length>6?`<li>…and ${errs.length-6} more</li>`:""}</ul>`, "validation");

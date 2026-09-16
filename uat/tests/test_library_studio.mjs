@@ -127,6 +127,22 @@ check("catches a non-numeric template_id",
   F.validateMemes(broken(l => { l.templates[0].template_id = "drake"; }))
    .some(e => e.includes("numeric Imgflip id")));
 
+// The most consequential meme bug this repo has: meme_box_check.py scores the
+// writer's captions against IMGFLIP's box_count, not the library's, and drops a
+// short meme rather than shipping a blank panel. So a library that disagrees
+// with Imgflip loses every meme of that template, silently. 16 templates were
+// corrected for this in Aug/Sep 2026.
+check("catches the library disagreeing with Imgflip's box count",
+  F.validateMemes(meme, {[String(meme.templates[0].template_id)]: meme.templates[0].box_count + 1})
+   .some(e => e.includes("Imgflip says")));
+
+check("says nothing when the library and Imgflip agree",
+  F.validateMemes(meme, Object.fromEntries(
+    meme.templates.map(t => [String(t.template_id), t.box_count]))).length === 0);
+
+check("skips the Imgflip check for templates it has no live count for",
+  F.validateMemes(meme, {}).length === 0);
+
 check("catches an invalid GIF status",
   F.validateGifs(broken(l => {
     l.categories[Object.keys(l.categories)[0]].gifs[0].status = "maybe";
