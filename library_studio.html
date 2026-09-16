@@ -202,6 +202,18 @@ const S = {
   meme: {handle:null, name:"", raw:"", data:null, sel:null, dirty:false, roundTrip:null},
   gif:  {handle:null, name:"", raw:"", data:null, sel:null, dirty:false, roundTrip:null},
   candidates: null,     // Imgflip get_memes, fetched on demand
+
+  // template_id -> blank template image URL.
+  // NOT derivable from template_id: Imgflip serves blank templates under a
+  // short base-36 slug (drake is 181913649 but its image is 30b1gx.jpg), so
+  // https://i.imgflip.com/<template_id>.jpg is a 404 for EVERY template.
+  // get_memes is the only thing that knows the mapping.
+  templateImages: {},
+
+  // slug -> a real render of that template's worked example, from
+  // uat/meme_review_cache.json (written by uat/review_memes.py --with-renders).
+  // Better than a blank template for review: you see the joke, not the picture.
+  renderCache: {},
 };
 const cur = () => S[S.tab];
 const $ = id => document.getElementById(id);
@@ -378,6 +390,26 @@ async function autoLoad(){
   if (bad.length) return reportLoad(bad[0]);
   banner("ok", `Loaded ${loaded.map(k => esc(LIB_PATHS[k].split("/").pop())).join(" and ")}. `
     + `Both round-trip byte-for-byte, so a save shows only your edits. Save writes straight to disk.`);
+}
+
+// Blank-template URLs and pre-rendered worked examples. Both are optional:
+// the page is fully usable without either, so neither failure is fatal.
+async function loadPreviewSources(){
+  try{
+    const memes = await imgflipCandidates();
+    S.templateImages = Object.fromEntries(memes.map(m => [String(m.id), m.url]));
+  }catch(e){
+    console.warn("blank template images unavailable:", e.message);
+  }
+  if (SERVED){
+    try{
+      const r = await fetch("uat/meme_review_cache.json?t=" + Date.now());
+      if (r.ok) S.renderCache = await r.json();
+    }catch(e){
+      console.warn("render cache unavailable:", e.message);
+    }
+  }
+  if (S.tab === "meme" && cur().sel !== null) drawEditor();
 }
 
 async function openLibrary(){
@@ -558,7 +590,8 @@ function statusButtons(val, path){
 function memeEditor(){
   const t = selMeme();
   const engines = Object.keys((cur().data._meta||{}).engines||{});
-  const blank = `https://i.imgflip.com/${t.template_id}.jpg`;
+  const blank = S.templateImages[String(t.template_id)] || "";
+  const cached = S.renderCache[t.slug] || "";
   return `
   <div class="row" style="align-items:center">
     <div style="flex:0 0 auto"><span class="chip mono">${esc(t.template_id)}</span></div>
@@ -628,13 +661,29 @@ function memeEditor(){
 
   <h2>Preview</h2>
   <div class="prev">
-    <div><img src="${blank}" alt="blank template" loading="lazy">
-      <div class="hint">blank template</div></div>
-    <div><img id="renderImg" alt="rendered worked example" loading="lazy"
-           style="display:none">
-      <div><button data-act="render">Render worked example</button></div>
-      <div class="hint" id="renderHint">Captions the template with the worked example above, via Imgflip.
-        Needs your Imgflip login once; it is kept in this browser only.</div></div>
+    <div>
+      ${cached
+        ? `<img src="${esc(cached)}" alt="worked example rendered" loading="lazy">`
+        : `<div class="msg warn" style="width:300px">No cached render for this template yet.
+             Use the button to make one.</div>`}
+      <div class="hint">the worked example, actually rendered — check each caption
+        landed in the panel its purpose describes</div>
+    </div>
+    <div>
+      ${blank
+        ? `<img src="${esc(blank)}" alt="blank template" loading="lazy">`
+        : `<div class="msg warn" style="width:300px">Blank template not available —
+             this one is outside Imgflip's top-100, which is the only place the
+             blank image URL can be looked up.</div>`}
+      <div class="hint">blank template</div>
+    </div>
+    <div style="flex:1 1 220px">
+      <img id="renderImg" alt="freshly rendered worked example" loading="lazy" style="display:none">
+      <div><button data-act="render">Re-render worked example</button></div>
+      <div class="hint" id="renderHint">The cached render is from the last time this template's
+        worked example was rendered — if you have edited the captions, re-render to see them.
+        Needs your Imgflip login once; it stays in this browser.</div>
+    </div>
   </div>`;
 }
 
@@ -866,6 +915,7 @@ async function renderWorked(){
     if (!j.success) throw new Error(j.error_message||"unknown error");
     const img = $("renderImg");
     img.src = j.data.url; img.style.display = "";
+    S.renderCache[t.slug] = j.data.url;   // so switching away and back keeps it
     $("renderHint").textContent = "Rendered just now. Check each caption landed in the panel its purpose describes.";
   }catch(e){
     $("renderHint").textContent = "";
@@ -946,7 +996,7 @@ window.addEventListener("beforeunload", e => {
 
 if (SERVED){
   render();
-  autoLoad();
+  autoLoad().then(loadPreviewSources);
 } else {
   // file:// — the File System Access API is unavailable here no matter the
   // browser, because it requires a secure context. Say so plainly rather than
@@ -960,5 +1010,6 @@ if (SERVED){
     + `context: both libraries load automatically and Save writes straight to disk. Same one gesture, `
     + `no terminal.`);
   render();
+  loadPreviewSources();
 }
 </script>
