@@ -1,0 +1,456 @@
+CURATED_TEMPLATES currently has 30 entries.
+
+======================================================================
+IMGFLIP get_memes: 100 templates checked, showing ones NOT already in CURATED_TEMPLATES
+======================================================================
+
+  name: UNO Draw 25 Cards
+    suggested slug: uno-draw-25-cards
+    template_id: 217743513
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/217743513
+
+  name: Running Away Balloon
+    suggested slug: running-away-balloon
+    template_id: 131087935
+    box_count (per Imgflip): 5
+    page: https://imgflip.com/meme/131087935
+
+  name: Sad Pablo Escobar
+    suggested slug: sad-pablo-escobar
+    template_id: 80707627
+    box_count (per Imgflip): 3
+    page: https://imgflip.com/meme/80707627
+
+  name: Disaster Girl
+    suggested slug: disaster-girl
+    template_id: 97984
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/97984
+
+  name: Batman Slapping Robin
+    suggested slug: batman-slapping-robin
+    template_id: 438680
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/438680
+
+  name: Y'all Got Any More Of That
+    suggested slug: y-all-got-any-more-of-that
+    template_id: 124055727
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/124055727
+
+  name: X, X Everywhere
+    suggested slug: x-x-everywhere
+    template_id: 91538330
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/91538330
+
+  name: Ancient Aliens
+    suggested slug: ancient-aliens
+    template_id: 101470
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/101470
+
+  name: Bernie Sanders Once Again Asking
+    suggested slug: bernie-sanders-once-again-asking
+    template_id: 224015000
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/224015000
+
+  name: Marked Safe From
+    suggested slug: marked-safe-from
+    template_id: 161865971
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/161865971
+
+  name: Bike Fall
+    suggested slug: bike-fall
+    template_id: 79132341
+    box_count (per Imgflip): 3
+    page: https://imgflip.com/meme/79132341
+
+  name: Absolute Cinema
+    suggested slug: absolute-cinema
+    template_id: 505705955
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/505705955
+
+  name: You Guys are Getting Paid
+    suggested slug: you-guys-are-getting-paid
+    template_id: 177682295
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/177682295
+
+  name: 0 days without (Lenny, Simpsons)
+    suggested slug: 0-days-without-lenny-simpsons
+    template_id: 427308417
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/427308417
+
+  name: Mother Ignoring Kid Drowning In A Pool
+    suggested slug: mother-ignoring-kid-drowning-in-a-pool
+    template_id: 252758727
+    box_count (per Imgflip): 4
+    page: https://imgflip.com/meme/252758727
+
+  name: This Is Where I'd Put My Trophy If I Had One
+    suggested slug: this-is-where-i-d-put-my-trophy-if-i-had-one
+    template_id: 3218037
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/3218037
+
+  name: Tuxedo Winnie The Pooh
+    suggested slug: tuxedo-winnie-the-pooh
+    template_id: 178591752
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/178591752
+
+  name: Oprah You Get A
+    suggested slug: oprah-you-get-a
+    template_id: 28251713
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/28251713
+
+  name: Squidward window
+    suggested slug: squidward-window
+    template_id: 67452763
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/67452763
+
+  name: Megamind peeking
+    suggested slug: megamind-peeking
+    template_id: 370867422
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/370867422
+
+  name: Pawn Stars Best I Can Do
+    suggested slug: pawn-stars-best-i-can-do
+    template_id: 77045868
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/77045868
+
+  name: George Bush 9/11
+    suggested slug: george-bush-9-11
+    template_id: 208915813
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/208915813
+
+  name: Bell Curve
+    suggested slug: bell-curve
+    template_id: 533936279
+    box_count (per Imgflip): 3
+    page: https://imgflip.com/meme/533936279
+
+  name: I Bet He's Thinking About Other Women
+    suggested slug: i-bet-he-s-thinking-about-other-women
+    template_id: 110163934
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/110163934
+
+  name: where monkey
+    suggested slug: where-monkey
+    template_id: 316466202
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/316466202
+
+  name: Soldier protecting sleeping child
+    suggested slug: soldier-protecting-sleeping-child
+    template_id: 171305372
+    box_count (per Imgflip): 3
+    page: https://imgflip.com/meme/171305372
+
+  name: Roll Safe Think About It
+    suggested slug: roll-safe-think-about-it
+    template_id: 89370399
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/89370399
+
+  name: Spider Man Triple
+    suggested slug: spider-man-triple
+    template_id: 206151308
+    box_count (per Imgflip): 3
+    page: https://imgflip.com/meme/206151308
+
+  name: Friendship ended
+    suggested slug: friendship-ended
+    template_id: 137501417
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/137501417
+
+  name: Two guys on a bus
+    suggested slug: two-guys-on-a-bus
+    template_id: 354700819
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/354700819
+
+  name: Imagination Spongebob
+    suggested slug: imagination-spongebob
+    template_id: 163573
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/163573
+
+  name: They don't know
+    suggested slug: they-don-t-know
+    template_id: 284929871
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/284929871
+
+  name: Boardroom Meeting Suggestion
+    suggested slug: boardroom-meeting-suggestion
+    template_id: 1035805
+    box_count (per Imgflip): 4
+    page: https://imgflip.com/meme/1035805
+
+  name: Types of Headaches meme
+    suggested slug: types-of-headaches-meme
+    template_id: 119215120
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/119215120
+
+  name: All My Homies Hate
+    suggested slug: all-my-homies-hate
+    template_id: 216523697
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/216523697
+
+  name: Flex Tape
+    suggested slug: flex-tape
+    template_id: 166969924
+    box_count (per Imgflip): 3
+    page: https://imgflip.com/meme/166969924
+
+  name: You know, I'm something of a scientist myself
+    suggested slug: you-know-i-m-something-of-a-scientist-myself
+    template_id: 133946291
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/133946291
+
+  name: Sleeping Shaq
+    suggested slug: sleeping-shaq
+    template_id: 99683372
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/99683372
+
+  name: Inhaling Seagull
+    suggested slug: inhaling-seagull
+    template_id: 114585149
+    box_count (per Imgflip): 4
+    page: https://imgflip.com/meme/114585149
+
+  name: A train hitting a school bus
+    suggested slug: a-train-hitting-a-school-bus
+    template_id: 247113703
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/247113703
+
+  name: Evil Kermit
+    suggested slug: evil-kermit
+    template_id: 84341851
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/84341851
+
+  name: Anime Girl Hiding from Terminator
+    suggested slug: anime-girl-hiding-from-terminator
+    template_id: 224514655
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/224514655
+
+  name: Scooby doo mask reveal
+    suggested slug: scooby-doo-mask-reveal
+    template_id: 145139900
+    box_count (per Imgflip): 4
+    page: https://imgflip.com/meme/145139900
+
+  name: Megamind no bitches
+    suggested slug: megamind-no-bitches
+    template_id: 371619279
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/371619279
+
+  name: Three-headed Dragon
+    suggested slug: three-headed-dragon
+    template_id: 187102311
+    box_count (per Imgflip): 4
+    page: https://imgflip.com/meme/187102311
+
+  name: Grandma Finds The Internet
+    suggested slug: grandma-finds-the-internet
+    template_id: 61556
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/61556
+
+  name: AJ Styles & Undertaker
+    suggested slug: aj-styles-undertaker
+    template_id: 234202281
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/234202281
+
+  name: Grant Gustin over grave
+    suggested slug: grant-gustin-over-grave
+    template_id: 221578498
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/221578498
+
+  name: No - Yes
+    suggested slug: no-yes
+    template_id: 129315248
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/129315248
+
+  name: Laughing Leo
+    suggested slug: laughing-leo
+    template_id: 259237855
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/259237855
+
+  name: Whisper and Goosebumps
+    suggested slug: whisper-and-goosebumps
+    template_id: 101956210
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/101956210
+
+  name: spiderman pointing at spiderman
+    suggested slug: spiderman-pointing-at-spiderman
+    template_id: 110133729
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/110133729
+
+  name: Domino Effect
+    suggested slug: domino-effect
+    template_id: 162372564
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/162372564
+
+  name: is this butterfly
+    suggested slug: is-this-butterfly
+    template_id: 142009471
+    box_count (per Imgflip): 3
+    page: https://imgflip.com/meme/142009471
+
+  name: Blank Nut Button
+    suggested slug: blank-nut-button
+    template_id: 119139145
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/119139145
+
+  name: Star Wars Yoda
+    suggested slug: star-wars-yoda
+    template_id: 14371066
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/14371066
+
+  name: Futurama Fry
+    suggested slug: futurama-fry
+    template_id: 61520
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/61520
+
+  name: Two Paths
+    suggested slug: two-paths
+    template_id: 309668311
+    box_count (per Imgflip): 3
+    page: https://imgflip.com/meme/309668311
+
+  name: Third World Skeptical Kid
+    suggested slug: third-world-skeptical-kid
+    template_id: 101288
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/101288
+
+  name: say the line bart! simpsons
+    suggested slug: say-the-line-bart-simpsons
+    template_id: 72525473
+    box_count (per Imgflip): 3
+    page: https://imgflip.com/meme/72525473
+
+  name: American Chopper Argument
+    suggested slug: american-chopper-argument
+    template_id: 134797956
+    box_count (per Imgflip): 5
+    page: https://imgflip.com/meme/134797956
+
+  name: Grim Reaper Knocking Door
+    suggested slug: grim-reaper-knocking-door
+    template_id: 104893621
+    box_count (per Imgflip): 3
+    page: https://imgflip.com/meme/104893621
+
+  name: I'm The Captain Now
+    suggested slug: i-m-the-captain-now
+    template_id: 29562797
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/29562797
+
+  name: Charlie Conspiracy (Always Sunny in Philidelphia)
+    suggested slug: charlie-conspiracy-always-sunny-in-philidelphia
+    template_id: 92084495
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/92084495
+
+  name: Drake Blank
+    suggested slug: drake-blank
+    template_id: 91998305
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/91998305
+
+  name: whe i'm in a competition and my opponent is
+    suggested slug: whe-i-m-in-a-competition-and-my-opponent-is
+    template_id: 360597639
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/360597639
+
+  name: Bad Luck Brian
+    suggested slug: bad-luck-brian
+    template_id: 61585
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/61585
+
+  name: The Scroll Of Truth
+    suggested slug: the-scroll-of-truth
+    template_id: 123999232
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/123999232
+
+  name: Wolverine Remember
+    suggested slug: wolverine-remember
+    template_id: 47169131
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/47169131
+
+  name: Look At Me
+    suggested slug: look-at-me
+    template_id: 29617627
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/29617627
+
+  name: c'mon do something
+    suggested slug: c-mon-do-something
+    template_id: 20007896
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/20007896
+
+  name: Leonardo Dicaprio Cheers
+    suggested slug: leonardo-dicaprio-cheers
+    template_id: 5496396
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/5496396
+
+  name: Gus Fring we are not the same
+    suggested slug: gus-fring-we-are-not-the-same
+    template_id: 342785297
+    box_count (per Imgflip): 3
+    page: https://imgflip.com/meme/342785297
+
+  name: Trump Bill Signing
+    suggested slug: trump-bill-signing
+    template_id: 91545132
+    box_count (per Imgflip): 2
+    page: https://imgflip.com/meme/91545132
+
+======================================================================
+Done. 74 new candidates out of 100 checked.
+Nothing was written — this only read from Imgflip's public API.
+Paste this whole output back to Claude for fit judgement + box
+semantics. Still run uat/probe_meme_box_order.py on anything you
+seriously consider before trusting panel ORDER, not just box_count.

@@ -1,6 +1,7 @@
 # GIF + Meme Library Expansion — Handoff to a Local Session
 
 **Branch:** `claude/expand-meme-gif-library-wb0j4h` (7 commits ahead of `main`, 0 behind as of 2026-09-16)
+**Updated:** 2026-09-15 by a local session, which ran the meme expansion round described below.
 **Written by:** a Claude Code **cloud** session, for a Claude Code session running **on Abram's machine**.
 
 ---
@@ -38,33 +39,75 @@ Thinnest categories (selectable entries): `betrayal_self_sabotage=3`,
 `domination=4`, `denial_copium=6`, `debate_takes=7`. If another expansion round
 happens, start there.
 
-### Meme library — `prompts/meme_library.DRAFT.json` — REVIEW IN FLIGHT
-30 templates, all still `candidate` **in this branch**. Template ids and
+### Meme library — `prompts/meme_library.DRAFT.json` — EXPANDED 2026-09-15, REVIEW STILL OPEN
+**44 templates across 21 engines**, all still `candidate`. Template ids and
 `box_count` were verified against Imgflip's live API on 2026-08-27; panel ORDER
 by render probe on 2026-09-01. Zero `role_unverified` / `box_count_unverified`
 flags remain. **Do not redo that work.** What has never been reviewed is the
 *semantics*: whether box purposes, the valence rule and the examples describe a
 joke that lands.
 
+**The 2026-09-15 round added 14 templates and 5 engines.** They were chosen by
+comparing *demand against supply* rather than by picking popular templates:
+`meme_history.json` holds 54 memes over 28 days (~1.9/day), and grouping those
+by engine shows where rotation was starving. `emotional_whiplash` had been used
+5 times against **one** template; `lopsided_exchange` 4 times against one;
+`denial_amid_disaster` 7 times against two. With ~13 meme slots a week and a
+7-day cooldown, a depth-1 engine gets repeated by construction — and
+`swap_cooled_templates()` can only swap *within* an engine, so depth 1 means the
+repeat is kept. Re-run that comparison before the next round; it is three lines
+of `collections.Counter` over `meme_history.json` joined to each template's
+`engine`.
+
+Added: `pawn-stars-best-i-can-do` (lopsided_exchange 1→2),
+`gus-fring-we-are-not-the-same` (hardened_vs_soft 2→3), `laughing-leo`
+(contempt_face_off 2→3), `uno-draw-25-cards` (subject_abandons 3→4), `bike-fall`
+(self_inflicted 3→4), `roll-safe-think-about-it` (obliviousness_gap 3→4), plus
+five new engines: `simple_take_vindicated` (bell-curve), `mismatched_response`
+(flex-tape, mother-ignoring-kid-drowning), `outside_looking_in`
+(squidward-window, two-guys-on-a-bus), `truth_refused` (the-scroll-of-truth,
+charlie-conspiracy) and `obligatory_ritual` (say-the-line-bart).
+
+**Still depth-1 and still the two hungriest engines: `emotional_whiplash`
+(panik-kalm-panik, 5 uses) and `forced_choice_dilemma` (two-buttons, 3 uses).**
+Nothing in Imgflip's top-100 is an honest sibling for either — whiplash needs a
+genuine three-beat worry/relief/worse-worry, and two-buttons needs two
+*same-valence* options with the choice not yet made. Deliberately left alone
+rather than filled with a bad fit, which is the failure mode `_meta.engines`
+warns about. If you want them filled, the search has to go outside the top-100,
+which means an id that `get_memes` cannot confirm — render it and count panels
+before writing any semantics.
+
 ---
 
 ## Outstanding work
 
-1. **Abram ran the meme review locally and the result was never pushed.** As of
-   this writing the branch shows no commit applying it, so
-   `prompts/meme_library.DRAFT.json` and `prompts/meme_selector_index.txt` may
-   be modified in his working tree. **Check `git status` first.** If they are
-   dirty, that is the review — commit and push it rather than regenerating
-   anything:
+1. **The meme semantic review has still not been applied.** Checked on
+   2026-09-15 from the local machine: the working tree was **clean** and all
+   templates read `status: candidate`. So the earlier note that Abram's review
+   might be sitting unpushed in his working tree is settled — there was nothing
+   there to rescue. The review has to be done (or redone) from the page.
+
+   `uat/meme_review.html` has been rebuilt with `--with-renders` and now covers
+   all 44 templates, each captioned with its own worked example so the joke can
+   be seen rather than inferred. Open it, mark Verify/Retire, Export Decisions,
+   then:
    ```bash
-   git add prompts/meme_library.DRAFT.json prompts/meme_selector_index.txt
-   git commit -m "Apply meme semantic review"
+   python -X utf8 uat/apply_meme_decisions.py
    ```
+   Remember the export replays every decision ever made in that browser — check
+   `new_status` against the library's current status to see what actually
+   changed.
 
-2. **The meme expansion round has not started.** Nobody has run
-   `meme_library_expand_probe.py` yet. See the workflow below.
+2. **The meme expansion round is DONE for this pass** (see above). The probe
+   output is committed as `probe_candidates.txt` — 74 candidates, of which 14
+   were taken. The 60 left over are still there with real ids and box counts, so
+   the next round does not need to re-probe unless Imgflip's top-100 has moved.
 
----
+3. **The GIF library was not touched in this pass.** It remains as described
+   above: 223 entries, 0 candidates, reviewed 9/15. Thinnest categories are
+   still `betrayal_self_sabotage=3`, `domination=4`, `denial_copium=6`,
+   `debate_takes=7`.
 
 ## Tooling map — check here before building anything
 
@@ -156,6 +199,25 @@ are gitignored — they rebuild from the tracked library files.
   Abram" — they had been reviewed, but the old applier wrote `status` and left
   the note alone. `apply_gif_decisions.py` now strips that marker from any entry
   it touches. All 209 are cleared; the count is 0.
+
+- **Imgflip renders can be looked at, and should be.** A local session can
+  caption any template with positional markers (`BOX 0`, `BOX 1`, ...), download
+  the JPG and *read the image*. Every one of the 14 templates added on
+  2026-09-15 had its panel order settled that way before a single box semantic
+  was written, and two were not what a reasonable guess would have said:
+  `flex-tape`'s index 2 is the man in the TOP panel (index 1 is the tape in the
+  bottom one), and `mother-ignoring-kid-drowning`'s index 2 is the mother, not
+  the drowning child. Both would have shipped inverted jokes. This is strictly
+  better than `probe_meme_box_order.py`'s review page when you only need a
+  handful, and it is why none of the new entries carries `role_unverified`.
+  One gotcha: `i.imgflip.com` returns **403 to urllib's default User-Agent**.
+  Send a browser UA (`requests.get(url, headers={"User-Agent": "Mozilla/5.0 ..."})`)
+  or the download fails while the render itself succeeded.
+
+- **Two suites fail on `main`, not one.** `test_history_dedup.py` is the known
+  one. `test_run_quality.py` also fails, and did so on a detached checkout of
+  `c54891e` with no working-tree changes — verified 2026-09-15. 10 of the 12
+  offline suites pass. Neither is library work; do not fix them as part of it.
 
 - **`test_history_dedup.py` fails on `main`.** Verified against a clean
   `origin/main` worktree — `is_recently_used sees a same-run entry: expected

@@ -7,7 +7,7 @@
     "subject_is_mandatory": "Every template requires a subject -- the person/team/org the meme is about. subject.placement is either 'box:N' (a caption box names them) or 'copy' (the surrounding prose must). Where placement is 'copy', subject.rule is a HARD requirement: the subject must be named in the sentence immediately before or after the meme, and if no specific subject can be named the template must not be used. ENFORCEMENT GAP: pass2_writer.txt does not currently carry this rule and nothing validates it. See open_questions_for_review.",
     "engine_axis": "'engine' is the shared comedic mechanism -- templates in one engine share comedic_engine, valence_rule, key_test and failure_mode (defined once under _meta.engines). 'pattern_type' is the separate structural axis: how captions map onto physical panels. Two templates can share an engine but differ in pattern_type (drake vs distracted-boyfriend) or vice versa. The taxonomy is open -- add a new engine rather than force a bad fit.",
     "examples_are_illustrative": "worked_example and anti_example captions demonstrate SHAPE ONLY. They are NOT factual claims and must never be reused as source material. Real captions must be built from game_state.json ground truth. Corrected 2026-09-04: nine worked examples still carried the caption shape from BEFORE the 2026-08-27 / 2026-09-01 render corrections -- five were simply short, and four (epic-handshake, eric-andre-shooting, is-this-a-pigeon, surprised-pikachu) had captions in the wrong boxes. Three valence rules had the same problem. uat/tests/test_meme_library.py now fails on any disagreement between valence, the examples, and boxes[].",
-    "box_count_convention": "box_count is the template's TRUE physical caption count, taken from Imgflip's live get_memes API on 2026-08-27 (authoritative). Entries carrying box_count_source were corrected against it. Boxes flagged role_unverified have a correct COUNT but an inferred panel ORDER -- a single real render settles each.",
+    "box_count_convention": "box_count is the template's TRUE physical caption count, taken from Imgflip's live get_memes API on 2026-08-27 (authoritative). Entries carrying box_count_source were corrected against it. Boxes flagged role_unverified have a correct COUNT but an inferred panel ORDER -- a single real render settles each. The 14 templates added 2026-09-15 took box_count from the same live API (meme_library_expand_probe.py) and had their panel ORDER confirmed by rendering marker captions and inspecting the image, so none carries role_unverified. flex-tape and mother-ignoring-kid-drowning were both non-obvious: flex-tape's index 2 is in the TOP panel, and the pool's index 2 is the mother rather than the drowning child.",
     "open_questions_for_review": "Panel ORDER verified by render 2026-08-27 for 11 of 12 flagged templates. Confirmed as inferred: left-exit-12-off-ramp, is-this-a-pigeon, buff-doge-vs-cheems, first-time, ight-imma-head-out. CORRECTED: eric-andre-shooting (subject box:2->box:0), trade-offer (subject box:0->box:2), epic-handshake (clasp is box 0, not box 2), surprised-pikachu (3 stacked caption lines, face uncaptioned), corporates-want-you-to-find-the-difference (box 2 is the observer; the verdict line is pre-printed), vince-mcmahon-reaction (box_count 4 -> 5; the old 4 shipped a blank payoff panel). spider-man-pointing-at-spider-man resolved 2026-09-01: exactly 2 boxes (top/bottom, centre-aligned, not on the figures). The earlier probes looked incoherent because Imgflip renders only the first and last of an over-long box list. No panel-order questions remain open. On 2026-09-01 the last three caveats were settled by render: two-buttons confirmed as written (subject box:2); distracted-boyfriend CORRECTED -- subject is box 1, not box 2, and boxes 0/2 were reversed (0 is the new temptation, 2 the established thing); spider-man-pointing-at-spider-man confirmed at 2 boxes. No panel-order questions remain.",
     "engines": {
       "subject_abandons_sensible_for_funky": {
@@ -19,7 +19,8 @@
         "members": [
           "drake",
           "distracted-boyfriend",
-          "left-exit-12-off-ramp"
+          "left-exit-12-off-ramp",
+          "uno-draw-25-cards"
         ]
       },
       "self_inflicted_realization": {
@@ -31,7 +32,8 @@
         "members": [
           "gru-plan",
           "clown-applying-makeup",
-          "eric-andre-shooting"
+          "eric-andre-shooting",
+          "bike-fall"
         ]
       },
       "never_arrives": {
@@ -55,7 +57,8 @@
         "members": [
           "surprised-pikachu",
           "always-has-been",
-          "is-this-a-pigeon"
+          "is-this-a-pigeon",
+          "roll-safe-think-about-it"
         ]
       },
       "escalating_ladder": {
@@ -88,7 +91,8 @@
         "failure_mode": "Writing both sides at equal intensity, which flattens it into a generic argument.",
         "members": [
           "mocking-spongebob",
-          "woman-yelling-at-cat"
+          "woman-yelling-at-cat",
+          "laughing-leo"
         ]
       },
       "awkward_exit_or_evasion": {
@@ -121,7 +125,8 @@
         "failure_mode": "Two parties with equivalent experience, which erases the gap the template needs.",
         "members": [
           "buff-doge-vs-cheems",
-          "first-time"
+          "first-time",
+          "gus-fring-we-are-not-the-same"
         ]
       },
       "forced_choice_dilemma": {
@@ -141,7 +146,8 @@
         "key_test": "Would anyone actually accept this deal?",
         "failure_mode": "Writing a balanced trade, which is just a transaction description.",
         "members": [
-          "trade-offer"
+          "trade-offer",
+          "pawn-stars-best-i-can-do"
         ]
       },
       "understated_difficulty": {
@@ -183,9 +189,62 @@
         "members": [
           "change-my-mind"
         ]
+      },
+      "simple_take_vindicated": {
+        "summary": "Three readings of one question: the blunt take, the over-thought take, and the blunt take again -- vindicated.",
+        "comedic_engine": "The two ends agree and only the middle is working hard. The analysis is the butt of the joke, not the answer.",
+        "valence_rule": "The two ends MUST land on the SAME conclusion, close to word-for-word. The middle MUST be more sophisticated AND more wrong.",
+        "key_test": "Is the simple take actually correct? If the analysis is right and the simple take is wrong, this engine inverts and dies.",
+        "failure_mode": "Three different takes with no repeat, which is a list of opinions rather than a curve.",
+        "members": [
+          "bell-curve"
+        ]
+      },
+      "mismatched_response": {
+        "summary": "The response is wildly out of proportion to the problem -- a trivial patch on a catastrophe, or attention lavished on the wrong thing while the real one drowns.",
+        "comedic_engine": "The subject is visibly doing something, which is what makes it worse than doing nothing. Effort aimed at the wrong target.",
+        "valence_rule": "The problem MUST be real and large, and the response MUST be plainly too small or aimed elsewhere. If the response would actually work, there is no joke.",
+        "key_test": "Would a neutral observer say the response is proportionate? If yes, wrong engine.",
+        "failure_mode": "Writing a fix that is merely imperfect rather than absurdly undersized, which reads as ordinary criticism.",
+        "members": [
+          "flex-tape",
+          "mother-ignoring-kid-drowning"
+        ]
+      },
+      "outside_looking_in": {
+        "summary": "One event, two seats: someone is inside it and someone is shut out or stuck with the worse view.",
+        "comedic_engine": "The gap between the two seats, not the event. The excluded party knowing exactly what they are missing is what stings.",
+        "valence_rule": "Both sides MUST be looking at the SAME thing. The shut-out side MUST have had a credible claim to be inside it, or the exclusion is unremarkable.",
+        "key_test": "Would the shut-out party reasonably have expected to be in it?",
+        "failure_mode": "Two unrelated situations placed side by side, which is a comparison rather than an exclusion.",
+        "members": [
+          "squidward-window",
+          "two-guys-on-a-bus"
+        ]
+      },
+      "truth_refused": {
+        "summary": "The subject is handed a plain, accurate answer and will not take it -- either discarding it outright or building something elaborate in its place.",
+        "comedic_engine": "The effort spent avoiding a one-sentence truth. The work of the avoidance is funnier than the truth itself.",
+        "valence_rule": "The refused truth MUST be accurate and plainly stated. If it is an insult rather than a fact, the meme punches instead of landing.",
+        "key_test": "Is there a simple true answer the subject is visibly stepping around?",
+        "failure_mode": "Writing the 'truth' as an opinion, which turns the refusal into a reasonable disagreement.",
+        "members": [
+          "the-scroll-of-truth",
+          "charlie-conspiracy"
+        ]
+      },
+      "obligatory_ritual": {
+        "summary": "A thing said or done every single year, on cue, by someone visibly tired of saying it.",
+        "comedic_engine": "The weariness of the performer against the undimmed delight of the crowd. Everyone knows the line is coming and it works anyway.",
+        "valence_rule": "The line MUST be genuinely recurring -- an annual or seasonal fixture the audience can recite. A one-off statement has no ritual in it.",
+        "key_test": "Has this happened in at least two prior seasons?",
+        "failure_mode": "Using it for a first-time event, which leaves the crowd nothing to be anticipating.",
+        "members": [
+          "say-the-line-bart"
+        ]
       }
     },
-    "template_count": 30,
+    "template_count": 44,
     "generated_by": "Claude (AI-authored; every entry status='candidate')."
   },
   "templates": [
@@ -2036,6 +2095,844 @@
         "dare"
       ],
       "note": "AI-authored box semantics, not yet reviewed by Abram."
+    },
+    {
+      "slug": "pawn-stars-best-i-can-do",
+      "template_id": "77045868",
+      "category": "domination_superiority",
+      "engine": "lopsided_exchange",
+      "pattern_type": "ask_then_lowball",
+      "box_count": 2,
+      "subject": {
+        "required": true,
+        "who": "The party making the insulting counteroffer -- the front office, league, or buyer holding the leverage.",
+        "placement": "copy",
+        "rule": "MUST be named in the sentence immediately before or after the meme. If you cannot name who is lowballing, do not use this template.",
+        "note": "Rick is the stand-in for the lowballer; the boxes carry the ask and the offer only."
+      },
+      "comedic_engine": "A legitimate, defensible ask meets a counteroffer so small it is funnier than a refusal.",
+      "valence": "Box 0 MUST be an ask a reasonable person would defend. Box 1 MUST be transparently less than the thing is worth. Never write box 1 as a fair offer -- a sensible counter is a negotiation, not a joke.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "what the other side walked in asking for, stated straight",
+          "valence": "positive -- must read as a legitimate ask"
+        },
+        {
+          "index": 1,
+          "purpose": "the lowball that comes back, in 'best I can do is ...' shape",
+          "valence": "negative -- insultingly small against box 0"
+        }
+      ],
+      "use_when": "A named party answered a reasonable ask -- a contract demand, a trade request, a fine, a settlement -- with something conspicuously insulting.",
+      "do_not_use_when": "The two sides are close, or the ask itself was unreasonable. If the lowball is justified, the audience sides with the lowballer and there is no joke.",
+      "worked_example": {
+        "subject": "The Bengals front office",
+        "boxes": [
+          "FOUR YEARS, FULLY GUARANTEED, TOP-FIVE AT THE POSITION",
+          "BEST I CAN DO IS A THIRD-YEAR OPTION AND A FIRM HANDSHAKE"
+        ],
+        "why_it_lands": "Box 0 is what any comparable player actually gets. Box 1 is the gap, in the show's own deadpan cadence."
+      },
+      "anti_example": {
+        "boxes": [
+          "A FIVE-YEAR EXTENSION",
+          "A FOUR-YEAR EXTENSION"
+        ],
+        "why_it_fails": "The counteroffer is close to the ask. Lopsided exchange needs a gap big enough to be embarrassing; this is just a negotiation."
+      },
+      "selector_line": "Reasonable ask answered with an insulting counteroffer. Box 0 = the ask, box 1 = the lowball.",
+      "tags": [
+        "negotiation",
+        "lowball",
+        "contract",
+        "trade",
+        "subject-implied",
+        "deadpan"
+      ],
+      "status": "candidate",
+      "special_handling": null,
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "gus-fring-we-are-not-the-same",
+      "template_id": "342785297",
+      "category": "domination_superiority",
+      "engine": "hardened_vs_soft",
+      "pattern_type": "same_act_different_class",
+      "box_count": 3,
+      "subject": {
+        "required": true,
+        "who": "The hardened party -- the one who did the same thing under real pressure.",
+        "placement": "box:1",
+        "rule": "Box 1 MUST name them. The class difference is the whole joke, so an unnamed hardened party leaves nothing to compare."
+      },
+      "comedic_engine": "Two parties did the same thing on paper. One did it when it counted, and says so without raising their voice.",
+      "valence": "Box 0 and box 1 MUST describe the SAME act -- not two different achievements. Box 1 MUST name the SUBJECT, and their version MUST be the one done under real pressure. Box 2 MUST be a flat, unbothered verdict; an exclamation mark anywhere in box 2 kills the delivery.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the other party, and the easy version of the feat they are claiming",
+          "valence": "neutral -- stated straight, never mocked outright"
+        },
+        {
+          "index": 1,
+          "purpose": "the SUBJECT, and the same feat done when it actually mattered",
+          "valence": "positive -- the version with weight behind it"
+        },
+        {
+          "index": 2,
+          "purpose": "the flat closing verdict that names the class difference",
+          "valence": "cold -- unbothered, never triumphant"
+        }
+      ],
+      "use_when": "Two parties posted a superficially identical line -- same stat, same streak, same trophy -- and one of them did it against real opposition.",
+      "do_not_use_when": "The two acts are genuinely different achievements, or the gap needs explaining. If you have to argue the case, the deadpan does not work.",
+      "worked_example": {
+        "subject": "A road team that clinched in hostile territory",
+        "boxes": [
+          "THEY WON SEVEN STRAIGHT AT HOME IN SEPTEMBER",
+          "WE WON SEVEN STRAIGHT ON THE ROAD IN JANUARY",
+          "WE ARE NOT THE SAME"
+        ],
+        "why_it_lands": "Same streak length, same sport, wildly different difficulty. Box 2 refuses to explain it, which is the tone."
+      },
+      "anti_example": {
+        "boxes": [
+          "THEY WON THE DIVISION",
+          "WE MADE THE CONFERENCE FINAL",
+          "WE ARE NOT THE SAME"
+        ],
+        "why_it_fails": "Two different achievements rather than one act done at two levels. There is nothing to hold side by side."
+      },
+      "selector_line": "Same feat, two classes of difficulty, closed with a flat verdict. Box 1 = the SUBJECT.",
+      "tags": [
+        "superiority",
+        "deadpan",
+        "same-act",
+        "subject-in-box",
+        "three-line"
+      ],
+      "status": "candidate",
+      "special_handling": null,
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "laughing-leo",
+      "template_id": "259237855",
+      "category": "reaction_surprise",
+      "engine": "contempt_face_off",
+      "pattern_type": "claim_then_puncture",
+      "box_count": 2,
+      "subject": {
+        "required": true,
+        "who": "The party who made the confident claim being laughed at.",
+        "placement": "box:0",
+        "rule": "Box 0 MUST name them. Laughing at an unnamed party is just sneering."
+      },
+      "comedic_engine": "A claim delivered with total confidence, then the one detail that makes the rest of the room put a drink down.",
+      "valence": "Box 0 MUST name the SUBJECT and state their claim straight, with no wink and no editorial. Box 1 MUST be a single fact that punctures it. If box 1 only restates box 0 more loudly, nothing pops.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the SUBJECT and the confident claim they made, reported without comment",
+          "valence": "neutral -- must sound reasonable on its own"
+        },
+        {
+          "index": 1,
+          "purpose": "the one fact that makes the claim funny",
+          "valence": "negative -- the puncture, and it must be checkable"
+        }
+      ],
+      "use_when": "Someone made a straight-faced claim that one piece of public record immediately undercuts.",
+      "do_not_use_when": "The puncture needs a paragraph of setup, or the claim was obviously a joke already. Laughing at self-aware humour makes the newsletter the slow one in the room.",
+      "worked_example": {
+        "subject": "A coach guaranteeing a January run",
+        "boxes": [
+          "THE COACH SAID THIS ROSTER IS BUILT FOR JANUARY",
+          "THEY HAVE NOT WON A GAME IN JANUARY SINCE 2019"
+        ],
+        "why_it_lands": "Box 0 is a real quote taken at face value. Box 1 is one number, and it does all the work."
+      },
+      "anti_example": {
+        "boxes": [
+          "THE COACH SAID THEY ARE BUILT FOR JANUARY",
+          "LOL THEY ARE NOT BUILT FOR JANUARY"
+        ],
+        "why_it_fails": "Box 1 restates box 0 with a sneer instead of supplying a fact. Contempt without evidence is just noise."
+      },
+      "selector_line": "Confident claim in box 0, the single fact that punctures it in box 1.",
+      "tags": [
+        "mockery",
+        "puncture",
+        "quote",
+        "subject-in-box",
+        "schadenfreude"
+      ],
+      "status": "candidate",
+      "special_handling": null,
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "uno-draw-25-cards",
+      "template_id": "217743513",
+      "category": "comparison_preference",
+      "engine": "subject_abandons_sensible_for_funky",
+      "pattern_type": "comply_or_take_the_penalty",
+      "box_count": 2,
+      "subject": {
+        "required": true,
+        "who": "The party who took the absurd penalty rather than do the easy thing.",
+        "placement": "box:1",
+        "rule": "Box 1 MUST name them, because the joke is a specific party sitting there holding the consequence."
+      },
+      "comedic_engine": "Complying was trivial. They are visibly holding twenty-five cards instead, and have been for some time.",
+      "valence": "Box 0 MUST be an easy, obviously reasonable ask. Box 1 MUST name the SUBJECT who took the penalty rather than do it. Never write box 0 as something genuinely difficult -- the entire joke is that complying would have cost nothing.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the simple thing they were asked to do, written on the card",
+          "valence": "positive -- trivially easy to comply with"
+        },
+        {
+          "index": 1,
+          "purpose": "the SUBJECT, holding the enormous hand they chose instead",
+          "valence": "absurd -- the self-imposed penalty they are still paying"
+        }
+      ],
+      "use_when": "A named party was asked for something small and reasonable and has instead absorbed an enormous, ongoing cost to avoid it.",
+      "do_not_use_when": "The ask was genuinely hard, or the refusal is defensible. If a reasonable fan would also refuse, the card has no joke on it.",
+      "worked_example": {
+        "subject": "A front office in a stalled extension",
+        "boxes": [
+          "JUST PAY THE MAN MARKET RATE",
+          "A FRONT OFFICE ON ITS THIRD STRAIGHT SUMMER OF TRADE RUMOURS"
+        ],
+        "why_it_lands": "Box 0 is the cheap, obvious fix. Box 1 is the pile of cards they have been holding instead."
+      },
+      "anti_example": {
+        "boxes": [
+          "WIN THE CHAMPIONSHIP",
+          "A TEAM THAT DID NOT WIN THE CHAMPIONSHIP"
+        ],
+        "why_it_fails": "Box 0 is not an easy ask, so declining it is not a choice -- it is just failure. Nobody chose to draw those cards."
+      },
+      "special_handling": "'OR DRAW 25' is PRE-PRINTED on the card. Box 0 is the demand ABOVE that line -- do not write the words 'or draw 25' into any caption.",
+      "selector_line": "Refused a trivially easy ask and is visibly paying a huge cost instead. Box 1 = the SUBJECT.",
+      "tags": [
+        "comparison",
+        "stubbornness",
+        "self-imposed-cost",
+        "subject-in-box",
+        "preprinted-text"
+      ],
+      "status": "candidate",
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "bike-fall",
+      "template_id": "79132341",
+      "category": "betrayal_self_destruction",
+      "engine": "self_inflicted_realization",
+      "pattern_type": "rolling_then_stick_then_crash",
+      "box_count": 3,
+      "subject": {
+        "required": true,
+        "who": "The party who was doing fine and then sabotaged themselves.",
+        "placement": "box:0",
+        "rule": "Box 0 MUST name them while things were still going well, so the fall in box 2 belongs to someone."
+      },
+      "comedic_engine": "Three panels, one culprit. They were rolling along, they put the stick in their own spokes, and the ground arrived.",
+      "valence": "Box 0 MUST name the SUBJECT at the point things were still going well. Box 1 MUST be an action they took themselves -- never an injury, a referee, or anything done to them. Box 2 MUST be the damage that followed, stated plainly.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the SUBJECT, rolling along with everything going fine",
+          "valence": "positive -- genuinely in good shape at this point"
+        },
+        {
+          "index": 1,
+          "purpose": "the stick they jammed into their own spokes -- their own decision",
+          "valence": "self-inflicted -- must be an act of theirs"
+        },
+        {
+          "index": 2,
+          "purpose": "the crash it produced",
+          "valence": "negative -- the consequence, no editorial needed"
+        }
+      ],
+      "use_when": "A party in a good position took one specific self-destructive action and the damage is already visible.",
+      "do_not_use_when": "An injury, a bad call, or an opponent caused it. Bad luck is not self-sabotage and this template will read as cruel if you force it.",
+      "worked_example": {
+        "subject": "A team holding a playoff spot in September",
+        "boxes": [
+          "A TEAM TWO GAMES UP WITH ELEVEN TO PLAY",
+          "BENCHING THE ONLY HEALTHY STARTER TO 'SEND A MESSAGE'",
+          "NOW A GAME AND A HALF OUT"
+        ],
+        "why_it_lands": "Box 1 is unmistakably their own decision, and box 2 is the standings, not an opinion."
+      },
+      "anti_example": {
+        "boxes": [
+          "A TEAM TWO GAMES UP",
+          "THEIR STARTING QUARTERBACK TORE AN ACL",
+          "THEY MISSED THE PLAYOFFS"
+        ],
+        "why_it_fails": "An injury is not a stick in your own spokes. The engine requires an action the subject chose, and laughing at an injury is punching down besides."
+      },
+      "selector_line": "Was fine, sabotaged themselves, crashed. Box 0 = the SUBJECT, box 1 = their own decision.",
+      "tags": [
+        "self-sabotage",
+        "three-panel",
+        "own-goal",
+        "subject-in-box",
+        "consequence"
+      ],
+      "status": "candidate",
+      "special_handling": null,
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "roll-safe-think-about-it",
+      "template_id": "89370399",
+      "category": "denial_copium",
+      "engine": "obliviousness_gap",
+      "pattern_type": "premise_then_dumb_conclusion",
+      "box_count": 2,
+      "subject": {
+        "required": true,
+        "who": "The party whose logic this is -- the one actually reasoning this way.",
+        "placement": "copy",
+        "rule": "MUST be named in the sentence immediately before or after the meme. Unattributed galaxy-brain logic is a tweet, not a joke about anyone.",
+        "note": "Roll Safe is the stand-in for the reasoner; the boxes carry the premise and the conclusion only."
+      },
+      "comedic_engine": "Logic that is airtight and completely stupid, delivered with a smug tap of the temple.",
+      "valence": "Box 0 MUST be a real constraint the subject actually faces. Box 1 MUST be a conclusion that technically follows from it and is obviously idiotic. If the reasoning genuinely works, this is advice rather than a joke.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the real problem or constraint, stated straight",
+          "valence": "neutral -- must be a genuine situation"
+        },
+        {
+          "index": 1,
+          "purpose": "the technically-valid, obviously stupid way out of it",
+          "valence": "absurd -- follows logically, helps nobody"
+        }
+      ],
+      "use_when": "A party's stated reasoning survives its own internal logic and collapses on contact with sense -- tanking justifications, load-management doctrine, moral-victory framing.",
+      "do_not_use_when": "The reasoning is merely wrong rather than perversely valid. The joke needs the conclusion to actually follow from the premise.",
+      "worked_example": {
+        "subject": "A team in an open tank",
+        "boxes": [
+          "YOU CANNOT LOSE A PLAYOFF SERIES",
+          "IF YOU NEVER QUALIFY FOR THE PLAYOFFS"
+        ],
+        "why_it_lands": "Box 1 is unarguable and useless at the same time, which is the entire template."
+      },
+      "anti_example": {
+        "boxes": [
+          "THEY ARE BAD AT DEFENCE",
+          "THEY SHOULD PLAY BETTER DEFENCE"
+        ],
+        "why_it_fails": "That is ordinary advice, not perverse logic. Nothing about it is dumb enough to be funny."
+      },
+      "selector_line": "Airtight reasoning to an obviously stupid conclusion. Needs a named reasoner in the copy.",
+      "tags": [
+        "copium",
+        "false-logic",
+        "tanking",
+        "subject-implied",
+        "smug"
+      ],
+      "status": "candidate",
+      "special_handling": null,
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "bell-curve",
+      "template_id": "533936279",
+      "category": "debate_takes",
+      "engine": "simple_take_vindicated",
+      "pattern_type": "tails_agree_middle_overthinks",
+      "box_count": 3,
+      "subject": {
+        "required": true,
+        "who": "The team, player, or debate the three takes are about.",
+        "placement": "copy",
+        "rule": "MUST be named in the sentence immediately before or after the meme. A curve about nothing in particular is a shrug.",
+        "note": "The three figures are the takes, not people -- nobody on the curve gets named."
+      },
+      "comedic_engine": "The blunt fan and the enlightened analyst reach the same conclusion. Only the person in the middle did any modelling, and only they got it wrong.",
+      "valence": "Box 0 and box 2 MUST say the SAME thing, close to word-for-word -- box 2 is the same take said calmly. Box 1 MUST be the elaborate version that talks itself somewhere worse. If box 2 differs from box 0, the curve is broken and there is no joke.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "left tail -- the blunt, unschooled version of the take",
+          "valence": "correct -- crude but right"
+        },
+        {
+          "index": 1,
+          "purpose": "centre -- the over-modelled version, jargon and all, arriving somewhere worse",
+          "valence": "wrong -- sophisticated and incorrect"
+        },
+        {
+          "index": 2,
+          "purpose": "right tail -- the same take as box 0, now said with total calm",
+          "valence": "correct -- identical conclusion, no working shown"
+        }
+      ],
+      "use_when": "A debate where the obvious read turned out right and the clever read did not -- advanced-stat arguments that a scoreboard settled, projection models beaten by the eye test.",
+      "do_not_use_when": "The analysis was actually correct, or the simple take needs a caveat. This engine inverts and dies the moment the midwit is right.",
+      "worked_example": {
+        "subject": "A veteran having a late-career season",
+        "boxes": [
+          "HE IS STILL GOOD",
+          "HIS EXPECTED METRICS REGRESSED IN THE SECOND HALF AND HIS USAGE-ADJUSTED EFFICIENCY SUGGESTS DECLINE",
+          "HE IS STILL GOOD"
+        ],
+        "why_it_lands": "Boxes 0 and 2 are identical, which is the shape of the template. Box 1 is the only one that had to work for it."
+      },
+      "anti_example": {
+        "boxes": [
+          "HE IS GOOD",
+          "HE IS DECLINING",
+          "HE IS ELITE"
+        ],
+        "why_it_fails": "The two ends do not match, so there is no curve -- just three opinions in a row."
+      },
+      "selector_line": "Blunt take, over-modelled take, same blunt take again. Boxes 0 and 2 must be identical.",
+      "tags": [
+        "takes",
+        "analytics",
+        "overthinking",
+        "subject-implied",
+        "repeat-ends"
+      ],
+      "status": "candidate",
+      "special_handling": null,
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "flex-tape",
+      "template_id": "166969924",
+      "category": "denial_copium",
+      "engine": "mismatched_response",
+      "pattern_type": "gushing_hole_then_patch",
+      "box_count": 3,
+      "subject": {
+        "required": true,
+        "who": "The party applying the undersized fix -- usually a front office or coaching staff.",
+        "placement": "box:2",
+        "rule": "Box 2 MUST name them. The joke is somebody specific standing there with the tape."
+      },
+      "comedic_engine": "A problem gushing at season scale, and a patch you could hold in one hand, applied with total confidence.",
+      "valence": "Box 0 MUST be a structural, season-scale problem. Box 1 MUST be a fix that is plainly too small for it. Box 2 MUST name the SUBJECT applying it. Never write box 1 as something that would actually work.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the catastrophic problem, gushing in plain view",
+          "valence": "negative -- structural, not cosmetic"
+        },
+        {
+          "index": 1,
+          "purpose": "the small patch slapped over it",
+          "valence": "inadequate -- obviously undersized for box 0"
+        },
+        {
+          "index": 2,
+          "purpose": "the SUBJECT doing the slapping",
+          "valence": "neutral -- named, and visibly pleased with themselves"
+        }
+      ],
+      "use_when": "A team answered a roster-sized hole with a minimum-deal signing, a coordinator change, or a press conference.",
+      "do_not_use_when": "The fix is proportionate, or the problem is small. An imperfect-but-reasonable move is ordinary criticism, not this.",
+      "worked_example": {
+        "subject": "A front office at the deadline",
+        "boxes": [
+          "A BOTTOM-THREE DEFENCE IN EVERY CATEGORY THAT MATTERS",
+          "SIGNING A 34-YEAR-OLD TO A ONE-YEAR MINIMUM DEAL",
+          "A FRONT OFFICE CALLING IT A STATEMENT MOVE"
+        ],
+        "why_it_lands": "The gap between box 0 and box 1 is the whole joke, and box 2 puts a name on the confidence."
+      },
+      "anti_example": {
+        "boxes": [
+          "THE OFFENCE IS STRUGGLING",
+          "THEY TRADED FOR AN ALL-STAR",
+          "THE FRONT OFFICE"
+        ],
+        "why_it_fails": "The fix is proportionate to the problem. Nothing is gushing and the tape holds."
+      },
+      "special_handling": "Imgflip's panel order is NOT top-to-bottom: index 0 is the leaking tank and index 2 is the man, both in the TOP panel; index 1 is the tape in the BOTTOM panel. Confirmed by render 2026-09-15.",
+      "selector_line": "Season-sized problem answered with a hand-sized fix. Box 2 = the SUBJECT applying it.",
+      "tags": [
+        "inadequate-fix",
+        "front-office",
+        "deadline",
+        "subject-in-box",
+        "nonlinear-panels"
+      ],
+      "status": "candidate",
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "mother-ignoring-kid-drowning",
+      "template_id": "252758727",
+      "category": "denial_copium",
+      "engine": "mismatched_response",
+      "pattern_type": "urgent_ignored_for_trivial",
+      "box_count": 4,
+      "subject": {
+        "required": true,
+        "who": "The party choosing to attend to the lesser problem.",
+        "placement": "box:2",
+        "rule": "Box 2 MUST name them. Without a name, the pool is just a picture of things going badly."
+      },
+      "comedic_engine": "Everyone in the frame can see which one is drowning. The subject is playing with the other one, and there is already a skeleton at the bottom.",
+      "valence": "Box 0 MUST be the more urgent problem and box 1 the lesser one -- inverting them kills it outright. Box 2 MUST name the SUBJECT who chose box 1. Box 3 MUST be an older failure everyone stopped bringing up years ago.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the urgent problem, drowning in plain sight",
+          "valence": "negative -- the thing that actually needs attention"
+        },
+        {
+          "index": 1,
+          "purpose": "the lesser thing getting all the attention instead",
+          "valence": "neutral -- fine in itself, just not the priority"
+        },
+        {
+          "index": 2,
+          "purpose": "the SUBJECT, cheerfully attending to box 1",
+          "valence": "neutral -- named, entirely untroubled"
+        },
+        {
+          "index": 3,
+          "purpose": "the older failure at the bottom of the pool that nobody mentions any more",
+          "valence": "negative -- long past saving, and long past discussion"
+        }
+      ],
+      "use_when": "A team is visibly working on the wrong problem, and there is a third, older problem that stopped being newsworthy.",
+      "do_not_use_when": "You cannot fill box 3 with something genuinely abandoned. A skeleton panel filled with a live issue wastes the best beat in the template.",
+      "worked_example": {
+        "subject": "A front office in its fourth rebuild year",
+        "boxes": [
+          "AN OFFENSIVE LINE ALLOWING PRESSURE ON HALF OF ALL DROPBACKS",
+          "A THIRD-STRING TIGHT END COMPETITION",
+          "A FRONT OFFICE RUNNING IT BACK",
+          "THE KICKING SITUATION NOBODY HAS MENTIONED SINCE 2023"
+        ],
+        "why_it_lands": "Box 3 is the payoff: a problem so old it has stopped generating opinions."
+      },
+      "anti_example": {
+        "boxes": [
+          "A MINOR INJURY",
+          "A MAJOR INJURY",
+          "THE TRAINING STAFF",
+          "ANOTHER MAJOR INJURY"
+        ],
+        "why_it_fails": "Boxes 0 and 1 are inverted -- the bigger problem is the one getting attention -- so the neglect the template runs on is gone."
+      },
+      "selector_line": "Urgent problem drowning while the SUBJECT plays with a lesser one; box 3 is the long-abandoned failure.",
+      "tags": [
+        "priorities",
+        "neglect",
+        "four-panel",
+        "subject-in-box",
+        "front-office"
+      ],
+      "status": "candidate",
+      "special_handling": null,
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "squidward-window",
+      "template_id": "67452763",
+      "category": "betrayal_self_destruction",
+      "engine": "outside_looking_in",
+      "pattern_type": "excluded_watcher",
+      "box_count": 2,
+      "subject": {
+        "required": true,
+        "who": "The party shut out, watching through the blinds.",
+        "placement": "box:0",
+        "rule": "Box 0 MUST name them. The template is entirely about who is not invited."
+      },
+      "comedic_engine": "The window. They can see exactly what is happening without them, and they expected to be in it.",
+      "valence": "Box 0 MUST name the SUBJECT who is excluded. Box 1 MUST be the thing happening without them, right now. The party in box 0 MUST have had a credible claim to be inside it -- a team that was never close is not shut out, it is simply absent.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the SUBJECT at the window, not invited",
+          "valence": "negative -- excluded, and aware of it"
+        },
+        {
+          "index": 1,
+          "purpose": "the thing happening outside without them",
+          "valence": "positive -- genuinely good, and genuinely in view"
+        }
+      ],
+      "use_when": "Elimination season. A team, player, or fanbase with a real claim is watching the part they expected to be in.",
+      "do_not_use_when": "The excluded party was never in contention. Exclusion needs an expectation to violate, or it is just a standings note.",
+      "worked_example": {
+        "subject": "A team eliminated on the final weekend",
+        "boxes": [
+          "A TEAM THAT LED THE DIVISION IN AUGUST",
+          "THE OTHER FOUR DIVISION TEAMS PLAYING IN OCTOBER"
+        ],
+        "why_it_lands": "Box 0 establishes the claim, so box 1 lands as exclusion rather than as a result."
+      },
+      "anti_example": {
+        "boxes": [
+          "A LAST-PLACE TEAM",
+          "THE PLAYOFFS"
+        ],
+        "why_it_fails": "Nobody expected them there, so there is no window and no sting -- just a fact about the standings."
+      },
+      "selector_line": "Shut out and watching it happen. Box 0 = the excluded SUBJECT, box 1 = what they are missing.",
+      "tags": [
+        "exclusion",
+        "elimination",
+        "playoffs",
+        "subject-in-box",
+        "envy"
+      ],
+      "status": "candidate",
+      "special_handling": null,
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "two-guys-on-a-bus",
+      "template_id": "354700819",
+      "category": "comparison_preference",
+      "engine": "outside_looking_in",
+      "pattern_type": "same_ride_two_views",
+      "box_count": 2,
+      "subject": {
+        "required": true,
+        "who": "The two parties riding out the same result -- both named in the boxes.",
+        "placement": "copy",
+        "rule": "The shared event MUST be named in the sentence immediately before or after the meme, so the reader knows both boxes are about the same thing.",
+        "note": "Both parties go in the boxes; the prose supplies the event they are both sitting in."
+      },
+      "comedic_engine": "Same bus, same route, same window count. One of them got the rock wall.",
+      "valence": "Both boxes MUST describe the SAME event. Box 0 MUST be the party it went badly for and box 1 the party it went well for. If the two boxes are about different events, this is a comparison and the bus means nothing.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the party facing the rock wall -- the grim side of the shared result",
+          "valence": "negative -- same event, worse seat"
+        },
+        {
+          "index": 1,
+          "purpose": "the party facing the sunset -- the glorious side of that same result",
+          "valence": "positive -- same event, better seat"
+        }
+      ],
+      "use_when": "One event split two fanbases, two sides of a trade, or two teams in the same standings picture.",
+      "do_not_use_when": "The two boxes describe separate events. The template's whole claim is that this is one ride.",
+      "worked_example": {
+        "boxes": [
+          "THE TEAM THAT TRADED THE PICK",
+          "THE TEAM THAT TURNED IT INTO A ROOKIE OF THE YEAR"
+        ],
+        "why_it_lands": "One transaction, two windows. Neither side has to be mocked for the gap to land."
+      },
+      "anti_example": {
+        "boxes": [
+          "A TEAM THAT LOST ON SUNDAY",
+          "A TEAM THAT WON ON MONDAY"
+        ],
+        "why_it_fails": "Two different games. Without a shared event the passengers are not on the same bus."
+      },
+      "selector_line": "One event, two fanbases: box 0 gets the rock wall, box 1 gets the sunset.",
+      "tags": [
+        "two-sides",
+        "trade",
+        "rivalry",
+        "shared-event",
+        "subject-implied"
+      ],
+      "status": "candidate",
+      "special_handling": null,
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "the-scroll-of-truth",
+      "template_id": "123999232",
+      "category": "denial_copium",
+      "engine": "truth_refused",
+      "pattern_type": "truth_then_discard",
+      "box_count": 2,
+      "subject": {
+        "required": true,
+        "who": "The party throwing the verdict into the sea.",
+        "placement": "box:1",
+        "rule": "Box 1 MUST name them. An unattributed refusal has nobody in it to be funny about."
+      },
+      "comedic_engine": "Fifteen years of searching, one accurate sentence, and an immediate underarm throw into the ocean.",
+      "valence": "Box 0 MUST be true and checkable -- a fact, not an insult dressed as one. Box 1 MUST name the SUBJECT discarding it. If box 0 is merely unkind rather than accurate, this becomes a cheap shot instead of a joke.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the accurate, unwelcome verdict written on the scroll",
+          "valence": "true -- checkable against the record, stated plainly"
+        },
+        {
+          "index": 1,
+          "purpose": "the SUBJECT throwing it away",
+          "valence": "negative -- refusing something they asked for"
+        }
+      ],
+      "use_when": "A fanbase, front office, or player is visibly refusing a conclusion the record already settled.",
+      "do_not_use_when": "The 'truth' is an opinion or a prediction. A contestable take being rejected is a disagreement, and this template will read as a bad-faith dunk.",
+      "worked_example": {
+        "subject": "A fanbase mid-rebuild",
+        "boxes": [
+          "YOU ARE NOT ONE PIECE AWAY. YOU ARE FOUR.",
+          "A FANBASE ON ITS SIXTH CONSECUTIVE 'ONE PIECE AWAY' SUMMER"
+        ],
+        "why_it_lands": "Box 0 is arithmetic rather than opinion, so box 1's refusal is the only unreasonable thing in the frame."
+      },
+      "anti_example": {
+        "boxes": [
+          "YOUR QUARTERBACK IS OVERRATED",
+          "A FANBASE"
+        ],
+        "why_it_fails": "Box 0 is an opinion, so refusing it is reasonable. The engine needs a fact to be refused, and box 1 names nobody."
+      },
+      "special_handling": "Panels 1-3 carry PRE-PRINTED dialogue ('I'VE FINALLY FOUND IT... AFTER 15 YEARS', 'THE SCROLL OF TRUTH!', 'NYEHHH'). Only the scroll (box 0) and the final panel (box 1) are writable -- never restate the printed lines.",
+      "selector_line": "Checkable truth in box 0, the SUBJECT throwing it in the sea in box 1.",
+      "tags": [
+        "denial",
+        "copium",
+        "fanbase",
+        "subject-in-box",
+        "preprinted-text"
+      ],
+      "status": "candidate",
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "charlie-conspiracy",
+      "template_id": "92084495",
+      "category": "denial_copium",
+      "engine": "truth_refused",
+      "pattern_type": "elaborate_theory_then_plain_reason",
+      "box_count": 2,
+      "subject": {
+        "required": true,
+        "who": "The party doing the theorising -- whoever is actually making this argument.",
+        "placement": "copy",
+        "rule": "MUST be named in the sentence immediately before or after the meme. An unattributed conspiracy board is a strawman.",
+        "note": "Charlie is the stand-in for the theorist; the boxes carry the theory and the plain reason only."
+      },
+      "comedic_engine": "String, pins, and a wall of receipts, all deployed to avoid a one-sentence explanation standing right there.",
+      "valence": "Box 0 MUST be a genuinely convoluted explanation someone is actually making -- never one you invented for them. Box 1 MUST be the boring, obvious reason. If box 1 is not clearly simpler, the rant looks reasonable and the joke evaporates.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the elaborate theory being argued, at full length",
+          "valence": "absurd -- convoluted, and sincerely held"
+        },
+        {
+          "index": 1,
+          "purpose": "the plain one-line reason it actually happened",
+          "valence": "true -- boring, and obviously sufficient"
+        }
+      ],
+      "use_when": "A real argument is circulating that requires scheduling plots, referee conspiracies, or league agendas to explain something ordinary.",
+      "do_not_use_when": "Nobody is actually making the argument, or the simple explanation is contested. Inventing the theory to knock it down is a strawman, not a joke.",
+      "worked_example": {
+        "subject": "A fanbase after a one-score loss",
+        "boxes": [
+          "THE LEAGUE WANTED A BIG-MARKET FINAL SO THE WHISTLES WENT ONE WAY IN THE FOURTH",
+          "THEY SHOT 4-FOR-21 IN THE FOURTH"
+        ],
+        "why_it_lands": "Box 1 is one number and it explains everything box 0 needed a wall for."
+      },
+      "anti_example": {
+        "boxes": [
+          "THE REFS WERE BAD",
+          "THE REFS WERE FINE"
+        ],
+        "why_it_fails": "Box 0 is not convoluted and box 1 is not simpler -- it is just a contradiction. Nothing on the wall."
+      },
+      "selector_line": "Convoluted theory in box 0, the boring one-line reason in box 1. Needs a real theorist named in the copy.",
+      "tags": [
+        "copium",
+        "conspiracy",
+        "fanbase",
+        "subject-implied",
+        "refs"
+      ],
+      "status": "candidate",
+      "special_handling": null,
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
+    },
+    {
+      "slug": "say-the-line-bart",
+      "template_id": "72525473",
+      "category": "escalation_levels",
+      "engine": "obligatory_ritual",
+      "pattern_type": "demand_delivery_delight",
+      "box_count": 3,
+      "subject": {
+        "required": true,
+        "who": "The party made to say the line again -- player, coach, team, or fanbase.",
+        "placement": "box:1",
+        "rule": "Box 1 MUST name them and carry the line itself. A ritual with no performer is just a saying."
+      },
+      "comedic_engine": "Everyone in the room already knows the line. They want to hear it anyway, and the person saying it has said it every year since they can remember.",
+      "valence": "Box 0 MUST be the demand, phrased the way the crowd would phrase it. Box 1 MUST name the SUBJECT and give the line they always give. Box 2 MUST be the crowd's delight, undimmed by repetition. The line in box 1 has to be one the audience already knows by heart.",
+      "boxes": [
+        {
+          "index": 0,
+          "purpose": "the crowd demanding it, in their words",
+          "valence": "eager -- they know what is coming"
+        },
+        {
+          "index": 1,
+          "purpose": "the SUBJECT delivering the line flatly, for the Nth year running",
+          "valence": "weary -- resigned, never angry"
+        },
+        {
+          "index": 2,
+          "purpose": "the delight it gets anyway",
+          "valence": "positive -- the room goes up regardless"
+        }
+      ],
+      "use_when": "An annual or seasonal fixture just came round again -- the yearly 'best shape of my life', the perennial rebuild promise, the same September collapse.",
+      "do_not_use_when": "It has happened only once. Without at least two prior seasons behind it there is no ritual and box 0's demand makes no sense.",
+      "worked_example": {
+        "subject": "A perennially rebuilding team at media day",
+        "boxes": [
+          "SAY THE LINE, COACH",
+          "A COACH ENTERING YEAR FIVE: 'WE LIKE WHERE THIS GROUP IS TRENDING'",
+          "THE ROOM GOES UP EVERY SINGLE AUGUST"
+        ],
+        "why_it_lands": "Box 2 does the work -- the crowd's enthusiasm has survived four identical Augusts."
+      },
+      "anti_example": {
+        "boxes": [
+          "SAY THE LINE",
+          "A FIRST-YEAR COACH SAYING SOMETHING OPTIMISTIC",
+          "EVERYONE CHEERS"
+        ],
+        "why_it_fails": "A first-year coach has no line yet. Without repetition the crowd cannot be anticipating anything."
+      },
+      "selector_line": "The annual line, demanded and wearily delivered. Box 1 = the SUBJECT and the line itself.",
+      "tags": [
+        "ritual",
+        "annual",
+        "media-day",
+        "subject-in-box",
+        "three-panel"
+      ],
+      "status": "candidate",
+      "special_handling": null,
+      "note": "AI-authored box semantics, not yet reviewed by Abram. Panel order confirmed by render 2026-09-15."
     }
   ]
 }

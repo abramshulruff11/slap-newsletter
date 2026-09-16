@@ -40,36 +40,50 @@ CURATED_TEMPLATES = {
     "corporates-want-you-to-find-the-difference": "180190441", # ✓ verified (They're The Same Picture)
     "buff-doge-vs-cheems":                      "247375501",   # ✓ verified
     "epic-handshake":                           "135256802",   # ✓ verified
+    "uno-draw-25-cards":                        "217743513",   # ✓ verified 2026-09-15 (order by render)
+    "two-guys-on-a-bus":                        "354700819",   # ✓ verified 2026-09-15 (order by render)
     # --- ESCALATION / LEVELS ---
     "expanding-brain":                          "93895088",    # ✓ verified
     "vince-mcmahon-reaction":                   "193966043",   # FIXED: was 27813981 (Hide the Pain Harold)
     "gru-plan":                                 "131940431",   # ✓ verified
     "clown-applying-makeup":                    "195515965",   # FIXED: was 178591752 (Tuxedo Winnie the Pooh)
     "panik-kalm-panik":                         "226297822",   # ✓ verified
+    "say-the-line-bart":                        "72525473",    # ✓ verified 2026-09-15 (order by render)
     # --- DENIAL / COPIUM ---
     "this-is-fine":                             "55311130",    # ✓ verified
     "hide-the-pain-harold":                     "27813981",    # FIXED: was 27865 (unknown)
     "anakin-padme":                             "322841258",   # FIXED: was 371605855 (unknown)
     "bernie-i-am-once-again-asking":            "222403160",   # FIXED: was 382370190 (unknown)
+    "roll-safe-think-about-it":                 "89370399",    # ✓ verified 2026-09-15 (order by render)
+    "flex-tape":                                "166969924",   # ✓ verified 2026-09-15 — panels NOT top-to-bottom
+    "mother-ignoring-kid-drowning":             "252758727",   # ✓ verified 2026-09-15 (order by render)
+    "the-scroll-of-truth":                      "123999232",   # ✓ verified 2026-09-15 — panels 1-3 pre-printed
+    "charlie-conspiracy":                       "92084495",    # ✓ verified 2026-09-15 (order by render)
     # --- REACTION / SURPRISE ---
     "surprised-pikachu":                        "155067746",   # ✓ verified
     "always-has-been":                          "252600902",   # ✓ verified
     "monkey-puppet":                            "148909805",   # ✓ verified
     "mocking-spongebob":                        "102156234",   # ✓ verified
     "first-time":                               "277489984",   # FIXED: was 161865971 (Marked Safe From)
+    "laughing-leo":                             "259237855",   # ✓ verified 2026-09-15 (order by render)
     # --- DOMINATION / SUPERIORITY ---
     "trade-offer":                              "309868304",   # ✓ verified
     "one-does-not-simply":                      "61579",       # ✓ verified
     "waiting-skeleton":                         "4087833",     # ✓ verified
+    "pawn-stars-best-i-can-do":                 "77045868",    # ✓ verified 2026-09-15 (order by render)
+    "gus-fring-we-are-not-the-same":            "342785297",   # ✓ verified 2026-09-15 (order by render)
     # --- BETRAYAL / SELF-DESTRUCTION ---
     "spider-man-pointing-at-spider-man":        "122757825",   # FIXED: was 119215120 (unknown)
     "eric-andre-shooting":                      "135678846",   # FIXED: was 97984 (Disaster Girl)
     "is-this-a-pigeon":                         "100777631",   # FIXED: was 100947 (Matrix Morpheus)
     "woman-yelling-at-cat":                     "188390779",   # ✓ verified
+    "bike-fall":                                "79132341",    # ✓ verified 2026-09-15 (order by render)
+    "squidward-window":                         "67452763",    # ✓ verified 2026-09-15 (order by render)
     # --- RESIGNATION / WALKING AWAY ---
     "ight-imma-head-out":                       "196652226",   # FIXED: was 378389 (unknown) — Spongebob Ight Imma Head Out
     # --- DEBATE / TAKES ---
     "change-my-mind":                           "129242436",   # ✓ verified
+    "bell-curve":                               "533936279",   # ✓ verified 2026-09-15 (order by render)
 }
 
 IMGFLIP_CAPTION_URL = "https://api.imgflip.com/caption_image"

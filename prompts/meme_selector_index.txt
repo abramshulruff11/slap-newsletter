@@ -13,6 +13,7 @@
    - drake (2 boxes, subject: copy) -- Subject already chose the petty option over the obvious one. Needs a named subject in the copy.
    - distracted-boyfriend (3 boxes, subject: box:1) -- Subject abandons the sensible established thing for a flashier new one. Box 0 = the new temptation, box 1 = the SUBJECT, box 2 = what got dropped.
    - left-exit-12-off-ramp (3 boxes, subject: box:2) -- Abrupt last-second swerve off an established plan. Use over drake when suddenness is the story.
+   - uno-draw-25-cards (2 boxes, subject: box:1) -- Refused a trivially easy ask and is visibly paying a huge cost instead. Box 1 = the SUBJECT.
 
 ## self_inflicted_realization
    The subject caused their own problem, and the reveal -- them realizing it, or conspicuously not -- is the punchline.
@@ -20,6 +21,7 @@
    - gru-plan (4 boxes, subject: copy) -- Plan whose own final step reveals the self-inflicted flaw. Writer supplies 3 captions; code repeats the 3rd.
    - clown-applying-makeup (4 boxes, subject: copy) -- Escalating self-delusion in four stages ending in full clown. All four from the same subject.
    - eric-andre-shooting (3 boxes, subject: box:0) -- Subject caused the harm then acts baffled about who did it. Subject goes IN box 0, victim in box 1.
+   - bike-fall (3 boxes, subject: box:0) -- Was fine, sabotaged themselves, crashed. Box 0 = the SUBJECT, box 1 = their own decision.
 
 ## never_arrives
    Something awaited -- an answer, a concession, an event -- never materializes, and the waiting itself becomes the joke.
@@ -34,6 +36,7 @@
    - surprised-pikachu (3 boxes, subject: copy) -- Shock at a completely foreseeable consequence of the subject's own action.
    - always-has-been (2 boxes, subject: copy) -- Naive realization of a cynical truth that was always true. Not for new developments.
    - is-this-a-pigeon (3 boxes, subject: box:0) -- Confident, cheerful misidentification of something obvious.
+   - roll-safe-think-about-it (2 boxes, subject: copy) -- Airtight reasoning to an obviously stupid conclusion. Needs a named reasoner in the copy.
 
 ## escalating_ladder
    An ordered sequence of rungs, each more extreme than the last, ending somewhere absurd.
@@ -52,6 +55,7 @@
    TEST: Is one side clearly not taking the other seriously?
    - mocking-spongebob (2 boxes, subject: copy) -- Echo a real claim back mockingly. Box 1 is the SAME words as box 0, typed normally.
    - woman-yelling-at-cat (2 boxes, subject: copy) -- Heated accusation met with total, smug indifference. Energy mismatch required.
+   - laughing-leo (2 boxes, subject: box:0) -- Confident claim in box 0, the single fact that punctures it in box 1.
 
 ## awkward_exit_or_evasion
    The subject wants out of a situation -- either glancing away guiltily or actually leaving.
@@ -70,6 +74,7 @@
    TEST: Has the hardened side plainly been through worse?
    - buff-doge-vs-cheems (4 boxes, subject: copy) -- Hardened past vs diminished present. Needs a lopsided toughness gap.
    - first-time (2 boxes, subject: copy) -- Newcomer's shock vs veteran's routine endurance of the same thing.
+   - gus-fring-we-are-not-the-same (3 boxes, subject: box:1) -- Same feat, two classes of difficulty, closed with a flat verdict. Box 1 = the SUBJECT.
 
 ## forced_choice_dilemma
    A subject frozen between two options of the SAME valence -- both appealing, or both painful -- that cannot coexist.
@@ -80,6 +85,7 @@
    A transaction framed as mutual that is transparently one-sided.
    TEST: Would anyone actually accept this deal?
    - trade-offer (3 boxes, subject: box:2) -- Blatantly one-sided swap framed as a polite formal trade offer. The offerer goes IN box 2.
+   - pawn-stars-best-i-can-do (2 boxes, subject: copy) -- Reasonable ask answered with an insulting counteroffer. Box 0 = the ask, box 1 = the lowball.
 
 ## understated_difficulty
    Solemnly correcting the assumption that something is easy.
@@ -100,3 +106,31 @@
    Planting a contestable opinion and inviting argument.
    TEST: Would this actually start an argument?
    - change-my-mind (2 boxes, subject: copy) -- Genuinely contestable hot take planted as a dare. Must actually start an argument.
+
+## simple_take_vindicated
+   Three readings of one question: the blunt take, the over-thought take, and the blunt take again -- vindicated.
+   TEST: Is the simple take actually correct? If the analysis is right and the simple take is wrong, this engine inverts and dies.
+   - bell-curve (3 boxes, subject: copy) -- Blunt take, over-modelled take, same blunt take again. Boxes 0 and 2 must be identical.
+
+## mismatched_response
+   The response is wildly out of proportion to the problem -- a trivial patch on a catastrophe, or attention lavished on the wrong thing while the real one drowns.
+   TEST: Would a neutral observer say the response is proportionate? If yes, wrong engine.
+   - flex-tape (3 boxes, subject: box:2) -- Season-sized problem answered with a hand-sized fix. Box 2 = the SUBJECT applying it.
+   - mother-ignoring-kid-drowning (4 boxes, subject: box:2) -- Urgent problem drowning while the SUBJECT plays with a lesser one; box 3 is the long-abandoned failure.
+
+## outside_looking_in
+   One event, two seats: someone is inside it and someone is shut out or stuck with the worse view.
+   TEST: Would the shut-out party reasonably have expected to be in it?
+   - squidward-window (2 boxes, subject: box:0) -- Shut out and watching it happen. Box 0 = the excluded SUBJECT, box 1 = what they are missing.
+   - two-guys-on-a-bus (2 boxes, subject: copy) -- One event, two fanbases: box 0 gets the rock wall, box 1 gets the sunset.
+
+## truth_refused
+   The subject is handed a plain, accurate answer and will not take it -- either discarding it outright or building something elaborate in its place.
+   TEST: Is there a simple true answer the subject is visibly stepping around?
+   - the-scroll-of-truth (2 boxes, subject: box:1) -- Checkable truth in box 0, the SUBJECT throwing it in the sea in box 1.
+   - charlie-conspiracy (2 boxes, subject: copy) -- Convoluted theory in box 0, the boring one-line reason in box 1. Needs a real theorist named in the copy.
+
+## obligatory_ritual
+   A thing said or done every single year, on cue, by someone visibly tired of saying it.
+   TEST: Has this happened in at least two prior seasons?
+   - say-the-line-bart (3 boxes, subject: box:1) -- The annual line, demanded and wearily delivered. Box 1 = the SUBJECT and the line itself.
