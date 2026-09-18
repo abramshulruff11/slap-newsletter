@@ -32,6 +32,29 @@ two-job split. Beehiiv remains unused (post API is enterprise-only).
 
 ---
 
+## Backlog Execution (Linear)
+
+- Linear (team: SLAP Sports) is the source of truth for what to work on next — not verbal/chat
+  instructions given outside of Linear tickets.
+- Before starting work, query Linear for issues in team SLAP Sports with **status = Todo**
+  specifically (not Backlog — Backlog means not yet groomed/reviewed and must never be picked up
+  automatically) that are also unblocked (no unresolved `blockedBy` dependencies), sorted by
+  priority (Urgent > High > Medium > Low > None).
+- Work exactly ONE issue per session unless explicitly told to chain multiple. Mark it
+  "In Progress" before starting, and update its status when finished. Do not automatically pick
+  up a second ticket at the end of a session.
+- Before starting the actual work, do a brief sizing pass: skim the ticket description and the
+  specific files/directories it touches — not a deep exploratory read of the whole repo. Based on
+  that skim, give a rough size estimate (S/M/L) and flag explicitly if the ticket looks like it
+  could plausibly run past a single 5-hour session window. If it's flagged L, stop and ask before
+  proceeding rather than starting work that might get cut off mid-change.
+- If a ticket's requirements are ambiguous, or contradicted by what's actually in the codebase,
+  stop and ask rather than guessing — consistent with the "wrong is worse than nothing"
+  principle below.
+- Leave a brief comment on the Linear ticket summarizing what was done before marking it complete.
+
+---
+
 ## Pipeline Architecture — 6 Passes
 
 ```

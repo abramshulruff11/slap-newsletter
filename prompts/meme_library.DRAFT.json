@@ -704,7 +704,7 @@
     {
       "slug": "expanding-brain",
       "template_id": "93895088",
-      "status": "candidate",
+      "status": "verified",
       "category": "escalation_levels",
       "engine": "escalating_ladder",
       "pattern_type": "escalation_sequence",
@@ -769,7 +769,7 @@
         "takes",
         "irony"
       ],
-      "note": "AI-authored box semantics, not yet reviewed by Abram."
+      "note": ""
     },
     {
       "slug": "vince-mcmahon-reaction",
