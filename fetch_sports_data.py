@@ -83,6 +83,27 @@ LEAGUES = {
     },
 }
 
+# Fixed 32-team NFL conference/division mapping, keyed by ESPN's standard
+# abbreviation. Realignment-stable (doesn't change season to season), so this
+# is a static table rather than a live fetch — verified 2026-09-18 against
+# ESPN's own /standings conference->division tree for the current season.
+NFL_DIVISIONS = {
+    "BUF": ("AFC", "East"),  "MIA": ("AFC", "East"),  "NE": ("AFC", "East"),  "NYJ": ("AFC", "East"),
+    "BAL": ("AFC", "North"), "CIN": ("AFC", "North"), "CLE": ("AFC", "North"), "PIT": ("AFC", "North"),
+    "HOU": ("AFC", "South"), "IND": ("AFC", "South"), "JAX": ("AFC", "South"), "TEN": ("AFC", "South"),
+    "DEN": ("AFC", "West"),  "KC":  ("AFC", "West"),  "LAC": ("AFC", "West"),  "LV":  ("AFC", "West"),
+    "DAL": ("NFC", "East"),  "NYG": ("NFC", "East"),  "PHI": ("NFC", "East"),  "WSH": ("NFC", "East"),
+    "CHI": ("NFC", "North"), "DET": ("NFC", "North"), "GB":  ("NFC", "North"), "MIN": ("NFC", "North"),
+    "ATL": ("NFC", "South"), "CAR": ("NFC", "South"), "NO":  ("NFC", "South"), "TB":  ("NFC", "South"),
+    "ARI": ("NFC", "West"),  "LAR": ("NFC", "West"),  "SEA": ("NFC", "West"),  "SF":  ("NFC", "West"),
+}
+
+
+def _nfl_division_lookup(abbr: str) -> tuple[str | None, str | None]:
+    """(conference, division) for an NFL team abbreviation, or (None, None) if unrecognized."""
+    return NFL_DIVISIONS.get(abbr, (None, None))
+
+
 RETRY_ATTEMPTS = 3
 RETRY_DELAY    = 2  # seconds between retries
 
@@ -356,6 +377,16 @@ def parse_game(event: dict) -> dict | None:
     away_team  = away.get("team", {}).get("displayName", "Unknown")
     home_abbr  = home.get("team", {}).get("abbreviation", "")
     away_abbr  = away.get("team", {}).get("abbreviation", "")
+    home_id    = home.get("team", {}).get("id", "")
+    away_id    = away.get("team", {}).get("id", "")
+
+    # season.type: 1=preseason, 2=regular season, 3=postseason. week.number is
+    # the regular/post-season week. Both live at the event level, not per-team.
+    season_obj  = event.get("season", {}) or {}
+    week_obj    = event.get("week", {}) or {}
+    season_type = season_obj.get("type")
+    season_year = season_obj.get("year")
+    week_number = week_obj.get("number")
 
     try:
         home_score = int(home.get("score", 0) or 0)
@@ -389,24 +420,29 @@ def parse_game(event: dict) -> dict | None:
     series = parse_series(competition, home_abbr, away_abbr) if is_playoff else None
 
     return {
-        "game_id":    event.get("id", ""),
-        "home_rank":  _competitor_rank(home),
-        "away_rank":  _competitor_rank(away),
-        "date":       event.get("date", ""),
-        "matchup":    f"{away_team} @ {home_team}",
-        "home_team":  home_team,
-        "home_abbr":  home_abbr,
-        "away_team":  away_team,
-        "away_abbr":  away_abbr,
-        "home_score": home_score,
-        "away_score": away_score,
-        "winner":     winner,
-        "loser":      loser,
-        "completed":  completed,
-        "status":     status_str,
-        "overtime":   is_overtime(competition),
-        "playoffs":   is_playoff,
-        "series":     series,
+        "game_id":     event.get("id", ""),
+        "home_rank":   _competitor_rank(home),
+        "away_rank":   _competitor_rank(away),
+        "date":        event.get("date", ""),
+        "season_year": season_year,
+        "season_type": season_type,
+        "week":        week_number,
+        "matchup":     f"{away_team} @ {home_team}",
+        "home_team":   home_team,
+        "home_abbr":   home_abbr,
+        "home_id":     home_id,
+        "away_team":   away_team,
+        "away_abbr":   away_abbr,
+        "away_id":     away_id,
+        "home_score":  home_score,
+        "away_score":  away_score,
+        "winner":      winner,
+        "loser":       loser,
+        "completed":   completed,
+        "status":      status_str,
+        "overtime":    is_overtime(competition),
+        "playoffs":    is_playoff,
+        "series":      series,
     }
 
 
@@ -429,6 +465,84 @@ def fetch_scoreboard(sport: str, league: str, target_date: date) -> list[dict]:
         game = parse_game(event)
         if game:
             games.append(game)
+    return games
+
+
+def fetch_scoreboard_by_week(sport: str, league: str, season_year: int,
+                              week: int, season_type: int = 2) -> list[dict]:
+    """
+    Fetch all games for one week number (season_type: 1=pre, 2=regular, 3=post).
+    Used to build a season-long game log — the per-date fetch_scoreboard()
+    above only ever sees one day at a time, which can't give a full season.
+    """
+    url = (
+        f"{ESPN_BASE}/{sport}/{league}/scoreboard"
+        f"?week={week}&seasontype={season_type}&dates={season_year}&limit=100"
+    )
+    data = fetch_url(url)
+    if not data:
+        return []
+
+    games = []
+    for event in data.get("events", []):
+        game = parse_game(event)
+        # Defense in depth: ESPN's seasontype filter should already exclude
+        # preseason, but standings must never count a game that slips through.
+        if game and game.get("season_type") == season_type:
+            games.append(game)
+    return games
+
+
+def fetch_nfl_current_week() -> tuple[int, int] | None:
+    """
+    (season_year, week_number) for the NFL regular season right now, read
+    from the default (unscoped) scoreboard call. Returns None outside the
+    regular season (preseason/postseason weeks don't anchor the season log).
+    """
+    data = fetch_url(f"{ESPN_BASE}/football/nfl/scoreboard?limit=1")
+    if not data:
+        return None
+    season = data.get("season") or {}
+    week   = data.get("week") or {}
+    if season.get("type") != 2:
+        return None
+    year, number = season.get("year"), week.get("number")
+    if year is None or number is None:
+        return None
+    return year, number
+
+
+def fetch_nfl_season_games() -> list[dict]:
+    """
+    Full current-season, regular-season-only NFL game log — every game
+    through the current week, each tagged with its division/conference.
+    Sufficient for standings: records, streaks, and tiebreakers (SLA-42).
+
+    Rebuilt in full every run rather than accumulated day over day: stateless,
+    so a missed or re-run pipeline day can never leave the log with a gap or
+    a duplicate. Costs one ESPN call per week played so far (at most 18 for a
+    full regular season), not one per day.
+    """
+    anchor = fetch_nfl_current_week()
+    if not anchor:
+        print("      ✗ Could not determine current NFL week — season game log skipped")
+        return []
+    season_year, current_week = anchor
+
+    games: list[dict] = []
+    seen_ids: set[str] = set()
+    for week in range(1, current_week + 1):
+        for game in fetch_scoreboard_by_week("football", "nfl", season_year, week, season_type=2):
+            gid = game.get("game_id")
+            if not gid or gid in seen_ids:
+                continue
+            seen_ids.add(gid)
+            game["home_conference"], game["home_division"] = _nfl_division_lookup(game.get("home_abbr", ""))
+            game["away_conference"], game["away_division"] = _nfl_division_lookup(game.get("away_abbr", ""))
+            games.append(game)
+        time.sleep(0.2)
+
+    print(f"      Season game log: {len(games)} regular-season game(s) through week {current_week}")
     return games
 
 
@@ -1679,6 +1793,13 @@ def main() -> None:
         # League leaders
         leaders = fetch_league_leaders(sport, league, key)
 
+        # Full-season regular-season game log for standings computation
+        # (records, streaks, tiebreakers) — NFL only, see fetch_nfl_season_games().
+        season_games: list[dict] = []
+        if key == "nfl":
+            print("    Fetching season game log...")
+            season_games = fetch_nfl_season_games()
+
         # Fetch playoff bracket if any game (yesterday OR today) is a playoff game
         any_playoff = any(g.get("playoffs") for g in yesterday_games + today_games)
         bracket: list[dict] = []
@@ -1699,6 +1820,12 @@ def main() -> None:
             "bracket":         bracket,
             "leaders":         leaders,
         }
+        if key == "nfl":
+            output["sports"][key]["season_games"] = season_games
+            output["sports"][key]["divisions"] = {
+                abbr: {"conference": conf, "division": div}
+                for abbr, (conf, div) in NFL_DIVISIONS.items()
+            }
 
         completed = [g for g in yesterday_games if g["completed"]]
         total_games += len(completed)
