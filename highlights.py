@@ -37,6 +37,8 @@ import urllib.request
 from datetime import datetime, timezone
 from typing import Dict, List, Optional, Set, Tuple
 
+import team_match
+
 _CHANNELS_URL = "https://www.googleapis.com/youtube/v3/channels"
 _PLAYLIST_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
 _ESPN = "https://site.api.espn.com/apis/site/v2/sports"
@@ -49,11 +51,6 @@ _ESPN_LEAGUE = {"mlb": "mlb", "nhl": "nhl", "wc": "fifa.world"}
 _MAX_CLUSTER = 4          # cap on the "Top Plays" cluster
 _RECENT_HOURS = 40        # uploads/games older than this are ignored
 _UA = "Mozilla/5.0"
-
-_MULTIWORD_NICK = {
-    "red sox", "white sox", "blue jays", "maple leafs",
-    "golden knights", "blue jackets",
-}
 
 # Section headings that are NOT a single game's story (never anchor a recap here).
 _NON_STORY_HEADINGS = {"around the league", "box scores", "top plays"}
@@ -98,7 +95,7 @@ def _nickname(full_name: str, league: str = "mlb") -> str:
     if league == "wc":
         return full_name or ""
     parts = (full_name or "").split()
-    if len(parts) >= 2 and " ".join(parts[-2:]).lower() in _MULTIWORD_NICK:
+    if len(parts) >= 2 and " ".join(parts[-2:]).lower() in team_match.MULTIWORD_NICKNAMES:
         return " ".join(parts[-2:])
     return parts[-1] if parts else ""
 
@@ -300,6 +297,20 @@ _H2_RE = re.compile(r"<h2\b[^>]*>(.*?)</h2>", re.IGNORECASE | re.DOTALL)
 _TAG_RE = re.compile(r"<[^>]+>")
 
 
+def _find_target_section(sections: List[Tuple], away: str, home: str,
+                         used_sections: Set[int]) -> Optional[Tuple[int, int, int]]:
+    """The story section that covers this game, or None. Requires both team
+    nicknames or either team's full name (team_match.section_matches_game) —
+    a bare nickname substring is not enough, which is what let an Arizona
+    Cardinals (NFL) section claim a St. Louis Cardinals (MLB) box score."""
+    for htext, sec_text, start, end, idx in sections:
+        if idx in used_sections or htext in _NON_STORY_HEADINGS:
+            continue
+        if team_match.section_matches_game(sec_text, away, home):
+            return (start, end, idx)
+    return None
+
+
 def _completed_games(game_state: Dict) -> List[Dict]:
     out: List[Dict] = []
     sports = (game_state or {}).get("sports", {})
@@ -364,15 +375,8 @@ def inject_highlights(body_html: str, game_state: Dict,
         uploads = _channel_uploads(lg, api_key)
         recap = _find_recap(uploads, an, hn, used_videos)
 
-        # Find the story section that covers this game (either team named).
-        target = None
-        for htext, sec_text, start, end, idx in sections:
-            if idx in used_sections or htext in _NON_STORY_HEADINGS:
-                continue
-            if (an.lower() in sec_text or hn.lower() in sec_text
-                    or away.lower() in sec_text or home.lower() in sec_text):
-                target = (start, end, idx)
-                break
+        # Find the story section that covers this game.
+        target = _find_target_section(sections, away, home, used_sections)
 
         if target:
             start, end, idx = target
