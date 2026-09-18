@@ -163,8 +163,11 @@ def gate(draft: Path, published: Path, status: dict) -> tuple[int, str]:
         shutil.copy(draft, t / "newsletter_draft.html")
         shutil.copy(published, t / "newsletter_substack.html")
         (t / "run_status.json").write_text(json.dumps(status), encoding="utf-8")
-        r = subprocess.run([sys.executable, "verify_run.py"], cwd=t,
-                           capture_output=True, text=True)
+        # -X utf8 + an explicit decode: verify_run.py prints box-drawing and
+        # emoji, and on Windows a captured stdout defaults to cp1252, so the
+        # script crashed on its first header and every issue read as exit 1.
+        r = subprocess.run([sys.executable, "-X", "utf8", "verify_run.py"], cwd=t,
+                           capture_output=True, text=True, encoding="utf-8")
         return r.returncode, r.stdout
 
 
