@@ -31,46 +31,39 @@ load_dotenv(Path(__file__).resolve().parent / ".env", override=True)
 # These are the 10 hand-picked templates the agent is instructed to use.
 # The live top-100 fetch supplements this but never overrides it.
 # ---------------------------------------------------------------------------
-CURATED_TEMPLATES = {
-    # --- COMPARISON / PREFERENCE ---
-    "drake":                                    "181913649",   # ✓ verified
-    "distracted-boyfriend":                     "112126428",   # ✓ verified
-    "left-exit-12-off-ramp":                    "124822590",   # ✓ verified
-    "two-buttons":                              "87743020",    # ✓ verified
-    "corporates-want-you-to-find-the-difference": "180190441", # ✓ verified (They're The Same Picture)
-    "buff-doge-vs-cheems":                      "247375501",   # ✓ verified
-    "epic-handshake":                           "135256802",   # ✓ verified
-    # --- ESCALATION / LEVELS ---
-    "expanding-brain":                          "93895088",    # ✓ verified
-    "vince-mcmahon-reaction":                   "193966043",   # FIXED: was 27813981 (Hide the Pain Harold)
-    "gru-plan":                                 "131940431",   # ✓ verified
-    "clown-applying-makeup":                    "195515965",   # FIXED: was 178591752 (Tuxedo Winnie the Pooh)
-    "panik-kalm-panik":                         "226297822",   # ✓ verified
-    # --- DENIAL / COPIUM ---
-    "this-is-fine":                             "55311130",    # ✓ verified
-    "hide-the-pain-harold":                     "27813981",    # FIXED: was 27865 (unknown)
-    "anakin-padme":                             "322841258",   # FIXED: was 371605855 (unknown)
-    "bernie-i-am-once-again-asking":            "222403160",   # FIXED: was 382370190 (unknown)
-    # --- REACTION / SURPRISE ---
-    "surprised-pikachu":                        "155067746",   # ✓ verified
-    "always-has-been":                          "252600902",   # ✓ verified
-    "monkey-puppet":                            "148909805",   # ✓ verified
-    "mocking-spongebob":                        "102156234",   # ✓ verified
-    "first-time":                               "277489984",   # FIXED: was 161865971 (Marked Safe From)
-    # --- DOMINATION / SUPERIORITY ---
-    "trade-offer":                              "309868304",   # ✓ verified
-    "one-does-not-simply":                      "61579",       # ✓ verified
-    "waiting-skeleton":                         "4087833",     # ✓ verified
-    # --- BETRAYAL / SELF-DESTRUCTION ---
-    "spider-man-pointing-at-spider-man":        "122757825",   # FIXED: was 119215120 (unknown)
-    "eric-andre-shooting":                      "135678846",   # FIXED: was 97984 (Disaster Girl)
-    "is-this-a-pigeon":                         "100777631",   # FIXED: was 100947 (Matrix Morpheus)
-    "woman-yelling-at-cat":                     "188390779",   # ✓ verified
-    # --- RESIGNATION / WALKING AWAY ---
-    "ight-imma-head-out":                       "196652226",   # FIXED: was 378389 (unknown) — Spongebob Ight Imma Head Out
-    # --- DEBATE / TAKES ---
-    "change-my-mind":                           "129242436",   # ✓ verified
-}
+# CURATED_TEMPLATES is DERIVED, not written here. prompts/meme_library.DRAFT.json
+# is the single source of truth for which templates exist and what their ids are;
+# this used to be a second hand-maintained copy of that mapping, and
+# test_meme_library.py existed partly to catch the two drifting apart. Since
+# library_studio.html lets the library be edited without running anything, a
+# hand-kept dict here would go stale the moment it was used.
+#
+# Deliberately NOT raising when the library cannot be read: a broken library is
+# not a reason to kill the newsletter, which is the product. It degrades to zero
+# memes, loudly — and verify_run.py's gate reports the meme count, so a run that
+# silently loses every meme still colours the job.
+def _load_curated_templates() -> dict:
+    """slug -> template_id for every template in the library, retired included.
+
+    Retired templates stay in here on purpose: active_templates() removes them
+    from what Pass 1 may PICK, but a slug already sitting in today's plan must
+    still render. Same reason get_template() is permissive.
+    """
+    try:
+        import meme_library
+        templates = meme_library.load_meme_library().get("templates", [])
+    except Exception as e:
+        print(f"[memes] ERROR: could not derive CURATED_TEMPLATES from the library: {e}")
+        return {}
+    out = {str(t["slug"]): str(t["template_id"])
+           for t in templates if t.get("slug") and t.get("template_id")}
+    if not out:
+        print("[memes] ERROR: meme library produced ZERO templates — "
+              "every meme this run will be dropped. Check prompts/meme_library.DRAFT.json.")
+    return out
+
+
+CURATED_TEMPLATES = _load_curated_templates()
 
 IMGFLIP_CAPTION_URL = "https://api.imgflip.com/caption_image"
 IMGFLIP_MEMES_URL   = "https://api.imgflip.com/get_memes"

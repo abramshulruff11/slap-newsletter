@@ -58,7 +58,7 @@ PROD_PROMPTS = REPO_ROOT / "prompts"
 ARCHIVE = PROD_PROMPTS / "Archive"
 
 # Prod-only files that are deliberately never in UAT.
-PROD_ONLY_OK = {"base_prompt.txt", "meme_selector_index.txt"}
+PROD_ONLY_OK = {"base_prompt.txt"}
 
 IDENTICAL, EOL_ONLY, UAT_AHEAD, PROD_AHEAD, DIVERGED, UAT_ONLY = (
     "identical", "eol-only", "uat-ahead", "prod-ahead", "diverged", "uat-only")

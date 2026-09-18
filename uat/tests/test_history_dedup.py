@@ -25,6 +25,7 @@ No API calls, no network.
 import json
 import sys
 import tempfile
+from datetime import date
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
@@ -32,6 +33,11 @@ sys.path.insert(0, str(REPO))
 
 import runner_common as R  # noqa: E402
 import generate_memes as M  # noqa: E402
+
+# A same-run entry is dated TODAY -- that is what the pipeline writes. These
+# were hardcoded to 2026-09-02, which fell out of the 7-day window on 09-10
+# and failed the suite every day after, bug or no bug.
+TODAY = date.today().isoformat()
 
 
 def check(label, got, want):
@@ -58,7 +64,7 @@ for name, save, load, fname in (
                "search_term": "old"}]
     (root / fname).write_text(json.dumps(stored), encoding="utf-8")
 
-    fresh = [{"date": "2026-09-02", "slug": "new", "url": "u-new",
+    fresh = [{"date": TODAY, "slug": "new", "url": "u-new",
               "search_term": "new"}]
     save(root, fresh, load(root))
     rows = json.loads((root / fname).read_text(encoding="utf-8"))
@@ -70,7 +76,7 @@ for name, save, load, fname in (
 # --- Same-run dedup must still see entries added during this run ----------
 # The in-run insert stays; only the SAVE stops re-counting it.
 print()
-run_history = [{"date": "2026-09-02", "url": "u-1", "search_term": "slow clap"}]
+run_history = [{"date": TODAY, "url": "u-1", "search_term": "slow clap"}]
 check("is_recently_used sees a same-run entry",
       R.is_recently_used("u-1", run_history, days=7), True)
 check("is_recently_used ignores an unrelated url",
@@ -78,7 +84,7 @@ check("is_recently_used ignores an unrelated url",
 check("is_concept_recently_used sees a same-run concept",
       R.is_concept_recently_used("slow clap", run_history, days=7), True)
 
-meme_history = [{"date": "2026-09-02", "slug": "distracted-boyfriend",
+meme_history = [{"date": TODAY, "slug": "distracted-boyfriend",
                  "boxes": ["A", "B", "C"]}]
 check("is_template_recently_used sees a same-run template",
       M.is_template_recently_used("distracted-boyfriend", meme_history), True)
@@ -91,7 +97,7 @@ root = Path(tempfile.mkdtemp())
 stored = [{"date": "2026-08-01", "url": f"u{i}", "search_term": f"s{i}"}
           for i in range(59)]
 (root / "gif_history.json").write_text(json.dumps(stored), encoding="utf-8")
-R.save_gif_history(root, [{"date": "2026-09-02", "url": "u-new",
+R.save_gif_history(root, [{"date": TODAY, "url": "u-new",
                            "search_term": "new"}], R.load_gif_history(root))
 rows = json.loads((root / "gif_history.json").read_text(encoding="utf-8"))
 check("cap retains 60 rows", len(rows), 60)

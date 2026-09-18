@@ -32,6 +32,29 @@ two-job split. Beehiiv remains unused (post API is enterprise-only).
 
 ---
 
+## Backlog Execution (Linear)
+
+- Linear (team: SLAP Sports) is the source of truth for what to work on next — not verbal/chat
+  instructions given outside of Linear tickets.
+- Before starting work, query Linear for issues in team SLAP Sports with **status = Todo**
+  specifically (not Backlog — Backlog means not yet groomed/reviewed and must never be picked up
+  automatically) that are also unblocked (no unresolved `blockedBy` dependencies), sorted by
+  priority (Urgent > High > Medium > Low > None).
+- Work exactly ONE issue per session unless explicitly told to chain multiple. Mark it
+  "In Progress" before starting, and update its status when finished. Do not automatically pick
+  up a second ticket at the end of a session.
+- Before starting the actual work, do a brief sizing pass: skim the ticket description and the
+  specific files/directories it touches — not a deep exploratory read of the whole repo. Based on
+  that skim, give a rough size estimate (S/M/L) and flag explicitly if the ticket looks like it
+  could plausibly run past a single 5-hour session window. If it's flagged L, stop and ask before
+  proceeding rather than starting work that might get cut off mid-change.
+- If a ticket's requirements are ambiguous, or contradicted by what's actually in the codebase,
+  stop and ask rather than guessing — consistent with the "wrong is worse than nothing"
+  principle below.
+- Leave a brief comment on the Linear ticket summarizing what was done before marking it complete.
+
+---
+
 ## Pipeline Architecture — 6 Passes
 
 ```
@@ -85,6 +108,10 @@ slap-newsletter/
 ├── runner_common.py            ← runner body shared by prod + UAT: 24 functions, models,
 │                                 PRICING, PASS_COSTS. configure(prompts_dir=) per runner
 ├── plan_audit.py               ← deterministic audits, SHARED by prod + UAT (see below)
+├── library_studio.html         ← review/add/edit/delete BOTH libraries in a browser
+├── library_studio.bat          ← double-click THIS to open the studio (not the .html)
+├── library_studio_server.py    ← localhost host for the studio; PUT writes the two libraries
+├── library_json.py             ← style-matching JSON writer; ONE copy, ported to JS in the studio
 ├── meme_library.py             ← meme library access layer, shared
 ├── meme_box_check.py           ← box-count guard: blocks memes that would render blank panels
 ├── gif_library_select.py       ← tiered GIF selection from the curated library, shared
@@ -229,6 +256,38 @@ losing memes for following its own prompt. Both tables are gone. The index is ge
 `{{MEME_SELECTOR_INDEX}}` — same pattern as `{{GIF_LIBRARY_CATEGORIES}}`, and `promote.py`
 already refuses to install a prompt whose placeholder the destination runner cannot substitute.
 
+**The library files are now edited from a page, so everything derived from them is
+generated (2026-09-15).** `library_studio.html` reviews, adds, edits and deletes entries in both
+libraries and writes the JSON back directly. That only works if the JSON is the WHOLE truth, so
+the two things that used to be hand-kept copies of it are gone:
+
+- `CURATED_TEMPLATES` in `generate_memes.py` is **derived** from the library at import. It was a
+  second mapping of slug → template_id that `test_meme_library.py` partly existed to police; a
+  hand-kept dict would go stale the moment the page wrote a new template. It degrades to `{}`
+  with a loud error rather than raising — a broken library must not kill the newsletter, which
+  is the product — and `verify_run.py` already reports the meme count, so a run that silently
+  lost every meme still colours red.
+- `prompts/meme_selector_index.txt` is **deleted**. `load_selector_index()` now calls
+  `build_selector_index()`, so Pass 1 gets an index built at the point of use and there is no
+  file to go stale. It had already gone stale once, silently, when box counts were corrected.
+
+Two guarantees moved into the browser with it, and both are tested by
+`uat/tests/test_library_studio.mjs` (Node, in CI, 0 API calls) against the REAL library files:
+the page's JS port of `library_json.py` must reproduce each file **byte-for-byte**, and its JS
+port of the meme checks must still catch each bug it claims to. The page refuses to save when
+either fails. Two things the port has to get right that Python never had to: both libraries are
+**CRLF** and end **without a trailing newline** — `Path.write_text` was doing the first invisibly
+and `dumps_matching_style` never added the second.
+
+**`library_studio.bat` is how the page is opened — not the .html.** The File System Access API is
+the only way a page can write back to a file it opened, and it requires a **secure context**;
+`file://` is not one, in any browser. Opened directly the page can only hand back a downloaded
+copy to move over the original yourself. The `.bat` starts `library_studio_server.py`, which
+serves the repo on `http://localhost` (a secure context) and adds a PUT endpoint restricted to
+an allowlist of exactly the two library files — so both load automatically and Save writes
+straight to disk, atomically, keeping a `.bak`. The server re-checks the formatting before
+writing rather than trusting the page.
+
 **The library also has to agree with itself.** The 2026-08-27 and 2026-09-01 render corrections
 updated `box_count`, `boxes[]`, `subject` and `selector_line` — and left `valence` and
 `worked_example` describing the OLD panel mapping. `format_meme_specs()` prints all of them, and
@@ -298,6 +357,16 @@ rule updates, or audit recent newsletters, read `feedback_log.md` first. The fil
 review ritual (instructions for Claude) and the active log of unresolved observations. Do not
 edit `rolling_feedback.txt` directly during review — propose changes for the user to integrate.
 
+**GIF/meme library work starts at `docs/library_expansion_handoff.md`:** read it before touching
+`prompts/gif_library.DRAFT.json`, `prompts/meme_library.DRAFT.json` or anything named
+`*_expand_probe.py` / `review_*.py` / `apply_*_decisions.py`. It carries the tooling map (all of
+it already exists — a session nearly rebuilt `review_gifs.py` from scratch by not checking), which
+steps need network to Giphy/Imgflip and so cannot run from a cloud session, and the failure modes
+worth not re-learning: the two library files use different JSON formatting and must be written
+through `library_json.dumps_matching_style()`; meme `status` gates nothing until
+`active_templates()` is respected; and a decisions export replays every verdict ever stored in that
+browser, so its row count is not the size of the review.
+
 **UAT before prod:** `uat/` has its own prompt copies. Changes are tested there, then promoted
 with `python -X utf8 uat/promote.py` — never by hand-copying, which is how the two trees drifted
 for months. It classifies each pair (identical / eol-only / uat-ahead / prod-ahead / diverged),
@@ -331,7 +400,9 @@ the deterministic audits, `test_runner_drift.py` locks prod-vs-UAT runner diverg
 `test_history_dedup.py` the GIF/meme history writers,
 `test_meme_wiring_dryrun.py` the UAT meme wiring, and
 `test_prod_wiring_dryrun.py` exercises the real production path with the Anthropic client
-stubbed, and `test_proxy_fallback.py` locks the ESPN 403 / RSS bot-wall proxy fallback. Run all three before changing a prompt or a pass.
+stubbed, and `test_proxy_fallback.py` locks the ESPN 403 / RSS bot-wall proxy fallback.
+`test_library_studio.mjs` is the one Node suite — it locks `library_studio.html`'s JS ports of
+`library_json.py` and the meme checks against the real library files. Run all three before changing a prompt or a pass.
 
 ---
 
@@ -573,7 +644,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The eleven offline suites, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (12 Python + 1 Node), 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -614,6 +685,26 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-15 — Meme library expanded to 44; both libraries editable from a page**
+- 14 templates and 5 engines added, chosen by comparing *demand against supply* rather than by
+  popularity. `meme_history.json` held 54 memes over 28 days grouped by engine:
+  `emotional_whiplash` had been used 5 times against ONE template, `lopsided_exchange` 4 against
+  one. With ~13 meme slots a week against a 7-day cooldown, and `swap_cooled_templates()` only
+  able to swap WITHIN an engine, depth 1 means the repeat is kept rather than avoided. Panel
+  ORDER for all 14 was settled by rendering marker captions and looking at the image; two were
+  not what a guess would have said (`flex-tape` index 2 is in the TOP panel;
+  `mother-ignoring-kid-drowning` index 2 is the mother, not the drowning child).
+  `emotional_whiplash` and `forced_choice_dilemma` are still depth 1 on purpose — nothing in
+  Imgflip's top-100 is an honest sibling, and forcing one is the failure mode `_meta.engines`
+  warns about.
+- `library_studio.html` + `library_studio.bat` + `library_studio_server.py`: review, add, edit
+  and delete entries in both libraries from a browser, with real Imgflip and Giphy previews, and
+  save straight to disk. See the rules above for why the `.bat` rather than the `.html`, and for
+  what became generated as a result (`CURATED_TEMPLATES`, and `meme_selector_index.txt`, which
+  is deleted).
+- `uat/tests/test_library_studio.mjs` locks the browser's copies of `library_json.py` and the
+  meme checks, and `tests.yml` runs it.
 
 **2026-09-15 — NFL and college football get box scores; CFB is ranked-only**
 - Football had never produced a box score. Not a regression — the code path did not exist, in

@@ -1195,6 +1195,11 @@ def main() -> None:
             story_plan = json.dumps(_plan, ensure_ascii=False)
         else:
             print(f"  ✓ §2.3 tweet budget OK — {_rep['after']} tweet(s)")
+        # Over-cap tweets left in place because every section holding them was
+        # at its floor. Shipping is the policy; shipping silently is not.
+        for _acct, _n in _rep.get("uncapped", []):
+            print(f"  ⚠ §2.3 {_acct} still {_n} over the account cap — "
+                  f"every section holding it is at its floor")
     except (json.JSONDecodeError, TypeError, KeyError) as e:
         print(f"  ⚠ §2.3 tweet budget skipped — {e}")
 

@@ -72,6 +72,22 @@ jobs:
           fi
           echo "All suites passed, 0 API calls." >> "$GITHUB_STEP_SUMMARY"
 
+      # library_studio.html reimplements library_json.py's formatter and the
+      # meme consistency checks in JavaScript, because it writes the libraries
+      # from the browser with no Python in the loop. If that port drifts, every
+      # save reflows a library and the diff stops recording what the review
+      # decided. Node is preinstalled on ubuntu-latest, so this costs nothing.
+      - name: Run the library studio suite (Node)
+        run: |
+          echo "### Library studio (Node)" >> "$GITHUB_STEP_SUMMARY"
+          if node uat/tests/test_library_studio.mjs; then
+            echo "| \`test_library_studio\` | ✅ |" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "| \`test_library_studio\` | ❌ |" >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::test_library_studio failed"
+            exit 1
+          fi
+
       # A prompt carrying a {{PLACEHOLDER}} the destination runner cannot
       # substitute would ship raw template syntax to the model. promote.py
       # already refuses such a copy; this makes the same check run on every push.

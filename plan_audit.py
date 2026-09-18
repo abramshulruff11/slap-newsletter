@@ -432,13 +432,69 @@ def _drop_from_story(story: dict, keys: set) -> int:
     return removed
 
 
+def _account_of(t: dict) -> str:
+    return "@" + str(t.get("account", "?")).lstrip("@")
+
+
+def _cut_account_overflow(sections: list, report: dict) -> None:
+    """Rule 2: an account over HEADLINER_ACCOUNT_CAP across the WHOLE issue
+    loses its excess tweets — cut from whichever section holding one is
+    currently above its floor and has the most tweets, never the section
+    that happened to be mid-processing when a running count first crossed
+    the cap.
+
+    That single running-count approach is what shipped on 2026-09-15:
+    @TalkinBaseball_ appeared in three sections (Yankees 1/floor 1, Dodgers
+    2/floor 1, Mets 1/floor 1) against a cap of 2. Two of the three were
+    already AT their floor before the loop ever reached them, and the old
+    code's `break` on reaching a floor skipped incrementing its count
+    entirely — so seen_issue undercounted, and the violation was never
+    detected. Counting every tweet fixes the detection, but a single forward
+    pass is still order-dependent: if Dodgers (the one section with slack)
+    is visited before the running count crosses the cap, it looks fine in
+    the moment and nothing gets cut. This recomputes real survivor counts
+    globally, after rules 1 and 3 have already run, and only then decides
+    what to trim — so the answer no longer depends on section order.
+
+    A section already at its floor is left alone; if every section holding
+    the account is at its floor, the excess is left in place and recorded
+    under report["uncapped"] rather than emptying a section, since no rule
+    is allowed to take a section below its floor.
+    """
+    counts: dict = {}
+    for _label, story, _floor in sections:
+        for t in story.get("tweets", []) or []:
+            if isinstance(t, dict):
+                counts[_account_of(t)] = counts.get(_account_of(t), 0) + 1
+
+    for acct, n in counts.items():
+        excess = n - HEADLINER_ACCOUNT_CAP
+        while excess > 0:
+            holders = []
+            for label, story, floor in sections:
+                tweets = story.get("tweets", []) or []
+                mine = [t for t in tweets if isinstance(t, dict) and _account_of(t) == acct]
+                if mine and len(tweets) > floor:
+                    holders.append((len(tweets), story, mine))
+            if not holders:
+                report.setdefault("uncapped", []).append((acct, excess))
+                break
+            holders.sort(key=lambda h: -h[0])
+            _, story, mine = holders[0]
+            _drop_from_story(story, {_norm_key(mine[-1])})
+            report["dropped"].append(("account-cap/issue", acct))
+            excess -= 1
+
+
 def enforce_tweet_budget(plan: dict, ceiling: int = TWEET_CEILING) -> dict:
     """
     Trim the story plan to the tweet budget, dropping the least valuable first.
 
     Order:
       1. insider/wire tweets past their cap of 1 (keep the anchor, drop the rest)
-      2. any account past the normal cap of 2
+      2. any account past the normal cap of 2, across the whole issue
+         (_cut_account_overflow — see its docstring for why this is a
+         separate global pass rather than folded into the per-section loop)
       3. pure-update shapes ("BREAKING: ...", scorelines)
       4. if still over, the trailing tweet of the biggest section, respecting
          per-section floors
@@ -463,13 +519,18 @@ def enforce_tweet_budget(plan: dict, ceiling: int = TWEET_CEILING) -> dict:
         else:
             plan["around_the_league"] = atl_tweets
 
-    # --- Rules 1-3, headliners only ---
+    # --- Rules 1 and 3, coupled per section: insider/wire cap + pure-update ---
     # Insider caps are PER STORY, not per issue: pass1_story_selector.txt says an
     # insider tweet "may anchor A STORY once". Applying it per issue emptied the
     # NFL-fines story entirely on 2026-08-27 (both its tweets were Pelissero's),
     # which is worse than the problem being solved. A section is never taken
     # below its floor by any rule.
-    seen_issue: dict = {}
+    #
+    # Rules 1 and 3 stay coupled in one pass (not split out like rule 2 below):
+    # dropping an insider's BREAKING tweet as a pure-update must free that
+    # insider's per-story quota for their real scoop right behind it, or the
+    # scoop gets cut too for being merely "the second insider tweet". A
+    # dropped tweet consumes no quota for this reason.
     for label, story, floor in sections:
         tweets = [t for t in (story.get("tweets", []) or []) if isinstance(t, dict)]
         seen_section: dict = {}
@@ -478,31 +539,26 @@ def enforce_tweet_budget(plan: dict, ceiling: int = TWEET_CEILING) -> dict:
         for t in tweets:
             if len(tweets) - len(drop) <= floor:
                 break                      # floor reached — stop cutting this section
-            acct = "@" + str(t.get("account", "?")).lstrip("@")
+            acct = _account_of(t)
             low = acct.lower()
             seen_section[acct] = seen_section.get(acct, 0) + 1
-            seen_issue[acct] = seen_issue.get(acct, 0) + 1
             text = (t.get("text") or "").strip()
 
             if low in INSIDER_WIRE_ACCOUNTS and seen_section[acct] > INSIDER_HEADLINER_CAP:
                 drop.add(_norm_key(t))
                 report["dropped"].append(("insider-cap/story", acct))
-            elif seen_issue[acct] > HEADLINER_ACCOUNT_CAP:
-                drop.add(_norm_key(t))
-                report["dropped"].append(("account-cap/issue", acct))
             elif _PURE_UPDATE_RE.match(text) or _SCORELINE_RE.match(text):
                 drop.add(_norm_key(t))
                 report["dropped"].append(("pure-update", acct))
             else:
                 continue
-            # A dropped tweet consumes no quota — otherwise cutting the first
-            # tweet of an account makes the next one look "over cap" and takes
-            # that too, which zeroed @ShamsCharania out of its own scoop.
-            seen_issue[acct] -= 1
             seen_section[acct] -= 1
 
         if drop:
             _drop_from_story(story, drop)
+
+    # --- Rule 2: account cap, across the whole issue (order-independent) ---
+    _cut_account_overflow(sections, report)
 
     # --- Rule 4: still over budget, shave the biggest sections ---
     def total() -> int:

@@ -31,8 +31,21 @@ prompts/gif_library.DRAFT.backup-*.json
 uat/gif_review.html
 uat/gif_decisions.json
 
+# Meme library — same deal (review_memes.py, apply_meme_decisions.py). The
+# render cache holds Imgflip URLs for each template's worked example; it is
+# free to rebuild and re-renders on demand.
+prompts/meme_library.DRAFT.backup-*.json
+uat/meme_review.html
+uat/meme_decisions.json
+uat/meme_review_cache.json
+
 # GIF URL cache — build artifact, regenerated per run
 gif_url_cache.json
 
 # Per-run status, read by verify_run.py. Build artifact, regenerated each run.
 run_status.json
+
+# library_studio_server.py keeps a .bak beside each library it writes, and
+# writes through a .tmp. Neither belongs in git — the library itself is the record.
+prompts/*.bak
+prompts/*.tmp

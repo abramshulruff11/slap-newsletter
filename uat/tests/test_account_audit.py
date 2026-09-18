@@ -159,6 +159,35 @@ beat_urls = {m["url"] for s in [PLAN["lead_story"]] + sup
              for b in s["beats"] for m in b["media"]}
 check("beat media pruned in lockstep (no orphans)", beat_urls - leftover, set())
 
+# --- 2026-09-15 account-cap bug: one account across 3 floor-1 sections -------
+# Real shipped layout: @TalkinBaseball_ in Yankees (1 tweet), Dodgers (2),
+# Mets (1), all supporting stories (floor 1), cap 2. The old code's `break`
+# on reaching a floor skipped counting entirely for Yankees and Mets (each
+# already AT their floor of 1 tweet), so the violation was never even
+# detected and all 4 tweets shipped. Fixed count-everything detects it; but
+# floors cap how much can actually be cut: Yankees and Mets can't give up
+# their only tweet without going to 0 (disallowed), so the true achievable
+# minimum is 3, not 2 — one cut from Dodgers, the only section with slack.
+CAP_PLAN = {
+    "lead_story": story("Lead", [tw("StatMuse", "unrelated stat line")]),
+    "supporting_stories": [
+        story("Yankees", [tw("TalkinBaseball_", "Yankees clinch a playoff berth")]),
+        story("Dodgers", [tw("TalkinBaseball_", "Dodgers clinch for the 14th straight year"),
+                          tw("TalkinBaseball_", "Skubal threw a gem in the clincher")]),
+        story("Mets", [tw("TalkinBaseball_", "Mets are eliminated from contention")]),
+    ],
+    "around_the_league": {"tweets": []},
+}
+cap_rep = G.enforce_tweet_budget(CAP_PLAN)
+cap_sup = CAP_PLAN["supporting_stories"]
+cap_counts = [len(s["tweets"]) for s in cap_sup]
+check("no section emptied below its floor of 1", all(n >= 1 for n in cap_counts), True)
+check("Dodgers (the only section with slack) is the one cut", cap_counts, [1, 1, 1])
+check("account-cap drop recorded",
+      ("account-cap/issue", "@TalkinBaseball_") in cap_rep["dropped"], True)
+check("residual over-cap is reported, not silently shipped",
+      cap_rep.get("uncapped"), [("@TalkinBaseball_", 1)])
+
 
 print()
 print("=" * 66)

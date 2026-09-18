@@ -16,12 +16,22 @@ status changes into prompts/gif_library.DRAFT.json.
 This generator script itself does NOT modify the library — it only reads it
 and produces the review page.
 
+--no-api renders each entry as Giphy's keyless iframe embed
+(giphy.com/embed/<id>) instead of resolving a thumbnail URL, so the page can
+be generated with no GIPHY_API_KEY and no network at all — the browser loads
+the GIFs when you open it. Use it when you only need to eyeball the library
+(regenerating the normal way costs one API call per entry, which is what
+exhausted the daily quota on 2026-08-26 and blanked a UAT run), or from an
+environment that cannot reach api.giphy.com.
+
 Usage:
     python uat/review_gifs.py
+    python uat/review_gifs.py --no-api
 Output:
     uat/gif_review.html  (open this file in your browser)
 """
 
+import argparse
 import json
 import time
 import urllib.request
@@ -29,7 +39,7 @@ import urllib.error
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import gif_url_cache as GC  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -66,18 +76,28 @@ def resolve_gif(gif_id: str, api_key: str) -> dict | None:
 
 
 def main():
-    api_key = load_giphy_key()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--no-api", action="store_true",
+                        help="Render keyless giphy.com/embed iframes instead of "
+                             "resolving thumbnails (no API key, no network needed)")
+    args = parser.parse_args()
+
+    api_key = None if args.no_api else load_giphy_key()
     library = json.loads(LIBRARY_PATH.read_text(encoding="utf-8"))
     categories = library.get("categories", {})
 
     total = sum(len(c.get("gifs", [])) for c in categories.values())
-    print(f"Resolving {total} GIF(s) via Giphy API...")
+    if args.no_api:
+        print(f"Building page for {total} GIF(s) as iframe embeds (no API calls)...")
+    else:
+        print(f"Resolving {total} GIF(s) via Giphy API...")
 
     sections_html = []
     resolved_count = 0
     failed_count = 0
-    url_cache = GC.load_cache()
+    url_cache = {} if args.no_api else GC.load_cache()
     source_counts: dict = {}
+    bucket_counts: dict = {}
 
     for cat_key, cat in categories.items():
         cards = []
@@ -101,21 +121,41 @@ def main():
                 return (images.get("downsized_medium", {}).get("url")
                         or images.get("original", {}).get("url") or None)
 
-            img_url, source = GC.resolve(gif_id, _fetch, url_cache)
-            source_counts[source] = source_counts.get(source, 0) + 1
-
-            if img_url:
-                resolved_count += 1
-                img_html = f'<img src="{img_url}" loading="lazy" alt="{label}">'
+            if args.no_api:
+                if gif_id.startswith("PLACEHOLDER"):
+                    failed_count += 1
+                    img_html = '<div class="broken">⚠ placeholder id — nothing to render</div>'
+                else:
+                    resolved_count += 1
+                    img_html = (f'<div class="embed-wrap"><iframe loading="lazy" '
+                                f'src="https://giphy.com/embed/{gif_id}" '
+                                f'title="{label}" allowfullscreen></iframe></div>')
             else:
-                failed_count += 1
-                img_html = '<div class="broken">⚠ could not resolve</div>'
+                img_url, source = GC.resolve(gif_id, _fetch, url_cache)
+                source_counts[source] = source_counts.get(source, 0) + 1
+
+                if img_url:
+                    resolved_count += 1
+                    img_html = f'<img src="{img_url}" loading="lazy" alt="{label}">'
+                else:
+                    failed_count += 1
+                    img_html = '<div class="broken">⚠ could not resolve</div>'
 
             note_html = f'<div class="note">{note}</div>' if note else ""
 
+            # An entry whose own note says it was never looked at, but whose
+            # status says verified, is LIVE in selection while unreviewed —
+            # the highest-priority review bucket, and invisible in a plain
+            # status filter because it sits among the genuinely-checked ones.
+            eyeballed = "no" if "not yet eyeballed" in note.lower() else "yes"
+            bucket_counts[status] = bucket_counts.get(status, 0) + 1
+            if eyeballed == "no" and status == "verified":
+                bucket_counts["unreviewed"] = bucket_counts.get("unreviewed", 0) + 1
+
             cards.append(f"""
             <div class="card" data-id="{gif_id}" data-category="{cat_key}"
-                 data-orig-status="{status}" data-status="{status}">
+                 data-orig-status="{status}" data-status="{status}"
+                 data-eyeballed="{eyeballed}">
                 {img_html}
                 <div class="meta">
                     <span class="badge">{status}</span>
@@ -140,6 +180,12 @@ def main():
         </section>
         """)
 
+    if args.no_api:
+        stats_line = (f"{resolved_count} embedded · {failed_count} unrenderable · "
+                      f"{total} total — iframe mode, GIFs load from Giphy in your browser")
+    else:
+        stats_line = f"{resolved_count} resolved · {failed_count} failed · {total} total"
+
     html = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -162,6 +208,8 @@ def main():
   .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }}
   .card {{ background: #1a1a1a; border-radius: 8px; overflow: hidden; border: 1px solid #2a2a2a; }}
   .card img {{ width: 100%; display: block; background: #000; }}
+  .embed-wrap {{ position: relative; width: 100%; aspect-ratio: 4 / 3; background: #000; }}
+  .embed-wrap iframe {{ position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }}
   .broken {{ padding: 40px 10px; text-align: center; color: #f66; font-size: 12px; }}
   .meta {{ padding: 10px; }}
   .badge {{ display: inline-block; font-size: 10px; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; color: #111; font-weight: 600; margin-bottom: 6px; }}
@@ -171,6 +219,10 @@ def main():
   .note {{ font-size: 11px; color: #999; line-height: 1.4; margin-top: 4px; }}
   .card[data-status="retired"] {{ opacity: 0.4; }}
   .card.changed {{ border-color: #7ab8ff; }}
+  /* live in selection but its own note says nobody ever looked at it */
+  .card[data-status="verified"][data-eyeballed="no"] {{ border-color: #7a3b33; }}
+  .card[data-status="verified"][data-eyeballed="no"].changed {{ border-color: #7ab8ff; }}
+  .filters button.urgent {{ border-color: #c0392b; color: #ff9b8f; }}
   .hidden {{ display: none !important; }}
   .actions {{ margin-top: 8px; display: flex; gap: 6px; }}
   .act-btn {{ flex: 1; font-size: 10px; padding: 5px 4px; border-radius: 4px; border: 1px solid #444; background: #222; color: #ccc; cursor: pointer; }}
@@ -181,13 +233,14 @@ def main():
 </head>
 <body>
 <h1>SLAP GIF Library Review</h1>
-<div class="stats">{resolved_count} resolved · {failed_count} failed · {total} total</div>
+<div class="stats">{stats_line}</div>
 <div class="toolbar">
   <div class="filters">
-    <button class="active" onclick="filterStatus('all', this)">All</button>
-    <button onclick="filterStatus('verified', this)">Verified</button>
-    <button onclick="filterStatus('candidate', this)">Candidate (needs review)</button>
-    <button onclick="filterStatus('retired', this)">Retired</button>
+    <button class="active" onclick="filterStatus('all', this)">All ({total})</button>
+    <button class="urgent" onclick="filterStatus('unreviewed', this)">⚠ Never eyeballed &amp; LIVE ({bucket_counts.get('unreviewed', 0)})</button>
+    <button onclick="filterStatus('candidate', this)">Candidate ({bucket_counts.get('candidate', 0)})</button>
+    <button onclick="filterStatus('verified', this)">Verified ({bucket_counts.get('verified', 0)})</button>
+    <button onclick="filterStatus('retired', this)">Retired ({bucket_counts.get('retired', 0)})</button>
   </div>
   <button class="export-btn" onclick="exportDecisions()">⬇ Export Decisions</button>
   <button class="clear-btn" onclick="clearDecisions()">Clear saved decisions</button>
@@ -226,12 +279,9 @@ function updateCardUI(card, status) {{
   badge.textContent = status;
   const colors = {{ verified: '#1e8e3e', candidate: '#e8a33d', retired: '#999999' }};
   badge.style.background = colors[status] || '#666';
-  const origStatus = card.dataset.origStatus;
-  if (status !== origStatus) {{
-    card.classList.add('changed');
-  }} else {{
-    card.classList.remove('changed');
-  }}
+  // Highlight on "has a pending decision", not "status differs" — confirming a
+  // never-eyeballed entry is a real decision that leaves the status unchanged.
+  card.classList.toggle('changed', !!loadDecisions()[card.dataset.id]);
 }}
 
 function setStatus(btn, newStatus) {{
@@ -242,10 +292,17 @@ function setStatus(btn, newStatus) {{
   const label = card.querySelector('.label').textContent;
 
   const decisions = loadDecisions();
-  if (newStatus === origStatus) {{
+  // A no-change click on a never-eyeballed entry is still a decision: it means
+  // "I looked at this and it's fine", which is what clears the 'NOT yet
+  // eyeballed' marker from its note. Without this, confirming any of the
+  // already-verified backlog would be a silent no-op and they'd stay queued
+  // for review forever. Use Reset to actually clear a decision.
+  const neverEyeballed = card.dataset.eyeballed === 'no';
+  if (newStatus === origStatus && !neverEyeballed) {{
     delete decisions[id];
   }} else {{
-    decisions[id] = {{ id, category, label, old_status: origStatus, new_status: newStatus }};
+    decisions[id] = {{ id, category, label, old_status: origStatus,
+                      new_status: newStatus, confirmed: newStatus === origStatus }};
   }}
   saveDecisions(decisions);
   updateCardUI(card, newStatus);
@@ -254,7 +311,11 @@ function setStatus(btn, newStatus) {{
 
 function resetStatus(btn) {{
   const card = btn.closest('.card');
-  setStatus(btn, card.dataset.origStatus);
+  const decisions = loadDecisions();
+  delete decisions[card.dataset.id];
+  saveDecisions(decisions);
+  updateCardUI(card, card.dataset.origStatus);
+  updatePendingCount();
 }}
 
 function updatePendingCount() {{
@@ -294,11 +355,19 @@ function filterStatus(status, btn) {{
   document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('.card').forEach(card => {{
-    if (status === 'all' || card.dataset.status === status) {{
-      card.classList.remove('hidden');
-    }} else {{
-      card.classList.add('hidden');
-    }}
+    // 'unreviewed' is not a status — it's verified-but-never-eyeballed,
+    // i.e. live in selection without anyone having confirmed the clip.
+    const match = status === 'all'
+      ? true
+      : status === 'unreviewed'
+        ? (card.dataset.status === 'verified' && card.dataset.eyeballed === 'no')
+        : card.dataset.status === status;
+    card.classList.toggle('hidden', !match);
+  }});
+  // Empty categories are just noise once a filter is on.
+  document.querySelectorAll('section').forEach(sec => {{
+    const anyVisible = sec.querySelector('.card:not(.hidden)');
+    sec.classList.toggle('hidden', !anyVisible);
   }});
 }}
 
@@ -309,9 +378,12 @@ applyStoredDecisions();
 """
 
     OUTPUT_PATH.write_text(html, encoding="utf-8")
-    GC.save_cache(url_cache)
-    print(f"\nDone. {resolved_count}/{total} resolved, {failed_count} failed.")
-    print(f"URL source: {GC.summarize(source_counts)}")
+    if not args.no_api:
+        GC.save_cache(url_cache)
+        print(f"\nDone. {resolved_count}/{total} resolved, {failed_count} failed.")
+        print(f"URL source: {GC.summarize(source_counts)}")
+    else:
+        print(f"\nDone. {resolved_count}/{total} embedded, {failed_count} unrenderable. 0 API calls.")
     print(f"Open: {OUTPUT_PATH}")
 
 

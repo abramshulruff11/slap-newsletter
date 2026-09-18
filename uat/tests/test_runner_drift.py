@@ -69,7 +69,7 @@ KNOWN_DIVERGENT = {
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
     )),
-    "main": dict(prod="585fb6a5e3fe", uat="0e25f4ba71c9", reason=(
+    "main": dict(prod="5471409d8a48", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
         "5-line stub. Expected to stay divergent permanently. (2026-09-04: prod "
         "now strips HTML comments from the published Substack file. Nothing to "
@@ -78,7 +78,8 @@ KNOWN_DIVERGENT = {
         "for CHECK 8; run_uat.py does the same at its own call site. 2026-09-05: "
         "prod's main() calls run_status.reset(); UAT instead repoints "
         "run_status.STATUS_PATH at its own output dir at import, so the sandbox "
-        "never writes prod's status file.)"
+        "never writes prod's status file. 2026-09-17: prod's main() prints "
+        "plan_audit's report['uncapped']; run_uat.py prints it at its own call site.)"
     )),
 }
 
