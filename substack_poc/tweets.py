@@ -97,27 +97,16 @@ def _best_mp4(media: Dict) -> Optional[str]:
     return max(mp4s, key=lambda v: v.get("bitrate", 0) or 0)["url"]
 
 
-_PBS_TWIMG = "https://pbs.twimg.com/"
-_PBS_SUBSTACK = "https://pbs.substack.com/"
-
-
-def _substack_img(url: str) -> str:
-    """Rewrite a pbs.twimg.com image url to Substack's mirror host.
-
-    A twitter2 `photos` entry renders ONLY when its `img_url` points at Substack's
-    own pbs.substack.com proxy (same path, just a different host) -- a raw
-    pbs.twimg.com url renders blank in the embed. This is exactly the rewrite the
-    editor does when you paste a tweet; the proxy fetches the image from Twitter
-    on demand, so no upload is needed."""
-    return url.replace(_PBS_TWIMG, _PBS_SUBSTACK, 1) if url else url
-
-
 def _media(data: Dict) -> tuple[list, Optional[str]]:
     """Return (photos, video_url) for a tweet.
 
     A twitter2 `photos` entry is {img_url, link_url} (NOT url/width/height -- those
-    are ignored by Substack's renderer): img_url is the still image on Substack's
-    mirror host (see _substack_img), link_url is the media's t.co short link. Photos
+    are ignored by Substack's renderer): img_url is the still image, link_url is the
+    media's t.co short link. img_url is returned as the raw pbs.twimg.com url here --
+    publish.hydrate_tweets rehosts it onto Substack's own CDN via api.get_image()
+    before it ships (see that function's docstring for why: the previous approach,
+    swapping the host to pbs.substack.com and relying on Substack's proxy to fetch
+    it on demand, started rendering as a broken-image icon -- 2026-09-16). Photos
     cover still images plus a video/animated_gif's poster thumbnail; the first video
     also yields the `video_url` Substack needs to render an inline player."""
     photos: list = []
@@ -128,7 +117,7 @@ def _media(data: Dict) -> tuple[list, Optional[str]]:
             continue
         photos.append(
             {
-                "img_url": _substack_img(m.get("media_url_https", "")),
+                "img_url": m.get("media_url_https", ""),
                 "link_url": m.get("url", ""),
             }
         )
