@@ -105,6 +105,8 @@ slap-newsletter/
 ├── highlights.py              ← injects MLB/NHL/World Cup highlight video embeds
 ├── build_email_html.py        ← builds the email HTML body
 ├── generate_memes.py          ← Imgflip meme generation
+├── nfl_standings.py           ← NFL standings: records, official tiebreakers,
+│                                 responsive HTML table (mock + real feed)
 ├── runner_common.py            ← runner body shared by prod + UAT: 24 functions, models,
 │                                 PRICING, PASS_COSTS. configure(prompts_dir=) per runner
 ├── plan_audit.py               ← deterministic audits, SHARED by prod + UAT (see below)
@@ -685,6 +687,42 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-18 — NFL standings: records, official tiebreakers, responsive table (SLA-43)**
+- `nfl_standings.py` turns the season game log `fetch_nfl_season_games()` writes to
+  `game_state.json` (`sports.nfl.season_games`, added for SLA-42) into AFC-then-NFC division
+  standings and a self-contained HTML component. Nothing in it fetches and nothing in it is
+  Substack- or Beehiiv-specific, so the live-render test and the real-data wiring reuse the same
+  code. `python -X utf8 nfl_standings.py` writes `nfl_standings_mock.html` from a seeded mock
+  season; `--game-state <path>` reads the real log instead.
+- **The 32-team division map is imported, not copied.** `fetch_sports_data.NFL_DIVISIONS` stays
+  the only copy — a second hand-kept table is the exact drift this repo has paid for before.
+- **Tiebreakers are the official two-team procedure, all twelve steps, and a step that cannot be
+  evaluated falls through rather than guessing.** Head-to-head between teams that never met,
+  common games under the four-game minimum, division record across divisions, net touchdowns
+  (the feed carries scores, not TDs) all return "does not apply" and the procedure moves on.
+  Deriving touchdowns from a final score would be the approximation the ticket rules out. Step 12
+  is a coin toss, so it is **reported as unresolved** and the pair is ordered alphabetically —
+  a randomized order would be non-deterministic and would hide the tie.
+- **Three-or-more-team ties are flagged, not faked.** The NFL's multi-team procedure eliminates
+  one club and restarts from step 1; it is not the two-team procedure applied pairwise. That is
+  its own piece of work, so such a group is ordered provisionally and every row says so.
+- **The responsive scheme deliberately does not copy MLB's, and here is why.** `PAGE_CSS`'s
+  `@media(max-width:680px)` stacks two-column layout regions, never a table column;
+  `_mi_std_table()` handles narrow screens by pre-trimming to six short columns at build time.
+  NFL's column list is nine wide with two five-character records (DIV, CONF), so a single
+  build-time trim would have to drop DIV and CONF at every width. Columns are cut by breakpoint
+  instead — 680px reused from `PAGE_CSS`, then 560/460/380 — always off the BOTTOM of the
+  ticket's priority list (PCT, then CONF, then DIV, then DIFF). Callers that know their
+  destination strips `<style>` can still pre-trim via `columns=`.
+- **"No horizontal scroll, ever" was measured, not asserted.** Chromium at 320/360/375/390/414/
+  460/560/680/768/1024px: `scrollWidth` never exceeds the viewport and no element overflows —
+  including the worst case where the `<style>` block is stripped and all nine columns survive.
+  `table-layout:fixed` plus `overflow-wrap:anywhere` is what holds that: without the wrap, a
+  header like "W-L-T" sets a min-content floor the fixed layout cannot go under.
+- `uat/tests/test_nfl_standings.py` — 80+ offline checks, 0 API calls. Every tiebreaker step has
+  its own fixture in which every earlier step is deliberately level, so the step under test is
+  the one that decides; otherwise a step that quietly stopped applying would still look fine.
 
 **2026-09-15 — Meme library expanded to 44; both libraries editable from a page**
 - 14 templates and 5 engines added, chosen by comparing *demand against supply* rather than by
