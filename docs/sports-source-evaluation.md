@@ -104,10 +104,16 @@ because it has no source. Meanwhile `prompts/pass1_story_selector.txt`
   took to end it."
 - A coach who won a title as a player with the same franchise.
 
-**Every one of those is a cross-sport, full-history query.** That is the
-product requirement, and it is the requirement that decides this evaluation:
-a source covering the last 20 seasons does not answer "longest drought in
-major North American sports."
+**Every one of those is a cross-sport, full-history query** — and a source
+covering the last 20 seasons cannot answer "longest drought in major North
+American sports."
+
+**But the prompt is not the product spec.** I initially scored this as the
+requirement that decides the evaluation; per Abram it is a direction SLAP
+wants to grow into, not the launch bar. The launch bar is the basics —
+player–team history, team records, playoffs and champions, key season and
+career stats. §1.3 carries the corrected priorities, and §5.1 carries what
+the correction changes.
 
 **Two consumers need more than prose.** `nfl_standings.py` (SLA-43) needs a
 full season game log with home/away, scores and division/conference
@@ -136,27 +142,51 @@ turns out to be strategically right for reasons beyond wheels (§5.2).
 
 ### 1.3 The rubric
 
-Must-haves are what the writers are *currently blocked on*. Nice-to-haves are
-real but already served, or wanted later.
+**Revised 2026-09-19 on Abram's direction, and the revision changes
+conclusions — see §5.1.** My first draft read the prompts and inferred that
+cross-sport deep-history analysis ("rank this drought against comparable
+droughts in major North American sports") was the discriminating must-have,
+because `pass1_story_selector.txt` asks for it explicitly. That was reading
+the prompt as the product spec. The actual priority is the opposite way
+round: **the basics are mission-critical, the clever cross-sport analysis is
+a nice-to-have we want to grow into.**
+
+Mission-critical is: *which team was this player on, what is this team's
+record, who won the playoffs and the title, and what are the key season and
+career numbers.*
 
 | # | Data point | Why | Priority |
 |---|---|---|---|
 | R1 | Game results — date, teams, final score, OT/SO flag, winner | The base fact of every recap | **MUST** |
-| R2 | Postseason results + champions per season | RULE 3.4 "defending champion"; `claim_validator.py:65` can only flag it today | **MUST** |
-| R3 | **Full-league-history depth** for R1/R2 | "first since YYYY", "longest in N years", cross-sport drought ranking. The discriminating requirement | **MUST** |
-| R4 | Standings / season records (W-L-T, div, conf, pct) | `nfl_standings.py`; "X is 7-0" | **MUST** |
+| R2 | Postseason results + champions per season | "Defending champion" (RULE 3.4); `claim_validator.py:65` can only flag it today | **MUST** |
+| R4 | Standings / team records (W-L-T, div, conf, pct) | `nfl_standings.py`; "X is 7-0" | **MUST** |
 | R5 | Schedule — scheduled and in-progress | Tier 1 calendar; "Next: Game n" | **MUST** |
-| R6 | Stable team identity across relocation/rename | Oilers→Titans, Sonics→Thunder, Bullets→Wizards. A drought query silently breaks without it | **MUST** |
-| R7 | Stable player IDs across sources and eras | Joins season stats to rosters to results | **MUST** |
-| R8 | Season-level team + player stats | SLA-59 | Nice |
-| R9 | Rosters, current and historical | SLA-60 | Nice |
-| R10 | Box scores / player game lines | SLA-41: already served by ESPN | Nice (served) |
-| R11 | Play-by-play | Fantasy needs it for NFL only; no other sport does | Nice (NFL only) |
+| R6 | Stable team identity across relocation/rename | Oilers→Titans, Sonics→Thunder. Breaks any franchise query silently | **MUST** |
+| R7 | Stable player IDs across sources and eras | Joins stats to rosters to results | **MUST** |
+| **R8** | **Key season stats, team and player** | Promoted. "Mission critical" | **MUST** |
+| **R9** | **Player–team history — which team, which season** | Promoted. Named first among the basics | **MUST** |
+| **R14** | **Career stats (aggregate of R8 over a player's span)** | New. Named as mission-critical | **MUST** |
+| ~~R3~~ | ~~Full-league-history depth~~ → **deep history for streaks/droughts** | Demoted. Cross-sport streak ranking is where SLAP wants to go, not what it needs at launch | **Nice — strategic** |
+| R10 | Box scores / player game lines | Already served by ESPN (SLA-41) | Nice (served) |
+| R11 | Play-by-play | Fantasy needs it for NFL only | Nice (NFL only) |
 | R12 | Awards, leaders, draft | Colour | Nice |
 | R13 | Betting lines, weather, venue, tracking | Nothing consumes these | Out of scope |
 
-R3 and R6 are the two the naive answer ("just use ESPN") fails, and they are
-why this ticket exists.
+**What the demotion of R3 changes.** R3 was the requirement no source
+satisfied cheaply, and it was doing most of the work in the original
+recommendations. Demoting it has three consequences, all of them good:
+
+1. **The nflverse 1999 floor stops being a blocker** (§5.1). Nearly every
+   mission-critical NFL query is answerable from 1999+ — plus rosters, which
+   reach 1920 and cover R9 across the *entire* history of the league.
+2. **R2 is the one must-have that still needs real depth**, and it is the
+   cheapest thing in this document to obtain: a champions table is a few
+   hundred rows per league.
+3. **NCAAMB's unverified depth stops being a tier-moving risk** (§2.6). Even
+   a 2013 coverage floor serves the basics for the modern era.
+
+R6 and R7 are now the requirements the naive answer ("just use ESPN") fails
+worst, and they are structural — they live in the schema, not in a source.
 
 ---
 
@@ -341,7 +371,7 @@ gets consciously scoped to the modern era. **Note the shared CFBD/CBBD call
 pool (§2.5)** — this is one key and one budget across both college sports,
 not two.
 
-### 2.7 Men's tennis — **Sackmann is the right data and the wrong licence**
+### 2.7 Men's tennis — **OUT AT LAUNCH.** Right data, wrong licence
 
 The ticket guesses tennis has no clean analogue. It half does:
 **Jeff Sackmann's `tennis_atp`** is a genuine nflverse-equivalent —
@@ -360,12 +390,14 @@ decision for Abram, not an engineering call** (§6, Q1).
 Tennis also fits the schema badly: no teams, no standings, no seasons in the
 league sense. R4 and R6 don't apply; R1 becomes match-not-game.
 
-**Recommendation.** Data-wise Sackmann, unreservedly. **Gate on the licence
-question before building anything.** If NC is disqualifying, the fallback is
+**Decided: out at launch (not a team sport).** Data-wise Sackmann is
+unreserved, so this is not a data verdict — and because nothing at launch
+touches it, the NonCommercial licence stops being on the critical path.
+**If tennis is ever revisited, gate on that licence question first.** If NC is disqualifying, the fallback is
 ESPN's tennis coverage for current results plus a curated majors-winners table
 — which is most of what the newsletter actually cites about tennis anyway.
 
-### 2.8 Men's golf — **the genuinely hard one; recommend deferring**
+### 2.8 Men's golf — **OUT AT LAUNCH.** The genuinely hard one
 
 The ticket's suspicion is correct: **there is no free, maintained,
 nflverse-equivalent for golf.** What exists:
@@ -384,7 +416,7 @@ nflverse-equivalent for golf.** What exists:
 Golf's shape fights the schema hardest: no teams, no standings, no fixtures —
 a tournament is a field of 150 players over four rounds with a cut.
 
-**Recommendation. Defer golf.** What SLAP's prompts actually cite about golf
+**Decided: out at launch (not a team sport), and the evaluation independently said defer anyway.** What SLAP's prompts actually cite about golf
 is narrow — `pass1_story_selector.txt` names "final round Sunday of any major:
 The Masters, PGA Championship, US Open, The Open Championship" as a Tier 1
 lead trigger. That is **four events a year and a winners table**, not an
@@ -397,16 +429,110 @@ golf coverage deepens.
 
 ## 3. Step 3 summary — one table
 
-| Sport | Primary | Fallback | History (R3) | R1 | R2 | R4 | R8 | R9 | Update | Top risk |
+| Sport | Primary | Fallback | Depth | R1 results | R2 champs | R4 records | R8 stats | R9 player–team | Update | Top risk |
 |---|---|---|---|---|---|---|---|---|---|---|
-| **NFL** | nflverse | ESPN (live) | **1999** ⚠ (rosters 1920) | ✅ | ✅ | ✅ | ✅ | ✅ | batch + ESPN live | pre-1999 gap |
-| **MLB** | Retrosheet + Lahman | MLB Stats API (live only) | **1871** ✅ | ✅ | ✅ | ✅ | ✅ | ◐ | annual + ESPN live | Lahman share-alike |
+| **NFL** | nflverse | ESPN (live) | 1999+ (rosters **1920**) | ✅ | 1999+ ⚠ | ✅ | ✅ | ✅ **1920** | batch + ESPN live | pre-1999 champs — cheap to fix |
+| **MLB** | Retrosheet + Lahman | MLB Stats API (live only) | **1871** ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | annual + ESPN live | Lahman share-alike |
 | **NHL** | NHL official API | curated champions table | unverified ⚠ | ✅ | ✅ | ✅ | ✅ | ✅ | live | undocumented API |
 | **NBA** | `nba_api` (proxied) | `hoopR-nba-data` (2002+) | 1946, sparse pre-1983 ⚠ | ✅ | ✅ | ✅ | ✅ | ✅ | live | **datacenter IP block** |
 | **NCAAF** | CFBD | ESPN (poll, live) | deep ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | live | quota: 1k/mo free, shared with CBBD |
-| **NCAAMB** | CBBD | `hoopR-mbb-data` (2002+) | unverified ⚠ | ✅ | ✅ | ✅ | ✅ | ✅ | live | depth unconfirmed — the one open check that can move a tier |
-| **Tennis** | Sackmann `tennis_atp` | ESPN + curated majors | **1968** ✅ | ✅ | ✅ | n/a | ✅ | n/a | weekly | **NC licence** |
-| **Golf** | *defer* — curated majors CSV | DataGolf (paid, 2004+) | **none free** ❌ | ◐ | ✅ | n/a | ❌ | n/a | manual | no viable free source |
+| **NCAAMB** | CBBD | `hoopR-mbb-data` (2002+) | unverified | ✅ | ✅ | ✅ | ✅ | ✅ | live | depth unconfirmed — no longer tier-moving |
+| ~~Tennis~~ | *out at launch — not a team sport* | ESPN + curated majors | 1968 | — | — | — | — | — | — | NC licence; revisit only if scope changes |
+| ~~Golf~~ | *out at launch — not a team sport* | curated majors CSV | none free | — | — | — | — | — | — | no viable free source either way |
+
+---
+
+## 3A. Capability per sport — can now / could / won't
+
+Scored against the **revised** rubric (§1.3): the basics are mission-critical,
+deep-history streak analysis is strategic. "Can now" means with the
+recommended primary source, at launch, at zero or near-zero cost. "Could"
+means real additional work, money, or a second source. "Won't" means no
+viable path I found — not "hard", but *not available*.
+
+Read the **Won't** column first. It is the honest scope boundary, and in four
+of six sports it is the same boundary: the pre-modern era.
+
+### NFL — nflverse + ESPN
+
+| | |
+|---|---|
+| **Can now** | Player–team history **1920–present** (R9 fully covered — the best-served must-have in the set). Results, standings, playoffs, champions, season + career stats, all **1999+**. Weekly rosters 2002+. Draft picks, combine, contracts, injuries (2009+), depth charts (2001+) |
+| **Could** | Pre-1999 **champions + postseason** via a curated table — ~106 rows, an afternoon, and it closes the last must-have gap. Advanced/NGS metrics 2016+. Snap counts 2012+ |
+| **Won't** | Pre-1999 game-by-game results and pre-1999 season/career stats. The obvious source (Pro-Football-Reference) is barred by its own terms for our use (§5.3), and I found no free substitute. So "Jim Brown's career numbers" stays out of reach; "Mahomes' career numbers" is fine |
+
+**Net: the strongest sport.** Every mission-critical item is either covered or
+one cheap table away.
+
+### MLB — Retrosheet + Lahman
+
+| | |
+|---|---|
+| **Can now** | Effectively everything, **1871–present**: results, standings, postseason + champions, season stats (batting/pitching/fielding), career stats, player–team history by season, managers. The only sport where the *strategic* R3 tier is also free |
+| **Could** | Statcast-era pitch/batted-ball detail (2015+) via pybaseball. Minor-league linkage |
+| **Won't** | Little worth naming. Some pre-1900 box scores are incomplete at source — a Retrosheet research limit, not a licensing or access one |
+
+**Net: the reference implementation.** Build the schema against MLB first; if
+it fits MLB it fits everything.
+
+### NHL — official NHL API
+
+| | |
+|---|---|
+| **Can now** | Current and recent results, standings, rosters, schedules, player stats. Depth **unverified** (check 1, §6) |
+| **Could** | Full history if the season walk-back proves deep. Champions independently via a curated table — ~107 rows, and it de-risks R2 regardless of what check 1 says |
+| **Won't** | Detailed play-by-play before 2010-11 (`hockeyR` floor). Nothing in SLAP needs hockey PBP, so this costs us nothing |
+
+**Net: fine for the basics, pending one check.** The champions table makes the
+check non-blocking.
+
+### NBA — nba_api (proxied) + hoopR fallback
+
+| | |
+|---|---|
+| **Can now** | Results, standings, box scores, rosters, season and career stats — **once the proxy work is done**. `playercareerstats` is a first-class endpoint, so R14 is well served. hoopR gives 2002+ immediately with no proxy at all |
+| **Could** | Deep history to 1946-47 for results and champions. Franchise continuity is unusually messy here (Sonics→Thunder, Bullets→Wizards, New Orleans/Charlotte) — R6 work, not source work |
+| **Won't** | Granular stats before they existed: steals, blocks and turnovers only from **1973-74**, offensive rebounds likewise. That's a fact about basketball, not about the API — no source anywhere has them |
+
+**Net: viable, but the IP-blocking is real work.** Start on hoopR 2002+, add
+`nba_api` behind the proxy for depth.
+
+### NCAA football — CFBD
+
+| | |
+|---|---|
+| **Can now** | Results, records, rankings with deep historical reach. Rosters, player stats, recruiting and betting for the modern era. Postseason and champions |
+| **Could** | Fuller historical stats at a paid tier — remembering the **shared CFBD/CBBD pool** (§2.5). Play-by-play and drives |
+| **Won't** | Rosters and player stats for the early eras. College data thins out severely going back, at every source — a records-keeping fact, not a CFBD gap |
+
+**Net: strong for team-level, thin for player-level history.** Matches how
+SLAP actually writes about CFB.
+
+### NCAA men's basketball — CBBD
+
+| | |
+|---|---|
+| **Can now** | **Unknown until check 2 runs** (§6). Assume modern-era results, records, postseason, rosters, player stats — the shape is confirmed, the depth is not |
+| **Could** | Deeper history if CBBD reaches back; otherwise hoopR-mbb-data 2002+, Bart Torvik 2008+ for advanced metrics |
+| **Won't** | Early-era player stats, same records-keeping reason as CFB |
+
+**Net: no longer a tier-moving risk** under the revised rubric — even a 2013
+floor serves the basics. Still worth running check 2 before SLA-5 locks.
+
+### Tennis and golf — **out at launch** (team sports only, confirmed)
+
+Not built, not ingested, not in the schema. Recorded so the decision is
+findable later, and because both still *appear* in the newsletter as Tier 1
+leads (a major's final Sunday), sourced as today from ESPN and tweets.
+
+| | Tennis | Golf |
+|---|---|---|
+| **Could, if revisited** | Sackmann: matches 1968+, rankings, players. Data is excellent | DataGolf 2004+, paid (~$30/mo) |
+| **Blocker** | CC BY-NC-SA — **NonCommercial**. A licensing decision, not an engineering one | No free source at any depth. Cost, not licence |
+| **Cheap alternative** | Curated majors-winners table | Curated majors-winners table — ~600 rows covers all four majors, full history |
+
+**Net: the curated majors table is the whole launch answer for both**, and it
+serves nearly every claim SLAP actually makes about either sport.
 
 ---
 
@@ -445,29 +571,43 @@ the NFL began in 1920. That is 79 missing seasons, including every
 pre-merger championship, both Super Bowl dynasties of the 70s, and the
 1958 title game.
 
-This is not a small gap for SLAP specifically, because §1.3 R3 is driven by
-drought-and-streak prose, and droughts are long. "Their first title since
-1957" is precisely the sentence RULE 3 exists to stop the model inventing —
-and 1999+ data cannot source it either.
+**⬇ The revised rubric (§1.3) downgrades this from blocker to boundary.**
+My first draft called this "the finding to act on" because R3 — deep history
+for drought-and-streak prose — was scored as a must-have. With R3 demoted to
+strategic and the basics promoted, the 1999 floor costs far less than it
+first appeared:
+
+- **R9, player–team history, is fully covered to 1920.** The mission-critical
+  item Abram named *first* is the one nflverse serves *best*.
+- **R1, R4, R8, R14** — results, records, season and career stats — are
+  answerable from 1999+ for every currently-active player and every recent
+  season, which is what SLAP overwhelmingly writes about.
+- **R2, champions and postseason, is the one must-have the floor still
+  breaks** — and it is the cheapest gap in this document to close.
 
 **Recommended re-phasing (needs Abram's call):**
 
 - **Split SLA-6 in two.** *6a, 1999–present*: essentially free — one 520 KB
   Parquet file, already downloaded and parsed in the course of writing this.
-  Days, not weeks. *6b, 1920–1998*: a real project needing its own source
-  decision, and the place where the schedule risk actually lives.
-- **Same split for SLA-59**, same 1999 boundary, same reason.
+  Days, not weeks. *6b, pre-1999*: **now scoped down to champions and
+  postseason results only** — roughly 106 rows, an afternoon. That closes the
+  last mission-critical gap and drops the expensive part.
+- **SLA-59 splits at the same boundary, and the pre-1999 half becomes
+  nice-to-have** rather than in-scope. Career stats for pre-1999 players are
+  the thing we consciously give up.
 - **SLA-60 (rosters) is unaffected and is the pleasant surprise** —
   `roster_1920.parquet` is real (369 players across Akron, Canton, Decatur
-  and 11 others). The ticket's stated depth is correct as written.
+  and 11 others). The ticket's stated depth is correct as written, and under
+  the revised rubric it is also the highest-value of the three.
 
-**Candidate sources for 1920–1998, none free of friction:** Pro-Football-
-Reference has it all but its terms forbid this use (§5.3); Wikipedia/Wikidata
-season tables are permissively licensed but need parsing and validation; a
-curated champions-only table is cheap and covers R2 but not R1. My
-recommendation is to scope 6b as *champions and postseason results first*
-(small, high-value, most of the prose benefit) and treat full pre-1999
-regular-season results as a separate, later question.
+**What we're consciously giving up**, and it should be a decision rather than
+a discovery: full pre-1999 regular-season results and pre-1999 career stats.
+Pro-Football-Reference has all of it and its terms forbid our use (§5.3);
+Wikipedia/Wikidata are permissively licensed but need parsing and validation.
+So "their first title since 1957" stays unsourceable, and RULE 3 keeps
+downgrading it to relative framing — which is exactly the status quo, not a
+regression. If deep-history prose later becomes a priority, **that** is the
+moment to revisit 6b properly.
 
 ### 5.2 It is a patchwork — but there is one architectural pattern
 
@@ -545,17 +685,25 @@ today's scores and not the archive.
 
 ### 5.4 Which sports are worth it at launch
 
+**DECIDED 2026-09-19: team sports only at launch.** Tennis and golf are out —
+not deferred pending a question, out. That settles open question 3, and it
+also makes the tennis licensing question (open question 1) non-blocking:
+nothing at launch touches Sackmann, so CC BY-NC-SA stops being on the
+critical path.
+
 | Tier | Sports | Why |
 |---|---|---|
-| **A — launch** | NFL, MLB, NHL, NCAAF | Purpose-built or official sources, permissive-or-workable licences, team-shaped. NFL and MLB are the deepest and are what the newsletter leads with most often |
-| **B — fast follow** | NBA, NCAAMB | Sources exist; NBA needs the proxy work, NCAAMB needs its depth confirmed. Neither is a research problem |
-| **C — defer** | Men's tennis, men's golf | Tennis is blocked on a licence question, not on data. Golf has no viable free source at any depth. Both fit the schema badly, and both are a handful of events a year in the newsletter |
+| **A — launch** | NFL, MLB, NHL, NCAAF, **NCAAMB** | Purpose-built or official sources, workable licences, team-shaped. MLB is the deepest and the right one to design the schema against. NCAAMB promoted from B: under the revised rubric its unverified depth no longer moves the tier, since even a modern-era floor serves the basics |
+| **B — fast follow** | NBA | The only Tier B sport, and for an operational reason rather than a data one: the datacenter IP block is real engineering. hoopR 2002+ is available immediately with no proxy, so B here means "starts simple, deepens later" |
+| **Out at launch** | Men's tennis, men's golf | Not team sports. Both also fit the schema badly — player-and-event shaped, no standings, no seasons in the league sense |
 
-Deferring C is not dropping coverage. Tier 1 golf and tennis moments still
-lead the newsletter — they just keep sourcing from ESPN and tweets, as today,
-plus a small curated champions table. **The cost of forcing tennis and golf
-into the launch schema is that they distort the schema for the six sports
-that actually fit it.**
+**Out is not uncovered.** Tier 1 golf and tennis moments still lead the
+newsletter — a major's final Sunday is an explicit Tier 1 trigger in
+`pass1_story_selector.txt` — and they keep sourcing from ESPN and tweets
+exactly as today, plus a curated majors-winners table if we want the
+champions history. **The cost of forcing them into the launch schema is that
+they distort it for the six sports that actually fit**, which is the whole
+reason team-sports-only is the right call.
 
 ### 5.5 Effect on SLA-7 (recurring feed)
 
@@ -571,19 +719,31 @@ was silent — a 404, a hang, or a hollow file.
 
 ## 6. Open questions for Abram — please answer before SLA-5 starts
 
-1. **Is SLAP commercial, now or intended?** This decides tennis
-   (CC BY-NC-SA) and constrains Lahman (ShareAlike) and MLB Stats API
-   (non-bulk). It is the one answer I cannot derive from the codebase.
-2. **How much does pre-1999 NFL actually matter?** §5.1. If champions and
-   postseason results are enough, 6b is small. If full regular-season results
-   back to 1920 are wanted, that is the largest single piece of work in the
-   epic and PFR — the obvious source — is off the table (§5.3).
-3. **Team sports only at launch?** I recommend yes (§5.4). It simplifies
-   SLA-5's schema materially.
-4. **Budget for a CFBD/CBBD paid tier during the backfill month?**
+**Answered 2026-09-19:**
+
+- ~~**Team sports only at launch?**~~ → **Yes.** Tennis and golf are out
+  (§5.4). This also de-risks the tennis licence question below.
+- ~~**How much does pre-1999 NFL matter?**~~ → **Champions and postseason are
+  enough.** Deep-history streak prose is strategic, not launch scope, so 6b
+  shrinks to a ~106-row table and the expensive half is consciously dropped
+  (§5.1, §1.3).
+
+**Still open:**
+
+1. **Is SLAP commercial, now or intended?** No longer blocking — nothing at
+   launch touches the NonCommercial source, since tennis is out. Still worth
+   answering, because it constrains **Lahman** (ShareAlike, and MLB is a
+   launch sport) and the **MLB Stats API** (non-bulk). It remains the one
+   answer I cannot derive from the codebase.
+2. **Budget for a CFBD/CBBD paid tier during the backfill month?**
    **$1/mo** buys 5,000 calls and $5 buys 30,000 — cheaper than first
    estimated, and it removes the quota problem outright. Remember it is
-   **one shared pool across both college sports** (§2.5).
+   **one shared pool across both college sports** (§2.5), and NCAAMB is now
+   a launch sport, so both draw on it at once.
+3. **Do we want the curated champions tables?** They are the cheap answer to
+   R2 in four places — pre-1999 NFL (~106 rows), NHL (~107), and tennis/golf
+   majors (~600) even though those sports are out. A day's work total, and it
+   closes the last mission-critical gap in the set.
 
 ### The three outstanding checks
 
