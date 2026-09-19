@@ -1,10 +1,32 @@
 name: Substack CI Test
 
-# Manual-only. Tests whether GitHub Actions can reach Substack's API (or gets
-# Cloudflare-blocked). Creates and immediately deletes a throwaway draft.
-# Does NOT run on a schedule and never publishes anything.
+# Manual-only. Two modes, selected by the `mode` input:
+#
+#   connectivity (default) - tests whether GitHub Actions can reach Substack's
+#     API (or gets Cloudflare-blocked). Creates and immediately deletes a
+#     throwaway draft.
+#
+#   table-probe - SLA-17. Sends a draft containing a native ProseMirror table
+#     node and reads it back to see whether Substack kept or stripped it.
+#     Leaves the draft in place for inspection unless `delete_draft` is true.
+#
+# Neither mode ever publishes anything.
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Which test to run'
+        required: true
+        default: 'connectivity'
+        type: choice
+        options:
+          - connectivity
+          - table-probe
+      delete_draft:
+        description: 'table-probe only: delete the draft after reading it back'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   test:
@@ -27,4 +49,12 @@ jobs:
         run: pip install python-substack==0.1.22 curl_cffi
 
       - name: Run Substack connectivity test
+        if: inputs.mode == 'connectivity'
         run: python substack_poc/ci_auth_test.py
+
+      - name: Run native-table probe (SLA-17)
+        if: inputs.mode == 'table-probe'
+        run: |
+          python substack_poc/table_probe.py \
+            --game-state uat/fixtures/game_state.json \
+            ${{ inputs.delete_draft && '--delete' || '' }}
