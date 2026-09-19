@@ -39,11 +39,17 @@ api.collegefootballdata.com    site.api.espn.com    stats.nba.com
 ```
 
 `api.github.com` is scope-limited to this session's repos, and
-`raw.githubusercontent.com` 404s for orgs outside the allowlist — so a probe
-of, say, `JeffSackmann/tennis_atp` returns 404 whether or not the file
-exists. **No claim in this doc rests on one of those 404s.** Where a source
-could not be probed, its row says "documented, unverified" and the next step
-is a ten-minute check from a normal network.
+`raw.githubusercontent.com` and the release-asset host are allowlisted to
+**nflverse only** — verified by control: `sportsdataverse/hoopR-mbb-data`,
+`hoopR-nba-data` and `cfbfastR-data` assets all 404 while an nflverse asset
+fetched in the same batch returns 200. So a probe of, say,
+`JeffSackmann/tennis_atp` returns 404 whether or not the file exists.
+**No claim in this doc rests on one of those 404s.** Where a source could not
+be probed, its row says "documented, unverified".
+
+The fetch service is blocked for the same hosts, so there is no second route
+and no indirect one. The three checks this leaves open are tracked in §6 with
+a runnable script attached to the ticket.
 
 That limitation is itself a finding, not just an inconvenience — see §5.2.
 
@@ -284,13 +290,30 @@ games, box scores, rosters, stats, rankings, recruiting, betting, drives and
 play-by-play, back to the sport's origins. v2 of the REST API is GA. Free key
 at `collegefootballdata.com/key`; `cfbfastR` (R) and `CFBD/cbbd-r` wrap it.
 
-**The constraint is the quota: 1,000 API calls per calendar month on the free
-tier**, enforced per key, with suspension for overrun. A full historical
-backfill paginated by season and week will blow through 1,000 calls. Patreon
-tiers raise it. So: **either budget a paid tier for the backfill month, or
-spread it across months** — and either way the recurring feed (SLA-7) fits
-inside the free tier comfortably, since in-season it is a handful of calls a
-day.
+**The constraint is the quota**, enforced per key with suspension for overrun.
+Tiers, per the maintainer's own published tier docs:
+
+| Tier | Calls / month |
+|---|---|
+| Free | 1,000 |
+| Student / academic (`.edu` signup) | 3,000 |
+| Patreon T1 — **$1/mo** | 5,000 |
+| Patreon T2 — $5/mo | 30,000 |
+| Patreon T3 — $10/mo | 75,000 + GraphQL |
+
+**⚠ CFBD and CBBD share one monthly pool on the same key.** NCAAF and NCAAMB
+are not two independent budgets — a backfill of one starves the other. Plan
+them together.
+
+A full historical backfill paginated by season will blow through 1,000 calls,
+so **either take a paid tier for the backfill month or spread it across
+months**. The cost is trivial — $1 buys 5x headroom — and materially cheaper
+than first estimated. The recurring feed (SLA-7) fits inside the free tier
+comfortably at a handful of calls a day.
+
+**Tier differences are about call volume, not historical depth** — no tier
+doc mentions gating years. Not yet confirmed against the API itself; it's
+check 3 in §6.
 
 **Recommendation.** CFBD primary. ESPN stays for the CFB poll and the
 ranked-matchup box score filter already shipping. Decide the tier before
@@ -304,13 +327,19 @@ recruiting, transfer portal, NBA draft. Free Bearer-token key. Wrapped by
 `hoopR`'s `cbbd_*()` functions (full v1 surface) and `cbbreadr`.
 
 **Historical depth is documented but unverified**, and unlike CFB I found no
-statement of how far back games go — that is the check to run (§6).
-Alternatives: `hoopR-mbb-data` (ESPN-derived, 2002+), Bart Torvik (2008+,
-advanced metrics), KenPom (paid).
+statement anywhere of how far back games go — not on the site, not in the
+wrappers, not in the maintainer's posts. That is the largest remaining
+unknown in this evaluation and it is check 2 in §6. Alternatives:
+`hoopR-mbb-data` (ESPN-derived, 2002+), Bart Torvik (2008+, advanced
+metrics), KenPom (paid).
 
-**Recommendation.** CBBD primary, on the same free key posture as CFBD and
-with the same quota question to answer. Lower confidence than CFB purely
-because depth is unconfirmed.
+**Recommendation.** CBBD primary — **conditional on that check**. If games
+reach back to the early 2000s, NCAAMB is a Tier A sport. If coverage starts
+around 2013 (as several commercial NCAAMB feeds do), CBBD fails rubric R3 the
+same way `hoopR-mbb-data` does, and NCAAMB either needs a deeper source or
+gets consciously scoped to the modern era. **Note the shared CFBD/CBBD call
+pool (§2.5)** — this is one key and one budget across both college sports,
+not two.
 
 ### 2.7 Men's tennis — **Sackmann is the right data and the wrong licence**
 
@@ -374,8 +403,8 @@ golf coverage deepens.
 | **MLB** | Retrosheet + Lahman | MLB Stats API (live only) | **1871** ✅ | ✅ | ✅ | ✅ | ✅ | ◐ | annual + ESPN live | Lahman share-alike |
 | **NHL** | NHL official API | curated champions table | unverified ⚠ | ✅ | ✅ | ✅ | ✅ | ✅ | live | undocumented API |
 | **NBA** | `nba_api` (proxied) | `hoopR-nba-data` (2002+) | 1946, sparse pre-1983 ⚠ | ✅ | ✅ | ✅ | ✅ | ✅ | live | **datacenter IP block** |
-| **NCAAF** | CFBD | ESPN (poll, live) | deep ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | live | **1k calls/mo free** |
-| **NCAAMB** | CBBD | `hoopR-mbb-data` (2002+) | unverified ⚠ | ✅ | ✅ | ✅ | ✅ | ✅ | live | depth unconfirmed |
+| **NCAAF** | CFBD | ESPN (poll, live) | deep ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | live | quota: 1k/mo free, shared with CBBD |
+| **NCAAMB** | CBBD | `hoopR-mbb-data` (2002+) | unverified ⚠ | ✅ | ✅ | ✅ | ✅ | ✅ | live | depth unconfirmed — the one open check that can move a tier |
 | **Tennis** | Sackmann `tennis_atp` | ESPN + curated majors | **1968** ✅ | ✅ | ✅ | n/a | ✅ | n/a | weekly | **NC licence** |
 | **Golf** | *defer* — curated majors CSV | DataGolf (paid, 2004+) | **none free** ❌ | ◐ | ✅ | n/a | ❌ | n/a | manual | no viable free source |
 
@@ -551,16 +580,28 @@ was silent — a 404, a hang, or a hollow file.
    epic and PFR — the obvious source — is off the table (§5.3).
 3. **Team sports only at launch?** I recommend yes (§5.4). It simplifies
    SLA-5's schema materially.
-4. **Budget for CFBD/CBBD paid tiers during backfill month?** ~$10–30 for
-   one month removes the quota problem entirely.
+4. **Budget for a CFBD/CBBD paid tier during the backfill month?**
+   **$1/mo** buys 5,000 calls and $5 buys 30,000 — cheaper than first
+   estimated, and it removes the quota problem outright. Remember it is
+   **one shared pool across both college sports** (§2.5).
 
-Three quick checks I could not run from this sandbox (§0), each ~10 minutes
-from a normal network, none of which changes a recommendation — only
-confidence:
+### The three outstanding checks
 
-- NHL official API: how far back do results and standings actually go?
-- CBBD: earliest season with games?
-- CFBD: does the free tier cap history as well as call volume?
+Both routes out of the cloud sandbox are closed by egress policy — direct
+`curl` and the fetch service alike return 403 at CONNECT for every live
+sports API, and GitHub release assets are allowlisted to nflverse only, so
+there is no indirect route either. These three therefore remain open. A
+stdlib-only script that answers all three in about 12 API calls is attached
+to the SLA-58 ticket; it needs a normal network and two free keys.
+
+| # | Check | Status | If it comes back badly |
+|---|---|---|---|
+| 1 | NHL: how far back do standings and results actually go? | **open** | Fall back to a curated champions table (~107 rows). Does not change the primary recommendation |
+| 2 | CBBD: earliest season with games? | **open — the one that can move a recommendation** | NCAAMB drops from Tier A to modern-era-only, or needs a deeper source |
+| 3 | CFBD: is history tier-gated, or only call volume? | **largely closed** — published tiers differ on volume only, no year gating documented; unconfirmed against the API | Take the $1 tier and re-scope the backfill |
+
+Check 2 is the one worth running before SLA-5 locks, because it is the only
+one whose answer changes a sport's tier.
 
 ---
 
