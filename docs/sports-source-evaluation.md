@@ -48,7 +48,7 @@ fetched in the same batch returns 200. So a probe of, say,
 be probed, its row says "documented, unverified".
 
 The fetch service is blocked for the same hosts, so there is no second route
-and no indirect one. The three checks this leaves open are tracked in §6 with
+and no indirect one. The four checks this leaves open are tracked in §6 with
 a runnable script attached to the ticket.
 
 That limitation is itself a finding, not just an inconvenience — see §5.2.
@@ -745,13 +745,13 @@ was silent — a 404, a hang, or a hollow file.
    majors (~600) even though those sports are out. A day's work total, and it
    closes the last mission-critical gap in the set.
 
-### The three outstanding checks
+### The outstanding checks
 
 Both routes out of the cloud sandbox are closed by egress policy — direct
 `curl` and the fetch service alike return 403 at CONNECT for every live
 sports API, and GitHub release assets are allowlisted to nflverse only, so
 there is no indirect route either. These three therefore remain open. A
-stdlib-only script that answers all three in about 12 API calls is attached
+stdlib-only script that answers all four in about 13 API calls is attached
 to the SLA-58 ticket; it needs a normal network and two free keys.
 
 | # | Check | Status | If it comes back badly |
@@ -759,13 +759,134 @@ to the SLA-58 ticket; it needs a normal network and two free keys.
 | 1 | NHL: how far back do standings and results actually go? | **open** | Fall back to a curated champions table (~107 rows). Does not change the primary recommendation |
 | 2 | CBBD: earliest season with games? | **open — the one that can move a recommendation** | NCAAMB drops from Tier A to modern-era-only, or needs a deeper source |
 | 3 | CFBD: is history tier-gated, or only call volume? | **largely closed** — published tiers differ on volume only, no year gating documented; unconfirmed against the API | Take the $1 tier and re-scope the backfill |
+| 4 | **CFBD `/roster`: year-only or per-team?** | **open — decides whether the epic is free at all** (§7.1) | Per-team means ~3,250 calls and one $5 month. Year-only means $0 throughout |
 
 Check 2 is the one worth running before SLA-5 locks, because it is the only
 one whose answer changes a sport's tier.
 
 ---
 
-## 7. Hold
+## 7. Cost, and what each increment actually buys
+
+### 7.1 The short answer: the mission-critical scope is free
+
+**Every launch-sport must-have is obtainable at $0 cash.** That is not a
+rounding-down — it is the consequence of choosing purpose-built open projects
+over commercial feeds in §2.
+
+| Source | Cost | Covers |
+|---|---|---|
+| nflverse | **$0** (CC-BY 4.0) | NFL 1999+, rosters 1920+ |
+| Retrosheet | **$0**, commercial use expressly permitted | MLB 1871+ results |
+| Lahman | **$0** (CC BY-SA 3.0) | MLB 1871+ season stats |
+| NHL official API | **$0**, no key | NHL results, standings, rosters |
+| `nba_api` / hoopR | **$0** | NBA — proxy already paid for (Substack) |
+| CFBD / CBBD free tier | **$0** | 1,000 calls/mo, **shared across both** |
+| Curated champions tables | **$0** | The R2 gap, everywhere |
+| Storage (~300 MB, §7.2) | **$0** | Fits every free tier by an order of magnitude |
+| GitHub Actions, public repo | **$0** | Unlimited minutes |
+
+**Does the college backfill fit in 1,000 calls?** For the data that matters,
+yes. `/games?year=YYYY` takes `team` as *optional*, so one call returns a full
+season: ~158 NFL-equivalent seasons × 2 season types ≈ **316 calls for all of
+CFB history**, plus ~25 for CBBD. Under a third of the free monthly quota.
+
+**The variable is rosters.** If CFBD's roster endpoint also paginates by year
+alone, college rosters are free too. If it requires a team, it becomes
+~130 teams × 25 years ≈ **3,250 calls** and needs one paid month. *This is
+the single unknown that decides whether the whole epic is free* — worth
+resolving in the same pass as the §6 checks.
+
+### 7.2 Measured sizing
+
+Bytes-per-row measured from real nflverse Parquet, not estimated:
+season player stats **144 B/row** (148 columns), rosters **176 B/row**,
+games **69 B/row**.
+
+| Sport | Est. size |
+|---|---|
+| MLB | ~100 MB |
+| NCAAF | ~70 MB |
+| NFL | ~45 MB |
+| NCAAMB | ~30 MB |
+| NBA | ~15 MB |
+| NHL | ~10 MB |
+| **Total** | **~270 MB**, call it 1 GB with indexes and headroom |
+
+That is small enough that storage is a non-decision: Supabase's free tier is
+500 MB, Neon's is comparable, R2 gives 10 GB. Even at S3 list price it is
+under a cent a month. **Do not spend design effort optimising storage** — it
+is three orders of magnitude away from mattering.
+
+### 7.3 What actually costs money
+
+- **CFBD/CBBD above the free quota** — $1/mo (5k calls), $5/mo (30k),
+  $10/mo (75k + GraphQL). Needed for *one month* during backfill, and only
+  if rosters turn out to be per-team. Drops to $0–1 in steady state.
+- **LLM tokens** — the unavoidable one. Richer ground truth means more input
+  on Passes 1, 2 and 6, and daily-changing data cannot live in the cached
+  block. Modelled from `PRICING`: **+$1/mo** at 3k extra tokens per pass,
+  **+$3/mo** at 10k. Roughly doubles today's ~$2–5/mo and remains trivial.
+- **Nothing else.** The residential proxy is already a line item for
+  Substack; NBA reuses it at zero marginal cost.
+
+**Totals: ~$5 one-time, $5–10/mo all-in including today's spend.**
+
+**The real cost is time — roughly 6–10 weeks focused**, and it is not evenly
+distributed. SLA-5's schema and identity model is 1–2 weeks of the hardest
+thinking; NBA's IP-block work is the least predictable; everything else is
+days-to-a-week per sport.
+
+### 7.4 Value checkpoints — where to stop and look
+
+The cost curve is flat at zero until very late. **The value curve is
+steeply front-loaded.** So the sensible question is not "what does the epic
+cost" but "where is the first point we could stop and still be better off",
+and the answer is: almost immediately.
+
+Each checkpoint below is independently shippable and independently valuable.
+
+| # | Checkpoint | Effort | Cash | What it buys |
+|---|---|---|---|---|
+| **0** | Today | — | — | Writer downgrades history to vague framing (RULE 3.3). "Defending champion" can be flagged but never resolved |
+| **1** | **Champions + postseason tables, all launch sports** | **~1 day** | **$0** | **The highest value-per-hour item in the epic.** ~500 rows total. Makes RULE 3.4 verifiable and upgrades `claim_validator.py` Check 3 from flag-only to resolvable. Fixes a *named, recurring, reader-visible* failure |
+| **2** | NFL 1999+ (nflverse) + rosters 1920+ | days | $0 | Team records, results, season and career stats for every active player. Player–team history across all NFL history. Gives `nfl_standings.py` real data |
+| **3** | MLB (Retrosheet + Lahman) | ~1 week | $0 | The deepest sport, 1871+ — and the schema validation. If it fits MLB it fits everything |
+| **4** | NHL + NCAAF results and records | ~1 week | $0 | Four of six sports at mission-critical |
+| **5** | NCAAMB + NBA | 1–2 weeks | $0 | All six. NBA is the unpredictable one |
+| **6** | Recurring feed (SLA-7) | ~1 week | $0 | Self-maintaining rather than a one-time snapshot |
+| **7** | College historical rosters/stats | days | ~$5 once | Only if §7.1's roster question resolves badly |
+| **8** | Pre-1999 NFL results + career stats | — | — | **Blocked**, not costed: PFR bars our use (§5.3) |
+| **9** | Tennis, golf | — | $0–30/mo | Out of scope by the team-sports decision |
+
+**Three things this framing makes obvious:**
+
+1. **Checkpoint 1 is wildly underpriced.** A day's work, a few hundred rows,
+   no source integration, no quota — and it closes the one must-have gap that
+   §5.1 identified across NFL *and* NHL, and fixes a failure the newsletter
+   demonstrably ships today. **If only one thing gets built, build this.**
+2. **The first four checkpoints deliver most of the practical value at $0**,
+   because SLAP overwhelmingly writes about current players and recent
+   seasons, and that is exactly what the free sources cover well.
+3. **Money only enters at checkpoint 7**, and may never be needed at all.
+
+### 7.5 The tension worth naming
+
+Checkpoint 1 is so cheap it is tempting to do it *before* SLA-5 — and then it
+is a loose CSV nobody else can join against, and every later checkpoint pays
+to migrate it.
+
+**Recommendation: do the schema minimally, not fully.** Enough to land
+checkpoint 1 properly — surrogate team IDs, a franchise-continuity table, a
+provenance column — and grow it per sport. Designing the whole schema up
+front against six sports guesses at shapes we have not loaded yet; skipping
+it entirely recreates the drift this repo has already paid for twice. The
+identity layer (§5.2) is the part that must be right early, because it is the
+only part that is expensive to retrofit.
+
+---
+
+## 8. Hold
 
 Per the ticket's hold instruction, this is an evaluation only. **No repo has
 been stood up, no schema designed, no ingestion written.** The two defects
