@@ -551,9 +551,18 @@ unstaged, which breaks `git pull --rebase`.
   divergence. Duplicated LOC across identical functions went 668 → 0. **Four functions remain
   duplicated and diverged** — `run_pass1`, `run_pass2`, `pre_edit`, `main` — and are declared in
   that test's `KNOWN_DIVERGENT` ledger with reasons. `run_pass1` and `run_pass2` are diverged in
-  *both* directions (prod has degraded mode; UAT has the §2.1 video filter and Pass 1B), so
+  *both* directions (prod has degraded mode; UAT has Pass 1B and drops video tweets from Pass 1's
+  candidate list outright, which prod cannot do because prod's ATL is where clips belong), so
   neither can be promoted by copying — they need a real merge. Until then, **any change to those
-  four must be applied to both copies in the same commit.**
+  four must be applied to both copies in the same commit** — or, where only one side has the
+  problem, the ledger entry must say so and why (see `run_pass1`, SLA-67).
+
+  **Both runners enforce a video policy; they are not the same policy.** Prod
+  (`enforce_video_policy`) has been live since 2026-09-04 — the note that once called §2.1
+  "UAT-only" was stale. Since SLA-67 prod PARTITIONS Pass 1's candidate pool into `tweets`
+  (non-video) and `around_the_league_only_tweets`, so a headliner tweet cannot be a video tweet
+  by construction; `enforce_video_policy` remains a backstop that should now never fire. If it
+  does, that is a Pass 1 bug, not a routine trim.
 
 - **`Archive/` vs `archive/` case collision (open, real):** git's index holds 11 files under
   `Archive/` (old code versions) and 910 under `archive/` (daily CI output). On Windows
@@ -575,10 +584,14 @@ unstaged, which breaks `git pull --rebase`.
   ground-truth block (`format_game_state_summary` returns "" on empty) and box scores thin out,
   with no alarm. A date check is useless; the real fix is a **content-presence guard** (fail CI if
   the payload has no games/standings) plus logging `as_of_date` + per-sport counts in CI.
-- **UAT prompt drift (RESOLVED 2026-09-01):** `uat/promote.py` now diffs and copies on confirm,
-  and all nine pairs are identical or deliberately one-sided (`editor_prompt` is UAT-ahead by the
-  highlight-placeholder rules prod has no Pass 1B for; `pass1b_highlight_selector.txt` is UAT-only).
-  Run `uat/promote.py` after any prompt change to keep it that way.
+- **UAT prompt drift (MOSTLY RESOLVED 2026-09-01):** `uat/promote.py` now diffs and copies on
+  confirm. Seven of the nine pairs are identical or deliberately one-sided (`editor_prompt` is
+  UAT-ahead by the highlight-placeholder rules prod has no Pass 1B for;
+  `pass1b_highlight_selector.txt` is UAT-only). **`pass1_story_selector.txt` is genuinely
+  `diverged`** — both sides carry unique lines, so neither direction can be copied without
+  losing work. That is deliberate and follows the runners: UAT's §2.1 says video tweets are
+  already gone from its candidate list, prod's describes the two-pool partition (SLA-67). Do not
+  "fix" it by promoting either way. Run `uat/promote.py` after any prompt change.
 - **No `.gitattributes` (RESOLVED 2026-09-01):** `* text=auto` added. `promote.py` also reports
   line-ending-only differences as `eol-only` rather than as drift.
 - **`requirements.txt` drift (RESOLVED 2026-09-01):** `python-substack==0.1.22` and `curl_cffi`
@@ -687,6 +700,40 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-20 — Pass 1's tweet pool is partitioned, not marked (SLA-67)**
+- The 09-20 issue shipped 8 tweets, **7 of them in Around the League**: the lead and three of
+  four supporting stories ran with none. Not a bad day — the steady state. Across runs 175–188
+  (09-07 → 09-20) the §2.1 filter deleted **112 headliner tweets, ~8 an issue**, emptied **21
+  sections to zero**, and fired on **13 of 14 runs**. The lead was cut on 11 of them and shipped
+  tweetless on 09-09, 09-16 and 09-20. Four highlight accounts drove 74% of it: @TalkinBaseball_
+  29, @ESPN 19, @ClutchPoints 19, @SportsCenter 16.
+- **The check was right; the shape was wrong.** Prod handed Pass 1 one list of ~294 tweets with
+  `has_video: true` markers plus a prompt rule not to place them in a headliner, and
+  `enforce_video_policy` deleted any that got through. Pass 1 broke that rule almost every day,
+  and because enforcement was a pure delete with no replacement, each violation became lost
+  content instead of a warning. Exactly the failure this file already names: *a rule the model is
+  asked to follow, checked only after the fact.*
+- `run_pass1` now splits the payload into `tweets` (non-video — the headliner pool) and
+  `around_the_league_only_tweets` (video). ATL may draw from both. Same tweets, same token count,
+  two labelled lists instead of one with markers — and no video tweet in the headliner pool for
+  Pass 1 to pick. `enforce_video_policy` stays as a backstop that should now never fire.
+- **Backfilling was the obvious fix and it does not work.** Checked per story on 09-20: the MLB
+  walkoff story had **zero** non-video tweets available (a walkoff story *is* highlight clips),
+  Steveson had 3 with none on topic, NC State had 1 from a satire account. Only the lead had real
+  depth (19). Making the floors bind inside `enforce_video_policy` is worse still — the only way
+  to hold a floor by retention is to keep the dead grey embed the policy exists to prevent.
+- **Not a UAT port.** UAT drops video tweets entirely and has Pass 1B to recover them as highlight
+  clips; prod has neither, and prod's ATL genuinely wants the clips (3–8 a day). The
+  `KNOWN_DIVERGENT` entry records why UAT was deliberately left alone.
+- `verify_run.py` gained `_placement()`: tweets are now counted per section, and the report
+  carries `in stories` / `in ATL` rows. An issue whose tweets all land in ATL now **fails**; fewer
+  than 3 across the body, or a tweetless lead, **warn**. Calibrated over the 20 archived issues
+  09-01 → 09-20 (headliner counts 1–13, median 7): it fires on 09-16 and 09-20 and stays quiet on
+  the other eighteen. Replayed against the real 09-20 draft it prints `in stories 1 / in ATL 7`
+  and "the lead story shipped without a tweet" — the thing an issue-wide count of 8 could not see.
+- `uat/tests/test_video_pool_partition.py` — 25 offline checks, 0 API calls. All 15 Python suites
+  and the Node suite green.
 
 **2026-09-18 — NFL standings: records, official tiebreakers, responsive table (SLA-43)**
 - `nfl_standings.py` turns the season game log `fetch_nfl_season_games()` writes to

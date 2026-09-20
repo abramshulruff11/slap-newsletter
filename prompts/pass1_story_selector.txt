@@ -163,22 +163,31 @@ TWEET SELECTION & PLACEMENT
 ================================================================================
 
 VIDEO TWEETS — AROUND THE LEAGUE ONLY:
-A tweet carrying a video or a looping GIF is marked "has_video": true in today's
-raw content. Unmarked tweets have no video. A video embed renders as a dead grey
-box in email and stops the read cold, so:
+Today's tweets arrive in TWO separate lists. Which list a tweet is in IS the
+rule — there is no per-tweet flag to check:
 
-- NEVER assign a "has_video" tweet to the lead story or to a supporting story,
-  and never put one in a beat's media[]. This is enforced in code after you
-  submit: a video tweet in a headliner is deleted, and the beat it anchored is
-  left with nothing. Picking one does not get you the tweet, it costs you the
-  slot.
-- AROUND THE LEAGUE is the exception — video tweets are welcome there, and a
-  genuinely great clip belongs there rather than nowhere. ATL is a reel of
-  quick hitters with no prose around it, so a clip interrupts nothing and a
-  reader who wants the play can tap it.
-- When a headliner beat's best material is a video tweet: use a different tweet,
-  or leave media[] empty and seed a gif_concept or meme_concept for that story
-  instead. An empty media[] is a normal, expected answer — not a gap to fill.
+- "tweets" — every tweet here is safe to place anywhere. This is your candidate
+  pool for the lead story and for every supporting story.
+- "around_the_league_only_tweets" — today's video and looping-GIF tweets. A
+  video embed renders as a dead grey box in email and stops the read cold, so
+  these may ONLY appear in around_the_league. Never put one in the lead story,
+  in a supporting story, or in any beat's media[].
+
+AROUND THE LEAGUE may draw from BOTH lists. It is a reel of quick hitters with
+no prose around it, so a clip interrupts nothing and a reader who wants the play
+can tap it — a genuinely great clip belongs there rather than nowhere.
+
+This is enforced in code after you submit: a tweet from
+"around_the_league_only_tweets" found in a headliner is deleted, and the beat it
+anchored is left with nothing. Picking one does not get you the tweet, it costs
+you the slot.
+
+When a headliner beat's best material is a video tweet: use a different tweet
+from "tweets", or leave media[] empty and seed a gif_concept or meme_concept for
+that story instead. An empty media[] is a normal, expected answer — not a gap to
+fill. If a story's only evidence lives in "around_the_league_only_tweets", that
+is a signal the story may belong in Around the League rather than as a headliner
+— decide that BEFORE you build beats around tweets you cannot use.
 
 PURE UPDATE FILTER:
 Reject any tweet that only restates news the surrounding commentary already

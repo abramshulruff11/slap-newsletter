@@ -49,6 +49,17 @@ MIN_MEDIA = 3            # GIFs + memes combined
 WANT_MEMES = 3           # the §2.4 seed floor, measured here on RENDERED memes
 WANT_GIFS = 5
 
+# Tweets in the lead + supporting stories, i.e. everywhere a reader meets one
+# inside prose. An issue-wide total cannot see this: on 2026-09-20 eight tweets
+# shipped and SEVEN were in Around the League, so the lead and three of four
+# supporting stories ran with none — and 8 > MIN_TWEETS, so the run went green
+# with a "thin for a normal day" warning. Calibrated by running _placement over
+# the 20 archived issues 09-01 -> 09-20, whose headliner counts ran 1-13 with a
+# median of 7: a floor of 3 fires on 09-16 (2) and 09-20 (1) and stays quiet on
+# the other eighteen. Nothing in that window trips the hard failure below, which
+# is the intent — it is a floor for "not a newsletter", not for "a light day".
+WANT_HEADLINER_TWEETS = 3
+
 
 def _summary(text: str) -> None:
     path = os.getenv("GITHUB_STEP_SUMMARY")
@@ -73,6 +84,42 @@ def _count(html: str) -> dict:
     }
 
 
+def _placement(html: str) -> dict:
+    """Tweet counts per section: the lead, each supporting story, and ATL.
+
+    Sections are split on h1/h2 exactly as the writer emits them. Box Scores is
+    skipped (it holds images, never tweets); Around the League is counted apart
+    from the headliners because it is the one section a video tweet may live in,
+    and so the one place tweets pile up when the headliner pool fails.
+    """
+    parts = re.split(r'<h([12])>(.*?)</h\1>', html, flags=re.S)
+    lead, supporting, atl = 0, [], 0
+    lead_seen = False
+    i = 1
+    while i + 2 < len(parts):
+        level, title, body = parts[i], parts[i + 1], parts[i + 2]
+        n = (len(re.findall(r'<blockquote[^>]*class="tweet"', body))
+             or len(re.findall(r'class="tweet-url"', body)))
+        low = re.sub(r'<[^>]+>', '', title).strip().lower()
+        if "box score" in low:
+            pass
+        elif "around the league" in low:
+            atl += n
+        elif level == "1":
+            lead += n
+            lead_seen = True
+        else:
+            supporting.append(n)
+        i += 3
+    # A draft with no h1/h2 at all splits into a single chunk and every count
+    # above stays 0 — which would read as "all the tweets are in ATL" and fire
+    # the hard failure for the wrong reason. `sections` lets the caller tell
+    # "the body has no tweets" from "this file has no sections to look in".
+    return {"lead": lead, "supporting": supporting, "atl": atl,
+            "headliner": lead + sum(supporting),
+            "sections": (1 if lead_seen else 0) + len(supporting)}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="SLAP run-quality gate")
     ap.add_argument("--strict", action="store_true",
@@ -95,8 +142,11 @@ def main() -> int:
     box_images = sorted(BOX_SCORE_DIR.glob("box_score_sport_*.png"))
 
     # ---- the report, which is the point even when everything passes --------
+    place = _placement(draft)
     rows = [
         ("tweets", c["tweets"], f"floor {MIN_TWEETS}"),
+        ("  in stories", place["headliner"], f"want {WANT_HEADLINER_TWEETS}+"),
+        ("  in ATL", place["atl"], ""),
         ("GIFs", c["gifs"], f"want {WANT_GIFS}+"),
         ("memes", c["memes"], f"want {WANT_MEMES}+"),
         ("highlight clips", c["highlights"], ""),
@@ -129,6 +179,12 @@ def main() -> int:
     if status.get("incomplete_passes"):
         errors.append("a pass returned incomplete output: "
                       + ", ".join(status["incomplete_passes"]))
+    # Every tweet in the issue landed in Around the League. The stories a reader
+    # actually reads carry none, which no issue-wide total can show.
+    if c["tweets"] >= MIN_TWEETS and place["sections"] and place["headliner"] == 0:
+        errors.append(
+            f"all {c['tweets']} tweet(s) are in Around the League — the lead and "
+            f"every supporting story shipped without one")
     if status.get("email_sent") is False:
         errors.append(f"the email did not send — {status.get('email_error', 'no reason recorded')}")
     elif "email_sent" not in status:
@@ -144,6 +200,13 @@ def main() -> int:
         warnings.append(f"{c['gifs']} GIF(s) rendered, want {WANT_GIFS}+")
     if MIN_TWEETS <= c["tweets"] < 12:
         warnings.append(f"{c['tweets']} tweets — thin for a normal day")
+    if 0 < place["headliner"] < WANT_HEADLINER_TWEETS:
+        warnings.append(
+            f"only {place['headliner']} tweet(s) across the lead and supporting "
+            f"stories ({place['atl']} in Around the League) — the body is "
+            f"running on GIFs and prose")
+    if place["lead"] == 0 and place["headliner"]:
+        warnings.append("the lead story shipped without a tweet")
     if not box_images:
         warnings.append("no box score images were rendered")
     if share < 30 and media:

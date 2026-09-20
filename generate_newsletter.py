@@ -252,22 +252,46 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         return d
 
     # Tweets carry two extra fields from fetch_content.py. media_kind is for
-    # operators, not the model, so it is dropped here; has_video is kept ONLY
-    # when true, so the flag reads as a marker on the handful of tweets it
-    # applies to instead of ~270 lines of "has_video": false. Pass 1's prompt
-    # tells it what the marker means; plan_audit enforces it afterwards.
+    # operators, not the model. has_video is dropped too: which POOL a tweet is
+    # in now carries that fact (see the partition below), so a per-tweet marker
+    # would only be a second, weaker way of saying the same thing.
     def _slim_tweet(d):
         d = _slim_item(d)
         if not isinstance(d, dict):
             return d
-        d = {k: v for k, v in d.items() if k != "media_kind"}
-        if not d.get("has_video"):
-            d.pop("has_video", None)
-        return d
+        return {k: v for k, v in d.items() if k not in ("media_kind", "has_video")}
+
+    # §2.1 — the candidate pool is PARTITIONED, not marked. A video tweet
+    # renders as a dead grey box inside a prose section, so a headliner may
+    # never carry one; Around the League may, because a clip there interrupts
+    # no writing. That ATL exception is why production does not drop video
+    # tweets outright the way UAT does — see
+    # uat/tests/test_runner_drift.KNOWN_DIVERGENT["run_pass1"].
+    #
+    # This used to be ONE list carrying "has_video": true markers, plus a prompt
+    # rule telling Pass 1 not to place a marked tweet in a headliner. Measured
+    # across runs 175-188 (2026-09-07 -> 09-20), Pass 1 broke that rule on 13 of
+    # 14 runs: 112 headliner tweets deleted by plan_audit.enforce_video_policy,
+    # ~8 an issue, 21 sections emptied to zero, the lead cut on 11 of the 14 and
+    # left with zero tweets on 09-09, 09-16 and 09-20. A rule the model is asked
+    # to follow is not a rule, and the enforcement was a pure delete with no
+    # replacement, so every violation became lost content rather than a warning.
+    # Two disjoint lists make it structural: there is no video tweet in the
+    # headliner pool for Pass 1 to pick.
+    _headliner_pool, _atl_only_pool = [], []
+    for _t in raw.get("tweets", []) or []:
+        target = (_atl_only_pool if isinstance(_t, dict) and _t.get("has_video")
+                  else _headliner_pool)
+        target.append(_t)
 
     raw_slim = dict(raw)
     raw_slim["news_headlines"] = [_slim_item(h) for h in raw.get("news_headlines", [])]
-    raw_slim["tweets"]         = [_slim_tweet(t) for t in raw.get("tweets", [])]
+    raw_slim["tweets"] = [_slim_tweet(t) for t in _headliner_pool]
+    raw_slim["around_the_league_only_tweets"] = [
+        _slim_tweet(t) for t in _atl_only_pool
+    ]
+    print(f"  §2.1 candidate pools: {len(_headliner_pool)} headliner-eligible, "
+          f"{len(_atl_only_pool)} Around-the-League-only (video)")
 
     degraded_block = ""
     if degraded:

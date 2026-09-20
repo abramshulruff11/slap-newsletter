@@ -45,18 +45,25 @@ UAT = REPO / "uat" / "generate_newsletter_uat.py"
 # pinned: touch either copy and this test fails until you have looked at the
 # counterpart and deliberately re-recorded the hash.
 KNOWN_DIVERGENT = {
-    "run_pass1": dict(prod="e22669a9998d", uat="19da9bdf0a57", reason=(
+    "run_pass1": dict(prod="56d31a484844", uat="19da9bdf0a57", reason=(
         "Bidirectional, and the two now hold DIFFERENT video policies on "
-        "purpose. Prod (2026-09-04): video tweets are tagged by fetch_content, "
-        "marked for Pass 1 in the payload, and removed from the headliners by "
-        "plan_audit.enforce_video_policy — Around the League keeps them, "
-        "because a clip there interrupts no writing. UAT: video tweets are "
-        "dropped from Pass 1's candidate list entirely (§2.1), because Pass 1B "
-        "turns them into highlight GIFs and prod has no Pass 1B. Prod also has "
-        "degraded mode (Nitter outage -> headline-only). Neither side is a "
-        "superset, so no copy in either direction is safe. (2026-09-04: meme "
-        "cooldown — the recent-slug block and the same-engine swap — was added "
-        "to BOTH copies identically.)"
+        "purpose. UAT: video tweets are dropped from Pass 1's candidate list "
+        "entirely (§2.1), because Pass 1B turns them into highlight GIFs and "
+        "prod has no Pass 1B — so UAT's Around the League carries no clips. "
+        "Prod CANNOT do that: its ATL is where clips belong (3-8 a day), since "
+        "a clip there interrupts no writing. Prod therefore PARTITIONS the pool "
+        "(SLA-67, 2026-09-20): `tweets` is the non-video headliner pool and "
+        "`around_the_league_only_tweets` holds the video, with "
+        "plan_audit.enforce_video_policy left as a backstop that should now "
+        "never fire. Prod also has degraded mode (Nitter outage -> "
+        "headline-only). Neither side is a superset, so no copy in either "
+        "direction is safe. "
+        "2026-09-20 (SLA-67): prod moved from tagging to partitioning; UAT "
+        "deliberately unchanged, because it already excludes video at source "
+        "and so never had the failure — Pass 1 ignoring the tag on 13 of 14 "
+        "runs, 112 headliner tweets deleted, 21 sections emptied to zero. "
+        "(2026-09-04: meme cooldown — the recent-slug block and the same-engine "
+        "swap — was added to BOTH copies identically.)"
     )),
     "run_pass2": dict(prod="bfabc3173843", uat="7db198bedbf7", reason=(
         "Bidirectional. Prod carries degraded-mode wiring UAT lacks; UAT "
