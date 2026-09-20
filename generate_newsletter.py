@@ -35,6 +35,7 @@ import gif_library_select
 # shipped, because promote.py diffs prompts only. See runner_common.py and
 # uat/tests/test_runner_drift.py.
 import run_status
+import pipeline_status
 import runner_common
 from runner_common import (
     MODEL, MODEL_DEFAULT, MODEL_WRITER, PASS_COSTS, PRICING,
@@ -1120,7 +1121,14 @@ def main() -> None:
 
     # Clear yesterday's status before anything can record into it. Without
     # this, a stale "email_sent: true" would sit there while today's send fails.
-    run_status.reset()
+    #
+    # ensure_started(), not reset(): since SLA-52 the two fetch stages run
+    # BEFORE this process and record their own outcomes into the same file, and
+    # a bare reset() here would wipe them — so the status email would show a
+    # failed ESPN fetch as a stage that never ran. The workflow calls
+    # `pipeline_status.py start` as its first step; this call only resets when
+    # the file is left over from an earlier day, which is the local case.
+    pipeline_status.ensure_started()
 
     print(f"Loading content...")
     raw            = load_json(RAW_CONTENT_PATH)

@@ -94,7 +94,11 @@ jobs:
         run: pip install python-substack==0.1.22 curl_cffi python-dotenv requests
 
       - name: Auto-publish today's draft if still unpublished
+        id: publish
         if: steps.gate.outputs.publish == 'true'
+        # continue-on-error so the alert step below always gets to run. The job
+        # is still failed by the final step, which reads this step's outcome.
+        continue-on-error: true
         env:
           SUBSTACK_COOKIES_STRING: ${{ secrets.SUBSTACK_COOKIES_STRING }}
           SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
@@ -110,10 +114,38 @@ jobs:
           # exact class of silent failure this whole branch exists to remove.
           set -o pipefail
           python substack_poc/publish.py --publish-existing \
-            --state-in substack_post_state.json | tee publish.log
+            --state-in substack_post_state.json \
+            --result-out publish_result.json | tee publish.log
           # Surface the outcome on the run page instead of only in the log.
           if grep -q '^PUBLISHED' publish.log; then
             echo "✅ Published today's draft." >> "$GITHUB_STEP_SUMMARY"
           else
             echo "ℹ️ Nothing to publish: $(grep -m1 '^\[skip\]' publish.log || echo 'see log')" >> "$GITHUB_STEP_SUMMARY"
           fi
+
+      # The noon half of SLA-52's "one email a day". Abram's rule (2026-09-19):
+      # the morning status email is the daily one, and this job emails him ONLY
+      # when the publish needs him — a crash, or a draft that was never created
+      # this morning. A normal publish, a draft he published himself, a draft he
+      # deleted: all silent. Silence at 12:30 means the issue went out.
+      #
+      # publish.py decides which of those needs attention and writes it to
+      # publish_result.json; --step-outcome covers the case where it crashed so
+      # hard it never wrote one.
+      - name: Email Abram only if the publish needs attention
+        if: always() && steps.gate.outputs.publish == 'true'
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        run: |
+          python email_newsletter.py --publish-alert \
+            --result publish_result.json \
+            --step-outcome "${{ steps.publish.outcome }}"
+
+      # The publish step swallowed its own exit code so the alert could send.
+      # Give it back here, so a failed publish is still a red run.
+      - name: Fail the run if the publish failed
+        if: always() && steps.publish.outcome == 'failure'
+        run: |
+          echo "::error::the Substack publish step failed — see the log above"
+          exit 1

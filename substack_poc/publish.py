@@ -27,6 +27,8 @@ Modes (mutually exclusive)
 Other flags: --title, --subtitle, --out (dry-run JSON dump),
   --box-score-dir DIR, --no-box-scores, --state-out PATH (with --draft),
   --state-in PATH / --draft-id ID (with --publish-existing),
+  --result-out PATH (with --publish-existing: machine-readable outcome, read by
+    email_newsletter.py --publish-alert to decide whether Abram hears anything),
   --send / --no-send (email subscribers vs web-only; default web-only).
 
 Auth (needed for draft/schedule/publish) comes from a .env file locally, or
@@ -372,11 +374,39 @@ def today_et() -> str:
 
 def write_state(path: str, draft_id, title: str) -> None:
     """Record which draft the midday job should publish. Keyed by ET date so a
-    stale file (a morning run that failed days ago) is ignored, never published."""
+    stale file (a morning run that failed days ago) is ignored, never published.
+
+    `url` is for humans only -- the morning status email links it so Abram can
+    open the draft from his inbox. publish_existing() still keys off date and
+    draft_id alone, so an older handoff without the field reads exactly as before."""
+    pub = (os.getenv("SUBSTACK_PUBLICATION_URL") or "").rstrip("/")
     payload = {"date": today_et(), "draft_id": draft_id, "title": title}
+    if pub and draft_id:
+        payload["url"] = f"{pub}/publish/post/{draft_id}"
     with open(path, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
     print(f"Wrote draft handoff -> {path}: {payload}")
+
+
+def write_result(path: Optional[str], outcome: str, reason: str,
+                 needs_attention: bool, **extra) -> None:
+    """Record what the midday publish actually did, for the alert email.
+
+    WHY needs_attention IS DECIDED HERE, NOT BY THE EMAILER
+        Only this function knows which no-ops are innocent. "Draft 404s" means
+        Abram deleted it; "already published" means he published it himself --
+        both are him, doing the thing, and emailing him about it is noise. But
+        "no handoff file" and "stale handoff" mean the MORNING run never made a
+        draft, so today's issue is not going out, and that must reach him.
+        Abram's rule for noon (2026-09-19) is that silence means success, which
+        only works if the silent cases are genuinely fine."""
+    if not path:
+        return
+    payload = {"date": today_et(), "outcome": outcome, "reason": reason,
+               "needs_attention": bool(needs_attention), **extra}
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
+    print(f"Wrote publish result -> {path}: {payload}")
 
 
 def _resolve_send_email(flag: Optional[bool]) -> bool:
@@ -403,11 +433,15 @@ def publish_existing(args) -> None:
       * draft already has a Substack schedule  -> skip (you scheduled it yourself)
     Otherwise: prepublish + publish the draft *as it stands now*, so any edits made
     during the morning review go out automatically. Only unexpected errors raise."""
+    out = getattr(args, "result_out", None)
     draft_id = args.draft_id
     recorded_date = None
     if args.state_in:
         if not os.path.exists(args.state_in):
             print(f"[skip] No handoff file at {args.state_in!r}; nothing to auto-publish.")
+            write_result(out, "skipped_no_handoff",
+                         "The morning run never wrote a Substack draft handoff, so "
+                         "there is no draft to publish today.", True)
             return
         with open(args.state_in, encoding="utf-8") as f:
             state = json.load(f)
@@ -415,9 +449,15 @@ def publish_existing(args) -> None:
         recorded_date = state.get("date")
     if not draft_id:
         print("[skip] No draft id (empty handoff and no --draft-id); nothing to do.")
+        write_result(out, "skipped_no_draft_id",
+                     "The handoff file names no draft id, so today's issue was "
+                     "never drafted.", True)
         return
     if recorded_date is not None and recorded_date != today_et():
         print(f"[skip] Handoff draft is for {recorded_date}, today is {today_et()} -- stale, not publishing.")
+        write_result(out, "skipped_stale_handoff",
+                     f"The newest draft handoff is from {recorded_date}, not today "
+                     f"({today_et()}) -- today's draft was never created.", True)
         return
 
     api = make_api()
@@ -426,14 +466,23 @@ def publish_existing(args) -> None:
     except Exception as e:  # noqa: BLE001 -- 404 means you deleted it; anything else is real
         if _looks_like_not_found(e):
             print(f"[skip] Draft {draft_id} not found (deleted) -- nothing to publish.")
+            write_result(out, "skipped_draft_deleted",
+                         f"Draft {draft_id} no longer exists.", False,
+                         draft_id=draft_id)
             return
         raise
 
     if draft.get("is_published"):
         print(f"[skip] Draft {draft_id} is already published -- nothing to do.")
+        write_result(out, "skipped_already_published",
+                     f"Draft {draft_id} was already published.", False,
+                     draft_id=draft_id)
         return
     if draft.get("postSchedules"):
         print(f"[skip] Draft {draft_id} already has a Substack schedule -- leaving it alone.")
+        write_result(out, "skipped_already_scheduled",
+                     f"Draft {draft_id} has a Substack schedule of its own.", False,
+                     draft_id=draft_id)
         return
 
     send = _resolve_send_email(args.send_email)
@@ -442,6 +491,9 @@ def publish_existing(args) -> None:
     api.prepublish_draft(draft_id)
     published = api.publish_draft(draft_id, send=send)
     print(f"PUBLISHED. is_published={published.get('is_published')} slug={published.get('slug', '')}")
+    write_result(out, "published", f"Published {title!r}.", False,
+                 draft_id=draft_id, slug=published.get("slug", ""),
+                 emailed_subscribers=send)
 
 
 def main() -> None:
@@ -473,6 +525,9 @@ def main() -> None:
     ap.add_argument("--state-in", metavar="PATH",
                     help="with --publish-existing: read the handoff file written by an earlier --draft run")
     ap.add_argument("--draft-id", help="with --publish-existing: target this draft id directly (instead of --state-in)")
+    ap.add_argument("--result-out", metavar="PATH",
+                    help="with --publish-existing: write a machine-readable outcome "
+                         "here (read by email_newsletter.py --publish-alert)")
     send = ap.add_mutually_exclusive_group()
     send.add_argument("--send", dest="send_email", action="store_true", default=None,
                       help="email subscribers when publishing (default: web-only, or env SUBSTACK_SEND_EMAIL)")
@@ -483,7 +538,14 @@ def main() -> None:
 
     # --publish-existing is the lightweight midday job: no HTML build, just auth + publish.
     if args.publish_existing:
-        publish_existing(args)
+        try:
+            publish_existing(args)
+        except Exception as e:  # noqa: BLE001 -- record, then fail exactly as before
+            # The alert email is driven off the result file, so an exception
+            # that left no file would be indistinguishable from a clean run.
+            write_result(args.result_out, "error",
+                         f"The publish crashed: {type(e).__name__}: {e}", True)
+            raise
         return
     if not args.input:
         ap.error("input HTML path is required (omit only with --publish-existing)")

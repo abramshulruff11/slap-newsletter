@@ -55,17 +55,28 @@ jobs:
         with:
           python-version: '3.12'
 
+      # Before the installs, so a pip failure is a REPORTED stage rather than a
+      # run that reported nothing at all. Needs no dependencies of its own.
+      - name: Start pipeline status
+        run: python pipeline_status.py start
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: bash ci/run_stage.sh "Install dependencies" pip install -r requirements.txt
 
       - name: Install Playwright Chromium
-        run: python -m playwright install --with-deps chromium
+        run: bash ci/run_stage.sh "Install Playwright Chromium" python -m playwright install --with-deps chromium
 
+      # SLA-52: from here down, every stage runs through ci/run_stage.sh, which
+      # tees its output to ci_logs/, records the exit code into run_status.json,
+      # and re-raises. That record is what the one daily status email reads back
+      # to say WHICH stage broke and WHY, instead of leaving the answer in this
+      # job log where only a visit to the Actions tab would find it. The wrapper
+      # is invisible to pass/fail: a critical stage still halts the job.
       - name: Fetch content
-        run: python fetch_content.py
+        run: bash ci/run_stage.sh "Fetch content" python fetch_content.py
 
       - name: Fetch sports data
-        run: python fetch_sports_data.py
+        run: bash ci/run_stage.sh "Fetch sports data" python fetch_sports_data.py
 
       # Loud, not blocking: a blocked ESPN fetch fails THIS step and annotates
       # the run, but the newsletter, email and Substack draft still go out —
@@ -73,10 +84,11 @@ jobs:
       # game_state.json (standings, zero games) passed as healthy for weeks.
       - name: Check sports data health
         continue-on-error: true
-        run: python check_game_state.py
+        run: bash ci/run_stage.sh "Check sports data health" python check_game_state.py
 
       - name: Validate raw content
         run: |
+          bash ci/run_stage.sh "Validate raw content" <<'STAGE'
           python -c "
           import json, sys
           data = json.load(open('raw_content.json'))
@@ -87,6 +99,7 @@ jobs:
               sys.exit(1)
           print(f'Found {len(headlines)} headlines and {len(tweets)} tweets')
           "
+          STAGE
 
       - name: Generate newsletter
         run: |
@@ -97,16 +110,19 @@ jobs:
           if [ "${{ inputs.skip_gifs }}" = "true" ]; then
             FLAGS="$FLAGS --no-gifs"
           fi
-          python generate_newsletter.py $FLAGS
+          bash ci/run_stage.sh "Generate newsletter" python generate_newsletter.py $FLAGS
 
       - name: Render box score images (one per sport, MLB chunked)
         run: |
+          bash ci/run_stage.sh "Render box score images" <<'STAGE'
           rm -f box_score/box_score_sport_*.html box_score/box_score_sport_*.png
           python box_score/build_box_score.py --per-sport
           python box_score/render_pngs.py
+          STAGE
 
       - name: Verify outputs
         run: |
+          bash ci/run_stage.sh "Verify outputs" <<'STAGE'
           for f in newsletter_draft.html newsletter_substack.html; do
             if [ ! -f "$f" ]; then
               echo "ERROR: Missing output file: $f"
@@ -114,9 +130,14 @@ jobs:
             fi
           done
           echo "All output files present"
+          STAGE
 
+      # continue-on-error: losing today's snapshot is worth an email, not worth
+      # withholding the newsletter it snapshots.
       - name: Archive outputs
+        continue-on-error: true
         run: |
+          bash ci/run_stage.sh "Archive outputs" <<'STAGE'
           DATE=$(date -u +"%Y-%m-%d")
           ARCHIVE_DIR="archive/$DATE"
           mkdir -p "$ARCHIVE_DIR"
@@ -136,6 +157,7 @@ jobs:
           fi
           cp box_score/box_score_sport_*.png "$ARCHIVE_DIR/" 2>/dev/null || true
           echo "Archived to $ARCHIVE_DIR"
+          STAGE
 
       # Push BEFORE email so the box score images are live on GitHub: the size
       # guard in email_newsletter.py falls back to raw.githubusercontent URLs on
@@ -144,6 +166,7 @@ jobs:
       - name: Commit and push outputs
         continue-on-error: true
         run: |
+          bash ci/run_stage.sh "Commit and push outputs" <<'STAGE'
           git config user.name "SLAP Bot"
           git config user.email "slap-bot@users.noreply.github.com"
           git add raw_content.json newsletter_draft.html newsletter_substack.html newsletter_email.html recent_output.json gif_history.json meme_history.json archive/ || true
@@ -156,15 +179,7 @@ jobs:
           git commit -m "SLAP newsletter output for $DATE" || echo "No changes to commit"
           git pull --rebase -X theirs origin main
           git push
-
-      # continue-on-error because email_newsletter.py now EXITS NON-ZERO when
-      # delivery fails (it used to catch the SMTP error, print it, and exit 0 --
-      # which is how a broken email went unnoticed from at least 2026-08-14).
-      # A failed send must not skip the Substack path that follows; verify_run.py
-      # at the end of the job turns it into a red run.
-      - name: Email newsletter
-        continue-on-error: true
-        run: python email_newsletter.py
+          STAGE
 
       # Create the Substack DRAFT (tweets embedded, GIFs/memes included, box scores
       # uploaded) and record a handoff file naming today's draft id. This is the
@@ -173,29 +188,43 @@ jobs:
       # away, or deleted it first. (Substack removed its /schedule API endpoint, so
       # we schedule via our own cron + an immediate publish instead.) Routes through
       # a residential proxy (PROXY_URL) because GitHub Actions' datacenter IP is
-      # otherwise Cloudflare-blocked. NO continue-on-error: a failure here means no
-      # draft was created, and we want that to surface (it runs LAST, after the
-      # email -- the product -- has already gone out, so a red run never blocks it).
+      # otherwise Cloudflare-blocked.
+      #
+      # continue-on-error since SLA-52. It used to be blocking so that a missing
+      # draft surfaced — but "surfaced" meant a red square in the Actions tab.
+      # The failure now reaches Abram's inbox with the error text in it, and the
+      # final gate below still turns it into a red run, so halting here would
+      # only cost the steps underneath.
       - name: Create Substack draft (auto-publishes at 12:30 PM ET)
+        continue-on-error: true
         env:
           SUBSTACK_COOKIES_STRING: ${{ secrets.SUBSTACK_COOKIES_STRING }}
           SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
           PROXY_URL: ${{ secrets.PROXY_URL }}
         run: |
+          bash ci/run_stage.sh "Create Substack draft" <<'STAGE'
+          # Inside the wrapper, not above it: a pip failure here would
+          # otherwise fail the step while recording nothing, so the stage
+          # would read as "never ran" in the status email — a stage that
+          # silently vanishes is the hole this mechanism exists to close.
           pip install python-substack==0.1.22 curl_cffi
           python substack_poc/publish.py newsletter_substack.html --draft \
             --state-out substack_post_state.json
+          STAGE
 
       # Commit the handoff so the separate noon workflow (which checks out main) can
-      # read today's draft id. Only runs if the draft step above succeeded.
+      # read today's draft id.
       - name: Commit Substack draft handoff
+        continue-on-error: true
         run: |
+          bash ci/run_stage.sh "Commit Substack draft handoff" <<'STAGE'
           git config user.name "SLAP Bot"
           git config user.email "slap-bot@users.noreply.github.com"
           git add substack_post_state.json
           git commit -m "Substack draft handoff for $(date -u +%Y-%m-%d)" || echo "No handoff change to commit"
           git pull --rebase -X theirs origin main
           git push
+          STAGE
 
       # The other half of the 12:30 PM ET target. publish-substack.yml polls
       # every 30 minutes and publishes at the first slot past 12:30 ET -- but
@@ -211,34 +240,59 @@ jobs:
       # SUBSTACK_SEND_EMAIL must be set explicitly: publish.py defaults to
       # web-only (no subscriber email) when the variable is absent, which would
       # silently publish a SILENT issue.
-      - name: Publish now if this run finished after 12:30 PM ET
+      - name: Publish late if past 12:30 PM ET
+        continue-on-error: true
         env:
           SUBSTACK_COOKIES_STRING: ${{ secrets.SUBSTACK_COOKIES_STRING }}
           SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
           PROXY_URL: ${{ secrets.PROXY_URL }}
           SUBSTACK_SEND_EMAIL: 'true'
         run: |
+          bash ci/run_stage.sh "Publish late if past 12:30 PM ET" <<'STAGE'
           NOW_ET=$(TZ=America/New_York date '+%H%M')
           PRETTY=$(TZ=America/New_York date '+%I:%M %p %Z')
           if [ "$((10#$NOW_ET))" -ge 1230 ]; then
             echo "This run finished at $PRETTY, past the 12:30 PM ET slot — publishing now."
             python substack_poc/publish.py --publish-existing \
-              --state-in substack_post_state.json
+              --state-in substack_post_state.json \
+              --result-out publish_result.json
             echo "Ran late ($PRETTY) — published immediately rather than waiting." >> "$GITHUB_STEP_SUMMARY"
           else
             echo "Finished at $PRETTY, before 12:30 PM ET — leaving it to publish-substack.yml."
             echo "Draft created at $PRETTY; publish-substack.yml will post it at 12:30 PM ET." >> "$GITHUB_STEP_SUMMARY"
           fi
+          STAGE
 
-      # Run-quality gate. Reads what the run actually produced (tweets, GIFs,
-      # memes, un-rendered placeholders, whether the email sent, whether any
-      # pass came back truncated), writes it to the run summary, and FAILS the
-      # job when the issue is not fit to send. Everything above has already
-      # happened by now, so failing here costs nothing but tells the truth.
+      # Reads what the run actually produced (tweets, GIFs, memes, un-rendered
+      # placeholders, whether any pass came back truncated) and RECORDS it, so
+      # the status email can quote the findings. --record always exits 0: a
+      # broken issue must not stop the email that explains it. The exit code
+      # comes from the gate at the very bottom instead.
       #
-      # Verified against the archive: this gate fails 2026-09-01, the day seven
-      # GIFs shipped as invisible empty divs, and passes the five issues around
-      # it with warnings only.
-      - name: Verify run quality
+      # Verified against the archive: these findings fail 2026-09-01, the day
+      # seven GIFs shipped as invisible empty divs, and pass the five issues
+      # around it with warnings only.
+      - name: Assess run quality
         if: always()
-        run: python verify_run.py
+        continue-on-error: true
+        run: bash ci/run_stage.sh "Assess run quality" python verify_run.py --record
+
+      # THE one email (SLA-52). always(), and last, because the run Abram most
+      # needs to hear about is the run that died on step three — and that is
+      # exactly the run the old mid-workflow email step never reached. It
+      # carries the status panel, what broke and why, the cost breakdown, the
+      # Substack draft handoff, and then the newsletter itself with the box
+      # score images inline.
+      #
+      # continue-on-error so a failed SEND (it exits non-zero) still reaches the
+      # gate below, which turns it into a red run.
+      - name: Send the daily status email
+        if: always()
+        continue-on-error: true
+        run: python email_newsletter.py
+
+      # The job's verdict, computed from the same findings the email just
+      # reported — including whether that email actually sent.
+      - name: Run-quality gate
+        if: always()
+        run: python verify_run.py --gate

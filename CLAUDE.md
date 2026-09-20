@@ -9,12 +9,24 @@ GitHub Actions runs the full pipeline daily at **2:17 AM EDT** (cron `17 6 * * *
 Why 2:17 and not a round hour: GitHub's scheduled workflows queue worst at the top of the hour.
 Moving off it — and earlier — buys several hours of buffer before the morning review.
 
-**Delivery (current reality, as of 8/23/2026): two paths run every day.**
+**Delivery (current reality, as of 9/20/2026): two paths run every day.**
 
-1. **Email** — `email_newsletter.py` sends the finished newsletter to the owner's Gmail as an
-   HTML body with the per-sport box score images **embedded inline** under the "Box Scores"
-   header. A daily cost breakdown rides at the top. One select-all → copy → paste carries the
-   whole issue, images included.
+1. **Email — exactly ONE a day, and it always fires (SLA-52).** `email_newsletter.py` runs
+   **last** in the workflow under `if: always()` and sends a single message that is both the
+   product and the status report: a pipeline status panel (succeeded / partially succeeded /
+   failed, every stage with its outcome, the real error text of anything that broke, what the
+   run-quality gate found, whether today's Substack draft exists), the daily cost breakdown, a
+   copy-from-here marker, and then the newsletter with the per-sport box score images
+   **embedded inline** under the "Box Scores" header. One select-all → copy → paste below the
+   marker carries the whole issue, images included.
+
+   It used to sit in the middle of the workflow, so a failure above it meant **no email at all**
+   — the run Abram most needed to hear about was the one that stayed silent. A run that dies at
+   Pass 2 now still produces an email naming the stage and quoting the traceback.
+
+   The 12:30 PM ET publish job sends a second, lightweight email **only when the publish needs
+   attention**. A normal publish, a draft Abram published himself, a draft he deleted: all
+   silent. Silence at noon means it went out.
 2. **Substack auto-post** — the morning run creates a **draft** via `substack_poc/publish.py`
    and commits a handoff file naming today's draft id. A separate workflow
    (`publish-substack.yml`) polls every 30 minutes and publishes that draft at the first slot
@@ -55,6 +67,29 @@ two-job split. Beehiiv remains unused (post API is enterprise-only).
 
 ---
 
+## Session Summary Format (for Abram)
+
+Abram doesn't review code directly — he engages at the level of ideas, quality, and trade-offs.
+When you finish a session (or a meaningful chunk of work), give him a summary in plain,
+non-technical language instead of a technical changelog. No file names, function names, or
+implementation details unless truly unavoidable to explain what changed.
+
+Structure:
+
+1. **What got done** — a short, plain-English recap of the work, written for tone and clarity
+   rather than to a strict bullet count or length limit. Explain it the way you'd explain it to a
+   smart non-engineer: what changed from his perspective, and what it means for the product or
+   output.
+2. **Judgment calls** (only if needed) — a clearly separated section flagging any trade-offs,
+   decisions, or ambiguities where his input or approval matters. Skip this section entirely if
+   there's nothing to flag — don't write "no major trade-offs this session" or similar filler.
+
+This format applies only to the summary you give him directly in the session. Commit messages,
+PR descriptions, and Linear ticket comments should stay as they are now — technical detail is
+fine there since he's not the primary reader.
+
+---
+
 ## Pipeline Architecture — 6 Passes
 
 ```
@@ -81,9 +116,14 @@ newsletter_draft.html / newsletter_substack.html / newsletter_email.html
 box_score/build_box_score.py --per-sport  → per-sport HTML (MLB ~4 games/image, football ~3)
 box_score/render_pngs.py                   → cropped PNGs (Chromium screenshot + Pillow trim)
         ↓
-push (continue-on-error) → email_newsletter.py → substack_poc/publish.py --draft
+push → substack_poc/publish.py --draft → verify_run.py --record
+        ↓
+email_newsletter.py  (LAST, if: always() — the one daily status email)
+        ↓
+verify_run.py --gate  (the job's exit code)
         ↓
 publish-substack.yml at 12:30 PM ET → publishes the draft
+        → email_newsletter.py --publish-alert  (emails ONLY on trouble)
 ```
 
 Pass numbering is sequential (1–6) and matches execution order. Passes 3 and 5 are
@@ -101,6 +141,13 @@ slap-newsletter/
 ├── fetch_content.py           ← ESPN/CBS RSS + Nitter RSS → raw_content.json
 ├── fetch_sports_data.py       ← ESPN scores/standings/box scores → game_state.json
 ├── claim_validator.py         ← deterministic fact check vs game_state.json (Pass 3)
+├── run_status.py              ← per-run state on disk, shared across processes
+├── pipeline_status.py         ← per-STAGE outcomes on top of run_status.json;
+│                                 PIPELINE_STAGES is the declared stage list
+├── verify_run.py              ← run-quality gate; --record / --gate (see below)
+├── check_game_state.py        ← ESPN fetch-health guard
+├── ci/run_stage.sh            ← runs one workflow stage, tees its log, records
+│                                 the exit code, re-raises it
 ├── generate_newsletter.py     ← orchestrates all passes (main script)
 ├── highlights.py              ← injects MLB/NHL/World Cup highlight video embeds
 ├── build_email_html.py        ← builds the email HTML body
@@ -118,7 +165,9 @@ slap-newsletter/
 ├── meme_box_check.py           ← box-count guard: blocks memes that would render blank panels
 ├── gif_library_select.py       ← tiered GIF selection from the curated library, shared
 ├── gif_url_cache.py            ← GIF URL cache (gif_url_cache.json, gitignored)
-├── email_newsletter.py        ← email delivery: HTML body + box scores inline (cid + size guard)
+├── email_newsletter.py        ← THE one daily email: status panel + cost + newsletter +
+│                                 box scores inline (cid + size guard). Also
+│                                 `--publish-alert`, the noon trouble-only note.
 ├── raw_content.json           ← daily input: headlines + tweets
 ├── game_state.json            ← daily ESPN ground truth (GITIGNORED build artifact)
 ├── story_plan.json            ← Pass 1 plan as Pass 2 received it, post §2.4/§2.3
@@ -149,7 +198,8 @@ slap-newsletter/
 │   ├── promote.py             ← diff-and-confirm prompt promotion (USE THIS, never copy by hand)
 │   ├── probe_meme_box_order.py ← renders marker captions to verify meme panel order
 │   ├── tests/                 ← offline suites, 0 API calls — run before any prompt/code change
-│   │   └── test_runner_drift.py ← fails if a change reaches one runner and not the other
+│   │   ├── test_runner_drift.py ← fails if a change reaches one runner and not the other
+│   │   └── test_pipeline_status.py ← locks the status email + the stage list vs the workflow
 │   ├── fixtures/              ← frozen inputs — the control. Deliberately NOT gitignored
 │   └── prompts/               ← a FORK of prompts/. Promotion to prod is manual
 ├── prompts/                   ← all production prompt files (versioned in git)
@@ -335,7 +385,7 @@ which is why its workflow step carries `continue-on-error`: a failed send must c
 without skipping the Substack path that follows. UAT repoints `run_status.STATUS_PATH` at its own
 output dir, so the sandbox never writes a production file.
 
-**The offline suites run in CI (2026-09-05).** `.github/workflows/tests.yml` runs all eleven on
+**The offline suites run in CI (2026-09-05).** `.github/workflows/tests.yml` runs them all on
 every push and pull request. They made zero API calls and took seconds, and until now nothing ran
 them — `test_runner_drift.py` exists to catch a change reaching one runner and not the other, which
 is exactly what caused the 2026-09-01 outage, and it could only do that if it ran before the code
@@ -347,6 +397,35 @@ nothing acted on the number; the §2.2 "filter" was only ever printing a count t
 about itself; and editor CHECK 3 missed `@TomPelissero` (4x) and `@ESPN` (3x) while flagging an
 account that appeared once. All three are arithmetic now in `plan_audit.py`. When adding a rule,
 decide where it is *enforced* — a prompt line with no check is not a rule.
+
+**One email a day, always sent, and it is the only notification (SLA-52, 2026-09-20).**
+`email_newsletter.py` is the last step of the workflow and runs under `if: always()`. Everything
+that used to reach Abram only through the Actions tab — a blocked ESPN fetch, a failed Substack
+draft, `verify_run.py`'s findings, a truncated pass — is in it.
+
+- **Every stage reports itself.** `ci/run_stage.sh` wraps each step: it tees the stage's output
+  to `ci_logs/`, records the exit code and (on failure only) the log tail into `run_status.json`
+  via `pipeline_status.record_stage()`, and re-raises the original code. The wrapper is invisible
+  to pass/fail — a critical stage still halts the job, it just leaves a record on the way out.
+- **`PIPELINE_STAGES` must match the workflow, and `critical` must match `continue-on-error`.**
+  A stage that never ran is the most important row in the report and the only one nothing can
+  record; the declared list is what makes "never ran" printable. `uat/tests/test_pipeline_status.py`
+  parses `daily-newsletter.yml` and fails on any disagreement in either direction, including
+  order. **When you add a workflow step, add it to `PIPELINE_STAGES` in the same commit.**
+- **Warnings do NOT downgrade the verdict.** `verify_run.py` warns on a thin issue, and those
+  fire on most days. A top line that reads PARTIAL every morning is a top line nobody reads,
+  which is the failure this ticket exists to fix. Only real breakage moves the headline.
+- **`verify_run.py` splits into `--record` and `--gate`.** `--record` runs BEFORE the email,
+  writes its errors and warnings into `run_status.json`, and always exits 0 — a broken issue must
+  not stop the email that explains it. `--gate` runs LAST, after the email has recorded whether
+  it sent, and carries the job's exit code. Both compute the findings the same way; the plain
+  invocation is unchanged.
+- **`email_newsletter.py` and `pipeline_status.py` import nothing outside the standard library**,
+  on purpose: a run that dies in `pip install` must still be able to say so. The test asserts it.
+- **Noon is silent on success.** `publish.py --result-out` decides which outcomes need attention
+  (no handoff / stale handoff / crash) and which are Abram himself (he published it, deleted it,
+  scheduled it). `email_newsletter.py --publish-alert` sends only the first kind. That rule only
+  holds if the innocent cases stay genuinely silent — don't widen it.
 
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
@@ -646,24 +725,25 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (12 Python + 1 Node), 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (15 Python + 1 Node), 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
 `SUBSTACK_COOKIES_STRING`, `SUBSTACK_PUBLICATION_URL`, `PROXY_URL`.
 
-Daily pipeline steps: checkout → setup Python → `pip install -r requirements.txt` →
-`playwright install --with-deps chromium` → fetch content → fetch sports data → validate →
-generate newsletter → render box score PNGs → verify outputs → archive → **commit & push**
-(continue-on-error) → **email** (continue-on-error; it exits non-zero on failure) → **create
-Substack draft** → commit handoff → publish now if already past 12:30 PM ET → **verify run quality**
-(`if: always()`, fails the job on an unshippable issue). A "check sports data health" step (continue-on-error) sits after the
-sports fetch; see the ESPN entry under Known Issues.
+Daily pipeline steps: checkout → setup Python → **start pipeline status** → install deps →
+install Chromium → fetch content → fetch sports data → check sports data health → validate →
+generate newsletter → render box score PNGs → verify outputs → archive → **commit & push** →
+**create Substack draft** → commit handoff → publish now if already past 12:30 PM ET →
+**assess run quality** (`verify_run.py --record`) → **send the daily status email**
+(`if: always()`) → **run-quality gate** (`verify_run.py --gate`, `if: always()`, fails the job).
+Every one of those from "install deps" down runs through `ci/run_stage.sh`.
 
-Ordering notes: push is before email so the size-guard's hosted-URL fallback resolves when Gmail
-fetches it. The Substack draft step runs **last**, deliberately without `continue-on-error` — the
-email (the product) has already gone out, so a red run there surfaces the failure without ever
-blocking delivery.
+Ordering notes: push is before the email so the size-guard's hosted-URL fallback resolves when
+Gmail fetches it. The **email is last**, because it reports on everything above it — including
+the Substack draft, which it could not name when the email ran in the middle. Every step between
+the fetches and the email is `continue-on-error`, so nothing short-circuits the report; the gate
+at the bottom is what turns a bad run red.
 
 DST caveat: GitHub cron is UTC and ignores DST, so `daily-newsletter.yml` fires an hour earlier
 in ET each winter (1:17 AM EST). The **publish job no longer has this problem** — its gate reads
@@ -687,6 +767,45 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-20 — One daily status email, always sent (SLA-52)**
+- Abram got several notifications a day and silence on the days that mattered. `verify_run.py`
+  failing the job, `check_game_state.py` finding a blocked ESPN fetch, a Substack draft that was
+  never created — all of it reached the GitHub Actions UI and stopped there. Worse, the email
+  step sat in the MIDDLE of the workflow, so a run that died at Pass 2 sent nothing at all.
+- There is now exactly one email, sent last, under `if: always()`: status panel (SUCCESS /
+  PARTIAL / FAILED, every stage, the real error text of whatever broke), run-quality findings,
+  the cost breakdown, the Substack draft confirmation, then the newsletter with box scores inline.
+  **Verified by rendering all three variants against the real 2026-09-19 issue**, not just asserted.
+- `pipeline_status.py` + `ci/run_stage.sh`: every stage tees its log, records its exit code, and
+  re-raises. `PIPELINE_STAGES` is the declared list that lets the report print "never ran" for a
+  stage nothing could record, and `uat/tests/test_pipeline_status.py` parses the workflow and
+  fails if the two disagree in either direction — including `critical` vs `continue-on-error`.
+- **The status email imports nothing outside the standard library.** A run that dies in
+  `pip install` must still be able to say so, and the installs are declared stages for that reason.
+- `verify_run.py` gained `--record` (before the email, always exits 0) and `--gate` (after it,
+  carries the exit code). Splitting them is what lets a broken issue still send the email that
+  explains it. The plain invocation is untouched, so `test_run_quality.py` still locks it.
+- **Warnings deliberately do not downgrade the verdict.** Sub-floor memes and thin slates fire on
+  most days; PARTIAL every morning is a headline nobody reads.
+- Noon stays silent on success. `publish.py --result-out` classifies each outcome and
+  `email_newsletter.py --publish-alert` emails only the ones that need Abram — a missing or stale
+  handoff, or a crash. A draft he published, deleted or scheduled himself sends nothing.
+- `generate_newsletter.main()` now calls `pipeline_status.ensure_started()` instead of
+  `run_status.reset()`: two fetch stages record into that file before the generator starts, and a
+  reset would have wiped them. Re-pinned in `test_runner_drift.py`'s `KNOWN_DIVERGENT`.
+
+**2026-09-18 — NFL box score shows real division standings (SLA-45)**
+- The NFL summary image showed ESPN's standings as one flat league-wide list cut to 16 rows —
+  no divisions, half the league missing. `_nfl_division_standings()` in `build_box_score.py`
+  now renders `nfl_standings.py` from `sports.nfl.season_games`; an empty or malformed log
+  falls back to the old flat list rather than no table. At the 400px render width the
+  component's own breakpoints drop PCT, CONF and DIV.
+- **Verified against live data, run locally** (ESPN is 403 from cloud sessions): W/L/T, PF, PA,
+  DIFF, streak, DIV and CONF match ESPN for all 32 teams. For **ordering, NFL.com is the
+  reference, not ESPN** — ESPN's standings API ordered four divisions differently from NFL.com,
+  and we matched NFL.com in six of eight. The two misses are 3+ team ties, which are already
+  labelled provisional (the multi-team procedure is SLA-51).
 
 **2026-09-18 — NFL standings: records, official tiebreakers, responsive table (SLA-43)**
 - `nfl_standings.py` turns the season game log `fetch_nfl_season_games()` writes to

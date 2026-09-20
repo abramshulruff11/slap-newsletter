@@ -1,1 +1,7 @@
 * text=auto
+
+# Shell scripts must be LF wherever they land. ci/run_stage.sh runs on the
+# ubuntu CI runner, and a CRLF .sh fails there with a carriage return glued
+# to every command.
+# text=auto above would normalise it anyway; this makes it non-negotiable.
+*.sh text eol=lf

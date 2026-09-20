@@ -23,6 +23,17 @@ WHAT FAILS vs WHAT WARNS
 
     python verify_run.py            # exit 1 if the issue is broken
     python verify_run.py --strict   # also exit 1 on warnings
+    python verify_run.py --record   # record the findings, always exit 0
+    python verify_run.py --gate     # verdict line only, exit 1 if broken
+
+WHY --record AND --gate EXIST (SLA-52)
+    The consolidated daily email has to show what this gate found, and the email
+    is sent by a separate process later in the job. So --record runs BEFORE the
+    email, writes the errors and warnings into run_status.json, and exits 0 so
+    the email still goes out. --gate then runs LAST, after the email has had its
+    chance to record whether it sent, and turns the same findings into the job's
+    exit code. Both compute the findings identically: this file stays the only
+    thing that decides whether an issue is shippable.
 """
 
 from __future__ import annotations
@@ -77,15 +88,38 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="SLAP run-quality gate")
     ap.add_argument("--strict", action="store_true",
                     help="treat warnings as failures too")
+    ap.add_argument("--record", action="store_true",
+                    help="write the findings to run_status.json and exit 0 "
+                         "(so the status email can report them and still send)")
+    ap.add_argument("--gate", action="store_true",
+                    help="verdict line only; the exit code is the whole point")
     args = ap.parse_args()
 
+    loud = not args.gate
     errors: list[str] = []
     warnings: list[str] = []
+    counts: dict = {}
+    box_count = 0
+    media_share = 0
+
+    def finish(code: int) -> int:
+        """Record the findings when asked, then hand back the exit code.
+        --record always exits 0: a broken issue must not stop the email that
+        reports it. --gate runs after the email and carries the real code."""
+        if args.record:
+            run_status.record(quality={
+                "errors": errors, "warnings": warnings,
+                "counts": counts, "box_images": box_count,
+                "media_share": media_share,
+            })
+            return 0
+        return code
 
     if not SUBSTACK.exists() or not DRAFT.exists():
+        errors.append("newsletter output missing — nothing was produced")
         print("::error::newsletter output missing — nothing was produced")
         _summary("> ❌ newsletter output missing")
-        return 1
+        return finish(1)
 
     draft = DRAFT.read_text(encoding="utf-8")
     published = SUBSTACK.read_text(encoding="utf-8")
@@ -93,6 +127,9 @@ def main() -> int:
     pub = _count(published)
     status = run_status.load()
     box_images = sorted(BOX_SCORE_DIR.glob("box_score_sport_*.png"))
+    box_count = len(box_images)
+    counts = {"tweets": c["tweets"], "gifs": c["gifs"], "memes": c["memes"],
+              "highlights": c["highlights"], "words": c["words"]}
 
     # ---- the report, which is the point even when everything passes --------
     rows = [
@@ -103,17 +140,21 @@ def main() -> int:
         ("box score images", len(box_images), ""),
         ("words", c["words"], ""),
     ]
-    print("\n── RUN QUALITY ─────────────────────────────────────")
+    if loud:
+        print("\n── RUN QUALITY ─────────────────────────────────────")
     _summary("### Newsletter produced")
     _summary("| item | count | target |")
     _summary("|---|---:|---|")
     for label, n, target in rows:
-        print(f"  {label:<18} {n:>4}   {target}")
+        if loud:
+            print(f"  {label:<18} {n:>4}   {target}")
         _summary(f"| {label} | {n} | {target} |")
 
     media = c["gifs"] + c["memes"]
     share = media / (media + c["tweets"]) * 100 if (media + c["tweets"]) else 0
-    print(f"  {'media share':<18} {share:>3.0f}%   (GIFs+memes vs tweets)")
+    media_share = round(share)
+    if loud:
+        print(f"  {'media share':<18} {share:>3.0f}%   (GIFs+memes vs tweets)")
     _summary(f"| media share | {share:.0f}% | 40% |")
 
     # ---- hard failures: the issue is not fit to send -----------------------
@@ -150,23 +191,26 @@ def main() -> int:
         warnings.append(f"media share {share:.0f}% — target is 40%")
 
     for w in warnings:
-        print(f"  ⚠ {w}")
-        print(f"::warning::{w}")
+        if loud:
+            print(f"  ⚠ {w}")
+            print(f"::warning::{w}")
         _summary(f"> ⚠️ {w}")
     for e in errors:
-        print(f"  ✗ {e}")
-        print(f"::error::{e}")
+        if loud:
+            print(f"  ✗ {e}")
+            print(f"::error::{e}")
         _summary(f"> ❌ {e}")
 
     if errors:
-        print(f"\n  {len(errors)} problem(s) make this issue unfit to send.")
-        return 1
+        print(f"\n  {len(errors)} problem(s) make this issue unfit to send."
+              + (f" First: {errors[0]}" if args.gate else ""))
+        return finish(1)
     if warnings and args.strict:
         print(f"\n  {len(warnings)} warning(s), failing because --strict.")
-        return 1
+        return finish(1)
     print(f"\n  ✓ Issue looks shippable"
           + (f" ({len(warnings)} warning(s))" if warnings else ""))
-    return 0
+    return finish(0)
 
 
 if __name__ == "__main__":

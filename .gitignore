@@ -49,3 +49,10 @@ run_status.json
 # writes through a .tmp. Neither belongs in git — the library itself is the record.
 prompts/*.bak
 prompts/*.tmp
+
+# Per-stage logs teed by ci/run_stage.sh, and the midday publish's machine-
+# readable outcome. Both are per-run build artifacts; what matters from them
+# is already copied into run_status.json / the status email.
+ci_logs/
+publish_result.json
+publish.log

@@ -69,7 +69,7 @@ KNOWN_DIVERGENT = {
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
     )),
-    "main": dict(prod="5471409d8a48", uat="0e25f4ba71c9", reason=(
+    "main": dict(prod="21632f1ddb31", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
         "5-line stub. Expected to stay divergent permanently. (2026-09-04: prod "
         "now strips HTML comments from the published Substack file. Nothing to "
@@ -79,7 +79,12 @@ KNOWN_DIVERGENT = {
         "prod's main() calls run_status.reset(); UAT instead repoints "
         "run_status.STATUS_PATH at its own output dir at import, so the sandbox "
         "never writes prod's status file. 2026-09-17: prod's main() prints "
-        "plan_audit's report['uncapped']; run_uat.py prints it at its own call site.)"
+        "plan_audit's report['uncapped']; run_uat.py prints it at its own call site. "
+        "2026-09-20 (SLA-52): prod's reset() became pipeline_status.ensure_started(), "
+        "because the two fetch stages now record into the same file BEFORE this "
+        "process starts and a reset would wipe them. Nothing to port — the sandbox "
+        "has no workflow around it, records no stages, and its import-time redirect "
+        "already keeps it out of prod's status file.)"
     )),
 }
 
