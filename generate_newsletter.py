@@ -40,6 +40,7 @@ import runner_common
 from runner_common import (
     MODEL, MODEL_DEFAULT, MODEL_WRITER, PASS_COSTS, PRICING,
     MAX_TOKENS_WRITER, MAX_TOKENS_EDITOR, was_truncated,
+    SDK_MAX_RETRIES, retry_api_call,
     _normalize_tweet_url,
     blockquotes_to_substack_urls,
     clean_giphy_search,
@@ -456,21 +457,29 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             # get_final_message() returns the same Message object
             # messages.create() would have -- tool_use blocks and usage
             # included -- so everything below is unchanged.
-            with client.messages.stream(
-                model=MODEL_DEFAULT,
-                max_tokens=32768,
-                system=[
-                    {
-                        "type": "text",
-                        "text": selector_prompt,
-                        "cache_control": {"type": "ephemeral"},
-                    }
-                ],
-                tools=[tool_definition],
-                tool_choice={"type": "tool", "name": "submit_story_plan"},
-                messages=messages,
-            ) as stream:
-                response = stream.get_final_message()
+            # Retried by retry_api_call: a stream that died halfway cannot be
+            # resumed, so the only correct retry is to re-enter the context
+            # manager from scratch -- which is exactly what a zero-argument
+            # callable gives it. A transient failure therefore no longer costs
+            # one of the three VALIDATION attempts this loop is really for.
+            def _call_story_selector():
+                with client.messages.stream(
+                    model=MODEL_DEFAULT,
+                    max_tokens=32768,
+                    system=[
+                        {
+                            "type": "text",
+                            "text": selector_prompt,
+                            "cache_control": {"type": "ephemeral"},
+                        }
+                    ],
+                    tools=[tool_definition],
+                    tool_choice={"type": "tool", "name": "submit_story_plan"},
+                    messages=messages,
+                ) as stream:
+                    return stream.get_final_message()
+
+            response = retry_api_call("PASS 1", _call_story_selector)
         except Exception as e:
             api_error = f"{type(e).__name__}: {e}"
 
@@ -745,14 +754,22 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                 })
 
             else:
-                # API-level error (e.g. malformed JSON in tool input).
-                # Don't append an assistant turn — add a corrective user message.
+                # API-level error. Since SLA-54 a TRANSIENT failure never gets
+                # here -- retry_api_call has already waited and re-tried four
+                # times below, so anything that reaches this branch is either
+                # non-transient or a genuine outage. That matters, because the
+                # old text here asserted the cause was "special characters
+                # (unescaped quotes, backslashes) inside string values", which
+                # for a 429 was simply false: it burned a validation attempt on
+                # a problem the model did not cause and grew the prompt while
+                # doing it. Say what actually happened instead.
                 messages.append({
                     "role": "user",
                     "content": (
                         f"⚠ The previous API call failed: {api_error}\n\n"
-                        "This is usually caused by special characters (unescaped quotes, "
-                        "backslashes) inside string values. "
+                        "If that was caused by the tool input itself, it is usually "
+                        "special characters (unescaped quotes, backslashes) inside "
+                        "string values. "
                         "Call submit_story_plan again with your complete story plan."
                     ),
                 })
@@ -893,13 +910,17 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
     # turns a normal run takes.
     MAX_TURNS = 8
     for _turn in range(1, MAX_TURNS + 1):
-        response = client.messages.create(
+        # Retried underneath, per turn: a transient failure on turn 3 of a
+        # tool loop is not a reason to throw away turns 1 and 2. `messages` is
+        # unchanged by a failed attempt, so re-issuing it is exact, not
+        # approximate.
+        response = retry_api_call("PASS 2", lambda: client.messages.create(
             model=MODEL_WRITER,
             max_tokens=MAX_TOKENS_WRITER,
             system=system_blocks,
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=messages,
-        )
+        ))
         total_in         += response.usage.input_tokens
         total_out        += response.usage.output_tokens
         total_cache_read  += getattr(response.usage, "cache_read_input_tokens", 0)
@@ -1146,7 +1167,13 @@ def main() -> None:
         print(f"  ⚠ DEGRADED MODE: only {tweet_count} tweet(s) (< {DEGRADED_TWEET_FLOOR}) — "
               f"today's issue will be headline-only, no Around the League")
 
-    client = anthropic.Anthropic(api_key=api_key)
+    # max_retries explicitly, not left to the SDK default. `anthropic` is
+    # pinned because an unpinned dependency changed behaviour under us once
+    # already (2026-09-01); a retry count the pipeline leans on should not be a
+    # default that can move in a patch release. These are the SDK's own FAST
+    # retries (sub-8s, honouring retry-after). runner_common.retry_api_call
+    # wraps every pass with the slow outer ones on top.
+    client = anthropic.Anthropic(api_key=api_key, max_retries=SDK_MAX_RETRIES)
 
     # Passes: selector → writer → voice editor → tweet audit → LLM editor
     game_state    = load_json(GAME_STATE_PATH)

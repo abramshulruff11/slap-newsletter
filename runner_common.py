@@ -28,6 +28,7 @@ calls configure() at import; load_prompt() reads what it set.
 """
 
 import json
+import os
 import re
 import time
 from pathlib import Path
@@ -130,6 +131,217 @@ MAX_TOKENS_EDITOR = 8192     # Passes 4 and 6: rewrite a draft of ~3.5-5K tokens
 #                 NOT do; so treat it as partial and say so rather than
 #                 shipping the fragment as if it were the finished draft.
 INCOMPLETE_STOP_REASONS = ("max_tokens", "pause_turn")
+
+
+# ---------------------------------------------------------------------------
+# Retrying the Anthropic calls (SLA-54)
+# ---------------------------------------------------------------------------
+# WHAT WAS ALREADY TRUE, AND WHY THIS IS STILL WORTH DOING
+#     The SDK is not doing nothing: anthropic.Anthropic defaults to
+#     max_retries=2 and already retries 408/409/429/5xx with backoff, honouring
+#     retry-after. What it does NOT do is any of the following, and each one
+#     has cost this repo a run or an hour:
+#
+#       * say so. An SDK retry is silent, so "the run took 9 minutes" and "the
+#         run took 9 minutes because Pass 2 was rate-limited twice" look
+#         identical in the log. Since SLA-52 a stage's log reaches the morning
+#         email, so a retry that announces itself is now diagnosable from an
+#         inbox.
+#       * wait long enough. The SDK's delay caps at 8 seconds. A sustained
+#         rate limit on a 60K-token Opus call outlasts that comfortably.
+#       * keep a transport failure out of the MODEL's conversation. This is the
+#         real bug. Pass 1 wraps its call in a validation-retry loop, and on an
+#         API error it appended a user turn reading "The previous API call
+#         failed ... usually caused by special characters (unescaped quotes,
+#         backslashes) inside string values." For a 429 that sentence is simply
+#         false, and it (a) burned one of only three validation attempts on a
+#         problem the model did not cause, (b) grew the prompt on every attempt,
+#         so the retry was larger and likelier to be limited again, and (c)
+#         retried instantly, with no backoff at all. Same disease as
+#         2026-09-01, when a client-side ValueError about streaming was
+#         reported as "likely malformed JSON in tool input".
+#
+#     So: transient failures are retried HERE, underneath every pass, with real
+#     backoff and a line in the log. The passes' own loops keep doing what they
+#     are for -- Pass 1's retries the MODEL, not the network.
+#
+# WHAT IS NOT RETRIED, AND WHY THAT MATTERS MORE
+#     A 400, a 401, a bad model string, the SDK's own streaming ValueError:
+#     none of those get better by waiting, and retrying them turns a five-second
+#     red run into a several-minute red run that looks like an outage. Those
+#     raise immediately, with a line saying that waiting will not help.
+#
+# COST ACCOUNTING
+#     Nothing to reconcile: cost_summary() is only ever called with the usage
+#     of a response that actually arrived. A failed attempt returns no usage,
+#     so it contributes nothing and cannot be double-counted. The one honest
+#     gap is a STREAMING call that dies mid-stream -- those tokens were
+#     generated and billed by Anthropic, and the SDK hands us no usage object
+#     for them, so the run's cost summary is a slight under-estimate on a day
+#     that retried Pass 1. Recording an invented number would be worse.
+
+RETRY_ATTEMPTS    = 4      # total tries, i.e. 3 retries
+RETRY_BASE_DELAY  = 4.0    # seconds; doubles each time -> 4, 8, 16
+RETRY_MAX_DELAY   = 60.0
+# Explicit, not left to the SDK default. `anthropic` is pinned precisely
+# because an unpinned dependency changed behaviour under us once already; a
+# retry count we rely on should not be a default that can move in a patch
+# release. These are the SDK's OWN fast retries -- ours are the slow outer
+# ones, and the two compose: up to 4 * (1 + 2) = 12 HTTP attempts in the worst
+# case, which still finishes inside the job's 30-minute cap.
+SDK_MAX_RETRIES = 2
+
+# Worth another try. 409 and 429 are the SDK's own list; 529 is Anthropic's
+# "overloaded", which is >= 500 anyway but is spelled out because it is the one
+# most likely to be seen.
+TRANSIENT_STATUS = frozenset({408, 409, 425, 429, 500, 502, 503, 504, 529})
+
+
+def is_transient(exc: BaseException) -> bool:
+    """True when waiting and trying again could plausibly fix this.
+
+    Deliberately built on the SDK's PUBLIC exception classes and on
+    .status_code, never on its internals: the pinned version here (1.2.0) is
+    not necessarily the version a developer has installed locally, and this
+    predicate decides whether a red run is five seconds or five minutes."""
+    status = getattr(exc, "status_code", None)
+    if isinstance(status, int):
+        return status in TRANSIENT_STATUS
+    if isinstance(exc, (anthropic.APITimeoutError, anthropic.APIConnectionError,
+                        anthropic.RateLimitError, anthropic.InternalServerError)):
+        return True
+    # Socket-level failures that never made it as far as an SDK exception.
+    return isinstance(exc, (TimeoutError, ConnectionError))
+
+
+def describe_api_error(exc: BaseException) -> str:
+    """The failure in words, for a log line a human reads at 8am."""
+    status = getattr(exc, "status_code", None)
+    named = {429: "a rate limit (429)", 529: "an overloaded API (529)",
+             408: "a request timeout (408)", 409: "a lock conflict (409)",
+             500: "a server error (500)", 502: "a bad gateway (502)",
+             503: "the service being unavailable (503)",
+             504: "a gateway timeout (504)", 400: "a bad request (400)",
+             401: "a rejected API key (401)", 403: "a permission error (403)",
+             404: "a not-found (404) -- check the model name",
+             422: "an unprocessable request (422)"}
+    if isinstance(status, int) and status in named:
+        return named[status]
+    if isinstance(exc, anthropic.APITimeoutError):
+        return "a timeout"
+    if isinstance(exc, anthropic.APIConnectionError):
+        return "a connection failure"
+    if isinstance(status, int):
+        return f"HTTP {status}"
+    return type(exc).__name__
+
+
+class SimulatedAPIFailure(Exception):
+    """A fake failure injected by SLAP_SIMULATE_API_FAILURES.
+
+    Carries a real status_code so it travels through is_transient() and
+    describe_api_error() exactly as a genuine SDK error would -- the point of a
+    drill is to exercise the real predicate, not a parallel one."""
+
+    def __init__(self, status_code: int, note: str = ""):
+        self.status_code = status_code
+        super().__init__(note or f"simulated HTTP {status_code}")
+
+
+_SIM_KINDS = {"429": 429, "ratelimit": 429, "529": 529, "overloaded": 529,
+              "500": 500, "timeout": 408, "connection": 503,
+              "fatal": 400, "400": 400, "auth": 401}
+_sim_used: dict[str, int] = {}
+
+
+def _simulate_if_asked(label: str) -> None:
+    """Drill mode. SLAP_SIMULATE_API_FAILURES makes the next N calls of every
+    pass fail, so the retry path can be exercised on demand instead of waiting
+    for a real rate limit to turn up on its own.
+
+        SLAP_SIMULATE_API_FAILURES=2            two 429s per pass, then succeed
+        SLAP_SIMULATE_API_FAILURES=529:1        one overload per pass
+        SLAP_SIMULATE_API_FAILURES=timeout:3    three timeouts
+        SLAP_SIMULATE_API_FAILURES=fatal        one 400 -- must NOT be retried
+        SLAP_SIMULATE_API_FAILURES=exhaust      always fail -- must give up
+
+    Unset (the normal case) this is one getenv and a return."""
+    spec = (os.getenv("SLAP_SIMULATE_API_FAILURES") or "").strip().lower()
+    if not spec:
+        return
+    if spec == "exhaust":
+        raise SimulatedAPIFailure(429, "simulated permanent rate limit (drill)")
+    kind, _, count = spec.partition(":")
+    if not count and kind.isdigit():
+        kind, count = "429", kind
+    status = _SIM_KINDS.get(kind)
+    if status is None:
+        print(f"  [drill] SLAP_SIMULATE_API_FAILURES={spec!r} not understood -- ignoring")
+        return
+    budget = int(count or 1)
+    used = _sim_used.get(label, 0)
+    if used >= budget:
+        return
+    _sim_used[label] = used + 1
+    raise SimulatedAPIFailure(status, f"simulated {kind} failure (drill)")
+
+
+def reset_simulated_failures() -> None:
+    """Clear the per-pass drill budget. For the tests and the probe."""
+    _sim_used.clear()
+
+
+def _record_retries(label: str, note: str) -> None:
+    try:
+        import run_status
+        run_status.append("api_retries", f"{label}: {note}")
+    except Exception as e:  # noqa: BLE001 -- reporting must never break a run
+        print(f"    (could not record retry status: {type(e).__name__})")
+
+
+def retry_api_call(label: str, call, *, attempts: int = RETRY_ATTEMPTS,
+                   sleep=time.sleep):
+    """Run call(), retrying ONLY transient failures, with exponential backoff.
+
+    `call` is a zero-argument callable so a streaming pass can re-open its
+    stream from scratch: a stream that died halfway cannot be resumed, and
+    re-entering the context manager is the only correct retry.
+
+    Raises the last exception once the attempts are gone, and raises a
+    non-transient one immediately. Either way the caller sees an ordinary
+    exception and decides what it means -- this never swallows one.
+    """
+    for attempt in range(1, attempts + 1):
+        try:
+            _simulate_if_asked(label)
+            result = call()
+        except Exception as e:  # noqa: BLE001 -- classified immediately below
+            what = describe_api_error(e)
+            if not is_transient(e):
+                print(f"  ✗ {label}: {what} is NOT a transient failure -- not "
+                      f"retrying. Waiting will not fix this.")
+                print(f"    {type(e).__name__}: {e}")
+                raise
+            if attempt >= attempts:
+                print(f"  ✗ {label}: still failing with {what} after "
+                      f"{attempts} attempts -- giving up.")
+                _record_retries(label, f"gave up after {attempts} attempts ({what})")
+                raise
+            delay = min(RETRY_BASE_DELAY * (2 ** (attempt - 1)), RETRY_MAX_DELAY)
+            print(f"  ⚠ {label}: attempt {attempt}/{attempts} failed with "
+                  f"{what}. Waiting {delay:.0f}s and trying again.")
+            sleep(delay)
+            continue
+
+        if attempt > 1:
+            note = f"recovered on attempt {attempt}/{attempts}"
+            print(f"  ✓ {label}: {note} -- the transient failure cleared.")
+            _record_retries(label, note)
+        return result
+
+    # Unreachable: the loop either returns or raises.
+    raise RuntimeError(f"{label}: retry loop fell through")
+
 
 
 def was_truncated(response, label: str) -> bool:
@@ -791,7 +1003,7 @@ def run_pass4(draft_html: str, client: anthropic.Anthropic) -> str:
         "cache_control": {"type": "ephemeral"},
     })
 
-    response = client.messages.create(
+    response = retry_api_call("PASS 4", lambda: client.messages.create(
         model=MODEL_DEFAULT,
         max_tokens=MAX_TOKENS_EDITOR,
         system=system_blocks,
@@ -803,7 +1015,7 @@ def run_pass4(draft_html: str, client: anthropic.Anthropic) -> str:
                 + draft_html
             )
         }]
-    )
+    ))
 
     cache_read  = getattr(response.usage, "cache_read_input_tokens", 0)
     cache_write = getattr(response.usage, "cache_creation_input_tokens", 0)
@@ -878,7 +1090,7 @@ def run_pass6(draft_html: str, recent_output: dict, client: anthropic.Anthropic,
         print("  ⚠ no ground truth available — CHECK 8 can only source claims "
               "from the tweets in each section")
 
-    response = client.messages.create(
+    response = retry_api_call("PASS 6", lambda: client.messages.create(
         model=MODEL_DEFAULT,
         max_tokens=MAX_TOKENS_EDITOR,
         system=system_blocks,
@@ -888,7 +1100,7 @@ def run_pass6(draft_html: str, recent_output: dict, client: anthropic.Anthropic,
                 (ground_truth + "\n\n") if ground_truth else ""
             ) + f"Edit this newsletter draft and return the corrected HTML:\n\n{draft_html}"
         }]
-    )
+    ))
 
     cache_read  = getattr(response.usage, "cache_read_input_tokens", 0)
     cache_write = getattr(response.usage, "cache_creation_input_tokens", 0)

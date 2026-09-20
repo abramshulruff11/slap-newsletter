@@ -45,7 +45,7 @@ UAT = REPO / "uat" / "generate_newsletter_uat.py"
 # pinned: touch either copy and this test fails until you have looked at the
 # counterpart and deliberately re-recorded the hash.
 KNOWN_DIVERGENT = {
-    "run_pass1": dict(prod="e22669a9998d", uat="19da9bdf0a57", reason=(
+    "run_pass1": dict(prod="cbde6de6b254", uat="afcaa3c4975b", reason=(
         "Bidirectional, and the two now hold DIFFERENT video policies on "
         "purpose. Prod (2026-09-04): video tweets are tagged by fetch_content, "
         "marked for Pass 1 in the payload, and removed from the headliners by "
@@ -56,20 +56,25 @@ KNOWN_DIVERGENT = {
         "degraded mode (Nitter outage -> headline-only). Neither side is a "
         "superset, so no copy in either direction is safe. (2026-09-04: meme "
         "cooldown — the recent-slug block and the same-engine swap — was added "
-        "to BOTH copies identically.)"
+        "to BOTH copies identically. 2026-09-20 (SLA-54): the streaming call in "
+        "BOTH copies became a named function handed to retry_api_call, so a "
+        "transient failure no longer burns one of the three VALIDATION attempts "
+        "this loop exists for. Prod additionally stopped asserting that an API "
+        "error was caused by unescaped quotes — UAT never carried that text.)"
     )),
-    "run_pass2": dict(prod="bfabc3173843", uat="7db198bedbf7", reason=(
+    "run_pass2": dict(prod="67437f3363f6", uat="aad9967e6967", reason=(
         "Bidirectional. Prod carries degraded-mode wiring UAT lacks; UAT "
         "carries highlight-plan wiring prod has no Pass 1B for. (2026-09-04: "
         "the {{MEME_SELECTOR_INDEX}} substitution was added to BOTH copies "
         "identically — the meme library is now the only template list the "
         "writer sees. 2026-09-05: the bounded tool loop, MAX_TOKENS_WRITER and "
-        "the was_truncated check likewise went into both.)"
+        "the was_truncated check likewise went into both. 2026-09-20 (SLA-54): so did "
+        "retry_api_call around the per-turn call.)"
     )),
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
     )),
-    "main": dict(prod="21632f1ddb31", uat="0e25f4ba71c9", reason=(
+    "main": dict(prod="4093639cf91b", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
         "5-line stub. Expected to stay divergent permanently. (2026-09-04: prod "
         "now strips HTML comments from the published Substack file. Nothing to "
@@ -84,7 +89,9 @@ KNOWN_DIVERGENT = {
         "because the two fetch stages now record into the same file BEFORE this "
         "process starts and a reset would wipe them. Nothing to port — the sandbox "
         "has no workflow around it, records no stages, and its import-time redirect "
-        "already keeps it out of prod's status file.)"
+        "already keeps it out of prod's status file. 2026-09-20 (SLA-54): prod's "
+        "main() builds the client with max_retries=SDK_MAX_RETRIES; UAT's entry "
+        "point run_uat.py does the same at its own construction site.)"
     )),
 }
 

@@ -157,6 +157,7 @@ slap-newsletter/
 ├── runner_common.py            ← runner body shared by prod + UAT: 24 functions, models,
 │                                 PRICING, PASS_COSTS. configure(prompts_dir=) per runner
 ├── plan_audit.py               ← deterministic audits, SHARED by prod + UAT (see below)
+│   (runner_common.py also owns retry_api_call / is_transient — SLA-54)
 ├── library_studio.html         ← review/add/edit/delete BOTH libraries in a browser
 ├── library_studio.bat          ← double-click THIS to open the studio (not the .html)
 ├── library_studio_server.py    ← localhost host for the studio; PUT writes the two libraries
@@ -197,6 +198,7 @@ slap-newsletter/
 │   ├── generate_newsletter_uat.py
 │   ├── promote.py             ← diff-and-confirm prompt promotion (USE THIS, never copy by hand)
 │   ├── probe_meme_box_order.py ← renders marker captions to verify meme panel order
+│   ├── probe_retry.py         ← the API retry drill, plain-English PASS/FAIL, 0 API calls
 │   ├── tests/                 ← offline suites, 0 API calls — run before any prompt/code change
 │   │   ├── test_runner_drift.py ← fails if a change reaches one runner and not the other
 │   │   └── test_pipeline_status.py ← locks the status email + the stage list vs the workflow
@@ -427,6 +429,44 @@ draft, `verify_run.py`'s findings, a truncated pass — is in it.
   scheduled it). `email_newsletter.py --publish-alert` sends only the first kind. That rule only
   holds if the innocent cases stay genuinely silent — don't widen it.
 
+**Transient API failures are retried underneath every pass; permanent ones are not (SLA-54,
+2026-09-20).** `runner_common.retry_api_call()` wraps all seven Anthropic call sites — Pass 1, 2,
+4, 6 in production, plus Pass 1B in UAT.
+
+- **The SDK was already retrying.** `anthropic.Anthropic` defaults to `max_retries=2` and handles
+  408/409/429/5xx with backoff, honouring `retry-after`. The outer loop adds what it does not:
+  a line in the log (an SDK retry is silent, so a rate-limited run and a slow run look identical),
+  waits longer than the SDK's ~8s cap, and keeps a transport failure out of the model's
+  conversation. `max_retries` is now passed **explicitly** at both client construction sites —
+  a number the pipeline leans on should not be an SDK default that can move in a patch release.
+- **The real bug it fixed:** Pass 1's validation-retry loop caught API errors too, and appended a
+  user turn asserting the failure was "usually caused by special characters (unescaped quotes,
+  backslashes) inside string values". For a 429 that is false. It burned one of only three
+  validation attempts on a problem the model did not cause, grew the prompt each time, and
+  retried with **no backoff at all**. Pass 1's loop now retries the MODEL; `retry_api_call`
+  retries the network.
+- **What is NOT retried matters more.** 400, 401, 404, 422, a bad model string, and the SDK's own
+  client-side streaming `ValueError` all raise immediately with a line saying waiting will not
+  help. Retrying them turns a five-second red run into a several-minute one that looks like an
+  outage — which is how 2026-09-01 got misdiagnosed.
+- **Bounded:** 4 attempts, 4s → 8s → 16s, worst case 12 HTTP attempts per call including the
+  SDK's own. A genuine outage still fails today rather than hanging past the 30-minute job cap.
+- **Cost is not double-counted, and that needs no special handling.** `cost_summary()` is only
+  ever called with the usage of a response that arrived; a failed attempt returns none. The one
+  honest gap: a STREAMING call that dies mid-stream generated billed tokens the SDK gives us no
+  usage object for, so a day that retried Pass 1 slightly under-reports. An invented number
+  would be worse.
+- **Retries are visible in the morning email**, via `run_status` `api_retries` → the API RETRIES
+  section of the SLA-52 panel. A recovered retry deliberately does **not** change the verdict —
+  the run survived it — but a day that recovered from three rate limits should not look identical
+  to a day that sailed through.
+- **The drill switch.** `SLAP_SIMULATE_API_FAILURES` makes every pass fail on cue
+  (`2` / `529:1` / `timeout:3` / `fatal` / `exhaust`). It is exposed as a **`workflow_dispatch`
+  input only** — scheduled runs carry no inputs, so it is a `getenv` and a return, and
+  `test_api_retry.py` fails if anything else ever sets it. `python -X utf8 uat/probe_retry.py`
+  runs the same drill offline and prints a plain-English PASS/FAIL per behaviour; `tests.yml`
+  runs it on every push so the verdict is on the run page.
+
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
 
@@ -585,6 +625,9 @@ unstaged, which breaks `git pull --rebase`.
 - Estimated cost: ~$2-5/month.
 - Note on Opus 4.7: it follows instructions more literally than Sonnet, and its tokenizer can use
   1.0–1.35× more tokens for the same input. Budget for both when reading the cost summary.
+- **Every call is retried on transient failures** (`runner_common.retry_api_call`, SLA-54): 4
+  attempts at 4/8/16s on top of the SDK's own 2. A retried call adds no cost row — `cost_summary()`
+  only ever sees a response that arrived.
 - Pass 1 `max_tokens`: **32,768** (raised 4,096 → 8,192 → 16,384 → 32,768; silent truncation
   caused an ATL regression and truncated story plans on full slates). Raised to 32,768 with the
   beats port on 2026-09-01 — beats plus the meme/gif fields roughly double the plan, and this
@@ -725,7 +768,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (15 Python + 1 Node), 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (16 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -767,6 +810,34 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-20 — Transient API failures no longer end the day's run (SLA-54)**
+- `runner_common.retry_api_call()` wraps all seven Anthropic call sites: 4 attempts, 4/8/16s
+  backoff, transient only. `is_transient()` is built on the SDK's PUBLIC exception classes and
+  `.status_code`, never its internals — the pin is 1.2.0 but a developer's local install may not be.
+- **The SDK was already retrying twice.** The ticket's premise was half right, and saying so
+  matters: what was actually missing was visibility (an SDK retry is silent), patience (its delay
+  caps at ~8s), and keeping a transport failure out of the model's conversation.
+- **That last one was a real bug.** Pass 1's validation-retry loop caught API errors too and told
+  the model the failure was "usually caused by special characters (unescaped quotes, backslashes)
+  inside string values" — false for a 429, and it burned one of only three validation attempts,
+  grew the prompt, and retried instantly with no backoff. Fixed in BOTH runners in this commit;
+  the misleading sentence is gone from prod (UAT never carried it).
+- Non-transient failures — 400/401/404/422, a bad model string, the SDK's client-side streaming
+  `ValueError` — raise immediately with a line saying waiting will not help. Retrying those is how
+  a fast red run becomes a slow one that looks like an outage.
+- `max_retries=SDK_MAX_RETRIES` is now explicit at both client construction sites.
+- Retries reach the morning email (`api_retries` → the SLA-52 panel) but deliberately do not move
+  the verdict: the run survived them.
+- **Drill switch, per Abram's request:** `SLAP_SIMULATE_API_FAILURES` fakes 429s/529s/timeouts, a
+  fatal 400, or a permanent outage. Exposed as a `workflow_dispatch` input only, and
+  `test_api_retry.py` fails if anything else sets it. `uat/probe_retry.py` runs it offline with a
+  plain-English PASS/FAIL per behaviour and now runs in `tests.yml`.
+- `uat/tests/test_api_retry.py` — 70+ offline checks, 0 API calls, 0 seconds slept (the clock is
+  stubbed). It counts the wrapped call sites **in the source** of all three files, because two of
+  them live in `run_pass1`/`run_pass2`, which are declared divergent — exactly where a half-port
+  hides. All three `KNOWN_DIVERGENT` entries re-pinned; `run_pass1` and `run_pass2` changed in
+  both runners in this commit, as the standing rule requires.
 
 **2026-09-20 — One daily status email, always sent (SLA-52)**
 - Abram got several notifications a day and silence on the days that mattered. `verify_run.py`

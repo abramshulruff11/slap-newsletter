@@ -172,6 +172,27 @@ def _broke_html(status: dict) -> str:
     return out
 
 
+def _retries_html(status: dict) -> str:
+    """Transient API failures the run rode out (SLA-54).
+
+    Informational, and deliberately NOT part of the verdict: the whole point of
+    a retry is that the run survived it. But a day that recovered from three
+    rate limits and a day that sailed through look identical otherwise, and the
+    first one is worth knowing about before it becomes the second kind of day."""
+    retries = status.get("api_retries") or []
+    if not retries:
+        return ""
+    out = ('<div style="margin:14px 0 0 0;font-weight:bold;color:#1a1a1a;">'
+           'API RETRIES</div>')
+    for r in retries:
+        gave_up = "gave up" in str(r)
+        colour = "#b42318" if gave_up else "#5f5f5f"
+        mark = "✗" if gave_up else "↻"
+        out += (f'<div style="color:{colour};margin-top:2px;">{mark} '
+                f'{_html.escape(str(r))}</div>')
+    return out
+
+
 def _quality_html(status: dict) -> str:
     q = status.get("quality") or {}
     if not q:
@@ -213,6 +234,7 @@ def _status_block_html(status: dict, level: str, headline: str) -> str:
                  '✗ a pass returned incomplete output: '
                  + _html.escape(", ".join(str(p) for p in passes)) + '</div>')
     body += _broke_html(status)
+    body += _retries_html(status)
     body += _quality_html(status)
     body += ('<div style="margin:14px 0 0 0;font-weight:bold;color:#1a1a1a;">'
              'SUBSTACK</div>'

@@ -88,6 +88,13 @@ jobs:
             exit 1
           fi
 
+      # The retry drill, printed in full. This is the one suite whose OUTPUT is
+      # the deliverable: every line is plain English and says PASS or FAIL, so
+      # the retry behaviour can be read off the run page without reading any
+      # code. It fast-forwards the backoff clock, so it costs a second.
+      - name: Retry drill (plain-English verdict)
+        run: python -X utf8 uat/probe_retry.py
+
       # A prompt carrying a {{PLACEHOLDER}} the destination runner cannot
       # substitute would ship raw template syntax to the model. promote.py
       # already refuses such a copy; this makes the same check run on every push.

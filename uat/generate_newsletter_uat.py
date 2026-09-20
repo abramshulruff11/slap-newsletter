@@ -50,6 +50,7 @@ import runner_common
 from runner_common import (
     MODEL, MODEL_DEFAULT, MODEL_WRITER, PASS_COSTS, PRICING,
     MAX_TOKENS_WRITER, MAX_TOKENS_EDITOR, was_truncated,
+    SDK_MAX_RETRIES, retry_api_call,
     _normalize_tweet_url,
     blockquotes_to_substack_urls,
     clean_giphy_search,
@@ -479,23 +480,31 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
             # call, so it fails instantly and free. .get_final_message()
             # returns the same Message shape client.messages.create() did,
             # so every downstream .content / .usage access below is unchanged.
-            with client.messages.stream(
-                model=MODEL_PASS1,
-                max_tokens=32768,
-                system=[
-                    {
-                        "type": "text",
-                        "text": selector_prompt,
-                        "cache_control": {"type": "ephemeral"},
-                    }
-                ],
-                tools=[tool_definition],
-                tool_choice={"type": "tool", "name": "submit_story_plan"},
-                messages=messages,
-            ) as stream:
-                for _ in stream:
-                    pass
-                response = stream.get_final_message()
+            # Retried by retry_api_call: a stream that died halfway cannot be
+            # resumed, so the only correct retry is to re-enter the context
+            # manager from scratch -- which is exactly what a zero-argument
+            # callable gives it. A transient failure therefore no longer costs
+            # one of the three VALIDATION attempts this loop is really for.
+            def _call_story_selector():
+                with client.messages.stream(
+                    model=MODEL_PASS1,
+                    max_tokens=32768,
+                    system=[
+                        {
+                            "type": "text",
+                            "text": selector_prompt,
+                            "cache_control": {"type": "ephemeral"},
+                        }
+                    ],
+                    tools=[tool_definition],
+                    tool_choice={"type": "tool", "name": "submit_story_plan"},
+                    messages=messages,
+                ) as stream:
+                    for _ in stream:
+                        pass
+                    return stream.get_final_message()
+
+            response = retry_api_call("PASS 1", _call_story_selector)
         except Exception as e:
             api_error = str(e)
 
@@ -908,7 +917,7 @@ def run_pass1b(story_plan: str, video_tweets: list, client: anthropic.Anthropic)
     )
 
     try:
-        response = client.messages.create(
+        response = retry_api_call("PASS 1B", lambda: client.messages.create(
             model=MODEL_DEFAULT,
             max_tokens=4096,
             system=[{"type": "text", "text": prompt,
@@ -916,7 +925,7 @@ def run_pass1b(story_plan: str, video_tweets: list, client: anthropic.Anthropic)
             tools=[tool_definition],
             tool_choice={"type": "tool", "name": "submit_highlight_plan"},
             messages=[{"role": "user", "content": user_message}],
-        )
+        ))
     except Exception as e:
         print(f"  ✗ Pass 1B failed: {e}")
         print("    Continuing without highlights.")
@@ -1069,13 +1078,16 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
     # turns a normal run takes.
     MAX_TURNS = 8
     for _turn in range(1, MAX_TURNS + 1):
-        response = client.messages.create(
+        # Retried underneath, per turn: a transient failure on turn 3 of a
+        # tool loop is not a reason to throw away turns 1 and 2. `messages` is
+        # unchanged by a failed attempt, so re-issuing it is exact.
+        response = retry_api_call("PASS 2", lambda: client.messages.create(
             model=MODEL_WRITER,
             max_tokens=MAX_TOKENS_WRITER,
             system=system_blocks,
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=messages,
-        )
+        ))
         total_in         += response.usage.input_tokens
         total_out        += response.usage.output_tokens
         total_cache_read  += getattr(response.usage, "cache_read_input_tokens", 0)

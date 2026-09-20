@@ -18,6 +18,19 @@ on:
         description: 'Skip GIF lookup'
         type: boolean
         default: false
+      simulate_api_failures:
+        # SLA-54 drill. Makes every Claude pass fail on cue so the retry path
+        # can be watched end to end in a real run, instead of waiting for
+        # Anthropic to have a bad day. A dispatch input ONLY -- scheduled runs
+        # carry no inputs, so this resolves to empty and the hook is a getenv
+        # and a return. Locked by uat/tests/test_api_retry.py.
+        #   2       two rate limits per pass, then recover
+        #   529:1   one overload per pass
+        #   fatal   a 400 -- must NOT be retried, run should fail fast
+        #   exhaust never recovers -- run should give up, not hang
+        description: 'Retry drill: 2 | 529:1 | timeout:3 | fatal | exhaust (blank = off)'
+        type: string
+        default: ''
 
 jobs:
   generate:
@@ -102,6 +115,9 @@ jobs:
           STAGE
 
       - name: Generate newsletter
+        env:
+          # Empty on every scheduled run; only a manual dispatch can set it.
+          SLAP_SIMULATE_API_FAILURES: ${{ inputs.simulate_api_failures }}
         run: |
           FLAGS=""
           if [ "${{ inputs.skip_editor }}" = "true" ]; then

@@ -46,6 +46,7 @@ import highlight_to_gif as H                 # noqa: E402
 import meme_box_check as MB                  # noqa: E402
 import meme_library                          # noqa: E402
 import gif_library_select as GL              # noqa: E402
+from runner_common import SDK_MAX_RETRIES    # noqa: E402
 
 # ---------------------------------------------------------------------------
 # CONFIG — §1.2
@@ -281,7 +282,13 @@ def main() -> None:
         raise SystemExit("ANTHROPIC_API_KEY not set (read from repo .env)")
 
     import anthropic
-    client = anthropic.Anthropic(api_key=api_key)
+    # max_retries explicitly, not left to the SDK default. `anthropic` is
+    # pinned because an unpinned dependency changed behaviour under us once
+    # already (2026-09-01); a retry count the pipeline leans on should not be a
+    # default that can move in a patch release. These are the SDK's own FAST
+    # retries (sub-8s, honouring retry-after). runner_common.retry_api_call
+    # wraps every pass with the slow outer ones on top.
+    client = anthropic.Anthropic(api_key=api_key, max_retries=SDK_MAX_RETRIES)
 
     print("=" * 52)
     print("SLAP MEDIA MIX — UAT")
