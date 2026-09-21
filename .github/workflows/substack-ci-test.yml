@@ -22,6 +22,7 @@ on:
         options:
           - connectivity
           - table-probe
+          - text-preview
           - delete-draft
       delete_draft:
         description: 'table-probe only: delete the draft after reading it back'
@@ -64,6 +65,16 @@ jobs:
           python substack_poc/table_probe.py \
             --game-state uat/fixtures/game_state.json \
             ${{ inputs.delete_draft && '--delete' || '' }}
+
+      # SLA-17: real box scores as code_block text, for a visual check on a
+      # phone and in dark mode. The offline suite proves the character counts;
+      # only a real draft shows what Substack's renderer does with them.
+      - name: Draft box scores as text (SLA-17)
+        if: inputs.mode == 'text-preview'
+        run: |
+          python substack_poc/text_box_preview.py \
+            --game-state uat/fixtures/game_state.json \
+            --sports mlb --games 3
 
       # A draft carrying a table node crashes the Substack editor, so it cannot
       # be deleted through the UI. This removes one by id via the API.
