@@ -22,11 +22,17 @@ on:
         options:
           - connectivity
           - table-probe
+          - delete-draft
       delete_draft:
         description: 'table-probe only: delete the draft after reading it back'
         required: false
         default: false
         type: boolean
+      delete_draft_id:
+        description: 'delete-draft mode: the draft id to delete'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   test:
@@ -58,3 +64,11 @@ jobs:
           python substack_poc/table_probe.py \
             --game-state uat/fixtures/game_state.json \
             ${{ inputs.delete_draft && '--delete' || '' }}
+
+      # A draft carrying a table node crashes the Substack editor, so it cannot
+      # be deleted through the UI. This removes one by id via the API.
+      - name: Delete a draft by id
+        if: inputs.mode == 'delete-draft'
+        run: |
+          test -n "${{ inputs.delete_draft_id }}" || { echo "delete_draft_id is required"; exit 1; }
+          python substack_poc/table_probe.py --delete-id "${{ inputs.delete_draft_id }}"

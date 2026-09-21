@@ -218,6 +218,10 @@ def main() -> int:
     ap.add_argument("--title", default="[SLA-17 probe] Native table test — do not publish")
     ap.add_argument("--delete", action="store_true",
                     help="delete the draft after reading it back (default: leave it)")
+    ap.add_argument("--delete-id", type=int, default=None,
+                    help="delete this existing draft id and exit; probes nothing. "
+                         "A draft carrying a table node cannot be opened in the UI, "
+                         "so this is the only way to remove one.")
     args = ap.parse_args()
 
     cookies = os.getenv("SUBSTACK_COOKIES_STRING")
@@ -228,6 +232,22 @@ def main() -> int:
         return 2
     if not proxy:
         print("WARNING: PROXY_URL not set -- going direct (expected to fail from CI).")
+
+    # Deletion mode runs before anything else and probes nothing.
+    if args.delete_id is not None:
+        try:
+            mode = _install_session(proxy)
+            print(f"Mode: {mode}")
+            from substack import Api
+            api = Api(cookies_string=cookies, publication_url=pub)
+            print(f"Auth OK, user_id={api.get_user_id()}")
+            api.delete_draft(args.delete_id)
+            print(f"Deleted draft id={args.delete_id}")
+            return 0
+        except Exception as e:  # noqa: BLE001
+            print(f"Delete FAILED: {type(e).__name__}: {str(e)[:300]}")
+            traceback.print_exc()
+            return 1
 
     box = load_box_rows(args.game_state)
     print(f"Box score under test: {box['title']} ({len(box['rows'])} rows)")
