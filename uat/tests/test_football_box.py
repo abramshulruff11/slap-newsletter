@@ -381,6 +381,36 @@ check("Passing" in combined and "AP Top 25" in combined,
       "the combined --append block carries football box scores too")
 
 
+# ---------------------------------------------------------------------------
+# 6. NFL division standings from the season game log (SLA-45)
+# ---------------------------------------------------------------------------
+print("\n[6] NFL division standings")
+
+import nfl_standings  # noqa: E402
+
+flat = [{"team": "Buffalo Bills", "wins": "2", "losses": "0", "win_pct": "1.000",
+         "games_behind": "-", "streak": "W2"}]
+with_log = {"label": "NFL", "standings": flat,
+            "season_games": nfl_standings.mock_season(weeks=2)}
+page = bbs._football_summary_sections("nfl", with_log)
+check("AFC East" in page and "NFC West" in page and "Buffalo Bills" not in page,
+      "a season log renders the eight divisions, not ESPN's flat list")
+check(page.count("nflst-table") == 8, "one table per division")
+
+without_log = {"label": "NFL", "standings": flat, "season_games": []}
+check("Buffalo Bills" in bbs._football_summary_sections("nfl", without_log),
+      "no season log → falls back to the flat list rather than no standings")
+
+broken = {"label": "NFL", "standings": flat, "season_games": [{"completed": True,
+          "home_abbr": "BUF", "away_abbr": "NYJ", "home_score": "not a number"}]}
+check("Buffalo Bills" in bbs._football_summary_sections("nfl", broken),
+      "a malformed log degrades to the flat list instead of killing the page")
+
+cfb_log = {"label": "CFB", "rankings": [], "season_games": nfl_standings.mock_season(weeks=1)}
+check("nflst" not in bbs._football_summary_sections("ncaafb", cfb_log),
+      "the NFL component never renders for college football")
+
+
 print()
 if FAILURES:
     print(f"{len(FAILURES)} FAILURE(S):")

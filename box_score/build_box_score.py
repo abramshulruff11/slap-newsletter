@@ -1079,6 +1079,40 @@ def _football_box_label(sport_key):
     """CFB says so on the tin: the absence of the other 60 games is deliberate."""
     return "Box Scores \u2014 Ranked Matchups" if sport_key == "ncaafb" else "Box Scores"
 
+def _nfl_division_standings(sport_data):
+    """
+    NFL division standings computed from the season game log (SLA-45).
+
+    ESPN's standings payload arrives here as one flat league-wide list, so the
+    page used to show the top 16 teams by record with no divisions and half the
+    league missing. nfl_standings.py computes the eight divisions from
+    `season_games` instead, with the official tiebreakers — which, measured on
+    2026-09-18, ordered ties the way NFL.com does in divisions where ESPN's own
+    standings order did not.
+
+    Returns "" when there is no season log or the module fails, so the caller
+    falls back to the flat table rather than losing standings altogether.
+    """
+    out = ""
+    games = sport_data.get("season_games") or []
+    if games:
+        try:
+            import sys
+            root = str(SCRIPT_DIR.parent)
+            if root not in sys.path:
+                sys.path.insert(0, root)
+            import nfl_standings
+            # <style> is kept: this HTML is only ever screenshotted by Chromium,
+            # so the component's own breakpoints pick the columns for the 400px
+            # render width rather than a second hand-kept column list here.
+            out = nfl_standings.render_standings_html(
+                nfl_standings.build_standings(games))
+        except Exception as e:
+            print(f"  ⚠ NFL division standings failed ({type(e).__name__}: {e}) "
+                  f"— falling back to the flat standings list")
+            out = ""
+    return out
+
 def _football_summary_sections(sport_key, sport_data, label=None):
     """
     The football summary page: table (standings or poll) + leaders + results.
@@ -1092,6 +1126,7 @@ def _football_summary_sections(sport_key, sport_data, label=None):
     label     = label or sport_data.get("label", sport_key.upper())
 
     html = ""
+    nfl_divs = _nfl_division_standings(sport_data) if sport_key == "nfl" else ""
     if sport_key == "ncaafb":
         # Never fall back to conference standings here. _drill_for_entries()
         # returns whichever group it finds first, so a CFB "standings" list is
@@ -1100,6 +1135,8 @@ def _football_summary_sections(sport_key, sport_data, label=None):
         # every CFB page. If the poll is missing, show no table at all.
         if rankings:
             html += _mi_rule("AP Top 25") + _mi_rankings(rankings)
+    elif nfl_divs:
+        html += _mi_rule(f"{label} Standings") + nfl_divs
     elif isinstance(standings, list) and standings:
         html += _mi_rule(f"{label} Standings") + _mi_simple_standings(standings)
     ldr = _mi_leaders_half(leaders, None, _FB_LEAD)
