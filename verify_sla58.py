@@ -1,21 +1,33 @@
 #!/usr/bin/env python3
 """
-SLA-58 — the three source checks that could not run from the cloud sandbox.
+SLA-58 — the four source checks that could not run from the cloud sandbox.
+Tracked as SLA-63.
 
 Every live sports API is denied at CONNECT by that environment's egress policy,
 so NHL/CFBD/CBBD depth stayed documentation-stated in docs/sports-source-evaluation.md.
-This answers all three from a normal network. Stdlib only, no installs.
+This answers all four from a normal network. Stdlib only, no installs.
+
+  1. NHL      how far back do standings and results actually go?
+  2. CBBD     earliest season with games?  <-- can move a recommendation
+  3. CFBD     is history tier-gated, or only call volume?
+  4. CFBD     does /roster paginate by year alone, or need a team?
+              <-- decides whether the whole epic is free or needs one $5 month
 
     python3 verify_sla58.py
 
-Keys are optional but checks 2 and 3 need them (both free, ~1 min to get):
+Check 1 needs no key. Checks 2-4 do (both free, ~1 min to get):
     CFBD: https://collegefootballdata.com/key
     CBBD: https://collegebasketballdata.com/key
 
     CFBD_API_KEY=xxx CBBD_API_KEY=yyy python3 verify_sla58.py
 
 Note: CFBD and CBBD share one monthly call pool per key. This script spends
-about 12 calls against it.
+about 13 calls against a free-tier pool of 1,000.
+
+Transport failures are reported LOUDLY (a "!" line plus HTTP 0) rather than
+returning an empty result. That distinction matters: every source evaluated
+here fails silently, so a check that cannot tell "no data" from "blocked"
+would answer the CBBD depth question wrong, and confidently.
 """
 
 import json
