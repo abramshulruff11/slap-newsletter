@@ -27,10 +27,26 @@ each preceded by a marker paragraph so it can be located in the read-back:
 
 What it reports
 ---------------
-For each candidate: SURVIVED (node type present in the read-back), STRIPPED
-(gone), or MUTATED (came back as something else). Exit code is 0 whenever the
-probe itself ran -- a stripped table is a valid, informative result, not a
-failure of the script.
+For each candidate: STORED (node type present in the read-back) or STRIPPED
+(gone). Exit code is 0 whenever the probe itself ran.
+
+!! READ-BACK IS NOT A TEST OF SUPPORT. Answered 2026-09-19, the hard way. !!
+
+This probe was run and reported STORED for every candidate -- including BOTH
+`table_row`/`table_cell` AND `tableRow`/`tableCell` at once, which no single
+ProseMirror schema can accept. That was the tell: Substack stores `draft_body`
+as an opaque blob and does not validate it on save, so a read-back returns
+whatever you sent and can never distinguish a supported node from a fatal one.
+
+Opening the resulting draft in the Substack editor showed a BLANK page and
+"Something has gone wrong. Please refresh the page and try again." The unknown
+`table` node crashes the editor on load. Substack has no table support; the
+draft is not merely unrendered, it is unopenable.
+
+So: STORED means "the server accepted the bytes", nothing more. The only real
+test is opening the draft in a browser. Keep that in mind before reading a
+green-looking result off this script -- it is the same trap as the 2026-09-01
+GIF placeholders, which persisted perfectly and rendered as empty divs.
 
 The draft is left in place on purpose so it can be opened and looked at. It is
 never published. Delete it by hand, or re-run with --delete.
@@ -277,22 +293,26 @@ def main() -> int:
             n_sent = sent_types.get(expected, 0)
             n_got = got_types.get(expected, 0)
             if n_got >= n_sent and n_sent > 0:
-                verdict = "SURVIVED"
+                verdict = "STORED"
             elif n_got == 0:
                 verdict = "STRIPPED"
             else:
                 verdict = f"PARTIAL ({n_got}/{n_sent})"
             print(f"  {verdict:<9} {label}  [{expected}]")
 
-        table_ok = got_types.get("table", 0) > 0
+        # A schema that accepts BOTH naming conventions is not validating at all.
+        both_conventions = got_types.get("table_row", 0) and got_types.get("tableRow", 0)
         print("\n" + "-" * 62)
-        if table_ok:
-            print("Substack KEPT a table node. Native tables are worth pursuing;")
-            print("open the draft and check how it renders on mobile and in dark mode.")
-        else:
-            print("Substack STRIPPED the table node. Native tables are not available,")
-            print("as the editor docs and the library both suggested. Decide between")
-            print("Datawrapper embeds and structured text blocks (see SLA-17).")
+        print("STORED != SUPPORTED. draft_body is an opaque blob; the server")
+        print("returns whatever you sent. This says nothing about rendering.")
+        if both_conventions:
+            print("\nBoth snake_case and camelCase tables came back, which no single")
+            print("ProseMirror schema can accept -- confirming there is no server-side")
+            print("validation here at all.")
+        print("\nKnown answer (2026-09-19): opening such a draft in the Substack")
+        print("editor gives a BLANK page and 'Something has gone wrong'. The table")
+        print("node crashes the editor. Substack has no table support.")
+        print("\nThe only valid test is opening the draft in a browser.")
         print("-" * 62)
 
         pub_base = pub.rstrip("/")
