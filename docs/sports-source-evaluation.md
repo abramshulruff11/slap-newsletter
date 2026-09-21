@@ -49,7 +49,7 @@ be probed, its row says "documented, unverified".
 
 The fetch service is blocked for the same hosts, so there is no second route
 and no indirect one. The four checks this leaves open are tracked in §6 with
-a runnable script attached to the ticket.
+`verify_sla58.py` in the repo root.
 
 That limitation is itself a finding, not just an inconvenience — see §5.2.
 
@@ -750,9 +750,13 @@ was silent — a 404, a hang, or a hollow file.
 Both routes out of the cloud sandbox are closed by egress policy — direct
 `curl` and the fetch service alike return 403 at CONNECT for every live
 sports API, and GitHub release assets are allowlisted to nflverse only, so
-there is no indirect route either. These three therefore remain open. A
-stdlib-only script that answers all four in about 13 API calls is attached
-to the SLA-58 ticket; it needs a normal network and two free keys.
+there is no indirect route either. These four therefore remain open.
+
+**`verify_sla58.py`, in the repo root**, is a stdlib-only script that answers
+all four in about 13 API calls. It needs a normal network and two free keys
+(CFBD and CBBD). It lives in the repo rather than as a chat attachment
+precisely so it is findable from this doc and from SLA-63 — an earlier draft
+said "attached to the ticket", which it never was.
 
 | # | Check | Status | If it comes back badly |
 |---|---|---|---|
