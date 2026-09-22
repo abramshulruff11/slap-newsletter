@@ -48,8 +48,9 @@ fetched in the same batch returns 200. So a probe of, say,
 be probed, its row says "documented, unverified".
 
 The fetch service is blocked for the same hosts, so there is no second route
-and no indirect one. The four checks this leaves open are tracked in §6 with
-`verify_sla58.py` in the repo root.
+and no indirect one. The four checks this left open were run from a normal
+network on **2026-09-22** (SLA-63) and are now **measured** — §6 records the
+answers. Two of them came back deeper than this doc had assumed.
 
 That limitation is itself a finding, not just an inconvenience — see §5.2.
 
@@ -264,14 +265,18 @@ be the backfill source. ESPN remains the incumbent for box score images.
 Retrosheet's licence is the most permissive of any source evaluated, and its
 attribution string must be carried into anything published.
 
-### 2.3 NHL — **official API primary; deep history needs a second source**
+### 2.3 NHL — **official API primary; history reaches 1917-18**
 
 `api-web.nhle.com` and `api.nhle.com/stats/rest` replaced the retired
 `statsapi.web.nhl.com`. No key, no registration, documented by the community
 (`Zmalski/NHL-API-Reference`, `dword4/nhlapi`). Season-parameterised
-(`20242025`), so results and standings can be walked back by season —
-**how far back is documented but unverified**, and is the single check to run
-first (§6).
+(`20242025`), so results and standings can be walked back by season.
+**Measured 2026-09-22 (check 1, §6): back to 1917-18, the first season the
+NHL played.** `standings-season` enumerates 109 seasons and every one probed
+returns a populated table with era-correct team counts — 4 in 1917-18, 6
+through the Original Six years, 14 after the 1970 expansion — while
+`club-schedule-season` returns games carrying scores at every era sampled
+(1917-18, 1927-28, 1967-68, 1987-88, 2023-24).
 
 `hockeyR-data` (`danmorse314/hockeyR-data`) publishes scraped PBP nightly but
 only back to **2010-11**, because the NHL's JSON source has no detailed PBP
@@ -279,10 +284,17 @@ before that. It fails R3 badly and is PBP-only — which nothing in SLAP needs
 for hockey (R11 is NFL-only). Not recommended.
 
 **Recommendation.** NHL official API primary. Its licensing posture is
-unstated, which is a risk of the same shape as ESPN's (§5.3). If the season
-walk-back proves shallow, the fallback for champions and season records is a
-small curated table — the Stanley Cup has ~107 winners, which is a
-one-afternoon CSV, not an integration.
+unstated, which is a risk of the same shape as ESPN's (§5.3). **The curated
+champions table is no longer needed as a depth fallback** — the API carries
+the full history itself. A ~107-row Stanley Cup table is still worth having
+as an R2 convenience and as insurance against that licensing risk, but it is
+now optional rather than a gap-filler.
+
+⚠ **A probe gotcha worth keeping.** `standings/{year}-04-01` returns an empty
+table for early seasons — not because the data is missing but because those
+regular seasons ended in March, so April 1 falls between seasons. Probe an
+in-season date instead; `02-01` is safe in every era. `verify_sla58.py` had
+exactly this bug and reported 1917-18 as "listed but not populated".
 
 ### 2.4 NBA — **viable, but the IP-blocking risk is the real story**
 
@@ -356,20 +368,29 @@ substitutions, team/player stats, lineups, ratings, rankings, betting,
 recruiting, transfer portal, NBA draft. Free Bearer-token key. Wrapped by
 `hoopR`'s `cbbd_*()` functions (full v1 surface) and `cbbreadr`.
 
-**Historical depth is documented but unverified**, and unlike CFB I found no
-statement anywhere of how far back games go — not on the site, not in the
-wrappers, not in the maintainer's posts. That is the largest remaining
-unknown in this evaluation and it is check 2 in §6. Alternatives:
-`hoopR-mbb-data` (ESPN-derived, 2002+), Bart Torvik (2008+, advanced
-metrics), KenPom (paid).
+**Historical depth is now measured (check 2, §6, 2026-09-22): games reach
+back to 1949**, and are substantial from 1950 — 22 games in 1949, 1,261 in
+1950, 2,822 in 1980. 1946 through 1948 return empty, so 1949 is a real floor
+and not a sampling artifact. No public source states any of this — not the
+site, not the wrappers, not the maintainer's posts — which is why it had to
+be probed. Alternatives, now clearly worse: `hoopR-mbb-data` (ESPN-derived,
+2002+), Bart Torvik (2008+, advanced metrics), KenPom (paid).
 
-**Recommendation.** CBBD primary — **conditional on that check**. If games
-reach back to the early 2000s, NCAAMB is a Tier A sport. If coverage starts
-around 2013 (as several commercial NCAAMB feeds do), CBBD fails rubric R3 the
-same way `hoopR-mbb-data` does, and NCAAMB either needs a deeper source or
-gets consciously scoped to the modern era. **Note the shared CFBD/CBBD call
-pool (§2.5)** — this is one key and one budget across both college sports,
-not two.
+⚠ **`/games` caps each response at 3,000 rows.** Every season from 1990
+onward returned exactly 3000 — a cap, not a count, which 1950's 1,261 and
+1980's 2,822 give away by coming in under it. Taking 3000 as a game count
+would understate modern seasons and overstate early ones. Both
+`startDateRange`/`endDateRange` and `conference` chunk under the cap
+(January 2024 alone = 1,350 games; SEC 2024 = 342), so a full modern season
+needs roughly six monthly calls — see §7.1 for what that does to the quota.
+The cap is CBBD-specific: CFBD returned 3,745 games for 2025 in one call.
+
+**Recommendation.** CBBD primary — **and the condition is now satisfied**.
+Games reach 1949, far deeper than the ~2013 floor that would have dropped
+NCAAMB out of Tier A, so it stays a launch sport on measured rather than
+assumed depth. **Note the shared CFBD/CBBD call pool (§2.5)** — one key and
+one budget across both college sports, not two — and note that the 3,000-row
+cap above makes NCAAMB's share of that budget larger than first estimated.
 
 ### 2.7 Men's tennis — **OUT AT LAUNCH.** Right data, wrong licence
 
@@ -693,7 +714,7 @@ critical path.
 
 | Tier | Sports | Why |
 |---|---|---|
-| **A — launch** | NFL, MLB, NHL, NCAAF, **NCAAMB** | Purpose-built or official sources, workable licences, team-shaped. MLB is the deepest and the right one to design the schema against. NCAAMB promoted from B: under the revised rubric its unverified depth no longer moves the tier, since even a modern-era floor serves the basics |
+| **A — launch** | NFL, MLB, NHL, NCAAF, **NCAAMB** | Purpose-built or official sources, workable licences, team-shaped. MLB is the deepest and the right one to design the schema against. NCAAMB promoted from B, and its depth is now measured rather than assumed — CBBD games reach 1949 (§2.6), well clear of the modern-era floor that was the worry |
 | **B — fast follow** | NBA | The only Tier B sport, and for an operational reason rather than a data one: the datacenter IP block is real engineering. hoopR 2002+ is available immediately with no proxy, so B here means "starts simple, deepens later" |
 | **Out at launch** | Men's tennis, men's golf | Not team sports. Both also fit the schema badly — player-and-event shaped, no standings, no seasons in the league sense |
 
@@ -736,37 +757,50 @@ was silent — a 404, a hang, or a hollow file.
    launch sport) and the **MLB Stats API** (non-bulk). It remains the one
    answer I cannot derive from the codebase.
 2. **Budget for a CFBD/CBBD paid tier during the backfill month?**
-   **$1/mo** buys 5,000 calls and $5 buys 30,000 — cheaper than first
-   estimated, and it removes the quota problem outright. Remember it is
-   **one shared pool across both college sports** (§2.5), and NCAAMB is now
-   a launch sport, so both draw on it at once.
+   **Now optional rather than necessary.** Check 4 resolved rosters to
+   year-only pagination, so the backfill fits the free tier (§7.1) — but the
+   estimate lands near ~800 of 1,000 calls once CBBD's 3,000-row cap is
+   accounted for, which is thin headroom for retries. **$1/mo** buys 5,000
+   calls and $5 buys 30,000; either removes the risk outright. The $0
+   alternative is to split the backfill across two calendar months. Remember
+   it is **one shared pool across both college sports** (§2.5).
 3. **Do we want the curated champions tables?** They are the cheap answer to
    R2 in four places — pre-1999 NFL (~106 rows), NHL (~107), and tennis/golf
    majors (~600) even though those sports are out. A day's work total, and it
    closes the last mission-critical gap in the set.
 
-### The outstanding checks
+### The four checks — all closed 2026-09-22
 
-Both routes out of the cloud sandbox are closed by egress policy — direct
-`curl` and the fetch service alike return 403 at CONNECT for every live
-sports API, and GitHub release assets are allowlisted to nflverse only, so
-there is no indirect route either. These four therefore remain open.
+These stayed open because both routes out of the cloud sandbox are closed by
+egress policy — direct `curl` and the fetch service alike return 403 at
+CONNECT for every live sports API, and GitHub release assets are allowlisted
+to nflverse only, so there was no indirect route either. **They were run from
+a normal network on 2026-09-22 (SLA-63), and all four are answered.**
 
-**`verify_sla58.py`, in the repo root**, is a stdlib-only script that answers
-all four in about 13 API calls. It needs a normal network and two free keys
-(CFBD and CBBD). It lives in the repo rather than as a chat attachment
-precisely so it is findable from this doc and from SLA-63 — an earlier draft
-said "attached to the ticket", which it never was.
+**`verify_sla58.py`, in the repo root**, is the stdlib-only script that
+answers them — about 13 API calls, plus follow-up probes where its own ladder
+was too coarse. It needs a free CFBD/CBBD key, and **one key serves both
+APIs**: confirmed by sending the CFBD key to CBBD and getting 200 rather than
+401. Total spend for the whole exercise was ~33 calls of the 1,000.
 
-| # | Check | Status | If it comes back badly |
+Two of the script's checks were themselves wrong, and are fixed in the same
+commit as this update: check 1 probed standings at an out-of-season date, and
+check 2's ladder floored at 2003 while reporting a capped 3,000 as a game
+count. **Both errors pointed the same direction — toward concluding a source
+was shallower than it is** — which is the failure mode §0 warns about, this
+time inside the verification tool rather than the documentation.
+
+| # | Check | Answer | Consequence |
 |---|---|---|---|
-| 1 | NHL: how far back do standings and results actually go? | **open** | Fall back to a curated champions table (~107 rows). Does not change the primary recommendation |
-| 2 | CBBD: earliest season with games? | **open — the one that can move a recommendation** | NCAAMB drops from Tier A to modern-era-only, or needs a deeper source |
-| 3 | CFBD: is history tier-gated, or only call volume? | **largely closed** — published tiers differ on volume only, no year gating documented; unconfirmed against the API | Take the $1 tier and re-scope the backfill |
-| 4 | **CFBD `/roster`: year-only or per-team?** | **open — decides whether the epic is free at all** (§7.1) | Per-team means ~3,250 calls and one $5 month. Year-only means $0 throughout |
+| 1 | NHL: how far back do standings and results actually go? | **1917-18 — the full history.** 109 seasons enumerated and populated, era-correct team counts, scores at every era sampled | Curated champions table demoted from depth fallback to optional (§2.3) |
+| 2 | CBBD: earliest season with games? | **1949**, substantial from 1950. Nowhere near the ~2013 floor that was feared | **NCAAMB stays Tier A on measured depth** (§2.6, §5.4). Separately exposed a 3,000-row response cap that changes the quota math (§7.1) |
+| 3 | CFBD: is history tier-gated, or only call volume? | **Volume only.** `year=1869` returns games on the free tier — the first season ever played | No re-scoping needed; §2.5 stands as written |
+| 4 | **CFBD `/roster`: year-only or per-team?** | **Year-only.** 22,843 players across 308 teams in a single call | **The epic is free** — no $5 month, no major-conference-only compromise (§7.1) |
 
-Check 2 is the one worth running before SLA-5 locks, because it is the only
-one whose answer changes a sport's tier.
+Check 2 was the one that mattered before SLA-5 locks, because it was the only
+one whose answer could change a sport's tier. It came back deep, so **no tier
+moves and SLA-5 can lock its schema against the six launch sports as
+written.**
 
 ---
 
@@ -790,16 +824,35 @@ over commercial feeds in §2.
 | Storage (~300 MB, §7.2) | **$0** | Fits every free tier by an order of magnitude |
 | GitHub Actions, public repo | **$0** | Unlimited minutes |
 
-**Does the college backfill fit in 1,000 calls?** For the data that matters,
-yes. `/games?year=YYYY` takes `team` as *optional*, so one call returns a full
-season: ~158 NFL-equivalent seasons × 2 season types ≈ **316 calls for all of
-CFB history**, plus ~25 for CBBD. Under a third of the free monthly quota.
+**Does the college backfill fit in 1,000 calls? Yes — with less headroom
+than first estimated.** `/games?year=YYYY` takes `team` as *optional*, so one
+call returns a full season: ~158 NFL-equivalent seasons × 2 season types ≈
+**316 calls for all of CFB history**.
 
-**The variable is rosters.** If CFBD's roster endpoint also paginates by year
-alone, college rosters are free too. If it requires a team, it becomes
-~130 teams × 25 years ≈ **3,250 calls** and needs one paid month. *This is
-the single unknown that decides whether the whole epic is free* — worth
-resolving in the same pass as the §6 checks.
+**Rosters are resolved, and free (check 4, §6).** `/roster?year=2024` with no
+team returned **22,843 players across 308 teams in one call**, so it
+paginates by year exactly as `/games` does: ~25 calls for 25 years, not the
+~3,250 the per-team case would have cost. **The $5 month is not needed**, and
+neither is the major-conferences-only fallback SLA-63 had lined up.
+
+**The new variable is CBBD's 3,000-row response cap (§2.6).** A modern NCAAMB
+season exceeds it, so seasons must be chunked — roughly six monthly calls
+each. Across ~77 seasons (1949-2026) that is **~460 calls**, against the ~25
+this doc previously assumed for CBBD.
+
+| Line item | Calls |
+|---|---|
+| CFB games, all history | ~316 |
+| CFB rosters, 25 years | ~25 |
+| NCAAMB games 1949-2026, chunked under the cap | ~460 |
+| **Total, against a shared 1,000/mo pool** | **~800** |
+
+That fits, but at ~80% of the pool it leaves little room for a retry or a
+mistake. Two ways to de-risk, both acceptable: split the backfill across two
+calendar months at $0, or spend $1 for 5,000 calls. **The ~460 figure is an
+extrapolation from one measured month** (January 2024 = 1,350 games), not a
+measurement — worth confirming against two or three real seasons before
+committing to the single-month plan.
 
 ### 7.2 Measured sizing
 
