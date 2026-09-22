@@ -866,11 +866,16 @@ for …") omitted.
     marker" step (continue-on-error, `if: always()`, declared in `PIPELINE_STAGES` like every
     other stage) commits the marker right after the send, mirroring the Substack handoff commit.
   - `substack_poc/publish.py --draft --rerun-safe` checks `--state-out`'s existing handoff before
-    creating anything: a still-open draft from *today* gets updated in place via `put_draft`
-    (`_find_reusable_draft()`) instead of `post_draft`-ing a second one. Every case that ISN'T a
-    safe reuse — no handoff, a stale (not-today) handoff, a draft that 404s (deleted), or one
-    that's already published — falls through to the ordinary fresh-draft path unchanged, so it
-    never risks overwriting a live post.
+    creating anything (`_rerun_safe_draft_plan()`, three outcomes): a still-open draft from
+    *today* gets updated in place via `put_draft` instead of `post_draft`-ing a second one; no
+    valid same-day handoff (missing, unreadable, stale, or the draft it names 404s) falls through
+    to the ordinary fresh-draft path, unchanged; and — the one that isn't a copy of the original
+    bug's shape — a draft that's **already published, or already carries its own Substack
+    schedule**, creates NOTHING at all rather than falling through to a fresh draft. The first cut
+    of this fix did fall through in that case, which is worse than the original bug: the new
+    draft is unpublished, so the handoff would point at it and either "Publish late" later in the
+    same run or the noon job would auto-publish it — a second LIVE post, not just an orphaned
+    draft. Caught in review before this shipped, not after.
 - `uat/tests/test_rerun_safe.py` — offline, no network/Substack/SMTP: locks the draft-reuse
   decision table, the marker's cross-run skip behavior (and that it's ignored without the flag),
   and that the workflow's new input/flags/stage stay wired together.

@@ -67,7 +67,7 @@ def check_true(label, got):
 
 # ===========================================================================
 print("=" * 72)
-print("SUBSTACK DRAFT REUSE — _find_reusable_draft")
+print("SUBSTACK DRAFT REUSE — _rerun_safe_draft_plan")
 print("=" * 72)
 
 
@@ -105,31 +105,40 @@ def state_file(payload) -> str:
 today = P.today_et()
 
 api = FakeApi({111: {"is_published": False}})
-check("a valid, unpublished, TODAY draft is reused",
-      P._find_reusable_draft(api, state_file({"date": today, "draft_id": 111})),
-      111)
+check("a valid, unpublished, TODAY draft is REUSED",
+      P._rerun_safe_draft_plan(api, state_file({"date": today, "draft_id": 111})),
+      ("reuse", 111))
 
 api = FakeApi({111: {"is_published": False}})
 check("a STALE (yesterday's) handoff is never reused",
-      P._find_reusable_draft(api, state_file({"date": "2020-01-01", "draft_id": 111})),
-      None)
+      P._rerun_safe_draft_plan(api, state_file({"date": "2020-01-01", "draft_id": 111})),
+      ("create", None))
 
 api = FakeApi({})
 check("a draft that 404s (deleted) falls through to a fresh one",
-      P._find_reusable_draft(api, state_file({"date": today, "draft_id": 111})),
-      None)
+      P._rerun_safe_draft_plan(api, state_file({"date": today, "draft_id": 111})),
+      ("create", None))
 
+# The bug the first version of this fix had: falling through to "create" here
+# would leave the handoff pointing at a brand-new UNPUBLISHED draft, which the
+# "Publish late" step or the noon job would then auto-publish -- a second LIVE
+# post, worse than the orphaned-draft bug this flag exists to fix.
 api = FakeApi({111: {"is_published": True}})
-check("an ALREADY-PUBLISHED draft is never touched -- fresh draft instead",
-      P._find_reusable_draft(api, state_file({"date": today, "draft_id": 111})),
-      None)
+check("an ALREADY-PUBLISHED draft is SKIPPED -- nothing created at all",
+      P._rerun_safe_draft_plan(api, state_file({"date": today, "draft_id": 111})),
+      ("skip", 111))
+
+api = FakeApi({111: {"is_published": False, "postSchedules": [{"id": "x"}]}})
+check("a draft Abram SCHEDULED himself is SKIPPED too -- not touched",
+      P._rerun_safe_draft_plan(api, state_file({"date": today, "draft_id": 111})),
+      ("skip", 111))
 
 api = FakeApi({111: {"is_published": False}})
 check("no draft_id in the handoff falls through",
-      P._find_reusable_draft(api, state_file({"date": today})), None)
+      P._rerun_safe_draft_plan(api, state_file({"date": today})), ("create", None))
 
 check("a missing handoff file falls through",
-      P._find_reusable_draft(FakeApi(), "/no/such/file.json"), None)
+      P._rerun_safe_draft_plan(FakeApi(), "/no/such/file.json"), ("create", None))
 
 
 def _write_garbage() -> str:
@@ -141,7 +150,55 @@ def _write_garbage() -> str:
 
 
 check("an unreadable (corrupt) handoff file falls through",
-      P._find_reusable_draft(FakeApi(), _write_garbage()), None)
+      P._rerun_safe_draft_plan(FakeApi(), _write_garbage()), ("create", None))
+
+
+work = tempfile.TemporaryDirectory()
+WORK = Path(work.name)
+
+# ===========================================================================
+print()
+print("=" * 72)
+print("main() WIRING — the skip path must touch nothing (not even hydrate/upload)")
+print("=" * 72)
+
+
+class SkipApi(FakeApi):
+    def get_user_id(self):
+        return 42
+
+
+calls = {"hydrate": 0, "upload": 0}
+skip_api = SkipApi({111: {"is_published": True}})
+
+_orig_make_api = P.make_api
+_orig_hydrate = P.hydrate_tweets
+_orig_upload = P.upload_box_scores
+P.make_api = lambda: skip_api
+P.hydrate_tweets = lambda blocks, api=None: (calls.__setitem__("hydrate", calls["hydrate"] + 1) or {})
+P.upload_box_scores = lambda api, box_dir: (calls.__setitem__("upload", calls["upload"] + 1) or ([], {}))
+
+html_path = WORK / "newsletter_substack.html"
+html_path.write_text("<html><body><h1>x</h1></body></html>", encoding="utf-8")
+state_path = WORK / "state.json"
+state_path.write_text(json.dumps({"date": today, "draft_id": 111, "title": "SLAP"}),
+                      encoding="utf-8")
+
+_old_argv = sys.argv
+sys.argv = ["publish.py", str(html_path), "--draft", "--rerun-safe",
+           "--state-out", str(state_path)]
+try:
+    P.main()
+finally:
+    sys.argv = _old_argv
+    P.make_api = _orig_make_api
+    P.hydrate_tweets = _orig_hydrate
+    P.upload_box_scores = _orig_upload
+
+check("an already-published today's draft: no post_draft, no put_draft call",
+      (skip_api.post_calls, skip_api.put_calls), ([], []))
+check("...and tweet hydration / box score upload never even ran",
+      (calls["hydrate"], calls["upload"]), (0, 0))
 
 
 # ===========================================================================
@@ -150,8 +207,6 @@ print("=" * 72)
 print("EMAIL SKIP — email_sent_state.json across separate runs")
 print("=" * 72)
 
-work = tempfile.TemporaryDirectory()
-WORK = Path(work.name)
 EN.EMAIL_SENT_MARKER = WORK / "email_sent_state.json"
 
 check("no marker at all -- nothing to report", EN.already_sent_today(), None)

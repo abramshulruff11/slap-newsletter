@@ -594,37 +594,50 @@ def publish_existing(args) -> None:
                  emailed_subscribers=send)
 
 
-def _find_reusable_draft(api, state_path: str) -> Optional[int]:
-    """SLA-55, --rerun-safe: the id of today's still-open draft, if this run is
-    a rerun of an earlier attempt from the same ET day, so it can be updated in
-    place instead of minting a second draft that orphans the first. Returns
-    None (create a fresh draft, same as the non-rerun path) for every case that
-    ISN'T a safe reuse: no handoff, a stale (not-today) handoff, a draft that
-    was deleted, or one that already published -- overwriting a live post is
-    not this flag's job."""
+def _rerun_safe_draft_plan(api, state_path: str) -> tuple[str, Optional[int]]:
+    """SLA-55, --rerun-safe: what to do about today's Substack draft on a rerun.
+
+    Returns (action, draft_id):
+      "reuse"  -- today's draft is still open; update it in place (PUT) instead
+                  of minting a second one that orphans the first.
+      "skip"   -- today's draft is ALREADY PUBLISHED, or has a Substack
+                  schedule of its own (mirrors the two "leave it alone"
+                  cases in publish_existing() -- both mean Abram already
+                  acted on it himself). Create nothing. Falling through to a
+                  fresh draft here would be worse than the bug this flag
+                  exists to fix: that new draft is unpublished, so
+                  write_state() would point the handoff at it, and either the
+                  "Publish late" step later in this same run or the noon
+                  publish-substack.yml job would auto-publish it -- a SECOND
+                  LIVE post, not just an orphaned draft.
+      "create" -- no valid same-day handoff (missing, unreadable, stale, or the
+                  draft it names was deleted) -- proceed exactly like the
+                  non-rerun path."""
     try:
         with open(state_path, encoding="utf-8") as f:
             state = json.load(f)
     except (OSError, json.JSONDecodeError):
-        return None
+        return "create", None
     if state.get("date") != today_et():
-        return None
+        return "create", None
     draft_id = state.get("draft_id")
     if not draft_id:
-        return None
+        return "create", None
     try:
         draft = api.get_draft(draft_id)
     except Exception as e:  # noqa: BLE001 -- 404 means it was deleted; make a fresh one
         if _looks_like_not_found(e):
             print(f"[rerun-safe] Today's handoff draft {draft_id} no longer exists -- creating a fresh one.")
-            return None
+            return "create", None
         raise
     if draft.get("is_published"):
-        print(f"[rerun-safe] Today's draft {draft_id} is already published -- "
-              f"creating a fresh draft rather than overwriting a live post.")
-        return None
+        print(f"[rerun-safe] Today's draft {draft_id} is already published -- nothing to do.")
+        return "skip", draft_id
+    if draft.get("postSchedules"):
+        print(f"[rerun-safe] Today's draft {draft_id} already has a Substack schedule -- leaving it alone.")
+        return "skip", draft_id
     print(f"[rerun-safe] Reusing today's existing draft {draft_id} instead of creating a new one.")
-    return draft_id
+    return "reuse", draft_id
 
 
 def main() -> None:
@@ -661,8 +674,10 @@ def main() -> None:
                          "here (read by email_newsletter.py --publish-alert)")
     ap.add_argument("--rerun-safe", action="store_true",
                     help="SLA-55: with --draft, if --state-out already names a draft "
-                         "created earlier today and it's not yet published, update it "
-                         "in place instead of creating a second, orphaned draft")
+                         "created earlier today: update it in place if still open "
+                         "(instead of creating a second, orphaned draft), or create "
+                         "nothing if it already published (instead of risking a "
+                         "second LIVE post)")
     send = ap.add_mutually_exclusive_group()
     send.add_argument("--send", dest="send_email", action="store_true", default=None,
                       help="email subscribers when publishing (default: web-only, or env SUBSTACK_SEND_EMAIL)")
@@ -721,9 +736,14 @@ def main() -> None:
     user_id = api.get_user_id()
     print(f"Authenticated as user_id={user_id}")
 
-    reuse_draft_id = None
+    draft_action, reuse_draft_id = "create", None
     if args.draft and args.rerun_safe and args.state_out and os.path.exists(args.state_out):
-        reuse_draft_id = _find_reusable_draft(api, args.state_out)
+        draft_action, reuse_draft_id = _rerun_safe_draft_plan(api, args.state_out)
+    if draft_action == "skip":
+        # Today's issue is already live. Stop here -- no tweet hydration, no
+        # box score upload, no draft of any kind. The existing handoff already
+        # points at the published post, so it's left alone.
+        return
 
     tweet_attrs = hydrate_tweets(blocks, api=api)
 
@@ -737,7 +757,7 @@ def main() -> None:
 
     post = build_post(blocks, title, args.subtitle, user_id=user_id,
                       tweet_attrs=tweet_attrs, box_score_images=box_images)
-    if reuse_draft_id:
+    if draft_action == "reuse":
         draft = api.put_draft(reuse_draft_id, **post.get_draft())
         draft_id = draft.get("id") or reuse_draft_id
         print(f"Updated draft id={draft_id}")
