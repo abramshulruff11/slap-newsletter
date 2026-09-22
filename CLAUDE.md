@@ -467,6 +467,36 @@ draft, `verify_run.py`'s findings, a truncated pass — is in it.
   runs the same drill offline and prints a plain-English PASS/FAIL per behaviour; `tests.yml`
   runs it on every push so the verdict is on the run page.
 
+**A Substack image that never uploads is a DELIVERY failure, not a warning (SLA-68,
+2026-09-21).** `upload_box_scores()` returns `(items, report)` where report is
+`{expected, uploaded, failed[], seconds}`, records it to `run_status` under `substack_images`,
+and every reporter reads it from there.
+
+- **It used to return only its successes**, so a partial upload was literally
+  indistinguishable from a complete one — there was no number to compare against.
+  `verify_run.py` counted the PNGs on *disk*, saw them all, and was satisfied. On 2026-09-21
+  three of thirteen images never reached Substack and the run reported SUCCESS.
+- **A shortfall makes the run PARTIAL**, and that is a deliberate exception to "warnings do not
+  downgrade the verdict". A thin issue (memes under their floor) fires most days and must not
+  move the headline. This is different: content that was successfully produced failed to reach
+  the published issue, and it is rare — 0 failures on 09-20, 3 on 09-21. Rare plus real is what
+  the top line is for. `verify_run.py` still only *warns*, because the issue is shippable.
+- **The emailed copy is unaffected** and the panel says so — `email_newsletter.py` embeds the
+  PNGs from disk via `cid:`, independently of Substack. Only the published post loses them.
+- **Two time bounds, with different jobs.** `MAX_RETRY_SECONDS = 180` caps time spent on second
+  and third tries. `MAX_UPLOAD_SECONDS = 600` is a hard stop for the catastrophe where even
+  first attempts are all timing out. **Every image always gets its first attempt**, regardless
+  of budget — an image never tried is an image guaranteed missing, and on a big slate most of
+  them would have worked. (The first cut of this gated first attempts too; the new test caught
+  it by modelling 13 slow-but-healthy uploads, which silently lost the last three.)
+  Worst case is now ~10.5 min against a 30-minute job cap and a ~13.5-minute base run; before,
+  it was `attempts x timeout x images` with nothing stopping it, and 2026-09-21 finished at
+  **24m48s** with only three failures.
+- **This does NOT reuse `runner_common.retry_api_call`.** That helper imports `anthropic`,
+  classifies HTTP statuses against Anthropic's semantics, and records into `api_retries` — using
+  it here would put Substack retries in the Pass-retry report. `substack_poc/` is also runnable
+  standalone against an archived issue, so its `run_status` import is wrapped and optional.
+
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
 
@@ -768,7 +798,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (16 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (17 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -810,6 +840,32 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-21 — A Substack image that never uploads is no longer silent (SLA-68)**
+- The 2026-09-21 run shipped a Substack post missing **3 of 13 box score images** and reported
+  **PIPELINE SUCCESS**. `upload_box_scores()` returned only its successes, so nothing downstream
+  had a number to compare against, and `verify_run.py` counted the PNGs on disk rather than the
+  ones that arrived. Found while grooming SLA-56/57, not during a fix.
+- It now returns `(items, report)` and records `substack_images` to `run_status`. A shortfall
+  makes the verdict **PARTIAL**, shows a SUBSTACK IMAGES section in the daily email naming the
+  files, and warns in `verify_run.py`. The panel also says the emailed copy is unaffected,
+  because it is — the email embeds from disk.
+- **The time bound was the more urgent half.** 4 attempts x a 30s curl timeout plus backoff is
+  ~132s per hard failure, so three failures cost ~11 minutes and the run finished at **24m48s**
+  against `timeout-minutes: 30`. Two more would have killed the job — and a killed job never
+  reaches the step that emails Abram, which is precisely what SLA-52 exists to prevent.
+  `MAX_RETRY_SECONDS = 180` caps retries; `MAX_UPLOAD_SECONDS = 600` hard-stops the phase;
+  attempts 4 → 3.
+- **The first implementation had the bug its own test then caught.** The code comment promised
+  "every image still gets its FIRST attempt" while the code skipped first attempts too — so 13
+  slow-but-healthy uploads silently lost the last three. Split into two bounds with distinct
+  jobs. A comment that disagrees with the code beside it is the same class of failure as the
+  half-ported runners.
+- Root cause of the failures themselves looks like residential-proxy flakiness (`curl (28)`
+  timeouts through `PROXY_URL`), not a code bug: the 09-20 run uploaded 8 of 8. Not addressed
+  here — this change makes it visible and bounded rather than fixing the proxy.
+- `uat/tests/test_substack_uploads.py` — stubs the Substack API *and* the clock, so the
+  time-box checks run instantly with no network and no real waiting.
 
 **2026-09-20 — Transient API failures no longer end the day's run (SLA-54)**
 - `runner_common.retry_api_call()` wraps all seven Anthropic call sites: 4 attempts, 4/8/16s

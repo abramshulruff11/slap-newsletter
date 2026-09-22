@@ -236,6 +236,20 @@ def verdict(status: dict) -> tuple[str, str]:
         names = ", ".join(f"“{r['name']}”" for r in soft_bad[:2])
         more = f" (+{len(soft_bad) - 2} more)" if len(soft_bad) > 2 else ""
         return "partial", f"newsletter shipped, but {names}{more} failed"
+
+    # SLA-68. This one is PARTIAL rather than a warning, and the distinction is
+    # deliberate: the paragraph above says warnings must not move the headline,
+    # and that is right for a THIN issue -- a meme below its floor fires most
+    # days, and PARTIAL every morning is a headline nobody reads. This is not
+    # that. Content that was successfully produced failed to reach the published
+    # issue, which is a DELIVERY failure, and it is rare (0 failures on
+    # 2026-09-20, 3 on 09-21). Rare plus real is exactly what the top line is for.
+    images = status.get("substack_images") or {}
+    missing = len(images.get("failed") or [])
+    if missing:
+        total = images.get("expected", missing)
+        return "partial", (f"newsletter shipped, but {missing} of {total} box score "
+                           f"image(s) never reached Substack")
     if not rows or all(r["state"] == "skipped" for r in rows):
         return "failed", "no pipeline stage reported in — the run never started"
     return "success", "every stage completed"

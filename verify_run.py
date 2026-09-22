@@ -187,6 +187,16 @@ def main() -> int:
         warnings.append(f"{c['tweets']} tweets — thin for a normal day")
     if not box_images:
         warnings.append("no box score images were rendered")
+    # SLA-68: box_images above counts what was RENDERED to disk. That is not the
+    # same as what reached Substack, and on 2026-09-21 the difference was three
+    # images that the run reported as a clean success.
+    _si = status.get("substack_images") or {}
+    if _si.get("failed"):
+        warnings.append(
+            f"{len(_si['failed'])} of {_si.get('expected', '?')} box score image(s) "
+            f"never reached Substack ({', '.join(_si['failed'][:3])}"
+            f"{'...' if len(_si['failed']) > 3 else ''}) — the published issue is "
+            f"missing them; the emailed copy is not")
     if share < 30 and media:
         warnings.append(f"media share {share:.0f}% — target is 40%")
 

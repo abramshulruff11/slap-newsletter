@@ -172,6 +172,34 @@ def _broke_html(status: dict) -> str:
     return out
 
 
+def _substack_images_html(status: dict) -> str:
+    """Box score images that did not reach Substack (SLA-68).
+
+    Named separately from the stage table because the stage SUCCEEDS: publish.py
+    gives up on an image and carries on, so there is no failed step to point at.
+    The only way this is visible at all is by comparing what was rendered
+    against what was uploaded."""
+    images = status.get("substack_images") or {}
+    failed = images.get("failed") or []
+    if not failed:
+        return ""
+    expected = images.get("expected", len(failed))
+    out = ('<div style="margin:14px 0 0 0;font-weight:bold;color:#9a6700;">'
+           'SUBSTACK IMAGES</div>'
+           f'<div style="color:#9a6700;margin-top:2px;">⚠ {len(failed)} of '
+           f'{expected} box score image(s) never reached Substack — the '
+           f'published issue is missing them.</div>'
+           '<div style="color:#5f5f5f;margin-top:2px;">This email is unaffected: '
+           'it embeds the images from disk, so the copy below is complete.</div>')
+    for name in failed[:8]:
+        out += (f'<div style="color:#5f5f5f;margin-top:1px;">• '
+                f'{_html.escape(str(name))}</div>')
+    if len(failed) > 8:
+        out += (f'<div style="color:#5f5f5f;margin-top:1px;">… and '
+                f'{len(failed) - 8} more</div>')
+    return out
+
+
 def _retries_html(status: dict) -> str:
     """Transient API failures the run rode out (SLA-54).
 
@@ -234,6 +262,7 @@ def _status_block_html(status: dict, level: str, headline: str) -> str:
                  '✗ a pass returned incomplete output: '
                  + _html.escape(", ".join(str(p) for p in passes)) + '</div>')
     body += _broke_html(status)
+    body += _substack_images_html(status)
     body += _retries_html(status)
     body += _quality_html(status)
     body += ('<div style="margin:14px 0 0 0;font-weight:bold;color:#1a1a1a;">'

@@ -62,6 +62,15 @@ import requests
 
 import convert
 
+# run_status lives at the repo root. publish.py is also runnable standalone
+# against an archived issue, so a missing import must not break it -- it only
+# costs the daily run its image-shortfall reporting.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+try:
+    import run_status
+except Exception:  # noqa: BLE001
+    run_status = None
+
 try:  # stdout may be a cp1252 console on Windows; force UTF-8 so dashes/accents print.
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
@@ -170,37 +179,121 @@ def glob_box(box_dir: str) -> List[str]:
     return sorted(glob.glob(os.path.join(box_dir, "box_score_sport_*.png")))
 
 
-def upload_box_scores(api, box_dir: str) -> List[Dict]:
+# SLA-68. On 2026-09-21 three of thirteen box score images failed to upload and
+# the run reported SUCCESS anyway: 4 attempts x a 30s curl timeout plus backoff
+# is ~132s per hard failure, so the three of them burned ~11 minutes and the run
+# finished at 24m48s against a 30-minute job cap. Two more failures would have
+# hit the cap -- and a job killed by timeout never reaches the step that emails
+# Abram, which is the exact outcome SLA-52 exists to prevent.
+#
+# So the phase is time-boxed. Every image still gets its FIRST attempt; retries
+# only happen while there is budget left. That way a slow-but-working connection
+# still uploads everything (a successful retry costs a short backoff, not a
+# timeout), while a broken one degrades to one attempt each instead of
+# multiplying 132s by the size of the slate.
+#
+# TWO bounds, because they answer different questions:
+#
+#   MAX_RETRY_SECONDS  -- how long the phase may spend on SECOND and third
+#       tries. Every image always gets its first attempt regardless; cutting
+#       those off would throw away images that were going to work, which on a
+#       big slate is the common case rather than the rare one. Retrying is the
+#       part that multiplies, so retrying is the part that is capped.
+#
+#   MAX_UPLOAD_SECONDS -- a hard stop for the catastrophe where even the FIRST
+#       attempts are all timing out. Only reachable when Substack or the proxy
+#       is comprehensively broken, and at that point stopping early is right:
+#       the remaining images were not going to upload either, and the job has a
+#       newsletter to email.
+#
+# Worst case: MAX_UPLOAD_SECONDS plus one in-flight attempt, ~10.5 minutes,
+# against a 30-minute job cap and a ~13.5-minute base run.
+MAX_RETRY_SECONDS = 180
+MAX_UPLOAD_SECONDS = 600
+UPLOAD_ATTEMPTS = 3
+
+
+def upload_box_scores(api, box_dir: str) -> tuple[List[Dict], Dict]:
     """Upload box_score_sport_*.png from box_dir to Substack, in order.
 
-    Returns [{"url": substack_cdn_url, "alt": "NBA box score"}] for each. Missing
-    dir or zero images -> empty list (auto-draft simply omits the section)."""
+    Returns (items, report):
+      items  - [{"url": substack_cdn_url, "alt": "NBA box score"}] per image
+      report - {"expected", "uploaded", "failed": [names], "seconds"}
+
+    The report is the point of the tuple: this used to return only the successes,
+    so a partial upload was indistinguishable from a complete one and the daily
+    email called it SUCCESS. Missing dir or zero images -> empty, which is not a
+    failure (the draft simply omits the section)."""
+    import time
+
     paths = glob_box(box_dir)
+    report = {"expected": len(paths), "uploaded": 0, "failed": [], "seconds": 0.0}
     if not paths:
         print(f"No box score PNGs found in {box_dir!r} -- skipping box score upload.")
-        return []
+        return [], report
+
     out: List[Dict] = []
+    started = time.monotonic()
     print(f"Uploading {len(paths)} box score image(s) from {box_dir!r}...")
     for i, p in enumerate(paths, 1):
-        m = _BOX_RE.search(os.path.basename(p))
+        name = os.path.basename(p)
+        elapsed = time.monotonic() - started
+        if elapsed >= MAX_UPLOAD_SECONDS:
+            # The catastrophe stop, not the ordinary one: even first attempts
+            # are timing out. Skipping loudly beats running the job into its
+            # 30-minute cap, which costs the whole newsletter rather than one
+            # image -- a killed job never reaches the step that emails Abram.
+            print(f"  [{i}/{len(paths)}] SKIPPED {name} -- {elapsed:.0f}s spent, "
+                  f"over the {MAX_UPLOAD_SECONDS}s hard limit for the whole phase")
+            report["failed"].append(name)
+            continue
+        m = _BOX_RE.search(name)
         sport = m.group(2).upper() if m else ""
-        url = _upload_one_image(api, p)  # retries transient resets internally
+        # Note the deadline is the RETRY budget: this image's first attempt
+        # happens either way.
+        url = _upload_one_image(api, p, deadline=started + MAX_RETRY_SECONDS)
         if not url:
-            print(f"  [{i}/{len(paths)}] FAILED (giving up) {os.path.basename(p)}")
+            print(f"  [{i}/{len(paths)}] FAILED (giving up) {name}")
+            report["failed"].append(name)
             continue
         dm = _DIM_RE.search(url)
         item = {"url": url, "alt": f"{sport} box score".strip()}
         if dm:
             item["width"], item["height"] = int(dm.group(1)), int(dm.group(2))
         out.append(item)
-        print(f"  [{i}/{len(paths)}] ok   {os.path.basename(p)} -> {url}")
-    return out
+        print(f"  [{i}/{len(paths)}] ok   {name} -> {url}")
+
+    report["uploaded"] = len(out)
+    report["seconds"] = round(time.monotonic() - started, 1)
+    if report["failed"]:
+        print(f"  !! {len(report['failed'])} of {report['expected']} box score "
+              f"image(s) did NOT reach Substack: {', '.join(report['failed'])}")
+        print(f"     The published issue will be missing them. The EMAILED copy is "
+              f"unaffected -- it embeds the PNGs from disk.")
+    else:
+        print(f"  All {report['expected']} box score image(s) uploaded "
+              f"in {report['seconds']:.0f}s.")
+
+    # The channel every other reporter already reads. Best effort: a status file
+    # that cannot be written must not cost us the draft.
+    if run_status is not None:
+        try:
+            run_status.record(substack_images=report)
+        except Exception as e:  # noqa: BLE001
+            print(f"     (could not record image status: {type(e).__name__})")
+    return out, report
 
 
-def _upload_one_image(api, path: str, attempts: int = 4) -> Optional[str]:
-    """Upload one image with retries. Big box-score PNGs occasionally get the
-    connection reset mid-upload (ConnectionResetError 10054), so retry with
-    backoff before giving up."""
+def _upload_one_image(api, path: str, attempts: int = UPLOAD_ATTEMPTS,
+                      deadline: Optional[float] = None) -> Optional[str]:
+    """Upload one image, retrying while there is time left. Big box-score PNGs
+    occasionally get the connection reset mid-upload (ConnectionResetError
+    10054) or time out behind the residential proxy, so a retry is worth having
+    -- but only while the phase still has retry budget (see MAX_RETRY_SECONDS).
+
+    `deadline` never gates the FIRST attempt. An image that is never tried is an
+    image guaranteed to be missing, and on a big slate most of them would have
+    worked."""
     import time
 
     for attempt in range(1, attempts + 1):
@@ -208,12 +301,17 @@ def _upload_one_image(api, path: str, attempts: int = 4) -> Optional[str]:
             res = api.get_image(path)
             url = res.get("url")
             if url:
+                if attempt > 1:
+                    print(f"      recovered on attempt {attempt}/{attempts}")
                 return url
             print(f"      attempt {attempt}: no url returned")
         except Exception as e:  # noqa: BLE001
             print(f"      attempt {attempt}/{attempts} failed: {type(e).__name__}: {str(e)[:80]}")
         if attempt < attempts:
-            time.sleep(2 * attempt)  # 2s, 4s, 6s backoff
+            if deadline is not None and time.monotonic() >= deadline:
+                print(f"      out of upload budget -- not retrying")
+                return None
+            time.sleep(2 * attempt)  # 2s, 4s backoff
     return None
 
 
@@ -594,7 +692,7 @@ def main() -> None:
         if not box_dir:
             input_dir = os.path.dirname(os.path.abspath(args.input))
             box_dir = input_dir if glob_box(input_dir) else "box_score"
-        box_images = upload_box_scores(api, box_dir)
+        box_images, _box_report = upload_box_scores(api, box_dir)
 
     post = build_post(blocks, title, args.subtitle, user_id=user_id,
                       tweet_attrs=tweet_attrs, box_score_images=box_images)
