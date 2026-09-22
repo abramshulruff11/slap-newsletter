@@ -40,6 +40,7 @@ import subprocess
 import sys
 from pathlib import Path
 from datetime import date, datetime
+from typing import Optional
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
@@ -55,6 +56,7 @@ BOX_SCORE_DIR   = SCRIPT_DIR / "box_score"
 COST_SUMMARY_PATH = SCRIPT_DIR / "cost_summary.json"
 SUBSTACK_STATE_PATH = SCRIPT_DIR / "substack_post_state.json"
 PUBLISH_RESULT_PATH = SCRIPT_DIR / "publish_result.json"
+EMAIL_SENT_MARKER = SCRIPT_DIR / "email_sent_state.json"
 
 ET = ZoneInfo("America/New_York")
 
@@ -528,6 +530,33 @@ def build_daily_email(status: dict) -> tuple[str, str, list]:
     return subject, html_content, inline
 
 
+def already_sent_today() -> Optional[dict]:
+    """SLA-55. The persisted record of today's successful send, if any.
+
+    run_status.json can't answer this: it's gitignored and reset at the top of
+    every run, and a manual workflow_dispatch rerun gets a brand-new runner with
+    a fresh checkout — nothing from the failed attempt's process survives except
+    what was committed to git. This marker is committed (by the workflow, right
+    after a successful send) for exactly that reason, mirroring the existing
+    substack_post_state.json handoff."""
+    try:
+        data = json.loads(EMAIL_SENT_MARKER.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if isinstance(data, dict) and data.get("date") == datetime.now(ET).date().isoformat():
+        return data
+    return None
+
+
+def write_email_sent_marker(subject: str) -> None:
+    payload = {
+        "date": datetime.now(ET).date().isoformat(),
+        "subject": subject,
+        "sent_at": datetime.now(ET).isoformat(timespec="seconds"),
+    }
+    EMAIL_SENT_MARKER.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+
 def send_daily_email() -> bool:
     """The one daily email. Returns False only if the SEND itself failed —
     a failed pipeline still counts as a successful send."""
@@ -555,6 +584,7 @@ def send_daily_email() -> bool:
     if level != "failed":
         print("  → Open email, select all below the marker, paste into Substack")
     run_status.record(email_sent=True, email_error="", email_subject=subject)
+    write_email_sent_marker(subject)
     return True
 
 
@@ -636,6 +666,10 @@ def main() -> int:
     ap.add_argument("--step-outcome", default="success",
                     help="with --publish-alert: the publish step's outcome, so a "
                          "crash that wrote no result file still sends an alert")
+    ap.add_argument("--rerun-safe", action="store_true",
+                    help="SLA-55: skip sending if email_sent_state.json shows today's "
+                         "email already went out (from an earlier run today) — for a "
+                         "manual rerun after a partial failure, so it doesn't send twice")
     args = ap.parse_args()
 
     if args.publish_alert:
@@ -647,6 +681,16 @@ def main() -> int:
         return 0
 
     print("\n── DAILY STATUS EMAIL ──────────────────────────────")
+    if args.rerun_safe:
+        prior = already_sent_today()
+        if prior:
+            print(f"  [rerun-safe] today's email already sent at {prior.get('sent_at')} "
+                  f"({prior.get('subject')!r}) — not sending again.")
+            # Record it as sent (it was — just not by this process) so the gate
+            # and the panel don't read this run as a silently-missing send.
+            run_status.record(email_sent=True, email_error="",
+                              email_subject=prior.get("subject", ""))
+            return 0
     # Exit non-zero only when the SEND failed. The workflow step carries
     # continue-on-error so verify_run.py --gate still runs and turns the whole
     # run's outcome into the job's exit code.

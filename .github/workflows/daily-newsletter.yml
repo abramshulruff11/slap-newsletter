@@ -31,6 +31,22 @@ on:
         description: 'Retry drill: 2 | 529:1 | timeout:3 | fatal | exhaust (blank = off)'
         type: string
         default: ''
+      rerun_of_failed_run:
+        # SLA-55. A plain re-dispatch does a full run: a SECOND email (SLA-52
+        # is otherwise silent about it having already fired today) and a SECOND
+        # Substack draft that orphans the first (substack_post_state.json just
+        # gets overwritten). That risk is what discourages using the one tool
+        # available for fixing a bad morning run. With this on: the email step
+        # skips sending if today's already went out (email_sent_state.json,
+        # committed right after a successful send — run_status.json itself is
+        # gitignored and reset every run, so it cannot answer this across a
+        # fresh runner), and the draft step updates today's existing draft in
+        # place (substack_poc/publish.py --rerun-safe) instead of minting a
+        # new one. Opt-in and default off, so a deliberate full fresh run
+        # (e.g. testing) is unaffected.
+        description: 'This is a rerun of a failed/partial attempt today (skip duplicate email, update existing Substack draft)'
+        type: boolean
+        default: false
 
 jobs:
   generate:
@@ -224,8 +240,12 @@ jobs:
           # would read as "never ran" in the status email — a stage that
           # silently vanishes is the hole this mechanism exists to close.
           pip install python-substack==0.1.22 curl_cffi
+          FLAGS=""
+          if [ "${{ inputs.rerun_of_failed_run }}" = "true" ]; then
+            FLAGS="--rerun-safe"
+          fi
           python substack_poc/publish.py newsletter_substack.html --draft \
-            --state-out substack_post_state.json
+            --state-out substack_post_state.json $FLAGS
           STAGE
 
       # Commit the handoff so the separate noon workflow (which checks out main) can
@@ -305,7 +325,36 @@ jobs:
       - name: Send the daily status email
         if: always()
         continue-on-error: true
-        run: python email_newsletter.py
+        run: |
+          FLAGS=""
+          if [ "${{ inputs.rerun_of_failed_run }}" = "true" ]; then
+            FLAGS="--rerun-safe"
+          fi
+          python email_newsletter.py $FLAGS
+
+      # SLA-55: persist proof that today's email went out, so a LATER rerun on
+      # a fresh runner (run_status.json is gitignored and reset every run — it
+      # cannot answer this) can tell and skip sending a duplicate. Mirrors the
+      # substack_post_state.json handoff. continue-on-error and always(): a
+      # push hiccup here must not cost the run-quality gate below, and this
+      # must still attempt even after an earlier critical failure so a rerun
+      # after THAT failure has something to check.
+      - name: Commit email-sent marker
+        if: always()
+        continue-on-error: true
+        run: |
+          bash ci/run_stage.sh "Commit email-sent marker" <<'STAGE'
+          if [ -f email_sent_state.json ]; then
+            git config user.name "SLAP Bot"
+            git config user.email "slap-bot@users.noreply.github.com"
+            git add email_sent_state.json
+            git commit -m "Email-sent marker for $(date -u +%Y-%m-%d)" || echo "No marker change to commit"
+            git pull --rebase -X theirs origin main
+            git push
+          else
+            echo "No email_sent_state.json to commit (send failed or was skipped)."
+          fi
+          STAGE
 
       # The job's verdict, computed from the same findings the email just
       # reported — including whether that email actually sent.

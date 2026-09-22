@@ -594,6 +594,39 @@ def publish_existing(args) -> None:
                  emailed_subscribers=send)
 
 
+def _find_reusable_draft(api, state_path: str) -> Optional[int]:
+    """SLA-55, --rerun-safe: the id of today's still-open draft, if this run is
+    a rerun of an earlier attempt from the same ET day, so it can be updated in
+    place instead of minting a second draft that orphans the first. Returns
+    None (create a fresh draft, same as the non-rerun path) for every case that
+    ISN'T a safe reuse: no handoff, a stale (not-today) handoff, a draft that
+    was deleted, or one that already published -- overwriting a live post is
+    not this flag's job."""
+    try:
+        with open(state_path, encoding="utf-8") as f:
+            state = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return None
+    if state.get("date") != today_et():
+        return None
+    draft_id = state.get("draft_id")
+    if not draft_id:
+        return None
+    try:
+        draft = api.get_draft(draft_id)
+    except Exception as e:  # noqa: BLE001 -- 404 means it was deleted; make a fresh one
+        if _looks_like_not_found(e):
+            print(f"[rerun-safe] Today's handoff draft {draft_id} no longer exists -- creating a fresh one.")
+            return None
+        raise
+    if draft.get("is_published"):
+        print(f"[rerun-safe] Today's draft {draft_id} is already published -- "
+              f"creating a fresh draft rather than overwriting a live post.")
+        return None
+    print(f"[rerun-safe] Reusing today's existing draft {draft_id} instead of creating a new one.")
+    return draft_id
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Publish a SLAP newsletter to Substack.")
     ap.add_argument("input", nargs="?", help="path to newsletter_substack.html (omit for --publish-existing)")
@@ -626,6 +659,10 @@ def main() -> None:
     ap.add_argument("--result-out", metavar="PATH",
                     help="with --publish-existing: write a machine-readable outcome "
                          "here (read by email_newsletter.py --publish-alert)")
+    ap.add_argument("--rerun-safe", action="store_true",
+                    help="SLA-55: with --draft, if --state-out already names a draft "
+                         "created earlier today and it's not yet published, update it "
+                         "in place instead of creating a second, orphaned draft")
     send = ap.add_mutually_exclusive_group()
     send.add_argument("--send", dest="send_email", action="store_true", default=None,
                       help="email subscribers when publishing (default: web-only, or env SUBSTACK_SEND_EMAIL)")
@@ -684,6 +721,10 @@ def main() -> None:
     user_id = api.get_user_id()
     print(f"Authenticated as user_id={user_id}")
 
+    reuse_draft_id = None
+    if args.draft and args.rerun_safe and args.state_out and os.path.exists(args.state_out):
+        reuse_draft_id = _find_reusable_draft(api, args.state_out)
+
     tweet_attrs = hydrate_tweets(blocks, api=api)
 
     box_images: List[Dict] = []
@@ -696,9 +737,14 @@ def main() -> None:
 
     post = build_post(blocks, title, args.subtitle, user_id=user_id,
                       tweet_attrs=tweet_attrs, box_score_images=box_images)
-    draft = api.post_draft(post.get_draft())
-    draft_id = draft.get("id")
-    print(f"Created draft id={draft_id}")
+    if reuse_draft_id:
+        draft = api.put_draft(reuse_draft_id, **post.get_draft())
+        draft_id = draft.get("id") or reuse_draft_id
+        print(f"Updated draft id={draft_id}")
+    else:
+        draft = api.post_draft(post.get_draft())
+        draft_id = draft.get("id")
+        print(f"Created draft id={draft_id}")
 
     if args.state_out:
         write_state(args.state_out, draft_id, title)

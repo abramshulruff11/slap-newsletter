@@ -181,6 +181,8 @@ slap-newsletter/
 ├── gif_history.json           ← 7-day GIF dedup log
 ├── meme_history.json          ← meme dedup log
 ├── substack_post_state.json   ← handoff: today's Substack draft id (morning → noon job)
+├── email_sent_state.json      ← SLA-55: proof today's daily email sent (committed, unlike
+│                                 run_status.json — lets a --rerun-safe dispatch skip a duplicate)
 ├── .env                       ← API keys (gitignored — never commit)
 ├── requirements.txt           ← incl. playwright + Pillow (box score rendering)
 ├── box_score/                 ← box score subsystem (see "Box Score System" below)
@@ -824,9 +826,12 @@ in ET each winter (1:17 AM EST). The **publish job no longer has this problem** 
 
 **Re-running a failed run does NOT pick up a fix.** GitHub's "Re-run jobs" replays the run at its
 *original* commit, so a run that failed before a fix was pushed fails again identically. To run
-fixed code, use **Run workflow** (`workflow_dispatch`) on `main`. Note a fresh dispatch is a full
-run: it emails again and creates a *second* Substack draft, overwriting `substack_post_state.json`
-and orphaning the earlier draft — delete the orphan, or just let the existing one publish.
+fixed code, use **Run workflow** (`workflow_dispatch`) on `main`. A dispatch with **"This is a
+rerun of a failed/partial attempt today" checked (SLA-55)** is rerun-safe: it skips re-sending the
+one daily email if `email_sent_state.json` already shows today's went out, and updates today's
+existing Substack draft in place (`--rerun-safe`, a `PUT` via `substack_poc/publish.py`) instead of
+minting a second one that orphans the first. Leave it unchecked for a deliberate full fresh run
+(e.g. testing) — that still behaves exactly as before.
 
 If the pipeline fails, check, in rough likelihood order: **Nitter RSS availability** (there is now
 an outage probe that degrades to a headline-only newsletter), the **commit/push** step (daily box
@@ -840,6 +845,35 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-22 — Manual pipeline reruns are safe: no duplicate email, no orphaned Substack draft
+(SLA-55)**
+- Per the Known Issues note this ticket closes: a `workflow_dispatch` re-run after a failure did
+  a full run — a second daily email, and a second Substack draft that overwrote
+  `substack_post_state.json` and orphaned the first, needing manual cleanup. That risk discouraged
+  using the one tool available for fixing a bad morning run.
+- **Why `run_status.json` couldn't answer this.** It's gitignored and reset at the top of every
+  run on purpose (see `run_status.py`) — but that also means it holds nothing from an *earlier*
+  run today, because a manual re-dispatch gets a brand-new runner with a fresh checkout. Only what
+  was committed to git survives between separate runs, which is exactly the shape of the existing
+  `substack_post_state.json` handoff.
+- A new `rerun_of_failed_run` `workflow_dispatch` input (default off — a deliberate full fresh run
+  is unaffected) threads a `--rerun-safe` flag into two places:
+  - `email_newsletter.py --rerun-safe` skips the send if `email_sent_state.json` (new, committed —
+    unlike `run_status.json`) already shows today's email went out, from an earlier run today. It
+    still records `email_sent=True` in `run_status.json` either way, so `verify_run.py --gate`
+    reads the day correctly regardless of which run actually sent it. A new "Commit email-sent
+    marker" step (continue-on-error, `if: always()`, declared in `PIPELINE_STAGES` like every
+    other stage) commits the marker right after the send, mirroring the Substack handoff commit.
+  - `substack_poc/publish.py --draft --rerun-safe` checks `--state-out`'s existing handoff before
+    creating anything: a still-open draft from *today* gets updated in place via `put_draft`
+    (`_find_reusable_draft()`) instead of `post_draft`-ing a second one. Every case that ISN'T a
+    safe reuse — no handoff, a stale (not-today) handoff, a draft that 404s (deleted), or one
+    that's already published — falls through to the ordinary fresh-draft path unchanged, so it
+    never risks overwriting a live post.
+- `uat/tests/test_rerun_safe.py` — offline, no network/Substack/SMTP: locks the draft-reuse
+  decision table, the marker's cross-run skip behavior (and that it's ignored without the flag),
+  and that the workflow's new input/flags/stage stay wired together.
 
 **2026-09-21 — A Substack image that never uploads is no longer silent (SLA-68)**
 - The 2026-09-21 run shipped a Substack post missing **3 of 13 box score images** and reported

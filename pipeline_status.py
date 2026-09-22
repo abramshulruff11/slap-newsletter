@@ -92,6 +92,8 @@ PIPELINE_STAGES: tuple[Stage, ...] = (
           "the draft exists but the noon job cannot find it"),
     Stage("Publish late if past 12:30 PM ET", False),
     Stage("Assess run quality", False),
+    Stage("Commit email-sent marker", False,
+          "a same-day manual rerun may not know the email already went out"),
 )
 
 STAGE_BY_NAME = {s.name: s for s in PIPELINE_STAGES}

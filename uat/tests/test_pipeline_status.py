@@ -268,6 +268,7 @@ EN.BOX_SCORE_DIR = WORK / "box_score"
 EN.COST_SUMMARY_PATH = WORK / "cost_summary.json"
 EN.SUBSTACK_STATE_PATH = WORK / "substack_post_state.json"
 EN.PUBLISH_RESULT_PATH = WORK / "publish_result.json"
+EN.EMAIL_SENT_MARKER = WORK / "email_sent_state.json"
 EN.BOX_SCORE_DIR.mkdir()
 EN.os.environ["GMAIL_ADDRESS"] = "abram@example.com"
 EN.os.environ["GMAIL_PASSWORD"] = "app-password-not-real"
