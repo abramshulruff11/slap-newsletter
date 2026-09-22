@@ -39,6 +39,10 @@ import urllib.request
 UA = {"User-Agent": "SLAP-SLA58-verify/1.0"}
 TIMEOUT = 25
 
+# CBBD /games truncates each response at this many rows. CFBD does not -- it
+# returned 3,745 games for 2025 in one call -- so this is CBBD-specific.
+PAGE_CAP = 3000
+
 
 def get(url, key=None):
     """-> (status, parsed_json_or_None). Never raises."""
@@ -82,12 +86,19 @@ def check_nhl():
                   f"{seasons[0]} … {seasons[-1]}")
             verdict.append(f"standings enumerated from {str(seasons[0])[:4]}")
             # Does the oldest one actually return rows, or is it just listed?
+            #
+            # Probe 02-01, NOT 04-01. The early regular seasons ended in March,
+            # so April 1 falls between seasons and returns an empty table for
+            # reasons that have nothing to do with coverage: 1969-04-01 gives 0
+            # rows while 1969-03-15 gives a full 12-team table. This probe used
+            # to say 04-01 and reported the 1917-18 season as unpopulated when
+            # it is in fact complete. February is in-season in every NHL era.
             oldest = seasons[0]
             yr = int(str(oldest)[:4])
-            st2, d2 = get(f"https://api-web.nhle.com/v1/standings/{yr + 1}-04-01")
+            st2, d2 = get(f"https://api-web.nhle.com/v1/standings/{yr + 1}-02-01")
             if st2 == 200 and d2:
                 rows = d2.get("standings", [])
-                print(f"  standings/{yr + 1}-04-01 → HTTP 200, {len(rows)} rows"
+                print(f"  standings/{yr + 1}-02-01 → HTTP 200, {len(rows)} rows"
                       f"{' (EMPTY — listed but not populated)' if not rows else ''}")
                 if rows:
                     r = rows[0]
@@ -102,6 +113,7 @@ def check_nhl():
 
     # Results: walk the modern-era boundary explicitly.
     print("\n  club-schedule-season (game results by season):")
+    oldest_scored = None
     for season in ("19171918", "19271928", "19671968", "19871988", "20232024"):
         st, d = get(f"https://api-web.nhle.com/v1/club-schedule-season/MTL/{season}")
         games = len(d.get("games", [])) if (st == 200 and d) else 0
@@ -113,12 +125,18 @@ def check_nhl():
             )
         flag = "" if games else "   <-- no data"
         print(f"    {season}: HTTP {st}  games={games:<4} with_scores={scored}{flag}")
-        if games and scored:
-            verdict.append(f"results with scores exist at {season[:4]}")
+        if games and scored and oldest_scored is None:
+            # OLDEST, not newest: the depth question is answered by the earliest
+            # season that returns scores. This used to print verdict[-2:], which
+            # reported the most recent seasons probed -- the one fact nobody was
+            # in any doubt about.
+            oldest_scored = season
 
-    print("\n  VERDICT: " + ("; ".join(verdict[-2:]) if verdict else "NO DATA — check network"))
-    print("  → Doc says 'unverified'. Replace §2.3 with whatever the oldest")
-    print("    season above that returns games WITH scores actually is.")
+    if oldest_scored:
+        verdict.append(f"results with scores back to {oldest_scored[:4]}")
+    print("\n  VERDICT: " + ("; ".join(verdict) if verdict else "NO DATA — check network"))
+    print("  → Replace §2.3 with the oldest season above that returns games")
+    print("    WITH scores. Measured 2026-09-22: 1917-18, the full history.")
 
 
 # ---------------------------------------------------------------------------
@@ -133,8 +151,10 @@ def check_cbbd():
         return
 
     earliest = None
-    # Coarse ladder first; cheap on a 1k/month shared pool.
-    for season in (2003, 2008, 2013, 2015, 2019, 2025):
+    # The ladder has to start BELOW the plausible floor or it cannot find one.
+    # It used to start at 2003 and duly reported "earliest = 2003" -- which was
+    # just its own first rung. The real floor is 1949, 54 years earlier.
+    for season in (1940, 1949, 1950, 1980, 2003, 2025):
         st, d = get(f"https://api.collegebasketballdata.com/games?season={season}",
                     key=key)
         n = len(d) if (st == 200 and isinstance(d, list)) else 0
@@ -145,6 +165,11 @@ def check_cbbd():
             note = "   <-- QUOTA EXHAUSTED"
         elif st == 200 and n == 0:
             note = "   <-- 200 but EMPTY (before coverage starts)"
+        elif n == PAGE_CAP:
+            # Exactly 3000 every time is a per-response cap, not a count.
+            # 1950 (1,261) and 1980 (2,822) come in under it, which is what
+            # gives it away. Reading it as a count understates modern seasons.
+            note = f"   <-- AT THE {PAGE_CAP}-ROW CAP (a cap, not a count)"
         print(f"    season={season}: HTTP {st}  games={n}{note}")
         if n and earliest is None:
             earliest = season
@@ -152,9 +177,12 @@ def check_cbbd():
             return
 
     print(f"\n  VERDICT: earliest season returning games in this ladder = {earliest}")
-    print("  → If it's 2003, CBBD has real depth and NCAAMB is a Tier A sport.")
-    print("    If it's 2013+, CBBD fails rubric R3 the way hoopR-mbb-data does,")
-    print("    and NCAAMB needs a deeper source or gets scoped to the modern era.")
+    print("  → Measured 2026-09-22: 1949 (22 games), substantial from 1950")
+    print("    (1,261). 1946-48 are empty, so 1949 is a real floor. CBBD has")
+    print("    real depth and NCAAMB is a Tier A sport.")
+    print(f"  → Any season reading exactly {PAGE_CAP} is capped, not counted.")
+    print("    Chunk with startDateRange/endDateRange or conference: Jan 2024")
+    print("    alone = 1,350 games, SEC 2024 = 342. ~6 calls per modern season.")
 
 
 # ---------------------------------------------------------------------------
