@@ -39,7 +39,7 @@ import argparse
 import re
 import sys
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -117,17 +117,30 @@ def start() -> dict:
     )
 
 
-def ensure_started() -> dict:
+def ensure_started(now: datetime | None = None) -> dict:
     """start() unless this run already did.
 
     The workflow calls start() explicitly. This exists for a local
     `python generate_newsletter.py` with no workflow around it: it resets a
     status file left over from a previous day, and leaves today's alone so a
     generator run in the middle of a pipeline does not erase the stages
-    recorded before it."""
+    recorded before it.
+
+    BOTH SIDES OF THE COMPARISON ARE ET, AND THAT IS THE WHOLE POINT.
+    This originally compared start()'s ET timestamp against date.today(), which
+    is the machine's LOCAL date -- UTC on a GitHub runner. Between 00:00 and
+    04:00 UTC (05:00 in winter) those are different days, so ensure_started()
+    decided the file was stale and wiped the stage table the fetch steps had
+    just written. Caught by CI at 01:10 UTC on 2026-09-22; every earlier run
+    happened to fall outside the window and passed. A run dispatched in those
+    four hours would have emailed a status panel claiming the fetches never ran.
+
+    `now` is injectable so the test can pin it -- a test that only fails during
+    a four-hour window is barely a test."""
     data = run_status.load()
     started = str(data.get("run_started") or "")
-    if started[:10] == date.today().isoformat():
+    today_et = (now or datetime.now(ET)).date().isoformat()
+    if started[:10] == today_et:
         return data
     return start()
 

@@ -524,6 +524,47 @@ PS.ensure_started()
 check("a status file left over from another day is cleared",
       run_status.load()["stages"], [])
 
+# THE 01:10 UTC BUG, pinned so it cannot come back.
+#
+# start() stamps the time in ET. ensure_started() used to compare that against
+# date.today() -- the machine's LOCAL date, which is UTC on a GitHub runner.
+# Between 00:00 and 04:00 UTC they are different days, so it decided the file
+# was stale and wiped the stage table the fetch steps had just written. Every
+# earlier CI run fell outside that window and passed; the run at 01:10 UTC on
+# 2026-09-22 did not.
+#
+# The clock is INJECTED here rather than read, because a check that only fails
+# for four hours a day is a check that passes for the wrong reason.
+import datetime as _dt  # noqa: E402
+
+for label, et_now in (
+    ("just after midnight ET", _dt.datetime(2026, 9, 22, 0, 5, tzinfo=PS.ET)),
+    ("mid-morning ET", _dt.datetime(2026, 9, 22, 8, 30, tzinfo=PS.ET)),
+    # 21:10 ET is 01:10 UTC the NEXT day -- the exact case that broke CI.
+    ("21:10 ET, which is 01:10 UTC tomorrow", _dt.datetime(2026, 9, 21, 21, 10, tzinfo=PS.ET)),
+):
+    run_status.reset()
+    run_status.record(run_started=et_now.isoformat(timespec="seconds"),
+                      stages=[{"name": "Fetch content", "ok": True,
+                               "exit_code": 0, "critical": True}])
+    PS.ensure_started(now=et_now)
+    check(f"stages survive at {label}",
+          [x["name"] for x in run_status.load().get("stages") or []], ["Fetch content"])
+
+# ...and a genuinely old file is still cleared, at any hour.
+old_et = _dt.datetime(2026, 9, 20, 21, 10, tzinfo=PS.ET)
+run_status.reset()
+run_status.record(run_started=old_et.isoformat(timespec="seconds"),
+                  stages=[{"name": "Fetch content", "ok": True,
+                           "exit_code": 0, "critical": True}])
+PS.ensure_started(now=_dt.datetime(2026, 9, 21, 21, 10, tzinfo=PS.ET))
+check("yesterday's file is still cleared", run_status.load()["stages"], [])
+
+# The comparison must not reach for the machine's local clock again.
+_ps_src = (REPO / "pipeline_status.py").read_text(encoding="utf-8")
+check("pipeline_status.py never compares against a local date",
+      "== date.today()" in _ps_src, False)
+
 
 print()
 if failures:

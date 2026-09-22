@@ -78,6 +78,11 @@ jobs:
       # save reflows a library and the diff stops recording what the review
       # decided. Node is preinstalled on ubuntu-latest, so this costs nothing.
       - name: Run the library studio suite (Node)
+        # if: always() -- the file's own header promises one red suite does not
+        # hide the others, but that only held INSIDE the python loop; these
+        # steps were skipped outright. On 2026-09-22 a single failing suite
+        # hid the Node suite, the retry drill and the prompt check.
+        if: always()
         run: |
           echo "### Library studio (Node)" >> "$GITHUB_STEP_SUMMARY"
           if node uat/tests/test_library_studio.mjs; then
@@ -93,10 +98,20 @@ jobs:
       # the retry behaviour can be read off the run page without reading any
       # code. It fast-forwards the backoff clock, so it costs a second.
       - name: Retry drill (plain-English verdict)
+        # if: always() -- the file's own header promises one red suite does not
+        # hide the others, but that only held INSIDE the python loop; these
+        # steps were skipped outright. On 2026-09-22 a single failing suite
+        # hid the Node suite, the retry drill and the prompt check.
+        if: always()
         run: python -X utf8 uat/probe_retry.py
 
       # A prompt carrying a {{PLACEHOLDER}} the destination runner cannot
       # substitute would ship raw template syntax to the model. promote.py
       # already refuses such a copy; this makes the same check run on every push.
       - name: Prompt status (read-only)
+        # if: always() -- the file's own header promises one red suite does not
+        # hide the others, but that only held INSIDE the python loop; these
+        # steps were skipped outright. On 2026-09-22 a single failing suite
+        # hid the Node suite, the retry drill and the prompt check.
+        if: always()
         run: python -X utf8 uat/promote.py
