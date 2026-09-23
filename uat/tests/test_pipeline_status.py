@@ -117,6 +117,16 @@ skipped = [r["name"] for r in rows if r["state"] == "skipped"]
 check_true("stages that never reported are marked 'skipped', not 'ok'",
            "Create Substack draft" in skipped)
 
+# SLA-75. A stage that runs AFTER the email is never recorded when the email is
+# built. Calling it "skipped" printed "never ran" in every email ever sent.
+pending = [r["name"] for r in rows if r["state"] == "pending"]
+check("after-email stages read 'pending', not 'skipped'",
+      pending, [s.name for s in PS.PIPELINE_STAGES if s.after_email])
+check_true("...and the marker commit is one of them",
+           "Commit email-sent marker" in pending)
+check("a run where NOTHING reported is still FAILED, pending row or not",
+      PS.verdict({"stages": []})[0], "failed")
+
 
 # ===========================================================================
 print()
@@ -126,13 +136,16 @@ print("=" * 72)
 
 
 def status_with(**over):
-    """A status where every declared stage passed, then overridden."""
+    """A status where every declared stage passed, then overridden.
+
+    As the EMAIL sees it: stages that run after the email (SLA-75) have not
+    reported yet, so they are absent, exactly as on a real run."""
     base = {
         "date": "2026-09-20",
         "run_started": "2026-09-20T02:17:00-04:00",
         "stages": [{"name": s.name, "ok": True, "exit_code": 0,
                     "critical": s.critical, "seconds": 5}
-                   for s in PS.PIPELINE_STAGES],
+                   for s in PS.PIPELINE_STAGES if not s.after_email],
         "email_sent": True,
     }
     for name, exit_code in (over.pop("failed_stages", None) or {}).items():
@@ -238,6 +251,18 @@ check_true("the status email step runs even after a failure",
 check_true("and does not itself halt the gate below",
            "continue-on-error: true" in email_step["body"])
 check("the gate runs last", steps[-1]["name"], "Run-quality gate")
+
+# SLA-75: after_email must mean what it says, or a stage the email COULD have
+# reported on gets shown as "runs after this email" and its failure is hidden.
+email_at = [st["name"] for st in steps].index("Send the daily status email")
+after_in_wf = set()
+for i, st in enumerate(steps):
+    m = re.search(r'run_stage\.sh\s+"([^"]+)"', st["body"])
+    if m and i > email_at:
+        after_in_wf.add(m.group(1))
+check("after_email=True in the list == runs after the email step in the workflow",
+      sorted(after_in_wf),
+      sorted(s.name for s in PS.PIPELINE_STAGES if s.after_email))
 check_true("...and always", "if: always()" in steps[-1]["body"])
 
 # The status email imports nothing outside the standard library, on purpose: a
@@ -299,6 +324,12 @@ check_true("the body carries the ACTUAL error, not just 'failed'",
 check_true("the body says there is nothing to copy",
            "NO NEWSLETTER WAS PRODUCED" in body)
 check_true("stages that never ran are shown as such", "never ran" in body)
+check_true("a stage that runs after the email says so, not 'never ran'",
+           "runs after this email" in body)
+_marker_row = re.search(r"Commit email-sent marker</td>.*?</tr>", body, re.S)
+check_true("...on the marker commit's own row",
+           bool(_marker_row) and "runs after this email" in _marker_row.group(0)
+           and "never ran" not in _marker_row.group(0))
 # The panel is full of ✅/❌/—, and a bare <body> renders as mojibake wherever
 # the client guesses latin-1 instead of trusting the MIME charset.
 check_true("a body we generated ourselves declares its charset",

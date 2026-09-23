@@ -39,7 +39,7 @@ import smtplib
 import subprocess
 import sys
 from pathlib import Path
-from datetime import date, datetime
+from datetime import datetime
 from typing import Optional
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -134,6 +134,8 @@ def _stage_table_html(status: dict) -> str:
                 detail += " · non-blocking"
         elif state == "skipped":
             detail = "never ran"
+        elif state == "pending":
+            detail = "runs after this email"
         rows += (
             '<tr>'
             f'<td style="padding:2px 8px 2px 0;color:{colour};font-weight:bold;">{mark}</td>'
@@ -451,7 +453,9 @@ def build_daily_email(status: dict) -> tuple[str, str, list]:
 
     # %-d is glibc-only and blows up on Windows, where this file is edited and
     # tested; lstrip is portable and produces the same string.
-    today = date.today().strftime("%B %d, %Y").replace(" 0", " ")
+    # ET, like the status panel under it. date.today() is the runner's clock --
+    # UTC on GitHub -- so a run after 8 PM ET had a subject dated tomorrow.
+    today = datetime.now(ET).strftime("%B %d, %Y").replace(" 0", " ")
     if level == "success":
         subject = f"SLAP {today} — {title}"
     elif level == "partial":
@@ -533,6 +537,9 @@ def build_daily_email(status: dict) -> tuple[str, str, list]:
 def already_sent_today() -> Optional[dict]:
     """SLA-55. The persisted record of today's successful send, if any.
 
+    "Successful" means the email carried a usable issue (SLA-74): a
+    FAILED-verdict status email never writes this marker.
+
     run_status.json can't answer this: it's gitignored and reset at the top of
     every run, and a manual workflow_dispatch rerun gets a brand-new runner with
     a fresh checkout — nothing from the failed attempt's process survives except
@@ -584,7 +591,17 @@ def send_daily_email() -> bool:
     if level != "failed":
         print("  → Open email, select all below the marker, paste into Substack")
     run_status.record(email_sent=True, email_error="", email_subject=subject)
-    write_email_sent_marker(subject)
+    # SLA-74. Only an email that delivered a usable issue may suppress a
+    # --rerun-safe resend. A FAILED-verdict email is a failure report -- often
+    # with no newsletter in it at all -- and a rerun after one is exactly the
+    # case the rerun checkbox exists for. Marking it "sent" made that rerun
+    # produce the newsletter and then skip emailing it. A PARTIAL email did
+    # carry the issue, so it counts.
+    if level != "failed":
+        write_email_sent_marker(subject)
+    else:
+        print("  → failure report, not the issue: no email-sent marker written, "
+              "so a --rerun-safe rerun today will still send")
     return True
 
 

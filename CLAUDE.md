@@ -418,6 +418,9 @@ draft, `verify_run.py`'s findings, a truncated pass — is in it.
   record; the declared list is what makes "never ran" printable. `uat/tests/test_pipeline_status.py`
   parses `daily-newsletter.yml` and fails on any disagreement in either direction, including
   order. **When you add a workflow step, add it to `PIPELINE_STAGES` in the same commit.**
+  A step placed AFTER the email step must be declared `after_email=True` (the test checks both
+  directions): the email is built before it can report, so it shows as "runs after this email"
+  instead of "never ran". Before SLA-75 the marker commit read "never ran" in every email.
 - **Warnings do NOT downgrade the verdict.** `verify_run.py` warns on a thin issue, and those
   fire on most days. A top line that reads PARTIAL every morning is a top line nobody reads,
   which is the failure this ticket exists to fix. Only real breakage moves the headline.
@@ -472,7 +475,15 @@ pings are late. Setup, the cutoff's justification and how to pause it are in
   help. Retrying them turns a five-second red run into a several-minute one that looks like an
   outage — which is how 2026-09-01 got misdiagnosed.
 - **Bounded:** 4 attempts, 4s → 8s → 16s, worst case 12 HTTP attempts per call including the
-  SDK's own. A genuine outage still fails today rather than hanging past the 30-minute job cap.
+  SDK's own. That is quick for FAST failures (a 429/529 answers in seconds). It is NOT a bound on
+  a HUNG call — this file used to say it was, and it was wrong (SLA-74): with the SDK's default
+  600s per request, 12 hung attempts is two hours. Two limits now cover that case:
+  `API_REQUEST_TIMEOUT = 420` s per request (sized from a measured ~58 tok/s for Pass 2, so a
+  full 16,384-token draft still fits with ~1.5x headroom; for streaming Pass 1 it bounds silence
+  between chunks, not the whole generation), and a hard **17-minute `timeout` on the "Generate
+  newsletter" stage** in `daily-newsletter.yml`, inside `run_stage.sh` so the stage is still
+  recorded with an explanation. The stage limit is the real guarantee: it stops the generator in
+  time for the `always()` status email to go out inside the job's 30-minute cap.
 - **Cost is not double-counted, and that needs no special handling.** `cost_summary()` is only
   ever called with the usage of a response that arrived; a failed attempt returns none. The one
   honest gap: a STREAMING call that dies mid-stream generated billed tokens the SDK gives us no
@@ -693,11 +704,37 @@ unstaged, which breaks `git pull --rebase`.
   So Pass 1 calls `client.messages.stream(...)` + `.get_final_message()`, which returns the same
   `Message` object (tool_use blocks and `usage` included) that `messages.create()` did. Anything
   that raises another pass above 21,333 must convert that pass to streaming in the same commit.
-  This is invisible to the tests — they stub the Anthropic client, so the SDK guard never runs.
+  **Since SLA-74 the SDK guard no longer fires at all:** the SDK only runs it when the client
+  timeout is the default, and `API_REQUEST_TIMEOUT` makes it non-default. An oversized
+  non-streaming call would now be sent and then cut off at 420s instead of refused. The rule
+  moved into `test_api_retry.py`, which reads every non-streaming `messages.create()` in both
+  runners and `runner_common.py` and fails if its `max_tokens` exceeds 21,333 or cannot finish
+  inside `API_REQUEST_TIMEOUT`.
 
 ---
 
 ## Known Issues / TODO
+
+- **⚠ SPORTS-DATA LICENSING IS CONDITIONAL ON SLAP BEING FREE — RAISE THIS THE DAY IT ISN'T
+  (2026-09-23):** SLAP is a free Substack, ~30 subscribers, no ads and no sponsorship. On that
+  basis every source recommended in `docs/sports-source-evaluation.md` is in bounds. Two of them
+  are conditioned on it and **must be re-checked the moment paid subscriptions, sponsorship or
+  advertising are switched on**:
+  - **Lahman** (MLB season stats, CC BY-SA 3.0). ShareAlike bites on *distributing a derived
+    database*, not on writing prose from it — facts are not copyrightable — so publishing the
+    newsletter is fine either way. Publishing or sharing the database itself would not be.
+  - **MLB Stats API** — free for "individual, non-commercial, **and non-bulk**" use; anything
+    else needs written MLBAM authorization. It is already scoped to the live-delta lane only,
+    because a historical backfill is *bulk* regardless of money. Going paid removes the
+    non-commercial leg as well.
+  - **Retrosheet**, the actual MLB backfill source, expressly permits commercial use with
+    attribution, so the core of the design is unaffected either way.
+  - Tennis's NonCommercial source (Sackmann) is already out of scope — team sports only.
+
+  **Trigger for Claude: if Abram mentions turning on paid Substack subscriptions, sponsorship,
+  ads, or otherwise monetising SLAP, surface this note before the work proceeds.** The answer is
+  not "stop" — it is "re-check Lahman and MLB Stats API, and confirm Retrosheet still carries the
+  attribution line."
 
 - **Scheduled runs land hours late (WORKED AROUND 2026-09-04; the delay itself is GitHub's):**
   measured over three consecutive days, `daily-newsletter.yml` fired +5h05m after its 06:17 UTC
@@ -721,7 +758,11 @@ unstaged, which breaks `git pull --rebase`.
   against CI's pinned `1.2.0`; pinning from the wrong environment would pin the pipeline to
   versions it never ran on). **To bump any entry:** change its version, re-run the pipeline via
   `workflow_dispatch`, confirm green, then leave it pinned forward — one entry at a time, same as
-  the original `anthropic` rule this generalizes. Every run now also uploads a `pip-freeze`
+  the original `anthropic` rule this generalizes. **Workflows that install a short list by name
+  instead of `-r requirements.txt`** (the noon publish job, the Substack and Nitter CI checks)
+  carry the same `==` versions — the noon publish job was left unpinned by SLA-57 and fixed in
+  SLA-74. `uat/tests/test_workflow_pins.py` fails if any workflow's `pip install` disagrees with
+  `requirements.txt`, so a bump changes both in one commit. Every run now also uploads a `pip-freeze`
   build artifact (90-day retention) recording exactly what was installed, so the next bump never
   again has to mine an Actions log before it expires.
 - **Chromium is not separately pinned, and that's a deliberate decision, not an oversight
@@ -777,14 +818,20 @@ unstaged, which breaks `git pull --rebase`.
   `vince-mcmahon-reaction` turned out to be 5 panels, not 4 — it had been shipping a blank payoff
   frame and reporting success. `meme_box_check.py` now blocks that class of failure in production.
   Re-run the probe after adding any template.
-- **Meme output runs below the floor (open, 2026-09-02):** `MIN_MEME_SEEDS = 3` counts *seeds in
-  the Pass 1 plan*; nothing anywhere floors *rendered* memes. Real output over the 14 logged days
-  was 10 days under 3, median 2 (2026-09-01 shipped 1). Zero Imgflip failures and zero leftover
-  placeholders in that window, so the loss is entirely upstream of rendering — Pass 1 under-seeding
-  or Pass 2 under-emitting, and there is no check that distinguishes them: GIF tiers have
-  `count_planned_tier3`, memes have no equivalent. `story_plan.json` is archived daily as of
-  2026-09-02, so the next few runs will show which. Decide the policy against that data — the
-  "reported, never fabricated" rule for seeds is deliberate and should not be quietly overridden.
+- **Meme output runs below the floor (DIAGNOSED + FIX SHIPPED 2026-09-23, SLA-76; confirm over
+  the next week):** `MIN_MEME_SEEDS = 3`, but 20 of 22 archived issues (09-02 → 09-23) seeded
+  fewer, median 1. **Every seeded meme rendered** on all 22 days, so the loss was entirely in
+  Pass 1's plan, not Pass 2 or Imgflip. Cause: `pass1_story_selector.txt` stated the floor and,
+  thirty lines later, a "70% GIFs, 30% memes" balance with "most stories should ... leave
+  meme_concept empty". On a five-story day that is 1-2 memes, which is exactly what shipped. GIFs
+  had no competing instruction and hit their floor every day. The ratio is gone from both prompt
+  copies; the subject gate and "reported, never fabricated" are unchanged. Pass 1 is also told
+  3 is the CEILING (the writer's "Max 2-3 memes"): Pass 2 has rendered every seed one-for-one,
+  so its own cap would not stop an over-seeded plan. `uat/tests/
+  test_media_seed_prompt.py` fails if a percentage split or a "leave meme_concept empty" default
+  comes back, or if the stated floors drift from `plan_audit.py`. To re-measure, compare
+  `audit_media_seeds()` on `archive/<date>/story_plan.json` with the `i.imgflip.com` count in
+  that day's `newsletter_substack.html`.
 
 - **Cross-section callback rule** — discussed but not yet implemented in pass2_writer.txt
   (callbacks only valid when same person/team/event appears in BOTH sections literally).
@@ -834,7 +881,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (19 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (21 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -891,10 +938,40 @@ for …") omitted.
 - Cutoff 18:17 UTC, justified against the measured delay table in `docs/dead_mans_switch.md`.
   Configured in the service (cron `17 6 * * *` UTC, 12h grace); the code holds no cutoff.
 - Stdlib only, always exits 0, inert until `SLAP_HEARTBEAT_URL` is set. Verified against a local
-  HTTP server as well as the stubbed suite. **Not yet armed** — needs the healthchecks.io account
-  and secret; the "zero false alarms over a week" criterion can only be measured after that.
+  HTTP server as well as the stubbed suite. **Armed 2026-09-23** (check created, secret added);
+  the "zero false alarms over a week" criterion is being watched from there.
 - `uat/tests/test_heartbeat.py` — signal decision table, URL suffixes, never-fails, wiring order,
   stdlib-only imports. 0 network requests.
+
+**2026-09-23 — Pass 1 stops capping memes below its own floor (SLA-76)**
+- Measured the open Known Issue against 22 days of archived plans: seeds ≥3 on only 2 days,
+  median 1, and zero days where a seeded meme failed to render. Pass 1 under-seeds.
+- The Pass 1 prompt asked for "at least 3" memes and for a 70/30 GIF/meme split in the same
+  section; the split won. Replaced with one consistent instruction (a GIF and a meme are not
+  competing for one slot; the subject gate is the only reason to fall short) in both copies.
+  3 is stated as the ceiling too, matching the writer's cap, so the fix cannot overshoot.
+- `uat/tests/test_media_seed_prompt.py` locks it. Not yet confirmed on live runs.
+
+**2026-09-23 — Reliability review follow-ups (SLA-74)**
+- A review of the week's reliability work (SLA-52/54/55/57/68) found three gaps the tests did
+  not cover. Each fix has a test that fails against the old code.
+- **The rerun checkbox could swallow the newsletter.** `email_newsletter.py` wrote
+  `email_sent_state.json` after ANY successful send, including a FAILED-verdict failure report
+  with no newsletter in it. A rerun with the box checked — the exact case the box exists for —
+  then built the issue and skipped emailing it. Only a non-failed email (success or partial,
+  i.e. one that carried the issue) writes the marker now.
+- **A hung Claude call was unbounded.** See the SLA-54 rule above: `API_REQUEST_TIMEOUT` at both
+  client sites, plus a 17-minute stage limit on "Generate newsletter". Before this, the only
+  bound was the job's own 30-minute cap, which may kill the run before the status email.
+- **The noon publish job installed unpinned packages** (`curl_cffi`, `python-dotenv`,
+  `requests`) after SLA-57. Pinned there and in the Substack/Nitter CI checks, and locked by the
+  new `uat/tests/test_workflow_pins.py`.
+- Also: the email subject's date came from the runner's UTC clock while the panel used ET, so a
+  run after 8 PM ET had a subject dated tomorrow. Both are ET now.
+- Follow-up (SLA-75): "Commit email-sent marker" read "never ran" in every email, because it
+  runs after the send. Stages can now be declared `after_email=True`; the email shows them as
+  "runs after this email". The test fixture that built a "clean" status had every stage
+  reporting, including this one, which can never happen on a real run; it now matches reality.
 
 **2026-09-22 — Manual pipeline reruns are safe: no duplicate email, no orphaned Substack draft
 (SLA-55)**
