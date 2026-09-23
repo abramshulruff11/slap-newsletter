@@ -299,6 +299,34 @@ def _record_retries(label: str, note: str) -> None:
         print(f"    (could not record retry status: {type(e).__name__})")
 
 
+# A response that is NOT truncated (was_truncated() already covers that case)
+# can still fail to be a newsletter -- a meta-response about the model's own
+# approach, a refusal, anything without an <h1>/<h2> in it. Before SLA-15 that
+# case existed only for Pass 4, only at generate_newsletter.py's call site, and
+# fired silently: a print, then the fallback, with nothing recorded. Moved here
+# so both Pass 4 and Pass 6 get it, from one copy, and so the fallback is
+# visible in the daily email like every other fallback in this pipeline.
+_HTML_SHAPE_RE = re.compile(r'<h[12][\s>]', re.IGNORECASE)
+
+
+def _record_pass_fallback(label: str, reason: str) -> None:
+    try:
+        import run_status
+        run_status.append("pass_fallbacks", f"{label} ({reason})")
+    except Exception as e:  # noqa: BLE001 -- reporting must never break a run
+        print(f"    (could not record fallback status: {type(e).__name__})")
+
+
+def _gate_pass_shape(label: str, text: str, draft_html: str) -> str:
+    """Return `text` unless it isn't shaped like a newsletter, in which case
+    fall back to `draft_html` (the pre-pass draft) and record why."""
+    if _HTML_SHAPE_RE.search(text):
+        return text
+    print(f"  ⚠ {label} returned non-HTML output -- keeping the draft it was given instead.")
+    _record_pass_fallback(label, "non-HTML output")
+    return draft_html
+
+
 def retry_api_call(label: str, call, *, attempts: int = RETRY_ATTEMPTS,
                    sleep=time.sleep):
     """Run call(), retrying ONLY transient failures, with exponential backoff.
@@ -1028,7 +1056,7 @@ def run_pass4(draft_html: str, client: anthropic.Anthropic) -> str:
         print("    Keeping the pre-voice draft rather than a half-rewritten one.")
         return draft_html
 
-    return strip_code_fences(extract_text(response))
+    return _gate_pass_shape("PASS 4", strip_code_fences(extract_text(response)), draft_html)
 
 
 def _normalize_tweet_url(url: str) -> str:
@@ -1112,7 +1140,7 @@ def run_pass6(draft_html: str, recent_output: dict, client: anthropic.Anthropic,
         print("    Keeping the pre-editor draft rather than a truncated edit.")
         return draft_html
 
-    edited = strip_code_fences(extract_text(response))
+    edited = _gate_pass_shape("PASS 6", strip_code_fences(extract_text(response)), draft_html)
 
     # Count editor flags for the operator log
     flags = re.findall(r'<!-- EDITOR FLAG:', edited)

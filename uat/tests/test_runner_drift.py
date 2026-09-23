@@ -74,7 +74,7 @@ KNOWN_DIVERGENT = {
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
     )),
-    "main": dict(prod="4093639cf91b", uat="0e25f4ba71c9", reason=(
+    "main": dict(prod="b1375f886cfd", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
         "5-line stub. Expected to stay divergent permanently. (2026-09-04: prod "
         "now strips HTML comments from the published Substack file. Nothing to "
@@ -91,7 +91,15 @@ KNOWN_DIVERGENT = {
         "has no workflow around it, records no stages, and its import-time redirect "
         "already keeps it out of prod's status file. 2026-09-20 (SLA-54): prod's "
         "main() builds the client with max_retries=SDK_MAX_RETRIES; UAT's entry "
-        "point run_uat.py does the same at its own construction site.)"
+        "point run_uat.py does the same at its own construction site. 2026-09-23 "
+        "(SLA-15): prod's Pass 3 except clause broadened from ImportError-only to "
+        "also catch and degrade on any other exception, and records claim_flags / "
+        "pass3_error to run_status. run_uat.py's Pass 3 call (run_uat.py, not this "
+        "function) already caught broad exceptions; nothing to port there. The "
+        "non-HTML fallback gate that used to live in this function for Pass 4 moved "
+        "into the shared runner_common.run_pass4/run_pass6 (both now gated, both "
+        "call sites simplified) — not a change to what main() itself does, but it "
+        "shrank.)"
     )),
 }
 

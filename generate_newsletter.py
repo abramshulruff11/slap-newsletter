@@ -1254,23 +1254,31 @@ def main() -> None:
 
     draft_html    = run_pass2(story_plan, client, game_state, degraded=degraded)
 
-    # Pass 3 — Claim Validator (deterministic, cross-refs game_state.json)
+    # Pass 3 — Claim Validator (deterministic, cross-refs game_state.json).
+    # Advisory by design: it flags contradictions for Pass 6 to resolve, so any
+    # failure here degrades to "ship the draft unvalidated" rather than taking
+    # the whole run down. Used to catch only ImportError, so a bug INSIDE
+    # claim_validator (not just a missing module) killed the run for a
+    # cross-check nothing downstream requires.
     try:
         from claim_validator import validate_claims
         validated_html, _val_flags = validate_claims(draft_html, GAME_STATE_PATH)
+        # Discarded before SLA-15: a day with a dozen fact-flags and a clean day
+        # were indistinguishable, because the count went in the bin instead of
+        # run_status. Pass 6 (CHECK 9) still resolves every flag before publish
+        # — this is visibility into how much it had to resolve, not a gate.
+        run_status.record(claim_flags=_val_flags)
     except ImportError:
         print("\n── PASS 3: Claim Validator ─────────────────────────")
         print("  ⚠ claim_validator.py not found — skipping")
         validated_html = draft_html
+    except Exception as e:
+        print("\n── PASS 3: Claim Validator ─────────────────────────")
+        print(f"  ✗ {type(e).__name__}: {e} — shipping the draft unvalidated")
+        validated_html = draft_html
+        run_status.record(pass3_error=f"{type(e).__name__}: {e}")
 
     voiced_html   = run_pass4(validated_html, client)
-
-    # Gate: if Pass 4 returned a meta-response instead of HTML (e.g. it wrote
-    # about its approach to obituaries rather than returning the draft), fall back
-    # to Pass 2 output. A real newsletter always has at least one h1/h2 tag.
-    if not re.search(r'<h[12][\s>]', voiced_html, re.IGNORECASE):
-        print("  ⚠ Pass 4 returned non-HTML — falling back to validated draft")
-        voiced_html = validated_html
 
     audited_html  = pre_edit(voiced_html, story_plan)   # deterministic tweet check
     if args.no_editor:

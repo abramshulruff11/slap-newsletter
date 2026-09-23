@@ -60,6 +60,13 @@ MIN_MEDIA = 3            # GIFs + memes combined
 WANT_MEMES = 3           # the §2.4 seed floor, measured here on RENDERED memes
 WANT_GIFS = 5
 
+# Pass 3 (claim_validator) flags a contradiction for Pass 6 (CHECK 9) to
+# resolve before publish, so a flag alone is not a defect -- it is the check
+# working. No history exists to calibrate this against (the count was
+# discarded before SLA-15), so this is a starting point, not a measurement:
+# a double-digit count on one issue is worth a look, not an alarm on every run.
+WARN_CLAIM_FLAGS = 10
+
 
 def _summary(text: str) -> None:
     path = os.getenv("GITHUB_STEP_SUMMARY")
@@ -128,8 +135,11 @@ def main() -> int:
     status = run_status.load()
     box_images = sorted(BOX_SCORE_DIR.glob("box_score_sport_*.png"))
     box_count = len(box_images)
+    claim_flags = status.get("claim_flags")
     counts = {"tweets": c["tweets"], "gifs": c["gifs"], "memes": c["memes"],
               "highlights": c["highlights"], "words": c["words"]}
+    if isinstance(claim_flags, int):
+        counts["claim_flags"] = claim_flags
 
     # ---- the report, which is the point even when everything passes --------
     rows = [
@@ -140,6 +150,8 @@ def main() -> int:
         ("box score images", len(box_images), ""),
         ("words", c["words"], ""),
     ]
+    if isinstance(claim_flags, int):
+        rows.append(("claim flags (Pass 3)", claim_flags, f"warn at {WARN_CLAIM_FLAGS}+"))
     if loud:
         print("\n── RUN QUALITY ─────────────────────────────────────")
     _summary("### Newsletter produced")
@@ -199,6 +211,17 @@ def main() -> int:
             f"missing them; the emailed copy is not")
     if share < 30 and media:
         warnings.append(f"media share {share:.0f}% — target is 40%")
+    if isinstance(claim_flags, int) and claim_flags >= WARN_CLAIM_FLAGS:
+        warnings.append(f"Pass 3 raised {claim_flags} claim flag(s) — "
+                        f"Pass 6 resolves them, but that's a lot to resolve")
+    if status.get("pass3_error"):
+        warnings.append(f"Pass 3 (claim validator) failed and was skipped — "
+                        f"{status['pass3_error']}")
+    if status.get("pass_fallbacks"):
+        warnings.append(
+            "pass fallback(s) fired — the model returned non-newsletter output "
+            "and the pre-pass draft was kept instead: "
+            + ", ".join(status["pass_fallbacks"]))
 
     for w in warnings:
         if loud:

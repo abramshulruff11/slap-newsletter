@@ -846,6 +846,38 @@ deprecation, and API rate limits.
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
 
+**2026-09-23 — Four passes that detected a problem and only printed about it (SLA-15)**
+- Same disease this repo has already named twice: a `print()` is not a signal, because nothing
+  downstream can act on it. Four specific gaps, all closed:
+  1. **Pass 3's claim-flag count was discarded.** `validate_claims()` returns how many FACT FLAG /
+     COHERENCE FLAG comments it inserted for Pass 6 to resolve, and the count went straight in the
+     bin (`_val_flags` — the underscore was the whole bug). It's now recorded to `run_status` as
+     `claim_flags` and shown in `verify_run.py`'s report every run. `WARN_CLAIM_FLAGS = 10` warns
+     — never fails — because a flag is Pass 3 working as designed, not a defect; there's no history
+     to calibrate the threshold against (the count never used to be kept), so it's a starting
+     point to revisit once a few weeks of real numbers exist, not a measurement.
+  2. **Pass 6 had no malformed-output gate.** Pass 4 already fell back to its input HTML if the
+     model returned a meta-response instead of a rewritten draft; Pass 6 rewrites the whole draft
+     too and had no equivalent, so a meta-response there would have shipped as the newsletter.
+  3. **Both fallbacks were invisible when they fired** — a print and nothing else, so the model
+     could fail this way every single day with nothing to show for it but a build log nobody
+     reads. The gate moved out of `generate_newsletter.py`'s Pass 4 call site (the only place it
+     existed) into shared `runner_common._gate_pass_shape()`, used by both `run_pass4` and
+     `run_pass6`. Every fallback it triggers is recorded to `run_status["pass_fallbacks"]` and
+     surfaces as a warning in the daily email.
+  4. **Pass 3 could kill the whole run.** It only caught `ImportError`, so a bug *inside*
+     `claim_validator.py` — not just a missing module — took down the run for a cross-check that's
+     advisory by design. Broadened to catch and degrade (ship the draft unvalidated, record
+     `pass3_error`) on any exception.
+- `uat/tests/test_pass_output_gates.py` — offline, 0 API calls: locks the shared gate on both
+  passes, the Pass 3 broadened except clause (checked at the source level, since exercising
+  `main()` needs live API keys and a full run), and that all three new signals reach
+  `verify_run.py` as warnings, never failures.
+- `run_pass1`/`run_pass2`/`pre_edit`/`main` stay the `test_runner_drift.py` divergence ledger;
+  `main`'s prod hash is re-pinned in this commit (the Pass 3 except-clause change, and the shrink
+  from removing the now-redundant inline Pass 4 gate). UAT's `run_uat.py` already caught broad
+  exceptions around its own Pass 3 call — nothing to port there.
+
 **2026-09-22 — Manual pipeline reruns are safe: no duplicate email, no orphaned Substack draft
 (SLA-55)**
 - Per the Known Issues note this ticket closes: a `workflow_dispatch` re-run after a failure did
