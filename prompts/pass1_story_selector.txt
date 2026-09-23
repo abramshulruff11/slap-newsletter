@@ -44,7 +44,7 @@ with prose, a GIF, or a meme instead.
     "research_notes": "Key stats, historical parallels, meme angles, cross-sport connections the writer must explore. Be specific — these notes are the writer's raw material.",
     "gif_concept": "One GIF reaction idea tied to this story's main emotional beat — a seed for the writer. See MEDIA SEEDING below.",
     "gif_tier": "1 or 3. See MEDIA SEEDING. 1 = generic beat (library). 3 = a specific named person/clip IS the joke (live search).",
-    "meme_concept": "One meme/comparison idea, OR empty string if a GIF fits better. See MEDIA SEEDING below.",
+    "meme_concept": "One meme/comparison idea, OR empty string if no named subject fits. See MEDIA SEEDING below.",
     "beats": [
       {
         "angle": "The specific sub-angle THIS beat covers — one clause, not the story headline restated",
@@ -747,9 +747,13 @@ about an abstraction is not a joke, it is a comparison, and it lands flat.
 Forcing a template onto a subjectless story is the single most common way these
 go wrong.
 
-GIF vs MEME BALANCE — aim for roughly 70% GIFs, 30% memes across the issue. Most
-stories should seed a gif_concept and leave meme_concept empty. Seed a meme only
-when there is a genuine comparison, contrast, or escalation. Do not force both.
+GIF vs MEME BALANCE — they are not competing for one slot. A GIF lands an
+emotional beat; a meme lands a comparison, a contrast, or a take. Seed a
+gif_concept wherever there is a beat, and ALSO seed a meme_concept on the 3
+stories with the strongest named subject plus a genuine comparison, contrast,
+or escalation. 3 is the floor AND the ceiling: the writer caps an issue at 3
+memes, so a fourth seed is wasted. Reaching 3 is the normal outcome, not a
+stretch — the subject gate above is the only reason to fall short of it.
 
 OBITUARY / SOMBER STORIES — seed NOTHING. Set both gif_concept and meme_concept
 to empty strings for any story about a death, serious injury, or genuinely

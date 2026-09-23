@@ -798,14 +798,20 @@ unstaged, which breaks `git pull --rebase`.
   `vince-mcmahon-reaction` turned out to be 5 panels, not 4 — it had been shipping a blank payoff
   frame and reporting success. `meme_box_check.py` now blocks that class of failure in production.
   Re-run the probe after adding any template.
-- **Meme output runs below the floor (open, 2026-09-02):** `MIN_MEME_SEEDS = 3` counts *seeds in
-  the Pass 1 plan*; nothing anywhere floors *rendered* memes. Real output over the 14 logged days
-  was 10 days under 3, median 2 (2026-09-01 shipped 1). Zero Imgflip failures and zero leftover
-  placeholders in that window, so the loss is entirely upstream of rendering — Pass 1 under-seeding
-  or Pass 2 under-emitting, and there is no check that distinguishes them: GIF tiers have
-  `count_planned_tier3`, memes have no equivalent. `story_plan.json` is archived daily as of
-  2026-09-02, so the next few runs will show which. Decide the policy against that data — the
-  "reported, never fabricated" rule for seeds is deliberate and should not be quietly overridden.
+- **Meme output runs below the floor (DIAGNOSED + FIX SHIPPED 2026-09-23, SLA-76; confirm over
+  the next week):** `MIN_MEME_SEEDS = 3`, but 20 of 22 archived issues (09-02 → 09-23) seeded
+  fewer, median 1. **Every seeded meme rendered** on all 22 days, so the loss was entirely in
+  Pass 1's plan, not Pass 2 or Imgflip. Cause: `pass1_story_selector.txt` stated the floor and,
+  thirty lines later, a "70% GIFs, 30% memes" balance with "most stories should ... leave
+  meme_concept empty". On a five-story day that is 1-2 memes, which is exactly what shipped. GIFs
+  had no competing instruction and hit their floor every day. The ratio is gone from both prompt
+  copies; the subject gate and "reported, never fabricated" are unchanged. Pass 1 is also told
+  3 is the CEILING (the writer's "Max 2-3 memes"): Pass 2 has rendered every seed one-for-one,
+  so its own cap would not stop an over-seeded plan. `uat/tests/
+  test_media_seed_prompt.py` fails if a percentage split or a "leave meme_concept empty" default
+  comes back, or if the stated floors drift from `plan_audit.py`. To re-measure, compare
+  `audit_media_seeds()` on `archive/<date>/story_plan.json` with the `i.imgflip.com` count in
+  that day's `newsletter_substack.html`.
 
 - **Cross-section callback rule** — discussed but not yet implemented in pass2_writer.txt
   (callbacks only valid when same person/team/event appears in BOTH sections literally).
@@ -855,7 +861,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (19 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (20 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -900,6 +906,15 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-23 — Pass 1 stops capping memes below its own floor (SLA-76)**
+- Measured the open Known Issue against 22 days of archived plans: seeds ≥3 on only 2 days,
+  median 1, and zero days where a seeded meme failed to render. Pass 1 under-seeds.
+- The Pass 1 prompt asked for "at least 3" memes and for a 70/30 GIF/meme split in the same
+  section; the split won. Replaced with one consistent instruction (a GIF and a meme are not
+  competing for one slot; the subject gate is the only reason to fall short) in both copies.
+  3 is stated as the ceiling too, matching the writer's cap, so the fix cannot overshoot.
+- `uat/tests/test_media_seed_prompt.py` locks it. Not yet confirmed on live runs.
 
 **2026-09-23 — Reliability review follow-ups (SLA-74)**
 - A review of the week's reliability work (SLA-52/54/55/57/68) found three gaps the tests did
