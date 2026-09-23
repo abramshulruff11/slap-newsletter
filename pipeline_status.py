@@ -61,10 +61,17 @@ class Stage:
     FAILED run. critical=False means the step is wired continue-on-error and a
     failure degrades the run rather than ending it — a push hiccup or a missed
     Substack draft is worth an email, but the newsletter still went out.
+
+    after_email=True means the step runs AFTER the daily status email in the
+    workflow, so the email is always built before it could report. Without the
+    flag its row read "never ran" in every single email (SLA-75) -- permanent
+    noise in a panel whose whole job is to be worth reading. Such a stage is
+    shown as "pending" instead; its own outcome is in the job log.
     """
     name: str
     critical: bool
     note: str = ""
+    after_email: bool = False
 
 
 PIPELINE_STAGES: tuple[Stage, ...] = (
@@ -93,7 +100,8 @@ PIPELINE_STAGES: tuple[Stage, ...] = (
     Stage("Publish late if past 12:30 PM ET", False),
     Stage("Assess run quality", False),
     Stage("Commit email-sent marker", False,
-          "a same-day manual rerun may not know the email already went out"),
+          "a same-day manual rerun may not know the email already went out",
+          after_email=True),
 )
 
 STAGE_BY_NAME = {s.name: s for s in PIPELINE_STAGES}
@@ -201,7 +209,8 @@ def stage_rows(status: dict) -> list[dict]:
     for stage in PIPELINE_STAGES:
         got = recorded.pop(stage.name, None)
         if got is None:
-            rows.append({"name": stage.name, "state": "skipped",
+            rows.append({"name": stage.name,
+                         "state": "pending" if stage.after_email else "skipped",
                          "critical": stage.critical, "note": stage.note})
         else:
             rows.append({**got, "note": stage.note,
@@ -265,7 +274,9 @@ def verdict(status: dict) -> tuple[str, str]:
         total = images.get("expected", missing)
         return "partial", (f"newsletter shipped, but {missing} of {total} box score "
                            f"image(s) never reached Substack")
-    if not rows or all(r["state"] == "skipped" for r in rows):
+    # "pending" counts as not-run here: an after-email stage is never recorded
+    # when the email is built, so a run that never started has one of those too.
+    if not rows or all(r["state"] in ("skipped", "pending") for r in rows):
         return "failed", "no pipeline stage reported in — the run never started"
     return "success", "every stage completed"
 
@@ -301,7 +312,7 @@ def main(argv: list[str] | None = None) -> int:
     level, headline = verdict(status)
     print(f"\n── PIPELINE STATUS ── {level.upper()}: {headline}")
     for r in stage_rows(status):
-        mark = {"ok": "✓", "failed": "✗", "skipped": "–"}[r["state"]]
+        mark = {"ok": "✓", "failed": "✗", "skipped": "–", "pending": "·"}[r["state"]]
         secs = f"{r['seconds']:.0f}s" if r.get("seconds") is not None else ""
         print(f"  {mark} {r['name']:<34} {secs}")
     return 0

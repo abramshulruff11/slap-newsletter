@@ -134,6 +134,8 @@ def _stage_table_html(status: dict) -> str:
                 detail += " · non-blocking"
         elif state == "skipped":
             detail = "never ran"
+        elif state == "pending":
+            detail = "runs after this email"
         rows += (
             '<tr>'
             f'<td style="padding:2px 8px 2px 0;color:{colour};font-weight:bold;">{mark}</td>'
