@@ -92,6 +92,24 @@ jobs:
       - name: Install dependencies
         run: bash ci/run_stage.sh "Install dependencies" pip install -r requirements.txt
 
+      # SLA-57: what a green run actually installed, so the next pin bump can
+      # be read out of an artifact instead of an Actions log that will
+      # eventually age out. Diagnostic only — not a pipeline stage, so it
+      # isn't in PIPELINE_STAGES and can't affect the run's verdict.
+      - name: Record installed dependency versions
+        if: always()
+        continue-on-error: true
+        run: pip freeze > pip-freeze.txt
+
+      - name: Upload dependency versions artifact
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: pip-freeze
+          path: pip-freeze.txt
+          retention-days: 90
+
       - name: Install Playwright Chromium
         run: bash ci/run_stage.sh "Install Playwright Chromium" python -m playwright install --with-deps chromium
 

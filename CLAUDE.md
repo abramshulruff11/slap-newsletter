@@ -694,11 +694,25 @@ unstaged, which breaks `git pull --rebase`.
   aligns `yesterday` with last night's games; firing at, say, 02:00 UTC would compute
   `yesterday` while those games were still being played.
 
-- **`anthropic` pinned (RESOLVED 2026-09-02):** now `anthropic==1.2.0`, the version run 169
-  proved green end to end. It was a bare `anthropic`, so CI resolved whatever was newest — and
-  1.3.0 had already shipped, meaning the next scheduled run would have picked up a third,
-  untested version. Bump deliberately and re-run the pipeline before leaving it pinned forward.
-  The rest of `requirements.txt` is still unpinned.
+- **`anthropic` pinned (RESOLVED 2026-09-02); all of `requirements.txt` pinned (RESOLVED
+  2026-09-23, SLA-57):** every entry is now pinned to the version GitHub Actions run
+  `35602375183` (2026-09-21, green end to end) actually installed — read out of that run's
+  `pip install` log, not a local `pip freeze` (the dev machine had `anthropic==0.84.0` installed
+  against CI's pinned `1.2.0`; pinning from the wrong environment would pin the pipeline to
+  versions it never ran on). **To bump any entry:** change its version, re-run the pipeline via
+  `workflow_dispatch`, confirm green, then leave it pinned forward — one entry at a time, same as
+  the original `anthropic` rule this generalizes. Every run now also uploads a `pip-freeze`
+  build artifact (90-day retention) recording exactly what was installed, so the next bump never
+  again has to mine an Actions log before it expires.
+- **Chromium is not separately pinned, and that's a deliberate decision, not an oversight
+  (SLA-57).** `playwright install chromium` downloads the browser build tied to the installed
+  **Playwright package's** own revision manifest, not "whatever is newest" — so pinning
+  `playwright==1.63.0` in `requirements.txt` already pins which Chromium build CI downloads on
+  every run. A Chromium-level change can only reach us through a `playwright` package bump, which
+  the pin already guards and which gets the same workflow_dispatch-and-confirm-green treatment as
+  every other pin (box score renders are part of what "confirm green" means to check). No
+  separate `playwright install chromium@<rev>` or browser cache was added — it would be
+  redundant machinery for a case the package pin already covers.
 
 - **Runner duplication (MOSTLY RESOLVED 2026-09-01):** 24 byte-identical functions moved to
   `runner_common.py`, and `uat/tests/test_runner_drift.py` now fails on any undeclared
