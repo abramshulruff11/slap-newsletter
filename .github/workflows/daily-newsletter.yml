@@ -89,6 +89,20 @@ jobs:
       - name: Start pipeline status
         run: python pipeline_status.py start
 
+      # SLA-56 dead man's switch, first half. Everything else that watches this
+      # pipeline runs inside this job, so none of it can report a job that never
+      # started or was killed. This pings an EXTERNAL service (healthchecks.io);
+      # the service emails Abram if no finish ping follows by the cutoff — see
+      # docs/dead_mans_switch.md for the cutoff and why. Before the installs so
+      # a run that dies in pip still counts as "started". heartbeat.py is stdlib
+      # only, always exits 0, and is a no-op until the secret exists. Not a
+      # pipeline stage: it is monitoring, not part of making the issue.
+      - name: Heartbeat — started
+        continue-on-error: true
+        env:
+          SLAP_HEARTBEAT_URL: ${{ secrets.SLAP_HEARTBEAT_URL }}
+        run: python heartbeat.py start
+
       - name: Install dependencies
         run: bash ci/run_stage.sh "Install dependencies" pip install -r requirements.txt
 
@@ -349,6 +363,20 @@ jobs:
             FLAGS="--rerun-safe"
           fi
           python email_newsletter.py $FLAGS
+
+      # SLA-56 dead man's switch, second half. Right after the email, because
+      # the question it answers is "did Abram hear from this run?". Email sent
+      # -> success ping (the email already carries the verdict; a second alert
+      # for the same failure is noise). Email NOT sent -> fail ping, and the
+      # service alerts at once: this is the only channel left. always() so it
+      # runs after a failed stage; a job killed before reaching it simply never
+      # finishes, and the service alerts at the cutoff instead.
+      - name: Heartbeat — finished
+        if: always()
+        continue-on-error: true
+        env:
+          SLAP_HEARTBEAT_URL: ${{ secrets.SLAP_HEARTBEAT_URL }}
+        run: python heartbeat.py finish
 
       # SLA-55: persist proof that today's email went out, so a LATER rerun on
       # a fresh runner (run_status.json is gitignored and reset every run — it

@@ -146,6 +146,8 @@ slap-newsletter/
 │                                 PIPELINE_STAGES is the declared stage list
 ├── verify_run.py              ← run-quality gate; --record / --gate (see below)
 ├── check_game_state.py        ← ESPN fetch-health guard
+├── heartbeat.py               ← SLA-56 dead man's switch pings (healthchecks.io);
+│                                 stdlib only, always exits 0. docs/dead_mans_switch.md
 ├── ci/run_stage.sh            ← runs one workflow stage, tees its log, records
 │                                 the exit code, re-raises it
 ├── generate_newsletter.py     ← orchestrates all passes (main script)
@@ -430,6 +432,24 @@ draft, `verify_run.py`'s findings, a truncated pass — is in it.
   (no handoff / stale handoff / crash) and which are Abram himself (he published it, deleted it,
   scheduled it). `email_newsletter.py --publish-alert` sends only the first kind. That rule only
   holds if the innocent cases stay genuinely silent — don't widen it.
+
+**The one alert that does not come from the pipeline: the dead man's switch (SLA-56,
+2026-09-23).** Everything above runs inside the job, so none of it can report a job that never
+started or was killed. `heartbeat.py` pings healthchecks.io — `start` before the installs,
+`finish` right after the daily email under `if: always()` — and the SERVICE emails Abram when
+pings are late. Setup, the cutoff's justification and how to pause it are in
+`docs/dead_mans_switch.md`; read it before touching either step.
+
+- **`finish` means "did Abram get today's email?", not "was the run green".** Email sent →
+  success, whatever the verdict (the email already said so). Email not sent → `/fail`, and the
+  service alerts at once, because nothing else can.
+- **Cutoff 18:17 UTC** (cron + 12h grace, set in the service's UI, not in code): worst measured
+  start 12:55 UTC + the 30-min job cap = 13:25, so 4h52m of headroom. Earlier buys little — on a
+  never-ran day the noon publish job already alerts on the missing handoff.
+- **Inert until the `SLAP_HEARTBEAT_URL` secret exists**, and never fails a step. Neither step is
+  a pipeline stage (no `run_stage.sh`, not in `PIPELINE_STAGES`). Locked by
+  `uat/tests/test_heartbeat.py`.
+- **Pause it in the healthchecks.io UI, never by deleting the secret** — no pings means an alert.
 
 **Transient API failures are retried underneath every pass; permanent ones are not (SLA-54,
 2026-09-20).** `runner_common.retry_api_call()` wraps all seven Anthropic call sites — Pass 1, 2,
@@ -814,18 +834,19 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (17 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (19 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
-`SUBSTACK_COOKIES_STRING`, `SUBSTACK_PUBLICATION_URL`, `PROXY_URL`.
+`SUBSTACK_COOKIES_STRING`, `SUBSTACK_PUBLICATION_URL`, `PROXY_URL`, and (optional — the dead man's
+switch is off without it) `SLAP_HEARTBEAT_URL`.
 
-Daily pipeline steps: checkout → setup Python → **start pipeline status** → install deps →
+Daily pipeline steps: checkout → setup Python → **start pipeline status** → heartbeat start → install deps →
 install Chromium → fetch content → fetch sports data → check sports data health → validate →
 generate newsletter → render box score PNGs → verify outputs → archive → **commit & push** →
 **create Substack draft** → commit handoff → publish now if already past 12:30 PM ET →
 **assess run quality** (`verify_run.py --record`) → **send the daily status email**
-(`if: always()`) → **run-quality gate** (`verify_run.py --gate`, `if: always()`, fails the job).
+(`if: always()`) → heartbeat finish (`if: always()`) → commit email-sent marker → **run-quality gate** (`verify_run.py --gate`, `if: always()`, fails the job).
 Every one of those from "install deps" down runs through `ci/run_stage.sh`.
 
 Ordering notes: push is before the email so the size-guard's hosted-URL fallback resolves when
@@ -859,6 +880,21 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-23 — Dead man's switch: an alert that does not depend on the pipeline (SLA-56)**
+- Every reliability check ran inside the job, so a scheduled run that never started — or was
+  killed by `timeout-minutes` (09-21 finished at 24m48s of 30) — produced no email at all.
+- `heartbeat.py` + two workflow steps ping healthchecks.io (option 1 in the ticket; the only one
+  that survives an Actions outage). `start` precedes the installs so a pip death still counts as
+  started; `finish` follows the email and sends `/fail` only when the email did NOT go out, so a
+  failed-but-reported run does not produce a second alert.
+- Cutoff 18:17 UTC, justified against the measured delay table in `docs/dead_mans_switch.md`.
+  Configured in the service (cron `17 6 * * *` UTC, 12h grace); the code holds no cutoff.
+- Stdlib only, always exits 0, inert until `SLAP_HEARTBEAT_URL` is set. Verified against a local
+  HTTP server as well as the stubbed suite. **Not yet armed** — needs the healthchecks.io account
+  and secret; the "zero false alarms over a week" criterion can only be measured after that.
+- `uat/tests/test_heartbeat.py` — signal decision table, URL suffixes, never-fails, wiring order,
+  stdlib-only imports. 0 network requests.
 
 **2026-09-22 — Manual pipeline reruns are safe: no duplicate email, no orphaned Substack draft
 (SLA-55)**
