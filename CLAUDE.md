@@ -416,6 +416,9 @@ draft, `verify_run.py`'s findings, a truncated pass — is in it.
   record; the declared list is what makes "never ran" printable. `uat/tests/test_pipeline_status.py`
   parses `daily-newsletter.yml` and fails on any disagreement in either direction, including
   order. **When you add a workflow step, add it to `PIPELINE_STAGES` in the same commit.**
+  A step placed AFTER the email step must be declared `after_email=True` (the test checks both
+  directions): the email is built before it can report, so it shows as "runs after this email"
+  instead of "never ran". Before SLA-75 the marker commit read "never ran" in every email.
 - **Warnings do NOT downgrade the verdict.** `verify_run.py` warns on a thin issue, and those
   fire on most days. A top line that reads PARTIAL every morning is a top line nobody reads,
   which is the failure this ticket exists to fix. Only real breakage moves the headline.
@@ -914,8 +917,10 @@ for …") omitted.
   new `uat/tests/test_workflow_pins.py`.
 - Also: the email subject's date came from the runner's UTC clock while the panel used ET, so a
   run after 8 PM ET had a subject dated tomorrow. Both are ET now.
-- Still open (minor): "Commit email-sent marker" always reads "never ran" in the email, because
-  it runs after the send and the email cannot report on it.
+- Follow-up (SLA-75): "Commit email-sent marker" read "never ran" in every email, because it
+  runs after the send. Stages can now be declared `after_email=True`; the email shows them as
+  "runs after this email". The test fixture that built a "clean" status had every stage
+  reporting, including this one, which can never happen on a real run; it now matches reality.
 
 **2026-09-22 — Manual pipeline reruns are safe: no duplicate email, no orphaned Substack draft
 (SLA-55)**
