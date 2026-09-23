@@ -148,19 +148,33 @@ jobs:
           "
           STAGE
 
+      # SLA-74: the generator gets a hard 17-minute limit. A hung Claude call
+      # (a response that never arrives, as opposed to a fast 429/529) is not
+      # bounded by the retry logic -- each attempt can take the full
+      # API_REQUEST_TIMEOUT, several times over -- and without this limit it
+      # runs into the JOB's 30-minute cap, which may kill the run before the
+      # always() status email. Budget: the stage starts ~7 min in (fetches took
+      # 5.5 min on 2026-09-22); 7 + 17 leaves time for the email. A normal
+      # generate takes ~4.5 min. `timeout` runs INSIDE the wrapper so the stage
+      # is still recorded, with the explanation below in its log tail.
       - name: Generate newsletter
         env:
           # Empty on every scheduled run; only a manual dispatch can set it.
           SLAP_SIMULATE_API_FAILURES: ${{ inputs.simulate_api_failures }}
+          SKIP_EDITOR: ${{ inputs.skip_editor }}
+          SKIP_GIFS: ${{ inputs.skip_gifs }}
         run: |
+          bash ci/run_stage.sh "Generate newsletter" <<'STAGE'
           FLAGS=""
-          if [ "${{ inputs.skip_editor }}" = "true" ]; then
-            FLAGS="$FLAGS --no-editor"
+          if [ "$SKIP_EDITOR" = "true" ]; then FLAGS="$FLAGS --no-editor"; fi
+          if [ "$SKIP_GIFS" = "true" ]; then FLAGS="$FLAGS --no-gifs"; fi
+          timeout --kill-after=30s 17m python generate_newsletter.py $FLAGS
+          code=$?
+          if [ "$code" -eq 124 ] || [ "$code" -eq 137 ]; then
+            echo "ERROR: Generate newsletter ran past its 17-minute limit and was stopped, so the status email could still go out. The lines above show which pass it was waiting on -- most likely the Claude API stopped responding."
           fi
-          if [ "${{ inputs.skip_gifs }}" = "true" ]; then
-            FLAGS="$FLAGS --no-gifs"
-          fi
-          bash ci/run_stage.sh "Generate newsletter" python generate_newsletter.py $FLAGS
+          exit $code
+          STAGE
 
       - name: Render box score images (one per sport, MLB chunked)
         run: |
@@ -257,7 +271,7 @@ jobs:
           # otherwise fail the step while recording nothing, so the stage
           # would read as "never ran" in the status email — a stage that
           # silently vanishes is the hole this mechanism exists to close.
-          pip install python-substack==0.1.22 curl_cffi
+          pip install python-substack==0.1.22 curl_cffi==0.16.3
           FLAGS=""
           if [ "${{ inputs.rerun_of_failed_run }}" = "true" ]; then
             FLAGS="--rerun-safe"

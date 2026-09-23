@@ -300,6 +300,60 @@ for rel in ("generate_newsletter.py", "uat/run_uat.py"):
     src = (REPO / rel).read_text(encoding="utf-8")
     check_true(f"{rel}: the client sets max_retries explicitly",
                "max_retries=SDK_MAX_RETRIES" in src)
+    # SLA-74: and a per-request timeout. The SDK default is 600s, and a hung
+    # call x 12 attempts ran two hours past a 30-minute job.
+    check_true(f"{rel}: the client sets a per-request timeout explicitly",
+               "timeout=API_REQUEST_TIMEOUT" in src)
+
+check_true("API_REQUEST_TIMEOUT is under the SDK's 600s default",
+           0 < RC.API_REQUEST_TIMEOUT < 600)
+# ~58 tok/s measured for Pass 2 on 2026-09-22; a full MAX_TOKENS_WRITER must
+# still fit, or a legitimately long draft would be cut off as a "hang".
+check_true("API_REQUEST_TIMEOUT leaves room for a full-length Pass 2 draft",
+           RC.API_REQUEST_TIMEOUT >= 1.3 * RC.MAX_TOKENS_WRITER / 58)
+
+# Setting ANY client timeout switches OFF the SDK's own "Streaming is required"
+# guard (anthropic 1.2.0 only runs _calculate_nonstreaming_timeout when the
+# client timeout is the default). That guard is what used to refuse a
+# non-streaming call above 21,333 tokens. It now has to live here: every
+# non-streaming messages.create() must stay under that ceiling AND finish
+# inside API_REQUEST_TIMEOUT, or a legitimately long answer is cut off as a hang.
+_NONSTREAM_CEILING = 21_333
+for rel in ("generate_newsletter.py", "uat/generate_newsletter_uat.py",
+            "runner_common.py"):
+    src = (REPO / rel).read_text(encoding="utf-8")
+    for m in re.finditer(r"messages\.create\((.{0,600}?)\n\s*\)", src, re.S):
+        mt = re.search(r"max_tokens\s*=\s*([A-Z_]+|\d+)", m.group(1))
+        if not mt:
+            continue
+        raw = mt.group(1)
+        val = int(raw) if raw.isdigit() else getattr(RC, raw, None)
+        line = src[:m.start()].count("\n") + 1
+        check_true(f"{rel}:{line}: non-streaming max_tokens={raw} resolves",
+                   isinstance(val, int))
+        if isinstance(val, int):
+            check_true(f"{rel}:{line}: non-streaming max_tokens={val} is under the "
+                       f"{_NONSTREAM_CEILING} streaming ceiling",
+                       val <= _NONSTREAM_CEILING)
+            check_true(f"{rel}:{line}: max_tokens={val} fits API_REQUEST_TIMEOUT at "
+                       f"~58 tok/s with 1.3x headroom",
+                       1.3 * val / 58 <= RC.API_REQUEST_TIMEOUT)
+
+# The hard cap: the generator stage is stopped before the JOB's timeout, so
+# the always() status email still runs. Checked against the real workflow.
+_wf = (REPO / ".github/workflows/daily-newsletter.yml").read_text(encoding="utf-8")
+_gen = re.search(r"- name: Generate newsletter\n.*?(?=\n      - name:|\Z)", _wf, re.S)
+_job_cap = re.search(r"timeout-minutes:\s*(\d+)", _wf)
+_stage_cap = re.search(r"timeout\s+(?:--\S+\s+)*(\d+)m\s+python generate_newsletter\.py",
+                       _gen.group(0) if _gen else "")
+check_true("the Generate newsletter stage runs under a hard `timeout`",
+           bool(_stage_cap))
+if _stage_cap and _job_cap:
+    check_true("...that leaves >= 10 min of the job cap for fetches + the email",
+               int(_job_cap.group(1)) - int(_stage_cap.group(1)) >= 10)
+check_true("...and the timeout is INSIDE run_stage.sh, so the stage is still recorded",
+           bool(_gen) and "run_stage.sh \"Generate newsletter\"" in _gen.group(0)
+           and _gen.group(0).index("run_stage.sh") < _gen.group(0).index("timeout --"))
 
 # Pass 1's old corrective message asserted the cause was unescaped quotes. For a
 # 429 that was false, and it cost a validation attempt to say it.

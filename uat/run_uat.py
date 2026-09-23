@@ -46,7 +46,7 @@ import highlight_to_gif as H                 # noqa: E402
 import meme_box_check as MB                  # noqa: E402
 import meme_library                          # noqa: E402
 import gif_library_select as GL              # noqa: E402
-from runner_common import SDK_MAX_RETRIES    # noqa: E402
+from runner_common import SDK_MAX_RETRIES, API_REQUEST_TIMEOUT    # noqa: E402
 
 # ---------------------------------------------------------------------------
 # CONFIG — §1.2
@@ -288,7 +288,8 @@ def main() -> None:
     # default that can move in a patch release. These are the SDK's own FAST
     # retries (sub-8s, honouring retry-after). runner_common.retry_api_call
     # wraps every pass with the slow outer ones on top.
-    client = anthropic.Anthropic(api_key=api_key, max_retries=SDK_MAX_RETRIES)
+    client = anthropic.Anthropic(api_key=api_key, max_retries=SDK_MAX_RETRIES,
+                                 timeout=API_REQUEST_TIMEOUT)
 
     print("=" * 52)
     print("SLAP MEDIA MIX — UAT")

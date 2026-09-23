@@ -17,7 +17,9 @@ THE PROBLEM
 WHAT THIS LOCKS
   1. email_newsletter.py: a committed email_sent_state.json dated today makes
      --rerun-safe skip the send, and is otherwise ignored (a fresh day, a
-     missing file, no flag at all -- all send normally).
+     missing file, no flag at all -- all send normally). Only an email that
+     delivered the issue writes the marker: a FAILED-verdict failure report
+     must not stop the rerun after it from sending the newsletter (SLA-74).
   2. substack_poc/publish.py: --rerun-safe reuses today's still-open draft
      (PUT, not POST) instead of creating a second one, but only when the
      handoff is genuinely from today AND the draft is still an open draft --
@@ -275,6 +277,47 @@ sent.clear()
 rc = run_main([])
 check("WITHOUT --rerun-safe, a same-day marker is ignored -- sends anyway",
       len(sent), 1)
+
+# SLA-74. The scenario the rerun checkbox exists for: the morning run dies at a
+# critical stage, the always() email goes out as a FAILURE REPORT, and Abram
+# reruns with the box checked. That failure report must not count as "today's
+# email" -- if it did, the rerun would build the newsletter and never send it.
+EN.EMAIL_SENT_MARKER.unlink(missing_ok=True)
+EN.SUBSTACK_PATH.unlink(missing_ok=True)
+dead_stages = [dict(r, ok=False, exit_code=1) if r["name"] == "Generate newsletter"
+               else r for r in clean_stages]
+run_status.record(stages=dead_stages, email_sent=None)
+check("sanity: this morning's run reads as FAILED",
+      PS.verdict(run_status.load())[0], "failed")
+sent.clear()
+rc = run_main(["--rerun-safe"])
+check("a FAILED run still sends its failure report", len(sent), 1)
+check_true("...with the failure in the subject", "❌" in sent[0][0])
+check("...but writes NO email-sent marker", EN.already_sent_today(), None)
+
+# The rerun succeeds this time; with the box checked it must SEND the issue.
+EN.SUBSTACK_PATH.write_text("<html><body><h1>Rerun issue</h1></body></html>",
+                            encoding="utf-8")
+run_status.record(stages=clean_stages, email_sent=None)
+sent.clear()
+rc = run_main(["--rerun-safe"])
+check("the rerun after a failure report SENDS the newsletter", len(sent), 1)
+check_true("...and it is the issue, not another failure report",
+           "Rerun issue" in sent[0][0] and "❌" not in sent[0][0])
+check_true("...and NOW the marker exists, so a third run would skip",
+           EN.already_sent_today() is not None)
+
+# A PARTIAL run did deliver the issue, so it does count as sent.
+EN.EMAIL_SENT_MARKER.unlink(missing_ok=True)
+soft_bad = [dict(r, ok=False, exit_code=1) if r["name"] == "Archive outputs"
+            else r for r in clean_stages]
+run_status.record(stages=soft_bad, email_sent=None)
+check("sanity: a soft-stage failure reads as PARTIAL",
+      PS.verdict(run_status.load())[0], "partial")
+sent.clear()
+run_main(["--rerun-safe"])
+check_true("a PARTIAL email (issue delivered) DOES write the marker",
+           EN.already_sent_today() is not None)
 
 
 # ===========================================================================
