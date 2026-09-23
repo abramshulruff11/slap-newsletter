@@ -218,15 +218,13 @@ slap-newsletter/
 │   ├── meme_reference.txt
 │   └── Archive/               ← timestamped backups of old prompt versions
 ├── archive/                   ← daily committed output snapshots (see Known Issues — case bug)
-├── slap-sports-db/            ← SLA-5: the shared sports database (Postgres schema, migrations,
-│                                 adapter contract, tests). STAGED here until its own repo
-│                                 exists; self-contained, moves over as-is. Not used by the
-│                                 newsletter pipeline yet. Start at slap-sports-db/docs/schema.md
 └── .github/workflows/
     ├── daily-newsletter.yml   ← the pipeline, 2:17 AM EDT
     ├── publish-substack.yml   ← publishes the draft, 12:30 PM ET
     └── substack-ci-test.yml   ← manual-only connectivity check
 ```
+
+Shared sports database lives in `abramshulruff11/slap-sports-db` (SLA-5) — no longer staged here.
 
 ---
 

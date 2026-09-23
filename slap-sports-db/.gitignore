@@ -1,6 +1,0 @@
-__pycache__/
-*.pyc
-.pytest_cache/
-.env
-# Downloaded source assets (Parquet, CSV) belong in a cache, never in git.
-data/cache/
