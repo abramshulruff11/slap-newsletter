@@ -183,8 +183,9 @@ recommendations. Demoting it has three consequences, all of them good:
 2. **R2 is the one must-have that still needs real depth**, and it is the
    cheapest thing in this document to obtain: a champions table is a few
    hundred rows per league.
-3. **NCAAMB's unverified depth stops being a tier-moving risk** (§2.6). Even
-   a 2013 coverage floor serves the basics for the modern era.
+3. **NCAAMB's depth stops being a tier-moving risk** (§2.6). Even a 2013
+   coverage floor would have served the basics — and the measurement came
+   back at **1949**, far deeper than the worry.
 
 R6 and R7 are now the requirements the naive answer ("just use ESPN") fails
 worst, and they are structural — they live in the schema, not in a source.
@@ -454,10 +455,10 @@ golf coverage deepens.
 |---|---|---|---|---|---|---|---|---|---|---|
 | **NFL** | nflverse | ESPN (live) | 1999+ (rosters **1920**) | ✅ | 1999+ ⚠ | ✅ | ✅ | ✅ **1920** | batch + ESPN live | pre-1999 champs — cheap to fix |
 | **MLB** | Retrosheet + Lahman | MLB Stats API (live only) | **1871** ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | annual + ESPN live | Lahman share-alike |
-| **NHL** | NHL official API | curated champions table | unverified ⚠ | ✅ | ✅ | ✅ | ✅ | ✅ | live | undocumented API |
+| **NHL** | NHL official API | curated champions table | **1917-18** ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | live | undocumented API, no stated licence |
 | **NBA** | `nba_api` (proxied) | `hoopR-nba-data` (2002+) | 1946, sparse pre-1983 ⚠ | ✅ | ✅ | ✅ | ✅ | ✅ | live | **datacenter IP block** |
 | **NCAAF** | CFBD | ESPN (poll, live) | deep ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | live | quota: 1k/mo free, shared with CBBD |
-| **NCAAMB** | CBBD | `hoopR-mbb-data` (2002+) | unverified | ✅ | ✅ | ✅ | ✅ | ✅ | live | depth unconfirmed — no longer tier-moving |
+| **NCAAMB** | CBBD | `hoopR-mbb-data` (2002+) | **1949** ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | live | 3,000-row response cap (§2.6) |
 | ~~Tennis~~ | *out at launch — not a team sport* | ESPN + curated majors | 1968 | — | — | — | — | — | — | NC licence; revisit only if scope changes |
 | ~~Golf~~ | *out at launch — not a team sport* | curated majors CSV | none free | — | — | — | — | — | — | no viable free source either way |
 
@@ -500,12 +501,12 @@ it fits MLB it fits everything.
 
 | | |
 |---|---|
-| **Can now** | Current and recent results, standings, rosters, schedules, player stats. Depth **unverified** (check 1, §6) |
-| **Could** | Full history if the season walk-back proves deep. Champions independently via a curated table — ~107 rows, and it de-risks R2 regardless of what check 1 says |
+| **Can now** | Results, standings, rosters, schedules and player stats **back to 1917-18** — measured, check 1 §6. 109 seasons enumerated and populated |
+| **Could** | A curated champions table (~107 rows) as belt-and-braces. **Now optional rather than a depth fallback**, since the API itself goes all the way back |
 | **Won't** | Detailed play-by-play before 2010-11 (`hockeyR` floor). Nothing in SLAP needs hockey PBP, so this costs us nothing |
 
-**Net: fine for the basics, pending one check.** The champions table makes the
-check non-blocking.
+**Net: far better than assumed.** Full league history from an official, keyless
+API. The remaining risk is licensing posture, not depth — the NHL states none.
 
 ### NBA — nba_api (proxied) + hoopR fallback
 
@@ -698,6 +699,26 @@ Three findings that should reach whoever decides:
    **Lahman is ShareAlike** (CC BY-SA 3.0) — the latter raising a question
    about a derived database that mixes it with other sources.
 
+**Resolved for launch, 2026-09-23 — and here is the trigger that reopens it.**
+SLAP is a free Substack with ~30 subscribers, no ads and no sponsorship, so
+none of the above binds today:
+
+- **Retrosheet**, the MLB backfill source, permits commercial use outright
+  with attribution. Unaffected in any scenario. Carry its attribution line.
+- **Lahman** is ShareAlike, but ShareAlike triggers on *distributing a derived
+  database*, not on writing prose from it — facts are not copyrightable. The
+  newsletter is fine either way; publishing the database would not be.
+- **MLB Stats API** excludes *bulk* as well as commercial, which is why it is
+  already scoped to the live-delta lane. Money changes nothing about that
+  decision; it only adds a second reason for it.
+- **Sackmann** is NonCommercial and is out of scope — team sports only.
+
+So the launch design is clear at $0 and stays clear if SLAP monetises, with
+**one item to re-check: Lahman, and only if the database itself is ever
+published or shared.** That trigger is written into `CLAUDE.md` under Known
+Issues, so a future session raises it when paid subscriptions, sponsorship or
+ads come up — rather than relying on anyone remembering this paragraph.
+
 **ESPN, the source SLAP runs on today, has no stated licence at all.** It is
 an undocumented internal API used at the sufferance of a company that has
 already IP-blocked us once. That is not an argument to stop using it — it is
@@ -751,11 +772,12 @@ was silent — a 404, a hang, or a hollow file.
 
 **Still open:**
 
-1. **Is SLAP commercial, now or intended?** No longer blocking — nothing at
-   launch touches the NonCommercial source, since tennis is out. Still worth
-   answering, because it constrains **Lahman** (ShareAlike, and MLB is a
-   launch sport) and the **MLB Stats API** (non-bulk). It remains the one
-   answer I cannot derive from the codebase.
+~~1. **Is SLAP commercial, now or intended?**~~ → **Answered 2026-09-23: no,
+   not today.** SLAP is a free Substack, ~30 subscribers, no ads, no
+   sponsorship. That is not commercial use under any normal reading, and
+   **nothing in the recommended design is blocked.** Detail in §5.3; the
+   trigger for revisiting it is recorded in `CLAUDE.md` under Known Issues so
+   a future session raises it without being asked.
 2. **Budget for a CFBD/CBBD paid tier during the backfill month?**
    **Now optional rather than necessary.** Check 4 resolved rosters to
    year-only pagination, so the backfill fits the free tier (§7.1) — but the
