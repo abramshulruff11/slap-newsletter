@@ -226,6 +226,8 @@ slap-newsletter/
     └── substack-ci-test.yml   ← manual-only connectivity check
 ```
 
+Shared sports database lives in `abramshulruff11/slap-sports-db` (SLA-5) — no longer staged here.
+
 ---
 
 ## Prompt File — What Each Does
