@@ -188,8 +188,27 @@ RETRY_MAX_DELAY   = 60.0
 # retry count we rely on should not be a default that can move in a patch
 # release. These are the SDK's OWN fast retries -- ours are the slow outer
 # ones, and the two compose: up to 4 * (1 + 2) = 12 HTTP attempts in the worst
-# case, which still finishes inside the job's 30-minute cap.
+# case. That is quick for a FAST failure (a 429 or 529 answers in seconds), but
+# it multiplies whatever a single attempt can cost -- see API_REQUEST_TIMEOUT.
 SDK_MAX_RETRIES = 2
+
+# Per-request timeout, seconds (SLA-74). Left unset, the SDK allows 600s, so a
+# response that never arrives cost 600 x 12 = two hours -- four times the
+# job's 30-minute cap, and a job killed by that cap may never reach the step
+# that emails Abram. The earlier comment here claimed the 12 attempts "still
+# finish inside the job's 30-minute cap"; that was only true for fast errors.
+#
+# 420 is sized from real runs, not guessed: on 2026-09-22 Pass 2 (the slowest
+# non-streaming pass) wrote 4,560 tokens in 79s, ~58 tok/s. At its full
+# MAX_TOKENS_WRITER of 16,384 that is ~285s, so 420 leaves ~1.5x headroom.
+# Pass 1 streams, and for a stream this bounds the silence BETWEEN chunks, not
+# the whole generation, so its multi-minute runs are unaffected.
+#
+# This alone does not cap the run -- one hung call can still cost 3 x 420s
+# inside the SDK. The hard cap is the `timeout` around the "Generate
+# newsletter" stage in daily-newsletter.yml, which stops the generator in time
+# for the always() status email to go out.
+API_REQUEST_TIMEOUT = 420.0
 
 # Worth another try. 409 and 429 are the SDK's own list; 529 is Anthropic's
 # "overloaded", which is >= 500 anyway but is spelled out because it is the one

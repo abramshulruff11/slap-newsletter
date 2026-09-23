@@ -24,7 +24,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install deps
-        run: pip install feedparser
+        run: pip install feedparser==6.0.14
 
       - name: Probe Nitter bases from this runner
         run: python -u nitter_ci_test.py

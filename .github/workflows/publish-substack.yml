@@ -91,7 +91,7 @@ jobs:
 
       - name: Install Substack deps
         if: steps.gate.outputs.publish == 'true'
-        run: pip install python-substack==0.1.22 curl_cffi python-dotenv requests
+        run: pip install python-substack==0.1.22 curl_cffi==0.16.3 python-dotenv==1.2.3 requests==2.34.2
 
       - name: Auto-publish today's draft if still unpublished
         id: publish

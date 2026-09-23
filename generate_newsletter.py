@@ -40,7 +40,7 @@ import runner_common
 from runner_common import (
     MODEL, MODEL_DEFAULT, MODEL_WRITER, PASS_COSTS, PRICING,
     MAX_TOKENS_WRITER, MAX_TOKENS_EDITOR, was_truncated,
-    SDK_MAX_RETRIES, retry_api_call,
+    SDK_MAX_RETRIES, API_REQUEST_TIMEOUT, retry_api_call,
     _normalize_tweet_url,
     blockquotes_to_substack_urls,
     clean_giphy_search,
@@ -1173,7 +1173,8 @@ def main() -> None:
     # default that can move in a patch release. These are the SDK's own FAST
     # retries (sub-8s, honouring retry-after). runner_common.retry_api_call
     # wraps every pass with the slow outer ones on top.
-    client = anthropic.Anthropic(api_key=api_key, max_retries=SDK_MAX_RETRIES)
+    client = anthropic.Anthropic(api_key=api_key, max_retries=SDK_MAX_RETRIES,
+                                 timeout=API_REQUEST_TIMEOUT)
 
     # Passes: selector → writer → voice editor → tweet audit → LLM editor
     game_state    = load_json(GAME_STATE_PATH)

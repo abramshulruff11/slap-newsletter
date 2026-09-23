@@ -24,7 +24,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install deps
-        run: pip install python-substack==0.1.22 curl_cffi
+        run: pip install python-substack==0.1.22 curl_cffi==0.16.3
 
       - name: Run Substack connectivity test
         run: python substack_poc/ci_auth_test.py

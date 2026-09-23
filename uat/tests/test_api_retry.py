@@ -300,6 +300,33 @@ for rel in ("generate_newsletter.py", "uat/run_uat.py"):
     src = (REPO / rel).read_text(encoding="utf-8")
     check_true(f"{rel}: the client sets max_retries explicitly",
                "max_retries=SDK_MAX_RETRIES" in src)
+    # SLA-74: and a per-request timeout. The SDK default is 600s, and a hung
+    # call x 12 attempts ran two hours past a 30-minute job.
+    check_true(f"{rel}: the client sets a per-request timeout explicitly",
+               "timeout=API_REQUEST_TIMEOUT" in src)
+
+check_true("API_REQUEST_TIMEOUT is under the SDK's 600s default",
+           0 < RC.API_REQUEST_TIMEOUT < 600)
+# ~58 tok/s measured for Pass 2 on 2026-09-22; a full MAX_TOKENS_WRITER must
+# still fit, or a legitimately long draft would be cut off as a "hang".
+check_true("API_REQUEST_TIMEOUT leaves room for a full-length Pass 2 draft",
+           RC.API_REQUEST_TIMEOUT >= 1.3 * RC.MAX_TOKENS_WRITER / 58)
+
+# The hard cap: the generator stage is stopped before the JOB's timeout, so
+# the always() status email still runs. Checked against the real workflow.
+_wf = (REPO / ".github/workflows/daily-newsletter.yml").read_text(encoding="utf-8")
+_gen = re.search(r"- name: Generate newsletter\n.*?(?=\n      - name:|\Z)", _wf, re.S)
+_job_cap = re.search(r"timeout-minutes:\s*(\d+)", _wf)
+_stage_cap = re.search(r"timeout\s+(?:--\S+\s+)*(\d+)m\s+python generate_newsletter\.py",
+                       _gen.group(0) if _gen else "")
+check_true("the Generate newsletter stage runs under a hard `timeout`",
+           bool(_stage_cap))
+if _stage_cap and _job_cap:
+    check_true("...that leaves >= 10 min of the job cap for fetches + the email",
+               int(_job_cap.group(1)) - int(_stage_cap.group(1)) >= 10)
+check_true("...and the timeout is INSIDE run_stage.sh, so the stage is still recorded",
+           bool(_gen) and "run_stage.sh \"Generate newsletter\"" in _gen.group(0)
+           and _gen.group(0).index("run_stage.sh") < _gen.group(0).index("timeout --"))
 
 # Pass 1's old corrective message asserted the cause was unescaped quotes. For a
 # 429 that was false, and it cost a validation attempt to say it.

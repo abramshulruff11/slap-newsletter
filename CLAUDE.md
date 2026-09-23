@@ -452,7 +452,15 @@ draft, `verify_run.py`'s findings, a truncated pass — is in it.
   help. Retrying them turns a five-second red run into a several-minute one that looks like an
   outage — which is how 2026-09-01 got misdiagnosed.
 - **Bounded:** 4 attempts, 4s → 8s → 16s, worst case 12 HTTP attempts per call including the
-  SDK's own. A genuine outage still fails today rather than hanging past the 30-minute job cap.
+  SDK's own. That is quick for FAST failures (a 429/529 answers in seconds). It is NOT a bound on
+  a HUNG call — this file used to say it was, and it was wrong (SLA-74): with the SDK's default
+  600s per request, 12 hung attempts is two hours. Two limits now cover that case:
+  `API_REQUEST_TIMEOUT = 420` s per request (sized from a measured ~58 tok/s for Pass 2, so a
+  full 16,384-token draft still fits with ~1.5x headroom; for streaming Pass 1 it bounds silence
+  between chunks, not the whole generation), and a hard **17-minute `timeout` on the "Generate
+  newsletter" stage** in `daily-newsletter.yml`, inside `run_stage.sh` so the stage is still
+  recorded with an explanation. The stage limit is the real guarantee: it stops the generator in
+  time for the `always()` status email to go out inside the job's 30-minute cap.
 - **Cost is not double-counted, and that needs no special handling.** `cost_summary()` is only
   ever called with the usage of a response that arrived; a failed attempt returns none. The one
   honest gap: a STREAMING call that dies mid-stream generated billed tokens the SDK gives us no
@@ -701,7 +709,11 @@ unstaged, which breaks `git pull --rebase`.
   against CI's pinned `1.2.0`; pinning from the wrong environment would pin the pipeline to
   versions it never ran on). **To bump any entry:** change its version, re-run the pipeline via
   `workflow_dispatch`, confirm green, then leave it pinned forward — one entry at a time, same as
-  the original `anthropic` rule this generalizes. Every run now also uploads a `pip-freeze`
+  the original `anthropic` rule this generalizes. **Workflows that install a short list by name
+  instead of `-r requirements.txt`** (the noon publish job, the Substack and Nitter CI checks)
+  carry the same `==` versions — the noon publish job was left unpinned by SLA-57 and fixed in
+  SLA-74. `uat/tests/test_workflow_pins.py` fails if any workflow's `pip install` disagrees with
+  `requirements.txt`, so a bump changes both in one commit. Every run now also uploads a `pip-freeze`
   build artifact (90-day retention) recording exactly what was installed, so the next bump never
   again has to mine an Actions log before it expires.
 - **Chromium is not separately pinned, and that's a deliberate decision, not an oversight
@@ -814,7 +826,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (17 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (19 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -859,6 +871,25 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-23 — Reliability review follow-ups (SLA-74)**
+- A review of the week's reliability work (SLA-52/54/55/57/68) found three gaps the tests did
+  not cover. Each fix has a test that fails against the old code.
+- **The rerun checkbox could swallow the newsletter.** `email_newsletter.py` wrote
+  `email_sent_state.json` after ANY successful send, including a FAILED-verdict failure report
+  with no newsletter in it. A rerun with the box checked — the exact case the box exists for —
+  then built the issue and skipped emailing it. Only a non-failed email (success or partial,
+  i.e. one that carried the issue) writes the marker now.
+- **A hung Claude call was unbounded.** See the SLA-54 rule above: `API_REQUEST_TIMEOUT` at both
+  client sites, plus a 17-minute stage limit on "Generate newsletter". Before this, the only
+  bound was the job's own 30-minute cap, which may kill the run before the status email.
+- **The noon publish job installed unpinned packages** (`curl_cffi`, `python-dotenv`,
+  `requests`) after SLA-57. Pinned there and in the Substack/Nitter CI checks, and locked by the
+  new `uat/tests/test_workflow_pins.py`.
+- Also: the email subject's date came from the runner's UTC clock while the panel used ET, so a
+  run after 8 PM ET had a subject dated tomorrow. Both are ET now.
+- Still open (minor): "Commit email-sent marker" always reads "never ran" in the email, because
+  it runs after the send and the email cannot report on it.
 
 **2026-09-22 — Manual pipeline reruns are safe: no duplicate email, no orphaned Substack draft
 (SLA-55)**
