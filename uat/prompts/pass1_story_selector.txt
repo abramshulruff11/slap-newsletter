@@ -743,10 +743,11 @@ go wrong.
 
 GIF vs MEME BALANCE — they are not competing for one slot. A GIF lands an
 emotional beat; a meme lands a comparison, a contrast, or a take. Seed a
-gif_concept wherever there is a beat, and ALSO seed a meme_concept on every
-story that has a named subject plus a genuine comparison, contrast, or
-escalation. Reaching the meme floor of 3 is the normal outcome, not a stretch —
-the subject gate above is the only reason to fall short of it.
+gif_concept wherever there is a beat, and ALSO seed a meme_concept on the 3
+stories with the strongest named subject plus a genuine comparison, contrast,
+or escalation. 3 is the floor AND the ceiling: the writer caps an issue at 3
+memes, so a fourth seed is wasted. Reaching 3 is the normal outcome, not a
+stretch — the subject gate above is the only reason to fall short of it.
 
 OBITUARY / SOMBER STORIES — seed NOTHING. Set both gif_concept and meme_concept
 to empty strings for any story about a death, serious injury, or genuinely

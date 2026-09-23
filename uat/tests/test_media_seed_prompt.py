@@ -11,11 +11,13 @@ meme_concept") and, thirty lines later, a "70% GIFs, 30% memes" balance with
 ratio is 1-2 memes, which is what shipped. GIFs had no competing instruction
 and hit their floor every day.
 
-This guards three things, in BOTH prompt copies:
+This guards four things, in BOTH prompt copies:
   1. the floors the prompt states match MIN_GIF_SEEDS / MIN_MEME_SEEDS
   2. no percentage split between GIFs and memes comes back (any ratio sits
      below the floor on a four- or five-story day)
   3. no sentence tells Pass 1 to default meme_concept to empty
+  4. Pass 1 knows the writer's meme ceiling, and that ceiling is never below
+     the floor -- otherwise "seed more memes" becomes "ship a meme page"
 
 The subject gate is deliberately NOT touched: it is the one legitimate reason
 to fall short, and "reported, never fabricated" still holds.
@@ -35,6 +37,21 @@ import plan_audit  # noqa: E402
 
 PROMPTS = [REPO / "prompts" / "pass1_story_selector.txt",
            REPO / "uat" / "prompts" / "pass1_story_selector.txt"]
+WRITERS = [REPO / "prompts" / "pass2_writer.txt",
+           REPO / "uat" / "prompts" / "pass2_writer.txt"]
+
+
+def _writer_ceiling(path: Path) -> int | None:
+    """Upper bound of pass2_writer.txt's 'Max 2-3 generated memes per issue'."""
+    m = re.search(r"Max (\d+)(?:-(\d+))? generated memes per issue",
+                  path.read_text(encoding="utf-8"))
+    return int(m.group(2) or m.group(1)) if m else None
+
+
+_ceilings = {_writer_ceiling(p) for p in WRITERS}
+if len(_ceilings) != 1 or None in _ceilings:
+    raise AssertionError(f"writer meme ceiling unreadable or differs: {_ceilings}")
+WRITER_CEILING = _ceilings.pop()
 
 
 def check(label, got, want):
@@ -70,5 +87,20 @@ for path in PROMPTS:
 
     check(f"{label}: subject gate still present",
           "THE SUBJECT REQUIREMENT IS A GATE" in text, True)
+
+    # Pass 2 follows the plan one-for-one (every seed rendered, 09-02 -> 09-23),
+    # so the writer's "max N memes" does not cap an over-seeded plan in
+    # practice. Pass 1 has to know the ceiling itself, and it has to be the
+    # writer's number.
+    m = re.search(r"writer caps an issue at (\d+) memes", flat)
+    check(f"{label}: states the writer's meme ceiling",
+          int(m.group(1)) if m else None, WRITER_CEILING)
+
+print()
+print("-" * 66)
+print("PASS 2 MEME CEILING — never below the Pass 1 floor")
+print("-" * 66)
+check("writer ceiling >= MIN_MEME_SEEDS",
+      WRITER_CEILING >= plan_audit.MIN_MEME_SEEDS, True)
 
 print("\nall checks passed")

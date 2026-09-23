@@ -805,7 +805,9 @@ unstaged, which breaks `git pull --rebase`.
   thirty lines later, a "70% GIFs, 30% memes" balance with "most stories should ... leave
   meme_concept empty". On a five-story day that is 1-2 memes, which is exactly what shipped. GIFs
   had no competing instruction and hit their floor every day. The ratio is gone from both prompt
-  copies; the subject gate and "reported, never fabricated" are unchanged. `uat/tests/
+  copies; the subject gate and "reported, never fabricated" are unchanged. Pass 1 is also told
+  3 is the CEILING (the writer's "Max 2-3 memes"): Pass 2 has rendered every seed one-for-one,
+  so its own cap would not stop an over-seeded plan. `uat/tests/
   test_media_seed_prompt.py` fails if a percentage split or a "leave meme_concept empty" default
   comes back, or if the stated floors drift from `plan_audit.py`. To re-measure, compare
   `audit_media_seeds()` on `archive/<date>/story_plan.json` with the `i.imgflip.com` count in
@@ -911,6 +913,7 @@ for …") omitted.
 - The Pass 1 prompt asked for "at least 3" memes and for a 70/30 GIF/meme split in the same
   section; the split won. Replaced with one consistent instruction (a GIF and a meme are not
   competing for one slot; the subject gate is the only reason to fall short) in both copies.
+  3 is stated as the ceiling too, matching the writer's cap, so the fix cannot overshoot.
 - `uat/tests/test_media_seed_prompt.py` locks it. Not yet confirmed on live runs.
 
 **2026-09-23 — Reliability review follow-ups (SLA-74)**
