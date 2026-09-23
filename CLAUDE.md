@@ -679,6 +679,27 @@ unstaged, which breaks `git pull --rebase`.
 
 ## Known Issues / TODO
 
+- **⚠ SPORTS-DATA LICENSING IS CONDITIONAL ON SLAP BEING FREE — RAISE THIS THE DAY IT ISN'T
+  (2026-09-23):** SLAP is a free Substack, ~30 subscribers, no ads and no sponsorship. On that
+  basis every source recommended in `docs/sports-source-evaluation.md` is in bounds. Two of them
+  are conditioned on it and **must be re-checked the moment paid subscriptions, sponsorship or
+  advertising are switched on**:
+  - **Lahman** (MLB season stats, CC BY-SA 3.0). ShareAlike bites on *distributing a derived
+    database*, not on writing prose from it — facts are not copyrightable — so publishing the
+    newsletter is fine either way. Publishing or sharing the database itself would not be.
+  - **MLB Stats API** — free for "individual, non-commercial, **and non-bulk**" use; anything
+    else needs written MLBAM authorization. It is already scoped to the live-delta lane only,
+    because a historical backfill is *bulk* regardless of money. Going paid removes the
+    non-commercial leg as well.
+  - **Retrosheet**, the actual MLB backfill source, expressly permits commercial use with
+    attribution, so the core of the design is unaffected either way.
+  - Tennis's NonCommercial source (Sackmann) is already out of scope — team sports only.
+
+  **Trigger for Claude: if Abram mentions turning on paid Substack subscriptions, sponsorship,
+  ads, or otherwise monetising SLAP, surface this note before the work proceeds.** The answer is
+  not "stop" — it is "re-check Lahman and MLB Stats API, and confirm Retrosheet still carries the
+  attribution line."
+
 - **Scheduled runs land hours late (WORKED AROUND 2026-09-04; the delay itself is GitHub's):**
   measured over three consecutive days, `daily-newsletter.yml` fired +5h05m after its 06:17 UTC
   cron (11:20–11:24 UTC) and `publish-substack.yml` +2h50m after its 16:30 UTC cron (19:20–19:27
