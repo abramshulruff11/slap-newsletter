@@ -204,6 +204,10 @@ SDK_MAX_RETRIES = 2
 # Pass 1 streams, and for a stream this bounds the silence BETWEEN chunks, not
 # the whole generation, so its multi-minute runs are unaffected.
 #
+# SIDE EFFECT: any non-default client timeout switches OFF the SDK's
+# "Streaming is required" guard for non-streaming calls over 21,333 tokens.
+# test_api_retry.py now enforces that ceiling on every messages.create().
+#
 # This alone does not cap the run -- one hung call can still cost 3 x 420s
 # inside the SDK. The hard cap is the `timeout` around the "Generate
 # newsletter" stage in daily-newsletter.yml, which stops the generator in time

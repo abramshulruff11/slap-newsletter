@@ -312,6 +312,33 @@ check_true("API_REQUEST_TIMEOUT is under the SDK's 600s default",
 check_true("API_REQUEST_TIMEOUT leaves room for a full-length Pass 2 draft",
            RC.API_REQUEST_TIMEOUT >= 1.3 * RC.MAX_TOKENS_WRITER / 58)
 
+# Setting ANY client timeout switches OFF the SDK's own "Streaming is required"
+# guard (anthropic 1.2.0 only runs _calculate_nonstreaming_timeout when the
+# client timeout is the default). That guard is what used to refuse a
+# non-streaming call above 21,333 tokens. It now has to live here: every
+# non-streaming messages.create() must stay under that ceiling AND finish
+# inside API_REQUEST_TIMEOUT, or a legitimately long answer is cut off as a hang.
+_NONSTREAM_CEILING = 21_333
+for rel in ("generate_newsletter.py", "uat/generate_newsletter_uat.py",
+            "runner_common.py"):
+    src = (REPO / rel).read_text(encoding="utf-8")
+    for m in re.finditer(r"messages\.create\((.{0,600}?)\n\s*\)", src, re.S):
+        mt = re.search(r"max_tokens\s*=\s*([A-Z_]+|\d+)", m.group(1))
+        if not mt:
+            continue
+        raw = mt.group(1)
+        val = int(raw) if raw.isdigit() else getattr(RC, raw, None)
+        line = src[:m.start()].count("\n") + 1
+        check_true(f"{rel}:{line}: non-streaming max_tokens={raw} resolves",
+                   isinstance(val, int))
+        if isinstance(val, int):
+            check_true(f"{rel}:{line}: non-streaming max_tokens={val} is under the "
+                       f"{_NONSTREAM_CEILING} streaming ceiling",
+                       val <= _NONSTREAM_CEILING)
+            check_true(f"{rel}:{line}: max_tokens={val} fits API_REQUEST_TIMEOUT at "
+                       f"~58 tok/s with 1.3x headroom",
+                       1.3 * val / 58 <= RC.API_REQUEST_TIMEOUT)
+
 # The hard cap: the generator stage is stopped before the JOB's timeout, so
 # the always() status email still runs. Checked against the real workflow.
 _wf = (REPO / ".github/workflows/daily-newsletter.yml").read_text(encoding="utf-8")

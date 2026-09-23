@@ -681,7 +681,12 @@ unstaged, which breaks `git pull --rebase`.
   So Pass 1 calls `client.messages.stream(...)` + `.get_final_message()`, which returns the same
   `Message` object (tool_use blocks and `usage` included) that `messages.create()` did. Anything
   that raises another pass above 21,333 must convert that pass to streaming in the same commit.
-  This is invisible to the tests — they stub the Anthropic client, so the SDK guard never runs.
+  **Since SLA-74 the SDK guard no longer fires at all:** the SDK only runs it when the client
+  timeout is the default, and `API_REQUEST_TIMEOUT` makes it non-default. An oversized
+  non-streaming call would now be sent and then cut off at 420s instead of refused. The rule
+  moved into `test_api_retry.py`, which reads every non-streaming `messages.create()` in both
+  runners and `runner_common.py` and fails if its `max_tokens` exceeds 21,333 or cannot finish
+  inside `API_REQUEST_TIMEOUT`.
 
 ---
 
