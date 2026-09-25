@@ -732,6 +732,11 @@ unstaged, which breaks `git pull --rebase`.
   - **Retrosheet**, the actual MLB backfill source, expressly permits commercial use with
     attribution, so the core of the design is unaffected either way.
   - Tennis's NonCommercial source (Sackmann) is already out of scope — team sports only.
+  - **FiveThirtyEight `nfl_games.csv`** (pre-1999 NFL playoff results, SLA-84/85): MIT / CC BY,
+    free including commercial, with attribution. But its historical scores have **undisclosed
+    provenance and may trace to Pro-Football-Reference**, whose terms bar generative-AI use.
+    Abram accepted that knowingly on 2026-09-25 (scores are facts; we never touch PFR). Worth a
+    second look alongside Lahman if SLAP is monetised.
 
   **Trigger for Claude: if Abram mentions turning on paid Substack subscriptions, sponsorship,
   ads, or otherwise monetising SLAP, surface this note before the work proceeds.** The answer is
