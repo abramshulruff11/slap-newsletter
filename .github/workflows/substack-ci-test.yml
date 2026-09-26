@@ -74,7 +74,8 @@ jobs:
         run: |
           python substack_poc/text_box_preview.py \
             --game-state uat/fixtures/game_state.json \
-            --sports mlb --games 3
+            --sports mlb --games 3 \
+            --title "[SLA-17] Box scores as text — ${GITHUB_SHA::7}"
 
       # A draft carrying a table node crashes the Substack editor, so it cannot
       # be deleted through the UI. This removes one by id via the API.
