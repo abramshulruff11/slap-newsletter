@@ -69,6 +69,17 @@ def main() -> int:
     with open(args.game_state, encoding="utf-8") as f:
         gs = json.load(f)
 
+    # The three candidate renderings, so they can be compared in one post
+    # rather than across drafts opened minutes apart.
+    VARIANTS = [
+        ("A — narrow (38 chars, phone-safe)",
+         lambda g, c, l: tbs.render_game(g, c, budget=38, limit=l)),
+        ("B — all stats (46 chars, adds AVG and ERA)",
+         lambda g, c, l: tbs.render_game(g, c, budget=46, limit=l)),
+        ("C — side by side (90 chars, desktop-first)",
+         lambda g, c, l: tbs.render_game_wide(g, c, limit=l)),
+    ]
+
     # Render first so a data problem fails before we touch the network.
     blocks = []
     for sport in [s.strip() for s in args.sports.split(",") if s.strip()]:
@@ -78,13 +89,17 @@ def main() -> int:
         if not games:
             print(f"  ({sport}: no box scores in this game_state, skipping)")
             continue
-        blocks.append(("heading", sport.upper()))
-        for g in games:
-            text = tbs.render_game(g, cats, limit=args.players)
-            w = tbs.widest_line(text)
-            flag = "" if w <= tbs.MOBILE_BUDGET else f"  <-- OVER BUDGET ({w})"
-            print(f"  {sport} {g.get('matchup', '?')}: widest {w} chars{flag}")
-            blocks.append(("code", text))
+        for label, render in VARIANTS:
+            texts = [render(g, cats, args.players) for g in games]
+            widest = max(tbs.widest_line(t) for t in texts)
+            lines = sum(len(t.splitlines()) for t in texts) / len(texts)
+            print(f"  {sport} {label}: widest {widest}, avg {lines:.1f} lines/game")
+            blocks.append(("heading", f"{sport.upper()} · {label}"))
+            blocks.append(("para",
+                           f"Widest line {widest} chars, {lines:.0f} lines per game "
+                           f"(~{int(lines * 15)} for a 15-game slate)."))
+            for t in texts:
+                blocks.append(("code", t))
 
     if not any(k == "code" for k, _ in blocks):
         print("FAIL: nothing rendered -- check --game-state and --sports")
@@ -108,12 +123,16 @@ def main() -> int:
         post = Post(args.title,
                     "SLA-17: box scores as monospace code blocks, not images.", uid)
         post.paragraph(content=[{
-            "content": "Check on a phone and in dark mode: do the columns line up, "
-                       "and does any block scroll sideways?"
+            "content": "Three renderings of the SAME games. A and B are phone-first "
+                       "and leave desktop width unused; C fills the width and is "
+                       "about half as tall, but scrolls sideways on a phone. "
+                       "Check each on desktop AND phone."
         }])
         for kind, payload in blocks:
             if kind == "heading":
                 post.heading(content=[{"content": payload}], level=2)
+            elif kind == "para":
+                post.paragraph(content=[{"content": payload}])
             else:
                 post.draft_body["content"].append(tbs.code_block_node(payload))
 

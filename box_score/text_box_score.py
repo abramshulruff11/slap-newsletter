@@ -291,6 +291,52 @@ def render_game(game: Dict, categories: Sequence[str],
     return "\n".join(chunks)
 
 
+# Per-team column width for the side-by-side layout. A table's natural width
+# with every stat is ~43, so two of them plus a gutter is ~90 -- which is
+# close to what a desktop code block holds (~96 chars at ~8.6px each).
+# It does NOT fit a phone: 90 chars needs ~740px against a 375px phone's ~343.
+WIDE_COL_BUDGET = 43
+WIDE_GUTTER = "    "
+
+
+def join_columns(left: str, right: str, gutter: str = WIDE_GUTTER) -> str:
+    """Set two rendered blocks beside each other, newspaper style.
+
+    The left block is padded to its own widest line so the right column starts
+    at a fixed offset; ragged left text would make the right column wander.
+    Blocks of unequal height are padded with blanks rather than truncated.
+    """
+    ls, rs = left.splitlines(), right.splitlines()
+    width = max((len(l) for l in ls), default=0)
+    out = []
+    for i in range(max(len(ls), len(rs))):
+        l = ls[i] if i < len(ls) else ""
+        r = rs[i] if i < len(rs) else ""
+        out.append((l.ljust(width) + gutter + r).rstrip())
+    return "\n".join(out)
+
+
+def render_game_wide(game: Dict, categories: Sequence[str],
+                     col_budget: int = WIDE_COL_BUDGET,
+                     limit: Optional[int] = None) -> str:
+    """Away and home side by side, one pair of columns per category.
+
+    Fills a desktop code block and roughly halves the height, because the two
+    sides share their header rows and vertical space instead of stacking.
+    The cost is mobile: this cannot fit a phone without horizontal scrolling.
+    """
+    box = game.get("box_score") or {}
+    chunks = [game_header(game, col_budget * 2)]
+    for cat in categories:
+        away = render_side(box.get("away") or {}, cat, col_budget, limit)
+        home = render_side(box.get("home") or {}, cat, col_budget, limit)
+        if not (away or home):
+            continue
+        chunks.append("")
+        chunks.append(join_columns(away, home))
+    return "\n".join(chunks)
+
+
 def code_block_node(text: str) -> Dict:
     """Wrap rendered text in the ProseMirror node Substack actually accepts."""
     return {"type": "code_block", "content": [{"type": "text", "text": text}]}

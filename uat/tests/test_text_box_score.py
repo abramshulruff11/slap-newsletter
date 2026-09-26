@@ -216,6 +216,34 @@ check("=" not in tbs.render_game(
       "no '=====' rule under the header -- the code block draws its own border")
 
 
+# --------------------------------------------------- side-by-side (wide) layout
+print("\nside-by-side layout")
+j = tbs.join_columns("aa\nbbbb", "1\n2")
+jl = j.splitlines()
+check(len(jl) == 2, "two blocks of equal height give that many rows")
+check(jl[0].startswith("aa") and jl[0].endswith("1"),
+      "left and right both appear on the same row")
+check(jl[0].index("1") == jl[1].index("2"),
+      "the right column starts at a FIXED offset, padded to the left block's "
+      "widest line -- otherwise it wanders")
+
+tall = tbs.join_columns("a\nb\nc", "1")
+check(len(tall.splitlines()) == 3,
+      "an uneven pair pads with blanks rather than truncating the taller side")
+check(tbs.join_columns("", "") == "", "two empty blocks give an empty block")
+
+wide = tbs.render_game_wide(games[0], ["batting", "pitching"], limit=9)
+check(tbs.widest_line(wide) <= tbs.WIDE_COL_BUDGET * 2 + len(tbs.WIDE_GUTTER),
+      "the wide layout stays within two column budgets plus the gutter")
+check(wide.count("Batting") == 2 and wide.count("Pitching") == 2,
+      "both sides still render, now beside each other")
+check(len(wide.splitlines()) < len(
+          tbs.render_game(games[0], ["batting", "pitching"], limit=9).splitlines()),
+      "the wide layout is SHORTER than the stacked one -- the point of it")
+check(tbs.widest_line(wide) > tbs.MOBILE_BUDGET,
+      "the wide layout deliberately exceeds the phone budget; it is desktop-first")
+
+
 print()
 if FAILURES:
     print(f"{len(FAILURES)} FAILURE(S):")
