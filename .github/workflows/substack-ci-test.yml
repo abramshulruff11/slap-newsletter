@@ -24,6 +24,7 @@ on:
           - table-probe
           - text-preview
           - datawrapper-probe
+          - dark-mode-test
           - cleanup
           - delete-draft
       delete_draft:
@@ -97,6 +98,15 @@ jobs:
         if: inputs.mode == 'datawrapper-probe'
         run: |
           python substack_poc/datawrapper_probe.py \
+            --game-state uat/fixtures/game_state.json
+
+      # SLA-17: the `datawrapper` node renders, but came back dark on a light
+      # page. Same table, three dark settings, one draft -- whatever the
+      # browser is doing it does to all three, so the match is the answer.
+      - name: Datawrapper dark-mode test (SLA-17)
+        if: inputs.mode == 'dark-mode-test'
+        run: |
+          python substack_poc/datawrapper_darkmode.py \
             --game-state uat/fixtures/game_state.json
 
       # Sweep up the probe artifacts. Deletion is irreversible, so the script
