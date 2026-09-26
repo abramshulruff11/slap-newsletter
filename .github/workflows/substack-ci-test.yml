@@ -24,6 +24,7 @@ on:
           - table-probe
           - text-preview
           - datawrapper-probe
+          - cleanup
           - delete-draft
       delete_draft:
         description: 'table-probe only: delete the draft after reading it back'
@@ -32,6 +33,16 @@ on:
         type: boolean
       delete_draft_id:
         description: 'delete-draft mode: the draft id to delete'
+        required: false
+        default: ''
+        type: string
+      cleanup_drafts:
+        description: 'cleanup mode: comma-separated Substack draft ids'
+        required: false
+        default: ''
+        type: string
+      cleanup_charts:
+        description: 'cleanup mode: comma-separated Datawrapper chart ids'
         required: false
         default: ''
         type: string
@@ -87,6 +98,15 @@ jobs:
         run: |
           python substack_poc/datawrapper_probe.py \
             --game-state uat/fixtures/game_state.json
+
+      # Sweep up the probe artifacts. Deletion is irreversible, so the script
+      # prints what it will remove and treats an already-gone item as success.
+      - name: Delete probe artifacts (SLA-17)
+        if: inputs.mode == 'cleanup'
+        run: |
+          python substack_poc/cleanup_probe_artifacts.py \
+            --drafts "${{ inputs.cleanup_drafts }}" \
+            --charts "${{ inputs.cleanup_charts }}"
 
       # A draft carrying a table node crashes the Substack editor, so it cannot
       # be deleted through the UI. This removes one by id via the API.
