@@ -23,6 +23,7 @@ on:
           - connectivity
           - table-probe
           - text-preview
+          - datawrapper-probe
           - delete-draft
       delete_draft:
         description: 'table-probe only: delete the draft after reading it back'
@@ -40,6 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
+      DATAWRAPPER_API_TOKEN: ${{ secrets.DATAWRAPPER_API_TOKEN }}
       SUBSTACK_COOKIES_STRING: ${{ secrets.SUBSTACK_COOKIES_STRING }}
       SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
       PROXY_URL: ${{ secrets.PROXY_URL }}
@@ -76,6 +78,15 @@ jobs:
             --game-state uat/fixtures/game_state.json \
             --sports mlb --games 3 \
             --title "[SLA-17] Box scores as text — ${GITHUB_SHA::7}"
+
+      # SLA-17 go/no-go: build a real Datawrapper table, then try every
+      # candidate Substack embed node -- ONE DRAFT EACH, so a node that
+      # crashes the editor (as `table` did) costs one draft, not the run.
+      - name: Datawrapper embed probe (SLA-17)
+        if: inputs.mode == 'datawrapper-probe'
+        run: |
+          python substack_poc/datawrapper_probe.py \
+            --game-state uat/fixtures/game_state.json
 
       # A draft carrying a table node crashes the Substack editor, so it cannot
       # be deleted through the UI. This removes one by id via the API.
