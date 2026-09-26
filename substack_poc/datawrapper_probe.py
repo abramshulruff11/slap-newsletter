@@ -32,7 +32,11 @@ What it does
   3. Prints every draft id and what it contains, and deletes nothing.
 
 Env:
-  DATAWRAPPER_API_TOKEN                       (chart:read + chart:write)
+  DATAWRAPPER_API_TOKEN   needs FOUR scopes: chart:read, chart:write,
+                          theme:read AND visualization:read. Create, data and
+                          config succeed with only the two chart scopes --
+                          PUBLISH is what 403s "Insufficient scope", so a
+                          half-scoped token looks fine until the last call.
   SUBSTACK_COOKIES_STRING, SUBSTACK_PUBLICATION_URL, PROXY_URL
 """
 
@@ -221,7 +225,11 @@ def main() -> int:
         chart = make_datawrapper_table(dw_token, title, csv)
         if not chart:
             print("\nNO-GO (Datawrapper side): could not create/publish a table.")
-            print("Check the token has chart:read AND chart:write.")
+            print("If the failing call was POST /publish with 'Insufficient")
+            print("scope', the token needs all FOUR of: chart:read,")
+            print("chart:write, theme:read, visualization:read. The first three")
+            print("calls pass on the chart scopes alone, so the token looks")
+            print("correct right up until it does not.")
             return 1
         embed_url = chart["embed_url"]
         print(f"\nDatawrapper OK. chart id={chart['id']}")
