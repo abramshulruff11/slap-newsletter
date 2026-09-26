@@ -240,7 +240,8 @@ WHAT COUNTS AS SOURCED — leave these completely alone:
   1. An embedded tweet in the SAME section states it. A StatMuse line or a beat
      reporter's number carries its author's byline; that is a source.
   2. The GROUND TRUTH block at the top of this message states it. That block is
-     yesterday's real results from the ESPN API. If it is absent, or silent on
+     yesterday's real results from the ESPN API, and each league's defending
+     champion from the SLAP sports database. If it is absent, or silent on
      this particular claim, it does not source the claim.
   3. It carries no specific number, year, title or league placement. A general
      statement is not checkable and is not this check's business.
@@ -261,6 +262,8 @@ three-peat, "X-time champion", or any claim that someone currently holds a title
     "the defending champion Thunder"  ->  "the Thunder"
     "back-to-back MVP Jokic"  ->  "Jokic"
 Cut the title phrase. Keep the subject.
+Exception: "defending champion" for the exact team the ground truth block
+lists under DEFENDING CHAMPIONS for that league is SOURCED. LEAVE IT.
 
 --- CATEGORY C: HISTORICAL FIRSTS, STREAKS AND DROUGHTS ---
 Any "first since YYYY", "most since", "won N straight", "longest in N years".

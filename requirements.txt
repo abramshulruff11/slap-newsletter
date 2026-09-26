@@ -24,3 +24,7 @@ playwright==1.63.0
 Pillow==12.3.0
 python-substack==0.1.22
 curl_cffi==0.16.3
+# SLA-65: reads each league's defending champion from slap-sports-db. The
+# same version that repo's CI runs green on Python 3.12, where the pipeline
+# runs. Imported only when SPORTS_DB_URL is set.
+psycopg[binary]==3.2.3

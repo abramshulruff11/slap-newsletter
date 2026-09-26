@@ -74,6 +74,11 @@ jobs:
       # fetchers now retry blocked requests through PROXY_URL — the same fix
       # that unblocked Substack in June. Job-level so every step can use it.
       PROXY_URL: ${{ secrets.PROXY_URL }}
+      # The shared sports database (SLA-65): the fetch step reads each league's
+      # defending champion from it into game_state.json. Optional: without it
+      # the champions block says "unavailable" and "defending champion"
+      # claims are cut, as before. The Supabase session-pooler string.
+      SPORTS_DB_URL: ${{ secrets.SPORTS_DB_URL }}
 
     steps:
       - name: Checkout repo

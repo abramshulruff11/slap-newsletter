@@ -1864,6 +1864,22 @@ def main() -> None:
     output["golf"]   = golf_data
     output["tennis"] = tennis_data
 
+    # ── Defending champions (SLA-65) ──────────────────────────────────────
+    # From slap-sports-db, so "defending champion" can be checked instead of
+    # only flagged. Never fatal: without SPORTS_DB_URL or a reachable
+    # database the block says "unavailable" and Pass 3 asks for the claim
+    # to be cut, exactly as before.
+    import champions_source
+    print("  Fetching defending champions...")
+    output["champions"] = champions_source.fetch_champions()
+    champs = output["champions"]
+    if champs.get("status") == "ok":
+        for league, e in champs["leagues"].items():
+            state = e["team"] + f" ({e['season_label']})" if e["status"] == "ok" else e["status"].upper()
+            print(f"    {e['label']}: {state}")
+    else:
+        print(f"    ⚠ champions unavailable: {champs.get('reason')}")
+
     # Health block: how the file was fetched, not just what it holds. A file
     # with standings but zero games AND failed scoreboard calls is a blocked
     # fetch; the same file with zero failures is an off day. Downstream

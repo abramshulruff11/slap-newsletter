@@ -44,12 +44,17 @@ def canon(name: str) -> str:
     return re.sub(r"[-_.]+", "-", name).lower()
 
 
+# name[extras]==version. Extras (psycopg[binary], SLA-65) select optional
+# parts of the SAME package at the SAME pinned version, so they are still an
+# exact pin; the name the pin is keyed by is the one without them.
+PIN = r"([A-Za-z0-9_.\-]+)(?:\[[A-Za-z0-9_,.\-]+\])?==(\S+)"
+
 pins: dict[str, str] = {}
 for line in (REPO / "requirements.txt").read_text(encoding="utf-8").splitlines():
     line = line.split("#", 1)[0].strip()
     if not line:
         continue
-    m = re.fullmatch(r"([A-Za-z0-9_.\-]+)==(\S+)", line)
+    m = re.fullmatch(PIN, line)
     check_true(f"requirements.txt: {line!r} is an exact pin", bool(m))
     if m:
         pins[canon(m.group(1))] = m.group(2)
@@ -71,7 +76,7 @@ for wf in sorted((REPO / ".github" / "workflows").glob("*.yml")):
             if arg.startswith("-"):
                 check_true(f"{where}: no unexpected pip flag {arg!r}", False)
                 continue
-            pm = re.fullmatch(r"([A-Za-z0-9_.\-]+)==(\S+)", arg)
+            pm = re.fullmatch(PIN, arg)
             if not pm:
                 check_true(f"{where}: {arg!r} has an exact == version", False)
                 continue

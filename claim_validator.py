@@ -143,6 +143,142 @@ def extract_game_number(text: str) -> int | None:
 
 
 # ---------------------------------------------------------------------------
+# Check 3: "defending champion", resolved (SLA-65)
+# ---------------------------------------------------------------------------
+#
+# game_state.json carries a "champions" block (champions_source.py, read from
+# slap-sports-db): each league's most recent champion, or `stale`/`missing`
+# when the database is behind. For every "defending champion" in a section:
+#   - the team it names IS a current champion      -> confirmed, nothing added
+#   - it names a team that is NOT one              -> FACT FLAG [HIGH] naming
+#     the real champions, which editor Check 9 uses to correct the sentence
+#   - it names no team we can recognise, or a league's champion is unknown
+#                                                   -> FACT FLAG [LOW]: the
+#     claim can't be confirmed, so the editor cuts the title phrase
+# With no champions block at all (no database) every claim is the LOW case,
+# which is what this check always did.
+
+# A team name as written: capitalised words, "of" allowed inside
+# ("Mighty Ducks of Anaheim"). Case-sensitive on purpose: it is the capital
+# letters that separate "the Knicks" from "the rest of the league".
+_NAME = r"[A-Z][\w.'&-]*(?:\s+(?:of\s+)?[A-Z][\w.'&-]*){0,3}"
+_PHRASE = r"(?i:defending)\s+(?:[\w.'-]+\s+){0,2}?(?i:champ(?:ion)?s?)\b"
+# "the defending champion Thunder", "defending NBA champs, the Knicks"
+_AFTER_RE = re.compile(_PHRASE + r"[,:]?\s+(?:the\s+)?(" + _NAME + r")")
+# "the Knicks, the defending champions", "Indiana are the defending champs"
+_BEFORE_RE = re.compile(
+    r"(" + _NAME + r"),?\s+(?:(?:who\s+)?(?:are|were|is|was|as|remain)\s+)?(?:the\s+)?"
+    r"(?:reigning\s+(?:and\s+)?)?" + _PHRASE)
+# Capitalised only because they start a sentence ("Against the defending
+# champions."): never a team.
+_NOT_A_TEAM = {"the", "a", "an", "and", "but", "now", "so", "with", "when", "as", "then",
+               "even", "yes", "no", "meanwhile", "also", "still", "if", "because", "who",
+               "against", "over", "for", "from", "to", "at", "by", "vs", "versus", "beat",
+               "beating", "beats", "facing", "face", "faces", "after", "before", "into",
+               "like", "of", "on", "in", "than", "past", "without", "toward", "towards",
+               "they", "we", "you", "he", "she", "it", "this", "that", "these", "those",
+               "here", "there", "just", "only", "every", "all", "both", "sweeping",
+               "eliminating", "eliminated", "stunning", "upsetting", "ousting"}
+# Words that turn one school into another: "Michigan State" is not Michigan.
+_NAME_CONTINUES = {"state", "st", "tech", "a&m", "southern", "northern", "eastern",
+                   "western", "central", "christian", "international"}
+_SENTENCE_RE = re.compile(r"[^.!?]*\bdefending\s+champ[^.!?]*[.!?]?", re.IGNORECASE)
+
+
+def _tokens(name: str) -> list[str]:
+    return re.findall(r"[a-z0-9&]+", name.lower())
+
+
+def _is_champion(mention: str, champions: dict) -> str | None:
+    """The league whose current champion `mention` names, or None.
+
+    The mention may run on past the name ("Knicks Tuesday"), so its leading
+    words are tried against the END of each alias ("New York Knicks" is
+    named by "Knicks" and by "New York Knicks"). A match that would leave
+    a school-name word behind ("Michigan State") is not a match."""
+    m = _tokens(mention)
+    for league, entry in champions.items():
+        for alias in entry.get("aliases", []):
+            a = _tokens(alias)
+            for k in range(min(len(m), len(a)), 0, -1):
+                if m[:k] == a[-k:] and (k == len(m) or m[k] not in _NAME_CONTINUES):
+                    return league
+    return None
+
+
+def _mention(sentence: str) -> str | None:
+    """The team a "defending champion" sentence attaches the title to."""
+    for pattern in (_AFTER_RE, _BEFORE_RE):
+        m = pattern.search(sentence)
+        if m:
+            words = m.group(1).split()
+            while words and words[0].lower().strip(",.:;'") in _NOT_A_TEAM:
+                words.pop(0)
+            if words:
+                return " ".join(words)
+    return None
+
+
+def _names_a_champion(sentence: str, champions: dict) -> bool:
+    words = _tokens(sentence)
+    for entry in champions.values():
+        for alias in entry.get("aliases", []):
+            a = _tokens(alias)
+            if any(words[i:i + len(a)] == a for i in range(len(words) - len(a) + 1)):
+                return True
+    return False
+
+
+def _champion_list(champions: dict) -> str:
+    return "; ".join(f"{e['label']}: {e['team']} ({e['season_label']})"
+                     for e in champions.values())
+
+
+def check_defending_champion(plain_text: str, game_state: dict) -> list[str]:
+    if not DEFENDING_CHAMP_RE.search(plain_text):
+        return []
+    import champions_source
+    champions = champions_source.known_champions(game_state)
+    unknown = champions_source.unknown_leagues(game_state)
+    if not champions:
+        return ['\n<!-- FACT FLAG [LOW]: "Defending champion" language, and the champions '
+                'data is unavailable today, so it cannot be confirmed. Cut the title phrase '
+                'and keep the team (e.g. "the defending champion Thunder" -> "the Thunder"). -->']
+    flags = []
+    cities = {tuple(_tokens(e["city"])) for e in champions.values() if e.get("city")}
+    for sentence in _SENTENCE_RE.findall(plain_text):
+        mention = _mention(sentence)
+        if mention and _is_champion(mention, champions):
+            continue                                   # confirmed: nothing to fix
+        # No team attached to the phrase ("they stole homecourt from the
+        # defending champs"): the story names who it means. If the sentence,
+        # or failing that the section, names a current champion, that is who.
+        if not mention and (_names_a_champion(sentence, champions)
+                            or _names_a_champion(plain_text, champions)):
+            continue
+        # Inside an HTML comment: no double quotes, and never "--", which would
+        # end the comment early and print the rest into the newsletter.
+        quoted = re.sub(r"\s+", " ", sentence).strip()[:160].replace('"', "'").replace("--", "-")
+        # A bare city ("the defending champion Carolina") could be any of its
+        # clubs: not provably wrong, so it is the can't-confirm case.
+        ambiguous = mention and tuple(_tokens(mention)) in cities
+        if mention and not unknown and not ambiguous:
+            flags.append(
+                f'\n<!-- FACT FLAG [HIGH]: "{quoted}" calls {mention} the defending champion. '
+                f'They are not. Current defending champions: {_champion_list(champions)}. '
+                f'Correct the team, or cut the title phrase. -->')
+        else:
+            gap = (f" The {', '.join(champions_source.LEAGUES[k][0] for k in unknown)} "
+                   f"champion is not known today." if unknown else "")
+            who = f"calls {mention} the defending champion" if mention else "names no team we can match"
+            flags.append(
+                f'\n<!-- FACT FLAG [LOW]: "{quoted}" {who}, and that cannot be confirmed.{gap} '
+                f'Known defending champions: {_champion_list(champions)}. If the sentence '
+                f'means one of them, name it; otherwise cut the title phrase. -->')
+    return flags
+
+
+# ---------------------------------------------------------------------------
 # Section validator
 # ---------------------------------------------------------------------------
 
@@ -209,12 +345,13 @@ def validate_section(heading: str, section_html: str, game_state: dict) -> tuple
             )
 
     # ── CHECK 3: Defending champion language ─────────────────────────────────
-    if DEFENDING_CHAMP_RE.search(plain_text):
-        flags.append(
-            f'\n<!-- FACT FLAG [LOW]: "Defending champion" language detected. '
-            f'Training data may be stale — verify current title holder manually '
-            f'before publishing. -->'
-        )
+    # Resolved against the champions block (SLA-65), not flagged for a human.
+    # Only our own prose: an embedded tweet is someone else's words, which the
+    # editor may not touch (a 2026-07 tweet shouting "THE DEFENDING CHAMPIONS"
+    # about Argentina is not a claim SLAP made).
+    own_prose = strip_tags(re.sub(r"<blockquote\b.*?</blockquote>", " ", section_html,
+                                  flags=re.IGNORECASE | re.DOTALL))
+    flags.extend(check_defending_champion(own_prose, game_state))
 
     # ── CHECK 4: Series score claim vs game_state ─────────────────────────────
     score_matches = SERIES_SCORE_RE.findall(plain_text)

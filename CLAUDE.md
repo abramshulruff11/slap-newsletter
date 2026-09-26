@@ -141,6 +141,8 @@ slap-newsletter/
 ├── fetch_content.py           ← ESPN/CBS RSS + Nitter RSS → raw_content.json
 ├── fetch_sports_data.py       ← ESPN scores/standings/box scores → game_state.json
 ├── claim_validator.py         ← deterministic fact check vs game_state.json (Pass 3)
+├── champions_source.py        ← SLA-65: each league's defending champion from slap-sports-db,
+│                                 written into game_state.json["champions"] by the fetch step
 ├── run_status.py              ← per-run state on disk, shared across processes
 ├── pipeline_status.py         ← per-STAGE outcomes on top of run_status.json;
 │                                 PIPELINE_STAGES is the declared stage list
@@ -532,6 +534,25 @@ and every reporter reads it from there.
   it here would put Substack retries in the Pass-retry report. `substack_poc/` is also runnable
   standalone against an archived issue, so its `run_status` import is wrapped and optional.
 
+**"Defending champion" is checked, not flagged (SLA-65, 2026-09-26).** The fetch step reads each
+league's current champion (NFL, MLB, NHL, NBA, college football, men's college basketball) from
+slap-sports-db (`champions_source.py`, `v_league_title`) into `game_state.json["champions"]`.
+It reaches the writer and editor as a DEFENDING CHAMPIONS part of the GROUND TRUTH block, and
+Pass 3 Check 3 resolves every "defending champion" in our own prose (never inside an embedded
+tweet): the named team IS the champion → nothing added; a DIFFERENT team → `FACT FLAG [HIGH]`
+naming the real one, which editor Check 9 corrects; no team it can match, or a league whose
+champion isn't known today → `FACT FLAG [LOW]`, name it or cut the title phrase. An unnamed
+"the defending champs" is confirmed when the sentence or its section names a current champion.
+- **Stale means unknown.** A league whose newest title is older than the calendar says
+  (`champions_source.DECIDED_BY`) is `stale`, never offered as the champion, so a missed yearly
+  update in slap-sports-db (Linear SLA-94/95/96) can't turn last year's champion into this year's.
+- **Inert until the `SPORTS_DB_URL` secret exists, and never fatal.** No secret, no driver or no
+  database → the block says `unavailable` and every claim is the LOW case, which is what Check 3
+  always did. `psycopg` is imported only when the URL is set; its password is scrubbed from errors.
+- Replayed on every archived issue that used the phrase (Apr–Sep 2026): 13 confirmed, 0 HIGH,
+  3 LOW (two World Cup, not a launch league; one NFL item naming no team). Locked by
+  `uat/tests/test_defending_champion.py`.
+
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
 
@@ -892,8 +913,9 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
-`SUBSTACK_COOKIES_STRING`, `SUBSTACK_PUBLICATION_URL`, `PROXY_URL`, and (optional — the dead man's
-switch is off without it) `SLAP_HEARTBEAT_URL`.
+`SUBSTACK_COOKIES_STRING`, `SUBSTACK_PUBLICATION_URL`, `PROXY_URL`, and two optional ones:
+`SLAP_HEARTBEAT_URL` (the dead man's switch is off without it) and `SPORTS_DB_URL` (the
+defending-champion check falls back to cutting the phrase without it; SLA-65).
 
 Daily pipeline steps: checkout → setup Python → **start pipeline status** → heartbeat start → install deps →
 install Chromium → fetch content → fetch sports data → check sports data health → validate →
@@ -934,6 +956,18 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-09-26 — "Defending champion" is resolved against the sports database (SLA-65)**
+- The first consumer of slap-sports-db. RULE 3.4 told the writer to verify "defending champion"
+  against game_state.json, which only ever held yesterday's games, so Pass 3 could do nothing but
+  ask a human to check. `champions_source.py` now puts each league's current champion into
+  game_state.json; Check 3 confirms, corrects (HIGH) or asks for the phrase to be cut (LOW).
+- Replaying the archive found three things the unit tests hadn't: sentence-opening words read as
+  team names ("Against the defending champions."), tweets being checked as if they were our prose,
+  and quoted text that could close the flag's HTML comment early. All three fixed and tested.
+- RULE 3.4 (both copies, via `promote.py`) and editor Check 8 (source rule + Category B exception,
+  both copies) point at the DEFENDING CHAMPIONS list. `psycopg[binary]==3.2.3` added (the
+  version slap-sports-db's CI runs); `test_workflow_pins.py` now accepts pip extras as an exact pin.
 
 **2026-09-23 — Dead man's switch: an alert that does not depend on the pipeline (SLA-56)**
 - Every reliability check ran inside the job, so a scheduled run that never started — or was

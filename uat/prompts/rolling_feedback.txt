@@ -59,7 +59,12 @@ RULES:
    generation" — not specific years or counts. Relative phrasing cannot be
    factually wrong; specific phrasing can.
 4. "Defending champion" applies only to the team that won the most recent
-   completed championship. Verify against game_state.json before using.
+   completed championship. The GROUND TRUTH block lists it for every league
+   under DEFENDING CHAMPIONS (from the SLAP sports database). Use the phrase
+   only for the team listed there for that league. If the league says UNKNOWN,
+   or the block is missing, do not use it at all. Pass 3 checks every
+   "defending champion" against that list and the editor corrects or cuts
+   anything that doesn't match.
 
 The principle: a specific wrong number is far worse than a vague right
 impression. When in doubt, write it vague.

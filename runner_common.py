@@ -409,9 +409,16 @@ def format_game_state_summary(game_state: dict) -> str:
     Covers yesterday's completed games with series state for playoffs.
     Pass 1 and Pass 2 both receive this so they never rely on training data
     for scores, series state, or game numbers.
+
+    It also carries each league's defending champion (SLA-65), from the
+    champions block fetch_sports_data.py reads out of slap-sports-db. That
+    part stands on its own: an off day with no games still says who the
+    champions are.
     """
+    import champions_source
+    champion_lines = champions_source.summary_lines(game_state)
     if not game_state or not game_state.get("sports"):
-        return ""
+        return "\n".join(champion_lines)
 
     lines = [
         "## GROUND TRUTH: YESTERDAY'S GAME RESULTS",
@@ -457,8 +464,8 @@ def format_game_state_summary(game_state: dict) -> str:
         lines.append("")
 
     if not found_any:
-        return ""
-    return "\n".join(lines)
+        return "\n".join(champion_lines)
+    return "\n".join(lines + champion_lines)
 
 
 def strip_code_fences(text: str) -> str:
