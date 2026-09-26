@@ -157,13 +157,12 @@ def make_datawrapper_table(token: str, title: str, csv: str) -> Optional[Dict]:
 # Substack
 # --------------------------------------------------------------------------
 
-def _install_session(proxy_url):
-    import substack.api as sapi
-    from curl_cffi import requests as creq
-
-    proxies = {"http": proxy_url, "https": proxy_url} if proxy_url else None
-    sapi.requests.Session = lambda: creq.Session(impersonate="chrome", proxies=proxies)
-    return "proxy + curl_cffi(chrome)" if proxy_url else "DIRECT + curl_cffi(chrome)"
+# Connecting to Substack is publish.py's make_api(): it installs the proxy
+# session AND retries transient proxy failures with backoff. The first run of
+# this probe hand-rolled a bare Api() and died on "CONNECT tunnel failed,
+# response 504" -- the exact error make_api() exists to absorb, and which its
+# own docstring blames for ~90% of the Jul/Aug 2026 CI failures. Duplicating
+# that logic instead of importing it is the mistake this repo keeps paying for.
 
 
 def candidates(url: str) -> List[Tuple[str, str, Optional[Dict]]]:
@@ -202,7 +201,6 @@ def main() -> int:
     dw_token = os.getenv("DATAWRAPPER_API_TOKEN")
     cookies = os.getenv("SUBSTACK_COOKIES_STRING")
     pub = os.getenv("SUBSTACK_PUBLICATION_URL")
-    proxy = os.getenv("PROXY_URL")
 
     embed_url = args.chart_url
     if not embed_url:
@@ -242,11 +240,10 @@ def main() -> int:
 
     # ---- Substack: one draft per candidate, so one crash costs one draft ----
     try:
-        print(f"\nMode: {_install_session(proxy)}")
-        from substack import Api
+        from publish import make_api
         from substack.post import Post
 
-        api = Api(cookies_string=cookies, publication_url=pub)
+        api = make_api()
         uid = api.get_user_id()
         print(f"Auth OK, user_id={uid}\n")
 
