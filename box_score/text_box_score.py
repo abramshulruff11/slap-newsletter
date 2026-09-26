@@ -35,10 +35,19 @@ from __future__ import annotations
 from typing import Dict, List, Optional, Sequence
 
 # Characters that fit in a Substack code block before it scrolls sideways.
-# A 320px viewport with a code block's padding leaves ~280px; Substack's
-# monospace stack at its rendered size runs ~7.8px/char, so ~36 characters.
-# 34 keeps a margin for font substitution across mail clients.
-MOBILE_BUDGET = 34
+# Substack's monospace runs ~7.8px/char and the block's padding costs ~40px,
+# so the requirement is 7.8*N + 40 <= the phone's content width. A 375px phone
+# after page margins gives ~343px, which puts the ceiling at 38 characters.
+#
+# Measured against the fixture slate, 38 is also where the stat columns stop
+# improving for a while: 34 keeps AB/R/H/RBI/K, 36 is inconsistent, 38 adds BB
+# on every game, and the next gain (AVG) is not until 42 -- well past the
+# phone. So 38 buys a real column at no cost to the narrowest reader.
+#
+# This does NOT fix desktop, where the block is narrower than the content
+# column. A code block does not reflow, so one fixed width cannot suit both;
+# the width is set by the smallest device that has to work.
+MOBILE_BUDGET = 38
 
 # Gap between columns. Two spaces reads as a column break without the width
 # cost of a pipe-and-padding border.
@@ -134,6 +143,82 @@ def render_table(
     return "\n".join(parts)
 
 
+# Below this many active batters a table is not worth collapsing -- a
+# two-line box score reads as broken rather than tight.
+MIN_ROWS_BEFORE_ROLLUP = 3
+
+# Categories where a quiet player can be rolled into a footnote, and the test
+# for "quiet". Relievers who faced two batters are not the story of the game
+# any more than an 0-for-4 is -- the fixture slate averages 4.2 pitchers a
+# side, most of them fractional innings.
+ROLLUP_CATEGORIES = {"batting", "pitching"}
+
+
+def _as_num(v) -> float:
+    try:
+        return float(str(v).strip() or 0)
+    except ValueError:
+        return 0.0
+
+
+def did_something(player: Dict, category: str = "batting") -> bool:
+    """Did this player do anything a reader would look for?
+
+    A 0-for-4 is real and a purist box score prints it, but across a 15-game
+    slate those lines are most of the height and none of the news. Same for a
+    reliever who recorded one out. Neither is dropped -- both roll into a
+    footnote, which is the agate convention and keeps the box score complete.
+    """
+    st = player.get("stats") or {}
+    if category == "pitching":
+        # A full inning, or any run allowed, or a strikeout: that is a line
+        # worth its own row. One-out cameos are not.
+        return (_as_num(st.get("IP")) >= 1.0
+                or _as_num(st.get("ER")) > 0
+                or _as_num(st.get("K")) >= 2)
+    return any(_as_num(st.get(k)) > 0 for k in ("H", "R", "RBI", "BB"))
+
+
+def wrap_to(text: str, budget: int, indent: str = "  ") -> List[str]:
+    """Hard-wrap a footnote. A code block does not wrap, so we must."""
+    words, lines, cur = text.split(), [], ""
+    for w in words:
+        # NB: no .strip() on the trial -- it would eat the hanging indent on
+        # every continuation line after the first word was appended to it.
+        trial = f"{cur} {w}" if cur else w
+        if len(trial) > budget and cur:
+            lines.append(cur.rstrip())
+            cur = indent + w
+        else:
+            cur = trial
+    if cur:
+        lines.append(cur.rstrip())
+    return lines
+
+
+def _surname(name: str) -> str:
+    """'D. Schneemann' -> 'Schneemann'. The footnote has no room for initials
+    or positions -- those cost a line per two players at this width."""
+    return (name or "?").split()[-1]
+
+
+def rollup_line(players: Sequence[Dict], budget: int,
+                category: str = "batting") -> List[str]:
+    """'Also batted: Hoskins 0-4, Bazzana 0-4', wrapped to the budget."""
+    if not players:
+        return []
+    bits = []
+    for p in players:
+        st = p.get("stats") or {}
+        if category == "pitching":
+            bits.append(f'{_surname(p.get("name", "?"))} {st.get("IP", "0")}ip')
+        else:
+            bits.append(f'{_surname(p.get("name", "?"))} '
+                        f'{st.get("H", "0")}-{st.get("AB", "0")}')
+    label = "Also pitched: " if category == "pitching" else "Also batted: "
+    return wrap_to(label + ", ".join(bits), budget)
+
+
 def render_side(side: Dict, category: str, budget: int = MOBILE_BUDGET,
                 limit: Optional[int] = None) -> str:
     """One team's lines for one stat category (batting, passing, ...)."""
@@ -142,6 +227,14 @@ def render_side(side: Dict, category: str, budget: int = MOBILE_BUDGET,
         players = players[:limit]
     if not players:
         return ""
+
+    # Quiet batters become a footnote instead of a row each.
+    quiet: List[Dict] = []
+    if category in ROLLUP_CATEGORIES:
+        active = [p for p in players if did_something(p, category)]
+        if len(active) >= MIN_ROWS_BEFORE_ROLLUP:
+            quiet = [p for p in players if not did_something(p, category)]
+            players = active
 
     order = STAT_PRIORITY.get(category, [])
     present = [c for c in order if any(c in (p.get("stats") or {}) for p in players)]
@@ -159,7 +252,9 @@ def render_side(side: Dict, category: str, budget: int = MOBILE_BUDGET,
             [abbreviate_name(p.get("name", "?"), p.get("pos", ""))]
             + [str(st.get(c, "-")) for c in present]
         )
-    return render_table(headers, rows, budget)
+    table = render_table(headers, rows, budget)
+    extra = rollup_line(quiet, budget, category)
+    return "\n".join([table] + extra) if extra else table
 
 
 def game_header(game: Dict, budget: int = MOBILE_BUDGET) -> str:
@@ -183,9 +278,9 @@ def render_game(game: Dict, categories: Sequence[str],
                 budget: int = MOBILE_BUDGET, limit: Optional[int] = None) -> str:
     """A full game: score header, then each side's categories."""
     box = game.get("box_score") or {}
-    head = game_header(game, budget)
-
-    chunks = [head, "=" * min(len(head), budget)]
+    # No rule under the header: the code block draws its own border, so an
+    # '=====' line is redundant chrome costing one line per game.
+    chunks = [game_header(game, budget)]
     for key in ("away", "home"):
         side = box.get(key) or {}
         for cat in categories:

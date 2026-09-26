@@ -169,6 +169,53 @@ empty_game = {"away_team": "A", "home_team": "B", "away_score": 0,
 check(tbs.render_game(empty_game, ["batting"]).startswith("A 0 @ B 0"),
       "a game with no box score still renders its header rather than crashing")
 
+# ------------------------------------------------------- density / roll-ups
+print("\nroll-ups (density pass)")
+check(tbs.did_something({"stats": {"H": "1", "AB": "4"}}),
+      "a batter with a hit is shown as a row")
+check(not tbs.did_something({"stats": {"H": "0", "R": "0", "RBI": "0", "BB": "0"}}),
+      "an 0-for-4 with nothing else rolls up")
+check(tbs.did_something({"stats": {"H": "0", "BB": "1"}}),
+      "a walk counts -- reaching base is not nothing")
+check(tbs.did_something({"stats": {"IP": "1.0"}}, "pitching"),
+      "a pitcher with a full inning gets a row")
+check(not tbs.did_something({"stats": {"IP": "0.1", "ER": "0", "K": "0"}}, "pitching"),
+      "a one-out cameo rolls up")
+check(tbs.did_something({"stats": {"IP": "0.1", "ER": "1"}}, "pitching"),
+      "any run allowed earns a row however short the outing")
+check(tbs.did_something({"stats": {"IP": "0.2", "K": "2"}}, "pitching"),
+      "two strikeouts earn a row too")
+
+wrapped = tbs.wrap_to("Also batted: " + ", ".join(f"Player{i} 0-4" for i in range(8)), 38)
+check(all(len(l) <= 38 for l in wrapped),
+      "a wrapped footnote never exceeds the budget")
+check(len(wrapped) > 1, "a long footnote actually wraps")
+check(wrapped[1].startswith("  "),
+      "continuation lines keep the hanging indent (the .strip() bug)")
+
+quiet = [{"name": "R. Hoskins", "pos": "1B", "stats": {"H": "0", "AB": "4"}}]
+roll = tbs.rollup_line(quiet, 38)
+check(roll and "Hoskins 0-4" in roll[0], "batting roll-up shows surname and H-AB")
+check("1B" not in roll[0], "the roll-up drops positions -- no room at this width")
+pitch_roll = tbs.rollup_line([{"name": "M. Festa", "stats": {"IP": "0.1"}}], 38, "pitching")
+check(pitch_roll and "Festa 0.1ip" in pitch_roll[0], "pitching roll-up shows innings")
+check(tbs.rollup_line([], 38) == [], "no quiet players means no footnote line")
+
+# A side that is almost all quiet must not collapse to a stub.
+mostly_quiet = {"team": "X", "batting": [
+    {"name": f"P. {i}", "pos": "LF", "stats": {"AB": "4", "H": "0", "R": "0",
+                                               "RBI": "0", "BB": "0", "K": "1"}}
+    for i in range(9)]}
+out = tbs.render_side(mostly_quiet, "batting")
+check(out.count("\n") >= 9,
+      "with fewer than MIN_ROWS_BEFORE_ROLLUP active, every batter keeps a row")
+
+check("=" not in tbs.render_game(
+    {"away_team": "A", "home_team": "B", "away_abbr": "A", "home_abbr": "B",
+     "away_score": 1, "home_score": 0, "box_score": {}}, ["batting"]),
+      "no '=====' rule under the header -- the code block draws its own border")
+
+
 print()
 if FAILURES:
     print(f"{len(FAILURES)} FAILURE(S):")
