@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-09-26",
+    "slug": "expanding-brain",
+    "boxes": [
+      "MAKE THE PLAYOFFS",
+      "MAKE THE PLAYOFFS UNDER .500",
+      "GET HOME FIELD AT 80-82",
+      "FIRST SUB-.500 CHAMPIONS IN MLB HISTORY"
+    ]
+  },
+  {
+    "date": "2026-09-26",
+    "slug": "panik-kalm-panik",
+    "boxes": [
+      "DBACKS ARE HOT AGAIN",
+      "WE STILL LEAD THE WILD CARD",
+      "IT'S 1.5 GAMES AND THEY HAVE THE TIEBREAKER"
+    ]
+  },
+  {
     "date": "2026-09-25",
     "slug": "first-time",
     "boxes": [
@@ -504,23 +523,6 @@
       "MENDOZA WEEK 1: TD DRIVE VS CARDINALS STARTERS",
       "MENDOZA WEEK 2: 8-FOR-15, 86 YARDS",
       "MENDOZA WEEK 2: 80-YARD PICK-SIX ON THIRD PASS"
-    ]
-  },
-  {
-    "date": "2026-08-23",
-    "slug": "expanding-brain",
-    "boxes": [
-      "LEADOFF HOMER IN A GAME",
-      "FIRST-PITCH LEADOFF HOMER AND WALK-OFF HOMER",
-      "TWO GUYS DOING IT IN THE SAME WEEK AFTER 69 YEARS OF NOBODY DOING IT"
-    ]
-  },
-  {
-    "date": "2026-08-23",
-    "slug": "two-buttons",
-    "boxes": [
-      "LONGEST KICK IN NFL HISTORY",
-      "PRESEASON ASTERISK FOREVER"
     ]
   }
 ]
