@@ -1,5 +1,23 @@
 [
   {
+    "date": "2026-09-29",
+    "slug": "surprised-pikachu",
+    "boxes": [
+      "UNDEFEATED EAGLES TRAVEL TO CHICAGO",
+      "FACE 38-YEAR-OLD THIRD-STRING CASE KEENUM",
+      "LOSE BY 20"
+    ]
+  },
+  {
+    "date": "2026-09-29",
+    "slug": "panik-kalm-panik",
+    "boxes": [
+      "JAXSON DART DONE FOR THE YEAR",
+      "WE TRADED FOR A FORMER TOP-10 PICK",
+      "HE THREW MORE INTS THAN TDS AS A VIKING"
+    ]
+  },
+  {
     "date": "2026-09-28",
     "slug": "gus-fring-we-are-not-the-same",
     "boxes": [
@@ -508,22 +526,6 @@
     "boxes": [
       "LANE KIFFIN",
       "A CONSISTENT POSITION"
-    ]
-  },
-  {
-    "date": "2026-08-26",
-    "slug": "trade-offer",
-    "boxes": [
-      "WRIGHT RECEIVES: NIL BAG, FIFTH YEAR, SEC SPOTLIGHT",
-      "NFL RECEIVES: A ROSTER SPOT BACK"
-    ]
-  },
-  {
-    "date": "2026-08-25",
-    "slug": "one-does-not-simply",
-    "boxes": [
-      "ONE DOES NOT SIMPLY",
-      "DRIVE TO EAST PALESTINE WITH $160 CASH"
     ]
   }
 ]
