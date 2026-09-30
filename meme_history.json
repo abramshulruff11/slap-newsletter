@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-09-30",
+    "slug": "drake",
+    "boxes": [
+      "STARTING BEN RICE ALL YEAR",
+      "FIGURING IT OUT IN OCTOBER"
+    ]
+  },
+  {
     "date": "2026-09-29",
     "slug": "surprised-pikachu",
     "boxes": [
@@ -518,14 +526,6 @@
     "boxes": [
       "BIG TEN",
       "SEC"
-    ]
-  },
-  {
-    "date": "2026-08-26",
-    "slug": "is-this-a-pigeon",
-    "boxes": [
-      "LANE KIFFIN",
-      "A CONSISTENT POSITION"
     ]
   }
 ]
