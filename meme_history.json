@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-10-01",
+    "slug": "the-scroll-of-truth",
+    "boxes": [
+      "YOUR OFFENSE HAS NOT SCORED A RUN IN 26 STRAIGHT POSTSEASON INNINGS",
+      "THE BOSTON RED SOX"
+    ]
+  },
+  {
     "date": "2026-09-30",
     "slug": "drake",
     "boxes": [
@@ -518,14 +526,6 @@
       "NFL FRONT OFFICE",
       "KEEP DEVELOPING YOUR OWN PLAYERS",
       "LAUNDER THEM THROUGH LSU FOR A YEAR"
-    ]
-  },
-  {
-    "date": "2026-08-26",
-    "slug": "epic-handshake",
-    "boxes": [
-      "BIG TEN",
-      "SEC"
     ]
   }
 ]
