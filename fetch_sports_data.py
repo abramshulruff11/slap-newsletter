@@ -1880,6 +1880,23 @@ def main() -> None:
     else:
         print(f"    ⚠ champions unavailable: {champs.get('reason')}")
 
+    # ── Team history (SLA-108) ────────────────────────────────────────────
+    # Verified streaks, starts, droughts and head-to-head for the teams in
+    # yesterday's games, so RULE 3 can let a true "first since 2015" stand.
+    # Never fatal: without the database the block says "unavailable" and
+    # RULE 3 works exactly as before.
+    import history_source
+    print("  Fetching team history...")
+    output["history"] = history_source.fetch_history(output)
+    hist = output["history"]
+    if hist.get("status") == "ok":
+        for sport, e in hist["leagues"].items():
+            n = sum(1 for t in e["teams"] if t["facts"])
+            missed = f", unmatched: {', '.join(e['unmatched'])}" if e["unmatched"] else ""
+            print(f"    {e['label']}: {n} teams{missed}")
+    else:
+        print(f"    ⚠ history unavailable: {hist.get('reason')}")
+
     # Health block: how the file was fetched, not just what it holds. A file
     # with standings but zero games AND failed scoreboard calls is a blocked
     # fetch; the same file with zero failures is an off day. Downstream

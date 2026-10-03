@@ -143,6 +143,8 @@ slap-newsletter/
 ├── claim_validator.py         ← deterministic fact check vs game_state.json (Pass 3)
 ├── champions_source.py        ← SLA-65: each league's defending champion from slap-sports-db,
 │                                 written into game_state.json["champions"] by the fetch step
+├── history_source.py          ← SLA-108: verified team history (streaks, starts, droughts,
+│                                 head-to-head, polls) for yesterday's teams → game_state["history"]
 ├── run_status.py              ← per-run state on disk, shared across processes
 ├── pipeline_status.py         ← per-STAGE outcomes on top of run_status.json;
 │                                 PIPELINE_STAGES is the declared stage list
@@ -553,6 +555,28 @@ champion isn't known today → `FACT FLAG [LOW]`, name it or cut the title phras
   3 LOW (two World Cup, not a launch league; one NFL item naming no team). Locked by
   `uat/tests/test_defending_champion.py`.
 
+**Team history is sourced, so RULE 3 lets it stand (SLA-108, 2026-10-03).** The fetch step
+computes, for the teams in yesterday's games, what slap-sports-db can prove: current streaks and
+the last season one was matched, starts against the same point of every past season, last
+title / last title-game appearance / last playoff appearance (NFL) / last winning season kept
+apart (the Knicks error), head-to-head and road wins over today's opponent, and college football
+AP history. It reaches every pass as the HISTORICAL CONTEXT part of the GROUND TRUTH block, and
+RULE 3 item 5 (both copies) treats a listed fact as sourced; editor Check 8 already counts the
+ground-truth block as a source.
+- **Only notable facts are listed** (a streak or start not matched in 3-5 seasons, a head-to-head
+  drought of 3+), plus one drought line per team: ~9 KB on a heavy Saturday, ~5 KB on an NFL
+  Sunday. The block is in every pass's prompt, so noise costs money.
+- **Depth is stated.** NFL games start in 1999 here: "since at least 1999", never "since 1999".
+  A franchise younger than the data says "in franchise history (since 1969)". Titles are the
+  exception: the title record is complete, so "no World Series title in franchise history" is a fact.
+- **NBA/NHL facts name seasons ("2025-26")**, never the start year alone, and **titles count
+  only seasons before the current one**: a 2026-03-15 run must not see the Knicks' 2025-26 title.
+- **As of `yesterday_date`**: games after it are ignored, so a replay of an old issue is honest.
+- Pro teams match by name (accents/apostrophes normalized), college teams by ESPN id = CFBD id.
+- Inert without `SPORTS_DB_URL`, never fatal. Pass 3 does NOT check history claims yet: that is
+  SLA-109, which also loosens RULE 3 / Check 8 for everything the block can't confirm.
+  Locked by `uat/tests/test_history_context.py`.
+
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
 
@@ -956,6 +980,20 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-03 — Verified team history in the ground truth (SLA-108)**
+- RULE 3 blurred or cut every specific historical claim because nothing could source one.
+  `history_source.py` now computes, from slap-sports-db, streaks, starts, droughts (kept apart),
+  head-to-head and AP history for yesterday's teams; RULE 3 item 5 treats them as sourced.
+- Built against the live database and checked by hand: the Knicks' last title 1972-73 and last
+  Finals 1998-99 (the 2026-06-01 failure), Bills 1965 / Super Bowl 1993, Browns 1964, Georgia
+  2022, Chargers' last win at Buffalo 2018-09-16. Four bugs found that way and fixed: MLB's
+  live season had no start date (picked 2025 as current), the current season's title leaked into
+  a mid-season run, "no win since at least 2026" for a first meeting, and a younger franchise
+  read as "since at least 1876".
+- One temp table per league (two index-friendly halves) instead of a `team IN (home, away)` join,
+  which timed out on MLB: ~3-18 s a run.
+- Pass 3 checking of history claims, and loosening RULE 3 / Check 8, are SLA-109.
 
 **2026-09-26 — "Defending champion" is resolved against the sports database (SLA-65)**
 - The first consumer of slap-sports-db. RULE 3.4 told the writer to verify "defending champion"

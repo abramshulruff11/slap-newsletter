@@ -413,10 +413,12 @@ def format_game_state_summary(game_state: dict) -> str:
     It also carries each league's defending champion (SLA-65), from the
     champions block fetch_sports_data.py reads out of slap-sports-db. That
     part stands on its own: an off day with no games still says who the
-    champions are.
+    champions are. And the verified history of the teams in yesterday's
+    games (SLA-108): streaks, starts, droughts, head-to-head, polls.
     """
     import champions_source
-    champion_lines = champions_source.summary_lines(game_state)
+    import history_source
+    champion_lines = champions_source.summary_lines(game_state) + history_source.summary_lines(game_state)
     if not game_state or not game_state.get("sports"):
         return "\n".join(champion_lines)
 

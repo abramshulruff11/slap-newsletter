@@ -65,6 +65,16 @@ RULES:
    or the block is missing, do not use it at all. Pass 3 checks every
    "defending champion" against that list and the editor corrects or cuts
    anything that doesn't match.
+5. The GROUND TRUTH block's HISTORICAL CONTEXT lists verified history for
+   the teams in yesterday's games, computed from the SLAP sports database:
+   streaks, starts, title and Finals droughts (kept apart), head-to-head,
+   polls. A fact listed there IS sourced: you may use its specific year or
+   number. Keep its kind (a "last title" fact is not a Finals-appearance
+   fact: that is the Knicks failure above) and keep "since at least" where it
+   says so (it means the data starts there, not that it happened then).
+   NBA and NHL facts name seasons ("2025-26"): write them that way or as the
+   year the title was won, never the start year alone. A history claim not
+   listed there is not sourced: rules 1-3 apply to it.
 
 The principle: a specific wrong number is far worse than a vague right
 impression. When in doubt, write it vague.
