@@ -366,7 +366,12 @@ def _claim_kinds(window: str) -> set[str]:
     w = window.lower()
     if _PLAYER.search(w) or _OTHER_POSTSEASON.search(w):
         return set()
-    if re.search(r"miss(ed|es|ing)?", w):
+    if re.search(r"\b(biggest|most|highest|lowest|fewest|largest|smallest)\b", w):
+        # A superlative measures something ("biggest Finals court redesign in
+        # 17 years", replay 2026-06-01): never a title, Finals or playoff
+        # drought, which only a "first"/"since"/"drought" claim is.
+        return set()
+    if re.search(r"\bmiss(ed|es|ing)?\b", w):
         return set()                                   # "first missed playoffs since": the inverse fact
     if re.search(r"\b(straight|in\s+a\s+row|consecutive)\b", w) and re.search(r"\bseasons\b", w):
         return set()                                   # "five straight winning seasons"
@@ -557,7 +562,7 @@ def check_history_claims(own_text: str, game_state: dict, outcomes: list | None 
                     results.append((t, f, v))
             if any(v == "confirm" for _, _, v in results):
                 if outcomes is not None:
-                    outcomes.append(("confirmed", _quote(sentence)))
+                    outcomes.append(("confirmed", _quote(sentence), sentence))
                 continue
             quoted = _quote(sentence)
             if quoted in seen:
@@ -579,14 +584,14 @@ def check_history_claims(own_text: str, game_state: dict, outcomes: list | None 
                     f'year or count to match, keeping its kind (a title is not a Finals appearance), '
                     f'or cut the claim. -->')
                 if outcomes is not None:
-                    outcomes.append(("HIGH", flags[-1]))
+                    outcomes.append(("HIGH", quoted, sentence, flags[-1]))
             else:
                 flags.append(
                     f'\n<!-- FACT FLAG [LOW]: "{quoted}" makes a specific history claim the HISTORICAL '
                     f'CONTEXT block does not confirm. RULE 3: replace the specific year or count with '
                     f'relative framing, or cut the clause. -->')
                 if outcomes is not None:
-                    outcomes.append(("LOW", quoted))
+                    outcomes.append(("LOW", quoted, sentence))
     return flags
 
 
@@ -712,6 +717,7 @@ def validate_section(heading: str, section_html: str, game_state: dict) -> tuple
 def validate_claims(
     html: str,
     game_state_path: Path = GAME_STATE_PATH,
+    game_state: dict | None = None,
 ) -> tuple[str, int]:
     """
     Validate factual claims in newsletter HTML against game_state.json.
@@ -719,6 +725,9 @@ def validate_claims(
     Args:
         html: Full newsletter HTML string (from Pass 2 output).
         game_state_path: Path to game_state.json produced by fetch_sports_data.py.
+        game_state: The runner's in-memory copy, when it has one. Since SLA-111
+            the runner adds history for the teams the day's stories name
+            after Pass 1, so its copy knows more than the file does.
 
     Returns:
         (annotated_html, total_flag_count)
@@ -727,7 +736,7 @@ def validate_claims(
     """
     print("\n── PASS 3: Claim Validator ─────────────────────────")
 
-    game_state = load_game_state(game_state_path)
+    game_state = game_state if game_state else load_game_state(game_state_path)
 
     if not game_state:
         print("  ⚠ game_state.json not found — run fetch_sports_data.py first")
