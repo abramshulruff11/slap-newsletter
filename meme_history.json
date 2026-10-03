@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-10-03",
+    "slug": "buff-doge-vs-cheems",
+    "boxes": [
+      "NORTHWESTERN TONIGHT",
+      "PENN STATE TONIGHT",
+      "414 RUSHING YARDS IN A NEW STADIUM",
+      "RANKED #13 ON VIBES, NO P4 WINS"
+    ]
+  },
+  {
+    "date": "2026-10-03",
+    "slug": "eric-andre-shooting",
+    "boxes": [
+      "BRENT VIGEN",
+      "MONTANA STATE'S PERFECT SEASON",
+      "HOW DID WE LOSE TO 0-4 IDAHO?"
+    ]
+  },
+  {
     "date": "2026-10-02",
     "slug": "distracted-boyfriend",
     "boxes": [
@@ -507,25 +526,6 @@
     "boxes": [
       "RETIRING QUIETLY AT 37 LIKE A NORMAL VETERAN",
       "CASUALLY JOINING RANDY JOHNSON ON A LIST ONLY 6 PITCHERS HAVE EVER MADE"
-    ]
-  },
-  {
-    "date": "2026-08-28",
-    "slug": "two-buttons",
-    "boxes": [
-      "THROW A PERFECT GAME",
-      "GET SWEPT BY THE BRAVES ANYWAY",
-      "THE DODGERS THIS WEEK"
-    ]
-  },
-  {
-    "date": "2026-08-27",
-    "slug": "clown-applying-makeup",
-    "boxes": [
-      "OWN AN NFL FRANCHISE",
-      "OWN A PREMIER LEAGUE CLUB",
-      "OHIO TRAILER PARK",
-      "YANKEES SHIRT"
     ]
   }
 ]
