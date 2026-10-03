@@ -417,6 +417,10 @@ def main() -> None:
 
     # ---- Pass 2 ----------------------------------------------------------
     if "2" in passes:
+        # SLA-111: history for the teams the stories name, not only the teams
+        # that played. In place on game_state; never raises.
+        import history_source
+        print("  " + history_source.extend_for_stories(game_state, story_plan))
         html = G.run_pass2(story_plan, client, game_state, highlight_plan=converted)
         (G.OUTPUT_DIR / "pass2_raw.html").write_text(html, encoding="utf-8")
     else:
@@ -430,7 +434,7 @@ def main() -> None:
     if "3" in passes:
         try:
             from claim_validator import validate_claims
-            html, _flags = validate_claims(html, G.GAME_STATE_PATH)
+            html, _flags = validate_claims(html, G.GAME_STATE_PATH, game_state=game_state)
         except ImportError:
             print("\n── PASS 3: Claim Validator ─────────────────────────")
             print("  ⚠ claim_validator.py not found — skipping")

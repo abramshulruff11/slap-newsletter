@@ -712,6 +712,7 @@ def validate_section(heading: str, section_html: str, game_state: dict) -> tuple
 def validate_claims(
     html: str,
     game_state_path: Path = GAME_STATE_PATH,
+    game_state: dict | None = None,
 ) -> tuple[str, int]:
     """
     Validate factual claims in newsletter HTML against game_state.json.
@@ -719,6 +720,9 @@ def validate_claims(
     Args:
         html: Full newsletter HTML string (from Pass 2 output).
         game_state_path: Path to game_state.json produced by fetch_sports_data.py.
+        game_state: The runner's in-memory copy, when it has one. Since SLA-111
+            the runner adds history for the teams the day's stories name
+            after Pass 1, so its copy knows more than the file does.
 
     Returns:
         (annotated_html, total_flag_count)
@@ -727,7 +731,7 @@ def validate_claims(
     """
     print("\n── PASS 3: Claim Validator ─────────────────────────")
 
-    game_state = load_game_state(game_state_path)
+    game_state = game_state if game_state else load_game_state(game_state_path)
 
     if not game_state:
         print("  ⚠ game_state.json not found — run fetch_sports_data.py first")

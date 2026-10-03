@@ -1253,12 +1253,18 @@ def main() -> None:
     except OSError as e:
         print(f"  ⚠ story_plan.json not saved — {e}")
 
+    # SLA-111: history for the teams the chosen stories name, not only the
+    # teams that played yesterday (a trade, an off day, a preview). Added to
+    # game_state in place, so Passes 2, 3 and 6 all see it. Never raises.
+    import history_source
+    print("  " + history_source.extend_for_stories(game_state, story_plan))
+
     draft_html    = run_pass2(story_plan, client, game_state, degraded=degraded)
 
     # Pass 3 — Claim Validator (deterministic, cross-refs game_state.json)
     try:
         from claim_validator import validate_claims
-        validated_html, _val_flags = validate_claims(draft_html, GAME_STATE_PATH)
+        validated_html, _val_flags = validate_claims(draft_html, GAME_STATE_PATH, game_state=game_state)
     except ImportError:
         print("\n── PASS 3: Claim Validator ─────────────────────────")
         print("  ⚠ claim_validator.py not found — skipping")

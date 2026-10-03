@@ -33,13 +33,14 @@ No model writes or checks one. Four rules keep them honest:
 
 from __future__ import annotations
 
+import json
 import os
 import re
 import unicodedata
 from dataclasses import dataclass, field
 from datetime import date
 
-from champions_source import _connect, _scrub, _secrets
+from champions_source import _connect, _scrub, _secrets, expected_latest_season
 
 # game_state sport key -> (slap-sports-db league, how the newsletter names it,
 # what its title is called, what its title game is called)
@@ -510,6 +511,191 @@ def fetch_history(game_state: dict, url: str | None = None, connect=_connect) ->
 
 
 # ---------------------------------------------------------------------------
+# Teams the day's STORIES name (SLA-111). The block above covers yesterday's
+# games; a trade, an off day, a preview or a feature names teams that didn't
+# play, and their history claims could only ever be blurred. After Pass 1
+# picks the stories, every team they name gets facts too, matched to where
+# its league is: in season (streak, start, droughts), or not (droughts only,
+# through the last decided season).
+# ---------------------------------------------------------------------------
+
+MAX_STORY_TEAMS = 24    # a hard cap on what a busy day can add to every prompt
+
+# Which current AP Top 25 teams: college football is matched only against
+# these. 1,290 current college teams include schools named like places
+# ("Washington", "Miami"); the ranked ones are the ones stories are about.
+CFB_RANKED = """
+    SELECT DISTINCT ON (t.team_id) t.team_id, t.franchise_id, t.full_name, t.nickname, t.location
+    FROM poll_ranking p JOIN season s USING (season_id) JOIN team t USING (team_id)
+    WHERE p.poll = 'AP Top 25' AND s.league_id = 'ncaaf'
+      AND s.year = (SELECT max(s2.year) FROM poll_ranking p2 JOIN season s2 USING (season_id)
+                    WHERE p2.poll = 'AP Top 25' AND s2.start_date <= %(day)s::date)
+    ORDER BY t.team_id"""
+
+DECIDED = """
+    SELECT 1 FROM v_league_title WHERE league_id = ANY(%(leagues)s) AND year = %(year)s LIMIT 1"""
+
+
+def story_text(story_plan: str | dict) -> str:
+    """Every string the plan wrote about its stories, minus the tweets it
+    quotes (someone else's words) and URLs."""
+    try:
+        plan = json.loads(story_plan) if isinstance(story_plan, str) else story_plan
+    except (TypeError, ValueError):
+        return ""
+    out: list[str] = []
+
+    def walk(x, key=""):
+        if isinstance(x, dict):
+            if "url" in x and "account" in x:          # a quoted tweet
+                return
+            for k, v in x.items():
+                walk(v, k)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v, key)
+        elif isinstance(x, str) and key not in ("url", "topic_key"):
+            out.append(x)
+    walk(plan)
+    return "\n".join(out)
+
+
+def named_teams(text: str, teams_by_sport: dict[str, list[dict]]) -> dict[str, list[dict]]:
+    """The database teams `text` names, per sport. A full name, a school
+    (college), or a nickname no other team in any league shares, capitalised
+    as a name: "the Knicks", not "giants of the game", and never "Giants"
+    alone, which is two teams."""
+    nick_count: dict[str, int] = {}
+    for rows in teams_by_sport.values():
+        for t in rows:
+            if t.get("nickname"):
+                nick_count[t["nickname"]] = nick_count.get(t["nickname"], 0) + 1
+
+    pro_cities = {t.get("location") for sport, rows in teams_by_sport.items() if sport != "ncaafb" for t in rows}
+
+    def says(name: str, prefix: str = "") -> bool:
+        # A school is not the start of another school ("Georgia Tech").
+        return bool(name) and re.search(
+            prefix + r"(?<![\w-])" + re.escape(name) + r"(?![\w-])(?!\s+(?:State|Tech|A&M|Southern|St\.?)(?!\w))",
+            text) is not None
+
+    out: dict[str, list[dict]] = {}
+    for sport, rows in teams_by_sport.items():
+        for t in rows:
+            names = [t["full_name"]]
+            if sport == "ncaafb":
+                school = t.get("location") or ""
+                # "Miami" is also the Dolphins, Heat and Marlins: a school
+                # sharing a pro city counts only with its ranking in front.
+                if school in pro_cities:
+                    if says(school, prefix=r"No\.\s?\d{1,2}\s+"):
+                        out.setdefault(sport, []).append(t)
+                        continue
+                else:
+                    names.append(school)
+            elif t.get("nickname") and nick_count.get(t["nickname"]) == 1:
+                names.append(t["nickname"])
+            if any(says(n) for n in names):
+                out.setdefault(sport, []).append(t)
+    return out
+
+
+def build_story_facts(conn, game_state: dict, text: str) -> int:
+    """Add facts for the teams `text` names to game_state["history"] in
+    place. Returns how many teams were added."""
+    block = game_state.get("history") or {}
+    day = block.get("as_of") or game_state.get("yesterday_date")
+    have = {norm(t["team"]) for e in (block.get("leagues") or {}).values() for t in e.get("teams") or []}
+    pool: dict[str, list[dict]] = {}
+    for sport, spec in LEAGUES.items():
+        rows = (_rows(conn, CFB_RANKED, {"day": day}) if sport == "ncaafb"
+                else _rows(conn, CURRENT_TEAMS, {"league": spec[0]}))
+        pool[sport] = [t for t in rows if norm(t["full_name"]) not in have]
+    picked = named_teams(text, pool)
+    added = 0
+    for sport, teams in picked.items():
+        teams = teams[:max(0, MAX_STORY_TEAMS - added)]
+        if not teams:
+            continue
+        spec = LEAGUES[sport]
+        league = spec[0]
+        in_season = _rows(conn, SEASON, {"league": league, "day": day, "days": 10})
+        srow = in_season or _rows(conn, SEASON, {"league": league, "day": day, "days": 400})
+        if not srow:
+            continue
+        year, first_year = srow[0]["year"], srow[0]["first_year"]
+        title_leagues = [league] + (["afl", "aafc"] if league == "nfl" else [])
+        # Out of season, the last season is over: its champion (once decided)
+        # and its record count. In season, only seasons before this one do.
+        # The calendar must agree too (champions_source's rule: stale means
+        # unknown). The database row alone isn't enough: a replay of June 1
+        # must not see the Knicks' title won June 13, and a live run must not
+        # either if a row ever lands early.
+        through = year
+        if (not in_season and expected_latest_season(league, date.fromisoformat(day)) >= year
+                and _rows(conn, DECIDED, {"leagues": title_leagues, "year": year})):
+            through = year + 1
+        franchises = sorted({t["franchise_id"] for t in teams})
+        p = {"league": league, "franchises": franchises, "year": through, "day": day}
+        titles = {r["franchise_id"]: r for r in _rows(conn, TITLES, {"leagues": title_leagues,
+                                                                    "franchises": franchises, "year": through})}
+        playoffs = {r["franchise_id"]: r for r in _rows(conn, PLAYOFFS, p)} if league in PLAYOFF_GAMES else {}
+        playoff_first = next(iter(playoffs.values()), {}).get("first_year") if playoffs else None
+        winning = {r["franchise_id"]: r for r in _rows(conn, WINNING, {**p, "year": year if in_season else year + 1})}
+        streaks = starts = []
+        polls = {}
+        if in_season:
+            conn.execute("DROP TABLE IF EXISTS hist_sides")
+            conn.execute(BUILD_SIDES, {**p, "year": year})
+            streaks = _rows(conn, STREAKS, {**p, "year": year})
+            starts = _rows(conn, STARTS, {**p, "year": year})
+            if league == "ncaaf":
+                polls = {r["franchise_id"]: r for r in _rows(conn, POLLS, {**p, "year": year})}
+        entry = block.setdefault("leagues", {}).setdefault(
+            sport, {"label": spec[1], "season": year, "game_data_from": first_year, "teams": [], "unmatched": []})
+        for t in teams:
+            f = t["franchise_id"]
+            lines = [
+                streak_fact([s for s in streaks if s["franchise_id"] == f], year, first_year, league),
+                start_fact([s for s in starts if s["franchise_id"] == f], year, first_year, league),
+                poll_fact(polls.get(f), year),
+                drought_fact(spec, titles.get(f), playoffs.get(f), winning.get(f), through, first_year, playoff_first),
+            ]
+            entry["teams"].append({"team": t["full_name"], "opponent": None, "facts": [x for x in lines if x],
+                                   "postseason": False, "story": True,
+                                   # Out of season with this season's title not yet on the
+                                   # calendar: say where the facts stop, so a team that just
+                                   # won isn't read as still waiting.
+                                   "before": season(league, year) if (not in_season and through == year) else None})
+            added += 1
+    return added
+
+
+def extend_for_stories(game_state: dict, story_plan, url: str | None = None, connect=_connect) -> str:
+    """Called by both runners after Pass 1. Adds facts for the teams the
+    stories name to game_state["history"], in place, and says what it did in
+    one line for the log. Never raises; with no database it does nothing."""
+    block = (game_state or {}).get("history") or {}
+    if block.get("status") != "ok":
+        return "history: no database today, story teams skipped"
+    url = url if url is not None else os.environ.get("SPORTS_DB_URL", "")
+    if not url:
+        return "history: SPORTS_DB_URL is not set, story teams skipped"
+    text = story_text(story_plan)
+    if not text:
+        return "history: no story text, story teams skipped"
+    secrets = _secrets(url)
+    before = len("\n".join(summary_lines(game_state)))
+    try:
+        with connect(url) as conn:
+            n = build_story_facts(conn, game_state, text)
+    except Exception as e:  # noqa: BLE001 - reported, never fatal
+        return "history: story teams skipped: " + _scrub(f"{type(e).__name__}: {e}", secrets)
+    after = len("\n".join(summary_lines(game_state)))
+    return f"history: +{n} team(s) named in today's stories; block {before:,} -> {after:,} chars"
+
+
+# ---------------------------------------------------------------------------
 # Reading the sentences back (SLA-109). Pass 3 checks the draft's history
 # claims against these facts, so it needs each one as data: its kind, the
 # season(s) it names, or the floor it can't see past. Parsed from the lines
@@ -642,7 +828,10 @@ def summary_lines(game_state: dict) -> list[str]:
                 # A playoff team's droughts are as of BEFORE this postseason:
                 # "last NBA Finals appearance: 1998-99" for a team now in the
                 # Finals is what "first Finals since 1999" is checked against.
-                tag = " (in the postseason; titles and appearances are before this one)" if t.get("postseason") else ""
+                tag = (" (in the postseason; titles and appearances are before this one)" if t.get("postseason")
+                       else f" (named in today's stories; titles and appearances before the {t['before']} postseason)"
+                       if t.get("story") and t.get("before")
+                       else " (named in today's stories)" if t.get("story") else "")
                 lines.append(f"  {t['team']}{tag}: " + " ".join(t["facts"]))
         lines.append("")
     return lines

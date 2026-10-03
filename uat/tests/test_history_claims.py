@@ -369,6 +369,145 @@ check("'first postseason appearance since' has no MLB fact (no playoff games sto
       verdict("The Mariners are in the postseason for the first time since 2022.", MLB_POST), ["LOW"])
 
 # ---------------------------------------------------------------------------
+print("SLA-111: teams the day's stories name get facts too")
+# ---------------------------------------------------------------------------
+plan = {"lead_story": {"topic": "Knicks headed to the Finals", "headline": "The Knicks are back",
+                       "tweets": [{"url": "https://x.com/a/status/1", "account": "a",
+                                   "text": "Boston Celtics fans in shambles"}],
+                       "beats": [{"angle": "No. 7 Miami's quarterback", "landing": "Georgia Tech too"}]},
+        "story_log": [{"topic_key": "new-york-giants-trade", "title": "Giants of the game"}]}
+txt = hs.story_text(plan)
+check("story text keeps the plan's own words", "Knicks headed to the Finals" in txt, True)
+check("...but not the tweets it quotes", "Celtics" in txt, False)
+check("...nor topic keys", "new-york-giants" in txt, False)
+
+POOL = {
+    "nba": [{"team_id": 1, "franchise_id": 1, "full_name": "New York Knicks", "nickname": "Knicks", "location": "New York"},
+            {"team_id": 2, "franchise_id": 2, "full_name": "Miami Heat", "nickname": "Heat", "location": "Miami"}],
+    "nfl": [{"team_id": 3, "franchise_id": 3, "full_name": "New York Giants", "nickname": "Giants", "location": "New York"}],
+    "mlb": [{"team_id": 4, "franchise_id": 4, "full_name": "San Francisco Giants", "nickname": "Giants",
+             "location": "San Francisco"}],
+    "ncaafb": [{"team_id": 5, "franchise_id": 5, "full_name": "Georgia Bulldogs", "nickname": "Bulldogs", "location": "Georgia"},
+               {"team_id": 6, "franchise_id": 6, "full_name": "Miami Hurricanes", "nickname": "Hurricanes",
+                "location": "Miami"}]}
+
+
+def picks(text):
+    return sorted(t["full_name"] for rows in hs.named_teams(text, POOL).values() for t in rows)
+
+
+check("a unique nickname names its team", picks("The Knicks are rolling."), ["New York Knicks"])
+check("'Giants' alone is two teams: neither", picks("The Giants won."), [])
+check("...the full name is one", picks("The New York Giants won."), ["New York Giants"])
+check("a nickname must be capitalised as a name", picks("giants of the game"), [])
+check("a school by its name", picks("Georgia rolled."), ["Georgia Bulldogs"])
+check("...but not the start of another school", picks("Georgia Tech rolled."), [])
+check("a school sharing a pro city needs its ranking", picks("Miami won again."), [])
+check("...and with it, counts", picks("No. 7 Miami won again."), ["Miami Hurricanes"])
+
+
+class StoryConn:
+    """Canned answers for build_story_facts: the NBA out of season (unless
+    told otherwise), with the 2025-26 title in the database, as it is today."""
+    def __init__(self, nba_in_season=False):
+        self.nba_in_season, self.ran = nba_in_season, []
+
+    def execute(self, sql, params=None):
+        self.ran.append((sql, dict(params or {})))
+        rows = []
+        if sql is hs.CURRENT_TEAMS:
+            rows = POOL.get(params["league"], [])
+        elif sql is hs.CFB_RANKED:
+            rows = POOL["ncaafb"]
+        elif sql is hs.SEASON:
+            if params["league"] == "nba" and (params["days"] == 400 or self.nba_in_season):
+                rows = [{"year": 2025, "first_year": 1946}]
+        elif sql is hs.DECIDED:
+            rows = [{"one": 1}] if params["year"] == 2025 else []
+        elif sql is hs.WINNING:
+            rows = [{"franchise_id": 1, "last_winning": 2025}]
+        elif sql is hs.TITLES:
+            won = params["year"] > 2025            # the Knicks' 2025-26 title, once it counts
+            rows = [{"franchise_id": 1, "last_title": 2025 if won else 1972,
+                     "last_title_game": 2025 if won else 1998, "first_title_year": 1947}]
+        cols = list(rows[0]) if rows else ["x"]
+
+        class Cur:
+            description = [type("C", (), {"name": c}) for c in cols]
+
+            def fetchall(self_inner):
+                return [tuple(r[c] for c in cols) for r in rows]
+        return Cur()
+
+
+def story_block(day, text, conn=None, have=()):
+    gs = {"yesterday_date": day, "history": {"status": "ok", "as_of": day, "leagues": {}}}
+    for name in have:
+        gs["history"]["leagues"].setdefault("nba", {"label": "NBA", "season": 2025, "game_data_from": 1946,
+                                                    "teams": []})["teams"].append(team(name, None))
+    n = hs.build_story_facts(conn or StoryConn(), gs, text)
+    return gs, n
+
+
+gs, n = story_block("2026-05-31", "The Knicks ended a 53-year Finals drought.")
+knx = gs["history"]["leagues"]["nba"]["teams"][0]
+check("THE CASE, as it happened: the Knicks hadn't played, but the story names them", n, 1)
+check("...out of season, title not yet on the calendar: droughts BEFORE 2025-26", knx["facts"],
+      ["last NBA title: 1972-73; last NBA Finals appearance: 1998-99; last winning season: 2025-26."])
+has("...and the block says where they stop", "\n".join(hs.summary_lines(gs)),
+    "New York Knicks (named in today's stories; titles and appearances before the 2025-26 postseason)")
+check("...so the 2026-06-01 sentence is caught: HIGH",
+      verdict("The Knicks ended a 53-year Finals drought.", gs), ["HIGH"])
+gs, _ = story_block("2026-07-01", "The Knicks parade.")
+check("once the calendar says the title is decided, it counts",
+      gs["history"]["leagues"]["nba"]["teams"][0]["facts"],
+      ["last NBA title: 2025-26; last NBA Finals appearance: 2025-26; last winning season: 2025-26."])
+check("...and the 'before' tag goes", gs["history"]["leagues"]["nba"]["teams"][0]["before"], None)
+gs, n = story_block("2026-05-31", "The Knicks again.", have=["New York Knicks"])
+check("a team already in the block (it played) is not added twice", n, 0)
+conn = StoryConn(nba_in_season=True)
+gs, _ = story_block("2026-01-15", "The Knicks again.", conn)
+check("in season: streaks and starts are computed for a story team too",
+      any(sql is hs.BUILD_SIDES for sql, _ in conn.ran), True)
+check("...and its titles count only seasons before this one",
+      next(p for sql, p in conn.ran if sql is hs.TITLES)["year"], 2025)
+_cap = hs.MAX_STORY_TEAMS
+hs.MAX_STORY_TEAMS = 1
+gs, n = story_block("2026-05-31", "The Knicks and the Heat.")
+hs.MAX_STORY_TEAMS = _cap
+check("a busy day is capped", n, 1)
+
+print("SLA-111: never fatal")
+check("no database today: nothing",
+      hs.extend_for_stories({"history": {"status": "unavailable"}}, plan, url="x"),
+      "history: no database today, story teams skipped")
+check("no URL: nothing", hs.extend_for_stories({"history": {"status": "ok"}}, plan, url=""),
+      "history: SPORTS_DB_URL is not set, story teams skipped")
+
+
+def boom(url):
+    raise RuntimeError(f"could not connect to {url}")
+
+
+gs = {"yesterday_date": "2026-05-31", "history": {"status": "ok", "as_of": "2026-05-31", "leagues": {}}}
+msg = hs.extend_for_stories(gs, plan, url="postgresql://u:s3cret@h/db", connect=boom)
+check("a failed connection is reported, not raised", msg.startswith("history: story teams skipped"), True)
+check("...without the password", "s3cret" in msg, False)
+check("...and the block is untouched", gs["history"]["leagues"], {})
+
+print("SLA-111: Pass 3 reads the runner's game_state, not just the file")
+gs, _ = story_block("2026-05-31", "The Knicks.")
+out, n = validate_claims("<h1>Lead</h1><p>The Knicks ended a 53-year Finals drought.</p>",
+                         REPO / "does-not-exist.json", game_state=gs)
+check("the story team's fact reaches Pass 3", n, 1)
+check("...as a HIGH", "FACT FLAG [HIGH]" in out, True)
+for runner, call in (("generate_newsletter.py", "validate_claims(draft_html, GAME_STATE_PATH, game_state=game_state)"),
+                     ("uat/run_uat.py", "validate_claims(html, G.GAME_STATE_PATH, game_state=game_state)")):
+    src = (REPO / runner).read_text(encoding="utf-8")
+    has(f"{runner}: extends history after Pass 1 and hands it to Pass 3", src,
+        "history_source.extend_for_stories(game_state, story_plan)", call)
+
+# ---------------------------------------------------------------------------
 print("The prompts point at it")
 # ---------------------------------------------------------------------------
 for tree in ("prompts", "uat/prompts"):
