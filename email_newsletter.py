@@ -204,6 +204,33 @@ def _substack_images_html(status: dict) -> str:
     return out
 
 
+def _history_claims_html(status: dict) -> str:
+    """History claims the editor left in the final draft (SLA-112).
+
+    Pass 3 checks every "first since 1999" / "N-year drought" against the
+    sports database and the editor is asked to fix what it flags; this is the
+    code checking that it did. CONTRADICTED means the database says the claim
+    is wrong; UNCONFIRMED means nothing could check it either way."""
+    claims = status.get("history_claims") or []
+    if not claims:
+        return ""
+    out = ('<div style="margin:14px 0 0 0;font-weight:bold;color:#1a1a1a;">'
+           'HISTORY CLAIMS LEFT IN</div>')
+    for c in claims[:10]:
+        wrong = c.get("level") == "HIGH"
+        colour = "#b42318" if wrong and not c.get("cut") else "#9a6700"
+        what = "CONTRADICTED by the database" if wrong else "unconfirmed"
+        done = " — sentence was cut" if c.get("cut") else ""
+        out += (f'<div style="color:{colour};margin-top:2px;">{"✗" if wrong else "⚠"} {what}{done} '
+                f'({_html.escape(str(c.get("section", "")))}): '
+                f'“{_html.escape(str(c.get("sentence", "")))}”</div>')
+    if len(claims) > 10:
+        out += f'<div style="color:#5f5f5f;margin-top:1px;">… and {len(claims) - 10} more</div>'
+    out += ('<div style="color:#8c8c8c;margin-top:2px;">Check these before the noon publish: '
+            'edit or cut them in the Substack draft.</div>')
+    return out
+
+
 def _retries_html(status: dict) -> str:
     """Transient API failures the run rode out (SLA-54).
 
@@ -267,6 +294,7 @@ def _status_block_html(status: dict, level: str, headline: str) -> str:
                  + _html.escape(", ".join(str(p) for p in passes)) + '</div>')
     body += _broke_html(status)
     body += _substack_images_html(status)
+    body += _history_claims_html(status)
     body += _retries_html(status)
     body += _quality_html(status)
     body += ('<div style="margin:14px 0 0 0;font-weight:bold;color:#1a1a1a;">'

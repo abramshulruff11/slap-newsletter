@@ -1287,6 +1287,19 @@ def main() -> None:
     else:
         final_html = run_pass6(audited_html, recent_output, client, game_state)
 
+    # SLA-112: did the editor actually fix what Pass 3 flagged? Re-run the
+    # history-claim check on the final draft. Never rewrites prose: what's
+    # still standing is noted in the archived draft, the log and the morning
+    # email (unless SLAP_HISTORY_AUTOCUT is on, which cuts the sentence).
+    from claim_validator import final_history_check
+    final_html, _left = final_history_check(final_html, game_state)
+    run_status.record(history_claims=_left)
+    for _c in _left:
+        _how = "CUT" if _c["cut"] else "LEFT IN"
+        print(f"  ⚠ history claim {_how} [{_c['level']}] ({_c['section']}): {_c['sentence']}")
+    if not _left:
+        print("  ✓ final draft: no unconfirmed history claim left standing")
+
     # Embed media once into the shared body (below), then write both files
     # from it. This keeps GIF/meme history from being logged twice per run
     # and guarantees the draft and Substack versions show identical media.

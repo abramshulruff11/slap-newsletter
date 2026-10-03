@@ -74,7 +74,7 @@ KNOWN_DIVERGENT = {
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
     )),
-    "main": dict(prod="11c117a14269", uat="0e25f4ba71c9", reason=(
+    "main": dict(prod="b7b8897c1477", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
         "5-line stub. Expected to stay divergent permanently. (2026-09-04: prod "
         "now strips HTML comments from the published Substack file. Nothing to "
@@ -96,7 +96,9 @@ KNOWN_DIVERGENT = {
         "timeout=API_REQUEST_TIMEOUT, applied to both in the same commit. "
         "2026-10-03 (SLA-111): prod's main() calls history_source.extend_for_stories "
         "after Pass 1 and hands its game_state to validate_claims; run_uat.py does "
-        "both at its own Pass 2 / Pass 3 call sites.)"
+        "both at its own Pass 2 / Pass 3 call sites. 2026-10-03 (SLA-112): prod's "
+        "main() runs claim_validator.final_history_check after Pass 6 and records "
+        "it to run_status; run_uat.py runs it after its own Pass 6 and prints it.)"
     )),
 }
 

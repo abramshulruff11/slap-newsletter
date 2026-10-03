@@ -515,6 +515,81 @@ for runner, call in (("generate_newsletter.py", "validate_claims(draft_html, GAM
         "history_source.extend_for_stories(game_state, story_plan)", call)
 
 # ---------------------------------------------------------------------------
+print("SLA-112: the final draft is re-checked after the editor")
+# ---------------------------------------------------------------------------
+from claim_validator import final_history_check     # noqa: E402
+import pipeline_status as PS                          # noqa: E402
+import email_newsletter as EN                         # noqa: E402
+
+
+def status_with(**over):
+    """Every declared pre-email stage passed (as test_pipeline_status builds it), then overridden."""
+    base = {"date": "2026-10-03", "run_started": "2026-10-03T02:17:00-04:00", "email_sent": True,
+            "stages": [{"name": s.name, "ok": True, "exit_code": 0, "critical": s.critical, "seconds": 5}
+                       for s in PS.PIPELINE_STAGES if not s.after_email]}
+    base.update(over)
+    return base
+
+
+EDITED = ("<h1>Lead</h1><p>The Knicks won again. The Knicks ended a 53-year Finals drought. What a night.</p>"
+          "<h2>Around the League</h2><p>The Knicks are chasing their first title since 1973.</p>"
+          "<blockquote class=\"twitter-tweet\"><p>Knicks: first Finals since 1980!</p></blockquote>")
+out, rep = final_history_check(EDITED, GS, autocut=False)
+check("THE CASE: an editor that leaves a contradicted claim in is caught",
+      [(r["level"], r["section"]) for r in rep], [("HIGH", "Lead")])
+check("...a confirmed claim is not reported", any("1973" in r["sentence"] for r in rep), False)
+check("...a tweet's own claim is never checked", any("1980" in r["sentence"] for r in rep), False)
+check("...the draft is noted, not rewritten", "The Knicks ended a 53-year Finals drought." in out, True)
+check("...with a note after the heading", "HISTORY CLAIM LEFT IN BY THE EDITOR [HIGH]" in out, True)
+check("...nothing cut by default", rep[0]["cut"], False)
+
+out, rep = final_history_check(EDITED, GS, autocut=True)
+check("the switch cuts the sentence instead", "53-year" in out, False)
+check("...leaving the rest of the paragraph", "<p>The Knicks won again. What a night.</p>" in out, True)
+check("...and reports it as cut", rep[0]["cut"], True)
+spans = "<h1>Lead</h1><p>The Knicks ended a <b>53-year</b> Finals drought. Wow.</p>"
+out, rep = final_history_check(spans, GS, autocut=True)
+check("a sentence that spans markup is never mangled: noted instead of cut",
+      (rep[0]["cut"], "53-year" in out, "HISTORY CLAIM LEFT IN" in out), (False, True, True))
+
+import os                                             # noqa: E402
+os.environ["SLAP_HISTORY_AUTOCUT"] = "1"
+_, rep = final_history_check(EDITED, GS)
+os.environ.pop("SLAP_HISTORY_AUTOCUT")
+check("the switch is the SLAP_HISTORY_AUTOCUT setting", rep[0]["cut"], True)
+_, rep = final_history_check(EDITED, GS)
+check("...and it is off when unset", rep[0]["cut"], False)
+
+sourced = ("<h1>Lead</h1><p>The Lakers' first title since 2020 would be huge.</p>"
+           "<blockquote class=\"twitter-tweet\"><p>Lakers last won it all in 2020</p></blockquote>")
+check("a claim a tweet in the same section carries is sourced (Check 8, rule 1)",
+      final_history_check(sourced, GS)[1], [])
+points = ("<h1>Lead</h1><p>The Lakers ended a 53-year drought.</p>"
+          "<blockquote class=\"twitter-tweet\"><p>LeBron: 53 points tonight</p></blockquote>")
+check("...but a tweet's '53 points' never sources a '53-year drought'",
+      len(final_history_check(points, GS)[1]), 1)
+
+print("SLA-112: it reaches the morning email")
+st = status_with(history_claims=[{"level": "HIGH", "section": "Lead", "sentence": "x", "cut": False}])
+check("a contradicted claim left in moves the headline to PARTIAL", PS.verdict(st)[0], "partial")
+st = status_with(history_claims=[{"level": "HIGH", "section": "Lead", "sentence": "x", "cut": True}])
+check("...not once it was cut", PS.verdict(st)[0], "success")
+st = status_with(history_claims=[{"level": "LOW", "section": "Lead", "sentence": "x", "cut": False}])
+check("an unconfirmed one is listed, not a headline (it may well be true)", PS.verdict(st)[0], "success")
+panel = EN._history_claims_html({"history_claims": [
+    {"level": "HIGH", "section": "Lead", "sentence": "The Knicks ended a 53-year Finals drought.", "cut": False},
+    {"level": "LOW", "section": "ATL", "sentence": "Norway hadn't qualified since 1998.", "cut": False}]})
+has("the email lists both, the contradicted one as such", panel, "HISTORY CLAIMS LEFT IN",
+    "CONTRADICTED by the database", "unconfirmed", "53-year Finals drought", "before the noon publish")
+check("...and says nothing on a clean day", EN._history_claims_html({}), "")
+for runner, call in (("generate_newsletter.py", "final_history_check(final_html, game_state)"),
+                     ("uat/run_uat.py", "final_history_check(html, game_state)")):
+    has(f"{runner}: re-checks the final draft", (REPO / runner).read_text(encoding="utf-8"), call)
+has("the workflow passes the switch from a repository variable",
+    (REPO / ".github/workflows/daily-newsletter.yml").read_text(encoding="utf-8"),
+    "SLAP_HISTORY_AUTOCUT: ${{ vars.SLAP_HISTORY_AUTOCUT }}")
+
+# ---------------------------------------------------------------------------
 print("The prompts point at it")
 # ---------------------------------------------------------------------------
 for tree in ("prompts", "uat/prompts"):

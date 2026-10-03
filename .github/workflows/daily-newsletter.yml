@@ -182,6 +182,10 @@ jobs:
           SLAP_SIMULATE_API_FAILURES: ${{ inputs.simulate_api_failures }}
           SKIP_EDITOR: ${{ inputs.skip_editor }}
           SKIP_GIFS: ${{ inputs.skip_gifs }}
+          # SLA-112: cut a history claim the editor left in, instead of only
+          # reporting it. A repository variable (Settings > Variables), unset
+          # = off. Turn it on for days nobody reviews before the noon publish.
+          SLAP_HISTORY_AUTOCUT: ${{ vars.SLAP_HISTORY_AUTOCUT }}
         run: |
           bash ci/run_stage.sh "Generate newsletter" <<'STAGE'
           FLAGS=""
