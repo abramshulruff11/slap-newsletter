@@ -573,9 +573,35 @@ ground-truth block as a source.
   only seasons before the current one**: a 2026-03-15 run must not see the Knicks' 2025-26 title.
 - **As of `yesterday_date`**: games after it are ignored, so a replay of an old issue is honest.
 - Pro teams match by name (accents/apostrophes normalized), college teams by ESPN id = CFBD id.
-- Inert without `SPORTS_DB_URL`, never fatal. Pass 3 does NOT check history claims yet: that is
-  SLA-109, which also loosens RULE 3 / Check 8 for everything the block can't confirm.
-  Locked by `uat/tests/test_history_context.py`.
+- Inert without `SPORTS_DB_URL`, never fatal. Locked by `uat/tests/test_history_context.py`.
+
+**Pass 3 checks history claims against that block (SLA-109, 2026-10-03).** Check 3B in
+`claim_validator.py` finds "since YEAR" / "N-year drought" / "first ... since" / "longest ...
+since" in our own prose (no tweets, no comments), works out the claim's KIND (title, title-game
+appearance, playoffs, winning season, streak, start, poll, head-to-head, venue) and compares its
+year with the listed fact: agrees → left alone; contradicts → `FACT FLAG [HIGH]` quoting the fact;
+anything else → `FACT FLAG [LOW]`, i.e. RULE 3 as before. RULE 3 item 6 and editor Check 8
+Category C now leave a listed fact alone; Check 9 says how to act on a history flag.
+- **HIGH is narrow on purpose.** Only when the sentence itself names exactly one team with a fact
+  of that kind and every such fact disagrees. Facts are listed only when notable, so a missing fact
+  never convicts; a two-team or no-team sentence, a player's claim, a series win or conference
+  finals, a streak of a different length — all LOW. A HIGH that is actually right is a bug.
+- **The parser lives in `history_source.py`** (`parse_facts`), next to the sentence templates, and
+  `test_history_claims.py` round-trips every template — change a sentence, change its reader.
+- **Head-to-head now excludes yesterday's own game** from "last win". Before, a team that had just
+  beaten a long-time nemesis saw no drought at all (yesterday was its last win), so the most common
+  head-to-head claim could never be sourced. It now reads "beat the X yesterday, their first win
+  over them since DATE".
+- **The block is regular season only** (SLA-108's `teams_in_play` skips playoff games, and a league
+  with no regular-season game in 10 days has no season), so in the NBA/NHL playoffs every Finals or
+  Cup drought claim is LOW. The Knicks case is caught in the regular season, not in June.
+- **Replayed on all 146 issues since April**, each with its history block rebuilt from the
+  database as of that morning: 4 confirmed, **0 HIGH**, 102 LOW. The replay found two bugs the unit
+  tests hadn't, both fixed and tested: a recent fact can BE the event the sentence recounts
+  (2026-08-03, last October's "first World Series since 1993" read as wrong against "last World
+  Series appearance: 2025"), and "in LA" never matched "Los Angeles". Most LOWs are things the
+  database does not hold at all: playoff series, World Cup, tennis, player feats.
+  Locked by `uat/tests/test_history_claims.py`.
 
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
@@ -933,7 +959,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (21 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (24 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -981,6 +1007,17 @@ deprecation, and API rate limits.
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
 
+**2026-10-03 — Pass 3 checks history claims; RULE 3 / Check 8 loosen (SLA-109)**
+- Check 3B in `claim_validator.py` confirms, corrects (HIGH) or downgrades (LOW) every "since
+  YEAR" / "N-year drought" / "first/longest ... since" in our prose against HISTORICAL CONTEXT.
+  The 2026-06-01 Knicks "53-year Finals drought" is the first test case: HIGH, naming 1998-99.
+- `history_source.parse_facts()` reads the block's sentences back as data, beside the templates.
+- Head-to-head facts no longer count yesterday's own game as the "last win".
+- RULE 3 item 6 (both copies, via `promote.py`); editor Check 8 sources and Category C, and
+  Check 9's history-flag instructions, edited in both copies by hand (the editor prompt is
+  deliberately UAT-ahead, so `promote.py` would carry UAT-only lines into prod).
+- Archive replay: 146 issues, 4 confirmed, 0 HIGH, 102 LOW, after two fixes it found.
+
 **2026-10-03 — Verified team history in the ground truth (SLA-108)**
 - RULE 3 blurred or cut every specific historical claim because nothing could source one.
   `history_source.py` now computes, from slap-sports-db, streaks, starts, droughts (kept apart),
@@ -993,7 +1030,7 @@ for …") omitted.
   read as "since at least 1876".
 - One temp table per league (two index-friendly halves) instead of a `team IN (home, away)` join,
   which timed out on MLB: ~3-18 s a run.
-- Pass 3 checking of history claims, and loosening RULE 3 / Check 8, are SLA-109.
+- Pass 3 checking of history claims, and loosening RULE 3 / Check 8: SLA-109, same day (below).
 
 **2026-09-26 — "Defending champion" is resolved against the sports database (SLA-65)**
 - The first consumer of slap-sports-db. RULE 3.4 told the writer to verify "defending champion"
