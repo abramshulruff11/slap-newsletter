@@ -164,10 +164,10 @@ GS = {"yesterday_date": "2026-03-14", "history": {"status": "ok", "as_of": "2026
 def verdict(text, gs=GS):
     out = []
     flags = check_history_claims(text, gs, out)
-    check_len = len(flags) == sum(1 for v, _ in out if v != "confirmed")
+    check_len = len(flags) == sum(1 for v, *_ in out if v != "confirmed")
     if not check_len:
         FAILS.append(f"flag count for {text!r}")
-    return [v for v, _ in out]
+    return [v for v, *_ in out]
 
 
 check("THE CASE: 'a 53-year Finals drought' (53 is the title drought)",
@@ -246,6 +246,13 @@ check("replay 2026-08-03: last October's 'first World Series since 1993' is that
               "since 1993.", JAYS), ["LOW"])
 check("...while an old fact still convicts an older claim",
       verdict("The Blue Jays have their first World Series title since 1985 in sight.", JAYS), ["HIGH"])
+check("replay 2026-06-01: a superlative measures something, it is no Finals drought: LOW, never confirmed",
+      verdict("The Knicks rolled. Biggest Finals court redesign in 17 years.",
+              {"history": {"status": "ok", "as_of": "2026-05-31", "leagues": {"nba": {"label": "NBA",
+               "season": 2025, "game_data_from": 1946, "teams": [team("Orlando Magic", None,
+               "no NBA title in franchise history; last NBA Finals appearance: 2008-09.")]}}}}), ["LOW"])
+check("'missed' is a whole word: 'Mississippi' is not the inverse-fact guard",
+      verdict("The Knicks, back from Mississippi, are in their first Finals since 1999."), ["confirmed"])
 check("a team the block doesn't know: LOW", verdict("The Lakers won their first title since 2020."), ["LOW"])
 check("not a history claim: nothing", verdict("The league has existed since 1997."), [])
 check("a decade is relative framing: nothing", verdict("The Knicks' first Finals since the '90s."), [])

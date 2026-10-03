@@ -366,7 +366,12 @@ def _claim_kinds(window: str) -> set[str]:
     w = window.lower()
     if _PLAYER.search(w) or _OTHER_POSTSEASON.search(w):
         return set()
-    if re.search(r"miss(ed|es|ing)?", w):
+    if re.search(r"\b(biggest|most|highest|lowest|fewest|largest|smallest)\b", w):
+        # A superlative measures something ("biggest Finals court redesign in
+        # 17 years", replay 2026-06-01): never a title, Finals or playoff
+        # drought, which only a "first"/"since"/"drought" claim is.
+        return set()
+    if re.search(r"\bmiss(ed|es|ing)?\b", w):
         return set()                                   # "first missed playoffs since": the inverse fact
     if re.search(r"\b(straight|in\s+a\s+row|consecutive)\b", w) and re.search(r"\bseasons\b", w):
         return set()                                   # "five straight winning seasons"
@@ -557,7 +562,7 @@ def check_history_claims(own_text: str, game_state: dict, outcomes: list | None 
                     results.append((t, f, v))
             if any(v == "confirm" for _, _, v in results):
                 if outcomes is not None:
-                    outcomes.append(("confirmed", _quote(sentence)))
+                    outcomes.append(("confirmed", _quote(sentence), sentence))
                 continue
             quoted = _quote(sentence)
             if quoted in seen:
@@ -579,14 +584,14 @@ def check_history_claims(own_text: str, game_state: dict, outcomes: list | None 
                     f'year or count to match, keeping its kind (a title is not a Finals appearance), '
                     f'or cut the claim. -->')
                 if outcomes is not None:
-                    outcomes.append(("HIGH", flags[-1]))
+                    outcomes.append(("HIGH", quoted, sentence, flags[-1]))
             else:
                 flags.append(
                     f'\n<!-- FACT FLAG [LOW]: "{quoted}" makes a specific history claim the HISTORICAL '
                     f'CONTEXT block does not confirm. RULE 3: replace the specific year or count with '
                     f'relative framing, or cut the clause. -->')
                 if outcomes is not None:
-                    outcomes.append(("LOW", quoted))
+                    outcomes.append(("LOW", quoted, sentence))
     return flags
 
 
