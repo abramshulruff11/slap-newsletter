@@ -345,6 +345,19 @@ check("...'first title since 1973' stays a title claim: confirmed",
 check("...'first postseason series win since 2000' is round history (SLA-77): LOW",
       verdict("The Knicks won their first playoff series since 2000.", GS_POST), ["LOW"])
 
+CANES = {"history": {"status": "ok", "as_of": "2026-05-09", "leagues": {"nhl": {"label": "NHL", "season": 2025,
+    "game_data_from": 1917, "teams": [team("Carolina Hurricanes", "Philadelphia Flyers",
+        "last Stanley Cup: 2005-06; last Stanley Cup Final appearance: 2005-06.")]}}}}
+check("replay 2026-05-10: a conference-finals aside doesn't hide the title claim after it",
+      verdict("The Hurricanes, who reached the Eastern Conference finals for the third time in four years, "
+              "are looking for their first Stanley Cup since 2006.", CANES), ["confirmed"])
+check("...while a conference-finals claim itself stays LOW",
+      verdict("The Hurricanes reached the Eastern Conference finals for the first time since 2009.", CANES), ["LOW"])
+check("replay 2026-06-12: 'their first Cup since 2006' is the Stanley Cup",
+      verdict("The Hurricanes won again. One more win and they get their first Cup since 2006.", CANES), ["confirmed"])
+check("'World Cup' is never the Stanley Cup",
+      verdict("The Hurricanes' first World Cup since 1990.", CANES), ["LOW"])
+
 MLB_POST = {"history": {"status": "ok", "as_of": "2026-10-02", "leagues": {"mlb": {"label": "MLB", "season": 2026,
     "game_data_from": 1876, "teams": [team("Seattle Mariners", "Toronto Blue Jays",
         "no World Series title in franchise history; no World Series appearance in franchise history.")]}}}}

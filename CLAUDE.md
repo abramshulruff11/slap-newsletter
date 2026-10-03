@@ -592,9 +592,15 @@ Category C now leave a listed fact alone; Check 9 says how to act on a history f
   beaten a long-time nemesis saw no drought at all (yesterday was its last win), so the most common
   head-to-head claim could never be sourced. It now reads "beat the X yesterday, their first win
   over them since DATE".
-- **The block is regular season only** (SLA-108's `teams_in_play` skips playoff games, and a league
-  with no regular-season game in 10 days has no season), so in the NBA/NHL playoffs every Finals or
-  Cup drought claim is LOW. The Knicks case is caught in the regular season, not in June.
+- **Postseason teams get their droughts (SLA-110, 2026-10-03).** A team that played a playoff game
+  yesterday gets last title, last pennant/Finals/Cup Final/Super Bowl appearance and (NFL only, the
+  one league with stored playoff games) last playoff appearance, each separate, as of BEFORE this
+  postseason, and tagged so in the block. No streaks, starts or head-to-head for them (regular-season
+  facts), and no "last postseason appearance" for MLB/NBA/NHL: the database has their champions and
+  runners-up, not their playoff games (SLA-77). "Pennant" now reads as a World Series appearance;
+  the checker classifies the clause a claim sits in, so a "conference finals" aside no longer hides
+  the title claim after it; a bare "Cup" is the Stanley Cup. Replay (playoff games from ESPN, since
+  the database doesn't store them): 13 confirmed, 0 HIGH, 93 LOW.
 - **Replayed on all 146 issues since April**, each with its history block rebuilt from the
   database as of that morning: 4 confirmed, **0 HIGH**, 102 LOW. The replay found two bugs the unit
   tests hadn't, both fixed and tested: a recent fact can BE the event the sentence recounts

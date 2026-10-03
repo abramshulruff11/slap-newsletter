@@ -343,8 +343,20 @@ _LOSE = re.compile(r"\b(lost|lose|loses|losing|loss|losses|skid|defeats|dropped)
 # is exactly the other pennant winner (SLA-110).
 _FINALS = re.compile(r"\b(nba\s+finals|cup\s+final|finals|world\s+series|super\s+bowl|title\s+game|pennants?|"
                      r"championship\s+game)\b", re.IGNORECASE)
+# "Cup" alone is the Stanley Cup in our prose; the World Cup is never a team
+# in the history block.
 _TITLE = re.compile(r"\b(title|titles|championship|championships|champions?|ring|crown|stanley\s+cup|"
-                    r"won\s+it\s+all|parade)\b", re.IGNORECASE)
+                    r"(?<!world\s)cup|won\s+it\s+all|parade)\b", re.IGNORECASE)
+
+
+def _clause(window: str) -> str:
+    """The clause a claim sits in. "The Hurricanes, who reached the Eastern
+    Conference finals for the third time in four years, are looking for
+    their first Stanley Cup since 2006" is a title claim: the conference
+    finals are an aside (replay, 2026-05-10). A last clause too short to say
+    anything ("..., the first time since 1999") falls back to the whole."""
+    last = re.split(r"[,;:—–]|\s-\s", window)[-1]
+    return last if _claim_kinds(last) or _PLAYER.search(last) else window
 
 
 def _claim_kinds(window: str) -> set[str]:
@@ -524,7 +536,7 @@ def check_history_claims(own_text: str, game_state: dict, outcomes: list | None 
         for m in sorted(_history_anchors(sentence), key=lambda m: m.start()):
             window = sentence[start:m.end()]
             start = m.end()
-            kinds = _claim_kinds(window)
+            kinds = _claim_kinds(_clause(window))
             named = {n for n in _named(sentence, idx) if n in by_name}
             candidates = named or section_teams
             results = []                               # (team, fact, verdict)
