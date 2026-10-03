@@ -601,6 +601,23 @@ Category C now leave a listed fact alone; Check 9 says how to act on a history f
   the checker classifies the clause a claim sits in, so a "conference finals" aside no longer hides
   the title claim after it; a bare "Cup" is the Stanley Cup. Replay (playoff games from ESPN, since
   the database doesn't store them): 13 confirmed, 0 HIGH, 93 LOW.
+- **Teams the day's stories name get facts too (SLA-111, 2026-10-03).** After Pass 1, both runners
+  call `history_source.extend_for_stories(game_state, story_plan)`, which adds facts for every team
+  the plan's own words name (never its quoted tweets) and that isn't already in the block, then
+  hands the SAME in-memory game_state to Passes 2, 3 (`validate_claims(..., game_state=)`) and 6.
+  Nothing is written back to game_state.json (UAT's is a frozen fixture). Matching is
+  conservative: a full name, or a nickname no other team in ANY league shares ("Giants" alone is
+  two teams, so neither); college football only against the current AP poll season's teams, by
+  school, never the start of another school ("Georgia Tech"), and a school that shares a pro city
+  ("Miami") only with its ranking in front. In season a story team gets streaks and starts too;
+  out of season, droughts through the last season whose title the CALENDAR says is decided
+  (`champions_source.expected_latest_season`), not merely what the database holds, and the block
+  says where they stop. Capped at `MAX_STORY_TEAMS = 24`. Block size: +1.1K chars on average,
+  11.7K -> 12.7K on the heaviest day (2026-09-20). Replay (story_plan.json since 09-02; the issue's
+  own prose before that, as a stand-in): 18 confirmed, 0 HIGH, 88 LOW. It caught the real
+  2026-06-01 Knicks case, whose team hadn't played the night before. Two replay bugs fixed:
+  superlatives ("biggest … in 17 years") are never droughts, and the "missed" guard had lost its
+  word boundaries.
 - **Replayed on all 146 issues since April**, each with its history block rebuilt from the
   database as of that morning: 4 confirmed, **0 HIGH**, 102 LOW. The replay found two bugs the unit
   tests hadn't, both fixed and tested: a recent fact can BE the event the sentence recounts
