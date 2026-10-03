@@ -596,6 +596,84 @@ def check_history_claims(own_text: str, game_state: dict, outcomes: list | None 
 
 
 # ---------------------------------------------------------------------------
+# SLA-112: after the editor. Pass 3 flags a history claim and the editor is
+# ASKED to fix it; nothing checked that it did. This re-runs the same check
+# on the final draft and reports what is still standing. It never rewrites
+# prose: a claim the editor left in is flagged in the archived draft, the run
+# log and the morning email. Cutting the sentence instead is a switch
+# (SLAP_HISTORY_AUTOCUT=1), off by default, for days nobody reviews before
+# the noon publish.
+# ---------------------------------------------------------------------------
+
+AUTOCUT_ENV = "SLAP_HISTORY_AUTOCUT"
+
+
+def _figures(sentence: str) -> set[str]:
+    """Patterns for the numbers a history claim stakes itself on: years, and
+    counts of years ("53-year", "in 27 years"), a count only as a count of
+    years, so a tweet's "53 points" never sources a "53-year drought"."""
+    figs = {r"(?<!\d)" + y + r"(?!\d)" for y in re.findall(r"\b(?:18|19|20)\d{2}\b", sentence)}
+    figs |= {r"(?<!\d)" + n + r"[- ](?:years?|seasons?)\b"
+             for n in re.findall(r"\b(\d{1,3})[- ](?:years?|seasons?)\b", sentence, re.IGNORECASE)}
+    return figs
+
+
+def _tweet_text(section_html: str) -> str:
+    return " ".join(strip_tags(b) for b in re.findall(r"<blockquote\b.*?</blockquote>", section_html,
+                                                       flags=re.IGNORECASE | re.DOTALL))
+
+
+def _cut_sentence(section_html: str, sentence: str) -> tuple[str, bool]:
+    """Remove one sentence from the paragraph that holds it. Only where it
+    can be done cleanly: the sentence sits in the HTML as plain text, or is
+    the whole paragraph. Anything else is left and reported as not cut."""
+    s = sentence.strip()
+    for m in re.finditer(r"<p\b[^>]*>(.*?)</p>", section_html, flags=re.IGNORECASE | re.DOTALL):
+        inner = m.group(1)
+        if strip_tags(inner).strip() == s:
+            return section_html[:m.start()] + section_html[m.end():], True
+        if s in inner and s in strip_tags(inner):
+            new_inner = re.sub(r"\s{2,}", " ", inner.replace(s, "", 1)).strip()
+            return section_html[:m.start(1)] + new_inner + section_html[m.end(1):], True
+    return section_html, False
+
+
+def final_history_check(html: str, game_state: dict, autocut: bool | None = None) -> tuple[str, list[dict]]:
+    """Re-check the FINAL draft's history claims. Returns the draft (with a
+    note after each section heading, or the sentence cut when `autocut`) and
+    one entry per claim still standing: {level, section, sentence, cut}.
+
+    A claim whose year or count a tweet in the same section carries is
+    sourced (editor Check 8, rule 1) and is not reported."""
+    if autocut is None:
+        import os
+        autocut = os.environ.get(AUTOCUT_ENV, "").strip().lower() in ("1", "true", "yes")
+    report: list[dict] = []
+    parts = []
+    for heading, sec in split_into_sections(html):
+        if heading == "__preamble__":
+            parts.append(sec)
+            continue
+        outcomes: list = []
+        check_history_claims(own_text(sec), game_state, outcomes)
+        tweets = _tweet_text(sec)
+        for level, quoted, sentence, *_ in outcomes:
+            if level == "confirmed":
+                continue
+            if any(re.search(f, tweets, re.IGNORECASE) for f in _figures(sentence)):
+                continue                                # a tweet in this section carries it
+            cut = False
+            if autocut:
+                sec, cut = _cut_sentence(sec, sentence)
+            if not cut:
+                sec = inject_flag_after_heading(
+                    sec, f'\n<!-- ⚠ HISTORY CLAIM LEFT IN BY THE EDITOR [{level}]: "{quoted}" -->')
+            report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut})
+        parts.append(sec)
+    return "".join(parts), report
+
+
+# ---------------------------------------------------------------------------
 # Section validator
 # ---------------------------------------------------------------------------
 

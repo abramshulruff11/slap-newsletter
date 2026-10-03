@@ -618,6 +618,21 @@ Category C now leave a listed fact alone; Check 9 says how to act on a history f
   2026-06-01 Knicks case, whose team hadn't played the night before. Two replay bugs fixed:
   superlatives ("biggest … in 17 years") are never droughts, and the "missed" guard had lost its
   word boundaries.
+- **The final draft is re-checked after the editor (SLA-112, 2026-10-03).** Nothing used to check
+  that the editor actually fixed what Pass 3 flagged. `claim_validator.final_history_check()` runs
+  the same check on Pass 6's output (both runners) and reports every history claim still
+  standing, except one whose year or year-count a tweet in the same section carries (Check 8 rule
+  1; a tweet's "53 points" never sources a "53-year drought"). It **never rewrites prose**: each
+  one gets a note after its section heading in the archived draft (stripped from the published
+  file like every comment), a log line, and a HISTORY CLAIMS LEFT IN section in the morning email.
+  A CONTRADICTED claim still standing makes the run PARTIAL (rare and real, like SLA-68's missing
+  images); an unconfirmed one is listed but does not move the headline, since it may be true.
+  `SLAP_HISTORY_AUTOCUT` (a repository **variable**, Settings → Variables; unset = off) cuts the
+  sentence instead, but only where it can be cut cleanly (plain text in a `<p>`, or the whole
+  `<p>`); a sentence spanning markup is noted, never mangled. Replay over the archived final
+  drafts: since RULE 3 (06-01) the editor left at least one unconfirmed specific claim in 29 of
+  110 issues (43 claims, 0 contradicted); before RULE 3, 12 of 36. Autocut could cleanly cut 50
+  of the 69.
 - **Replayed on all 146 issues since April**, each with its history block rebuilt from the
   database as of that morning: 4 confirmed, **0 HIGH**, 102 LOW. The replay found two bugs the unit
   tests hadn't, both fixed and tested: a recent fact can BE the event the sentence recounts

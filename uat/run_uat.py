@@ -448,6 +448,12 @@ def main() -> None:
     # ---- Pass 6 ----------------------------------------------------------
     if "6" in passes:
         html = G.run_pass6(html, recent_output, client, game_state)
+        # SLA-112: what the editor left standing, as prod reports it.
+        from claim_validator import final_history_check
+        html, _left = final_history_check(html, game_state)
+        for _c in _left:
+            print(f"  ⚠ history claim {'CUT' if _c['cut'] else 'LEFT IN'} [{_c['level']}] "
+                  f"({_c['section']}): {_c['sentence']}")
 
     # ---- Pass 7 — media render ------------------------------------------
     if "7" in passes:

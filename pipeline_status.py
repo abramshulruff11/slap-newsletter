@@ -274,6 +274,15 @@ def verdict(status: dict) -> tuple[str, str]:
         total = images.get("expected", missing)
         return "partial", (f"newsletter shipped, but {missing} of {total} box score "
                            f"image(s) never reached Substack")
+    # SLA-112. A history claim the database CONTRADICTS that the editor left
+    # standing is wrong information in the published issue: rare (0 in the
+    # archive replay) and real, so it moves the top line. An unconfirmed (LOW)
+    # one is listed in the email but does not: it may well be true.
+    wrong = [c for c in (status.get("history_claims") or [])
+             if c.get("level") == "HIGH" and not c.get("cut")]
+    if wrong:
+        return "partial", (f"newsletter shipped, but {len(wrong)} history claim(s) the sports "
+                           f"database contradicts are still in it")
     # "pending" counts as not-run here: an after-email stage is never recorded
     # when the email is built, so a run that never started has one of those too.
     if not rows or all(r["state"] in ("skipped", "pending") for r in rows):
