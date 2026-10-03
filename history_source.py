@@ -99,19 +99,23 @@ class TeamFacts:
 # ---------------------------------------------------------------------------
 
 def teams_in_play(game_state: dict) -> dict[str, list[dict]]:
+    """Each team in yesterday's completed games. A team that played a
+    postseason game is marked `postseason` (SLA-110): until then playoff teams
+    got no facts at all, which is how the Knicks' "53-year Finals drought"
+    could never have been caught in June."""
     out: dict[str, list[dict]] = {}
     for sport, spec in LEAGUES.items():
         games = ((game_state.get("sports") or {}).get(sport) or {}).get("yesterday_games") or []
         rows = []
         for g in games:
-            if not g.get("completed") or g.get("playoffs"):
+            if not g.get("completed"):
                 continue
             if sport == "ncaafb" and g.get("home_rank") is None and g.get("away_rank") is None:
                 continue
             for side, other in (("home", "away"), ("away", "home")):
                 rows.append({"name": g[f"{side}_team"], "espn_id": str(g.get(f"{side}_id") or ""),
                              "opponent": g[f"{other}_team"], "opponent_espn_id": str(g.get(f"{other}_id") or ""),
-                             "home": side == "home"})
+                             "home": side == "home", "postseason": bool(g.get("playoffs"))})
         if rows:
             out[sport] = rows
     return out
@@ -138,7 +142,7 @@ SEASON = """
                     WHERE s2.league_id = %(league)s AND g2.season_type = 'regular') AS first_year
     FROM game g JOIN season s ON s.season_id = g.season_id
     WHERE g.league_id = %(league)s AND g.season_type = 'regular'
-      AND g.game_date BETWEEN %(day)s::date - 10 AND %(day)s::date
+      AND g.game_date BETWEEN %(day)s::date - %(days)s AND %(day)s::date
     ORDER BY g.game_date DESC LIMIT 1"""
 
 # Every regular-season result of the franchises, one row per team-game,
@@ -305,7 +309,7 @@ def start_fact(start_rows: list[dict], year: int, first_year: int, league: str =
 
 
 def drought_fact(spec: tuple, titles: dict | None, playoffs: dict | None, winning: dict | None,
-                 year: int, first_year: int, playoff_first: int | None) -> str:
+                 year: int, first_year: int, playoff_first: int | None, postseason: bool = False) -> str:
     league, label, title_word, game_word = spec
     # The title record is complete: every champion each league has crowned
     # (and every runner-up since there was a title game), so "none in
@@ -322,7 +326,8 @@ def drought_fact(spec: tuple, titles: dict | None, playoffs: dict | None, winnin
         p = (playoffs or {}).get("last_playoffs")
         parts.append(f"last playoff appearance: {season(league, p)}" if p else
                      f"no playoff appearance since at least {season(league, playoff_first)}")
-    if league not in NO_WINNING_SEASON:
+    # A postseason team's story is the title round, not its record.
+    if league not in NO_WINNING_SEASON and not postseason:
         wnn = (winning or {}).get("last_winning")
         parts.append(f"last winning season: {season(league, wnn)}" if wnn
                      else f"no winning season since at least {season(league, first_year)}")
@@ -418,7 +423,12 @@ def build_history(conn, game_state: dict) -> dict:
         spec = LEAGUES[sport]
         league = spec[0]
         teams = _resolve(conn, sport, rows)
-        season = _rows(conn, SEASON, {"league": league, "day": day})
+        # A postseason game can come weeks after the last regular-season one
+        # (the NBA Finals, two months): look back far enough to find the
+        # season it belongs to. Ten days otherwise, so an offseason date
+        # never borrows last season.
+        any_post = any(r.get("postseason") for r in rows)
+        season = _rows(conn, SEASON, {"league": league, "day": day, "days": 250 if any_post else 10})
         if not season:
             continue
         year, first_year = season[0]["year"], season[0]["first_year"]
@@ -426,13 +436,21 @@ def build_history(conn, game_state: dict) -> dict:
         # Facts as of the issue's date, not the database's: a replay of an
         # old issue must not see games played after it.
         p = {"league": league, "franchises": franchises, "year": year, "day": day}
-        conn.execute("DROP TABLE IF EXISTS hist_sides")
-        conn.execute(BUILD_SIDES, p)
-        streaks = _rows(conn, STREAKS, p)
-        starts = _rows(conn, STARTS, p)
-        pairs = [(teams[r["name"]]["franchise_id"], teams[r["opponent"]]["franchise_id"])
-                 for r in rows if r["name"] in teams and r["opponent"] in teams]
-        h2h = _rows(conn, HEAD_TO_HEAD, {**p, "pairs_f": [a for a, _ in pairs], "pairs_o": [b for _, b in pairs]})
+        # Streaks, starts and head-to-head are regular-season facts: a team
+        # in the playoffs gets only its droughts (SLA-110), so the costly
+        # game table is built only when a regular-season team needs it.
+        regular = [r for r in rows if not r.get("postseason")]
+        streaks = starts = h2h = []
+        if regular:
+            reg_franchises = sorted({teams[r["name"]]["franchise_id"] for r in regular if r["name"] in teams}
+                                    | {teams[r["opponent"]]["franchise_id"] for r in regular if r["opponent"] in teams})
+            conn.execute("DROP TABLE IF EXISTS hist_sides")
+            conn.execute(BUILD_SIDES, {**p, "franchises": reg_franchises})
+            streaks = _rows(conn, STREAKS, p)
+            starts = _rows(conn, STARTS, p)
+            pairs = [(teams[r["name"]]["franchise_id"], teams[r["opponent"]]["franchise_id"])
+                     for r in regular if r["name"] in teams and r["opponent"] in teams]
+            h2h = _rows(conn, HEAD_TO_HEAD, {**p, "pairs_f": [a for a, _ in pairs], "pairs_o": [b for _, b in pairs]})
         title_leagues = [league] + (["afl", "aafc"] if league == "nfl" else [])
         titles = {r["franchise_id"]: r for r in _rows(conn, TITLES, {"leagues": title_leagues,
                                                                     "franchises": franchises, "year": year})}
@@ -454,7 +472,12 @@ def build_history(conn, game_state: dict) -> dict:
                 continue
             f = t["franchise_id"]
             tf = TeamFacts(sport, r["name"], r["opponent"])
-            for line in (
+            post = bool(r.get("postseason"))
+            if post:
+                lines = (drought_fact(spec, titles.get(f), playoffs.get(f), None, year, first_year,
+                                      playoff_first, postseason=True),)
+            else:
+                lines = (
                 streak_fact([s for s in streaks if s["franchise_id"] == f], year, first_year, league),
                 start_fact([s for s in starts if s["franchise_id"] == f], year, first_year, league),
                 poll_fact(polls.get(f), year),
@@ -463,10 +486,11 @@ def build_history(conn, game_state: dict) -> dict:
                          r["opponent"], None if r["home"] else (teams.get(r["opponent"]) or {}).get("city"),
                          year, first_year),
                 drought_fact(spec, titles.get(f), playoffs.get(f), winning.get(f), year, first_year, playoff_first),
-            ):
+            )
+            for line in lines:
                 if line:
                     tf.lines.append(line)
-            facts.append({"team": tf.name, "opponent": tf.opponent, "facts": tf.lines})
+            facts.append({"team": tf.name, "opponent": tf.opponent, "facts": tf.lines, "postseason": post})
         leagues_out[sport] = {"label": spec[1], "season": year, "game_data_from": first_year,
                               "teams": facts, "unmatched": sorted(set(unmatched))}
     return {"status": "ok", "as_of": day, "source": "slap-sports-db", "leagues": leagues_out}
@@ -615,6 +639,10 @@ def summary_lines(game_state: dict) -> list[str]:
         lines.append(f"{entry['label']} ({scope}; game data from {entry['game_data_from']}):")
         for t in entry["teams"]:
             if t["facts"]:
-                lines.append(f"  {t['team']}: " + " ".join(t["facts"]))
+                # A playoff team's droughts are as of BEFORE this postseason:
+                # "last NBA Finals appearance: 1998-99" for a team now in the
+                # Finals is what "first Finals since 1999" is checked against.
+                tag = " (in the postseason; titles and appearances are before this one)" if t.get("postseason") else ""
+                lines.append(f"  {t['team']}{tag}: " + " ".join(t["facts"]))
         lines.append("")
     return lines

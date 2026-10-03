@@ -328,7 +328,7 @@ _PLAYER = re.compile(r"\b(he|she|his|her|he['’]s|she['’]s|him)\b", re.IGNORE
 # titles, rounds): never matched to a title or playoff fact. "First conference
 # finals since 2000" is not a Finals claim.
 _OTHER_POSTSEASON = re.compile(
-    r"\b(afc|nfc|conference|division(al)?|wild[- ]?card|pennant|alcs|nlcs|ecf|wcf|semi-?finals?|"
+    r"\b(afc|nfc|conference|division(al)?|wild[- ]?card|alcs|nlcs|ecf|wcf|semi-?finals?|"
     r"(first|second|third)\s+round|round|series\s+(win|wins|victory|victories)|playoff\s+(win|wins|victory|"
     r"victories|series|game|games)|postseason\s+(win|wins|victory|series|game|games)|closeout|elimination|"
     r"bowl\s+(game|win|victory)|cfp|college\s+football\s+playoff|mcws|llws|ncaa\s+tournament|final\s+four|"
@@ -339,7 +339,9 @@ _APPEAR = re.compile(r"\b(reach|reached|reaches|reaching|return|returns|returned
 _WIN = re.compile(r"\b(won|win|wins|winning|victory|victories|beat|beats|beating|topped|defeated?|swept)\b",
                   re.IGNORECASE)
 _LOSE = re.compile(r"\b(lost|lose|loses|losing|loss|losses|skid|defeats|dropped)\b", re.IGNORECASE)
-_FINALS = re.compile(r"\b(nba\s+finals|cup\s+final|finals|world\s+series|super\s+bowl|title\s+game|"
+# A pennant IS a World Series appearance: the database's runner-up record
+# is exactly the other pennant winner (SLA-110).
+_FINALS = re.compile(r"\b(nba\s+finals|cup\s+final|finals|world\s+series|super\s+bowl|title\s+game|pennants?|"
                      r"championship\s+game)\b", re.IGNORECASE)
 _TITLE = re.compile(r"\b(title|titles|championship|championships|champions?|ring|crown|stanley\s+cup|"
                     r"won\s+it\s+all|parade)\b", re.IGNORECASE)
@@ -357,6 +359,8 @@ def _claim_kinds(window: str) -> set[str]:
     if re.search(r"\b(straight|in\s+a\s+row|consecutive)\b", w) and re.search(r"\bseasons\b", w):
         return set()                                   # "five straight winning seasons"
     if _FINALS.search(w) or (_TITLE.search(w) and "stanley cup" in w):
+        if re.search(r"\bpennants?\b", w):
+            return {"title_game"}                      # "won the pennant" is reaching the World Series
         if re.search(r"\b(title|champion|championship|ring|parade)s?\b", w) and not re.search(
                 r"\b(title|championship)\s+game\b", w):
             return {"title"}                           # "World Series title", "Super Bowl champions"

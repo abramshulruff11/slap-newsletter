@@ -271,6 +271,91 @@ check("the quoted sentence can't close the comment early", "--" in flag, False)
 check("...nor carry a double quote", '"' in flag.split(": ", 1)[1].split(" makes")[0].strip('"'), False)
 
 # ---------------------------------------------------------------------------
+print("SLA-110: a team in the postseason gets its droughts")
+# ---------------------------------------------------------------------------
+# Until SLA-110 a team that played a playoff game got no facts at all, so
+# the exact Knicks setup (a Finals claim in June) could never be checked.
+PLAYOFF_GS = {"yesterday_date": "2026-05-30", "sports": {"nba": {"yesterday_games": [
+    {"home_team": "New York Knicks", "away_team": "Indiana Pacers", "completed": True, "playoffs": True,
+     "home_id": "18", "away_id": "11"}]}, "mlb": {"yesterday_games": [
+    {"home_team": "New York Yankees", "away_team": "Boston Red Sox", "completed": True, "playoffs": False,
+     "home_id": "10", "away_id": "2"}]}}}
+tip = hs.teams_in_play(PLAYOFF_GS)
+check("a playoff game's teams are in play", [r["name"] for r in tip["nba"]], ["New York Knicks", "Indiana Pacers"])
+check("...marked postseason", [r["postseason"] for r in tip["nba"]], [True, True])
+check("a regular-season game's are not", [r["postseason"] for r in tip["mlb"]], [False, False])
+check("a postseason team's droughts drop the winning-season line (its story is the title round)",
+      hs.drought_fact(NBA, {"last_title": 1972, "last_title_game": 1998}, None, {"last_winning": 2024},
+                      2025, 1946, None, postseason=True),
+      "last NBA title: 1972-73; last NBA Finals appearance: 1998-99.")
+check("NFL keeps 'last playoff appearance' separate from the title and Super Bowl facts",
+      parsed(hs.drought_fact(NFL, {"last_title": 1965, "last_title_game": 1993}, {"last_playoffs": 2024}, None,
+                             2025, 1999, 1999, postseason=True)),
+      [("title", [1965], None, False), ("title_game", [1993], None, False), ("playoff", [2024], None, False)])
+
+
+class FakeConn:
+    """Answers history_source's queries with canned rows and records what ran."""
+    def __init__(self):
+        self.ran = []
+
+    def execute(self, sql, params=None):
+        self.ran.append(sql)
+        rows = []
+        if sql is hs.CURRENT_TEAMS:
+            rows = {"nba": [{"team_id": 1, "franchise_id": 1, "full_name": "New York Knicks", "nickname": "Knicks",
+                             "location": "New York"},
+                            {"team_id": 2, "franchise_id": 2, "full_name": "Indiana Pacers", "nickname": "Pacers",
+                             "location": "Indiana"}]}.get(params["league"], [])
+        elif sql is hs.SEASON:
+            self.season_days = params["days"]
+            rows = [{"year": 2025, "first_year": 1946}]
+        elif sql is hs.TITLES:
+            rows = [{"franchise_id": 1, "last_title": 1972, "last_title_game": 1998, "first_title_year": 1947},
+                    {"franchise_id": 2, "last_title": None, "last_title_game": 1999, "first_title_year": 1947}]
+        cols = list(rows[0]) if rows else ["x"]
+
+        class Cur:
+            description = [type("C", (), {"name": c}) for c in cols]
+            def fetchall(self_inner):
+                return [tuple(r[c] for c in cols) for r in rows]
+        return Cur()
+
+
+conn = FakeConn()
+block = hs.build_history(conn, {"yesterday_date": "2026-05-30", "sports": {"nba": PLAYOFF_GS["sports"]["nba"]}})
+knx = block["leagues"]["nba"]["teams"][0]
+check("the Knicks, in the postseason, get their droughts", knx["facts"],
+      ["last NBA title: 1972-73; last NBA Finals appearance: 1998-99."])
+check("...and are marked postseason", knx["postseason"], True)
+check("a postseason game finds its season weeks after the regular season ended", conn.season_days, 250)
+check("a playoff-only day never builds the regular-season game table (no streaks, starts, head-to-head)",
+      any(sql is hs.BUILD_SIDES or sql is hs.STREAKS for sql in conn.ran), False)
+summary = "\n".join(hs.summary_lines({"history": block}))
+has("the block says the droughts are as of before this postseason", summary,
+    "New York Knicks (in the postseason; titles and appearances are before this one): last NBA title: 1972-73")
+
+GS_POST = {"history": block}
+check("THE CASE, live: the Knicks in the postseason, 'a 53-year Finals drought'",
+      verdict("The Knicks ended a 53-year Finals drought.", GS_POST), ["HIGH"])
+check("...'their first Finals since 1999': confirmed",
+      verdict("The Knicks are in their first Finals since 1999.", GS_POST), ["confirmed"])
+check("...'first title since 1973' stays a title claim: confirmed",
+      verdict("The Knicks are four wins from their first title since 1973.", GS_POST), ["confirmed"])
+check("...'first postseason series win since 2000' is round history (SLA-77): LOW",
+      verdict("The Knicks won their first playoff series since 2000.", GS_POST), ["LOW"])
+
+MLB_POST = {"history": {"status": "ok", "as_of": "2026-10-02", "leagues": {"mlb": {"label": "MLB", "season": 2026,
+    "game_data_from": 1876, "teams": [team("Seattle Mariners", "Toronto Blue Jays",
+        "no World Series title in franchise history; no World Series appearance in franchise history.")]}}}}
+check("'won the pennant' is a World Series appearance: never in franchise history, so HIGH",
+      verdict("The Mariners won their first pennant since 2001.", MLB_POST), ["HIGH"])
+check("'first World Series title' with no title ever: HIGH",
+      verdict("The Mariners are chasing their first World Series title since 1995.", MLB_POST), ["HIGH"])
+check("'first postseason appearance since' has no MLB fact (no playoff games stored): LOW",
+      verdict("The Mariners are in the postseason for the first time since 2022.", MLB_POST), ["LOW"])
+
+# ---------------------------------------------------------------------------
 print("The prompts point at it")
 # ---------------------------------------------------------------------------
 for tree in ("prompts", "uat/prompts"):
