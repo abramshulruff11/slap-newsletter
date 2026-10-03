@@ -145,6 +145,8 @@ slap-newsletter/
 │                                 written into game_state.json["champions"] by the fetch step
 ├── history_source.py          ← SLA-108: verified team history (streaks, starts, droughts,
 │                                 head-to-head, polls) for yesterday's teams → game_state["history"]
+├── football_bundle.py         ← SLA-116: one connected fact bundle per NFL/college game
+│                                 → game_state["football"]; summary_lines() renders it under 10K
 ├── run_status.py              ← per-run state on disk, shared across processes
 ├── pipeline_status.py         ← per-STAGE outcomes on top of run_status.json;
 │                                 PIPELINE_STAGES is the declared stage list
@@ -641,6 +643,34 @@ Category C now leave a listed fact alone; Check 9 says how to act on a history f
   database does not hold at all: playoff series, World Cup, tennis, player feats.
   Locked by `uat/tests/test_history_claims.py`.
 
+**Football games get one connected bundle each (SLA-116, 2026-10-03; stored only until SLA-119).**
+`football_bundle.py` runs in the fetch step after the history block and writes
+`game_state["football"]`: per completed NFL / college game, records and AP rank GOING IN, standings
+after (NFL division place and games back from `nfl_standings.py` on ESPN's log; college conference
+record from the stored games), the series before the game (regular season and playoffs apart, each
+with its depth), upsets (the winner's last regular-season win over a team ranked that high; the
+loser's last loss to an unranked team), NFL playoff wins, and the history_source lines folded in.
+It reads slap-sports-db's SLA-115 views. **Nothing shows it to a model yet**: SLA-119 adds it to the
+GROUND TRUTH block, replaces football teams' HISTORICAL CONTEXT lines and changes the prompts.
+- **Stale = unknown.** A college game not yet in the database (CFBD is fetched about once a day)
+  gets no record, conference record or upset fact, and its series and playoff-win counts stop at
+  last season and say so ("before this postseason"). Never filled from memory or guessed.
+- **A week with no AP poll makes an upset fact unknowable**, not "first since": `Polls.is_covered`
+  (2001 and 2020 skipped weeks). Bowls aren't stored, so every college count says "regular season".
+- **`summary_lines(game_state, story_plan)` is the 10K cap**, filled in the approved order: story
+  games (SLA-111's matching, with every pro team's city and nickname in the pool so "Pittsburgh" in
+  a Steelers story isn't Pitt), then upsets, ranked matchups and every NFL game, each at the richest
+  size that fits (full; without history; result line), then result lines for the rest. Dropped
+  games are counted, never silent.
+- **Query shape matters on Supabase.** Every v_team_game read names a league and year or a list of
+  franchises; series lookups are one LATERAL query per slate; "first win over a top-10 team since"
+  is computed in Python from one fetch of the AP ranges (as SQL it took 56 s for 20 teams).
+- **Replayed on every football day since 2026-09-03** (22 days, games rebuilt from the database):
+  every block under 10K; heaviest Saturday 9,936 chars (09-12, 80 games; all story and ranked games
+  kept, 13 full bundles), heaviest Sunday 9,764 (09-20, 14 NFL games: 9 full bundles, 5 result
+  lines only). ~2 s per run.
+  Locked by `uat/tests/test_football_bundle.py`.
+
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
 
@@ -997,7 +1027,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (24 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (25 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -1044,6 +1074,15 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-03 — Football fact bundles, built and stored (SLA-116 part A)**
+- `football_bundle.py` + one fetch step: a connected bundle per NFL / college game in
+  `game_state["football"]`, from the SLA-115 views and ESPN's NFL log. Not yet in any prompt (SLA-119).
+- Read by hand on 09-26 (65 college games) and 09-27 (14 NFL). The replay caught four things the
+  first draft got wrong: school names matched pro-city stories ("Pittsburgh"), result lines for 44
+  unranked games crowded story bundles out of the cap, upsets sorted behind routine ranked games, and
+  a stale playoff game would have said "last playoff win before this game" past a win the database
+  hadn't stored. All fixed and tested.
 
 **2026-10-03 — Pass 3 checks history claims; RULE 3 / Check 8 loosen (SLA-109)**
 - Check 3B in `claim_validator.py` confirms, corrects (HIGH) or downgrades (LOW) every "since

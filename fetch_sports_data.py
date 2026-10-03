@@ -1897,6 +1897,26 @@ def main() -> None:
     else:
         print(f"    ⚠ history unavailable: {hist.get('reason')}")
 
+    # ── Football fact bundles (SLA-116) ───────────────────────────────────
+    # One connected bundle per NFL / college game: records and ranks going
+    # in, standings after, the series, upsets, and the history above folded
+    # in. Stored only: SLA-119 puts it in front of the writer. Never fatal.
+    import football_bundle
+    print("  Building football bundles...")
+    output["football"] = football_bundle.fetch_bundles(output)
+    fb = output["football"]
+    if fb.get("status") == "ok":
+        for sport, e in (fb.get("sports") or {}).items():
+            stale = sum(1 for b in e["games"] if not b["vouched"]) if sport == "ncaafb" else 0
+            missed = f", unmatched: {', '.join(e['unmatched'])}" if e["unmatched"] else ""
+            print(f"    {e['label']}: {len(e['games'])} games"
+                  + (f", {stale} not in the database yet" if stale else "") + missed)
+        if fb.get("sports"):
+            print(f"    block: {len(chr(10).join(football_bundle.summary_lines(output))):,} chars "
+                  f"(cap {football_bundle.BUDGET:,})")
+    else:
+        print(f"    ⚠ football bundles unavailable: {fb.get('reason')}")
+
     # Health block: how the file was fetched, not just what it holds. A file
     # with standings but zero games AND failed scoreboard calls is a blocked
     # fetch; the same file with zero failures is an off day. Downstream
