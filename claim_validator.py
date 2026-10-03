@@ -78,6 +78,15 @@ def strip_tags(html: str) -> str:
     return re.sub(r'<[^>]+>', '', html)
 
 
+def own_text(section_html: str) -> str:
+    """A section's own prose: no embedded tweets, no HTML comments (a flag
+    an earlier pass left), one paragraph or heading per line."""
+    html = re.sub(r"<blockquote\b.*?</blockquote>|<!--.*?-->", " ", section_html,
+                  flags=re.IGNORECASE | re.DOTALL)
+    html = re.sub(r"</(p|h[1-6]|li|div)>|<br\s*/?>", "\n", html, flags=re.IGNORECASE)
+    return strip_tags(html)
+
+
 def split_into_sections(html: str) -> list[tuple[str, str]]:
     """
     Split HTML at every <h1>/<h2> boundary.
@@ -279,6 +288,293 @@ def check_defending_champion(plain_text: str, game_state: dict) -> list[str]:
 
 
 # ---------------------------------------------------------------------------
+# History claims (SLA-109): "first since YEAR", "N-year drought", "longest
+# ... since", checked against the HISTORICAL CONTEXT block (history_source).
+#
+#   a listed fact agrees          -> confirmed, nothing added
+#   the one team the sentence names has a fact of that kind, and it disagrees
+#                                 -> FACT FLAG [HIGH] quoting the fact
+#   anything else                 -> FACT FLAG [LOW]: RULE 3 still applies
+#
+# HIGH is deliberately narrow. A fact is only listed when it is notable, so
+# "no fact" never means "false"; and a sentence naming two teams, or none,
+# could mean either. Every doubt resolves to LOW, which asks for exactly what
+# RULE 3 asked for before this existed.
+# ---------------------------------------------------------------------------
+
+_NUM_WORDS = {w: i for i, w in enumerate(
+    "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen "
+    "fifteen sixteen seventeen eighteen nineteen twenty".split())}
+_N = r"(\d{1,3}|" + "|".join(_NUM_WORDS) + r")"
+
+# "since 1999", "since at least 1999", "since the 2020 season", "since '99",
+# "since 1998-99". Not a decade ("since the '90s"): that is the relative
+# framing RULE 3 asks for.
+_SINCE_RE = re.compile(r"\bsince\s+(?:at\s+least\s+)?(?:the\s+)?(?:(\d{4})(?:-(\d{2}))?|['’](\d{2}))(?![\ds'’])",
+                       re.IGNORECASE)
+_DATING_RE = re.compile(r"\bdating\s+(?:back\s+)?to\s+(?:the\s+)?(\d{4})(?:-(\d{2}))?(?![\ds])", re.IGNORECASE)
+_DROUGHT_RE = re.compile(_N + r"[- ](?:year|season)s?[- ](?:title\s+|finals\s+|playoff\s+|postseason\s+)?"
+                         r"(?:drought|wait|absence|skid|gap)\b", re.IGNORECASE)
+_IN_N_YEARS_RE = re.compile(r"\b(?:in|for)\s+(?:the\s+first\s+time\s+in\s+)?" + _N + r"\s+(?:years|seasons)\b",
+                            re.IGNORECASE)
+# A "since YEAR" is a history claim only next to one of these: "the league
+# has existed since 1997" is not one.
+_CLAIM_TRIGGER = re.compile(
+    r"\b(first|longest|most|best|worst|highest|lowest|biggest|fewest|never|without|drought|"
+    r"streak|straight|last\s+time|neither|nobody|none|hasn['’]?t|haven['’]?t|hadn['’]?t|didn['’]?t|not|no)\b", re.IGNORECASE)
+
+_PLAYER = re.compile(r"\b(he|she|his|her|he['’]s|she['’]s|him)\b", re.IGNORECASE)
+# Postseason milestones the database does not hold (series wins, conference
+# titles, rounds): never matched to a title or playoff fact. "First conference
+# finals since 2000" is not a Finals claim.
+_OTHER_POSTSEASON = re.compile(
+    r"\b(afc|nfc|conference|division(al)?|wild[- ]?card|pennant|alcs|nlcs|ecf|wcf|semi-?finals?|"
+    r"(first|second|third)\s+round|round|series\s+(win|wins|victory|victories)|playoff\s+(win|wins|victory|"
+    r"victories|series|game|games)|postseason\s+(win|wins|victory|series|game|games)|closeout|elimination|"
+    r"bowl\s+(game|win|victory)|cfp|college\s+football\s+playoff|mcws|llws|ncaa\s+tournament|final\s+four|"
+    r"sweet\s+16|elite\s+eight|all-star|heisman)\b", re.IGNORECASE)
+_APPEAR = re.compile(r"\b(reach|reached|reaches|reaching|return|returns|returned|back\s+(in|to)|appearance|"
+                     r"trip|berth|advance|advanced|advances|make|made|makes|clinch|clinched|in\s+the)\b",
+                     re.IGNORECASE)
+_WIN = re.compile(r"\b(won|win|wins|winning|victory|victories|beat|beats|beating|topped|defeated?|swept)\b",
+                  re.IGNORECASE)
+_LOSE = re.compile(r"\b(lost|lose|loses|losing|loss|losses|skid|defeats|dropped)\b", re.IGNORECASE)
+_FINALS = re.compile(r"\b(nba\s+finals|cup\s+final|finals|world\s+series|super\s+bowl|title\s+game|"
+                     r"championship\s+game)\b", re.IGNORECASE)
+_TITLE = re.compile(r"\b(title|titles|championship|championships|champions?|ring|crown|stanley\s+cup|"
+                    r"won\s+it\s+all|parade)\b", re.IGNORECASE)
+
+
+def _claim_kinds(window: str) -> set[str]:
+    """What a history claim is about, from the words just before it. Empty
+    when it isn't a team fact the database holds (a player's, a series
+    win's): those can only ever be LOW."""
+    w = window.lower()
+    if _PLAYER.search(w) or _OTHER_POSTSEASON.search(w):
+        return set()
+    if re.search(r"miss(ed|es|ing)?", w):
+        return set()                                   # "first missed playoffs since": the inverse fact
+    if re.search(r"\b(straight|in\s+a\s+row|consecutive)\b", w) and re.search(r"\bseasons\b", w):
+        return set()                                   # "five straight winning seasons"
+    if _FINALS.search(w) or (_TITLE.search(w) and "stanley cup" in w):
+        if re.search(r"\b(title|champion|championship|ring|parade)s?\b", w) and not re.search(
+                r"\b(title|championship)\s+game\b", w):
+            return {"title"}                           # "World Series title", "Super Bowl champions"
+        if _APPEAR.search(w):
+            return {"title_game"}                      # "first Finals trip", "reach the World Series"
+        if _WIN.search(w) and not re.search(r"\b(final|finals)\b", w):
+            return {"title"}                           # "won the Super Bowl", "won the Stanley Cup"
+        if "stanley cup" in w and not re.search(r"\bfinals?\b", w):
+            return {"title"}                           # "first Stanley Cup since 1994"
+        return {"title_game"}
+    if _TITLE.search(w):
+        return {"title"}
+    if re.search(r"\b(playoffs?|postseason)\b", w):
+        return {"playoff"}
+    if re.search(r"\bwinning\s+(season|record)|(above|over)\s+\.500\b", w):
+        return {"winning"}
+    if re.search(r"\b(straight|in\s+a\s+row|consecutive|streak|skid)\b", w):
+        if _LOSE.search(w):
+            return {"streak_L"}
+        if _WIN.search(w):
+            return {"streak_W"}
+        return set()                                   # "scoreless streak"
+    if re.search(r"\bstart\b|\b\d{1,2}-0\b|\b0-\d{1,2}\b", w):
+        return {"start_best", "start_worst"}
+    if re.search(r"\b(ranked|ranking|top[- ]\d+|poll)\b|\bno\.\s*\d", w):
+        return {"ranked_high"} if re.search(r"\b(high|highest|top|no\.)", w) else {"ranked"}
+    return set()
+
+
+def _alias_index(teams: list[dict]) -> dict[tuple, set[str]]:
+    """Token sequence -> the teams it names. A pro team goes by its full name
+    or its nickname ("Knicks", "Red Sox"); a college by its school
+    ("Georgia"), never a nickname that a dozen schools share, and never a
+    school that is the start of another ("Michigan" for Michigan State)."""
+    idx: dict[tuple, set[str]] = {}
+
+    def add(alias, name):
+        idx.setdefault(tuple(alias), set()).add(name)
+
+    for t in teams:
+        for name, college in ((t["team"], t["sport"] == "ncaafb"), (t.get("opponent") or "", t["sport"] == "ncaafb")):
+            toks = _tokens(name)
+            if not toks:
+                continue
+            add(toks, name)
+            for k in range(1, len(toks)):
+                if college:
+                    if toks[k] not in _NAME_CONTINUES:
+                        add(toks[:k], name)
+                elif not (k == len(toks) - 1 and toks[-1] in {"sox", "jays", "leafs", "knights", "blazers", "wings"}):
+                    add(toks[k:], name)
+    return idx
+
+
+def _named(text: str, idx: dict[tuple, set[str]]) -> set[str]:
+    words = _tokens(text)
+    found = set()
+    for alias, names in idx.items():
+        n = len(alias)
+        if any(tuple(words[i:i + n]) == alias for i in range(len(words) - n + 1)):
+            found |= names
+    return found
+
+
+def _claim_years(m: re.Match, issue_year: int, nows: set[int]) -> tuple[set[int], str]:
+    """The year(s) a claim says the thing last happened, and how it said it."""
+    if m.re in (_SINCE_RE, _DATING_RE):
+        if m.re is _SINCE_RE and m.group(3):
+            yy = int(m.group(3))
+            y = 1900 + yy if yy > issue_year % 100 else 2000 + yy
+            return {y}, "year"
+        y = int(m.group(1))
+        return ({y, y + 1} if m.group(2) else {y}), "year"
+    raw = m.group(1).lower()
+    n = int(raw) if raw.isdigit() else _NUM_WORDS[raw]
+    return {now - n for now in nows}, "count"
+
+
+def _verdict(fact: dict, claim: set[int], sport: str, window: str, season: int = 0) -> str:
+    """confirm / contradict / unknown for one fact against one claim."""
+    if fact["never"]:
+        return "contradict"
+    if fact["floor"] is not None:
+        # "None since at least 1999": a claim of 2005 says there was one, so
+        # it's wrong; a claim of 1987 is past what the data can see.
+        return "contradict" if min(claim) >= fact["floor"] else "unknown"
+    last = set(fact["last"])
+    # Football seasons end in the next calendar year: the 2019 season's Super
+    # Bowl and playoffs were played in 2020, and either is how people say it.
+    if sport in ("nfl", "ncaafb") and fact["kind"] in ("title", "title_game", "playoff"):
+        last |= {y + 1 for y in last}
+        if fact["kind"] in ("title", "title_game") and "super bowl" in window.lower() and max(last) < 1967:
+            return "unknown"                           # a pre-Super Bowl NFL title
+    if last & claim:
+        return "confirm"
+    # A fact from the last season or so may BE the event the sentence
+    # recounts: "Gausman sent the Blue Jays to their first World Series since
+    # 1993" (2026-08-03, about last October) is true, and "last World Series
+    # appearance: 2025" is that very trip. The one before it isn't listed, so
+    # an older claim can't be convicted.
+    if max(claim) < min(last) and max(fact["last"]) >= season - 1:
+        return "unknown"
+    return "contradict"
+
+
+def _numbers_agree(fact: dict, window: str) -> bool:
+    """A streak or start claim about a different number ("first 5-game
+    streak since...", against a 7-game one) is about something else."""
+    if "length" in fact:
+        nums = re.findall(r"\b" + _N + r"(?:[- ]game)?\s+(?:straight|in\s+a\s+row|consecutive|"
+                          r"(?:winning|losing|win|game)?\s*streak)", window, re.IGNORECASE)
+        return all((int(n) if n.isdigit() else _NUM_WORDS[n.lower()]) == fact["length"] for n in nums)
+    if "record" in fact:
+        recs = re.findall(r"\b\d{1,2}-\d{1,2}(?:-\d)?\b", window)
+        return all(r == fact["record"] for r in recs)
+    return True
+
+
+# How prose shortens the cities the database spells out.
+_CITY_SHORT = {"los angeles": ["la", "l.a."], "new york": ["ny"], "kansas city": ["kc"],
+               "san francisco": ["sf"], "tampa bay": ["tampa"], "philadelphia": ["philly"],
+               "las vegas": ["vegas"], "washington": ["dc", "d.c."]}
+
+
+def _at_city(window: str, city: str) -> bool:
+    """'won in LA', 'at Buffalo': a win AT the city the fact names."""
+    names = [city] + _CITY_SHORT.get(city.lower(), [])
+    return any(re.search(r"\b(?:at|in)\s+(?:the\s+)?" + re.escape(n) + r"(?![\w.])", window, re.IGNORECASE)
+               for n in names)
+
+
+def _history_anchors(sentence: str):
+    for rx in (_SINCE_RE, _DATING_RE, _DROUGHT_RE, _IN_N_YEARS_RE):
+        for m in rx.finditer(sentence):
+            if rx is _DROUGHT_RE or _CLAIM_TRIGGER.search(sentence[:m.end()]):
+                yield m
+
+
+def _quote(sentence: str) -> str:
+    # Inside an HTML comment: no double quotes, and never "--".
+    return re.sub(r"\s+", " ", sentence).strip()[:160].replace('"', "'").replace("--", "-")
+
+
+def check_history_claims(own_text: str, game_state: dict, outcomes: list | None = None) -> list[str]:
+    """`own_text`: one section's own prose (no tweets), one block per line.
+    `outcomes`, if given, collects (verdict, sentence) for every claim,
+    confirmed ones included: the archive replay counts them."""
+    sentences = [s for s in re.split(r"(?<=[.!?])\s+|\n+", own_text) if s.strip()]
+    if not any(True for s in sentences for _ in _history_anchors(s)):
+        return []
+    import history_source
+    teams = history_source.team_facts(game_state)
+    by_name = {t["team"]: t for t in teams}
+    idx = _alias_index(teams)
+    as_of = ((game_state or {}).get("history") or {}).get("as_of") or game_state.get("yesterday_date") or ""
+    issue_year = int(as_of[:4]) if as_of[:4].isdigit() else 0
+    section_teams = {n for n in _named(own_text, idx) if n in by_name}
+    flags, seen = [], set()
+    for sentence in sentences:
+        start = 0
+        for m in sorted(_history_anchors(sentence), key=lambda m: m.start()):
+            window = sentence[start:m.end()]
+            start = m.end()
+            kinds = _claim_kinds(window)
+            named = {n for n in _named(sentence, idx) if n in by_name}
+            candidates = named or section_teams
+            results = []                               # (team, fact, verdict)
+            for name in candidates:
+                t = by_name[name]
+                nows = {issue_year, t["season"] or issue_year}
+                if t["sport"] in ("nba", "nhl") and t["season"]:
+                    nows.add(t["season"] + 1)
+                claim, _ = _claim_years(m, issue_year, nows)
+                facts = [f for f in t["facts"] if f["kind"] in kinds]
+                # Head-to-head: a win over the team the sentence names, or at
+                # its city. Regular season only, and a team's, not a player's.
+                if _WIN.search(window) and not (_PLAYER.search(window) or _OTHER_POSTSEASON.search(window)):
+                    facts += [f for f in t["facts"] if f["kind"] == "h2h" and f["opponent"] in _named(window, idx)]
+                    facts += [f for f in t["facts"] if f["kind"] == "h2h_at" and _at_city(window, f["city"])]
+                for f in facts:
+                    v = _verdict(f, claim, t["sport"], window, t["season"] or issue_year) if _numbers_agree(f, window) else "unknown"
+                    results.append((t, f, v))
+            if any(v == "confirm" for _, _, v in results):
+                if outcomes is not None:
+                    outcomes.append(("confirmed", _quote(sentence)))
+                continue
+            quoted = _quote(sentence)
+            if quoted in seen:
+                continue
+            seen.add(quoted)
+            contradicting = {t["team"] for t, _, v in results if v == "contradict"}
+            # HIGH only when the sentence itself names exactly one team with a
+            # fact of this kind, and every such fact disagrees: no guessing
+            # whose history a two-team or no-team sentence meant.
+            if (named and len({t["team"] for t, _, _ in results}) == 1 and contradicting
+                    and all(v == "contradict" for _, _, v in results)):
+                t = results[0][0]
+                facts = "; ".join(f["text"] for _, f, _ in results)
+                ago = sorted({issue_year - max(f["last"]) for _, f, _ in results if f["last"]})
+                ago_s = f" ({', '.join(str(a) for a in ago)} years before this issue)" if ago else ""
+                flags.append(
+                    f'\n<!-- FACT FLAG [HIGH]: "{quoted}" makes a history claim the SLAP sports '
+                    f'database contradicts. {t["team"]}: {facts}{ago_s}, as of {as_of}. Correct the '
+                    f'year or count to match, keeping its kind (a title is not a Finals appearance), '
+                    f'or cut the claim. -->')
+                if outcomes is not None:
+                    outcomes.append(("HIGH", flags[-1]))
+            else:
+                flags.append(
+                    f'\n<!-- FACT FLAG [LOW]: "{quoted}" makes a specific history claim the HISTORICAL '
+                    f'CONTEXT block does not confirm. RULE 3: replace the specific year or count with '
+                    f'relative framing, or cut the clause. -->')
+                if outcomes is not None:
+                    outcomes.append(("LOW", quoted))
+    return flags
+
+
+# ---------------------------------------------------------------------------
 # Section validator
 # ---------------------------------------------------------------------------
 
@@ -352,6 +648,11 @@ def validate_section(heading: str, section_html: str, game_state: dict) -> tuple
     own_prose = strip_tags(re.sub(r"<blockquote\b.*?</blockquote>", " ", section_html,
                                   flags=re.IGNORECASE | re.DOTALL))
     flags.extend(check_defending_champion(own_prose, game_state))
+
+    # ── CHECK 3B: History claims vs HISTORICAL CONTEXT (SLA-109) ─────────────
+    # Same rule: our prose only. Paragraph and heading breaks become line
+    # breaks so a heading never runs into the sentence after it.
+    flags.extend(check_history_claims(own_text(section_html), game_state))
 
     # ── CHECK 4: Series score claim vs game_state ─────────────────────────────
     score_matches = SERIES_SCORE_RE.findall(plain_text)

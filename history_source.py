@@ -182,8 +182,11 @@ STARTS = """
     WHERE o.n <= c.g GROUP BY o.franchise_id, o.year, c.g"""
 
 HEAD_TO_HEAD = """
-    SELECT franchise_id, opp, max(game_date) FILTER (WHERE r = 'W') AS last_win,
-           max(game_date) FILTER (WHERE r = 'W' AND NOT home) AS last_road_win,
+    SELECT franchise_id, opp, max(game_date) FILTER (WHERE r = 'W' AND game_date < %(day)s::date) AS last_win,
+           max(game_date) FILTER (WHERE r = 'W' AND NOT home AND game_date < %(day)s::date) AS last_road_win,
+           -- Yesterday's own game is the news, not the history: a team that
+           -- just ended a drought must see the drought (SLA-109).
+           coalesce(bool_or(r = 'W' AND game_date = %(day)s::date), false) AS won_today,
            min(year) AS first_meeting
     FROM hist_sides
     WHERE (franchise_id, opp) IN (SELECT * FROM unnest(%(pairs_f)s::bigint[], %(pairs_o)s::bigint[]))
@@ -335,6 +338,18 @@ def h2h_fact(row: dict | None, opponent: str, opp_city: str | None, year: int, f
     since = max(first_year, row["first_meeting"])
     lw, lrw = row.get("last_win"), row.get("last_road_win")
     out = []
+    if row.get("won_today"):
+        # Yesterday's win ended whatever drought there was; say which.
+        if lw is None:
+            out.append(f"beat the {opponent} yesterday, their first win over them since at least {since}")
+        elif year - lw.year >= H2H_NOTABLE:
+            out.append(f"beat the {opponent} yesterday, their first win over them since {lw.isoformat()}")
+        if opp_city:
+            if lrw is None:
+                out.append(f"won at {opp_city} yesterday, their first win there since at least {since}")
+            elif year - lrw.year >= H2H_NOTABLE:
+                out.append(f"won at {opp_city} yesterday, their first win there since {lrw.isoformat()}")
+        return ("; ".join(out) + ".") if out else None
     if lw is None:
         out.append(f"no win over the {opponent} since at least {since}")
     elif year - lw.year >= H2H_NOTABLE:
@@ -468,6 +483,119 @@ def fetch_history(game_state: dict, url: str | None = None, connect=_connect) ->
             return build_history(conn, game_state)
     except Exception as e:  # noqa: BLE001 - reported, never fatal
         return {"status": "unavailable", "reason": _scrub(f"{type(e).__name__}: {e}", secrets)}
+
+
+# ---------------------------------------------------------------------------
+# Reading the sentences back (SLA-109). Pass 3 checks the draft's history
+# claims against these facts, so it needs each one as data: its kind, the
+# season(s) it names, or the floor it can't see past. Parsed from the lines
+# rather than stored beside them, so a game_state.json written before this
+# existed is still checkable; it lives HERE, next to the templates, so a
+# change to a sentence and a change to its reader land in the same file
+# (test_history_claims.py round-trips every template).
+# ---------------------------------------------------------------------------
+
+_TITLE_GAMES = {spec[3] for spec in LEAGUES.values() if spec[3]}
+
+
+def season_years(label: str) -> set[int]:
+    """'1972-73' -> {1972, 1973}; '2018-09-16' -> {2018}; '2015' -> {2015}."""
+    m = re.fullmatch(r"(\d{4})(?:-(\d{2}))?(?:-\d{2})?", label.strip())
+    if not m:
+        return set()
+    y = int(m.group(1))
+    if m.group(2) and len(label.strip()) == 7:        # a season, not a date
+        return {y, y + 1}
+    return {y}
+
+
+def _fact(kind: str, text: str, last: str | None = None, floor: str | None = None,
+          never: bool = False, **extra) -> dict:
+    return {"kind": kind, "text": text.strip().rstrip("."),
+            "last": sorted(season_years(last)) if last else None,
+            "floor": min(season_years(floor)) if floor else None, "never": never, **extra}
+
+
+_FLOOR = r"(?:since at least (\S+) \(game data starts \S+\)|in franchise history \(since (\S+)\))"
+
+
+def parse_facts(line: str) -> list[dict]:
+    """Every checkable fact in one HISTORICAL CONTEXT line."""
+    out = []
+    m = re.fullmatch(r"(\d+) straight (wins|losses) this season; last \d+\+ within a season: (\S+)\.", line)
+    if m:
+        return [_fact("streak_" + m.group(2)[0].upper(), line, last=m.group(3), length=int(m.group(1)))]
+    m = re.fullmatch(r"(\d+) straight (wins|losses) this season, their longest within a season " + _FLOOR + r"\.", line)
+    if m:
+        return [_fact("streak_" + m.group(2)[0].upper(), line, floor=m.group(3) or m.group(4),
+                      length=int(m.group(1)))]
+    m = re.fullmatch(r"(\S+) after (\d+) games; last start this (good|bad) or (?:better|worse): (\S+)\.", line)
+    if m:
+        return [_fact("start_" + ("best" if m.group(3) == "good" else "worst"), line,
+                      last=m.group(4), record=m.group(1))]
+    m = re.fullmatch(r"(\S+) after (\d+) games, their (best|worst) start " + _FLOOR + r"\.", line)
+    if m:
+        return [_fact("start_" + m.group(3), line, floor=m.group(4) or m.group(5), record=m.group(1))]
+    if line.startswith("AP No. "):
+        for part in line.rstrip(".").split(", ")[1:]:
+            if (m := re.fullmatch(r"first AP ranking in any season since at least (\d+) .*", part)):
+                out.append(_fact("ranked", part, floor=m.group(1)))
+            elif (m := re.fullmatch(r"first season ranked since (\d+)", part)):
+                out.append(_fact("ranked", part, last=m.group(1)))
+            elif (m := re.fullmatch(r"highest AP ranking since at least (\d+)", part)):
+                out.append(_fact("ranked_high", part, floor=m.group(1)))
+            elif (m := re.fullmatch(r"last ranked this high in (\d+)", part)):
+                out.append(_fact("ranked_high", part, last=m.group(1)))
+        return out
+    for part in line.rstrip(".").split("; "):
+        if (m := re.fullmatch(r"beat the (.+) yesterday, their first win over them since at least (\d+)", part)):
+            out.append(_fact("h2h", part, floor=m.group(2), opponent=m.group(1)))
+        elif (m := re.fullmatch(r"beat the (.+) yesterday, their first win over them since (\S+)", part)):
+            out.append(_fact("h2h", part, last=m.group(2), opponent=m.group(1)))
+        elif (m := re.fullmatch(r"won at (.+) yesterday, their first win there since at least (\d+)", part)):
+            out.append(_fact("h2h_at", part, floor=m.group(2), city=m.group(1)))
+        elif (m := re.fullmatch(r"won at (.+) yesterday, their first win there since (\S+)", part)):
+            out.append(_fact("h2h_at", part, last=m.group(2), city=m.group(1)))
+        elif (m := re.fullmatch(r"no win over the (.+) since at least (\d+)", part)):
+            out.append(_fact("h2h", part, floor=m.group(2), opponent=m.group(1)))
+        elif (m := re.fullmatch(r"last win over the (.+): (\S+)", part)):
+            out.append(_fact("h2h", part, last=m.group(2), opponent=m.group(1)))
+        elif (m := re.fullmatch(r"no win at (.+) since at least (\d+)", part)):
+            out.append(_fact("h2h_at", part, floor=m.group(2), city=m.group(1)))
+        elif (m := re.fullmatch(r"last win at (.+): (\S+)", part)):
+            out.append(_fact("h2h_at", part, last=m.group(2), city=m.group(1)))
+        elif (m := re.fullmatch(r"last playoff appearance: (\S+)", part)):
+            out.append(_fact("playoff", part, last=m.group(1)))
+        elif (m := re.fullmatch(r"no playoff appearance since at least (\S+)", part)):
+            out.append(_fact("playoff", part, floor=m.group(1)))
+        elif (m := re.fullmatch(r"last winning season: (\S+)", part)):
+            out.append(_fact("winning", part, last=m.group(1)))
+        elif (m := re.fullmatch(r"no winning season since at least (\S+)", part)):
+            out.append(_fact("winning", part, floor=m.group(1)))
+        elif (m := re.fullmatch(r"last (.+) appearance: (\S+)", part)) and m.group(1) in _TITLE_GAMES:
+            out.append(_fact("title_game", part, last=m.group(2)))
+        elif (m := re.fullmatch(r"no (.+) appearance in franchise history", part)) and m.group(1) in _TITLE_GAMES:
+            out.append(_fact("title_game", part, never=True))
+        elif (m := re.fullmatch(r"no (.+) in franchise history", part)):
+            out.append(_fact("title", part, never=True))
+        elif (m := re.fullmatch(r"last (.+): (\S+)", part)):
+            out.append(_fact("title", part, last=m.group(2)))
+    return out
+
+
+def team_facts(game_state: dict) -> list[dict]:
+    """Every team in the block with its parsed facts:
+    [{"team", "opponent", "sport", "season", "facts": [...]}]."""
+    block = (game_state or {}).get("history") or {}
+    if block.get("status") != "ok":
+        return []
+    out = []
+    for sport, entry in (block.get("leagues") or {}).items():
+        for t in entry.get("teams") or []:
+            facts = [f for line in t.get("facts") or [] for f in parse_facts(line)]
+            out.append({"team": t["team"], "opponent": t.get("opponent"), "sport": sport,
+                        "season": entry.get("season"), "facts": facts})
+    return out
 
 
 def summary_lines(game_state: dict) -> list[str]:
