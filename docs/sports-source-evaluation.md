@@ -383,7 +383,8 @@ onward returned exactly 3000 — a cap, not a count, which 1950's 1,261 and
 would understate modern seasons and overstate early ones. Both
 `startDateRange`/`endDateRange` and `conference` chunk under the cap
 (January 2024 alone = 1,350 games; SEC 2024 = 342), so a full modern season
-needs roughly six monthly calls — see §7.1 for what that does to the quota.
+needs three date windows (Nov-Dec, Jan-Feb, Mar-Apr), measured in SLA-69 —
+see §7.1 for what that does to the quota.
 The cap is CBBD-specific: CFBD returned 3,745 games for 2025 in one call.
 
 **Recommendation.** CBBD primary — **and the condition is now satisfied**.
@@ -858,23 +859,43 @@ paginates by year exactly as `/games` does: ~25 calls for 25 years, not the
 neither is the major-conferences-only fallback SLA-63 had lined up.
 
 **The new variable is CBBD's 3,000-row response cap (§2.6).** A modern NCAAMB
-season exceeds it, so seasons must be chunked — roughly six monthly calls
-each. Across ~77 seasons (1949-2026) that is **~460 calls**, against the ~25
-this doc previously assumed for CBBD.
+season exceeds it, so seasons must be chunked. **Measured 2026-10-03 (SLA-69),
+replacing the earlier extrapolation of ~460 calls:**
+
+| Season | Games | Fewest calls under the cap |
+|---|---|---|
+| 1954-55 | 1,478 | 1 (whole season) |
+| 1969-70 | 1,952 | 1 |
+| 1979-80 | 2,822 | 1 (SLA-63) |
+| 1984-85 | capped at 3,000 | 2 |
+| 1991-92 | 3,735 (Nov 270 / Dec 746 / Jan 1,218 / Feb 1,162 / Mar 334 / Apr 5) | 2 |
+| 2004-05 | 4,954 (624 / 1,108 / 1,369 / 1,300 / 549 / 4) | 3 |
+| 2023-24 | 6,072 (1,350 / 1,206 / 1,350 / 1,315 / 845 / 6) | 3 |
+
+No single month comes near the cap even now (the largest is 1,369), so a
+season does not need six monthly calls: **three fixed windows (Nov-Dec,
+Jan-Feb, Mar-Apr) hold every modern season**, the fullest being 2023-24's
+Jan-Feb at 2,665. Before the mid-1980s one call holds a whole season, and
+until about 2000 two do. A window that ever comes back at exactly 3,000 is
+split in half and refetched, so a bigger season costs a call, not a gap.
 
 | Line item | Calls |
 |---|---|
-| CFB games, all history | ~316 |
-| CFB rosters, 25 years | ~25 |
-| NCAAMB games 1949-2026, chunked under the cap | ~460 |
-| **Total, against a shared 1,000/mo pool** | **~800** |
+| NCAAMB games 1949-1980, one call a season | 32 |
+| NCAAMB games 1981-2000, two windows | 40 |
+| NCAAMB games 2001-2026, three windows | 78 |
+| Margin for windows that hit the cap and split (~20%) | ~30 |
+| NCAAMB polls, one call a season (measured: 1949-50's AP poll, 199 rows; a modern season's two polls are ~1,000, under the cap) | ~78 |
+| Teams, conferences | ~2 |
+| **NCAAMB backfill, total** | **~260** |
 
-That fits, but at ~80% of the pool it leaves little room for a retry or a
-mistake. Two ways to de-risk, both acceptable: split the backfill across two
-calendar months at $0, or spend $1 for 5,000 calls. **The ~460 figure is an
-extrapolation from one measured month** (January 2024 = 1,350 games), not a
-measurement — worth confirming against two or three real seasons before
-committing to the single-month plan.
+For comparison, the CFB backfill actually spent **~405 calls** (SLA-82,
+October 2026: games, records and polls for 157 seasons, all cached so a
+reload costs nothing), and college football's live season now runs at under
+200 a month (SLA-105). **So the basketball backfill fits in a single month at
+$0**: ~260 plus football's live ~200 is under half the pool, with room to
+redo it once. **Plan: run it in November 2026**, the first month whose pool
+isn't already half spent on the football backfill. The $1 tier is not needed.
 
 ### 7.2 Measured sizing
 
