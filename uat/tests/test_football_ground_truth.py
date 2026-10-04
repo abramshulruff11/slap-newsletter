@@ -181,8 +181,10 @@ for d in ("prompts", "uat/prompts"):
     ed = (REPO / d / "editor_prompt.txt").read_text(encoding="utf-8")
     check(f"{d}: RULE 3 names the FOOTBALL GAMES bundles", "FOOTBALL GAMES part of the GROUND TRUTH block" in rf, True)
     check(f"{d}: Check 8 counts them as a source", "and the FOOTBALL GAMES\n     bundles" in ed.replace("\r", ""), True)
-    check(f"{d}: Check 9 leaves a LOW flag alone when a bundle states the fact",
-          "the bundle sources it: LEAVE IT" in ed, True)
+    # SLA-119's temporary Check 9 exception for bundle facts was removed by
+    # SLA-130, once Pass 3 checked every kind of bundle fact itself.
+    check(f"{d}: Check 9 tells the editor Pass 3 checks upset and playoff-win claims against the bundles",
+          "Pass 3 checks them against the FOOTBALL GAMES bundles" in " ".join(ed.split()), True)
 
 print()
 if FAILS:

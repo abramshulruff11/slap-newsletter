@@ -64,12 +64,33 @@ def scoreboard(league: str, day: date) -> list[dict]:
     return [g for g in games if g and g.get("completed")]
 
 
+_SEASON_LOG: list | None = None
+
+
+def nfl_season_log() -> list[dict]:
+    """The NFL regular-season log so far, fetched once and cached for the
+    day; nfl_standing() cuts it at each replayed day, so standings are as of
+    that day (SLA-130)."""
+    global _SEASON_LOG
+    if _SEASON_LOG is None:
+        path = CACHE / f"nfl_season_games_{date.today().isoformat()}.json"
+        if path.exists():
+            _SEASON_LOG = json.loads(path.read_text(encoding="utf-8"))
+        else:
+            _SEASON_LOG = fsd.fetch_nfl_season_games() or []
+            CACHE.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(_SEASON_LOG), encoding="utf-8")
+    return _SEASON_LOG
+
+
 def game_state_for(day: date, url: str) -> dict:
     gs = {"yesterday_date": day.isoformat(), "as_of_date": (day + timedelta(days=1)).isoformat(), "sports": {}}
     for key, league in (("nfl", "nfl"), ("ncaafb", "college-football")):
         games = scoreboard(league, day)
         if games:
             gs["sports"][key] = {"label": key.upper(), "yesterday_games": games}
+            if key == "nfl":
+                gs["sports"][key]["season_games"] = nfl_season_log()
     if url and gs["sports"]:
         gs["football"] = fb.fetch_bundles(gs, url=url)
     return gs
@@ -98,6 +119,15 @@ def main() -> None:
                         continue
                     out: list = []
                     cv.check_football_claims(cv.own_text(sec), gs, out)
+                    # SLA-130: upset and playoff-win claims go through the
+                    # history check; only those kinds are counted here (the
+                    # replay has no HISTORICAL CONTEXT, so the rest is noise).
+                    hist: list = []
+                    cv.check_history_claims(cv.own_text(sec), gs, hist)
+                    for level, quoted, sentence, *_ in hist:
+                        kinds = cv._claim_kinds(cv._clause(sentence)) & {"upset_W", "upset_L", "playoff_win"}
+                        if kinds:
+                            out.append((level, quoted, sentence, "/".join(sorted(kinds)), ""))
                     for level, quoted, sentence, kind, fig in out:
                         day[(level, kind)] += 1
                         if level in show:
