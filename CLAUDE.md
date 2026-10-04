@@ -576,6 +576,9 @@ ground-truth block as a source.
   only seasons before the current one**: a 2026-03-15 run must not see the Knicks' 2025-26 title.
 - **As of `yesterday_date`**: games after it are ignored, so a replay of an old issue is honest.
 - Pro teams match by name (accents/apostrophes normalized), college teams by ESPN id = CFBD id.
+- **A team whose game yesterday isn't stored yet** (college, every Sunday) gets its streak, start
+  and head-to-head advanced by ESPN's result when the database is otherwise caught up, and left
+  out when it isn't (SLA-120; see the football bundles below).
 - Inert without `SPORTS_DB_URL`, never fatal. Locked by `uat/tests/test_history_context.py`.
 
 **Pass 3 checks history claims against that block (SLA-109, 2026-10-03).** Check 3B in
@@ -655,6 +658,26 @@ It reads slap-sports-db's SLA-115 views.
 - **Stale = unknown.** A college game not yet in the database (CFBD is fetched about once a day)
   gets no record, conference record or upset fact, and its series and playoff-win counts stop at
   last season and say so ("before this postseason"). Never filled from memory or guessed.
+- **...unless every EARLIER game is stored (SLA-120, 2026-10-04).** On a Sunday morning *none* of
+  Saturday's college games are in the database (2026-10-04: 54 of 54), so the rule above blanked
+  every Saturday bundle. ESPN's scoreboard carries each team's record after the game
+  (`home_records`/`away_records`, now kept by `parse_game`, with `neutral_site`). When, for both
+  teams, the stored record before the game equals ESPN's record minus the result
+  (`stored_before` vs `history_source.espn_record_before`), the game is **trusted**: records going
+  in, the series through this season and upset facts come from games before the day as usual,
+  and the conference record after is ESPN's `vsconf`. ESPN disagreeing (a missing earlier game)
+  or a team the database doesn't know falls back to stale = unknown. The bundle carries both
+  `vouched` (stored) and `trusted`.
+- **The history lines had the same lag, and it made them wrong, not just thin.** Florida's line
+  read "4 straight wins this season" beside its loss; Missouri's "last win over the Florida
+  Gators: 2023" beside its win over them. `history_source.catch_up()` runs the same check per
+  team: caught up → the streak, the start (STARTS compares past seasons through one more game,
+  `lag_f`/`lag_e`) and the head-to-head (`won_today`) are advanced by yesterday's result;
+  not caught up → those three are left out (droughts and polls stay). Locked by
+  `uat/tests/test_db_lag.py`.
+- **Replayed on 2026-10-03** (54 games, none stored): 51 trusted (the 3 others have an FCS opponent
+  the database doesn't hold). Missouri over No. 8 Florida gets "their last regular-season win over
+  an AP top-10 team before this: 2013-10-12 (over No. 7)". Block 9,947 chars.
 - **A week with no AP poll makes an upset fact unknowable**, not "first since": `Polls.is_covered`
   (2001 and 2020 skipped weeks). Bowls aren't stored, so every college count says "regular season".
 - **`summary_lines(game_state, story_plan)` is the 10K cap**, filled in the approved order: story
@@ -1050,7 +1073,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (26 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (27 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -1097,6 +1120,13 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-04 — Sunday's college facts no longer a game behind (SLA-120)**
+- The database gets Saturday's college games a day late. Bundles dropped records and upsets for all
+  54 games on 2026-10-04, and history lines were one game stale ("4 straight wins" after a loss).
+- `parse_game` keeps ESPN's post-game records and neutral-site flag. A game or team whose stored
+  record plus the result matches ESPN's is treated as caught up; otherwise as before.
+- No new API calls, no change to slap-sports-db's CFBD ration.
 
 **2026-10-04 — Football bundles reach the writer, editor and selector (SLA-119)**
 - The FOOTBALL GAMES block is part of the GROUND TRUTH every pass reads; story games move to the

@@ -32,6 +32,11 @@ The same rules as history_source.py, plus one:
   team whose game is not in the database yet gets nothing this season's
   database rows would have supplied (record, conference record, upset
   facts), and its series counts stop at last season. Never guessed.
+  Unless the database is otherwise caught up (SLA-120): when each team's
+  stored record before the game equals ESPN's record going in (ESPN's
+  record after a final, minus the result), every earlier game is stored, so
+  records going in, the series and upset facts are computed from games
+  before the day as usual; the conference record after is ESPN's.
 - **Depth is stated.** Counts cover stored games; each line says where the
   data starts. College counts are regular season (bowls are not stored).
 - **As of the issue's date.** Nothing on or after the game's own date counts
@@ -47,7 +52,8 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 
 from champions_source import _connect, _scrub, _secrets
-from history_source import _rows, named_teams, norm, story_text
+from history_source import (_rows, espn_record_before, game_result, named_teams, norm, parse_record,
+                            story_text)
 
 # game_state sport key -> (slap-sports-db league, label)
 SPORTS = {"nfl": ("nfl", "NFL"), "ncaafb": ("ncaaf", "College football")}
@@ -442,6 +448,7 @@ def _sides(g: dict, sport: str, teams: dict, season_rows: dict, polls: "Polls | 
         today = next((r for r in rows if r["game_date"] == gday), None)
         tid = (db or {}).get("team_id")
         side[s] = {"name": g[f"{s}_team"], "score": g.get(f"{s}_score"), "espn_rank": g.get(f"{s}_rank"),
+                   "records": g.get(f"{s}_records") or {},
                    "abbr": g.get(f"{s}_abbr"), "db": db, "rows": rows, "today": today,
                    "short": short(g[f"{s}_team"], (db or {}).get("location") if college else None),
                    "ap": polls.rank(AP, tid, gday) if (college and polls and tid) else None,
@@ -449,17 +456,27 @@ def _sides(g: dict, sport: str, teams: dict, season_rows: dict, polls: "Polls | 
     hs, as_ = g.get("home_score") or 0, g.get("away_score") or 0
     winner = "home" if hs > as_ else "away" if as_ > hs else None
     first, second = (side["away"], side["home"]) if winner == "away" else (side["home"], side["away"])
-    # Stale = unknown: both teams' game must be in the database before this
-    # season's database rows count for either.
-    vouched = bool(first["db"] and second["db"] and first["today"] and second["today"])
     post = bool(g.get("playoffs")) or int(g.get("season_type") or 2) == 3
+    # Stale = unknown: both teams' game must be in the database before this
+    # season's database rows count for either...
+    vouched = bool(first["db"] and second["db"] and first["today"] and second["today"])
+    # ...or, when it isn't stored yet (college games reach the database a day
+    # late, so every Saturday game on a Sunday morning: SLA-120), every
+    # EARLIER game must be: the stored record before this game has to equal
+    # ESPN's record going in. Then everything dated before the game is
+    # complete and can be used; nothing about this game comes from the database.
+    for s in ("home", "away"):
+        side[s]["espn_before"] = None if post else espn_record_before(g.get(f"{s}_records"), game_result(g, s))
+        side[s]["caught_up"] = bool(side[s]["db"] and (side[s]["today"] or (
+            side[s]["espn_before"] is not None and side[s]["espn_before"] == stored_before(side[s]["rows"], gday))))
+    trusted = vouched or bool(side["home"]["caught_up"] and side["away"]["caught_up"])
     known = bool(college and polls and polls.is_covered(year, gday))
-    upset = bool(college and vouched and winner is not None and not post and known
+    upset = bool(college and trusted and winner is not None and not post and known
                  and second["ap"] is not None and (first["ap"] is None or first["ap"] > second["ap"]))
     pair = (first["db"]["franchise_id"], second["db"]["franchise_id"]) if first["db"] and second["db"] else None
     return {"g": g, "day": gday, "year": year, "first": first, "second": second, "home": side["home"],
-            "winner": winner, "vouched": vouched, "post": post, "known": known, "upset": upset,
-            "max_year": year if vouched else year - 1, "pair": pair,
+            "winner": winner, "vouched": vouched, "trusted": trusted, "post": post, "known": known,
+            "upset": upset, "max_year": year if trusted else year - 1, "pair": pair,
             "upset_franchises": list(pair) if upset else []}
 
 
@@ -467,13 +484,14 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
             history: dict, game_state: dict) -> dict:
     college = sport == "ncaafb"
     g, gday, year, first, second, h = x["g"], x["day"], x["year"], x["first"], x["second"], x["home"]
-    vouched, post, known, winner = x["vouched"], x["post"], x["known"], x["winner"]
+    vouched, trusted, post, known, winner = x["vouched"], x["trusted"], x["post"], x["known"], x["winner"]
 
     def label(s):
         r = s["ap"] if s["ap"] is not None else (s["espn_rank"] if not known else None)
         return f"No. {r} {s['name']}" if r else s["name"]
 
-    neutral = (h["today"] or {}).get("venue_side") == "neutral"
+    neutral = ((h["today"] or {}).get("venue_side") == "neutral" if h["today"]
+               else bool(g.get("neutral_site")))
     where = ("neutral site" if neutral else f"at {h['short']}" if college
              else f"{h['name']} home game")
     result = (f"{label(first)} {first['score']}, {label(second)} {second['score']}"
@@ -486,13 +504,17 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
     for s in (first, second):
         if college:
             rp = rank_phrase(s["ap"], s["cfp"], s["espn_rank"] if not known else None)
-            if vouched:
+            if trusted:
                 t = s["today"]
-                before = (t["wins_before"], t["losses_before"], t["ties_before"])
+                before = ((t["wins_before"], t["losses_before"], t["ties_before"]) if t
+                          else s["espn_before"])
                 going.append(f"{s['short']} {record(*before)}, {rp}")
                 won = s is first and winner is not None
                 lost = winner is not None and not won
-                conf = _conference_record(s["rows"], gday)
+                # Not stored yet: the conference record after comes from
+                # ESPN, which is what game_state holds for this game anyway.
+                conf = (_conference_record(s["rows"], gday) if t
+                        else _espn_conference_record(s["records"], s["rows"]))
                 after.append(f"{s['short']} {record(before[0] + won, before[1] + lost, before[2])}"
                              + (f" ({conf})" if conf else ""))
             else:
@@ -508,14 +530,14 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
         lines.append("Going in: " + "; ".join(going) + ".")
     if after:
         lines.append("After: " + "; ".join(after) + ".")
-    if college and not vouched:
+    if college and not trusted:
         lines.append("This game is not in the database yet: records, conference records and upset facts "
                      "left out; series counts stop at last season.")
 
     if x["pair"]:
         line = series_line(series.get((*x["pair"], gday)), first["short"], second["short"],
                            regular_from=fy["regular"], post_from=fy["postseason"],
-                           through="" if vouched else "through last season", college=college)
+                           through="" if trusted else "through last season", college=college)
         if line:
             lines.append(line)
 
@@ -548,7 +570,7 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
             y = max((v for v in playoff_wins.get(s["db"]["franchise_id"], []) if v <= x["max_year"]), default=None)
             parts.append(f"{s['name']} {y} season" if y else
                          f"{s['name']} none since at least {fy['postseason']} (playoff data starts {fy['postseason']})")
-        lines.append(f"Last playoff win before {'this game' if vouched else 'this postseason'}: "
+        lines.append(f"Last playoff win before {'this game' if trusted else 'this postseason'}: "
                      + "; ".join(parts) + ".")
 
     hist_lines = [f"{s['name']} history: " + " ".join(history[(sport, s["name"])])
@@ -559,10 +581,24 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
             "ranked": bool(college and any(s["ap"] or s["espn_rank"] for s in (first, second))),
             "upset": bool(x["upset"]),
             "best_rank": min([r for s in (first, second) for r in (s["ap"] or s["espn_rank"],) if r] or [99]),
-            "postseason": post, "vouched": vouched,
+            "postseason": post, "vouched": vouched, "trusted": trusted,
             "teams": [{"name": s["name"], "full_name": (s["db"] or {}).get("full_name") or s["name"],
                        "nickname": (s["db"] or {}).get("nickname"), "location": (s["db"] or {}).get("location")}
                       for s in (first, second)]}
+
+
+def stored_before(rows: list[dict], day: date) -> tuple[int, int, int]:
+    """A team's record this season from the stored games dated before `day`."""
+    prior = [r for r in rows if r["game_date"] < day]
+    return (sum(r["result"] == "W" for r in prior), sum(r["result"] in ("L", "OTL") for r in prior),
+            sum(r["result"] == "T" for r in prior))
+
+
+def _espn_conference_record(records: dict, rows: list[dict]) -> str | None:
+    """ESPN's conference record after the game, named by the stored season."""
+    conf = parse_record((records or {}).get("vsconf"))
+    name = next((r.get("conference") for r in rows if r.get("conference")), None)
+    return f"{record(*conf)} {name}" if conf and name else None
 
 
 def _conference_record(rows: list[dict], upto: date) -> str | None:
