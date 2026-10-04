@@ -1258,6 +1258,10 @@ def main() -> None:
     # game_state in place, so Passes 2, 3 and 6 all see it. Never raises.
     import history_source
     print("  " + history_source.extend_for_stories(game_state, story_plan))
+    # SLA-119: the football block puts the games the stories cover first, in
+    # full, for every pass from here on. In memory only; never raises.
+    import football_bundle
+    print("  " + football_bundle.attach_story(game_state, story_plan))
 
     draft_html    = run_pass2(story_plan, client, game_state, degraded=degraded)
 

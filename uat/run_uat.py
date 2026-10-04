@@ -421,6 +421,10 @@ def main() -> None:
         # that played. In place on game_state; never raises.
         import history_source
         print("  " + history_source.extend_for_stories(game_state, story_plan))
+        # SLA-119: story games first, in full, in the football block from
+        # here on. In memory only; never raises.
+        import football_bundle
+        print("  " + football_bundle.attach_story(game_state, story_plan))
         html = G.run_pass2(story_plan, client, game_state, highlight_plan=converted)
         (G.OUTPUT_DIR / "pass2_raw.html").write_text(html, encoding="utf-8")
     else:

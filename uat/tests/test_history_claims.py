@@ -598,7 +598,7 @@ for tree in ("prompts", "uat/prompts"):
         "Pass 3 checks every", "write the specific figure ONLY when it is")
     editor = (REPO / tree / "editor_prompt.txt").read_text(encoding="utf-8")
     has(f"{tree}: Check 8 Category C leaves a listed fact alone", editor,
-        "If HISTORICAL CONTEXT in the ground truth block lists the same fact", "same KIND")
+        "If HISTORICAL CONTEXT or a FOOTBALL GAMES bundle in the ground truth block", "same KIND")
     has(f"{tree}: Check 9 says how to act on a history flag", editor,
         "A history flag quotes the sentence", "a 27-year Finals")
 
