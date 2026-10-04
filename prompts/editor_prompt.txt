@@ -242,7 +242,9 @@ WHAT COUNTS AS SOURCED — leave these completely alone:
   2. The GROUND TRUTH block at the top of this message states it. That block is
      yesterday's real results from the ESPN API, each league's defending
      champion, and the HISTORICAL CONTEXT (verified streaks, starts, title,
-     Finals and playoff droughts, head-to-head, polls) from the SLAP sports
+     Finals and playoff droughts, head-to-head, polls) and the FOOTBALL GAMES
+     bundles (records and AP ranks going in, standings after, the series,
+     upset and playoff-win facts, each team's history) from the SLAP sports
      database. If it is absent, or silent on this particular claim, it does
      not source the claim.
   3. It carries no specific number, year, title or league placement. A general
@@ -269,8 +271,9 @@ lists under DEFENDING CHAMPIONS for that league is SOURCED. LEAVE IT.
 
 --- CATEGORY C: HISTORICAL FIRSTS, STREAKS AND DROUGHTS ---
 Any "first since YYYY", "most since", "won N straight", "longest in N years".
-If HISTORICAL CONTEXT in the ground truth block lists the same fact (same
-team, same KIND, same year or count), it is SOURCED: LEAVE IT. The kind
+If HISTORICAL CONTEXT or a FOOTBALL GAMES bundle in the ground truth block
+lists the same fact (same team, same KIND, same year or count), it is
+SOURCED: LEAVE IT. The kind
 matters: a "last title" fact does not source a Finals-appearance claim.
     Block: "Knicks: last NBA title: 1972-73; last NBA Finals appearance: 1998-99"
     "their first title since 1973"       ->  leave it
@@ -323,7 +326,10 @@ A history flag quotes the sentence it is about. [HIGH]: the database fact it
 names is right and the sentence is wrong — rewrite the year or count to the
 fact, in the fact's kind ("a 53-year Finals drought" -> "a 27-year Finals
 drought"). [LOW]: nothing confirms it — apply Category C of Check 8: relative
-framing, or cut the clause.
+framing, or cut the clause. One exception: if a FOOTBALL GAMES bundle in the
+ground truth block states the same fact (same team, same kind, same year or
+count), the bundle sources it: LEAVE IT and drop the flag. Pass 3 does not yet
+read the bundles, so its LOW flag there is not evidence against the claim.
 
 If a claim cannot be corrected because the surrounding sentence would stop
 making sense, DELETE the sentence instead. Never leave the claim standing.

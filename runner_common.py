@@ -415,10 +415,22 @@ def format_game_state_summary(game_state: dict) -> str:
     part stands on its own: an off day with no games still says who the
     champions are. And the verified history of the teams in yesterday's
     games (SLA-108): streaks, starts, droughts, head-to-head, polls.
+
+    Football games get one connected bundle each (SLA-119, from SLA-116's
+    game_state["football"]). A game the FOOTBALL block shows is left out of
+    the results list (the bundle opens with the same result), and a team
+    whose bundle is shown in full is left out of HISTORICAL CONTEXT (the
+    bundle carries its facts verbatim). A game or team the budget cut keeps
+    its plain line, so nothing is lost to the cap.
     """
     import champions_source
+    import football_bundle
     import history_source
-    champion_lines = champions_source.summary_lines(game_state) + history_source.summary_lines(game_state)
+    football_lines = football_bundle.summary_lines(game_state)
+    in_bundles, full_teams = football_bundle.shown(game_state) if football_lines else (set(), set())
+    in_bundles.discard(None)
+    champion_lines = (football_lines + champions_source.summary_lines(game_state)
+                      + history_source.summary_lines(game_state, skip=full_teams))
     if not game_state or not game_state.get("sports"):
         return "\n".join(champion_lines)
 
@@ -435,7 +447,7 @@ def format_game_state_summary(game_state: dict) -> str:
         label = sport_data.get("label", sport_key.upper())
         completed = [
             g for g in sport_data.get("yesterday_games", [])
-            if g.get("completed")
+            if g.get("completed") and g.get("game_id") not in in_bundles
         ]
         if not completed:
             continue

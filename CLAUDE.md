@@ -147,6 +147,7 @@ slap-newsletter/
 │                                 head-to-head, polls) for yesterday's teams → game_state["history"]
 ├── football_bundle.py         ← SLA-116: one connected fact bundle per NFL/college game
 │                                 → game_state["football"]; summary_lines() renders it under 10K
+│                                 into every pass's GROUND TRUTH (SLA-119)
 ├── run_status.py              ← per-run state on disk, shared across processes
 ├── pipeline_status.py         ← per-STAGE outcomes on top of run_status.json;
 │                                 PIPELINE_STAGES is the declared stage list
@@ -643,15 +644,14 @@ Category C now leave a listed fact alone; Check 9 says how to act on a history f
   database does not hold at all: playoff series, World Cup, tennis, player feats.
   Locked by `uat/tests/test_history_claims.py`.
 
-**Football games get one connected bundle each (SLA-116, 2026-10-03; stored only until SLA-119).**
+**Football games get one connected bundle each (SLA-116, 2026-10-03; in every prompt since SLA-119).**
 `football_bundle.py` runs in the fetch step after the history block and writes
 `game_state["football"]`: per completed NFL / college game, records and AP rank GOING IN, standings
 after (NFL division place and games back from `nfl_standings.py` on ESPN's log; college conference
 record from the stored games), the series before the game (regular season and playoffs apart, each
 with its depth), upsets (the winner's last regular-season win over a team ranked that high; the
 loser's last loss to an unranked team), NFL playoff wins, and the history_source lines folded in.
-It reads slap-sports-db's SLA-115 views. **Nothing shows it to a model yet**: SLA-119 adds it to the
-GROUND TRUTH block, replaces football teams' HISTORICAL CONTEXT lines and changes the prompts.
+It reads slap-sports-db's SLA-115 views.
 - **Stale = unknown.** A college game not yet in the database (CFBD is fetched about once a day)
   gets no record, conference record or upset fact, and its series and playoff-win counts stop at
   last season and say so ("before this postseason"). Never filled from memory or guessed.
@@ -670,6 +670,29 @@ GROUND TRUTH block, replaces football teams' HISTORICAL CONTEXT lines and change
   kept, 13 full bundles), heaviest Sunday 9,764 (09-20, 14 NFL games: 9 full bundles, 5 result
   lines only). ~2 s per run.
   Locked by `uat/tests/test_football_bundle.py`.
+- **In front of every pass (SLA-119, 2026-10-04).** `format_game_state_summary()` carries the
+  FOOTBALL GAMES block after the results list, so Passes 1, 2 and 6 all get it. After Pass 1 both
+  runners call `football_bundle.attach_story(game_state, story_plan)` (next to
+  `extend_for_stories`), which stores the plan's story text in memory so later passes put story
+  games first, in full; Pass 1 sees the no-story order. The log line reads
+  `football: block A -> B chars (cap 10,000); N story game(s), M in full; X of Y game(s) shown`.
+- **Nothing said twice, nothing lost to the cap.** A game the block shows at any size is left out
+  of YESTERDAY'S GAME RESULTS. A team whose bundle is shown **in full** is left out of HISTORICAL
+  CONTEXT (`history_source.summary_lines(skip=)`), since the bundle carries those sentences
+  verbatim. A game the budget cut keeps its plain result line, and a team whose bundle lost its
+  history keeps its HISTORICAL CONTEXT line. `team_facts()` (what Pass 3 checks) is untouched.
+- **Prompts:** RULE 3 items 5 and 6 (both copies, via `promote.py`) and editor Check 8 (sources,
+  Category C) treat a bundle fact as sourced. **Check 9 has a temporary carve-out:** Pass 3 doesn't
+  read bundles yet, so a LOW history flag on a fact a bundle states is left alone. SLA-117 makes
+  the checker confirm bundle facts; until then `final_history_check` still lists such claims in
+  the morning email as unconfirmed (it doesn't move the verdict).
+- **Replayed on 2026-10-03's Saturday** (54 college games, real story plan, both runners' real pass
+  functions with the client stubbed): block 9,955 chars, 10 story games all in full, 21 of 54
+  games shown, the other 33 kept in the results list; 20 teams' history moved from HISTORICAL
+  CONTEXT into bundles. Whole ground truth 16.8K -> 22.3K chars per pass. All 54 games were "not in
+  the database yet" at run time (CFBD lag), so no record or upset facts. That's SLA-116's
+  stale-game rule, not this change; Missouri (No. 25) over No. 8 Florida shipped without its upset
+  line. Locked by `uat/tests/test_football_ground_truth.py`.
 
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
@@ -1027,7 +1050,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (25 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (26 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -1074,6 +1097,14 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-04 — Football bundles reach the writer, editor and selector (SLA-119)**
+- The FOOTBALL GAMES block is part of the GROUND TRUTH every pass reads; story games move to the
+  front, in full, after Pass 1 (`football_bundle.attach_story`, both runners).
+- Football games shown in the block leave the results list; teams whose bundle is shown in full
+  leave HISTORICAL CONTEXT. Whatever the cap cuts keeps its old line.
+- RULE 3, editor Check 8 and (temporarily, until SLA-117) Check 9 treat bundle facts as sourced.
+- Verified on the real 2026-10-03 slate through both runners with the client stubbed, 0 API calls.
 
 **2026-10-03 — Football fact bundles, built and stored (SLA-116 part A)**
 - `football_bundle.py` + one fetch step: a connected bundle per NFL / college game in

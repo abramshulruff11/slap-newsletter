@@ -808,11 +808,21 @@ def team_facts(game_state: dict) -> list[dict]:
     return out
 
 
-def summary_lines(game_state: dict) -> list[str]:
-    """The HISTORICAL CONTEXT part of the GROUND TRUTH block."""
+def summary_lines(game_state: dict, skip: set[tuple[str, str]] = frozenset()) -> list[str]:
+    """The HISTORICAL CONTEXT part of the GROUND TRUTH block. `skip` holds
+    (sport, team) pairs whose facts the FOOTBALL block already shows verbatim
+    (SLA-119); they are left out here so nothing is said twice. team_facts()
+    is unaffected: Pass 3 checks against the data, not this text."""
     block = (game_state or {}).get("history") or {}
     if block.get("status") != "ok" or not block.get("leagues"):
         return []
+    if skip:
+        block = dict(block, leagues={
+            sport: dict(entry, teams=[t for t in entry["teams"] if (sport, t["team"]) not in skip])
+            for sport, entry in block["leagues"].items()})
+        block["leagues"] = {s: e for s, e in block["leagues"].items() if any(t["facts"] for t in e["teams"])}
+        if not block["leagues"]:
+            return []
     lines = ["## GROUND TRUTH: HISTORICAL CONTEXT",
              f"Source: SLAP sports database, computed from every stored game, title and poll, as of "
              f"{block.get('as_of')}. Streaks, starts and head-to-head count the games each league's heading names; NBA and NHL years are seasons (2025-26). These are SOURCED: you may "

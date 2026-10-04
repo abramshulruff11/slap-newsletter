@@ -19,7 +19,7 @@ fetch_sports_data.py stores the bundles in game_state.json under "football".
 `summary_lines()` renders them in priority order under a hard character cap:
 full bundles for the games the day's stories cover, then ranked matchups (and
 every NFL game), then one result line for the rest. SLA-119 puts that in front
-of the writer; until then nothing shows it to a model.
+of every pass, through runner_common.format_game_state_summary.
 
 The same rules as history_source.py, plus one:
 
@@ -650,17 +650,25 @@ def _cost(lines: list[str], indent: int) -> int:
     return sum(len(x) + indent + 1 for x in lines)
 
 
-def summary_lines(game_state: dict, story: str | dict | None = None, budget: int = BUDGET) -> list[str]:
+def render(game_state: dict, story: str | dict | None = None,
+           budget: int = BUDGET) -> tuple[list[str], dict[str, str]]:
     """The FOOTBALL part of the GROUND TRUTH block, at most `budget`
     characters, filled in the approved order (SLA-114): story games, then
     ranked matchups and NFL games, each at the richest size that still fits
     (full bundle; bundle without its history lines; result line), then one
     result line for every other game while room is left. Story and ranked
     games always keep at least their result line; whatever else doesn't fit
-    is counted in the last line, never silently lost."""
+    is counted in the last line, never silently lost.
+
+    Returns the lines and, per game shown, the size it was shown at
+    ("full", "core" or "result"): format_game_state_summary needs to know
+    which games and which teams' history the block already carries.
+    `story` defaults to what attach_story() stored after Pass 1."""
     block = (game_state or {}).get("football") or {}
     if block.get("status") != "ok" or not any(e["games"] for e in (block.get("sports") or {}).values()):
-        return []
+        return [], {}
+    if story is None:
+        story = block.get("story_text")
     prio = priorities(block, _story(story))
     sports = list(block["sports"])
     games = [(sport, b) for sport, e in block["sports"].items() for b in e["games"]]
@@ -699,4 +707,47 @@ def summary_lines(game_state: dict, story: str | dict | None = None, budget: int
                 out.extend("    " + x for x in b.get("history") or [])
     if len(size) < len(games):
         out.append(f"  ... and {len(games) - len(size)} more football result(s) not shown (budget).")
-    return out
+    return out, size
+
+
+def summary_lines(game_state: dict, story: str | dict | None = None, budget: int = BUDGET) -> list[str]:
+    """The FOOTBALL part of the GROUND TRUTH block (see render())."""
+    return render(game_state, story, budget)[0]
+
+
+def shown(game_state: dict) -> tuple[set[str], set[tuple[str, str]]]:
+    """What the block, as rendered right now, already carries: the game ids
+    it shows at any size (their result line is in it), and the (sport, team)
+    pairs whose history it shows in full. format_game_state_summary leaves
+    exactly those out of YESTERDAY'S GAME RESULTS and HISTORICAL CONTEXT, so
+    nothing is said twice and nothing the budget cut is lost (SLA-119)."""
+    _, size = render(game_state)
+    games, teams = set(size), set()
+    for sport, e in (((game_state or {}).get("football") or {}).get("sports") or {}).items():
+        for b in e["games"]:
+            if size.get(b["game_id"]) == "full":
+                teams.update((sport, t["name"]) for t in b["teams"])
+    return games, teams
+
+
+def attach_story(game_state: dict, story_plan) -> str:
+    """Called by both runners after Pass 1 (SLA-119). Stores the plan's story
+    text in game_state["football"], in memory only, so every later pass's
+    ground truth puts the games the stories cover first, in full. Returns one
+    line for the log. Never raises."""
+    block = (game_state or {}).get("football") or {}
+    if block.get("status") != "ok":
+        return "football: no bundles today" + (f" ({block['reason']})" if block.get("reason") else "")
+    try:
+        before = len("\n".join(summary_lines(game_state)))
+        block["story_text"] = story_text(story_plan)
+        lines, size = render(game_state)
+        prio = priorities(block, block["story_text"])
+    except Exception as e:  # noqa: BLE001 - reported, never fatal
+        block.pop("story_text", None)
+        return f"football: story order skipped: {type(e).__name__}: {e}"
+    story = [g for g, p in prio.items() if p == 1]
+    full = sum(1 for g in story if size.get(g) == "full")
+    after = len("\n".join(lines))
+    return (f"football: block {before:,} -> {after:,} chars (cap {BUDGET:,}); "
+            f"{len(story)} story game(s), {full} in full; {len(size)} of {len(prio)} game(s) shown")

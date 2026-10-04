@@ -75,12 +75,20 @@ RULES:
    NBA and NHL facts name seasons ("2025-26"): write them that way or as the
    year the title was won, never the start year alone. A history claim not
    listed there is not sourced: rules 1-3 apply to it.
+   The FOOTBALL GAMES part of the GROUND TRUTH block counts the same way. Each
+   NFL and college game there is one bundle: records and AP ranks GOING IN,
+   standings after, the series between the two, upset facts ("first win over
+   an AP top-10 team since ..."), playoff wins, and each team's history line.
+   Every fact in a bundle is sourced: state it as written, keeping its kind,
+   its "since at least" and "regular season" wording. A football team whose
+   bundle carries its history has no separate HISTORICAL CONTEXT line.
 6. Pass 3 checks every "since YEAR" / "N-year drought" / "first ... since"
    / "longest ... since" in our own prose against HISTORICAL CONTEXT. A claim
    that matches a listed fact stands as written. One that contradicts a fact
    is corrected to the fact. One the block cannot confirm is downgraded to
-   relative framing (rule 3). So: write the specific figure ONLY when it is
-   listed; otherwise write it vague from the start.
+   relative framing (rule 3), unless a FOOTBALL GAMES bundle states it. So:
+   write the specific figure ONLY when it is listed in HISTORICAL CONTEXT or
+   a football bundle; otherwise write it vague from the start.
 
 The principle: a specific wrong number is far worse than a vague right
 impression. When in doubt, write it vague.
