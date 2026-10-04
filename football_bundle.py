@@ -310,6 +310,30 @@ def series_line(row: dict | None, a: str, b: str, *, regular_from: int | None,
     return out
 
 
+def nfl_standing(season_games: list[dict], abbr: str, upto: date) -> dict | None:
+    """The same standing as nfl_standings_after(), as data for Pass 3's
+    standings check (SLA-130): division, place (tiebreaker order), games
+    back, whether the team shares the leader's record, and the division size."""
+    import nfl_standings
+    games = [g for g in season_games if (et_date(g.get("date")) or date.max) <= upto]
+    try:
+        st = nfl_standings.build_standings(games)
+    except Exception:  # noqa: BLE001 - standings are a nicety; never fatal
+        return None
+    for conf in st["conferences"]:
+        for div in conf["divisions"]:
+            abbrs = [t["abbr"] for t in div["teams"]]
+            if abbr not in abbrs:
+                continue
+            i = abbrs.index(abbr)
+            me, lead = div["teams"][i], div["teams"][0]
+            at_top = [t for t in div["teams"] if abs(t["win_pct"] - lead["win_pct"]) < 1e-9]
+            return {"division": div["label"], "place": i + 1, "size": len(div["teams"]),
+                    "games_back": max(0.0, ((lead["wins"] - me["wins"]) + (me["losses"] - lead["losses"])) / 2),
+                    "shares_top": me in at_top and len(at_top) > 1}
+    return None
+
+
 def nfl_standings_after(season_games: list[dict], abbr: str, upto: date) -> str | None:
     """Division place and games back after the game day, from ESPN's log."""
     import nfl_standings
@@ -501,6 +525,8 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
 
     going, after = [], []
     before_of: dict[str, tuple] = {}     # the records stated above, as data for Pass 3 (SLA-117)
+    standing_of: dict[str, dict] = {}    # SLA-130: NFL standings, upset and playoff-win facts as data
+    facts_of: dict[str, list] = {first["name"]: [], second["name"]: []}
     sg = ((game_state.get("sports") or {}).get("nfl") or {}).get("season_games") or []
     for s in (first, second):
         if college:
@@ -528,6 +554,9 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
                     before_of[s["name"]] = tuple(rb)
                 going.append(f"{s['name']} {record(*rb)}" + (" in the regular season" if post else ""))
             st = None if post else nfl_standings_after(sg, s["abbr"], gday)
+            sd = None if post else nfl_standing(sg, s["abbr"], gday)
+            if sd:
+                standing_of[s["name"]] = sd
             if st:
                 after.append(f"{s['name']} {st}")
     if going:
@@ -550,6 +579,11 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
         b = bucket_for(l["ap"])
         who = f"{w['short']} ({'unranked' if w['ap'] is None else 'No. ' + str(w['ap'])})"
         state, last = last_win_over_ranked(upset_rows.get(w["db"]["franchise_id"], []), polls, b)
+        if state in ("ok", "never"):
+            facts_of[w["name"]].append(
+                {"kind": "upset_W", "bucket": b,
+                 "last": sorted({last["year"], last["game_date"].year}) if state == "ok" else None,
+                 "floor": polls.first_year if state == "never" else None})
         if state == "ok":
             lines.append(f"Upset: {who} beat No. {l['ap']} {l['short']}; their last regular-season win over "
                          f"{bucket_words(b)} before this: {last['game_date'].isoformat()} "
@@ -559,6 +593,10 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
                          f"{bucket_words(b)} since at least {polls.first_year} (AP poll starts {polls.first_year}).")
         if w["ap"] is None:
             state, last = last_loss_to_unranked(upset_rows.get(l["db"]["franchise_id"], []), polls)
+            if state in ("ok", "never"):
+                facts_of[l["name"]].append(
+                    {"kind": "upset_L", "last": sorted({last["year"], last["game_date"].year}) if state == "ok" else None,
+                     "floor": polls.first_year if state == "never" else None})
             if state == "ok":
                 lines.append(f"{l['short']}'s last regular-season loss to an unranked team before this: "
                              f"{last['game_date'].isoformat()}.")
@@ -572,6 +610,9 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
         parts = []
         for s in (first, second):
             y = max((v for v in playoff_wins.get(s["db"]["franchise_id"], []) if v <= x["max_year"]), default=None)
+            if trusted:       # an earlier round this postseason could be missing otherwise
+                facts_of[s["name"]].append({"kind": "playoff_win", "last": [y, y + 1] if y else None,
+                                            "floor": None if y else fy["postseason"]})
             parts.append(f"{s['name']} {y} season" if y else
                          f"{s['name']} none since at least {fy['postseason']} (playoff data starts {fy['postseason']})")
         lines.append(f"Last playoff win before {'this game' if trusted else 'this postseason'}: "
@@ -592,7 +633,8 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
                        # rank going in (None = unranked, when `known`), and the record going
                        # in the lines above state (None = not stated).
                        "short": s["short"], "ap": s["ap"], "cfp": s["cfp"], "ranks_known": bool(known),
-                       "record_before": list(before_of[s["name"]]) if s["name"] in before_of else None}
+                       "record_before": list(before_of[s["name"]]) if s["name"] in before_of else None,
+                       "standing": standing_of.get(s["name"]), "facts": facts_of[s["name"]]}
                       for s in (first, second)]}
 
 
@@ -854,5 +896,22 @@ def claim_facts(game_state: dict) -> list[dict]:
                             "school": b.get("location") if sport == "ncaafb" else None,
                             "game_id": g.get("game_id"), "result": result, "post": post,
                             "ranks": ranks, "unranked": unranked,
-                            "before": None if post else before, "after": None if post else after})
+                            "before": None if post else before, "after": None if post else after,
+                            # SLA-130: standings after (NFL), ESPN's conference record after
+                            # (college), and the bundle's upset / playoff-win facts.
+                            "standing": None if post else b.get("standing"),
+                            "conf_after": None if post else parse_record((g.get(f"{side}_records") or {}).get("vsconf")),
+                            "history_facts": b.get("facts") or []})
     return out
+
+
+def other_league_nicknames(game_state: dict) -> set[str]:
+    """Nicknames an NFL team shares with a team in another league ("Giants",
+    "Cardinals", "Panthers", "Jets"), lowercased. In a pennant race "the
+    Giants are two games back" is baseball, so Pass 3 never takes the bare
+    nickname as the NFL team (SLA-130)."""
+    pool = ((game_state or {}).get("football") or {}).get("name_pool") or []
+    nfl = {(t.get("nickname") or "").lower() for t in pool if t.get("league_id") == "nfl"}
+    other = {(t.get("nickname") or "").lower() for t in pool if t.get("league_id") != "nfl"}
+    # The pool comes from the database; without it, the four there are today.
+    return ((nfl & other) - {""}) or {"giants", "cardinals", "panthers", "jets"}

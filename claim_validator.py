@@ -364,7 +364,19 @@ def _claim_kinds(window: str) -> set[str]:
     when it isn't a team fact the database holds (a player's, a series
     win's): those can only ever be LOW."""
     w = window.lower()
-    if _PLAYER.search(w) or _OTHER_POSTSEASON.search(w):
+    if _PLAYER.search(w):
+        return set()
+    # SLA-130: the football bundles' upset and playoff-win facts. Before
+    # these, "first win over a top-10 team since 2017" read as a POLL claim
+    # and was compared with "last ranked this high in 2021".
+    if re.search(r"\b(playoff|postseason)\s+(win|victory)\b|\bwon\s+a\s+(playoff|postseason)\s+game\b", w):
+        return {"playoff_win"}
+    if re.search(r"\b(loss|losses|lost|lose|loses|fell)\b.{0,30}\bunranked\b", w):
+        return {"upset_L"}
+    if (re.search(r"\b(win|wins|won|victory|victories|beat|beats|beating|knock\w*\s+off|upset\w*)\b.{0,40}"
+                  r"\b(ranked|top[- ](\d+|five|ten)|ap)\b", w) and not re.search(r"\bunranked\b", w)):
+        return {"upset_W"}
+    if _OTHER_POSTSEASON.search(w):
         return set()
     if re.search(r"\b(biggest|most|highest|lowest|fewest|largest|smallest)\b", w):
         # A superlative measures something ("biggest Finals court redesign in
@@ -493,6 +505,13 @@ def _numbers_agree(fact: dict, window: str) -> bool:
     if "record" in fact:
         recs = re.findall(r"\b\d{1,2}-\d{1,2}(?:-\d)?\b", window)
         return all(r == fact["record"] for r in recs)
+    if "bucket" in fact:
+        # "a top-10 team" is a different fact from "a ranked team" (SLA-130):
+        # the bundle holds only the bucket the beaten team fell in.
+        m = re.search(r"\btop[- ](\d+|five|ten)\b", window, re.IGNORECASE)
+        claimed = (int(m.group(1)) if m.group(1).isdigit() else {"five": 5, "ten": 10}[m.group(1).lower()]) if m \
+            else 25
+        return claimed == fact["bucket"]
     return True
 
 
@@ -532,6 +551,40 @@ def _quote(sentence: str) -> str:
     return re.sub(r"\s+", " ", sentence).strip()[:160].replace('"', "'").replace("--", "-")
 
 
+_FOOTBALL_FACT_TEXT = {
+    "upset_W": lambda f: (f"last regular-season win over {'an AP-ranked team' if f['bucket'] == 25 else 'an AP top-' + str(f['bucket']) + ' team'}"
+                          + (f": {max(f['last'])}" if f["last"] else f": none since at least {f['floor']}")),
+    "upset_L": lambda f: ("last regular-season loss to an unranked team"
+                          + (f": {max(f['last'])}" if f["last"] else f": none since at least {f['floor']}")),
+    "playoff_win": lambda f: ("last playoff win" + (f": the {min(f['last'])} season" if f["last"]
+                                                    else f": none since at least {f['floor']}")),
+}
+
+
+def _with_football_facts(teams: list[dict], game_state: dict) -> list[dict]:
+    """The history teams plus the football bundles' upset and playoff-win
+    facts (SLA-130), in history_source.parse_facts()'s shape, so the same
+    confirm / HIGH / LOW rules and the final re-check apply to them."""
+    import football_bundle
+    out = [dict(t, facts=list(t["facts"])) for t in teams]
+    by_key = {(t["team"], t["sport"]): t for t in out}
+    as_of = (game_state or {}).get("yesterday_date") or ""
+    year = int(as_of[:4]) if as_of[:4].isdigit() else 0
+    for f in football_bundle.claim_facts(game_state or {}):
+        hf = [{"kind": x["kind"], "text": _FOOTBALL_FACT_TEXT[x["kind"]](x), "last": x["last"],
+               "floor": x["floor"], "never": False, **({"bucket": x["bucket"]} if "bucket" in x else {})}
+              for x in f.get("history_facts") or [] if x.get("kind") in _FOOTBALL_FACT_TEXT]
+        if not hf:
+            continue
+        t = by_key.get((f["team"], f["sport"]))
+        if t is None:
+            t = {"team": f["team"], "opponent": f["opponent"], "sport": f["sport"], "season": year, "facts": []}
+            out.append(t)
+            by_key[(f["team"], f["sport"])] = t
+        t["facts"].extend(hf)
+    return out
+
+
 def check_history_claims(own_text: str, game_state: dict, outcomes: list | None = None) -> list[str]:
     """`own_text`: one section's own prose (no tweets), one block per line.
     `outcomes`, if given, collects (verdict, sentence) for every claim,
@@ -540,7 +593,7 @@ def check_history_claims(own_text: str, game_state: dict, outcomes: list | None 
     if not any(True for s in sentences for _ in _history_anchors(s)):
         return []
     import history_source
-    teams = history_source.team_facts(game_state)
+    teams = _with_football_facts(history_source.team_facts(game_state), game_state)
     by_name = {t["team"]: t for t in teams}
     idx = _alias_index(teams)
     as_of = ((game_state or {}).get("history") or {}).get("as_of") or game_state.get("yesterday_date") or ""
@@ -645,6 +698,86 @@ _STATUS_RE = re.compile(r"\b(?:still|remains?|remained|stays?|stayed)\s+(unbeate
                         re.IGNORECASE)
 
 
+# Standings (SLA-130). NFL only: a division lead, a share of it, games back,
+# last place. Each needs a division or "first" as its object, so "leads the
+# series" or "led 21-7" is never one.
+_DIV = r"(?:AFC|NFC)\s+(?:East|West|North|South)"
+_LEAD_RE = re.compile(r"\b(?:lead(?:s|ing)?|atop|(?:on\s+)?top\s+of|first\s+(?:place\s+)?in)\s+(?:the\s+)?"
+                      r"(?P<div>" + _DIV + r"|division)\b|\bdivision\s+lead\b|\bin\s+first\s+place\b", re.IGNORECASE)
+_ALONE_RE = re.compile(r"\b(?:alone\s+in|sole\s+possession\s+of|outright)\s+(?:the\s+)?(?:first|division\s+lead)\b",
+                       re.IGNORECASE)
+# "tied with Kansas City atop the AFC West" (replay 2026-09-28) is a share.
+_SHARE_RE = re.compile(r"\btied\s+for\s+(?:first|the\s+division\s+lead)\b|"
+                       r"\btied\s+(?:with\s+[^,.;]{1,40}?\s+)?(?:atop|at\s+the\s+top\s+of|for\s+the\s+lead\s+in)\b|"
+                       r"\bshare\s+of\s+(?:the\s+)?"
+                       r"(?:division\s+lead|first(?:\s+place)?)\b|\bco-?leaders?\b", re.IGNORECASE)
+_BACK_RE = re.compile(r"\b(?P<n>\d+(?:\.5)?|a|one|two|three|four|five|half\s+a|one\s+and\s+a\s+half)\s+games?\s+"
+                      r"(?:back|behind|out)\b", re.IGNORECASE)
+_LAST_RE = re.compile(r"\b(?:last|bottom)\s+(?:place\s+)?(?:in|of)\s+(?:the\s+)?(?P<div>" + _DIV + r"|division)\b|"
+                      r"\blast\s+place\b|\bin\s+the\s+(?:division\s+)?cellar\b", re.IGNORECASE)
+_BACK_WORDS = {"a": 1, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "half a": 0.5, "one and a half": 1.5}
+# A college conference lead: what the bundle holds (each team's own
+# conference record) can't confirm one, so it is LOW. A conference RECORD
+# ("2-0 in SEC play") is checked against ESPN's.
+_CONF = r"(?:SEC|ACC|Big\s+Ten|Big\s+12|Pac-12|AAC|American|Mountain\s+West|Sun\s+Belt|MAC|C-USA|Conference\s+USA)"
+_CONF_LEAD_RE = re.compile(r"\b(?:lead(?:s|ing)?|atop|(?:on\s+)?top\s+of|first\s+(?:place\s+)?in)\s+(?:the\s+)?" + _CONF
+                           + r"\b")
+_CONF_RECORD_RE = re.compile(r"(?<![\d-])(\d{1,2})-(\d{1,2})(?![\d-])\s+in\s+(?:the\s+)?(?:" + _CONF +
+                             r"|conference|league)(?:\s+play|\s+games)?\b")
+
+
+_SPLIT_RECORD = re.compile(r"^\s+(?:in\s+(?:the\s+)?(?:" + _CONF + r"|conference|league|division|" + _DIV +
+                           r"|AFC|NFC)\b|against\b|vs\.?\s)", re.IGNORECASE)
+
+
+def _standing_verdict(f: dict, kind: str, m: re.Match) -> str:
+    s = f.get("standing")
+    if not s:
+        return "unknown"
+    div = (m.groupdict().get("div") or "") if m else ""
+    if div and div.lower() != "division" and re.sub(r"\s+", " ", div).lower() != s["division"].lower():
+        return "contradict"
+    if kind == "lead":
+        # A team tied at the top "leads" in plain English even when the
+        # tiebreaker lists it second (the Raiders, 2026-09-27): only "alone in
+        # first" / "outright" needs the lead untied.
+        return "confirm" if s["place"] == 1 or s["shares_top"] else "contradict"
+    if kind == "alone":
+        return "confirm" if s["place"] == 1 and not s["shares_top"] else "contradict"
+    if kind == "share":
+        return "confirm" if s["shares_top"] else "contradict"
+    if kind == "last":
+        return "confirm" if s["place"] == s["size"] else "contradict"
+    n = m.group("n").lower()
+    gb = float(n) if n[0].isdigit() else _BACK_WORDS[re.sub(r"\s+", " ", n)]
+    return "confirm" if abs(gb - s["games_back"]) < 0.01 else "contradict"
+
+
+def _standings_claims(sentence: str, named: list[str], by_name: dict):
+    """Standings and conference claims in one sentence, about a team the
+    sentence itself names (never the section's: "the Giants are two games
+    back" in a baseball section must not reach an NFL team)."""
+    nfl = [by_name[n] for n in named if by_name[n]["sport"] == "nfl"]
+    cfb = [by_name[n] for n in named if by_name[n]["sport"] == "ncaafb"]
+    one = named[0] if len(named) == 1 else None
+    if nfl:
+        for rx, kind in ((_ALONE_RE, "alone"), (_SHARE_RE, "share"), (_LAST_RE, "last"), (_BACK_RE, "back"),
+                         (_LEAD_RE, "lead")):
+            for m in rx.finditer(sentence):
+                if kind == "lead" and (_ALONE_RE.search(sentence) or _SHARE_RE.search(sentence)):
+                    continue                           # the more specific claim covers it
+                yield ("standings", m.group(0), re.escape(m.group(0)), nfl, one,
+                       lambda f, k=kind, mm=m: _standing_verdict(f, k, mm))
+    if cfb:
+        for m in _CONF_LEAD_RE.finditer(sentence):
+            yield ("standings", m.group(0), re.escape(m.group(0)), cfb, None, lambda f: "unknown")
+        for m in _CONF_RECORD_RE.finditer(sentence):
+            rec = (int(m.group(1)), int(m.group(2)))
+            yield ("record", m.group(0), re.escape(m.group(0)), cfb, one,
+                   lambda f, r=rec: "unknown" if not f.get("conf_after") else
+                   "confirm" if tuple(f["conf_after"][:2]) == r else "contradict")
+
+
 def _team_after(text: str, idx: dict[tuple, set[str]]) -> str | None:
     """The team written at the very start of `text`: "Florida beat ..." ->
     Florida. Longest alias wins; "Florida State" never reads as Florida, and
@@ -731,8 +864,8 @@ def _football_claims(sentence: str, idx: dict, by_name: dict, section_teams: set
         if sum(rec) > 20:
             continue                                   # a score, not a season
         pre, post = sentence[:m.start()], sentence[m.end():]
-        if _SCORE_AFTER.search(post):
-            continue
+        if _SCORE_AFTER.search(post) or _SPLIT_RECORD.search(post):
+            continue                                   # a score; or a conference/division split, not the record
         token = m.group(0)
         fig = r"(?<![\d-])" + re.escape(token) + r"(?![\d-])"
         if pre.rstrip().endswith("(") and post.lstrip().startswith(")"):
@@ -749,6 +882,7 @@ def _football_claims(sentence: str, idx: dict, by_name: dict, section_teams: set
         if cands:
             yield ("record", token, fig, cands, named[0] if len(named) == 1 else None,
                    lambda f, r=rec, w=when: _record_verdict(f, r, w))
+    yield from _standings_claims(sentence, named, by_name)
     for m in _STATUS_RE.finditer(sentence):
         cands = [by_name[n] for n in named] or [by_name[n] for n in section_teams]
         if cands:
@@ -777,6 +911,12 @@ def check_football_claims(own_text: str, game_state: dict, outcomes: list | None
             for alias in (_tokens(f["team"]), _tokens(f["school"])):
                 owned.setdefault(tuple(alias), set()).add(f["team"])
     idx.update(owned)          # a school's own name beats another team's prefix ("Florida A&M")
+    # "Giants", "Cardinals", "Panthers", "Jets": a nickname another league
+    # shares is never, alone, the NFL team (SLA-130).
+    for nick in football_bundle.other_league_nicknames(game_state):
+        names = idx.get((nick,), set())
+        if any(by_name.get(n, {}).get("sport") == "nfl" for n in names):
+            idx.pop((nick,), None)
     as_of = (game_state or {}).get("yesterday_date") or (game_state or {}).get("as_of_date") or ""
     sentences = _sentences(own_text)
     section_teams = {n for n in _named(own_text, idx) if n in by_name}

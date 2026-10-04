@@ -203,11 +203,10 @@ check("the PARTIAL headline names rank and record claims", "history, rank or rec
 print("The editor is told how to act on them (both copies)")
 for d in ("prompts", "uat/prompts"):
     ed = (REPO / d / "editor_prompt.txt").read_text(encoding="utf-8")
+    # SLA-130 extended this paragraph to standings and removed the SLA-119
+    # bundle exception it once had to step around.
     check(f"{d}: Check 9 says how to fix a rank or record flag",
-          ("A football rank or record flag" in ed, "football-bundle exception above does not apply" in ed),
-          (True, True))
-    check(f"{d}: the bundle exception is narrowed to series, upset and playoff-win facts",
-          "states the same series, upset or playoff-win fact" in ed, True)
+          ("A football rank, record or standings flag" in ed, "improved to 5-0" in ed), (True, True))
 
 print("Sentences")
 check("abbreviations don't end a sentence", cv._sentences("No. 4 Ole Miss lost. L.A. won. St. Louis too.\nNext"),
