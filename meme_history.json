@@ -1,5 +1,29 @@
 [
   {
+    "date": "2026-10-04",
+    "slug": "laughing-leo",
+    "boxes": [
+      "TY FRANCE SAID THE ROOF STOLE A GO-AHEAD HOME RUN",
+      "STATCAST SAYS IT ONLY LEAVES THE YARD IN HOUSTON"
+    ]
+  },
+  {
+    "date": "2026-10-04",
+    "slug": "waiting-skeleton",
+    "boxes": [
+      "YANKEES HITTERS",
+      "WAITING FOR THEIR SECOND HIT OF THE NIGHT"
+    ]
+  },
+  {
+    "date": "2026-10-04",
+    "slug": "monkey-puppet",
+    "boxes": [
+      "BRAVES AFTER BEATING THE PHILLIES",
+      "REALIZING THE NEXT ROUND IS THE DEFENDING CHAMPS"
+    ]
+  },
+  {
     "date": "2026-10-03",
     "slug": "buff-doge-vs-cheems",
     "boxes": [
@@ -500,32 +524,6 @@
     "boxes": [
       "THE PROCESS IS FUNDAMENTALLY SOUND",
       "ThE pRoCeSs Is FuNdAmEnTaLlY sOuNd"
-    ]
-  },
-  {
-    "date": "2026-08-29",
-    "slug": "buff-doge-vs-cheems",
-    "boxes": [
-      "EVERY OTHER SPORTS LEAGUE",
-      "$70M A YEAR FOR OHTANI",
-      "NHL SUPERSTARS",
-      "FINALLY CRACKED $20M IN 2026"
-    ]
-  },
-  {
-    "date": "2026-08-29",
-    "slug": "change-my-mind",
-    "boxes": [
-      "THE WNBA IS SUSPENDING ITS ALL-TIME DOUBLE-DOUBLE LEADER",
-      "FOR A PLAYOFF SEEDING GAME"
-    ]
-  },
-  {
-    "date": "2026-08-28",
-    "slug": "drake",
-    "boxes": [
-      "RETIRING QUIETLY AT 37 LIKE A NORMAL VETERAN",
-      "CASUALLY JOINING RANDY JOHNSON ON A LIST ONLY 6 PITCHERS HAVE EVER MADE"
     ]
   }
 ]
