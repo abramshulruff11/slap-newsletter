@@ -791,6 +791,14 @@ through `library_json.dumps_matching_style()`; meme `status` gates nothing until
 `active_templates()` is respected; and a decisions export replays every verdict ever stored in that
 browser, so its row count is not the size of the review.
 
+**A fact bundle for a new sport starts at `docs/sport_bundle_pattern.md` (SLA-118):** read it
+before opening the first ticket to give MLB, the NBA or the NHL what football has (a connected
+bundle per game, and Pass 3 checking every claim kind it states). It covers what the database
+must hold and the query shapes that keep it fast, the assembly file's interface, the checker's
+caution rules, and which football code does NOT carry over (the score filter that drops any record
+summing over 20 would drop MLB's 90-70). It also covers the replay every new claim kind needs
+before shipping and the bugs the football replays found.
+
 **UAT before prod:** `uat/` has its own prompt copies. Changes are tested there, then promoted
 with `python -X utf8 uat/promote.py` — never by hand-copying, which is how the two trees drifted
 for months. It classifies each pair (identical / eol-only / uat-ahead / prod-ahead / diverged),
@@ -1173,6 +1181,11 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-04 — The pattern the next sport copies (SLA-118)**
+- `docs/sport_bundle_pattern.md`: views and query lessons, the assembly-file interface, checker
+  routes and caution rules, per-sport claim kinds and traps, the replay ritual, what the pilot
+  measured, and open items. Written from what SLA-115/116/119/120/117/130 did.
 
 **2026-10-04 — Pass 3 checks football standings, upsets and playoff wins (SLA-130, part 3b)**
 - NFL standings ("leads the AFC West", "a game back", "alone in first") and college conference
