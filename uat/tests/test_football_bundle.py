@@ -317,6 +317,39 @@ check("the series query was told so", [p for q, p in conn.calls if q is fb.SERIE
 check("no upset query at all", any(q is fb.UPSET_GAMES for q, _ in conn.calls), False)
 check("flag", w["vouched"], False)
 
+print("SLA-120: not stored yet, but every earlier game is (ESPN's record agrees)")
+# Penn State has one stored game before the day (a 1-0 start in this
+# fixture) and lost yesterday: ESPN says 1-1 after it, 0-1 in conference.
+lag_gs = json.loads(json.dumps(GS))
+g1 = lag_gs["sports"]["ncaafb"]["yesterday_games"][0]
+g1.update(home_records={"total": "1-1", "vsconf": "0-1"}, away_records={"total": "3-1"}, neutral_site=False)
+conn = FakeConn(answers(stale_team=4))
+w = next(b for b in fb.build_bundles(conn, lag_gs)["sports"]["ncaafb"]["games"] if b["game_id"] == "g1")
+text = "\n".join(w["lines"])
+has("records going in, from the stored games before the day", text, "Penn State 1-0, AP No. 13")
+has("conference record after: ESPN's, named by the stored season", text, "Penn State 1-1 (0-1 Big Ten)")
+has("the upset is back", text, "Upset: Wisconsin (unranked) beat No. 13 Penn State")
+lacks("no 'not in the database yet' note, no 'through last season'", text, "not in the database", "through last season")
+check("the series runs through this season", [p for q, p in conn.calls if q is fb.SERIES][0]["max_year"], 2026)
+check("flags: not stored, but trusted", (w["vouched"], w["trusted"]), (False, True))
+
+g1["home_records"] = {"total": "3-1", "vsconf": "0-1"}   # ESPN: two games the database doesn't have
+conn = FakeConn(answers(stale_team=4))
+w = next(b for b in fb.build_bundles(conn, lag_gs)["sports"]["ncaafb"]["games"] if b["game_id"] == "g1")
+text = "\n".join(w["lines"])
+check("ESPN disagrees: back to stale = unknown", (w["trusted"], "not in the database yet" in text,
+                                                 "Upset" in text), (False, True, False))
+check("...series stops at last season", [p for q, p in conn.calls if q is fb.SERIES][0]["max_year"], 2025)
+
+g1.update(home_records={"total": "1-1"}, neutral_site=True)
+w = next(b for b in fb.build_bundles(FakeConn(answers(stale_team=4)), lag_gs)["sports"]["ncaafb"]["games"]
+         if b["game_id"] == "g1")
+has("not stored: the neutral site comes from ESPN", w["result"], "neutral site")
+check("no ESPN conference record: the after line just leaves it out",
+      "Penn State 1-1." in "\n".join(w["lines"]) or "Penn State 1-1;" in "\n".join(w["lines"]), True)
+check("stored_before counts only games before the day",
+      fb.stored_before([r for r in season_games() if r["team_id"] == 3], D(DAY)), (1, 1, 0))
+
 print("An NFL playoff game (the replay can't reach one before January)")
 nfl_answers = {
     fb.NFL_TEAMS: lambda p: [{"team_id": 4, "franchise_id": 40, "full_name": "Buffalo Bills", "nickname": "Bills",

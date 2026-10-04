@@ -358,6 +358,20 @@ def _competitor_rank(competitor: dict) -> int | None:
     return rank if 1 <= rank <= POLL_SIZE else None
 
 
+def _competitor_records(competitor: dict) -> dict[str, str]:
+    """ESPN's season records for one competitor, by type: {"total": "4-1",
+    "vsconf": "1-1", ...}. For a completed game they INCLUDE that game
+    (SLA-120): the sports database lags a Saturday by a day, and
+    history_source / football_bundle use these to check that the database
+    has every earlier game before trusting it up to the game date."""
+    out = {}
+    for r in competitor.get("records") or []:
+        kind, summary = (r.get("type") or r.get("name") or "").lower(), r.get("summary")
+        if kind and summary and kind not in out:
+            out[kind] = summary
+    return out
+
+
 def parse_game(event: dict) -> dict | None:
     """Parse a single ESPN event into a clean, flat game dict."""
     competitions = event.get("competitions", [])
@@ -443,6 +457,9 @@ def parse_game(event: dict) -> dict | None:
         "overtime":    is_overtime(competition),
         "playoffs":    is_playoff,
         "series":      series,
+        "home_records": _competitor_records(home),
+        "away_records": _competitor_records(away),
+        "neutral_site": bool(competition.get("neutralSite")),
     }
 
 

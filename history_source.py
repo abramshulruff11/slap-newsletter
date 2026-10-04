@@ -26,6 +26,13 @@ No model writes or checks one. Four rules keep them honest:
 - **Droughts are kept apart.** Last title, last title-game appearance, last
   playoff appearance and last winning season are four facts, because conflating
   two of them is exactly the Knicks error.
+- **The database can lag a day; ESPN can't (SLA-120).** College football
+  reaches it about once a day, so Saturday's games are missing on Sunday
+  morning. A team whose game yesterday isn't stored would get a streak, start
+  and head-to-head one game behind ("4 straight wins" for a team that just
+  lost). When the stored record plus yesterday's result equals ESPN's record
+  after the game, the database has every earlier game and those facts are
+  brought up to date with the result; when it doesn't, they are left out.
 - **Fail soft.** No SPORTS_DB_URL, no driver, no database: the block says
   `unavailable` and the run goes on with RULE 3 as before. The newsletter is
   the product. The password is scrubbed from any error (champions_source).
@@ -99,6 +106,88 @@ class TeamFacts:
 # Saturday has 80 FBS games and the newsletter covers the ranked ones.
 # ---------------------------------------------------------------------------
 
+def parse_record(summary: str | None) -> tuple[int, int, int] | None:
+    """ESPN's "4-1" / "2-1-1" -> (4, 1, 0) / (2, 1, 1). None if unreadable."""
+    m = re.fullmatch(r"(\d+)-(\d+)(?:-(\d+))?", (summary or "").strip())
+    return (int(m.group(1)), int(m.group(2)), int(m.group(3) or 0)) if m else None
+
+
+def game_result(g: dict, side: str) -> str | None:
+    """'W' / 'L' / 'T' for one side of a completed game, from ESPN."""
+    if not g.get("completed"):
+        return None
+    other = "away" if side == "home" else "home"
+    mine, theirs = g.get(f"{side}_score"), g.get(f"{other}_score")
+    if mine is None or theirs is None:
+        return None
+    return "W" if mine > theirs else "L" if mine < theirs else "T"
+
+
+def espn_record_before(records: dict, result: str | None) -> tuple[int, int, int] | None:
+    """The team's record going into the game: ESPN's record AFTER a completed
+    game ("total") minus that game's result."""
+    after = parse_record((records or {}).get("total"))
+    if after is None or result not in ("W", "L", "T"):
+        return None
+    w, l, t = after
+    before = (w - (result == "W"), l - (result == "L"), t - (result == "T"))
+    return before if min(before) >= 0 else None
+
+
+def advance_streaks(rows: list[dict], year: int, result: str) -> list[dict]:
+    """streak_fact()'s rows with yesterday's result added, for a team whose
+    game isn't stored yet: the current streak grows, or ends and a new one
+    of 1 begins (too short to list)."""
+    rows = [dict(r) for r in rows]
+    cur = next((r for r in rows if r["year"] == year and r["is_last"]), None)
+    if cur is not None and cur["r"] == result:
+        cur["len"] += 1
+        return rows
+    if cur is not None:
+        cur["is_last"] = False
+    if result in ("W", "L"):
+        rows.append({"year": year, "r": result, "len": 1, "is_last": True})
+    return rows
+
+
+def advance_start(rows: list[dict], year: int, result: str) -> list[dict]:
+    """start_fact()'s rows for a team whose game isn't stored yet: STARTS
+    already compared past seasons through one more game; this adds
+    yesterday's result to this season's row."""
+    out = [dict(r) for r in rows]
+    for r in out:
+        if r["year"] == year:
+            key = {"W": "w", "L": "l", "T": "t"}[result]
+            r[key] += 1
+    return out
+
+
+def catch_up(rows: list[dict], teams: dict, current: list[dict]) -> tuple[dict[int, str], set[int]]:
+    """For each team in `rows` whose game yesterday isn't stored: is the
+    database otherwise caught up? Yes when its record this season equals
+    ESPN's record going in (ESPN's after, minus the result). Returns
+    ({franchise: yesterday's result} for those, {franchise} for the rest).
+    A stored game, or a team the database doesn't know, is in neither."""
+    by_f = {c["franchise_id"]: c for c in current}
+    lag: dict[int, str] = {}
+    unverified: set[int] = set()
+    for r in rows:
+        t = teams.get(r["name"])
+        if t is None:
+            continue
+        f = t["franchise_id"]
+        c = by_f.get(f) or {"w": 0, "l": 0, "t": 0, "stored_today": False}
+        if c["stored_today"]:
+            continue
+        before = espn_record_before(r.get("records"), r.get("result"))
+        if before is not None and before == (c["w"], c["l"], c["t"]) and f not in unverified:
+            lag[f] = r["result"]
+        else:
+            unverified.add(f)
+            lag.pop(f, None)
+    return lag, unverified
+
+
 def teams_in_play(game_state: dict) -> dict[str, list[dict]]:
     """Each team in yesterday's completed games. A team that played a
     postseason game is marked `postseason` (SLA-110): until then playoff teams
@@ -116,7 +205,8 @@ def teams_in_play(game_state: dict) -> dict[str, list[dict]]:
             for side, other in (("home", "away"), ("away", "home")):
                 rows.append({"name": g[f"{side}_team"], "espn_id": str(g.get(f"{side}_id") or ""),
                              "opponent": g[f"{other}_team"], "opponent_espn_id": str(g.get(f"{other}_id") or ""),
-                             "home": side == "home", "postseason": bool(g.get("playoffs"))})
+                             "home": side == "home", "postseason": bool(g.get("playoffs")),
+                             "result": game_result(g, side), "records": g.get(f"{side}_records") or {}})
         if rows:
             out[sport] = rows
     return out
@@ -179,12 +269,25 @@ STREAKS = """
     SELECT i.franchise_id, i.year, i.r, i.len, (i.ends_at = l.n) AS is_last
     FROM islands i JOIN last_game l USING (franchise_id, year) WHERE i.r IN ('W', 'L')"""
 
+# A team whose game yesterday isn't stored yet (SLA-120) counts it here
+# (lag_f / lag_e): past seasons are compared through the same number of
+# games, and build_history adds yesterday's result to this season's row.
 STARTS = """
-    WITH cur AS (SELECT franchise_id, count(*) AS g FROM hist_sides WHERE year = %(year)s GROUP BY 1)
+    WITH lag AS (SELECT * FROM unnest(%(lag_f)s::bigint[], %(lag_e)s::int[]) AS x(f, extra)),
+    cur AS (SELECT franchise_id, count(*) + coalesce(max(lag.extra), 0) AS g
+            FROM hist_sides LEFT JOIN lag ON lag.f = franchise_id
+            WHERE year = %(year)s GROUP BY 1)
     SELECT o.franchise_id, o.year, count(*) FILTER (WHERE o.r = 'W') AS w,
            count(*) FILTER (WHERE o.r = 'L') AS l, count(*) FILTER (WHERE o.r = 'T') AS t, c.g
     FROM hist_sides o JOIN cur c USING (franchise_id)
     WHERE o.n <= c.g GROUP BY o.franchise_id, o.year, c.g"""
+
+# Each team's record this season as stored, and whether yesterday's game is
+# among it (SLA-120: college games reach the database a day late).
+CURRENT_RECORDS = """
+    SELECT franchise_id, count(*) FILTER (WHERE r = 'W') AS w, count(*) FILTER (WHERE r = 'L') AS l,
+           count(*) FILTER (WHERE r = 'T') AS t, coalesce(bool_or(game_date = %(day)s::date), false) AS stored_today
+    FROM hist_sides WHERE year = %(year)s GROUP BY 1"""
 
 HEAD_TO_HEAD = """
     SELECT franchise_id, opp, max(game_date) FILTER (WHERE r = 'W' AND game_date < %(day)s::date) AS last_win,
@@ -442,13 +545,15 @@ def build_history(conn, game_state: dict) -> dict:
         # game table is built only when a regular-season team needs it.
         regular = [r for r in rows if not r.get("postseason")]
         streaks = starts = h2h = []
+        lag, unverified = {}, set()
         if regular:
             reg_franchises = sorted({teams[r["name"]]["franchise_id"] for r in regular if r["name"] in teams}
                                     | {teams[r["opponent"]]["franchise_id"] for r in regular if r["opponent"] in teams})
             conn.execute("DROP TABLE IF EXISTS hist_sides")
             conn.execute(BUILD_SIDES, {**p, "franchises": reg_franchises})
+            lag, unverified = catch_up(regular, teams, _rows(conn, CURRENT_RECORDS, p))
             streaks = _rows(conn, STREAKS, p)
-            starts = _rows(conn, STARTS, p)
+            starts = _rows(conn, STARTS, {**p, "lag_f": sorted(lag), "lag_e": [1] * len(lag)})
             pairs = [(teams[r["name"]]["franchise_id"], teams[r["opponent"]]["franchise_id"])
                      for r in regular if r["name"] in teams and r["opponent"] in teams]
             h2h = _rows(conn, HEAD_TO_HEAD, {**p, "pairs_f": [a for a, _ in pairs], "pairs_o": [b for _, b in pairs]})
@@ -478,13 +583,20 @@ def build_history(conn, game_state: dict) -> dict:
                 lines = (drought_fact(spec, titles.get(f), playoffs.get(f), None, year, first_year,
                                       playoff_first, postseason=True),)
             else:
+                fs = [s for s in streaks if s["franchise_id"] == f]
+                fst = [s for s in starts if s["franchise_id"] == f]
+                fh = next((h for h in h2h if h["franchise_id"] == f
+                           and r["opponent"] in teams and h["opp"] == teams[r["opponent"]]["franchise_id"]), None)
+                if f in lag:            # caught up to the day before: add yesterday
+                    fs, fst = advance_streaks(fs, year, lag[f]), advance_start(fst, year, lag[f])
+                    fh = dict(fh, won_today=lag[f] == "W") if fh else None
+                elif f in unverified:   # a game behind, and we can't tell how far
+                    fs, fst, fh = [], [], None
                 lines = (
-                streak_fact([s for s in streaks if s["franchise_id"] == f], year, first_year, league),
-                start_fact([s for s in starts if s["franchise_id"] == f], year, first_year, league),
+                streak_fact(fs, year, first_year, league),
+                start_fact(fst, year, first_year, league),
                 poll_fact(polls.get(f), year),
-                h2h_fact(next((h for h in h2h if h["franchise_id"] == f
-                               and r["opponent"] in teams and h["opp"] == teams[r["opponent"]]["franchise_id"]), None),
-                         r["opponent"], None if r["home"] else (teams.get(r["opponent"]) or {}).get("city"),
+                h2h_fact(fh, r["opponent"], None if r["home"] else (teams.get(r["opponent"]) or {}).get("city"),
                          year, first_year),
                 drought_fact(spec, titles.get(f), playoffs.get(f), winning.get(f), year, first_year, playoff_first),
             )
@@ -648,7 +760,7 @@ def build_story_facts(conn, game_state: dict, text: str) -> int:
             conn.execute("DROP TABLE IF EXISTS hist_sides")
             conn.execute(BUILD_SIDES, {**p, "year": year})
             streaks = _rows(conn, STREAKS, {**p, "year": year})
-            starts = _rows(conn, STARTS, {**p, "year": year})
+            starts = _rows(conn, STARTS, {**p, "year": year, "lag_f": [], "lag_e": []})
             if league == "ncaaf":
                 polls = {r["franchise_id"]: r for r in _rows(conn, POLLS, {**p, "year": year})}
         entry = block.setdefault("leagues", {}).setdefault(
