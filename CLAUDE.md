@@ -706,9 +706,37 @@ It reads slap-sports-db's SLA-115 views.
   history keeps its HISTORICAL CONTEXT line. `team_facts()` (what Pass 3 checks) is untouched.
 - **Prompts:** RULE 3 items 5 and 6 (both copies, via `promote.py`) and editor Check 8 (sources,
   Category C) treat a bundle fact as sourced. **Check 9 has a temporary carve-out:** Pass 3 doesn't
-  read bundles yet, so a LOW history flag on a fact a bundle states is left alone. SLA-117 makes
-  the checker confirm bundle facts; until then `final_history_check` still lists such claims in
-  the morning email as unconfirmed (it doesn't move the verdict).
+  read bundles yet, so a LOW history flag on a fact a bundle states is left alone. SLA-117
+  (below) took ranks and records out of it; it now covers only series, upset and playoff-win
+  facts, until SLA-130. Until then `final_history_check` still lists such claims in the morning
+  email as unconfirmed (it doesn't move the verdict).
+- **Pass 3 checks football ranks and records (SLA-117, 2026-10-04).** Check 3C,
+  `claim_validator.check_football_claims()`, against `football_bundle.claim_facts()`: per team in
+  yesterday's NFL / college games, every rank it carried in (ESPN's scoreboard rank plus the
+  database's AP and CFP ranks from the bundle; a claim matching any source is confirmed), and its
+  record going in and after (ESPN's post-game record, minus the result for going in; the bundle's
+  when ESPN has none). Claims: "No. 8 Florida" / "#8" / "8th-ranked" / "No. 8-ranked" /
+  "unranked X" (college only, the team written right after it); "improved/fell/moved to 4-1",
+  "came in 4-0" / "4-0 going in", "Florida (4-1)", "still unbeaten/winless".
+  - **HIGH only when the claim attaches to one team:** a rank to the team after it (so two ranks in
+    one sentence are checked separately), a parenthetical record to the team before it, a
+    verb-cued record only when the sentence names a single team. Everything else about
+    yesterday's teams is LOW. A playoff game's record, and "now No. 5" (next week's poll), are LOW.
+  - **Not checked:** teams that didn't play yesterday (a preview's rank isn't this data's; Check 8
+    still covers it), NFL ranks ("No. 1 seed"), a parenthetical after a player ("Smith (4-1)"),
+    scores (no record cue, a sum over 20, or "a 10-7 win").
+  - **College names come from the database's school** ("Florida" is the Gators only, never the
+    start of "Florida Atlantic Owls"); a school-less team (FCS) can't take a known school's name.
+  - `final_history_check` reports these too, labelled with their kind (`kind`: rank / record),
+    sourced by a tweet carrying the same number; the email labels them and a contradicted one
+    left in makes the run PARTIAL, as history claims do. Editor Check 9 says how to fix each.
+  - **The sentence splitter broke at "No."** ("No. 4 Ole Miss" was two sentences), hiding every
+    rank claim and splitting history claims; `_sentences()` now skips abbreviations, for both checks.
+  - **Replayed** with `uat/replay_football_claims.py` (needs ESPN + the database; SLA-130 reuses it)
+    over every issue from 2026-09-05 to 2026-10-04: 4 claims, all confirmed, **0 HIGH**, 0 LOW,
+    after the two bugs it found (the splitter; "down 20 to No. 1 Ohio State" read as a forecast).
+    The archive rarely states ranks or records; SLA-119 gives the writer them, so expect more.
+    Locked by `uat/tests/test_football_claims.py`.
 - **Replayed on 2026-10-03's Saturday** (54 college games, real story plan, both runners' real pass
   functions with the client stubbed): block 9,955 chars, 10 story games all in full, 21 of 54
   games shown, the other 33 kept in the results list; 20 teams' history moved from HISTORICAL
@@ -1073,7 +1101,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (27 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (28 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -1120,6 +1148,15 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-04 — Pass 3 checks football ranks and records (SLA-117, part 3a)**
+- Check 3C: "No. 8 Florida", "unranked X", "improved to 4-1", "came in 4-0", "Florida (4-1)",
+  "still unbeaten" confirmed / HIGH / LOW against ESPN's ranks and records plus the database's
+  AP / CFP ranks; the final-draft re-check, the email and the verdict cover them.
+- Sentence splitting no longer breaks at "No." (both history and football checks).
+- `uat/replay_football_claims.py`: 23 football issues, 4 claims, all confirmed, 0 HIGH.
+- Editor Check 9: how to fix rank/record flags; the bundle carve-out narrowed. Standings and
+  upsets are SLA-130.
 
 **2026-10-04 — Sunday's college facts no longer a game behind (SLA-120)**
 - The database gets Saturday's college games a day late. Bundles dropped records and upsets for all

@@ -500,6 +500,7 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
     lines: list[str] = []
 
     going, after = [], []
+    before_of: dict[str, tuple] = {}     # the records stated above, as data for Pass 3 (SLA-117)
     sg = ((game_state.get("sports") or {}).get("nfl") or {}).get("season_games") or []
     for s in (first, second):
         if college:
@@ -509,6 +510,7 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
                 before = ((t["wins_before"], t["losses_before"], t["ties_before"]) if t
                           else s["espn_before"])
                 going.append(f"{s['short']} {record(*before)}, {rp}")
+                before_of[s["name"]] = tuple(before)
                 won = s is first and winner is not None
                 lost = winner is not None and not won
                 # Not stored yet: the conference record after comes from
@@ -522,6 +524,8 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
         else:
             rb = nfl_record_before(sg, s["abbr"], gday, year)
             if rb:
+                if not post:
+                    before_of[s["name"]] = tuple(rb)
                 going.append(f"{s['name']} {record(*rb)}" + (" in the regular season" if post else ""))
             st = None if post else nfl_standings_after(sg, s["abbr"], gday)
             if st:
@@ -583,7 +587,12 @@ def _bundle(x: dict, sport: str, fy: dict, polls, series: dict, upset_rows: dict
             "best_rank": min([r for s in (first, second) for r in (s["ap"] or s["espn_rank"],) if r] or [99]),
             "postseason": post, "vouched": vouched, "trusted": trusted,
             "teams": [{"name": s["name"], "full_name": (s["db"] or {}).get("full_name") or s["name"],
-                       "nickname": (s["db"] or {}).get("nickname"), "location": (s["db"] or {}).get("location")}
+                       "nickname": (s["db"] or {}).get("nickname"), "location": (s["db"] or {}).get("location"),
+                       # As data, for Pass 3's rank and record checks (SLA-117): AP and CFP
+                       # rank going in (None = unranked, when `known`), and the record going
+                       # in the lines above state (None = not stated).
+                       "short": s["short"], "ap": s["ap"], "cfp": s["cfp"], "ranks_known": bool(known),
+                       "record_before": list(before_of[s["name"]]) if s["name"] in before_of else None}
                       for s in (first, second)]}
 
 
@@ -787,3 +796,63 @@ def attach_story(game_state: dict, story_plan) -> str:
     after = len("\n".join(lines))
     return (f"football: block {before:,} -> {after:,} chars (cap {BUDGET:,}); "
             f"{len(story)} story game(s), {full} in full; {len(size)} of {len(prio)} game(s) shown")
+
+
+# ---------------------------------------------------------------------------
+# Rank and record facts, as data, for Pass 3 (SLA-117)
+# ---------------------------------------------------------------------------
+
+def claim_facts(game_state: dict) -> list[dict]:
+    """One entry per team in yesterday's completed NFL / college games, with
+    what claim_validator checks rank and record claims against:
+
+      ranks     every rank the team carried INTO the game, from any source:
+                ESPN's scoreboard rank, and the bundle's AP and CFP ranks
+      unranked  True when a source that knows the polls says it was
+                unranked; None when nothing knows (NFL, no data)
+      before    record going in: ESPN's record after, minus the result, or
+                the bundle's (the database's) when ESPN has none
+      after     record after the game: ESPN's, or before plus the result
+      post      a postseason game: records aren't checked (ESPN's season
+                totals and "regular season" phrasing don't line up)
+
+    ESPN is the ground truth for yesterday's games; the bundle adds the AP
+    rank from the database and the record for a game ESPN lacks one for.
+    Nothing here is guessed: a fact neither source holds is None."""
+    bundles = {}
+    for e in (((game_state or {}).get("football") or {}).get("sports") or {}).values():
+        for b in e.get("games") or []:
+            for t in b.get("teams") or []:
+                bundles[(b.get("game_id"), t["name"])] = t
+    out = []
+    for sport in SPORTS:
+        for g in ((game_state.get("sports") or {}).get(sport) or {}).get("yesterday_games") or []:
+            if not g.get("completed"):
+                continue
+            post = bool(g.get("playoffs")) or int(g.get("season_type") or 2) == 3
+            for side, other in (("home", "away"), ("away", "home")):
+                name = g.get(f"{side}_team")
+                if not name:
+                    continue
+                b = bundles.get((g.get("game_id"), name)) or {}
+                result = game_result(g, side)
+                before = espn_record_before(g.get(f"{side}_records"), result)
+                if before is None and b.get("record_before"):
+                    before = tuple(b["record_before"])
+                after = parse_record((g.get(f"{side}_records") or {}).get("total"))
+                if after is None and before is not None and result:
+                    after = (before[0] + (result == "W"), before[1] + (result == "L"), before[2] + (result == "T"))
+                ranks = {r for r in (g.get(f"{side}_rank"), b.get("ap"), b.get("cfp")) if r}
+                unranked = None
+                if sport == "ncaafb":
+                    says_unranked = (f"{side}_rank" in g and g.get(f"{side}_rank") is None) or \
+                                    (b.get("ranks_known") and b.get("ap") is None)
+                    unranked = bool(says_unranked)
+                out.append({"team": name, "opponent": g.get(f"{other}_team"), "sport": sport,
+                            # The school as the database spells it ("Florida", not the
+                            # "Florida" that also starts "Florida Atlantic Owls").
+                            "school": b.get("location") if sport == "ncaafb" else None,
+                            "game_id": g.get("game_id"), "result": result, "post": post,
+                            "ranks": ranks, "unranked": unranked,
+                            "before": None if post else before, "after": None if post else after})
+    return out

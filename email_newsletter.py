@@ -210,7 +210,9 @@ def _history_claims_html(status: dict) -> str:
     Pass 3 checks every "first since 1999" / "N-year drought" against the
     sports database and the editor is asked to fix what it flags; this is the
     code checking that it did. CONTRADICTED means the database says the claim
-    is wrong; UNCONFIRMED means nothing could check it either way."""
+    is wrong; UNCONFIRMED means nothing could check it either way. Since
+    SLA-117 the list also carries football rank and record claims ("No. 8
+    Florida", "improved to 4-1"), each labelled with its kind."""
     claims = status.get("history_claims") or []
     if not claims:
         return ""
@@ -220,6 +222,8 @@ def _history_claims_html(status: dict) -> str:
         wrong = c.get("level") == "HIGH"
         colour = "#b42318" if wrong and not c.get("cut") else "#9a6700"
         what = "CONTRADICTED by the database" if wrong else "unconfirmed"
+        if c.get("kind"):                      # SLA-117: a football rank or record claim
+            what = f"{c['kind']} {'CONTRADICTED by the game data' if wrong else 'unconfirmed'}"
         done = " — sentence was cut" if c.get("cut") else ""
         out += (f'<div style="color:{colour};margin-top:2px;">{"✗" if wrong else "⚠"} {what}{done} '
                 f'({_html.escape(str(c.get("section", "")))}): '

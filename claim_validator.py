@@ -516,6 +516,17 @@ def _history_anchors(sentence: str):
                 yield m
 
 
+# A period that ends an abbreviation does not end the sentence: "No. 4 Ole
+# Miss" was being read as "... No." and "4 Ole Miss" (SLA-117 replay), which
+# hid every rank claim and split history claims in two.
+_SENTENCE_END = re.compile(r"(?<=[.!?])(?<!\bNo\.)(?<!\bno\.)(?<!\bSt\.)(?<!\bvs\.)(?<!\bJr\.)(?<!\bSr\.)"
+                           r"(?<!\bMt\.)(?<!\bFt\.)(?<!\b[A-Z]\.)\s+|\n+")
+
+
+def _sentences(text: str) -> list[str]:
+    return [s for s in _SENTENCE_END.split(text) if s.strip()]
+
+
 def _quote(sentence: str) -> str:
     # Inside an HTML comment: no double quotes, and never "--".
     return re.sub(r"\s+", " ", sentence).strip()[:160].replace('"', "'").replace("--", "-")
@@ -525,7 +536,7 @@ def check_history_claims(own_text: str, game_state: dict, outcomes: list | None 
     """`own_text`: one section's own prose (no tweets), one block per line.
     `outcomes`, if given, collects (verdict, sentence) for every claim,
     confirmed ones included: the archive replay counts them."""
-    sentences = [s for s in re.split(r"(?<=[.!?])\s+|\n+", own_text) if s.strip()]
+    sentences = _sentences(own_text)
     if not any(True for s in sentences for _ in _history_anchors(s)):
         return []
     import history_source
@@ -592,6 +603,212 @@ def check_history_claims(own_text: str, game_state: dict, outcomes: list | None 
                     f'relative framing, or cut the clause. -->')
                 if outcomes is not None:
                     outcomes.append(("LOW", quoted, sentence))
+    return flags
+
+
+# ---------------------------------------------------------------------------
+# Football rank and record claims (SLA-117): "No. 8 Florida", "the unranked
+# ...", "improved to 4-1", "came in 4-0", "Missouri (4-1)", "still unbeaten",
+# checked against football_bundle.claim_facts(): ESPN's ranks and records
+# for yesterday's NFL and college games, plus the database's AP and CFP
+# ranks from the bundles.
+#
+#   the data agrees                          -> confirmed, nothing added
+#   the one team the claim is about plainly disagrees
+#                                            -> FACT FLAG [HIGH] with the data
+#   anything else about yesterday's teams    -> FACT FLAG [LOW]: cut the number
+#
+# Only teams that played yesterday are checked: a rank in a preview of next
+# week's game is not something this data holds, and editor Check 8 already
+# covers it. A rank belongs to the team written right after it, so it can be
+# HIGH even in a two-team sentence; a record attaches to a team only through
+# "Team (4-1)", so a verb-cued record ("improved to 4-1") is HIGH only when
+# the sentence names a single team.
+# ---------------------------------------------------------------------------
+
+_RANK_RE = re.compile(r"(?:\bNo\.\s*|#)(\d{1,2})(?!\d)(?:-ranked)?\s+|\b(\d{1,2})(?:st|nd|rd|th)-ranked\s+|"
+                      r"\b(unranked)\s+", re.IGNORECASE)
+# "now No. 5 Georgia": next week's poll, which nobody has yet. NOT "to": a
+# rank with a team after it is the team's ("down 20 to No. 1 Ohio State",
+# replay 2026-09-13); "climbed to No. 5" has no team and is never checked.
+_FORECAST_RE = re.compile(r"\bnow\s*$", re.IGNORECASE)
+_RECORD_RE = re.compile(r"(?<![\d-])(\d{1,2})-(\d{1,2})(?:-(\d{1,2}))?(?![\d-])")
+_AFTER_CUE = re.compile(r"\b(improv\w*|mov(?:e|es|ed|ing)|f[ae]ll(?:s|en|ing)?|drop\w*|slip\w*|ris(?:e|es|en|ing)|"
+                        r"rose|climb\w*|push\w*|now|sits?|sitting|sat|stands?|standing|stood)\s+(?:to\s+|at\s+)?"
+                        r"(?:a\s+)?$", re.IGNORECASE)
+_BEFORE_CUE = re.compile(r"\b(?:(?:came|coming|come|went|going|walked)\s+in|enter(?:s|ed|ing)?)\s+(?:at\s+)?(?:a\s+)?$",
+                         re.IGNORECASE)
+_BEFORE_AFTER = re.compile(r"^\s+(?:going|coming)\s+in\b", re.IGNORECASE)
+_SCORE_AFTER = re.compile(r"^\s+(?:win|victory|loss|defeat|lead|score|margin|halftime|final|blowout|rout)\b",
+                          re.IGNORECASE)
+_STATUS_RE = re.compile(r"\b(?:still|remains?|remained|stays?|stayed)\s+(unbeaten|undefeated|perfect|winless)\b",
+                        re.IGNORECASE)
+
+
+def _team_after(text: str, idx: dict[tuple, set[str]]) -> str | None:
+    """The team written at the very start of `text`: "Florida beat ..." ->
+    Florida. Longest alias wins; "Florida State" never reads as Florida, and
+    nor does any name followed by another capitalised word ("Florida
+    Atlantic"), which may be a school the data doesn't hold."""
+    words, raw = _tokens(text), text.split()
+    best = None
+    for alias, names in idx.items():
+        n = len(alias)
+        if tuple(words[:n]) == alias and (best is None or n > len(best[0])):
+            best = (alias, names)
+    if best is None or len(best[1]) != 1:
+        return None
+    n = len(best[0])
+    if n < len(words) and words[n] in _NAME_CONTINUES:
+        return None
+    nxt = raw[n] if n < len(raw) else ""
+    if nxt[:1].isupper() and len(_tokens(" ".join(raw[:n]))) == n:
+        return None
+    return next(iter(best[1]))
+
+
+def _team_before(text: str, idx: dict[tuple, set[str]]) -> str | None:
+    """The team written at the very end of `text`: "... Missouri (" -> Missouri."""
+    words = _tokens(text)
+    best = None
+    for alias, names in idx.items():
+        n = len(alias)
+        if n <= len(words) and tuple(words[-n:]) == alias and (best is None or n > len(best[0])):
+            best = (alias, names)
+    return next(iter(best[1])) if best and len(best[1]) == 1 else None
+
+
+def _rec(t) -> str:
+    return "?" if t is None else f"{t[0]}-{t[1]}" + (f"-{t[2]}" if t[2] else "")
+
+
+def _rank_verdict(f: dict, rank: int | None) -> str:
+    """rank None means the claim is "unranked"."""
+    if rank is None:
+        if f["unranked"]:
+            return "confirm"
+        return "contradict" if f["ranks"] and f["unranked"] is False else "unknown"
+    if rank in f["ranks"]:
+        return "confirm"
+    if f["ranks"] or f["unranked"]:
+        return "contradict"
+    return "unknown"
+
+
+def _record_verdict(f: dict, rec: tuple, when: str) -> str:
+    want = [f["before"]] if when == "before" else [f["after"]] if when == "after" else [f["before"], f["after"]]
+    if any(w is not None and tuple(w) == rec for w in want):
+        return "confirm"
+    if f["post"] or any(w is None for w in want):
+        return "unknown"
+    return "contradict"
+
+
+def _status_verdict(f: dict, word: str) -> str:
+    a = f["after"]
+    if a is None or f["post"]:
+        return "unknown"
+    ok = a[0] == 0 if word == "winless" else a[1] == 0 and a[2] == 0
+    return "confirm" if ok else "contradict"
+
+
+def _football_claims(sentence: str, idx: dict, by_name: dict, section_teams: set[str]):
+    """Every rank or record claim in one sentence: (kind, token, figure regex,
+    candidate facts, the one team it attaches to or None, verdict fn)."""
+    named = [n for n in _named(sentence, idx) if n in by_name]
+    for m in _RANK_RE.finditer(sentence):
+        team = _team_after(sentence[m.end():], idx)
+        if team is None or team not in by_name or by_name[team]["sport"] != "ncaafb":
+            continue                                   # a preview, a player, a pick, an NFL seed
+        n = m.group(1) or m.group(2)
+        rank = int(n) if n else None
+        forecast = bool(_FORECAST_RE.search(sentence[:m.start()]))
+        fig = (r"(?:No\.\s*|#)" + n + r"(?!\d)|\b" + n + r"(?:st|nd|rd|th)-ranked") if n else r"\bunranked\b"
+        yield ("rank", m.group(0).strip(), fig, [by_name[team]], None if forecast else team,
+               (lambda f, r=rank: "unknown") if forecast else (lambda f, r=rank: _rank_verdict(f, r)))
+    for m in _RECORD_RE.finditer(sentence):
+        rec = (int(m.group(1)), int(m.group(2)), int(m.group(3) or 0))
+        if sum(rec) > 20:
+            continue                                   # a score, not a season
+        pre, post = sentence[:m.start()], sentence[m.end():]
+        if _SCORE_AFTER.search(post):
+            continue
+        token = m.group(0)
+        fig = r"(?<![\d-])" + re.escape(token) + r"(?![\d-])"
+        if pre.rstrip().endswith("(") and post.lstrip().startswith(")"):
+            team = _team_before(pre.rstrip()[:-1], idx)
+            if team in by_name:
+                yield ("record", token, fig, [by_name[team]], team,
+                       lambda f, r=rec: _record_verdict(f, r, "either"))
+            continue                                   # "Jones (4-1)": a pitcher, not a team
+        when = ("after" if _AFTER_CUE.search(pre) else
+                "before" if _BEFORE_CUE.search(pre) or _BEFORE_AFTER.search(post) else None)
+        if when is None:
+            continue
+        cands = [by_name[n] for n in named] or [by_name[n] for n in section_teams]
+        if cands:
+            yield ("record", token, fig, cands, named[0] if len(named) == 1 else None,
+                   lambda f, r=rec, w=when: _record_verdict(f, r, w))
+    for m in _STATUS_RE.finditer(sentence):
+        cands = [by_name[n] for n in named] or [by_name[n] for n in section_teams]
+        if cands:
+            word = m.group(1).lower()
+            yield ("record", m.group(0), r"\b" + word + r"\b", cands, named[0] if len(named) == 1 else None,
+                   lambda f, w=word: _status_verdict(f, w))
+
+
+def check_football_claims(own_text: str, game_state: dict, outcomes: list | None = None) -> list[str]:
+    """`own_text`: one section's own prose (no tweets), one block per line.
+    `outcomes`, if given, collects (level, quoted, sentence, kind, figure)
+    for every claim, confirmed ones included."""
+    import football_bundle
+    facts = football_bundle.claim_facts(game_state or {})
+    if not facts:
+        return []
+    by_name = {f["team"]: f for f in facts}
+    # A college team the database knows goes by its full name or its school
+    # as the database spells it; "Florida" is then the Gators only, not also
+    # the start of "Florida Atlantic Owls". Without a school, the prefix rule.
+    idx = _alias_index([{"team": f["team"], "sport": f["sport"], "opponent": ""} for f in facts
+                        if not f.get("school")])
+    owned: dict[tuple, set[str]] = {}
+    for f in facts:
+        if f.get("school"):
+            for alias in (_tokens(f["team"]), _tokens(f["school"])):
+                owned.setdefault(tuple(alias), set()).add(f["team"])
+    idx.update(owned)          # a school's own name beats another team's prefix ("Florida A&M")
+    as_of = (game_state or {}).get("yesterday_date") or (game_state or {}).get("as_of_date") or ""
+    sentences = _sentences(own_text)
+    section_teams = {n for n in _named(own_text, idx) if n in by_name}
+    flags, seen = [], set()
+    for sentence in sentences:
+        for kind, token, fig, cands, team, verdict in _football_claims(sentence, idx, by_name, section_teams):
+            results = [(f, verdict(f)) for f in cands]
+            quoted = _quote(sentence)
+            if any(v == "confirm" for _, v in results):
+                if outcomes is not None:
+                    outcomes.append(("confirmed", quoted, sentence, kind, fig))
+                continue
+            if (quoted, token) in seen:
+                continue
+            seen.add((quoted, token))
+            if team is not None and len(results) == 1 and results[0][1] == "contradict":
+                f = results[0][0]
+                data = (f"went into the game {'ranked No. ' + ', '.join(str(r) for r in sorted(f['ranks'])) if f['ranks'] else 'unranked'}"
+                        if kind == "rank" else f"{_rec(f['before'])} going in, {_rec(f['after'])} after this game")
+                flags.append(
+                    f'\n<!-- FACT FLAG [HIGH]: "{quoted}" gives {f["team"]} a {kind} ("{token}") the '
+                    f'game data contradicts: {f["team"]} {data} (ESPN and the SLAP sports database, as of '
+                    f'{as_of}). Correct it to the data, or cut it. -->')
+                level = "HIGH"
+            else:
+                flags.append(
+                    f'\n<!-- FACT FLAG [LOW]: "{quoted}" states a {kind} ("{token}") the game data cannot '
+                    f'confirm. Cut the number and keep the sentence, unless a tweet in this section '
+                    f'carries it. -->')
+                level = "LOW"
+            if outcomes is not None:
+                outcomes.append((level, quoted, sentence, kind, fig))
     return flags
 
 
@@ -669,6 +886,20 @@ def final_history_check(html: str, game_state: dict, autocut: bool | None = None
                 sec = inject_flag_after_heading(
                     sec, f'\n<!-- ⚠ HISTORY CLAIM LEFT IN BY THE EDITOR [{level}]: "{quoted}" -->')
             report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut})
+        # SLA-117: football rank and record claims, the same way. A tweet in
+        # the section carrying the same rank or record sources it.
+        football: list = []
+        check_football_claims(own_text(sec), game_state, football)
+        for level, quoted, sentence, kind, fig in football:
+            if level == "confirmed" or re.search(fig, tweets, re.IGNORECASE):
+                continue
+            cut = False
+            if autocut:
+                sec, cut = _cut_sentence(sec, sentence)
+            if not cut:
+                sec = inject_flag_after_heading(
+                    sec, f'\n<!-- ⚠ FOOTBALL {kind.upper()} CLAIM LEFT IN BY THE EDITOR [{level}]: "{quoted}" -->')
+            report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut, "kind": kind})
         parts.append(sec)
     return "".join(parts), report
 
@@ -752,6 +983,9 @@ def validate_section(heading: str, section_html: str, game_state: dict) -> tuple
     # Same rule: our prose only. Paragraph and heading breaks become line
     # breaks so a heading never runs into the sentence after it.
     flags.extend(check_history_claims(own_text(section_html), game_state))
+
+    # ── CHECK 3C: Football rank and record claims (SLA-117) ──────────────────
+    flags.extend(check_football_claims(own_text(section_html), game_state))
 
     # ── CHECK 4: Series score claim vs game_state ─────────────────────────────
     score_matches = SERIES_SCORE_RE.findall(plain_text)

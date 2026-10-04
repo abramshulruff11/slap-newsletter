@@ -327,9 +327,19 @@ names is right and the sentence is wrong — rewrite the year or count to the
 fact, in the fact's kind ("a 53-year Finals drought" -> "a 27-year Finals
 drought"). [LOW]: nothing confirms it — apply Category C of Check 8: relative
 framing, or cut the clause. One exception: if a FOOTBALL GAMES bundle in the
-ground truth block states the same fact (same team, same kind, same year or
-count), the bundle sources it: LEAVE IT and drop the flag. Pass 3 does not yet
-read the bundles, so its LOW flag there is not evidence against the claim.
+ground truth block states the same series, upset or playoff-win fact (same
+team, same kind, same year or count), the bundle sources it: LEAVE IT and drop
+the flag. Pass 3 does not yet read those bundle lines, so its LOW history flag
+there is not evidence against the claim.
+
+A football rank or record flag names the rank ("No. 8") or record ("4-1")
+it is about. [HIGH]: the game data it quotes is right and the sentence is
+wrong — rewrite the rank or record to the data ("No. 5 Ole Miss" -> "No. 4
+Ole Miss"; "improved to 5-0" -> "improved to 4-1"), or cut it. [LOW]: nothing
+confirms it — cut the rank or record and keep the sentence ("No. 8 Florida"
+-> "Florida"; "fell to 3-2" -> "fell"), unless a tweet in the same section
+states it. Pass 3 reads ranks and records from the game data itself, so the
+football-bundle exception above does not apply to these.
 
 If a claim cannot be corrected because the surrounding sentence would stop
 making sense, DELETE the sentence instead. Never leave the claim standing.
