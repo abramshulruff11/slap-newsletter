@@ -1,5 +1,23 @@
 [
   {
+    "date": "2026-10-05",
+    "slug": "expanding-brain",
+    "boxes": [
+      "PRINCE FIELDER",
+      "ORLANDO ARCIA",
+      "SCHWARBER AND SOTO",
+      "22-YEAR-OLD JACKSON CHOURIO"
+    ]
+  },
+  {
+    "date": "2026-10-05",
+    "slug": "mocking-spongebob",
+    "boxes": [
+      "WE'VE GOT A GOOD LOOK HERE ON FOURTH AND TWENTY",
+      "We'Ve GoT a GoOd LoOk HeRe On FoUrTh AnD tWeNtY"
+    ]
+  },
+  {
     "date": "2026-10-04",
     "slug": "laughing-leo",
     "boxes": [
@@ -508,22 +526,6 @@
       "SIGN KEENAN ALLEN AS THE SAFETY VALVE",
       "KEENAN ALLEN ARRESTED 12 DAYS LATER",
       "KEENAN ALLEN ARRESTED 12 DAYS LATER"
-    ]
-  },
-  {
-    "date": "2026-08-30",
-    "slug": "waiting-skeleton",
-    "boxes": [
-      "FERNANDO MENDOZA WAITING FOR HIS FIRST START",
-      "KIRK COUSINS THROWS A PICK-SIX IN WEEK 2"
-    ]
-  },
-  {
-    "date": "2026-08-30",
-    "slug": "mocking-spongebob",
-    "boxes": [
-      "THE PROCESS IS FUNDAMENTALLY SOUND",
-      "ThE pRoCeSs Is FuNdAmEnTaLlY sOuNd"
     ]
   }
 ]
