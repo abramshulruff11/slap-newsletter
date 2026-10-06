@@ -1,5 +1,23 @@
 [
   {
+    "date": "2026-10-06",
+    "slug": "this-is-fine",
+    "boxes": [
+      "FOUR ERRORS AND BEN RICE DOING IT ALONE",
+      "WE'RE HAPPY WITH THE AT-BATS WE PUT TOGETHER"
+    ]
+  },
+  {
+    "date": "2026-10-06",
+    "slug": "gru-plan",
+    "boxes": [
+      "HONOR THE 2006 DOMECOMING ANNIVERSARY",
+      "BOOK THE FALCONS FOR MONDAY NIGHT",
+      "LOSE 45-24 ON NATIONAL TV",
+      "LOSE 45-24 ON NATIONAL TV"
+    ]
+  },
+  {
     "date": "2026-10-05",
     "slug": "expanding-brain",
     "boxes": [
@@ -507,25 +525,6 @@
       "TRADE FOR MYLES GARRETT",
       "UNRETIRE AARON DONALD",
       "PLAY THE 49ERS IN WEEK 1"
-    ]
-  },
-  {
-    "date": "2026-08-31",
-    "slug": "trade-offer",
-    "boxes": [
-      "PACKERS FRONT OFFICE",
-      "A ROOKIE-CONTRACT RB WITH A PULSE",
-      "A LATE-ROUND PICK THEY'RE FINE LOSING"
-    ]
-  },
-  {
-    "date": "2026-08-30",
-    "slug": "gru-plan",
-    "boxes": [
-      "TRADE MICHAEL PITTMAN JR",
-      "SIGN KEENAN ALLEN AS THE SAFETY VALVE",
-      "KEENAN ALLEN ARRESTED 12 DAYS LATER",
-      "KEENAN ALLEN ARRESTED 12 DAYS LATER"
     ]
   }
 ]
