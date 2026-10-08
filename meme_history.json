@@ -1,5 +1,23 @@
 [
   {
+    "date": "2026-10-08",
+    "slug": "clown-applying-makeup",
+    "boxes": [
+      "YANKEES FANS IN MARCH: WE HAVE THE BEST LINEUP IN BASEBALL",
+      "IN JULY: THE BULLPEN JUST NEEDS ONE MORE ARM",
+      "IN SEPTEMBER: WE ARE PEAKING AT THE RIGHT TIME",
+      "IN OCTOBER: SWEPT BY TAMPA BAY FOR THE 17TH YEAR IN A ROW"
+    ]
+  },
+  {
+    "date": "2026-10-08",
+    "slug": "squidward-window",
+    "boxes": [
+      "BREANNA STEWART AFTER DROPPING THE FIRST 35/10/5 GAME IN WNBA PLAYOFF HISTORY",
+      "THE REST OF THE LIBERTY SHOOTING THE DREAM INTO THE FINALS"
+    ]
+  },
+  {
     "date": "2026-10-07",
     "slug": "two-buttons",
     "boxes": [
@@ -507,23 +525,6 @@
       "WIN IN STRAIGHT SETS LIKE A NO. 1 SEED",
       "DROP A SET TO A GUY RANKED OUTSIDE THE TOP 60",
       "ALEXANDER ZVEREV"
-    ]
-  },
-  {
-    "date": "2026-09-03",
-    "slug": "is-this-a-pigeon",
-    "boxes": [
-      "STEVE BALLMER",
-      "A $28M NO-SHOW ENDORSEMENT",
-      "IS THIS A LEGAL BUSINESS ARRANGEMENT?"
-    ]
-  },
-  {
-    "date": "2026-09-02",
-    "slug": "spider-man-pointing-at-spider-man",
-    "boxes": [
-      "KEVIN DURANT ON HIS BURNER",
-      "TUA ON HIS BURNER"
     ]
   }
 ]
