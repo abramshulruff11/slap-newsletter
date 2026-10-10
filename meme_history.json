@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-10-10",
+    "slug": "gus-fring-we-are-not-the-same",
+    "boxes": [
+      "THE ACES WON A TITLE WITH FIVE ALL-STARS",
+      "THE VALKYRIES SWEPT THEM WITH FOUR",
+      "WE ARE NOT THE SAME"
+    ]
+  },
+  {
+    "date": "2026-10-10",
+    "slug": "buff-doge-vs-cheems",
+    "boxes": [
+      "IOWA OFFENSE IN WEEK 1",
+      "IOWA OFFENSE LAST NIGHT",
+      "PUNTED EIGHT TIMES AGAINST ILLINOIS STATE",
+      "41 POINTS AND A QB WITH A 215 RATING IN SEATTLE"
+    ]
+  },
+  {
     "date": "2026-10-09",
     "slug": "anakin-padme",
     "boxes": [
@@ -506,25 +525,6 @@
       "DOWN 10-3 EARLY AT LAMBEAU",
       "TIED 10-10, PUNTER JUST HIT THE GREATEST PUNT EVER",
       "NOTRE DAME HANGS 31 AND GOES FOR IT ON 4TH DOWN UP 28"
-    ]
-  },
-  {
-    "date": "2026-09-06",
-    "slug": "corporates-want-you-to-find-the-difference",
-    "boxes": [
-      "THE HOME TEAM",
-      "THE OFFICIATING CREW",
-      "WESTERN MICHIGAN"
-    ]
-  },
-  {
-    "date": "2026-09-05",
-    "slug": "clown-applying-makeup",
-    "boxes": [
-      "RECRUIT EX-NFL PLAYERS TO PLAY COLLEGE FOOTBALL",
-      "GET A JUDGE TO CLEAR THEM",
-      "BENCH THEM ANYWAY BECAUSE THE SEC IS MAD",
-      "GET SUED BY YOUR OWN CONFERENCE IN FEDERAL COURT"
     ]
   }
 ]
