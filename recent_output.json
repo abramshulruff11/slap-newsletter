@@ -1,5 +1,122 @@
 [
   {
+    "date": "2026-10-11",
+    "story_log": [
+      {
+        "topic_key": "guardians-white-sox-alds-2026",
+        "title": "Guardians complete comeback from 0-2 to eliminate White Sox 2-0 in ALDS Game 5 — advance to ALCS to face Rays",
+        "section": "lead",
+        "development": "CONTINUING [Day 8, TIER 1 ELIMINATION GAME]: Cleveland beat Chicago 2-0 per ground truth, won series 3-2 per ground truth. Gavin Williams: 5.2 IP, 1 H, 0 ER, 2 BB, 12 SO per StatMuse/TalkinBaseball — first Guardians pitcher with 12+ SO in postseason game since Charles Nagy 1996, 24 SO in series most since Gerrit Cole 25 in 2019 ALDS. José Ramírez go-ahead 2-run HR in 5th per JomboyMedia/TalkinBaseball/SportsCenter — 100-mph blast off Sean Burke, Spanish broadcast call per JomboyMedia. White Sox struck out 21 times (playoff record) per JeffPassan/CespedesBBQ, 75 SO in series most in 5-game series in MLB history. Erik Sabrowski escaped bases-loaded jam striking out Murakami per TalkinBaseball. Cade Smith 5-out save per TalkinBaseball. Guardians first team to comeback from 0-2 in Division Series since they lost to Yankees in 2017 per TalkinBaseball. White Sox 0-1 (.000) when striking out 21+ times per JayCuda. Travis Kelce fired up watching Ramírez HR per JomboyMedia. Burke wore black Air Force 1s per JomboyMedia. Guardians advance to ALCS vs Rays per JeffPassan. Sean Burke pitched on mound in black Air Force 1s.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "college-football-week-6-2026",
+        "title": "Week 6 CFB Saturday — Oklahoma upsets No. 1 Texas 27-24, Georgia beats Alabama 20-17 on no-call, Kentucky stuns LSU 35-34 in OT, UCLA shocks Oregon 17-15",
+        "section": "lead",
+        "development": "Oklahoma beat No. 1 Texas 27-24 per ground truth — Arch Manning INT with 20 sec left per ESPN/BallsackSports, Sooners kicked game-winner per SportsCenter. Georgia beat No. 6 Alabama 20-17 per ground truth — controversial no-call on pass interference in final minutes sparked outrage from Kalen DeBoer per CBS Sports/JomboyMedia/HaterReport, Dijon Lee personal foul punching Georgia player twice after play per RedditCFB/HaterReport. Kentucky beat No. 10 LSU 35-34 in OT per ground truth — Will Stein big-balls call, kicker missed 26-yarder to send to OT per BarstoolReags, Lane Kiffin left field surrounded by middle fingers per JomboyMedia. UCLA beat No. 13 Oregon 17-15 per ground truth — Bruins now 5-0, 5 straight wins (last 5+ within season 2022), beat Oregon for first time since 2017 per ground truth. Texas stumbles in Dallas per CBS Sports. Georgia takes over No. 1 per CBS Sports. Oregon's CFP hopes take massive hit per CBS Sports.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nba-preseason-oct-10-2026",
+        "title": "NBA preseason Oct 10-11 — Kyrie Irving returns after 586 days, Jaylen Brown watches from locker room in Boston return, Ben Simmons debuts for Kings",
+        "section": "supporting",
+        "development": "Kyrie Irving returned for Mavericks after 586 days per ClutchPoints — 17 PTS, 2 REB, 3 AST, 6-13 FG, 2-6 3PT in China Games vs Rockets. Cooper Flagg started Game 2, had 19 PTS in Game 1 per ClutchPoints. Jaylen Brown decided to watch Sixers-Celtics game from locker room instead of bench per ClutchPoints/HaterReport — first time back in TD Garden since trade, Celtics demolished Sixers 144-106 per ground truth. Ben Simmons made preseason debut for Kings after missing entire 2025-26 season with back issues per SportsCenter — went under screen on Steph Curry per HaterReport, hit stepback jumpers and fadeaways per NBAMemes/SportsCenter. Tatum and Brown completely ignored each other during warmups per HaterReport. Preseason action continues across league.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nhl-oct-10-2026",
+        "title": "NHL action Oct 10 — Flyers fall to 0-6 after 5-1 loss to Bruins, Maple Leafs beat Avalanche 6-3, Tampa beats Islanders",
+        "section": "supporting",
+        "development": "Philadelphia lost to Boston 5-1 per ground truth — Flyers now 0-6, 7 GF/24 GA this season per StatMuse, last start this bad or worse 2008-09 per ground truth. Toronto beat Colorado 6-3 per ground truth — William Nylander: 2 goals, 5 PTS, first Leaf with 5 points in game since Marner/Knies Jan 4 2025 per StatMuse, Auston Matthews: 2 goals, 4 PTS per StatMuse. Tampa Bay beat NY Islanders 5-3 per ground truth — Brandon Hagel hat trick (4th career, first since Oct 22 2024) per StatMuse. Other games: Devils beat Canucks 4-1, Oilers beat Sharks 3-1, Wild beat Panthers 4-1, Utah beat Sabres 4-1, Canadiens beat Red Wings 1-0 in OT, Senators beat Predators 3-2 in OT, Penguins beat Stars 2-1 in OT, Hurricanes beat Blackhawks 5-2, Blues beat Blue Jackets 5-3, Ducks beat Flames 4-2, Golden Knights beat Kings 2-1 in OT per ground truth.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "marvin-harrison-jr-trade-rumors-2026",
+        "title": "Cardinals fielding Marvin Harrison Jr. trade calls — Schefter reports team getting calls, Arizona would want 2nd-round pick and more",
+        "section": "supporting",
+        "development": "Arizona getting trade calls on Harrison per TomPelissero — league sources say Cardinals would want 2nd-round pick and more to consider dealing former No. 4 pick per TomPelissero. BillBarnwell lists 31 teams that should trade for him (everyone but Cardinals) per BillBarnwell. Texans remain team to watch per AdamSchefter. AlbertBreer: Texans creatively working around Cardinals' ask. Developing story, no trade completed yet.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "dodgers-nlcs-2026",
+        "title": "Dodgers-Brewers NLCS begins Sunday — LA opens at Milwaukee, rematch of 2025 NLCS",
+        "section": "supporting",
+        "development": "Los Angeles and Milwaukee will face off in NLCS starting Sunday Oct 11 per CBS Sports — rematch of 2025 NLCS. Dodgers going to NLCS for 3rd straight year (ties longest streak in franchise history 2016-2018) per recent history. Max Muncy wants to befriend ghost at Pfister Hotel per JomboyMedia — some Dodgers refuse to stay at 'haunted' hotel. NLCS Game 1 Sunday.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "brandin-podziemski-warriors-extension-2026",
+        "title": "Warriors sign Brandin Podziemski to 5yr/$110M extension — locks in 2023 first-rounder through 2032, preserves cap space",
+        "section": "atl",
+        "development": "Golden State signed Podziemski to 5yr/$110M fully guaranteed extension per ShamsCharania/ESPN — includes mutual option in fifth year (2031-32) and trade kicker. Deal starts at figure that preserves up to $55-60M in cap space next summer per ShamsCharania. 23-year-old combo guard averaged career-high 13.8 PPG last year, one of 18 players to play all 82 games per ShamsCharania. Foundational piece locked in.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "igor-shesterkin-injury-rangers-2026",
+        "title": "Igor Shesterkin suffers season-ending lower-body injury — Rangers star goalie out for year",
+        "section": "atl",
+        "development": "Shesterkin will miss rest of season with lower-body injury per JomboyMedia/MollieeWalkerr — injury occurred during play where Shesterkin went down per JomboyMedia. Rangers lose star goalie for season.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "sam-fuld-as-job-2026",
+        "title": "Sam Fuld declines A's president of baseball operations job — remains with Phillies, Taylor Smith top candidate",
+        "section": "atl",
+        "development": "Fuld was offered A's job as president of baseball operations but declined, has withdrawn from consideration per JeffPassan — will remain in current role as president of business operations for Phillies. Boston assistant GM Taylor Smith remains top candidate per JeffPassan. Cardinals assistant GM Rob Cerfolio expected to remain with St. Louis per JeffPassan.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "jayden-daniels-elbow-injury-2026",
+        "title": "Jayden Daniels will start Sunday vs Giants despite elbow injury — doctors fear risk of further injury, surgery inevitable",
+        "section": "atl",
+        "development": "Daniels will start Sunday vs Giants per AdamSchefter — it's never been question of if he'll need surgery, simply when he chooses to do it per AlbertBreer. Can play through as long as he can manage brace per AlbertBreer. Doctors around NFL believe it's matter of when, not if, he hurts left elbow again per AdamSchefter. Washington QB playing through serious injury.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nfl-week-5-inactive-list-2026",
+        "title": "NFL Week 5 inactive list — Ladd McConkey, Rico Dowdle, multiple OL out",
+        "section": "atl",
+        "development": "Chargers WR Ladd McConkey not expected to play vs Broncos per AdamSchefter — didn't practice all week, listed as questionable with foot injury. Steelers RB Rico Dowdle unlikely to play vs Colts per AdamSchefter — listed as questionable with toe injury, final determination in pre-game warmups. Chargers starting four rookies on OL per AdamSchefter — LT Logan Taylor, LG Jake Slaughter, C Jacob Spomer, RT Alex Harkey with Rashawn Slater and Joe Alt out. Justin Herbert has gone six straight games without more TD passes than INT per AdamSchefter. Ravens WR Zay Flowers expected to play vs Falcons per AdamSchefter. Cam Jurgens out for SNF per AdamSchefter.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "odell-beckham-vikings-elevation-2026",
+        "title": "Vikings elevate Odell Beckham Jr. from practice squad — provides insurance with Jefferson and Addison questionable",
+        "section": "atl",
+        "development": "Minnesota elevated OBJ from practice squad for Sunday's game at New Orleans per TomPelissero/AdamSchefter — still TBD if he'll play, but move provides insurance with both Justin Jefferson and Jordan Addison listed as questionable. Vikings guard depth tested.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nfl-fines-week-4-2026",
+        "title": "NFL fines season-high 10 players for major fouls in Week 4 — Deshaun Watson, Quinshon Judkins fined for 'smoking' celebration",
+        "section": "atl",
+        "development": "NFL fined season-high 10 players for major fouls in Week 4 per TomPelissero — includes hip-drop tackles (5 players), hits on defenseless players (3), horse collar, blindside block. Watson and Judkins fined $14,926 and $14,397 for unsportsmanlike conduct (illegal celebrations and vulgar acts) per TomPelissero — was 'smoking' gesture after Judkins TD. Jaguars CB Jarrian Jones fined $8,201 for facemask on Ja'Marr Chase per TomPelissero. Three fines in any one category triggers automatic one-game suspension.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "jon-rothstein-rothstein-45-oct-11-2026",
+        "title": "Jon Rothstein releases Rothstein 45 preseason rankings — Florida No. 1, Duke 2, Illinois 3, UConn 4, Michigan State 5",
+        "section": "atl",
+        "development": "Rothstein 45 released per JonRothstein — Top 10: 1. Florida, 2. Duke, 3. Illinois, 4. UConn, 5. Michigan State, 6. Arizona, 7. Virginia, 8. Texas, 9. Michigan, 10. Miami. CC: FanDuel, FanDuelResearch. 21 days until 2026-27 season begins per JonRothstein. Notable exhibitions Sunday: Villanova at Rutgers, Eastern Michigan at Michigan, Indiana at Butler, New Mexico at Oklahoma State per JonRothstein.",
+        "is_new": false,
+        "resolved": false
+      }
+    ]
+  },
+  {
     "date": "2026-10-10",
     "story_log": [
       {
@@ -3843,123 +3960,6 @@
         "title": "Former NFL RB LeShon Johnson sentenced to five years in prison for operating dogfighting ring — surrendered 190 dogs, largest number from one individual in federal case",
         "section": "atl",
         "development": "Johnson sentenced to five years in prison for operating dogfighting ring per CBS Sports — surrendered 190 dogs, largest number taken from one individual in federal dogfighting case per Department of Justice. Former NFL player sentenced.",
-        "is_new": true,
-        "resolved": true
-      }
-    ]
-  },
-  {
-    "date": "2026-09-10",
-    "story_log": [
-      {
-        "topic_key": "seahawks-patriots-nfl-kickoff-2026",
-        "title": "Seahawks beat Patriots 13-10 in NFL Kickoff Game — Drew Lock leads comeback after Sam Darnold injury, Drake Maye throws 3 INTs in 4th quarter",
-        "section": "lead",
-        "development": "Seahawks won 13-10 per ground truth. Darnold left game with hip injury on opening drive per Schefter/AlbertBreer, underwent CT scan, MRI scheduled Thursday—Macdonald: 'great news back', no fracture per Schefter. Drew Lock came in and led comeback. Patriots led 10-0 at half. Drake Maye threw 3 INTs in 4th quarter (all in final 7 minutes) per StatMuse/SharpFootball—game ended on Maye INT in endzone. A.J. Brown (ankle) ruled out in 3rd quarter per Schefter/AlbertBreer. JSN: 8-122-1 per StatMuse. Seahawks win title defense opener despite losing starting QB on first drive.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "coco-gauff-us-open-semifinals-2026",
-        "title": "Coco Gauff comes back from set down to beat Mirra Andreeva, reaches US Open semifinals",
-        "section": "supporting",
-        "development": "Gauff defeated Andreeva after losing first set per ESPN—saved two match points to force third set per ESPN, then won deciding set per ESPN/ClutchPoints. Second career US Open semifinal per ESPN. 90th Major match win per ESPN. Told post-match she thought about Frances Tiafoe's comeback yesterday per ESPN. 39-shot rally per SportsCenter. Two-time grand slam winner now two wins shy of second US Open title per CBS Sports.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "brock-bowers-knee-injury-2026",
-        "title": "Raiders TE Brock Bowers undergoes meniscus trim, expected to miss 'a game or two' including Week 1 opener",
-        "section": "supporting",
-        "development": "Bowers underwent meniscus trim Tuesday in Dallas per Schefter/ESPN—expected to miss 'a game or two' per ESPN. Will miss at least Raiders' season-opener against Dolphins per ESPN. HoHighlights: 'Come back soon Brock 💔.'",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "team-usa-hungary-world-cup-quarterfinals-2026",
-        "title": "Team USA beats Hungary 52 points in FIBA Women's World Cup Quarterfinals — Caitlin Clark, Napheesa Collier, Angel Reese lead rout",
-        "section": "supporting",
-        "development": "USA beat Hungary by 52 points per StatMuse. Collier led with 19 PTS, 6 REB, 9-13 FG, +35 per StatMuse. Clark: +36, pulled up from hash line per ClutchPoints, set up Reese multiple times including buzzer-beater assist per ClutchPoints. Clark found Boston for trey (Fever connection working well) per ClutchPoints. Reese set up Clark on break per ClutchPoints. Bueckers dialed swish from downtown per ClutchPoints. Napheesa had early rejection per ClutchPoints. Early morning do or die basketball per ClutchPoints.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "jazz-chisholm-yankees-injury-2026",
-        "title": "Jazz Chisholm Jr. lands on IL with sprained thumb — Yankees' trade deadline acquisition shut down 7-10 days",
-        "section": "supporting",
-        "development": "Chisholm will be shut down from baseball activities for 7-10 days per CBS Sports. Major blow as Yankees chase down AL East title per CBS Sports headline. Injury happened in game per ground truth (Yankees beat Rockies 6-1).",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "mlb-wild-card-races-sept-10-2026",
-        "title": "MLB wild card chaos: Dodgers demolish Reds 14-1 to sweep, Mets sweep Marlins after 29-run game, Brewers sweep Cubs to extend NL Central lead to 10 games",
-        "section": "atl",
-        "development": "Dodgers beat Reds 14-1, completed sweep per TalkinBaseball. Yamamoto: 7.0 IP, 3 H, 1 ER, 1 BB, 10 SO—8th start with 10+ SO (never more than 10 in game) per StatMuse. Kike Hernandez 2-run HR went around foul pole per ClutchPoints. Max Muncy deep 2-run shot per ClutchPoints. Elly De La Cruz 5 straight games with HR per TalkinBaseball. Dodgers calling up top prospect Josue De Paula (6th in MLB Pipeline Top 100) per TalkinBaseball, placing Shohei Ohtani on IL per TalkinBaseball. Mets swept Miami per TalkinBaseball—Mets and Marlins had more TDs than Patriots and Seahawks tonight per TalkinBaseball. Brewers swept Cubs, extended NL Central lead to 10 games per TalkinBaseball. Kyle Schwarber grand slam per TalkinBaseball. George Lombard Jr. grand slam made it 5-0 Yankees per TalkinBaseball. Jose Altuve 2500 hits (he and Freddie Freeman only active players) per TalkinBaseball. Zach Neto 3-run shot over Monster per TalkinBaseball. Padres swept Nats, now tied with D-backs for final NL Wild Card spot per TalkinBaseball. Jackson Merrill vs Nationals: 4-5, 2 HR, 1 3B, 6 RBI—first Padres player with 12 total bases in game since Fernando Tatis Jr. in 2021 per StatMuse. Giants overcame 5-run deficit in 8th to sweep Cardinals per TalkinBaseball. Will Warren: 6.0 IP, 4 H, 1 ER, 2 BB, 8 SO—4th game with 8+ strikeouts this season per StatMuse. Pirates and White Sox cleared benches after slide into second on DP per JomboyMedia. Padres manager Craig Stammen accidentally removed Walker Buehler because didn't realize there'd been mound visit per JomboyMedia.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "barry-melrose-death-2026",
-        "title": "Barry Melrose, legendary hockey analyst and former NHL coach, dies at 70",
-        "section": "atl",
-        "development": "Melrose died Wednesday per ESPN/Levy/AlbertBreer/JomboyMedia. Wife Cindy told ESPN's Steve Levy per ESPN. Was 70 years old. Former NHL player and coach, beloved longtime hockey analyst for ESPN. SVP, Schaap and ESPN family remembered him per ESPN. FieldYates: 'all-time great human' per FieldYates. Breer: 'This sucks. Loved watching Barry Melrose as a kid.'",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "steve-pikiell-cancer-diagnosis-2026",
-        "title": "Rutgers men's basketball coach Steve Pikiell announces cancer diagnosis, underwent successful surgery this summer",
-        "section": "atl",
-        "development": "Pikiell announced he has been diagnosed with cancer and is undergoing treatment per ESPN. Underwent successful surgery this summer per ESPN. Plans to remain involved with team to best of his ability during recovery per ESPN. JonRothstein: 'Prayers for Steve Pikiell. 🙏🙏🙏🙏🙏🙏🙏🙏.'",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "georgia-ncaa-eligibility-injunction-2026",
-        "title": "NCAA wins attempt to stay preliminary injunction in Georgia — RJ Godfrey, Chauncey Wiggins, JaMichael Stillwell, Dillon Hunter, Dan Skillings currently ineligible",
-        "section": "atl",
-        "development": "NCAA won attempt to stay preliminary injunction in Georgia per JonRothstein. Key players currently ineligible: RJ Godfrey (Arizona), Chauncey Wiggins (Gonzaga), JaMichael Stillwell (Texas Tech), Dillon Hunter (Clemson), Dan Skillings (Grand Canyon) per JonRothstein. NCAA eligibility battles continue.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "rams-49ers-australia-2026",
-        "title": "Rams arrive in Melbourne 27 hours before kickoff vs 49ers — George Kittle off injury report after tearing Achilles in January",
-        "section": "atl",
-        "development": "Rams deplaning 27 hours from kickoff per AlbertBreer. Schefter: 49ers TE George Kittle off injury report, scheduled to return tonight in Australia after tearing right Achilles tendon on January 11 (was listed as limited in practice this week). Rams take field for first time ahead of opener per ClutchPoints. MCG ready per ClutchPoints. PatMcAfeeShow: 'Rams have landed in Australia 1713 minutes before kickoff against Niners.'",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "aaron-judge-return-yankees-2026",
-        "title": "Aaron Judge returns to Yankees lineup, plays six innings as planned in first game since May 31",
-        "section": "atl",
-        "development": "CONTINUING [Day 3]: Judge played six innings as planned per CBS Sports—first game action since May 31. Yankees beat Rockies 6-1 per ground truth. TalkinBaseball: 'Aaron Judge's return has Yankees fans warning people that they're going to start being obnoxious.' New game today.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "elly-de-la-cruz-five-straight-homers-2026",
-        "title": "Elly De La Cruz homers in fifth straight game vs Dodgers — now has 5 consecutive games with HR",
-        "section": "atl",
-        "development": "CONTINUING [Day 2]: Elly hit HR in FIVE straight games per TalkinBaseball. Continues torrid stretch. New game today.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "jackson-chourio-22nd-homer-brewers-2026",
-        "title": "Jackson Chourio hits 22nd HR of season (new career-high) vs Cubs — goes 4-5 with HR, 2B, 2 RBI",
-        "section": "atl",
-        "development": "Chourio vs Cubs: 4-5, 1 HR, 1 2B, 2 RBI per StatMuse. Hit his 22nd HR of season (new career-high) per StatMuse. Brewers beat Cubs 8-6 per ground truth. New milestone.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "mike-vrabel-patriots-dianna-russini-2026",
-        "title": "Dianna Russini and Mike Vrabel dating jokes flood internet during Patriots-Seahawks game",
-        "section": "atl",
-        "development": "ghetto_gronk: 'Mike Vrabel trying to go home with Dianna Russini after losing to the Seahawks again.' PFTCommenter: 'Recurring guest/diehard seahawk fan Spencer Hawes wanted to check in on Hank postgame' (video). NFLMemes: 'Dianna Russini in stands at Lumen Field calling down to Mike Vrabel on Patriots sideline watching him trailing Seahawks late.' NFLMemes: 'Dianna Russini's husband seeing camera cut to Mike Vrabel on Patriots sideline.' Internet jokes continue.",
         "is_new": true,
         "resolved": true
       }

@@ -1,5 +1,24 @@
 [
   {
+    "date": "2026-10-11",
+    "slug": "vince-mcmahon-reaction",
+    "boxes": [
+      "SWING AT A STRIKE",
+      "SWING AT A BALL",
+      "SWING AT A SLIDER IN THE DIRT",
+      "SWING AT A PITCHOUT",
+      "CLOSE YOUR EYES AND LET IT RIP"
+    ]
+  },
+  {
+    "date": "2026-10-11",
+    "slug": "pawn-stars-best-i-can-do",
+    "boxes": [
+      "SECOND-ROUND PICK AND MORE FOR A FORMER TOP-5 WR",
+      "BEST I CAN DO IS A FOURTH AND YOU TAKE ON THE ROOKIE DEAL"
+    ]
+  },
+  {
     "date": "2026-10-10",
     "slug": "gus-fring-we-are-not-the-same",
     "boxes": [
@@ -507,24 +526,6 @@
     "boxes": [
       "16-HOUR FLIGHT TO MELBOURNE FOR WEEK 1",
       "AARON DONALD AFTER SIGNING FOR $30M"
-    ]
-  },
-  {
-    "date": "2026-09-08",
-    "slug": "trade-offer",
-    "boxes": [
-      "THE WEEK 1 STARTING JOB",
-      "THIS ARRANGEMENT LASTING PAST WEEK 1",
-      "TUA TAGOVAILOA"
-    ]
-  },
-  {
-    "date": "2026-09-07",
-    "slug": "panik-kalm-panik",
-    "boxes": [
-      "DOWN 10-3 EARLY AT LAMBEAU",
-      "TIED 10-10, PUNTER JUST HIT THE GREATEST PUNT EVER",
-      "NOTRE DAME HANGS 31 AND GOES FOR IT ON 4TH DOWN UP 28"
     ]
   }
 ]
