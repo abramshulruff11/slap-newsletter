@@ -1,5 +1,146 @@
 [
   {
+    "date": "2026-10-12",
+    "story_log": [
+      {
+        "topic_key": "nfc-east-winless-week-5-2026",
+        "title": "NFC East goes 0-3-1 in Week 5 — Giants tie Commanders, Eagles and Cowboys both lose to stay winless",
+        "section": "lead",
+        "development": "Washington and Giants tied 27-27 in OT per ground truth — Commanders ran clock out instead of kicking FG when they could've won per SportsCenter/AlbertBreer. Jacksonville beat Philadelphia 19-17 per ground truth — Eagles up by 10 late, blew lead per recent history. NFC East went 0-3-1 in Week 5, only happened 4 times since 2002 divisional realignment per CBS Sports. Giants 3-1-1, first in NFC East per ground truth. Eagles 2-3, Commanders 1-3-1 per ground truth. Sirianni took blame for loss per SportsCenter.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "david-bailey-jets-breakout-2026",
+        "title": "David Bailey breaks out with 3-sack day vs Browns — Jets No. 2 pick quiets critics",
+        "section": "supporting",
+        "development": "Bailey: 3 sacks vs Cleveland per CBS Sports — best game of young career, quieted critics per CBS Sports. New York beat Cleveland 17-12 per ground truth. Cover 32: 'Bailey's breakout' per CBS Sports. Jets improve to 2-3.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "vikings-start-2026",
+        "title": "Vikings improve to 5-0 — only undefeated team in NFC",
+        "section": "supporting",
+        "development": "Minnesota beat New Orleans 23-13 per ground truth — now 5-0, only undefeated NFC team per ground truth. 109 PF, 64 PA through 5 games per StatMuse. Saints 1-4 per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "49ers-seahawks-week-5-2026",
+        "title": "49ers survive Seahawks 32-29 — stay unbeaten at 5-0 after Cooper Kupp nearly converts 4th down",
+        "section": "supporting",
+        "development": "San Francisco beat Seattle 32-29 per ground truth — Kupp nearly converted 4th down at end, 49ers stay undefeated per SportsCenter. Mike Evans: 7 REC, 113 YDS, 1 TD, first 100-yard game with 49ers per StatMuse. JSN: 7 TDs through 5 games per SportsCenter. Dre Greenlaw ejected for headbutting Ernest Jones IV per SportsCenter. 49ers now 5-0, 154 PF/93 PA per StatMuse.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "brewers-nlcs-2026",
+        "title": "Brewers edge Dodgers 2-1 in NLCS Game 1 — Brice Turang HR, Misiorowski balk controversy",
+        "section": "supporting",
+        "development": "Milwaukee beat Los Angeles 2-1 per ground truth — first playoff win vs Dodgers in 8 years per SportsCenter. Turang took Skubal deep to tie 1-1 per SportsCenter. Misiorowski called for balk per CespedesBBQ — front knee buckled before back foot disengaged, 100% balk per CespedesBBQ. Dodgers acquired Skubal at deadline per recent history. Brewers swept by Dodgers in 2025 NLCS per StatMuse. Series: MIL 1-0.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "tua-tagovailoa-falcons-int-2026",
+        "title": "Tua Tagovailoa throws game-losing INT in Falcons debut — subbed in for injured Penix, picked off immediately in OT",
+        "section": "supporting",
+        "development": "Baltimore beat Atlanta 30-23 in OT per ground truth. Penix hurt ribs late in regulation per CBS Sports, Tua subbed in OT per HaterReport/NFLMemes. Tua: 3 passes, 2 completions, 1 INT per StatMuse — threw pick to lose game per HaterReport/ghetto_gronk. Penix said he'll be ready Week 6 per CBS Sports. RedditCFB: 'Tua coming in as backup, shattering hearts of Georgians for nearly a decade' — reference to 2018 Natty. Derrick Henry: 24 CAR, 102 YDS, 1 REC TD per StatMuse.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "marvin-harrison-texans-trade-2026",
+        "title": "Texans acquire Marvin Harrison Jr. from Cardinals — reunite him with CJ Stroud, send 2027 2nd and sweetener",
+        "section": "atl",
+        "development": "Houston sent 2027 2nd-round pick and sweetener to Arizona for Harrison per AlbertBreer/SportsCenter — reunites him with college QB Stroud per SportsCenter. Cardinals' asking price met per AlbertBreer. Harrison will wear No. 18, checks in for first time per SportsCenter (video from Oct 11). Story from Oct 11 trade rumors now complete.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "chargers-start-2026",
+        "title": "Chargers fall to 0-5 after loss to Broncos — Herbert struggling, Harbaugh under fire",
+        "section": "atl",
+        "development": "Denver beat LA 23-17 per ground truth — Chargers now 0-5, last start this bad 2003 per ground truth. 5 straight losses, last 5+ within season 2023 per ground truth. Herbert this season: 4 TD, 6 INT per recent history. JackKennedy: 'pathetic... hopeless offense, bad HC, shit OC, war criminal GM.' AlbertBreer: Herbert takes sack on game-ending Hail Mary. Chargers 4.5 games back in AFC West.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "lions-cardinals-week-5-2026",
+        "title": "Lions demolish Cardinals 45-21 — Jahmyr Gibbs 151-2, Jameson Williams 2 TD",
+        "section": "atl",
+        "development": "Detroit beat Arizona 45-21 per ground truth. Gibbs: 25 CAR, 151 YDS, 2 TD, 5 REC, 56 REC YDS per StatMuse — Lions 12-0 when he runs for 100 yards per StatMuse. Jameson Williams: 2 REC, 47 YDS, 2 TD, first career game with 2 receiving TDs per StatMuse. Cardinals last win over Lions: 2015-10-11 per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "packers-bears-week-5-2026",
+        "title": "Packers rout Bears 31-7 — Christian Watson 143-2, Jordan Love throws bombs",
+        "section": "atl",
+        "development": "Green Bay beat Chicago 31-7 per ground truth. Watson: 6 REC, 143 YDS, 2 TD per StatMuse — first Packers player with 140/2 vs Bears since Jordy Nelson 2014 per StatMuse. Series: Green Bay 39-15 (regular season since 1999) per ground truth. Both teams now 3-2, tied in NFC North per ground truth. LeBatardShow: 'LeFleur had Love throwing BOMBS.'",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "texans-titans-week-5-2026",
+        "title": "Texans get first win 26-3 over Titans — Houston 1-4, Tennessee 0-5",
+        "section": "atl",
+        "development": "Houston beat Tennessee 26-3 per ground truth — Texans 1-4 (1-4 after 5, last start this bad 2021), Titans 0-5 (0-5 after 5, last start this bad 2009) per ground truth. Texans first win after 0-4 start. Tennessee 4 games back in AFC South.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "patriots-raiders-week-5-2026",
+        "title": "Patriots rout Raiders 45-17 — New England 3-2, Las Vegas 3-2 after hot start",
+        "section": "atl",
+        "development": "New England beat Las Vegas 45-17 per ground truth — Pats beat Raiders for first time since 2020-09-27 per ground truth. Raiders 3-2 after hot 3-0 start. Patriots improve to 3-2.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "bengals-dolphins-week-5-2026",
+        "title": "Bengals beat Dolphins 31-24 — Burrow 4 TD, Miami falls to 0-5",
+        "section": "atl",
+        "development": "Cincinnati beat Miami 31-24 per ground truth. Burrow: 23-32, 190 YDS, 4 TD, 0 INT, 126.3 RTG per StatMuse — 10th career game with 4+ TD passes per StatMuse. Dolphins 0-5, last start this bad 2019 per ground truth. 5 straight losses, last 5+ within season 2022 per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "steelers-colts-week-5-2026",
+        "title": "Steelers beat Colts 34-22 — Jaylen Warren 101-1, 87-1, first Steelers RB with rush TD and rec TD since Najee 2021",
+        "section": "atl",
+        "development": "Pittsburgh beat Indianapolis 34-22 per ground truth. Warren: 15 CAR, 101 YDS, 1 TD, 6 REC, 87 REC YDS, 1 REC TD per StatMuse — first Steelers RB with rush TD and rec TD in game since Najee Harris 2021 per StatMuse. Colts last win at Pittsburgh: 2008-11-09 per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "jmu-american-conference-2026",
+        "title": "James Madison accepts invitation to American Conference — will join no later than July 1, 2028",
+        "section": "atl",
+        "development": "JMU accepted American invitation per CBS Sports/RedditCFB — will join no later than July 1, 2028 per CBS Sports. Most successful G6 football program over last 4 years per CBS Sports. Sun Belt → American. RedditCFB: 'Sun Belt Billy → American Billy.'",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "nhl-oct-11-2026",
+        "title": "NHL action Oct 11 — Kraken beat Capitals 5-3, Rangers rout Canucks 6-2, Hurricanes beat Flyers 4-1",
+        "section": "atl",
+        "development": "Seattle beat Washington 5-3 per ground truth — Joey Daccord: 33 saves, .917 save %, Kraken scored 5+ goals in 4 of 6 games this season per StatMuse. New York Rangers beat Vancouver 6-2 per ground truth — Will Cuylle: 2 goals, 3 SOG, Rangers 5-1-0 in last 6 games per StatMuse. Carolina beat Philadelphia 4-1 per ground truth — Flyers now 0-7, last 7+ straight losses 2023-24, 0-7 after 7 worst start in franchise history (since 1967-68) per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "nba-preseason-oct-11-2026",
+        "title": "NBA preseason Oct 11 — Cavs beat Magic 119-105, Hornets upset Bucks 105-90, Nuggets beat Bulls 133-128",
+        "section": "atl",
+        "development": "Cleveland beat Orlando 119-105 per ground truth. Charlotte upset Milwaukee 105-90 per ground truth. Denver beat Chicago 133-128 per ground truth. Dallas beat Houston 132-115 per ground truth. Preseason action continues.",
+        "is_new": true,
+        "resolved": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-11",
     "story_log": [
       {
@@ -3803,163 +3944,6 @@
         "title": "Mike Piazza joins SVP to recount unforgettable home run for Mets after events of 9/11 — 'I truly felt the support of everybody in that stadium behind me'",
         "section": "atl",
         "development": "Piazza joined SVP on 25th anniversary of 9/11 per SportsCenter. Piazza: 'As I said before, I truly felt the support of everybody in that stadium behind me. I can't describe it. When you feel that, a certain calm came over me' per SportsCenter. Emotional interview remembering moment that brought New York together.",
-        "is_new": true,
-        "resolved": true
-      }
-    ]
-  },
-  {
-    "date": "2026-09-11",
-    "story_log": [
-      {
-        "topic_key": "49ers-rams-australia-2026",
-        "title": "49ers dismantle Rams 27-7 in Melbourne — Myles Garrett's Rams debut a disaster, Trent Williams shuts him down, Matthew Stafford benched in 4th quarter",
-        "section": "lead",
-        "development": "CONTINUING [Day 3]: 49ers demolished Rams 27-7 per ground truth. Myles Garrett's Rams debut: 0 pressures, 0 QB hits, 0 sacks, 0 tackles in 27 pass rush snaps per SharpFootball — first game with 0 pressures since 2018, completely neutralized by Trent Williams. Stafford: 9-27, 126 YDS, 0 TD, 1 INT in 47 minutes, benched for Stetson Bennett IV in 4th quarter per StatMuse/SportsCenter — first game without TD pass since 2023, went entire 2025 season with at least 1 TD every game. Rams arrived 27 hours before kickoff (day of game) per yesterday's content, 49ers arrived early to adjust to time zone. Purdy: 25-34, 205 YDS, 3 TD, 1 INT per ClutchPoints. Mike Evans (new 49er): 6-7, 49 YDS, 1 TD per StatMuse. De'Zhaun Stribling carted off with ankle injury (Achilles intact) per Schefter. 49ers WR snaps: Stribling 12, Evans 10, Deebo 7, Robinson 5. RB split at half: CMC 15 snaps (4 touches), Kaelon Black 14 snaps (8 touches). 99-yard TD drive in 3rd quarter. Over 100,000 fans at MCG per ClutchPoints. Rams flew 15 hours, didn't enjoy Australia, just got blown out.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "miami-famu-blowout-2026",
-        "title": "Miami demolishes Florida A&M 77-7 — 856 yards of offense, went for it on 4th & 7 up 70 with 2 minutes left",
-        "section": "supporting",
-        "development": "Miami beat Florida A&M 77-7 per ground truth. 856 of the 963 total yards of offense per RedditCFB. 77-0 in 3rd quarter per PatMcAfeeShow. Miami went for it on 4th & 7 from 8-yard line up 70 points with 2 minutes left per RedditCFB. Broke 400 rushing yards AND 400 passing yards per RedditCFB. 41st first down per RedditCFB. FAMU scored TD in 4th quarter to avoid shutout per RedditCFB. Miami converted same number of 3rd downs as FAMU, won turnover battle per RedditCFB. Fourth quarter shortened to 10 minutes when score was 77-0. Mario Cristobal has the sauce.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "clippers-federal-investigation-kawhi-2026",
-        "title": "Federal prosecutors in Brooklyn open criminal investigation into Clippers for Kawhi Leonard salary cap circumvention — one week after NBA stripped five first-round picks",
-        "section": "supporting",
-        "development": "Federal prosecutors in Brooklyn opened criminal investigation into Clippers per CBS Sports headline — one week after NBA stripped five first-round picks, fined Ballmer $30M, suspended Ballmer/Frank/Zucker, fined Kawhi $700K, banned Uncle Dennis 5 years for salary cap circumvention involving endorsement deals per recent history. NBA punished Clippers Sept. 3. Federal investigation now escalates matter beyond league discipline.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "us-open-womens-semis-2026",
-        "title": "Rybakina completes comeback to beat Coco Gauff in US Open semifinal — first US Open final for new World No. 1, Sabalenka reaches fourth straight final",
-        "section": "supporting",
-        "development": "Rybakina defeated Gauff after losing first set 3-6 per ESPN/ClutchPoints — Gauff won opening set per ClutchPoints, Rybakina forced third set per ESPN, then won deciding set to reach first US Open final per ESPN. New World No. 1 Rybakina vs Gauff per ESPN. Sabalenka defeated Pegula to reach fourth straight US Open final per SportsCenter — chance to three-peat Saturday. Michelle Obama in attendance per ClutchPoints.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "aj-brown-patriots-injury-2026",
-        "title": "Patriots WR A.J. Brown expected to miss at least four weeks with high ankle sprain suffered in season opener vs Seahawks",
-        "section": "supporting",
-        "development": "CONTINUING [Day 2]: MRI confirmed Brown suffered high ankle sprain in Wednesday's 13-10 loss to Seahawks per Schefter/AdamSchefter — expected to sideline him at least four weeks per Schefter/ESPN. Brown ruled out in 3rd quarter per yesterday's content. Major blow to Patriots offense after Drake Maye's 3-INT 4th quarter in opener.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "anthony-volpe-grand-slam-2026",
-        "title": "Anthony Volpe crushes grand slam in first game back from minors — Yankees sweep Rockies 10-3",
-        "section": "atl",
-        "development": "Volpe in first game back from minors: 3-4, 1 HR (grand slam), 5 RBI, 1 SB per StatMuse — first grand slam since 2023 per StatMuse. Yankees swept Rockies 10-3 per ground truth. New story.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "jared-jones-pirates-no-hitter-2026",
-        "title": "Jared Jones carries no-hitter into 7th inning as Pirates sweep White Sox 2-0 — Jake Mangum's diving catch preserves it",
-        "section": "atl",
-        "development": "Jones took no-hitter into 7th inning per TalkinBaseball — 7.0 IP, 1 ER per later content. Mangum made diving catch to preserve no-hit bid per ClutchPoints. Pirates swept White Sox 2-0 per ground truth/TalkinBaseball to stay in playoff hunt. New story.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "jacob-degrom-return-rangers-2026",
-        "title": "Jacob deGrom strikes out 12 Mariners in six near-perfect innings — most Ks since 2022, but Julio Rodriguez erases Rangers lead in 7th",
-        "section": "atl",
-        "development": "CONTINUING [Day 2]: deGrom: 6.0 IP, 1 ER, 12 SO vs Seattle per TalkinBaseball — most strikeouts since Sept. 18, 2022 when still a Met per TalkinBaseball. All 12 Ks on video per TalkinBaseball. Julio Rodriguez immediately erased Rangers lead after deGrom exited per TalkinBaseball. Mariners won 4-3 per ground truth. New game since pristine outing vs Athletics.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "mlb-games-sept-10-2026",
-        "title": "MLB Wednesday: Braves beat Rays 3-1 in 8th-inning rally, Phillies edge Astros 1-0 behind Zack Wheeler's 9-SO gem",
-        "section": "atl",
-        "development": "Braves broke scoreless tie in 8th inning to beat Rays 3-1 per ground truth/TalkinBaseball. Phillies beat Astros 1-0 per ground truth — Wheeler: 7.0 IP, 1 ER, 9 SO, 110+ pitches (second time throwing 110+ this season, only he and Dylan Cease have done it multiple times) per TalkinBaseball/StatMuse. New games.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "nba-centel-ballmer-clippers-sale-2026",
-        "title": "TheNBACentel: Steve Ballmer plans to sell the Los Angeles Clippers — Bradley Beal will wear No. 3 to reflect expected 3.0 PPG",
-        "section": "atl",
-        "development": "TheNBACentel (parody account): 'BREAKING: Steve Ballmer plans to sell the Los Angeles Clippers' — posted same day federal investigation announced, obvious satire. Same account: 'Bradley Beal will wear No. 3 next season to reflect his expected average of 3.0 points per game.' Beal jokes continue after Clippers gave him Chris Paul's No. 3 jersey per yesterday's content.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "malachi-flynn-50-point",
-        "title": "NBAMemes reminds us Malachi Flynn had a 50-point game — 'still one of basketball's greatest plot twists'",
-        "section": "atl",
-        "development": "NBAMemes: 'Malachi Flynn having a 50-point game is still one of basketball's greatest plot twists 😂.' Throwback to one of strangest NBA performances. New post.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "tua-tagovailoa-oblique-injury-2026",
-        "title": "Falcons QB Tua Tagovailoa suffers oblique injury in Thursday practice — Cooper Rush took all first-team reps, Tua's Week 1 status uncertain",
-        "section": "atl",
-        "development": "Tua sustained oblique injury in practice Thursday, listed as limited per Schefter/ESPN. Cooper Rush took all first-team reps during team part of practice per Schefter. Tua's status for Week 1 vs Steelers uncertain. New injury one day before NFL Australia Game kickoff.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "sam-darnold-hip-injury-seahawks-2026",
-        "title": "Seahawks QB Sam Darnold expected to miss Week 2 vs Cardinals — 'unusual muscle strain in hip area,' no IR consideration yet",
-        "section": "atl",
-        "development": "CONTINUING [Day 2]: Tests showed Darnold has unusual muscle strain in hip area per Pelissero — no consideration of IR at this point, but timetable to return remains TBD per Pelissero. Expected to miss next week's game vs Arizona per yesterday's content (Schefter/ESPN). MRI showed 'really, really good news' per Macdonald yesterday — hip intact, muscle thing.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "navorro-bowman-jr-uconn-commit-2026",
-        "title": "NaVorro Bowman Jr., 5-star point guard and son of former 49ers LB, commits to UConn — highest-ranked 2027 recruit to commit",
-        "section": "atl",
-        "development": "Bowman Jr. (5-star PG, No. 12 overall in ESPN's 2027 rankings) committed to UConn and Dan Hurley per Schefter — highest-ranked player to commit to a school in 2027 High School Class per Schefter. Son of former 49ers standout LB NaVorro Bowman. New commitment.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "brevyn-spann-ford-cowboys-extension-2026",
-        "title": "Cowboys TE Brevyn Spann-Ford agrees to 3-year contract extension with Dallas",
-        "section": "atl",
-        "development": "Spann-Ford reached agreement on 3yr extension with Dallas per Schefter (via agent Mike McCartney). New extension one day before NFL regular season kicks off in Australia.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "josh-jacobs-plea-packers-2026",
-        "title": "Packers RB Josh Jacobs pleads no contest to misdemeanor battery and criminal damage — NFL review continues, no timetable for discipline",
-        "section": "atl",
-        "development": "CONTINUING [Day 2]: Jacobs pleaded no contest to misdemeanor charges of battery and criminal damage to property at court hearing in Green Bay Thursday per Schefter/ESPN. NFL: 'no timetable' for discipline, matter remains under review of personal conduct policy per Schefter — Jacobs remains on Commissioner's Exempt list, no change to status. Story from yesterday (charges reduced from felony), plea entered today.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "missouri-kansas-border-war-hype-2026",
-        "title": "Kansas releases hype video for Missouri Border War — 'These are deeply evil people and we must destroy them'",
-        "section": "atl",
-        "development": "Kansas released intense hype video for Missouri game per RedditCFB. RedditCFB: 'Some rivalries: \"We'll crush them on the field but it's only a game and we respect them as a peer institution 🤗\" Kansas: \"These are deeply evil people and we must destroy them.\"' Border War returns Friday night. New video.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "kate-koval-ncaa-waiver-2026",
-        "title": "NCAA grants Ukrainian Kate Koval transfer waiver after she left LSU due to Russian teammate",
-        "section": "atl",
-        "development": "Koval received NCAA transfer waiver per CBS Sports headline — decided to leave LSU after Tigers signed Russian teenager this summer per CBS Sports. Confirmed departure was due to Mulkey signing Russian player after transfer portal deadline passed per recent history (Sept. 3). Waiver granted today.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "leshon-johnson-dogfighting-sentence-2026",
-        "title": "Former NFL RB LeShon Johnson sentenced to five years in prison for operating dogfighting ring — surrendered 190 dogs, largest number from one individual in federal case",
-        "section": "atl",
-        "development": "Johnson sentenced to five years in prison for operating dogfighting ring per CBS Sports — surrendered 190 dogs, largest number taken from one individual in federal dogfighting case per Department of Justice. Former NFL player sentenced.",
         "is_new": true,
         "resolved": true
       }
