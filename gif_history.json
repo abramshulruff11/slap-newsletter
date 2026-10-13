@@ -1,5 +1,33 @@
 [
   {
+    "date": "2026-10-13",
+    "url": "https://media2.giphy.com/media/v1.Y2lkPWMwZDQzNDlibXJvbDhrOGxidHM4NWRvcGw0dG96NmJlMjN3eWsyODNhOXhvdWd1aiZlcD12MV9naWZzX2dpZklkJmN0PWc/Uqepe3KjEVzPYep8oW/giphy-downsized-medium.gif",
+    "search_term": "[library:celebratory] Stanley Cup parade (NHL)",
+    "library_id": "Uqepe3KjEVzPYep8oW",
+    "library_category": "celebratory"
+  },
+  {
+    "date": "2026-10-13",
+    "url": "https://media3.giphy.com/media/v1.Y2lkPWMwZDQzNDlicGgxdjJyYndvMHJ0b241eml4cGFvOWtyZTlyM3YwcGZrZHAyc2tzYiZlcD12MV9naWZzX2dpZklkJmN0PWc/XHeLeuirRbwptHhSWd/giphy-downsized-medium.gif",
+    "search_term": "[library:embarrassing_awkward] Can't-stop-laughing / spit-take laugh",
+    "library_id": "XHeLeuirRbwptHhSWd",
+    "library_category": "embarrassing_awkward"
+  },
+  {
+    "date": "2026-10-13",
+    "url": "https://media4.giphy.com/media/v1.Y2lkPWMwZDQzNDliN3lhanluZDNjdzJ3ZmpieWZwOWQ1bWRqMWd0cThwN3MwYXBibzJ2eSZlcD12MV9naWZzX2dpZklkJmN0PWc/nWWGEOdq8394Qs4qUw/giphy.gif",
+    "search_term": "[library:respect_awe] Oscars - standing ovation",
+    "library_id": "nWWGEOdq8394Qs4qUw",
+    "library_category": "respect_awe"
+  },
+  {
+    "date": "2026-10-13",
+    "url": "https://media1.giphy.com/media/v1.Y2lkPWMwZDQzNDliZGFoZ3Nmamp4Mzc4bmduOHZkOXAwOXl1dGZ4czNjMmZzamJkdDR3NCZlcD12MV9naWZzX2dpZklkJmN0PWc/nFzZ3X5D3fyb4WTRz4/giphy.gif",
+    "search_term": "[library:fatigue_over_it] 'Bored, here we go again' (Liverpool FC)",
+    "library_id": "nFzZ3X5D3fyb4WTRz4",
+    "library_category": "fatigue_over_it"
+  },
+  {
     "date": "2026-10-12",
     "url": "https://media2.giphy.com/media/v1.Y2lkPWMwZDQzNDlieTFwZTU3NGU3Y24ycG5pbG91Y28xZWc0cWl0YjFtaHQ4N2VjczV1aiZlcD12MV9naWZzX2dpZklkJmN0PWc/KD2gfeYLy6T5V7eMzp/giphy.gif",
     "search_term": "[library:confusion] 'No way' (NBA)",
@@ -390,33 +418,5 @@
     "search_term": "[library:celebratory] NBA Cup celebration",
     "library_id": "ugcpY6mLKO1XwLuEEA",
     "library_category": "celebratory"
-  },
-  {
-    "date": "2026-10-07",
-    "url": "https://media0.giphy.com/media/v1.Y2lkPWMwZDQzNDlia2s5bXZyc2hodW84MGM1YzJvbDF3Z3U0ZTF0eTNraGs3OHFobmNocSZlcD12MV9naWZzX2dpZklkJmN0PWc/tFXCQpZf3Q95S/giphy.gif",
-    "search_term": "[library:celebratory] Champagne celebration (MLB clubhouse)",
-    "library_id": "tFXCQpZf3Q95S",
-    "library_category": "celebratory"
-  },
-  {
-    "date": "2026-10-07",
-    "url": "https://media4.giphy.com/media/v1.Y2lkPWMwZDQzNDlicHN5aXA3YmpjMGU5NnNiYjJnOXN1MWMyaHBhaGd6ZGprNmQwNnFnayZlcD12MV9naWZzX2dpZklkJmN0PWc/YlMJ1e00nwoZdVTIDQ/giphy-downsized-medium.gif",
-    "search_term": "[library:sadness_resignation] John Cena - defeated (Late Late Show)",
-    "library_id": "YlMJ1e00nwoZdVTIDQ",
-    "library_category": "sadness_resignation"
-  },
-  {
-    "date": "2026-10-06",
-    "url": "https://media3.giphy.com/media/v1.Y2lkPWMwZDQzNDliMnJyYWF5enhyaDJvZDlvbHNyanh3M3piYmF3NXN6YjI3YzYyNWl6YSZlcD12MV9naWZzX2dpZklkJmN0PWc/3iLisDUozEvfIRyf9X/giphy-downsized-medium.gif",
-    "search_term": "[library:domination] UFC knockout",
-    "library_id": "3iLisDUozEvfIRyf9X",
-    "library_category": "domination"
-  },
-  {
-    "date": "2026-10-06",
-    "url": "https://media2.giphy.com/media/v1.Y2lkPWMwZDQzNDliNzZ6dHVzMHkzOG9oYjFzc2QyZGplYXNwdzlzZzBoOGU3NHJpc3J6aSZlcD12MV9naWZzX2dpZklkJmN0PWc/I9OPK7PtlsALTepOq2/giphy.gif",
-    "search_term": "[library:sadness_resignation] Sad Keanu on a bench",
-    "library_id": "I9OPK7PtlsALTepOq2",
-    "library_category": "sadness_resignation"
   }
 ]

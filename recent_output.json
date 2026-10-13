@@ -1,5 +1,90 @@
 [
   {
+    "date": "2026-10-13",
+    "story_log": [
+      {
+        "topic_key": "bills-rams-mnf-ot-thriller-2026",
+        "title": "Bills beat Rams 37-34 in OT thriller on MNF — Josh Allen finally wins overtime, Tyler Bass game-winner after Harrison Mevis blocked kick",
+        "section": "lead",
+        "development": "Buffalo beat LA 37-34 in OT per ground truth — Josh Allen finally won his first career overtime game (was 0-7) per HaterReport/SportsCenter. Tyler Bass game-winning FG after Rams' Harrison Mevis 48-yarder blocked per SportsCenter/ClutchPoints. James Cook fumbled in OT, Aaron Donald recovered, Rams drove but kick blocked per HaterReport/ClutchPoints. Allen: 12-19, 331 TOT yards, 2 TOT TD, 121 rush yards (most since 2018), 1 INT per StatMuse/HaterReport. Stafford and Allen both threw for 300+, 4th quarter shootout per HaterReport/NFLMemes. Alaric Jackson threw punch at Bradley Chubb after game per HaterReport/ClutchPoints. Bills improve to 4-1, first in AFC East per ground truth. Rams fall to 2-3, 3rd in NFC West per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "guardians-rays-alcs-2026",
+        "title": "Guardians take ALCS Game 1 over Rays 7-3 — Cleveland offense explodes after quiet start, Nathaniel Lowe go-ahead hit in 8th",
+        "section": "lead",
+        "development": "CONTINUING [Day 9, TIER 1 ELIMINATION-ROUND OPENER]: Cleveland beat Tampa Bay 7-3 per ground truth. Guardians trailed early, then exploded for runs in 8th per SportsCenter/TalkinBaseball. Nathaniel Lowe go-ahead hit in 8th gave Cleveland lead per TalkinBaseball. Chase DeLauter solo HR, Patrick Bailey solo HR per SportsCenter/TalkinBaseball. Drew Rasmussen: 6.0 IP, 8 H, 2 ER, 7 SO per StatMuse — career 2.41 postseason ERA, first run given up after 13 scoreless innings per TalkinBaseball. Cleveland takes 1-0 series lead, Game 2 Monday night.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "brewers-nlcs-2026",
+        "title": "Brewers take 2-0 NLCS lead over Dodgers 7-4 — William Contreras 3-run HR, Yoshinobu Yamamoto knocked out in 3rd",
+        "section": "supporting",
+        "development": "CONTINUING [Day 3, TIER 1 ELIMINATION-ROUND GAME]: Milwaukee beat Los Angeles 7-4 per ground truth. Contreras 3-run HR in 5th per SportsCenter/TalkinBaseball. Yamamoto: 2.2 IP, 3 ER — shortest postseason start of his career per StatMuse, Jake Bauers 12-pitch walk loaded bases before Christian Yelich 2-run single chased him per JeffPassan. Dodgers considering benching Shohei Ohtani for Game 3 per TalkinBaseball/ClutchPoints — 0 HR, 1 RBI since Aug 19 per ClutchPoints. Brewers lead series 2-0, Game 3 Tuesday in Milwaukee.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "josh-allen-overtime-record-2026",
+        "title": "Josh Allen wins first career overtime game after 0-7 start — Tyler Bass game-winner caps dramatic comeback vs Rams",
+        "section": "supporting",
+        "development": "CONTINUING [Day 2]: Allen was 0-7 in OT entering Monday night per StatMuse/HaterReport — finally won in OT after Bills beat Rams 37-34 per ground truth. Allen: 12-19, 210 pass YDS, 121 rush YDS (most since 2018), 2 TOT TD, 1 INT per StatMuse. James Cook fumbled in OT, Rams drove but Mevis kick blocked, Bills kicked game-winner per HaterReport/ClutchPoints. Allen told SVP: 'I haven't been a fan of overtime games in my career, so we get the first one. We'll take it' per SportsCenter/ClutchPoints. Now has 26% chance to win MVP per ghetto_gronk. Story from long-running OT struggles now resolved.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "ohtani-benching-consideration-2026",
+        "title": "Dodgers may bench Shohei Ohtani for NLCS Game 3 — 0 HR, 1 RBI since Aug 19, team considering move after 2-0 deficit",
+        "section": "atl",
+        "development": "Los Angeles will consider benching Ohtani for Game 3 per TalkinBaseball/ClutchPoints — 0 HR, 1 RBI since Aug 19, 3 hits in 6 postseason games per ClutchPoints. Dodgers down 2-0 to Brewers in NLCS. Ken Rosenthal reporting per TalkinBaseball.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "alaric-jackson-punch-2026",
+        "title": "Rams OL Alaric Jackson threw punch at Bills' Bradley Chubb after game — sucker punch caught on camera after Buffalo's OT win",
+        "section": "atl",
+        "development": "Jackson threw punch at Chubb after Bills-Rams ended per HaterReport/ClutchPoints/ESPN — appeared to be sucker punch per CBS Sports. Chubb later said 'It's just emotions... they always catch the second guy. So, I let him swing. And then my teammates held me back, and I just chilled' per ClutchPoints. Post-game altercation after dramatic finish.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "yuki-kawamura-clippers-waived-2026",
+        "title": "Clippers waive point guard Yuki Kawamura",
+        "section": "atl",
+        "development": "Los Angeles Clippers waived Kawamura per ChrisBHaynes. Clippers trim roster before season.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "nba-preseason-oct-12-2026",
+        "title": "NBA preseason action Oct 12 — Blazers beat Hawks, Nets beat Wizards, Timberwolves rout Knicks, Jazz beat Spurs",
+        "section": "atl",
+        "development": "Portland beat London Lions 119-66 per ground truth. Oklahoma City lost to Atlanta 110-113 per ground truth. Brooklyn beat Washington 131-122 per ground truth. Minnesota demolished New York 122-104 per ground truth. Utah beat San Antonio 119-109 per ground truth. Preseason continues across league.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "nhl-oct-12-2026",
+        "title": "NHL action Oct 12 — Sabres beat Panthers 5-3, Senators rout Devils 4-1, Wild beat Golden Knights 4-2",
+        "section": "atl",
+        "development": "Buffalo beat Florida 5-3 per ground truth — Panthers now 2-4, last start this bad 2019-20 per ground truth, Sam Reinhart 2 goals vs former team per StatMuse. Ottawa beat New Jersey 4-1 per ground truth — Senators 5-1 after 6 games, last start this good 2007-08 per ground truth. Minnesota beat Vegas 4-2 per ground truth. Regular season continues.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "college-football-week-7-looking-ahead-2026",
+        "title": "Week 7 college football preview — Ohio State-Indiana, Tennessee-Florida, Notre Dame-BYU headline slate",
+        "section": "atl",
+        "development": "CBS Sports model likes UCLA (-2.5) against Wisconsin per CBS Sports. SportsLine model predictions for Ohio State-Indiana, Tennessee-Florida released per CBS Sports. W_B_Rick: 'I don't wanna hear about the last time we beat Ohio State this week. We might be the defending champs but if you wanna be the Top Dog you gotta show up in these games and beat the other top dogs year in and year out. Whole world thinks you're a one hit wonder. Prove them wrong.' Indiana defending national champs face Buckeyes per W_B_Rick.",
+        "is_new": true,
+        "resolved": false
+      }
+    ]
+  },
+  {
     "date": "2026-10-12",
     "story_log": [
       {
@@ -3819,131 +3904,6 @@
         "title": "Willson Contreras gives up on at-bat after umpire denies pine tar, throws bat back at home plate after strikeout — on rehab assignment with Red Sox Double-A",
         "section": "atl",
         "development": "Contreras gave up on at-bat after umpire didn't let him get more pine tar, threw bat back at home plate as he walked away after striking out per JomboyMedia. On rehab assignment with Red Sox's Double-A Portland Sea Dogs per JomboyMedia. Bizarre tantrum.",
-        "is_new": true,
-        "resolved": true
-      }
-    ]
-  },
-  {
-    "date": "2026-09-12",
-    "story_log": [
-      {
-        "topic_key": "shelton-tiafoe-us-open-semis-2026",
-        "title": "Ben Shelton defeats Frances Tiafoe in four sets to reach first US Open final — first Black American man in US Open final since Arthur Ashe in 1972",
-        "section": "lead",
-        "development": "Shelton defeated Tiafoe in four-set battle per ground truth/ESPN/SportsCenter — will face Alexander Zverev in Sunday's final per ESPN. First Black American man to reach US Open final since Arthur Ashe in 1972 per ESPN. Tiafoe took first set per ESPN/SportsCenter, Shelton adjusted and won next three per ESPN. 158 MPH serve per JomboyMedia. Trinity Rodman in stands per HaterReport. Jalen Brunson courtside per ClutchPoints. Matthew McConaughey and Woody Harrelson analyzed match per SportsCenter/ESPN.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "brewers-clinch-playoffs-2026",
-        "title": "Brewers demolish Reds 20-0, become first NL team to clinch playoff berth — first team in MLB history with multiple 20+ run shutouts in same season",
-        "section": "supporting",
-        "development": "Milwaukee destroyed Cincinnati 20-0 per ground truth/TalkinBaseball — first NL team to clinch playoff berth per CBS Sports. First team in MLB history with multiple 20+ run shutouts in same season (beat Mariners 22-0 on Aug. 18, beat Reds 20-0 tonight) per TalkinBaseball. Garrett Mitchell grand slam made it 17-0 per TalkinBaseball/ClutchPoints. William Contreras 3-run HR made it 20 per ClutchPoints. Brice Turang: 3-3, 1 HR, 1 2B, 4 RBI, 1 BB per StatMuse. Three touchdowns plus extra point.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "rays-clinch-playoffs-caminero-2026",
-        "title": "Junior Caminero walk-off HR sends Rays to playoffs — 40th homer of season in dramatic finish",
-        "section": "supporting",
-        "development": "Caminero hit walk-off HR in 9th to beat Astros 3-1 per ground truth/TalkinBaseball/ClutchPoints — his 40th HR of season per TalkinBaseball. Rays clinch playoff berth, first team to clinch postseason spot this season per CBS Sports. Caminero pulled out LeBron James quote: 'TAMPA, THIS IS FOR YOU' per TalkinBaseball. Drew Rasmussen: 7.0 IP, 8 H, 1 ER, 0 BB, 4 SO — Rays have won his last 10 starts per StatMuse.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "braves-phillies-walkoff-11th-2026",
-        "title": "Drake Baldwin walks off Phillies in 11th inning after Braves rally from final out — Ha-seong Kim ties it, Baldwin ends it",
-        "section": "supporting",
-        "development": "Braves trailed Phillies going into 9th, Ha-seong Kim tied game with 2-out hit per TalkinBaseball/ClutchPoints, Baldwin delivered walk-off in 11th per TalkinBaseball/ClutchPoints to win 6-5 per ground truth. Luiz Arraez gave Phillies lead in top of 11th per ClutchPoints. Mike Yastrzemski's third hit of night tied game in 9th per TalkinBaseball. Wild extra-inning finish.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "athletics-walkoff-mariners-2026",
-        "title": "Donovan Walton walk-off HR for Athletics, Mason Miller ends it with 103 MPH paint — Seattle loses in dramatic fashion",
-        "section": "supporting",
-        "development": "Walton hit walk-off 2-run HR to beat Mariners 6-5 per ground truth/TalkinBaseball/ClutchPoints. Lazaro Montes tied game for Seattle with 2-run HR in 9th per ClutchPoints. Miller closed game with 103 MPH strikeout per TalkinBaseball. Justin Martinez threw immaculate inning for Dbacks (second immaculate inning of season for Arizona, fifth in franchise history) per TalkinBaseball. Wild back-and-forth finishes across MLB.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "mizzou-kansas-border-war-2026",
-        "title": "Missouri defeats Kansas 38-21 in Border War, extends win streak to 5 straight — Mizzou now in sole possession of best SEC record",
-        "section": "atl",
-        "development": "Missouri beat Kansas 38-21 per ground truth/RedditCFB — extends Border War win streak to 5 straight per RedditCFB. Mizzou now in sole possession of best record in SEC per RedditCFB. Mizzou moves to 129-195 all-time vs Kansas per RedditCFB. Kansas released hype video before game: 'These are deeply evil people and we must destroy them' per yesterday's content. Mizzou stole Kansas drum per RedditCFB. Kansas blocked FG for TD, destroyed ref's hamstring on return per SharpFootball.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "bc-rutgers-red-bandanna",
-        "title": "Boston College defeats Rutgers 28-21 in Red Bandanna Game honoring Welles Crowther on 25th anniversary of 9/11",
-        "section": "atl",
-        "development": "BC beat Rutgers 28-21 per ground truth/RedditCFB. Game honored Welles Crowther (BC alum who died on 9/11 saving others) on 25th anniversary per SportsCenter. Bill O'Brien: 'It's just a monumental night here at BC for everything that it means in memory of Welles Crowther, what he did on that fateful day 25 years ago. You gotta win so you can celebrate in memory of Welles' per SportsCenter. RedditCFB: Rutgers played BC more competitively than they played UMass.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "nc-state-richmond-weather-delay-2026",
-        "title": "NC State demolishes Richmond 73-0 after weather delay — 'With NC State's luck this had 28-0 lead unable to be resumed written all over it'",
-        "section": "atl",
-        "development": "NC State destroyed Richmond 73-0 per ground truth/RedditCFB. RedditCFB: 'NC State successfully completed their game against Richmond in an absolute blowout. This is a pleasant surprise for the Wolfpack: with NC State's luck this had 28-0 lead unable to be resumed and declared no contest written all over it.'",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "rudy-martin-jr-debut-blue-jays-2026",
-        "title": "Rudy Martin Jr. makes MLB debut at 30 after 12 years in minors — taken in 25th round of draft that doesn't exist anymore",
-        "section": "atl",
-        "development": "Toronto calling up Martin, expected to make debut after 12 years in minors per Passan. Martin (30 years old) was taken in 25th round of draft in 2014 — which doesn't exist anymore per Passan. Played indy ball, Mexican League, now MLB per Passan.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "tua-tagovailoa-oblique-injury-2026",
-        "title": "Tua Tagovailoa ruled out for Falcons' Week 1 opener vs Steelers — Cooper Rush will start",
-        "section": "atl",
-        "development": "CONTINUING [Day 3]: Falcons ruled Tua OUT for Sunday's opener at Pittsburgh per Schefter/AlbertBreer/ESPN. Cooper Rush will start per Schefter/AdamSchefter. Rush as starting QB: 60.5 CMP%, 200.6 YDS/G, 1.1 TD/G with winning record (9-7) per StatMuse. Oblique injury sustained in practice Thursday.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "aj-brown-patriots-injury-2026",
-        "title": "Patriots place A.J. Brown on injured reserve with high ankle sprain — out minimum four games, return earliest Oct. 18 vs Jets",
-        "section": "atl",
-        "development": "CONTINUING [Day 3]: Patriots placed Brown on IR per Schefter/AdamSchefter/AlbertBreer — out minimum four games. Return at earliest Oct. 18 vs Jets per AlbertBreer. Patriots also have Thursday night game in Chicago that week which could complicate comeback per AlbertBreer. High ankle sprain from Wednesday's opener.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "mark-williams-suns-shoulder-surgery-2026",
-        "title": "Suns center Mark Williams undergoes surgery for torn labrum in left shoulder — will miss extended period after offseason workout injury",
-        "section": "atl",
-        "development": "Williams underwent surgery Thursday to repair torn labrum in left shoulder per Shams — will miss extended period. Suffered injury in offseason workout per Shams. Phoenix's frontcourt depth tested.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "swift-bears-extension-2026",
-        "title": "Bears extend D'Andre Swift to 3-year, $33.75M deal — reunites with Ben Johnson on new contract",
-        "section": "atl",
-        "development": "Swift agreed to 3yr/$33.75M extension ($27.5M guaranteed) per Schefter/AdamSchefter. Career highs last season under Johnson: 1,087 yards, 9 TDs per Schefter. Third NFL contract for Swift. Deal wrapped up with regular season looming.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "kyle-shanahan-extension-49ers-2026",
-        "title": "49ers quietly signed Kyle Shanahan to contract extension in offseason — one of NFL's top coaches locked up for years to come",
-        "section": "atl",
-        "development": "49ers signed Shanahan to extension in offseason per Pelissero/@ringer/@netflixsports. Previously believed to be signed through 2027 per Pelissero. Now locked up for years to come. Stability for San Francisco.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "mike-piazza-anniversary-2026",
-        "title": "Mike Piazza joins SVP to recount unforgettable home run for Mets after events of 9/11 — 'I truly felt the support of everybody in that stadium behind me'",
-        "section": "atl",
-        "development": "Piazza joined SVP on 25th anniversary of 9/11 per SportsCenter. Piazza: 'As I said before, I truly felt the support of everybody in that stadium behind me. I can't describe it. When you feel that, a certain calm came over me' per SportsCenter. Emotional interview remembering moment that brought New York together.",
         "is_new": true,
         "resolved": true
       }
