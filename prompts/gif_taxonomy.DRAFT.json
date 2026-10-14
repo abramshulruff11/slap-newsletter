@@ -1,0 +1,846 @@
+{
+  "_meta": {
+    "status": "DRAFT for Abram's review (SLA-132). Not read by any code.",
+    "source": "155 Pass 1 gif_concept values in archive/*/story_plan.json, 2026-09-02 to 2026-10-14; 152 classified, 3 left out (2 empty, 1 Tier 3 specific clip).",
+    "supply_note": "supply_ids_by_label is a judgment from each verified GIF's label, not from looking at it. SLA-133's vision tagging replaces it.",
+    "fill_rank": "Ordered by shortfall = target_supply - supply_estimate, then demand. target_supply = max(3, 2 x weekly demand): with a 7-day cooldown a subcategory needs at least a week of demand in stock, and twice that so the pick is not forced. SLA-133/134 fill in this order.",
+    "entity_layer": {
+      "fields": {
+        "players": "list of names",
+        "teams": "list of team names",
+        "figures": "associated public figures (e.g. a celebrity tied to a player)",
+        "league": "nfl|mlb|nba|nhl|wnba|ncaafb|...|none"
+      },
+      "rule": "Entity tags come from Giphy metadata (channel, uploader, title, slug) and visible cues (jersey number and colours, logos, on-screen text). Never from recognizing a face. An entity tag with no metadata or visible support is not written.",
+      "use": "A secondary filter: prefer an entity match within the chosen subcategory, never pick an off-situation GIF because the entity matches."
+    }
+  },
+  "subcategories": [
+    {
+      "mood": "cockiness_smugness",
+      "id": "vindication_doubters_silenced",
+      "description": "'Told you so' after being doubted; the doubters go quiet.",
+      "use_when": "An underdog, a written-off player or team, or a cut/traded player proves people wrong.",
+      "demand": 34,
+      "demand_share": 0.224,
+      "supply_estimate": 5,
+      "supply_ids_by_label": [
+        "DT3gYifPXBt5voafS1",
+        "25OBBnY9j1uiVDV4lJ",
+        "3o72F0Bvsi8CLuY5KE",
+        "s1iCWGBXye6FOM6rSo",
+        "tFdqLBcwrh3AdgzYgT"
+      ],
+      "requests": [
+        "2026-09-03: Pablo Torre vindication—smug 'I told you so' energy after months of covering this story",
+        "2026-09-04: smug vindication after being doubted all summer",
+        "2026-09-05: smug dominance after being doubted — Miami fans waited years for a receiver like this, and here he is, an 18-year-old true freshman torching an ACC team in his first real game",
+        "2026-09-05: quiet, rising vindication — Rocchio and Bazzana aren't stars, but they just delivered two walk-offs in one day and nobody saw it coming",
+        "2026-09-07: Smug satisfaction after dominating someone who doubted you",
+        "2026-09-09: Smug vindication after being doubted all along—Baker proving everyone wrong",
+        "2026-09-10: Vindication after being doubted all summer — the smug satisfaction of proving everyone wrong",
+        "2026-09-12: Smug vindication after being doubted all season — the moment the doubters go silent and you get to say 'I told you so'",
+        "2026-09-13: vindication after being doubted — Rybakina winning again after proving herself earlier this year",
+        "2026-09-14: smug vindication after being doubted all offseason",
+        "2026-09-15: smug vindication after being doubted — everyone said Mahomes wouldn't run, then he scores two rushing TDs on the first drive",
+        "2026-09-16: Smug vindication after being doubted or let go — the 'I told you so' energy as the old team watches you succeed.",
+        "2026-09-17: arms raised in vindication—PCA finally getting the recognition he's earned all season",
+        "2026-09-19: Smug vindication — doubted all summer, now completing 93.8% of his passes and breaking records",
+        "2026-09-20: Smug vindication after being doubted and abandoned",
+        "2026-09-22: Smug vindication after being doubted all summer",
+        "2026-09-23: Smug vindication after being doubted all season — the small-market team that just beat the big spenders",
+        "2026-09-25: Smug vindication after being doubted all summer",
+        "2026-09-26: Smug vindication after being counted out — quiet 'I told you so' energy as the doubters fall silent",
+        "2026-09-26: Dominance and swagger after proving doubters wrong — the 'we're not dead yet' energy",
+        "2026-09-28: smug vindication after being doubted all summer",
+        "2026-09-30: smug confidence after dominating someone who doubted you — the Yankees and Padres walked into hostile territory and shut the crowd up",
+        "2026-10-01: Smug vindication after surviving certain death — Phillies fans after Bohm's go-ahead homer in the 10th, from two outs away from elimination to Game 3 alive",
+        "2026-10-02: Smug vindication after being doubted all offseason — Browns fans were ready to tank, now they're atop the AFC North and Deshaun looks great",
+        "2026-10-04: Smug vindication after being doubted all season — the underdog just silenced the empire",
+        "2026-10-06: Smug vindication after dominating on the road in primetime — the Falcons just embarrassed the Saints in their own building during a ceremony honoring their resilience",
+        "2026-10-07: Smug vindication after being doubted all summer — the 'I told you so' face",
+        "2026-10-09: smug vindication after being doubted all series",
+        "2026-10-10: quiet vindication after being doubted all season — the Valkyries were an expansion team, the Dream were underdogs, and both just swept the reigning powers",
+        "2026-10-10: smug vindication after coming back from the brink — Ramírez hitting the HR that saved the Guardians' season",
+        "2026-10-11: Smug vindication after being doubted — down 0-2, told they were finished, now they're in the ALCS",
+        "2026-10-12: smug vindication after being doubted",
+        "2026-10-12: vindication after being swept last year",
+        "2026-10-13: Smug confidence after proving the doubters wrong — the 'I told you so' energy"
+      ],
+      "per_week": 5.5,
+      "target_supply": 12,
+      "shortfall": 7,
+      "fill_rank": 1
+    },
+    {
+      "mood": "sadness_resignation",
+      "id": "season_slipping_away",
+      "description": "Not over yet, but you can feel it going.",
+      "use_when": "A collapse in progress, a star injured early, down 0-2.",
+      "demand": 7,
+      "demand_share": 0.046,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "requests": [
+        "2026-09-17: weary resignation as the season slips away",
+        "2026-09-19: Quiet resignation — hope built up over three months, seven games, then back to the void",
+        "2026-09-21: quiet resignation as the season slips away before it starts",
+        "2026-09-28: quiet resignation as the season slips away",
+        "2026-10-06: Quiet resignation as the season slips away — the Yankees' defense has collapsed and the Rays are one win from ending their season",
+        "2026-10-07: Quiet resignation as the season teeters — the moment right before everything either clicks or collapses",
+        "2026-10-12: quiet resignation as the season implodes"
+      ],
+      "per_week": 1.1,
+      "target_supply": 3,
+      "shortfall": 3,
+      "fill_rank": 2
+    },
+    {
+      "mood": "sadness_resignation",
+      "id": "cruel_twist",
+      "description": "You did everything right and the universe said no.",
+      "use_when": "A robbed home run, a late error, a near miss.",
+      "demand": 4,
+      "demand_share": 0.026,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "requests": [
+        "2026-09-24: BigCat's 'That was the moment. Fuck' — the Cubs needed this game and couldn't deliver.",
+        "2026-10-04: Agonizing resignation after a cruel twist of fate — you did everything right and the universe said no",
+        "2026-10-08: Disbelief and hope crushed — Manny Machado watching what he thought was a game-tying home run get caught at the wall",
+        "2026-10-14: quiet resignation after the error costs you the game"
+      ],
+      "per_week": 0.7,
+      "target_supply": 3,
+      "shortfall": 3,
+      "fill_rank": 3
+    },
+    {
+      "mood": "relief (NEW)",
+      "id": "dodged_disaster",
+      "description": "Exhale after a scare or a near-collapse.",
+      "use_when": "An injury that turned out fine, a team that nearly blew it.",
+      "demand": 4,
+      "demand_share": 0.026,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "requests": [
+        "2026-09-18: The reader feels the mix of fear and relief: it looked bad, but the thumbs up is always a good sign.",
+        "2026-09-22: Bregman dodged a career-altering injury, and the Cubs dodged losing their star before October",
+        "2026-09-26: Disaster narrowly averted — frantic scrambling that somehow results in survival",
+        "2026-10-12: relief after narrowly escaping disaster"
+      ],
+      "per_week": 0.7,
+      "target_supply": 3,
+      "shortfall": 3,
+      "fill_rank": 4
+    },
+    {
+      "mood": "relief (NEW)",
+      "id": "drought_over_or_star_back",
+      "description": "Weary relief when a long wait ends.",
+      "use_when": "A drought snapped, a star returning, a clinch after years.",
+      "demand": 4,
+      "demand_share": 0.026,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "requests": [
+        "2026-09-08: Relief and anticipation—fans/team exhaling because the superstar is finally back and they desperately needed him",
+        "2026-09-15: quiet relief after long wait — Judge back, Yankees clinch, the drought is over",
+        "2026-09-25: Excitement and relief — seeding matters, and the Valkyries fought for every inch",
+        "2026-10-13: Weary relief after finally ending a long drought — the smile of someone who just got a monkey off their back"
+      ],
+      "per_week": 0.7,
+      "target_supply": 3,
+      "shortfall": 3,
+      "fill_rank": 5
+    },
+    {
+      "mood": "anticipation (NEW)",
+      "id": "big_game_buildup",
+      "description": "Nervous excitement before a big fight or game; scoreboard-watching.",
+      "use_when": "Playoff openers, marquee matchups set, tight standings races.",
+      "demand": 4,
+      "demand_share": 0.026,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "requests": [
+        "2026-09-07: Let's get it on, anticipation for a battle",
+        "2026-09-10: Frantic scoreboard watching — refreshing the standings every half-inning because every game matters",
+        "2026-09-29: Nervous anticipation mixed with excitement — the 'here we go again' face before a big postseason game",
+        "2026-10-13: Quiet confidence after surviving chaos and now stepping into the real fight"
+      ],
+      "per_week": 0.7,
+      "target_supply": 3,
+      "shortfall": 3,
+      "fill_rank": 6
+    },
+    {
+      "mood": "sadness_resignation",
+      "id": "bad_news_accepted",
+      "description": "Taking bad news on the chin: a suspension, a benching, a forced exit.",
+      "use_when": "Off-field news delivered to someone who can only accept it.",
+      "demand": 3,
+      "demand_share": 0.02,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "requests": [
+        "2026-09-03: Quiet resignation—Mendoza watching from the sideline as his moment gets delayed",
+        "2026-09-03: Betrayal and resignation—the quiet heartbreak of being put in an impossible position",
+        "2026-09-20: Resigned acceptance of bad news"
+      ],
+      "per_week": 0.5,
+      "target_supply": 3,
+      "shortfall": 3,
+      "fill_rank": 7
+    },
+    {
+      "mood": "celebratory",
+      "id": "comeback_euphoria",
+      "description": "Despair turning into joy within one game or race.",
+      "use_when": "Walk-offs after trailing, rallies from double digits, still alive in a race.",
+      "demand": 3,
+      "demand_share": 0.02,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "requests": [
+        "2026-09-12: Emotional whiplash — the three-beat swing from despair to hope back to despair and finally to joy, all in one game",
+        "2026-09-16: Desperation turning into euphoria — the moment a team realizes they're still alive in a race they thought was over.",
+        "2026-10-03: Quiet belief turning into loud celebration — the Valkyries rallying around each other after being down 16"
+      ],
+      "per_week": 0.5,
+      "target_supply": 3,
+      "shortfall": 3,
+      "fill_rank": 8
+    },
+    {
+      "mood": "cockiness_smugness",
+      "id": "got_away_with_it",
+      "description": "Grinning after an undeserved escape or bailout.",
+      "use_when": "A controversial call or lucky break saves someone.",
+      "demand": 2,
+      "demand_share": 0.013,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "requests": [
+        "2026-09-02: smug satisfaction after a long, exhausting ordeal finally ends",
+        "2026-09-06: Smug satisfaction at getting away with something you absolutely did not deserve — the vibe when you know you got bailed out and you're just gonna grin and take it"
+      ],
+      "per_week": 0.3,
+      "target_supply": 3,
+      "shortfall": 3,
+      "fill_rank": 9
+    },
+    {
+      "mood": "respect_awe",
+      "id": "carrying_the_load",
+      "description": "Accepting a burden; doing everything for the team.",
+      "use_when": "A young captain named, a veteran playing three positions.",
+      "demand": 2,
+      "demand_share": 0.013,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "requests": [
+        "2026-09-16: The weight of responsibility — a young player accepting a massive burden with quiet confidence.",
+        "2026-10-09: Year 24, first time in Philly threads, and he's still got to carry everything—the memes about being point guard AND backup center land because they're true"
+      ],
+      "per_week": 0.3,
+      "target_supply": 3,
+      "shortfall": 3,
+      "fill_rank": 10
+    },
+    {
+      "mood": "domination",
+      "id": "shell_shocked_loser",
+      "description": "The losing side's thousand-yard stare after getting worked.",
+      "use_when": "The pitcher who gave up three straight HRs; a defense shredded by a backup.",
+      "demand": 2,
+      "demand_share": 0.013,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "requests": [
+        "2026-09-06: Shell-shocked disbelief after getting absolutely worked — the thousand-yard stare when you just got embarrassed on national TV",
+        "2026-09-29: Weary, stunned disbelief at being outplayed by a 38-year-old who hasn't started in 1,009 days — the 'how is this happening' face"
+      ],
+      "per_week": 0.3,
+      "target_supply": 3,
+      "shortfall": 3,
+      "fill_rank": 11
+    },
+    {
+      "mood": "confusion",
+      "id": "upset_shock",
+      "description": "Mouth agape at a result nobody predicted.",
+      "use_when": "Big underdog wins, a No. 1 falling, a 3-0 nobody saw coming.",
+      "demand": 6,
+      "demand_share": 0.039,
+      "supply_estimate": 1,
+      "supply_ids_by_label": [
+        "KD2gfeYLy6T5V7eMzp"
+      ],
+      "requests": [
+        "2026-09-13: shock — disbelief at the underdog winning",
+        "2026-09-24: Disbelief — two teams at .500 battling for a division title like it's the World Series.",
+        "2026-09-27: quiet resignation turning to stunned disbelief — Michigan fans watching the clock hit zero and realizing it's over",
+        "2026-09-28: confused disbelief at an outcome nobody predicted",
+        "2026-10-03: Mouth agape shock — the moment Brent Vigen realized he just gave Idaho a free play",
+        "2026-10-11: The reader sees Arch's INT, knows Texas is mortal, and realizes the Red River Rivalry still bites"
+      ],
+      "per_week": 1.0,
+      "target_supply": 3,
+      "shortfall": 2,
+      "fill_rank": 12
+    },
+    {
+      "mood": "cockiness_smugness",
+      "id": "smug_indifference",
+      "description": "Unbothered by criticism or by a mess; a shrug at your own failure.",
+      "use_when": "Someone brushes off a blowout loss, a call-out, or a plan falling apart.",
+      "demand": 3,
+      "demand_share": 0.02,
+      "supply_estimate": 1,
+      "supply_ids_by_label": [
+        "Nx2Lx1RmLadtC"
+      ],
+      "requests": [
+        "2026-09-21: smug indifference watching a plan fall apart",
+        "2026-09-27: smug indifference — Don Mattingly saying 'I was encouraged' after a blowout loss",
+        "2026-10-05: smug indifference after being called out"
+      ],
+      "per_week": 0.5,
+      "target_supply": 3,
+      "shortfall": 2,
+      "fill_rank": 13
+    },
+    {
+      "mood": "celebratory",
+      "id": "together_again",
+      "description": "Celebrating together: reunions, brothers, chaotic fun.",
+      "use_when": "Reunions, sibling feats, fun signings.",
+      "demand": 3,
+      "demand_share": 0.02,
+      "supply_estimate": 1,
+      "supply_ids_by_label": [
+        "DfLwM9kttDFEQ"
+      ],
+      "requests": [
+        "2026-09-02: chaotic celebration—everybody vibing, nobody knows what's happening but it's fun",
+        "2026-09-02: reunion hug after years apart—old friends back together",
+        "2026-10-14: brothers celebrating together after dominating on the same night"
+      ],
+      "per_week": 0.5,
+      "target_supply": 3,
+      "shortfall": 2,
+      "fill_rank": 14
+    },
+    {
+      "mood": "sadness_resignation",
+      "id": "farewell_to_a_legend",
+      "description": "Grief and respect together: a death or a retirement.",
+      "use_when": "Obituaries, retirement announcements.",
+      "demand": 2,
+      "demand_share": 0.013,
+      "supply_estimate": 1,
+      "supply_ids_by_label": [
+        "rvxMJNyHAgwlW4YWpJ"
+      ],
+      "requests": [
+        "2026-09-25: Grief and respect for a foundational figure in NBA history whose name has faded from casual memory but whose achievements were monumental in their era",
+        "2026-10-06: Quiet resignation tinged with respect — a legend is hanging up his skates and the hockey world is saying goodbye"
+      ],
+      "per_week": 0.3,
+      "target_supply": 3,
+      "shortfall": 2,
+      "fill_rank": 15
+    },
+    {
+      "mood": "betrayal_self_sabotage",
+      "id": "franchise_meltdown",
+      "description": "A franchise in disarray, watching everything fall apart.",
+      "use_when": "Upset losses that expose a broken organization.",
+      "demand": 2,
+      "demand_share": 0.013,
+      "supply_estimate": 1,
+      "supply_ids_by_label": [
+        "BsIZ9aNAv69iKMNC39"
+      ],
+      "requests": [
+        "2026-09-14: franchise in disarray watching everything fall apart",
+        "2026-10-05: franchise in disarray"
+      ],
+      "per_week": 0.3,
+      "target_supply": 3,
+      "shortfall": 2,
+      "fill_rank": 16
+    },
+    {
+      "mood": "relief (NEW)",
+      "id": "emotional_release",
+      "description": "Tears and hands on face after a pressure win.",
+      "use_when": "A first major, a career-defining win.",
+      "demand": 1,
+      "demand_share": 0.007,
+      "supply_estimate": 1,
+      "supply_ids_by_label": [
+        "rvxMJNyHAgwlW4YWpJ"
+      ],
+      "requests": [
+        "2026-09-12: Emotional relief after a massive, pressure-packed win — tears, hands on face, can't believe it moment"
+      ],
+      "per_week": 0.2,
+      "target_supply": 3,
+      "shortfall": 2,
+      "fill_rank": 17
+    },
+    {
+      "mood": "cockiness_smugness",
+      "id": "taunting_the_rival",
+      "description": "Rubbing it in a rival's face: stare-downs, chants, revenge.",
+      "use_when": "Revenge games, student-section chants, staring down an enemy.",
+      "demand": 2,
+      "demand_share": 0.013,
+      "supply_estimate": 2,
+      "supply_ids_by_label": [
+        "xUA7beT9PDJoDNAmgU",
+        "34qsir9hxG8sloNtXQ"
+      ],
+      "requests": [
+        "2026-09-02: cold-blooded vengeance—guy staring down his enemy after exacting revenge",
+        "2026-10-03: Smug satisfaction — Northwestern students chanting 'Safety School' at Penn State"
+      ],
+      "per_week": 0.3,
+      "target_supply": 3,
+      "shortfall": 1,
+      "fill_rank": 18
+    },
+    {
+      "mood": "celebratory",
+      "id": "pure_joy_breakthrough",
+      "description": "A kid living the dream; a first or a record.",
+      "use_when": "Prospects' first big night, a record broken by surprise.",
+      "demand": 2,
+      "demand_share": 0.013,
+      "supply_estimate": 2,
+      "supply_ids_by_label": [
+        "D7T5m0AFV8Yg0",
+        "iOMSfTen1pZUPTx2QF"
+      ],
+      "requests": [
+        "2026-09-17: pure joy—kid living out his dream, hitting two homers in one night",
+        "2026-09-19: Celebration — pure joy after breaking a record you didn't know you were chasing until someone told you mid-interview"
+      ],
+      "per_week": 0.3,
+      "target_supply": 3,
+      "shortfall": 1,
+      "fill_rank": 19
+    },
+    {
+      "mood": "hiding_avoidance",
+      "id": "caught_red_handed",
+      "description": "Frozen, caught doing something embarrassing.",
+      "use_when": "Burner accounts, hot-mic moments.",
+      "demand": 1,
+      "demand_share": 0.007,
+      "supply_estimate": 2,
+      "supply_ids_by_label": [
+        "jUwpNzg9IcyrK",
+        "xT5LMBhbii9Emb642Q"
+      ],
+      "requests": [
+        "2026-09-02: Blooper: guy caught red-handed doing something embarrassing, frozen deer-in-headlights moment"
+      ],
+      "per_week": 0.2,
+      "target_supply": 3,
+      "shortfall": 1,
+      "fill_rank": 20
+    },
+    {
+      "mood": "join_the_failure",
+      "id": "schadenfreude",
+      "description": "Enjoying a rival's pain.",
+      "use_when": "A rival's kicker misses; a hated team collapses.",
+      "demand": 1,
+      "demand_share": 0.007,
+      "supply_estimate": 2,
+      "supply_ids_by_label": [
+        "holej0e9EgHgmvEVv4",
+        "4PUjcUBXIzQYfI8iVa"
+      ],
+      "requests": [
+        "2026-10-03: Disbelief mixed with schadenfreude — Virginia Tech fans watching the kick sail over the upright and the ref wave it no good"
+      ],
+      "per_week": 0.2,
+      "target_supply": 3,
+      "shortfall": 1,
+      "fill_rank": 21
+    },
+    {
+      "mood": "sadness_resignation",
+      "id": "season_over",
+      "description": "Quiet resignation when the season ends.",
+      "use_when": "Elimination, a sweep, a final loss with nothing left.",
+      "demand": 17,
+      "demand_share": 0.112,
+      "supply_estimate": 10,
+      "supply_ids_by_label": [
+        "26FPImXfDlv4AFbBC",
+        "5O0E0jOnTDVfjtXz0k",
+        "QAJ1uCAQDQiBg0mEzN",
+        "3d2kMNpdOWQan2sQrG",
+        "fJXFGEicIov9QGjCkj",
+        "I9OPK7PtlsALTepOq2",
+        "9S5j6xr0sCuouLklM2",
+        "YlMJ1e00nwoZdVTIDQ",
+        "bHUajSIMIRcDY73Pti",
+        "l4LfagGUuIOouvWijX"
+      ],
+      "requests": [
+        "2026-09-04: quiet resignation as the season ends",
+        "2026-09-06: Quiet, resigned acceptance that it's over — the vibe when you know you're cooked and there's nothing left to say",
+        "2026-09-10: Quiet resignation as the season ends — Patriots fans watching Maye throw the game-ending INT",
+        "2026-09-11: quiet resignation as the season ends — Rams watching the clock run out in the 4th quarter, knowing they have a 17-hour flight home",
+        "2026-09-12: Quiet resignation as the season ends — the moment you realize it's over and there's nothing left to fight for",
+        "2026-09-13: quiet resignation as the season ends — Ohio State kicker missing wide left, sideline watching in disbelief",
+        "2026-09-15: quiet resignation as the season ends — so close, yet so far",
+        "2026-09-22: Quiet resignation as the season ends — Giants fans watching their optimism evaporate in real time",
+        "2026-09-23: Resigned 'well, that's it' — season over, hope extinguished, nothing left but acceptance",
+        "2026-09-24: Quiet resignation as the season ends — the camera on Vlad in the dugout, knowing it's over, knowing he gave eight years and got one pennant.",
+        "2026-09-30: quiet resignation as the season ends — the Lynx were supposed to be the No. 1 seed favorite, and they just got swept by an 8-seed",
+        "2026-10-02: Quiet resignation as the season ends — Phillies fans watching their championship window close again, another year of falling short",
+        "2026-10-05: quiet resignation as the season ends",
+        "2026-10-08: Dejection and seasons ending — Yankees fans watching their team get swept out of the playoffs for the Nth time in the last decade",
+        "2026-10-09: quiet resignation as the season ends",
+        "2026-10-10: quiet resignation as the season ends — Mike Norvell watching another blowout loss, knowing his seat is blazing but the buyout is too big",
+        "2026-10-11: Quiet resignation as the season ends — Brown sitting alone in the locker room, refusing to watch on the bench"
+      ],
+      "per_week": 2.8,
+      "target_supply": 6,
+      "shortfall": 0,
+      "fill_rank": 22
+    },
+    {
+      "mood": "respect_awe",
+      "id": "calm_dominance",
+      "description": "Quiet, unbothered greatness; the calm assassin.",
+      "use_when": "Repeated clutch performances, routine excellence, a closer shutting the door.",
+      "demand": 8,
+      "demand_share": 0.053,
+      "supply_estimate": 3,
+      "supply_ids_by_label": [
+        "Aas1NtStlvy7EYcDBY",
+        "A28CxD7W6d4B2",
+        "xUOrwq55SJxeiUBsPu"
+      ],
+      "requests": [
+        "2026-09-09: Quiet competence—a professional returning to work, the 'I never left' energy",
+        "2026-09-16: Quiet, unbothered dominance — the calm confidence of someone who just keeps delivering in the biggest moments.",
+        "2026-09-18: quiet, unstoppable dominance — Allen doing something no one has ever done, making it look routine",
+        "2026-09-28: effortless dominance, barely breaking a sweat",
+        "2026-10-01: Ice-cold clutch under pressure — Arike hitting the fading corner three to tie it late in regulation, then the OT bomb",
+        "2026-10-02: Wilson was unstoppable: 36 points, 10 rebounds, 11-18 FG. She now has more playoff double-doubles than everyone except one player in WNBA history. The Aces' championship pedigree showed.",
+        "2026-10-04: Quiet dominance — the calm assassin just closed the door without breaking a sweat",
+        "2026-10-12: calm, quiet dominance"
+      ],
+      "per_week": 1.3,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 23
+    },
+    {
+      "mood": "fatigue_over_it",
+      "id": "here_we_go_again",
+      "description": "Same story, again. Weary at a repeat failure.",
+      "use_when": "Another injury, another losing streak, the same QB carousel.",
+      "demand": 7,
+      "demand_share": 0.046,
+      "supply_estimate": 3,
+      "supply_ids_by_label": [
+        "nFzZ3X5D3fyb4WTRz4",
+        "eKsDAtyWPxkGRpEEtU",
+        "UnCXCkq3cs1uCv6uy2"
+      ],
+      "requests": [
+        "2026-09-07: Disbelief, head in hands, how did this happen AGAIN",
+        "2026-09-07: Here we go again, same story different team",
+        "2026-09-10: Resignation as another star goes down — Yankees fans have seen this movie before",
+        "2026-09-14: quiet resignation as the American drought continues",
+        "2026-09-18: exasperated resignation — Syracuse fans watching their team commit another penalty",
+        "2026-10-01: Quiet resignation as the Steelers' playoff failures pile up — Steelers fans watching Tomlin give a Minecraft tour while their team hasn't won a playoff game in years",
+        "2026-10-14: watching your team lose for the 8th straight time with no end in sight"
+      ],
+      "per_week": 1.1,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 24
+    },
+    {
+      "mood": "fatigue_over_it",
+      "id": "survived_and_exhausted",
+      "description": "Wiped out after a marathon or a thriller you barely survived.",
+      "use_when": "Five-set matches, multi-OT games, a game ending past midnight.",
+      "demand": 5,
+      "demand_share": 0.033,
+      "supply_estimate": 4,
+      "supply_ids_by_label": [
+        "U4jtIORqlc4svxFPUe",
+        "Ma1nnKL3XqZFEtaKs8",
+        "3FckanO0xoIDJo98OO",
+        "35BUnGH2e25bn8U6Qh"
+      ],
+      "requests": [
+        "2026-09-07: Maxed-out exhaustion, can't believe we survived that",
+        "2026-09-08: Exhausted resignation after staying up way too late for a game you thought would be over hours ago—the game ending at 12:20 AM Tuesday is the punchline",
+        "2026-09-09: Exhausted relief after a marathon—Shelton collapsing or celebrating after the final ace, the '5 a.m. bedtime' energy",
+        "2026-09-09: Exhausted vindication after a comeback—Tiafoe collapsing or celebrating after the final point",
+        "2026-09-21: exhausted relief after barely surviving"
+      ],
+      "per_week": 0.8,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 25
+    },
+    {
+      "mood": "respect_awe",
+      "id": "superhuman_play",
+      "description": "Something that shouldn't be physically possible.",
+      "use_when": "Diving catches, 105-mph throws, absurd goals.",
+      "demand": 4,
+      "demand_share": 0.026,
+      "supply_estimate": 3,
+      "supply_ids_by_label": [
+        "yidUzHnBk32Um9aMMw",
+        "9x53b0DRuorXEGOaTh",
+        "MUeQeEQaDCjE4"
+      ],
+      "requests": [
+        "2026-09-03: Superman flying catch—Nico Hoerner going full extension",
+        "2026-09-09: Superhuman dominance—someone doing something that should not be physically possible",
+        "2026-09-17: quiet awe—watching Messi do something rare and beautiful",
+        "2026-09-21: Ja'Marr Chase one-handed circus catch"
+      ],
+      "per_week": 0.7,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 26
+    },
+    {
+      "mood": "celebratory",
+      "id": "clinch_or_title_party",
+      "description": "Champagne-and-dogpile celebration of a clinch or title.",
+      "use_when": "Division clinches, titles, signature upsets at home.",
+      "demand": 3,
+      "demand_share": 0.02,
+      "supply_estimate": 8,
+      "supply_ids_by_label": [
+        "tFXCQpZf3Q95S",
+        "FX6SNOWqjUmzJlor4J",
+        "TLO3uEaFDbd58RUpIl",
+        "ugcpY6mLKO1XwLuEEA",
+        "Uqepe3KjEVzPYep8oW",
+        "l4FGIG0CE6nJxnc1q",
+        "zdjQpEtni7XIX4ncNg",
+        "t3sZxY5zS5B0z5zMIz"
+      ],
+      "requests": [
+        "2026-09-16: Celebration energy — champagne showers, the euphoria of locking up a title after a long grind.",
+        "2026-09-21: celebration after dominating",
+        "2026-09-27: ecstatic celebration — Florida fans and players after a 24-point upset of a top-5 team at home"
+      ],
+      "per_week": 0.5,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 27
+    },
+    {
+      "mood": "domination",
+      "id": "blowout_statement",
+      "description": "A rout as a statement; standing over the opponent.",
+      "use_when": "Blowouts, knockouts, running up the score.",
+      "demand": 3,
+      "demand_share": 0.02,
+      "supply_estimate": 4,
+      "supply_ids_by_label": [
+        "3iLisDUozEvfIRyf9X",
+        "3ohhwssY8BhybLFeDe",
+        "PZ58x6tqfRkrwyFlrw",
+        "fZEz565zA4ARwUDawo"
+      ],
+      "requests": [
+        "2026-09-11: This wasn't just a blowout. This was a statement that Miami has no interest in sportsmanship when they can instead send a message to the rest of college football.",
+        "2026-09-13: dominance — landing the knockout blow and standing over the opponent",
+        "2026-10-10: smug dominance — Iowa just steamrolled Washington on the road, and they're not supposed to be this good"
+      ],
+      "per_week": 0.5,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 28
+    },
+    {
+      "mood": "bad_dumb_move",
+      "id": "saw_it_coming",
+      "description": "Disbelief at a completely foreseeable failure; a plan imploding.",
+      "use_when": "Self-inflicted collapses, botched trick plays, obvious consequences.",
+      "demand": 3,
+      "demand_share": 0.02,
+      "supply_estimate": 4,
+      "supply_ids_by_label": [
+        "XsUtdIeJ0MWMo",
+        "xT9DPJVjlYHwWsZRxm",
+        "pajLsGB0Hub0naPw0p",
+        "STXfoyQhOKTRmdmZQR"
+      ],
+      "requests": [
+        "2026-09-04: shocked disbelief at a completely foreseeable consequence",
+        "2026-09-12: Disbelief after a completely foreseeable collapse — the moment you realize you saw this coming and it still hurts",
+        "2026-09-20: Horrified disbelief as a plan implodes"
+      ],
+      "per_week": 0.5,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 29
+    },
+    {
+      "mood": "getting_paid",
+      "id": "secured_the_bag",
+      "description": "Smug or contented after a big contract.",
+      "use_when": "Market-resetting extensions, loyal-but-rich re-signings.",
+      "demand": 3,
+      "demand_share": 0.02,
+      "supply_estimate": 5,
+      "supply_ids_by_label": [
+        "9HQRIttS5C4Za",
+        "3o6gDWzmAzrpi5DQU8",
+        "CglumrQL3ilVGivRHo",
+        "me7IYiufNb1JSV01EN",
+        "gQdejV5BBChHi"
+      ],
+      "requests": [
+        "2026-09-08: Smug satisfaction after securing the bag—player knowing they just reset the market and got paid more than anyone at their position ever",
+        "2026-09-23: This isn't a small discount. Kawhi sacrificed real money to help the Raptors build a contender.",
+        "2026-09-26: Quiet contentment after securing the bag and staying loyal — resignation that this is home, this is right"
+      ],
+      "per_week": 0.5,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 30
+    },
+    {
+      "mood": "cockiness_smugness",
+      "id": "bold_move_swagger",
+      "description": "Swagger after a bold declaration or a big move.",
+      "use_when": "Media-day boasts, a GM sure a trade fixes everything.",
+      "demand": 2,
+      "demand_share": 0.013,
+      "supply_estimate": 4,
+      "supply_ids_by_label": [
+        "qOnWoPxXnm0Vi",
+        "STYcRDzNO6AYNmMgvA",
+        "eKDrGTXLrLqqJMA7NC",
+        "U8TJaBmNwVY5Ie2crg"
+      ],
+      "requests": [
+        "2026-09-29: Confident swagger after making a bold declaration — the 'I said what I said' face",
+        "2026-10-01: Smug confidence after making a big move — Jerry Jones after trading for Joey Porter Jr., convinced this fixes the Cowboys' secondary"
+      ],
+      "per_week": 0.3,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 31
+    },
+    {
+      "mood": "confusion",
+      "id": "what_just_happened",
+      "description": "Bewildered by a bizarre moment or conflicting information.",
+      "use_when": "Benches clearing for unclear reasons, officials contradicting each other.",
+      "demand": 2,
+      "demand_share": 0.013,
+      "supply_estimate": 9,
+      "supply_ids_by_label": [
+        "g01ZnwAUvutuK8GIQn",
+        "1wnZt7VY9yPDZRZ9M6",
+        "kWcAYqxFQi6e6NGb9d",
+        "3rlkIb3L5zPTsQEn81",
+        "FcuiZUneg1YRAu1lH2",
+        "bm02BE6DQ4Oag8GXep",
+        "400IbOQGqOWQgTLCvx",
+        "3iwRj8JrhaBfvQMSx9",
+        "N86lbPjFROJIQUzqOq"
+      ],
+      "requests": [
+        "2026-09-05: confused bewilderment — the Red Sox are trying to figure out what just happened and why Alexander is upset",
+        "2026-10-08: Frustration and confusion — a coach being told conflicting information by officials in a crucial playoff moment"
+      ],
+      "per_week": 0.3,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 32
+    },
+    {
+      "mood": "hiding_avoidance",
+      "id": "im_out",
+      "description": "Walking away from something you were invested in.",
+      "use_when": "A player released or leaving after a reunion that didn't work.",
+      "demand": 1,
+      "demand_share": 0.007,
+      "supply_estimate": 5,
+      "supply_ids_by_label": [
+        "m93v8Rl9GBaW61AmOK",
+        "B7RQNl4rKdOuFgW8FA",
+        "jgulk8628iAZnq2zwN",
+        "09tH4BmFeKA0QwQnph",
+        "hLsCCNF5wlxuE99mxV"
+      ],
+      "requests": [
+        "2026-09-30: weary 'I'm out' exit from something the subject was invested in — OBJ thought the Giants reunion would work, it didn't, and now he's gone again"
+      ],
+      "per_week": 0.2,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 33
+    },
+    {
+      "mood": "respect_awe",
+      "id": "historic_company",
+      "description": "Joining a legend's company; the weight of history.",
+      "use_when": "Comparisons to all-time greats, firsts in history.",
+      "demand": 1,
+      "demand_share": 0.007,
+      "supply_estimate": 4,
+      "supply_ids_by_label": [
+        "zBBPQUhyV6qWjOVbKn",
+        "nWWGEOdq8394Qs4qUw",
+        "fCUTTqU2u2SjwM401F",
+        "x0qyzmrDa7LpAEDftB"
+      ],
+      "requests": [
+        "2026-10-07: The reader understands Yamamoto just joined Kershaw-level October company, and feels the weight of that historical comp"
+      ],
+      "per_week": 0.2,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 34
+    },
+    {
+      "mood": "escalation",
+      "id": "escalating_panic",
+      "description": "It keeps getting worse, and someone is watching it unfold.",
+      "use_when": "Investigations widening, scandals compounding.",
+      "demand": 1,
+      "demand_share": 0.007,
+      "supply_estimate": 4,
+      "supply_ids_by_label": [
+        "1n4iuWZFnTeN6qvdpD",
+        "K9m5k3LN95osDAL8RC",
+        "qpCYWYWC0CimN5GteN",
+        "5kFWWtxR0UCHgLaM4O"
+      ],
+      "requests": [
+        "2026-09-11: escalating panic — Ballmer watching the news that federal prosecutors are now involved"
+      ],
+      "per_week": 0.2,
+      "target_supply": 3,
+      "shortfall": 0,
+      "fill_rank": 35
+    }
+  ]
+}

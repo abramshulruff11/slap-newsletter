@@ -791,6 +791,11 @@ through `library_json.dumps_matching_style()`; meme `status` gates nothing until
 `active_templates()` is respected; and a decisions export replays every verdict ever stored in that
 browser, so its row count is not the size of the review.
 
+**GIF subcategories start at `docs/gif_taxonomy.md` (SLA-132):** 35 situations derived from
+what Pass 1 actually asked for, ranked by shortfall, with the entity-tag rule (metadata and
+visible cues, never face recognition). `prompts/gif_taxonomy.DRAFT.json` is not read by any code
+yet; SLA-133 wires it in UAT.
+
 **A fact bundle for a new sport starts at `docs/sport_bundle_pattern.md` (SLA-118):** read it
 before opening the first ticket to give MLB, the NBA or the NHL what football has (a connected
 bundle per game, and Pass 3 checking every claim kind it states). It covers what the database
@@ -983,6 +988,11 @@ unstaged, which breaks `git pull --rebase`.
     provenance and may trace to Pro-Football-Reference**, whose terms bar generative-AI use.
     Abram accepted that knowingly on 2026-09-25 (scores are facts; we never touch PFR). Worth a
     second look alongside Lahman if SLAP is monetised.
+
+  - **Giphy API Terms** (SLA-131/132, accepted 2026-10-14): they forbid using API content "to
+    create a database, directory, or index containing GIFs". The GIF library is a list of Giphy
+    IDs plus our own labels (we link only, never copy, cache or proxy media), and the SLA-132
+    taxonomy and SLA-133 tagging make that index richer. Low risk while free; re-check here.
 
   **Trigger for Claude: if Abram mentions turning on paid Substack subscriptions, sponsorship,
   ads, or otherwise monetising SLAP, surface this note before the work proceeds.** The answer is
