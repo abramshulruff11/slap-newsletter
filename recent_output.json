@@ -1,5 +1,154 @@
 [
   {
+    "date": "2026-10-14",
+    "story_log": [
+      {
+        "topic_key": "guardians-rays-alcs-2026",
+        "title": "Rays even ALCS 1-1 with 3-1 win over Guardians — Freddy Peralta 6 IP, Jose Ramirez costly error",
+        "section": "lead",
+        "development": "CONTINUING [Day 10, TIER 1 ELIMINATION-ROUND GAME]: Tampa Bay beat Cleveland 3-1 per ground truth. Freddy Peralta: 6.0 IP, 4 H, 0 ER, 2 BB, 6 SO per StatMuse — has won his last 8 starts per StatMuse. José Ramírez two-out error in 5th let Rays score first run per TalkinBaseball/JomboyMedia — all three runs unearned. Liam Hicks 2-RBI single in 5th put Rays up 3-0 per TalkinBaseball/ClutchPoints. Chase DeLauter RBI single in 7th got Cleveland on board per ClutchPoints. Series tied 1-1, Game 3 Wednesday in Cleveland.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "flyers-start-2026",
+        "title": "Flyers fall to 0-8 after loss to Kraken — worst start in franchise history, 8 straight losses",
+        "section": "supporting",
+        "development": "CONTINUING [Day 2]: Philadelphia lost to Seattle 2-1 in OT per ground truth. Flyers now 0-8 after 8 games, their worst start in franchise history (since 1967-68) per ground truth. 8 straight losses this season, last 8+ within a season 2023-24 per ground truth. Seattle now 5-2 after 7 games, their best start in franchise history (since 2021-22) per ground truth. Kraken won in OT. Philadelphia 8 games without a point to open season.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "kings-start-2026",
+        "title": "Kings fall to 0-5 after loss to Oilers — worst start in franchise history since 1967",
+        "section": "supporting",
+        "development": "Los Angeles lost to Edmonton 4-1 per ground truth — Kings now 0-5 after 5 games, their worst start in franchise history (since 1967-68) per ground truth. Connor McDavid scored goal #97 of Frozen Frenzy per SportsCenter — 'Just Connor McDavid things' per SportsCenter. Oilers now 5-1 after 6 games, last start this good or better 2021-22 per ground truth. Kings winless through five games for first time ever.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "tkachuk-brothers-frozen-frenzy-2026",
+        "title": "Tkachuk brothers dominate Frozen Frenzy — Matthew 5 assists for Panthers, Brady hat trick for Senators",
+        "section": "supporting",
+        "development": "Matthew Tkachuk: 5 AST, 1 SOG, 17:20 TOI vs Blue Jackets per StatMuse — first Panthers player with 5 assists in a game since Anton Lundell 2022 per StatMuse. Brady Tkachuk: 3 goals, 4 PTS, 4 SOG, 16:19 TOI vs Blue Jackets per StatMuse — his 4th career hat trick per StatMuse. SportsCenter: 'TKACHUK BROTHERS UNITE — Brady and Matthew Tkachuk combined for NINE total points in the Frozen Frenzy.' Florida beat Columbus 7-3, Ottawa beat Philadelphia 2-1 (different Blue Jackets games in StatMuse data). Brothers both produce massive nights on same Frozen Frenzy slate.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "crosby-goal-656-2026",
+        "title": "Sidney Crosby ties Brendan Shanahan for 14th all-time with 656 career goals",
+        "section": "atl",
+        "development": "Crosby: 2 goals, 2 SOG, 19:20 TOI vs Blackhawks per StatMuse — now tied with Brendan Shanahan for 14th in NHL history with 656 goals per StatMuse. Pittsburgh beat Chicago 5-3 per ground truth. Milestone goal for Penguins captain.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "lafreniere-goals-leader-2026",
+        "title": "Alexis Lafreniere leads NHL in goals after 2-goal night vs Lightning",
+        "section": "atl",
+        "development": "Lafrenière: 2 goals, 4 SOG, 19:23 TOI, +2 vs Tampa Bay per StatMuse — leads the league in goals this season per StatMuse. Rangers beat Lightning 4-1 per ground truth. Former No. 1 pick breaking out early.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "jack-hughes-ot-goal-devils-2026",
+        "title": "Jack Hughes scores 11th career OT goal as Devils beat Red Wings 5-4",
+        "section": "atl",
+        "development": "Jack Hughes: 2 AST, 3 PTS, 8 SOG, 23:31 TOI, +2 vs Red Wings per StatMuse — his 11th career overtime goal per StatMuse. Jesper Bratt: 2 AST, 3 PTS, 2 SOG, 20:18 TOI, +2 per StatMuse — has 20 points in 20 career games against Red Wings per StatMuse. New Jersey beat Detroit 5-4 in OT per ground truth. Hughes wins it in extra time.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "hurricanes-capitals-frozen-frenzy-2026",
+        "title": "Hurricanes beat Capitals 4-2 as Andrei Svechnikov scores 2 goals",
+        "section": "atl",
+        "development": "Svechnikov: 2 goals, 3 PTS, 5 SOG, 21:29 TOI, +2 vs Capitals per StatMuse — has 4 multi-point games this season per StatMuse. Carolina beat Washington 4-2 per ground truth. Defending champs improve.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "lane-hutson-ot-goal-canadiens-2026",
+        "title": "Lane Hutson OT goal lifts Canadiens over Sabres 4-3",
+        "section": "atl",
+        "development": "Hutson: 1 goal, 1 AST, 2 PTS, 2 SOG, 1 BLK, 27:07 TOI vs Sabres per StatMuse — has 14 points in 9 career games against Sabres per StatMuse. Montreal beat Buffalo 4-3 in OT per ground truth. Young defenseman wins it.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "seth-jones-4-assists-panthers-2026",
+        "title": "Seth Jones records 4 assists for Panthers — first Panthers defenseman with 4 assists in game since Aaron Ekblad 2022",
+        "section": "atl",
+        "development": "Jones: 4 AST, 3 SOG, 2 hits, 3 blocks, 23:14 TOI vs Blue Jackets per StatMuse — first Panthers defenseman with 4 assists in a game since Aaron Ekblad 2022 per StatMuse. Sam Reinhart: 2 goals, 3 PTS, 7 SOG, 19:24 TOI, +2 per StatMuse — has 4 goals in his last 2 games per StatMuse. Florida beat Columbus 7-3 per ground truth. Former Blue Jacket torches old team.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "senators-start-2026",
+        "title": "Senators improve to 5-2 after beating Blues 7-2 — best start since 2012-13",
+        "section": "atl",
+        "development": "Ottawa demolished St. Louis 7-2 per ground truth — Senators 5-2 after 7 games, last start this good or better 2012-13 per ground truth. Pavel Buchnevich: 3 AST, 1 SOG, 18:23 TOI, +2 for Blues per StatMuse — has 6 points in 6 games this season per StatMuse. Senators hot start continues.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "bruins-win-san-jose-2026",
+        "title": "Bruins beat Sharks 6-3 — first win at San Jose since 2023",
+        "section": "atl",
+        "development": "Boston beat San Jose 6-3 per ground truth — won at San Jose yesterday, their first win there since 2023-10-19 per ground truth. Bruins break road drought in California.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "payton-pritchard-extension-celtics-2026",
+        "title": "Celtics sign Payton Pritchard to 2yr/$44.2M extension — 6MOTY locked in through 2029",
+        "section": "atl",
+        "development": "Boston signed Pritchard to 2yr/$44.2M fully guaranteed extension, plus mutual option in 2029-30 season per ShamsCharania — 2024 NBA champion and 2025 Sixth Man of the Year per ShamsCharania. Averaged career highs 17 PPG, 5.2 APG, 3.9 RPG per ShamsCharania. CBS Sports: 'Why Celtics are getting a bargain on Pritchard's extension.' StatMuse: 'Payton Pritchard last two seasons: 15.7 PPG, 47/38/89%, 6MOTY — extended.' Defending champs lock in key piece.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "montez-sweat-suspension-bears-2026",
+        "title": "Bears DE Montez Sweat suspended 2 games for PED violation",
+        "section": "atl",
+        "development": "Sweat suspended next two games without pay for violating NFL's Performance-Enhancing Substances Policy per AdamSchefter. Will be eligible for reinstatement Friday Oct 23 following Bears' Week 7 game against Patriots per AdamSchefter. BarstoolBigCat: 'Need to appeal on the grounds that performance was not in fact enhanced.' Chicago loses pass rusher for two weeks.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "harrison-mevis-rams-released-2026",
+        "title": "Rams release kicker Harrison Mevis after Monday night meltdown — sign Blake Grupe off Jets practice squad",
+        "section": "atl",
+        "development": "Los Angeles released Mevis and signed Grupe off Jets practice squad per AdamSchefter/PatMcAfeeShow. HaterReport posted series of memes: Mevis eating/gooning instead of working, Sean McVay luring him out with honey bun, Mevis trying to grab muffin on way out, Mevis trying to leave facility after getting fired, Mevis having 'worst 24 hours of his life.' Mevis missed crucial kicks in Monday night OT loss to Bills. NFLMemes: 'Harrison Mevis headed out of the Rams facility after being told the news.' Immediate firing after blown game.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "alaric-jackson-suspension-rams-2026",
+        "title": "Rams LT Alaric Jackson suspended 2 games for punching Bills' Bradley Chubb — appeal denied",
+        "section": "atl",
+        "development": "CONTINUING [Day 2]: Jackson's appeal of 2-game suspension was denied per AdamSchefter — will miss two games for punching Chubb during Monday night's postgame gathering per AdamSchefter. Suspension now official. Story from Oct 13 punch now final.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "dre-greenlaw-suspension-49ers-2026",
+        "title": "49ers LB Dre Greenlaw's 1-game suspension appeal denied — will miss Monday Night matchup vs Commanders",
+        "section": "atl",
+        "development": "Greenlaw's appeal of his 1-game suspension was denied per AdamSchefter/ClutchPoints — will miss Monday night's game against Washington per AdamSchefter/ClutchPoints. San Francisco loses linebacker for primetime matchup.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "nba-preseason-oct-13-2026",
+        "title": "NBA preseason Oct 13 — Knicks demolished by Raptors 148-98, Cavaliers lose to Magic 132-116, Thunder edge Pacers 114-112 in OT",
+        "section": "atl",
+        "development": "Toronto demolished New York 148-98 per ground truth. Orlando beat Cleveland 132-116 per ground truth. Oklahoma City beat Indiana 114-112 in OT per ground truth — SGA called for pushoff, couldn't believe it per HaterReport, refs calling offensive fouls on pushoffs now per HaterReport. Golden State beat LA Lakers 101-89 per ground truth. Portland beat Sacramento 110-98 per ground truth. Preseason action continues.",
+        "is_new": true,
+        "resolved": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-13",
     "story_log": [
       {
@@ -3781,131 +3930,6 @@
         "development": "CONTINUING [Day 2]: Garrett will undergo arthroscopic surgery on ailing knee, headed to IR per Pelissero/RapSheet. Has been dealing with lower-leg pain, wasn't himself in Thursday opener per Pelissero. Hope is he's back in four weeks per Pelissero. Will miss games vs Giants, Broncos, Eagles, Bills per Pelissero — L.A. hosts Cardinals in Week 6. FieldYates: 'The two biggest trades of offseason were Myles Garrett to Rams and AJ Brown to Patriots. Both placed on IR after one game. Tough starts.'",
         "is_new": false,
         "resolved": false
-      }
-    ]
-  },
-  {
-    "date": "2026-09-13",
-    "story_log": [
-      {
-        "topic_key": "texas-ohio-state-comeback-2026",
-        "title": "Texas completes historic 20-point comeback to upset No. 1 Ohio State — Arch Manning rally, Ryan Day collapse, Sarkisian walks off interview",
-        "section": "lead",
-        "development": "CONTINUING [Day 1]: Texas scored 21 unanswered to complete 20-point 4th quarter comeback, beat No. 1 Ohio State 24-23 per ground truth/ESPN/SportsCenter. AP No. 1 teams were 197-0 when holding 20-point lead in 4Q since 2004 — until tonight per ESPN/TexasFootball. Ohio State kicker missed FG wide left with 1:23 left, Texas got ball back down 6 per ESPN. Hollywood Smothers go-ahead TD made it 24-23 per ClutchPoints. Largest Texas comeback since 2007 per SportsCenter. Sarkisian blew off postgame interview mid-question — 'THAT'S CALLED TEXAS FIGHT! HOOK 'EM!' per JomboyMedia. Ryan Day's largest blown lead of career per JomboyMedia. Arch Manning nightmares quote post-game per HaterReport. Yesterday: pregame hype, Jeremiah Smith first half dominance, Pat McAfee flyover pick.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "ryan-garcia-conor-benn-knockout-2026",
-        "title": "Ryan Garcia drops Conor Benn with vicious right hand, finishes him with TKO in second round — takes welterweight title in Las Vegas",
-        "section": "supporting",
-        "development": "Garcia knocked down Benn with vicious right hand, finished him with TKO in second round per HaterReport/CBS Sports. Won WBC welterweight title at T-Mobile Arena per CBS Sports. Garcia's right hand speed 'INSANE' even in slow motion per HaterReport. CBS Sports: 'Garcia has the star power already, but now he may be the one to carry the sport on an annual basis' — big win and bigger callouts.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "rybakina-sabalenka-us-open-final-2026",
-        "title": "Elena Rybakina wins third career Grand Slam, defeats Aryna Sabalenka in US Open final — second time she's beaten Sabalenka in Major final this year",
-        "section": "supporting",
-        "development": "CONTINUING [Day 2]: Rybakina defeated Sabalenka in US Open final to win third career Major, her first at US Open per SportsCenter/ESPN. Second time Rybakina has beaten Sabalenka in Major final this year per SportsCenter. Maria Sharapova handed Rybakina trophy per ESPN. New World No. 1 Rybakina caps dominant run. Yesterday: Rybakina and Sabalenka both reached final, Michelle Obama in attendance.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "oklahoma-state-oregon-upset-2026",
-        "title": "Oklahoma State stuns No. 6 Oregon as 24.5-point underdog — ends longest FBS losing streak in country at 21 games, Drew Mestemaker's improbable rise",
-        "section": "supporting",
-        "development": "CONTINUING [Day 2]: Oklahoma State beat No. 6 Oregon 39-31 as 24.5-point underdog per ground truth/SportsCenter — ended 21-game losing streak to FBS opponents (longest in country) per SportsCenter/CBS Sports. Mestemaker: 317 pass yds, 109 rush yds, 3 total TD per StatMuse. CBS Sports: Mestemaker threw for 317 yards and totaled three touchdowns, continuing an improbable rise from high school punter to Oklahoma State starting quarterback. Caleb Hawkins 23 CAR, 108 YDS, 1 TD per StatMuse. Oregon rushed for only 90 yards as team per StatMuse. Yesterday: live game updates, Mestemaker hype.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "bengals-buccaneers-nfl-week-1-2026",
-        "title": "NFL Week 1 kicks off Sunday — RedZone returns, first full slate since February, Schefter and Pelissero transaction blizzard",
-        "section": "supporting",
-        "development": "NFL regular season begins Sunday with full slate per CBS Sports. NFLMemes/JoeyMulinaro: first RedZone Sunday in months. ghetto_gronk: 'Time to let a professional football team that doesn't know I exist and an imaginary team I drafted determine my mental health for the next 4 months.' Schefter transaction blizzard: Joey Porter Jr. unlikely to play Sunday (back injury + uncertain future), Lamar Jackson and Ravens no substantive extension talks, CJ Stroud and Texans tabled extension talks until after season. Ihartitz: 'X▬▬▬.◙.▬▬▬X...just droppin' down to say Jameson Williams no matter what.' PatMcAfeeShow NFL hype tweets. Giants-Cowboys SNF in John Harbaugh's Giants debut per CBS Sports.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "michigan-oklahoma-upset-2026",
-        "title": "Michigan upsets No. 11 Oklahoma 17-10 — first home win as unranked team vs top-15 opponent since 2008, Kyle Whittingham's Big Ten debut",
-        "section": "atl",
-        "development": "Michigan beat No. 11 Oklahoma 17-10 per ground truth/SportsCenter — first home win as unranked team vs top-15 opponent since 2008 per SportsCenter. Kyle Whittingham got big win in Big Ten debut. PatMcAfeeShow: locker room feeling real good after that one.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "francisco-lindor-grand-slam-mets-2026",
-        "title": "Francisco Lindor crushes grand slam as Mets demolish Yankees 12-2 in Bronx — Gerrit Cole struggles continue in Subway Series",
-        "section": "atl",
-        "development": "Lindor hit grand slam to put Mets up big in Bronx per ground truth/TalkinBaseball. Mets won 12-2 per ground truth. Lindor: 3-5, 2 HR, 5 RBI — 9th straight full season with 20+ HR (excluding 2020) per StatMuse. Cole now has 8.49 ERA in five career Subway Series starts per TalkinBaseball. JomboyMedia: Cole refused to start game before official start time, then allowed leadoff HR.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "brewers-reds-blowout-2026",
-        "title": "Brewers score 33 runs in 14 innings vs Reds — Reds have allowed 47 runs in last 23 innings, getting absolutely demolished",
-        "section": "atl",
-        "development": "Milwaukee scored 33 runs in 14 innings against Cincinnati in series per TalkinBaseball — Reds have allowed 47 runs in their last 23 innings per TalkinBaseball. Brewers beat Reds 13-9 tonight per ground truth. William Contreras 3-run HR made it 8-5 per ClutchPoints. Brice Turang HR made it 4-0 in first per TalkinBaseball. Reds pitching in absolute shambles.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "white-sox-walk-off-cardinals-2026",
-        "title": "Randal Grichuk walks off Cardinals with White Sox down to final strike — Chicago wins 6-5",
-        "section": "atl",
-        "development": "Grichuk delivered walk-off hit with White Sox down to final strike per TalkinBaseball — Chicago beat St. Louis 6-5 per ground truth. Rare White Sox win.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "braves-phillies-blowout-2026",
-        "title": "Braves demolish Phillies 12-2 — Ronald Acuña Jr. answers, Michael Harris II 3-run HR, Bryce Harper early blast",
-        "section": "atl",
-        "development": "Atlanta destroyed Philadelphia 12-2 per ground truth. Harper gave Phillies 1-0 lead with first-inning blast per TalkinBaseball. Acuña answered with solo shot to tie it per TalkinBaseball. Harris hit 3-run HR off foul pole per ClutchPoints. Bryson Stott low throw got by Alec Bohm, Braves extended lead per TalkinBaseball. Dominant Braves win.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "rafael-devers-september-tear-2026",
-        "title": "Rafael Devers this month: 7 HR, 19 RBI, 8 BB — only PCA has more homers since start of May",
-        "section": "atl",
-        "development": "Devers in September: 7 HR, 19 RBI, 8 BB per StatMuse. Only PCA has more HR than Devers since start of May per StatMuse. Red Sox beat Royals 5-1 per ground truth. Devers on absolute tear.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "mariners-athletics-blowout-2026",
-        "title": "Mariners demolish Athletics 19-1 — Randy Arozarena homer part of offensive explosion",
-        "section": "atl",
-        "development": "Seattle destroyed Oakland 19-1 per ground truth. Arozarena hit HR to extend lead to 5-0 per ClutchPoints. Mariners offensive explosion. Lopsided blowout.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "team-usa-france-world-cup-final-2026",
-        "title": "USA vs France for FIBA Women's World Cup gold medal in Berlin — Gabby Williams led France with 22-5-5-4, Breanna Stewart led USA with 16-6-4",
-        "section": "atl",
-        "development": "USA and France meet for gold medal at FIBA World Cup in Berlin per CBS Sports/StatMuse. Williams vs Germany: 22 PTS, 5 REB, 5 AST, 4 STL, 8-12 FG, +17 — France moves on per StatMuse. Stewart led Team USA in scoring vs Spain: 16 PTS, 6 REB, 4-6 FG, 8-11 FT per StatMuse. USA seeks fifth straight gold per CBS Sports.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "kyle-harrison-giants-implosion-2026",
-        "title": "Kyle Harrison's last three outings: 7.1 IP, 23 H, 17 ER, 6 BB, 7 SO, 6 HR, 20.86 ERA — tonight lasted 0.0 IP, 4 H, 4 ER",
-        "section": "atl",
-        "development": "Harrison tonight: 0.0 IP, 4 H, 4 ER, 0 BB, 0 SO per TalkinBaseball. Last three outings (two starts): 7.1 IP, 23 H, 17 ER, 6 BB, 7 SO, 6 HR, 20.86 ERA, 3.95 WHIP per TalkinBaseball. Giants pitcher in total freefall. Padres beat Giants 7-6 per ground truth.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "willson-contreras-pine-tar-tantrum-2026",
-        "title": "Willson Contreras gives up on at-bat after umpire denies pine tar, throws bat back at home plate after strikeout — on rehab assignment with Red Sox Double-A",
-        "section": "atl",
-        "development": "Contreras gave up on at-bat after umpire didn't let him get more pine tar, threw bat back at home plate as he walked away after striking out per JomboyMedia. On rehab assignment with Red Sox's Double-A Portland Sea Dogs per JomboyMedia. Bizarre tantrum.",
-        "is_new": true,
-        "resolved": true
       }
     ]
   }
