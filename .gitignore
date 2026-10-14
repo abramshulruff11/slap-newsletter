@@ -30,6 +30,10 @@ uat/probe/
 prompts/gif_library.DRAFT.backup-*.json
 uat/gif_review.html
 uat/gif_decisions.json
+# GIF vision-tagger review page + its export (review_gif_tags.py, SLA-133); the
+# proposals themselves are in uat/output/ (ignored above).
+uat/gif_tag_review.html
+uat/gif_tag_decisions.json
 
 # Meme library — same deal (review_memes.py, apply_meme_decisions.py). The
 # render cache holds Imgflip URLs for each template's worked example; it is

@@ -3,7 +3,9 @@
     "status": "DRAFT for Abram's review (SLA-132). Not read by any code.",
     "source": "155 Pass 1 gif_concept values in archive/*/story_plan.json, 2026-09-02 to 2026-10-14; 152 classified, 3 left out (2 empty, 1 Tier 3 specific clip).",
     "supply_note": "supply_ids_by_label is a judgment from each verified GIF's label, not from looking at it. SLA-133's vision tagging replaces it.",
-    "fill_rank": "Ordered by shortfall = target_supply - supply_estimate, then demand. target_supply = max(3, 2 x weekly demand): with a 7-day cooldown a subcategory needs at least a week of demand in stock, and twice that so the pick is not forced. SLA-133/134 fill in this order.",
+    "demand": "placements = library GIFs that actually shipped 2026-09-02..10-14 (345), each classified by the paragraph above it (SLA-133 step 5). This is the real consumption and drives every target. pass1_requests = Pass 1's gif_concept for the same window (SLA-132), kept for comparison; Pass 1 seeds under half of what ships and over-asks for vindication.",
+    "placements_outside_situations": "34 placements fit a mood but no situation (mood-level is fine; the tagger tags moods too), 32 fit a candidate situation seen 1-3 times (left out until it recurs).",
+    "fill_rank": "Ordered by shortfall = freshness_target - supply_estimate, then placements. freshness_target = placement_share x 500, the SLA-134 pool size for ~2 months between repeats at ~8 GIFs/issue (min 3). cooldown_floor = max(3, 2 x weekly placements) is the bare minimum for the 7-day cooldown.",
     "entity_layer": {
       "fields": {
         "players": "list of names",
@@ -17,12 +19,109 @@
   },
   "subcategories": [
     {
+      "mood": "respect_awe",
+      "id": "calm_dominance",
+      "description": "Quiet, unbothered greatness; the calm assassin.",
+      "use_when": "Repeated clutch performances, routine excellence, a closer shutting the door.",
+      "placements": 23,
+      "placement_share": 0.067,
+      "pass1_requests": 8,
+      "supply_estimate": 3,
+      "supply_ids_by_label": [
+        "Aas1NtStlvy7EYcDBY",
+        "A28CxD7W6d4B2",
+        "xUOrwq55SJxeiUBsPu"
+      ],
+      "placement_contexts": [
+        "2026-09-06: …Cubs won 6-5. Shohei Ohtani, currently banged up and watching this, was hoping the \"he's on a heater\" narrative would cool. It has not cooled.",
+        "2026-09-07: …ss got the ball back with a stadium full of people convinced this was going to overtime, then calmly marched down the field like they'd already seen the ending.",
+        "2026-09-12: …103 MPH used to require a radar gun malfunction. Miller does it for the last out of a walk-off game like it's a warmup toss.",
+        "2026-09-14: …8-for-8. Dart's safety valve and red zone weapon in one game.",
+        "2026-09-16: …Yordan Alvarez had this thing locked up a month ago.",
+        "2026-09-16: …-agent splashes. They just show up in October every year while the Cubs rebuild for the twelfth consecutive spring and the Cardinals figure out what year it is.",
+        "2026-09-17: …Two homers and a triple. On a Wednesday. In September.",
+        "2026-09-18: …He leads the league in passing touchdowns. He also leads the league in rushing touchdowns. Pick a category, he's on top of it.",
+        "2026-09-19: …h 54. He does this quietly, in Atlanta, while the internet argues about Judge and Ohtani. Every year you look up in September and he's got 40 bombs and 100 RBI.",
+        "2026-09-25: …jan Robinson wasn't going to let Penix have all the fun. 29 carries, 194 rushing yards, 50 receiving, two touchdowns. The Packers' entire team ran for 17 yards.",
+        "2026-10-01: …Faded corner three to tie it late in regulation, then a wild one in OT to extend the lead. Dallas 108, Golden State 100. Series tied 1-1.",
+        "2026-10-02: …Evan Bouchard has 8 points through two games. The next-closest defenseman in the entire league has 4. He is lapping the field in the first week of October.",
+        "2026-10-03: …Arike Ogunbowale dropped 30. Over the last two games she put up 75. First player in Wings history with multiple 30-point playoff games.",
+        "2026-10-04: …Grant Taylor walking off the mound after four scoreless innings on 42 pitches:",
+        "2026-10-05: …II triple with two outs in the 5th. Scores on a wild pitch. Freddie Freeman's solo shot earlier in the inning tied it. That's the entire offense Atlanta needed.",
+        "2026-10-06: …The Rays don't walk up there trying to hit it 450 feet. They walk up there trying to make you catch it. And right now the Yankees can't.",
+        "2026-10-07: …Golden State buried the Lakers 124-98 in a preseason game that Steph Curry treated like Game 7. 16 points, 5 assists, 3-of-6 from three — in 14 minutes.",
+        "2026-10-07: …Argentina beat Benin 3-1. Messi finished with a goal, two assists, and a 9.3 match rating — his 193rd career goal contribution in an Argentina shirt.",
+        "2026-10-10: …sixth. Ramírez added a three-RBI triple with a .010 expected batting average because of course he did. Patrick Bailey tacked on a two-RBI single. 9-5 Guardians.",
+        "2026-10-11: …ince Gerrit Cole put up 25 in 2019. Williams showed up to a winner-take-all game and threw a bullpen session with the White Sox hitters standing in as courtesy.",
+        "2026-10-12: …Not a shootout team. A team that strangles you for three hours and goes home. Kevin O'Connell has built the most un-fun 5-0 in football and it's working.",
+        "2026-10-14: …Six innings, zero earned, and Cleveland's bats never figured out what pitch was coming next.",
+        "2026-10-14: …Meanwhile, Connor McDavid did Connor McDavid things:"
+      ],
+      "pass1_requests_text": [
+        "2026-09-09: Quiet competence—a professional returning to work, the 'I never left' energy",
+        "2026-09-16: Quiet, unbothered dominance — the calm confidence of someone who just keeps delivering in the biggest moments.",
+        "2026-09-18: quiet, unstoppable dominance — Allen doing something no one has ever done, making it look routine",
+        "2026-09-28: effortless dominance, barely breaking a sweat",
+        "2026-10-01: Ice-cold clutch under pressure — Arike hitting the fading corner three to tie it late in regulation, then the OT bomb",
+        "2026-10-02: Wilson was unstoppable: 36 points, 10 rebounds, 11-18 FG. She now has more playoff double-doubles than everyone except one player in WNBA history. The Aces' championship pedigree showed.",
+        "2026-10-04: Quiet dominance — the calm assassin just closed the door without breaking a sweat",
+        "2026-10-12: calm, quiet dominance"
+      ],
+      "per_week": 3.7,
+      "cooldown_floor": 8,
+      "freshness_target": 34,
+      "shortfall": 31,
+      "fill_rank": 1
+    },
+    {
+      "mood": "anticipation (NEW)",
+      "id": "big_game_buildup",
+      "description": "Nervous excitement before a big fight or game; scoreboard-watching.",
+      "use_when": "Playoff openers, marquee matchups set, tight standings races.",
+      "placements": 17,
+      "placement_share": 0.049,
+      "pass1_requests": 4,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "placement_contexts": [
+        "2026-09-02: …September baseball. Every mistake is magnified, every comeback is temporary, and somewhere a Giants fan is refreshing the standings and eating a paper bag.",
+        "2026-09-04: …Karen Khachanov, unseeded, already knocked out No. 3 Felix Auger-Aliassime. The bracket is thinning around Zverev, not for him.",
+        "2026-09-07: …\"It's going to be fireworks.\" — Alcaraz, doing zero to lower the temperature.",
+        "2026-09-09: …Somewhere Andy Roddick is refreshing his phone every ten minutes:",
+        "2026-09-10: … fight — Padres just swept the Nats. Jackson Merrill went 4-for-5 with two homers, a triple, and six RBI. San Diego is now tied with Arizona for the final spot.",
+        "2026-09-11: …The winner Saturday takes the trophy.",
+        "2026-09-13: …ry. RedZone returns. The group chat comes back to life. Millions of grown adults about to have their emotional state dictated by 22-year-olds they've never met.",
+        "2026-09-17: …is mess: the Orioles. Everyone else beats Cleveland in a tie. The team currently in first place has the worst possible position if it comes down to a coin flip.",
+        "2026-09-18: … career. The Bills are 2-0. The offense looks like a video game. And somewhere in a fan's basement, there's a folding table already picked out for late January.",
+        "2026-09-24: …osh Naylor walked off the Astros last night to tie the AL West at 78-80. Both teams. Same record. Four games left. Winner hosts a playoff game. Loser goes home.",
+        "2026-09-26: …Cleveland has not won a World Series in decades. Half a game back with a weekend to play.",
+        "2026-09-27: … to San Diego. Miss on both and the Dbacks are in. The Phillies are sending Zack Wheeler out to save the season against a lineup that just hung 12 on their ace.",
+        "2026-09-27: …Yordan Alvarez hit his 42nd homer tonight. Jeremy Pena added two of his own. One MVP-caliber bat in the middle of the order and a Game 162 waiting for them:",
+        "2026-09-30: …Game 1 winners are 15-1 in wild card series.",
+        "2026-10-09: …Cleveland's last World Series title was 1948. Saturday at 8 PM ET, they get to keep that shot alive or go home for the winter.",
+        "2026-10-10: …All-time. And they just drew the first team in women's sports history to break $100 million in annual revenue, playing in a sold-out Ballhalla, favored at -125.",
+        "2026-10-11: …e got eight more wins to go. The Guardians are two series away from their first title since 1948. That sentence has been written for 78 years and it still hits."
+      ],
+      "pass1_requests_text": [
+        "2026-09-07: Let's get it on, anticipation for a battle",
+        "2026-09-10: Frantic scoreboard watching — refreshing the standings every half-inning because every game matters",
+        "2026-09-29: Nervous anticipation mixed with excitement — the 'here we go again' face before a big postseason game",
+        "2026-10-13: Quiet confidence after surviving chaos and now stepping into the real fight"
+      ],
+      "per_week": 2.8,
+      "cooldown_floor": 6,
+      "freshness_target": 24,
+      "shortfall": 24,
+      "fill_rank": 2
+    },
+    {
       "mood": "cockiness_smugness",
       "id": "vindication_doubters_silenced",
       "description": "'Told you so' after being doubted; the doubters go quiet.",
       "use_when": "An underdog, a written-off player or team, or a cut/traded player proves people wrong.",
-      "demand": 34,
-      "demand_share": 0.224,
+      "placements": 19,
+      "placement_share": 0.055,
+      "pass1_requests": 34,
       "supply_estimate": 5,
       "supply_ids_by_label": [
         "DT3gYifPXBt5voafS1",
@@ -31,7 +130,28 @@
         "s1iCWGBXye6FOM6rSo",
         "tFdqLBcwrh3AdgzYgT"
       ],
-      "requests": [
+      "placement_contexts": [
+        "2026-09-02: …One run over 12 innings across his last two starts. No better way to say \"you shouldn't have done that\" than by making it look easy for the team that came next.",
+        "2026-09-04: …UMass head coach Joe Harasymiak was Rutgers' defensive coordinator from 2022 to 2024. His first win as UMass' coach came against his former team.",
+        "2026-09-13: …The kid took the nightmares quote and turned it into a haymaker.",
+        "2026-09-15: …Mahomes on the doubters after two rushing scores in the first ten minutes:",
+        "2026-09-15: …is Oladokun. Jake Browning. Trey Lance. The one healthy Mahomes game on that list was Week 11 — last night the AFC remembered how the food chain actually works.",
+        "2026-09-16: … Kiner and Albert Pujols hit more home runs over their first eight MLB seasons. Baltimore gave him five years, $155 million last December. His 36th of the year.",
+        "2026-09-20: …33 of 48, 363 passing yards, and three total touchdowns against the guy who used to call his plays.",
+        "2026-09-20: …Go-ahead touchdown. Game-ending interception setup. In a revenge game. Against the coach who left.",
+        "2026-09-24: …d after they finished the job. The front office that decided he wasn't worth the money watched him take a curtain call in their building after eliminating them.",
+        "2026-09-26: …ide the story. Written off for years, hitting 30 again in September while carrying a playoff push. The Cardinals traded him and this is what he does in Arizona.",
+        "2026-09-28: …kyries beat Dallas 104-80. The rookie who was supposed to spend a year adjusting is instead in the ROY conversation and demolishing playoff opponents in a half.",
+        "2026-09-30: …6.1 dominant innings against his childhood tormentors in October. Twice.",
+        "2026-10-03: …The Aces are next. A'ja Wilson has made eight straight semifinals. The Valkyries have made one, ever, and they got there by refusing to leave the floor.",
+        "2026-10-09: …Imagine being the 8-seed nobody picks.",
+        "2026-10-10: …Then they went and did this in Year 2:",
+        "2026-10-10: …025 WNBA Finals and posted three simple words: \"manifesting the finals.\" On the road Friday night, Reese led the Atlanta Dream to the WNBA Finals with 22 and 9.",
+        "2026-10-12: …had three sacks against the Browns in a 17-12 Jets win. Best game of his young career. The critics who've been circling since draft night can take the week off.",
+        "2026-10-12: … Angeles 1. NLCS Game 1 goes to the Brewers — their first playoff win over the Dodgers in years. Milwaukee was swept by LA in last year's NLCS. They remembered.",
+        "2026-10-13: …tout innings in Game 1 of the Division Series. Tonight: 6 IP, 2 ER, 7 K — his first postseason runs allowed, period. The Guardians are the team that solved him."
+      ],
+      "pass1_requests_text": [
         "2026-09-03: Pablo Torre vindication—smug 'I told you so' energy after months of covering this story",
         "2026-09-04: smug vindication after being doubted all summer",
         "2026-09-05: smug dominance after being doubted — Miami fans waited years for a receiver like this, and here he is, an 18-year-old true freshman torching an ACC team in his first real game",
@@ -67,21 +187,41 @@
         "2026-10-12: vindication after being swept last year",
         "2026-10-13: Smug confidence after proving the doubters wrong — the 'I told you so' energy"
       ],
-      "per_week": 5.5,
-      "target_supply": 12,
-      "shortfall": 7,
-      "fill_rank": 1
+      "per_week": 3.1,
+      "cooldown_floor": 7,
+      "freshness_target": 28,
+      "shortfall": 23,
+      "fill_rank": 3
     },
     {
       "mood": "sadness_resignation",
       "id": "season_slipping_away",
       "description": "Not over yet, but you can feel it going.",
       "use_when": "A collapse in progress, a star injured early, down 0-2.",
-      "demand": 7,
-      "demand_share": 0.046,
+      "placements": 16,
+      "placement_share": 0.046,
+      "pass1_requests": 7,
       "supply_estimate": 0,
       "supply_ids_by_label": [],
-      "requests": [
+      "placement_contexts": [
+        "2026-09-06: …Yankees lost 5-1.",
+        "2026-09-07: … Yankees are actively speedrunning a September collapse and the guy at the top of the rotation is doing pregame home run derby practice for the opposing lineup.",
+        "2026-09-10: …also lost A.J. Brown to an ankle in the third quarter. He limped to the locker room. Marquee offseason addition, two and a half quarters, welcome to Foxborough.",
+        "2026-09-11: … fourth quarter. They also lost A.J. Brown on the same night. Now Maye has to figure it out without his best receiver for the first month of his sophomore year.",
+        "2026-09-17: …The White Sox lost 6-3 anyway. Cleveland moved into first place.",
+        "2026-09-19: …es back with ten to play. 5.5 games up on Boston. What's actually at stake now is whether this team can beat Boston in a wild card series without their captain.",
+        "2026-09-19: …eturn until Sept. 27 — the Yankees' final game of the regular season. Best case, he gets one tune-up at-bat before the wild card. Worst case, he's already done.",
+        "2026-09-21: …QB pulling up with his hamstring, then a cart, then tears. He gave a thumbs up to the crowd on the way out — the kind of thumbs up that tells you it's not fine.",
+        "2026-09-21: …ackup's name at the podium, your starter isn't week-to-week. Washington lost 37-20. It got worse after halftime, and it's going to keep being worse for a while.",
+        "2026-09-23: …Giants fans getting exactly one week of hope:",
+        "2026-09-25: …The Packers ran for 17 yards at home. Matt LaFleur's chair is warming up in real time.",
+        "2026-09-29: …sing your best contact hitter against a lefty who strikes everyone out is a rough Tuesday. Yankees-Red Sox, Cubs-Padres, Astros-White Sox round out the bracket.",
+        "2026-10-07: …opped to 0-3 after a 2-1 loss to Florida, their worst start since 2020-21. Matthew Tkachuk scored to give the defending Panthers their first lead of the season.",
+        "2026-10-09: … over the Canadiens since December 2023. Calgary fell to 0-4, their worst start since at least 1975. Philadelphia is 0-5, their worst start since at least 2008.",
+        "2026-10-11: …Oklahoma's first win over Texas since 2023. Arch Manning's Heisman campaign is now a rebuild.",
+        "2026-10-12: …The reigning NFC champs from two years ago are 2-3 and sitting second in the division on tiebreaker. Their window isn't shut, but you can hear it rattling."
+      ],
+      "pass1_requests_text": [
         "2026-09-17: weary resignation as the season slips away",
         "2026-09-19: Quiet resignation — hope built up over three months, seven games, then back to the void",
         "2026-09-21: quiet resignation as the season slips away before it starts",
@@ -90,195 +230,676 @@
         "2026-10-07: Quiet resignation as the season teeters — the moment right before everything either clicks or collapses",
         "2026-10-12: quiet resignation as the season implodes"
       ],
-      "per_week": 1.1,
-      "target_supply": 3,
-      "shortfall": 3,
-      "fill_rank": 2
+      "per_week": 2.6,
+      "cooldown_floor": 6,
+      "freshness_target": 23,
+      "shortfall": 23,
+      "fill_rank": 4
     },
     {
       "mood": "sadness_resignation",
       "id": "cruel_twist",
       "description": "You did everything right and the universe said no.",
       "use_when": "A robbed home run, a late error, a near miss.",
-      "demand": 4,
-      "demand_share": 0.026,
+      "placements": 16,
+      "placement_share": 0.046,
+      "pass1_requests": 4,
       "supply_estimate": 0,
       "supply_ids_by_label": [],
-      "requests": [
+      "placement_contexts": [
+        "2026-09-05: …Ben Rice hit his 36th home run of the season for the Yankees. Luis Campusano hit a two-run walk-off homer for the Padres. Padres 3, Yankees 2.",
+        "2026-09-12: …Mariners fans, who saw a two-run lead in the ninth turn into a walk-off loss in the tenth:",
+        "2026-09-24: …evin Gausman made the reaction play on a comebacker and left the game right after. Chicago couldn't score late. Two hours later, BigCat had the definitive take:",
+        "2026-09-25: …chell's 27-game 20-point streak ended on the final day of the regular season. 7 points against Minnesota. The record is going to sit there for a very long time.",
+        "2026-09-27: … 16-yard touchdown with two seconds left. Vander Zee's second score of the fourth quarter. Both were 16-yarders from Brown. Big House goes silent, then empties.",
+        "2026-09-30: …Duran went 75 1/3 innings without allowing a home run before Shohei Ohtani broke the streak with a 100 mph splinker.",
+        "2026-10-02: …and Mahomes for most TDs against a single opponent without an interception. Then Denzel Ward picked him off for the first time in his career against the Browns.",
+        "2026-10-04: …Ty France watching the ball he just crushed get swallowed by a roof cable:",
+        "2026-10-04: …Padres fans learning that the umpires held a pre-game seminar on the exact rule that would end their night:",
+        "2026-10-04: …Cleveland fans watching Murakami round the bases:",
+        "2026-10-05: …Miller watched it from the side of the mound and started a slow walk to the visiting clubhouse. He'd been asked for the last six outs. He got five.",
+        "2026-10-08: … the fan had reached into the field of play to touch the ball before it cleared the wall. Volpe got a double. The Yankees got nothing. The Rays got the pennant.",
+        "2026-10-08: …Garrett Mitchell was waiting at the wall with his glove up.",
+        "2026-10-08: …Garrett Mitchell was waiting at the wall with his glove up.",
+        "2026-10-12: …San Francisco won 32-29 in Seattle to stay unbeaten. Cooper Kupp was a yard away from converting a fourth down at the end. One yard.",
+        "2026-10-14: …\"It's a little faster here,\" Ramírez said of the Tropicana Field infield, through a club translator. \"I tried to knock it down, but I couldn't.\""
+      ],
+      "pass1_requests_text": [
         "2026-09-24: BigCat's 'That was the moment. Fuck' — the Cubs needed this game and couldn't deliver.",
         "2026-10-04: Agonizing resignation after a cruel twist of fate — you did everything right and the universe said no",
         "2026-10-08: Disbelief and hope crushed — Manny Machado watching what he thought was a game-tying home run get caught at the wall",
         "2026-10-14: quiet resignation after the error costs you the game"
       ],
-      "per_week": 0.7,
-      "target_supply": 3,
-      "shortfall": 3,
-      "fill_rank": 3
-    },
-    {
-      "mood": "relief (NEW)",
-      "id": "dodged_disaster",
-      "description": "Exhale after a scare or a near-collapse.",
-      "use_when": "An injury that turned out fine, a team that nearly blew it.",
-      "demand": 4,
-      "demand_share": 0.026,
-      "supply_estimate": 0,
-      "supply_ids_by_label": [],
-      "requests": [
-        "2026-09-18: The reader feels the mix of fear and relief: it looked bad, but the thumbs up is always a good sign.",
-        "2026-09-22: Bregman dodged a career-altering injury, and the Cubs dodged losing their star before October",
-        "2026-09-26: Disaster narrowly averted — frantic scrambling that somehow results in survival",
-        "2026-10-12: relief after narrowly escaping disaster"
-      ],
-      "per_week": 0.7,
-      "target_supply": 3,
-      "shortfall": 3,
-      "fill_rank": 4
-    },
-    {
-      "mood": "relief (NEW)",
-      "id": "drought_over_or_star_back",
-      "description": "Weary relief when a long wait ends.",
-      "use_when": "A drought snapped, a star returning, a clinch after years.",
-      "demand": 4,
-      "demand_share": 0.026,
-      "supply_estimate": 0,
-      "supply_ids_by_label": [],
-      "requests": [
-        "2026-09-08: Relief and anticipation—fans/team exhaling because the superstar is finally back and they desperately needed him",
-        "2026-09-15: quiet relief after long wait — Judge back, Yankees clinch, the drought is over",
-        "2026-09-25: Excitement and relief — seeding matters, and the Valkyries fought for every inch",
-        "2026-10-13: Weary relief after finally ending a long drought — the smile of someone who just got a monkey off their back"
-      ],
-      "per_week": 0.7,
-      "target_supply": 3,
-      "shortfall": 3,
+      "per_week": 2.6,
+      "cooldown_floor": 6,
+      "freshness_target": 23,
+      "shortfall": 23,
       "fill_rank": 5
     },
     {
-      "mood": "anticipation (NEW)",
-      "id": "big_game_buildup",
-      "description": "Nervous excitement before a big fight or game; scoreboard-watching.",
-      "use_when": "Playoff openers, marquee matchups set, tight standings races.",
-      "demand": 4,
-      "demand_share": 0.026,
-      "supply_estimate": 0,
-      "supply_ids_by_label": [],
-      "requests": [
-        "2026-09-07: Let's get it on, anticipation for a battle",
-        "2026-09-10: Frantic scoreboard watching — refreshing the standings every half-inning because every game matters",
-        "2026-09-29: Nervous anticipation mixed with excitement — the 'here we go again' face before a big postseason game",
-        "2026-10-13: Quiet confidence after surviving chaos and now stepping into the real fight"
+      "mood": "bad_dumb_move",
+      "id": "saw_it_coming",
+      "description": "Disbelief at a completely foreseeable failure; a plan imploding.",
+      "use_when": "Self-inflicted collapses, botched trick plays, obvious consequences.",
+      "placements": 16,
+      "placement_share": 0.046,
+      "pass1_requests": 3,
+      "supply_estimate": 4,
+      "supply_ids_by_label": [
+        "XsUtdIeJ0MWMo",
+        "xT9DPJVjlYHwWsZRxm",
+        "pajLsGB0Hub0naPw0p",
+        "STXfoyQhOKTRmdmZQR"
       ],
-      "per_week": 0.7,
-      "target_supply": 3,
-      "shortfall": 3,
+      "placement_contexts": [
+        "2026-09-03: …ankruptcy. Aspiration co-founder Joe Sanberg pleaded guilty to two counts of wire fraud, admitting he defrauded investors and lenders of more than $248 million.",
+        "2026-09-07: … on a 57-yard field goal attempt is to stand there and hope. Not to launch yourself into the kicker's plant leg and gift the opponent 15 yards and a first down.",
+        "2026-09-14: …coordinator hire specifically brought in to fix the run game — produced 52 rushing yards. The schedule now flips to one of the toughest in the NFL after Week 2.",
+        "2026-09-18: …acuse spent the night beating themselves. At halftime they had 93 passing yards, 16 rushing yards, and 80 penalty yards. More yards in flags than on the ground.",
+        "2026-09-20: …They fumbled the snap. Vanderbilt scooped it up and walked into the end zone. 35-31, ballgame.",
+        "2026-09-20: …NC State's coaching staff realizing they just fumbled the snap on a play designed to end the game:",
+        "2026-09-22: …hrew a red-zone interception. Jameis Winston is going to Jameis, and the Giants signed up for exactly this outcome the moment they put him on the roster as QB2.",
+        "2026-09-28: …more drove the field in the final minute, and the Cowboys — with timeouts in their pocket — just... didn't use them. Dak knew. Dak knew before anyone else knew.",
+        "2026-10-03: …Dallas fans watching Gabby Williams realize what quarter it was:",
+        "2026-10-03: …Then Montana State head coach Brent Vigen calls a timeout.",
+        "2026-10-07: …er on the Dodgers side of the night, and Milwaukee had its own leather on display. Then Cooper Pratt threw one away on a wonky play and an insurance run scored.",
+        "2026-10-09: …Jake Ferguson dropped a 4th-down pass. Daron Bland dropped a pick-six that hit him in the hands.",
+        "2026-10-11: …Sean Burke pitched Game 5 of an elimination series in black Air Force 1s. He gave up the Ramírez bomb.",
+        "2026-10-11: …back jumpers. He hit fadeaways. He also went under a screen on Steph Curry, which is one of the four or five worst decisions available to a defender in the NBA.",
+        "2026-10-12: …Washington had a chance to walk off the Giants in overtime. Dan Quinn's staff decided to run the clock out instead. Not kick it. Run it out. In overtime. A tie.",
+        "2026-10-14: …ns scored in the inning. None of them earned. Cleveland's elite pitching held Tampa to three runs on the night — and Cleveland's defense handed Tampa all three."
+      ],
+      "pass1_requests_text": [
+        "2026-09-04: shocked disbelief at a completely foreseeable consequence",
+        "2026-09-12: Disbelief after a completely foreseeable collapse — the moment you realize you saw this coming and it still hurts",
+        "2026-09-20: Horrified disbelief as a plan implodes"
+      ],
+      "per_week": 2.6,
+      "cooldown_floor": 6,
+      "freshness_target": 23,
+      "shortfall": 19,
       "fill_rank": 6
-    },
-    {
-      "mood": "sadness_resignation",
-      "id": "bad_news_accepted",
-      "description": "Taking bad news on the chin: a suspension, a benching, a forced exit.",
-      "use_when": "Off-field news delivered to someone who can only accept it.",
-      "demand": 3,
-      "demand_share": 0.02,
-      "supply_estimate": 0,
-      "supply_ids_by_label": [],
-      "requests": [
-        "2026-09-03: Quiet resignation—Mendoza watching from the sideline as his moment gets delayed",
-        "2026-09-03: Betrayal and resignation—the quiet heartbreak of being put in an impossible position",
-        "2026-09-20: Resigned acceptance of bad news"
-      ],
-      "per_week": 0.5,
-      "target_supply": 3,
-      "shortfall": 3,
-      "fill_rank": 7
     },
     {
       "mood": "celebratory",
       "id": "comeback_euphoria",
       "description": "Despair turning into joy within one game or race.",
       "use_when": "Walk-offs after trailing, rallies from double digits, still alive in a race.",
-      "demand": 3,
-      "demand_share": 0.02,
+      "placements": 12,
+      "placement_share": 0.035,
+      "pass1_requests": 3,
       "supply_estimate": 0,
       "supply_ids_by_label": [],
-      "requests": [
+      "placement_contexts": [
+        "2026-09-09: …had reached his third US Open semifinal, beating Michelsen 5-7, 3-6, 7-5, 6-3, 7-6 (10-6). The biggest comeback of his career, on the biggest stage he plays on.",
+        "2026-09-10: …You lose your starter on the first possession, your backup leads a comeback, and you walk out 1-0.",
+        "2026-09-10: …Coco Gauff dropped the first set to Mirra Andreeva, saved two match points, dragged this thing into a third. Then she won it.",
+        "2026-09-12: …Braves fans then got to skip straight from panic to euphoria.",
+        "2026-09-13: …Texas was down 20 in the 4th quarter to No. 1 Ohio State. Then they scored 21 unanswered. Final: 24-23.",
+        "2026-09-20: …ff to beat the Marlins 7-6. Griffin Conine had already tied it in the ninth off Mason Miller, one of the best closers in baseball, just to give Salas the stage.",
+        "2026-09-26: …sen answered with two homers of his own for Kansas City, including one to tie it in the eighth. Then Cleveland walked it off in the ninth with the bases loaded.",
+        "2026-09-28: …s. Then somebody flipped a switch. He captained the 20-unanswered rally and finished it himself by leaping over the pile on 4th down for the go-ahead touchdown.",
+        "2026-09-28: …Sunday night in Rio, 80,000 Brazilians watching, seven seconds on the clock, 56 yards away. He drilled it. Ravens 34, Cowboys 31.",
+        "2026-10-02: …Ten seconds later Andre Szmyt kicked the game-winner.",
+        "2026-10-03: …A 16-point second-half deficit. Golden State is a second-year expansion team.",
+        "2026-10-05: …101 off Miller's hand. 110 off Chourio's bat. Two-RBI single, game over, Brewers up 2-0."
+      ],
+      "pass1_requests_text": [
         "2026-09-12: Emotional whiplash — the three-beat swing from despair to hope back to despair and finally to joy, all in one game",
         "2026-09-16: Desperation turning into euphoria — the moment a team realizes they're still alive in a race they thought was over.",
         "2026-10-03: Quiet belief turning into loud celebration — the Valkyries rallying around each other after being down 16"
       ],
-      "per_week": 0.5,
-      "target_supply": 3,
-      "shortfall": 3,
+      "per_week": 2.0,
+      "cooldown_floor": 4,
+      "freshness_target": 18,
+      "shortfall": 18,
+      "fill_rank": 7
+    },
+    {
+      "mood": "fatigue_over_it",
+      "id": "here_we_go_again",
+      "description": "Same story, again. Weary at a repeat failure.",
+      "use_when": "Another injury, another losing streak, the same QB carousel.",
+      "placements": 13,
+      "placement_share": 0.038,
+      "pass1_requests": 7,
+      "supply_estimate": 3,
+      "supply_ids_by_label": [
+        "nFzZ3X5D3fyb4WTRz4",
+        "eKsDAtyWPxkGRpEEtU",
+        "UnCXCkq3cs1uCv6uy2"
+      ],
+      "placement_contexts": [
+        "2026-09-04: …Georgia Tech: the only school on Earth capable of losing this specific way twice in five years.",
+        "2026-09-06: … his own conference-adjacent opener. Dabo has now hit the annual \"Dabo is done\" news cycle by the first Saturday in September, which might be a personal record.",
+        "2026-09-07: …The first three batters homered before he recorded an out. For the second time.",
+        "2026-09-10: …7-10 days is best case. Yankees fans have earned the right to distrust best case.",
+        "2026-09-13: …n talks, entering a contract year. Ravens fans have been through this movie before and it ended with a $260 million check written under duress. Book the sequel.",
+        "2026-09-23: …ade. Never missed a game because of injury. Since he walked away: Daniel Jones, Tyrod Taylor, Tommy DeVito, Drew Lock, Dart, and now Jameis. In a calendar year.",
+        "2026-09-24: …Four postseason misses. Three first-round exits. One pennant. Zero rings.",
+        "2026-09-28: …rough an ankle injury, then blew out his knee, in a 12-7 win where the Giants scored zero touchdowns. That's the Giants experience distilled into one afternoon.",
+        "2026-09-29: …elerated dramatically. From 2010 to 2024, seven — Tebow, Weeden, Manziel, Rosen, Trey Lance, Pickett, and now McCarthy. From 2000 to 2009, that number was zero.",
+        "2026-10-01: …Tomlin before Minecraft: one Super Bowl ring, two Super Bowl appearances. Tomlin with Minecraft: zero rings, zero Super Bowl trips. The CVS is cursed.",
+        "2026-10-06: …a World Series in decades. They can close that gap to \"lost the ALDS at home again\" by Wednesday, when the White Sox come back to the South Side with the broom.",
+        "2026-10-07: …Milwaukee has now lost its last dozen postseason road games.",
+        "2026-10-14: …h eight games — not during the expansion years, not during the Eric Lindros fallout, not during any of the five head-coaching changes in the last decade. Never."
+      ],
+      "pass1_requests_text": [
+        "2026-09-07: Disbelief, head in hands, how did this happen AGAIN",
+        "2026-09-07: Here we go again, same story different team",
+        "2026-09-10: Resignation as another star goes down — Yankees fans have seen this movie before",
+        "2026-09-14: quiet resignation as the American drought continues",
+        "2026-09-18: exasperated resignation — Syracuse fans watching their team commit another penalty",
+        "2026-10-01: Quiet resignation as the Steelers' playoff failures pile up — Steelers fans watching Tomlin give a Minecraft tour while their team hasn't won a playoff game in years",
+        "2026-10-14: watching your team lose for the 8th straight time with no end in sight"
+      ],
+      "per_week": 2.1,
+      "cooldown_floor": 5,
+      "freshness_target": 19,
+      "shortfall": 16,
       "fill_rank": 8
     },
     {
-      "mood": "cockiness_smugness",
-      "id": "got_away_with_it",
-      "description": "Grinning after an undeserved escape or bailout.",
-      "use_when": "A controversial call or lucky break saves someone.",
-      "demand": 2,
-      "demand_share": 0.013,
-      "supply_estimate": 0,
-      "supply_ids_by_label": [],
-      "requests": [
-        "2026-09-02: smug satisfaction after a long, exhausting ordeal finally ends",
-        "2026-09-06: Smug satisfaction at getting away with something you absolutely did not deserve — the vibe when you know you got bailed out and you're just gonna grin and take it"
+      "mood": "respect_awe",
+      "id": "historic_company",
+      "description": "Joining a legend's company; the weight of history.",
+      "use_when": "Comparisons to all-time greats, firsts in history.",
+      "placements": 13,
+      "placement_share": 0.038,
+      "pass1_requests": 1,
+      "supply_estimate": 4,
+      "supply_ids_by_label": [
+        "zBBPQUhyV6qWjOVbKn",
+        "nWWGEOdq8394Qs4qUw",
+        "fCUTTqU2u2SjwM401F",
+        "x0qyzmrDa7LpAEDftB"
       ],
-      "per_week": 0.3,
-      "target_supply": 3,
-      "shortfall": 3,
+      "placement_contexts": [
+        "2026-09-02: …Leading a league in strikeouts in your age-24 season puts you in the neighborhood of Kershaw, deGrom, and Strasburg.",
+        "2026-09-17: … the seventh player in MLB history to post 40-40. A Gold Glove center fielder chasing 40-40 while breaking Billy Williams records. Wrigley is chanting \"MVPETE.\"",
+        "2026-09-17: …Miami won the Campeones Cup final against Cruz Azul 2-0. Another trophy for the cabinet, another category of goal added to a résumé that already had everything.",
+        "2026-09-19: …and dished 10+ assists ten times this season. One teammate breaks the all-time scoring record, the other is on a career no one else has ever had. In one season.",
+        "2026-09-20: …The same Yankees they beat for that trophy 25 years ago.",
+        "2026-09-22: …Rice, Moss, T.O., Davante. That's the top four wide receivers in history at doing the thing that ends drives. Not \"of this era.\" All-time.",
+        "2026-09-23: …Toronto at 35 on a deal that runs through age 38. He's not chasing a ring on a min contract in Miami. He's cementing where he wants the plaque to say he played.",
+        "2026-09-26: …Duncan. Dirk. Kobe. One franchise, one legacy, walk out the door on your own terms. Steph just RSVP'd.",
+        "2026-10-02: …A'ja Wilson: 36 points, 10 rebounds, 11-of-18 shooting. She passed Candace Parker and Tamika Catchings on the all-time playoff double-doubles list.",
+        "2026-10-05: …has ever been younger with a walk-off hit in postseason history — twice, in the 1997 NLDS and the 1997 World Series. Chourio is now the third name on that list.",
+        "2026-10-07: …Only pitcher since saves became an official stat in 1969 to start a postseason game and then record a save of at least six outs . First save for King in years.",
+        "2026-10-07: …prime Kershaw. The next name on the list is Yamamoto, whose only blemish on the night was a four-pitch walk to Rowdy Tellez that nobody had on their bingo card.",
+        "2026-10-07: …That's a rare thing from a player who could still start on Sunday."
+      ],
+      "pass1_requests_text": [
+        "2026-10-07: The reader understands Yamamoto just joined Kershaw-level October company, and feels the weight of that historical comp"
+      ],
+      "per_week": 2.1,
+      "cooldown_floor": 5,
+      "freshness_target": 19,
+      "shortfall": 15,
       "fill_rank": 9
     },
     {
-      "mood": "respect_awe",
-      "id": "carrying_the_load",
-      "description": "Accepting a burden; doing everything for the team.",
-      "use_when": "A young captain named, a veteran playing three positions.",
-      "demand": 2,
-      "demand_share": 0.013,
+      "mood": "relief (NEW)",
+      "id": "drought_over_or_star_back",
+      "description": "Weary relief when a long wait ends.",
+      "use_when": "A drought snapped, a star returning, a clinch after years.",
+      "placements": 10,
+      "placement_share": 0.029,
+      "pass1_requests": 4,
       "supply_estimate": 0,
       "supply_ids_by_label": [],
-      "requests": [
-        "2026-09-16: The weight of responsibility — a young player accepting a massive burden with quiet confidence.",
-        "2026-10-09: Year 24, first time in Philly threads, and he's still got to carry everything—the memes about being point guard AND backup center land because they're true"
+      "placement_contexts": [
+        "2026-09-03: …Vlad Guerrero Jr. finally broke through:",
+        "2026-09-08: …Patriots fans finally seeing the front office keep a homegrown star:",
+        "2026-09-08: …Yankees fans watching Judge walk back into the clubhouse:",
+        "2026-09-09: … as planned. Yankees beat the Rockies 5-3. He didn't need to hit a 500-foot bomb or make a diving catch. He just needed to be in the lineup, and the lineup won.",
+        "2026-09-14: …- \"We went 30 years without winning a Grand Slam title, and now we won two within a span of three months.\"",
+        "2026-09-14: …ryell all lost their debut. Twelve straight coaches. Ken Whisenhunt lost his. Bruce Arians lost his. LaFleur just ended it by beating the Chargers in Inglewood.",
+        "2026-09-15: …stripes since May 31. A stress fracture in his right first rib. He missed over three months. He came back on September 9. Five games later, he did what he does.",
+        "2026-10-11: …17 points, 6-of-13 from the field, in the China Games against Houston. Cooper Flagg started Game 2 next to him. The Mavericks look like a basketball team again.",
+        "2026-10-13: …The weight of that streak lifting in real time:",
+        "2026-10-13: …Allen to Scott Van Pelt afterward: \"I haven't been a fan of overtime games in my career, so we get the first one. We'll take it.\""
       ],
-      "per_week": 0.3,
-      "target_supply": 3,
-      "shortfall": 3,
+      "pass1_requests_text": [
+        "2026-09-08: Relief and anticipation—fans/team exhaling because the superstar is finally back and they desperately needed him",
+        "2026-09-15: quiet relief after long wait — Judge back, Yankees clinch, the drought is over",
+        "2026-09-25: Excitement and relief — seeding matters, and the Valkyries fought for every inch",
+        "2026-10-13: Weary relief after finally ending a long drought — the smile of someone who just got a monkey off their back"
+      ],
+      "per_week": 1.6,
+      "cooldown_floor": 4,
+      "freshness_target": 14,
+      "shortfall": 14,
       "fill_rank": 10
+    },
+    {
+      "mood": "confusion",
+      "id": "what_just_happened",
+      "description": "Bewildered by a bizarre moment or conflicting information.",
+      "use_when": "Benches clearing for unclear reasons, officials contradicting each other.",
+      "placements": 15,
+      "placement_share": 0.043,
+      "pass1_requests": 2,
+      "supply_estimate": 9,
+      "supply_ids_by_label": [
+        "g01ZnwAUvutuK8GIQn",
+        "1wnZt7VY9yPDZRZ9M6",
+        "kWcAYqxFQi6e6NGb9d",
+        "3rlkIb3L5zPTsQEn81",
+        "FcuiZUneg1YRAu1lH2",
+        "bm02BE6DQ4Oag8GXep",
+        "400IbOQGqOWQgTLCvx",
+        "3iwRj8JrhaBfvQMSx9",
+        "N86lbPjFROJIQUzqOq"
+      ],
+      "placement_contexts": [
+        "2026-09-02: … percentage is higher with a guy who played 37 career NBA games than with the guy he won a championship with. Small sample size disclaimers apply. Nobody cares.",
+        "2026-09-04: …Playing a tournament. Positive test. Out-of-competition ruling.",
+        "2026-09-05: …ffin recruited these guys, a judge said they were fine, LSU sat them anyway, and the reward is a lawsuit from the people whose rules they were trying to follow.",
+        "2026-09-05: …Benches cleared in Boston. Blaze Alexander was mad. The Red Sox — the team he was mad at — could not figure out why. The game ended. Still no explanation.",
+        "2026-09-08: …Every FSU staffer trying to figure out how to call plays without technology:",
+        "2026-09-14: …The 39-22 final score has never happened before in NFL history. Fresh scorigami on opening Sunday.",
+        "2026-09-17: …Twelve hours later he was batting cleanup in the biggest game of the season.",
+        "2026-09-20: …Angels fans finding out they won a baseball game in extra innings:",
+        "2026-09-28: …lboy got into a physical altercation with Jags defender Josh Hines-Allen trying to retrieve the ball. Nothing about this franchise is normal and I love it here.",
+        "2026-10-01: …spare time, constructed a Minecraft world that includes a CVS, a 30-story luxury high rise with a lap pool, an indoor/outdoor restaurant, and a wellness center.",
+        "2026-10-03: … a 100-foot upright. Virginia Tech may have literally won this game if they'd built taller goalposts. In 2026. We're deciding playoff hopes on carpenter height.",
+        "2026-10-05: … Thornton got carted off with a gruesome ankle, Rashee Rice is already hurt, and Hill posted something cryptic on X thirty seconds after the Raiders game ended.",
+        "2026-10-09: …The franchise quarterback spent his postgame press conference addressing a guy who drives a car for a third-party contractor.",
+        "2026-10-10: …nd screen gets a shirtless Boston Connor and AJ Hawk audibly chewing dip through the national anthem. Both of these are now considered the Super Bowl broadcast.",
+        "2026-10-11: …Half the Dodgers roster is staying somewhere else. Max Muncy wants to make friends with it."
+      ],
+      "pass1_requests_text": [
+        "2026-09-05: confused bewilderment — the Red Sox are trying to figure out what just happened and why Alexander is upset",
+        "2026-10-08: Frustration and confusion — a coach being told conflicting information by officials in a crucial playoff moment"
+      ],
+      "per_week": 2.4,
+      "cooldown_floor": 5,
+      "freshness_target": 22,
+      "shortfall": 13,
+      "fill_rank": 11
+    },
+    {
+      "mood": "betrayal_self_sabotage",
+      "id": "franchise_meltdown",
+      "description": "A franchise in disarray, watching everything fall apart.",
+      "use_when": "Upset losses that expose a broken organization.",
+      "placements": 8,
+      "placement_share": 0.023,
+      "pass1_requests": 2,
+      "supply_estimate": 1,
+      "supply_ids_by_label": [
+        "BsIZ9aNAv69iKMNC39"
+      ],
+      "placement_contexts": [
+        "2026-09-09: …The only franchise capable of beating the Yankees at being the Yankees is the Yankees.",
+        "2026-09-16: …New York got eliminated from playoff contention the night before. The fans aren't booing the visitors anymore — they're booing the guys who signed their checks.",
+        "2026-09-18: …Ben Johnson took the offensive brain to Chicago in the offseason. Turns out he was also holding the defense together with duct tape and vibes.",
+        "2026-09-23: …And now he's the starter. The Giants have no other quarterbacks on the 53-man roster. Jake Haener is on the practice squad.",
+        "2026-09-23: …kees confirmed he won't be available for the Wild Card series. Highest payroll in baseball, home-field lost, MVP shelved, and the division belongs to Tampa Bay.",
+        "2026-10-02: …Rodgers: \"What the fuck?! Call it!\" McCarthy, into his helmet: \"Fuckin asshole.\"",
+        "2026-10-06: …That's the whole offense. One guy. A historic one, but still one guy, hitting into a vacuum while the defense sets money on fire behind him.",
+        "2026-10-09: …Jerry Jones left the box early. Schottenheimer is considering staff changes. Dallas is 2-3, third in the NFC East, 1.5 games back."
+      ],
+      "pass1_requests_text": [
+        "2026-09-14: franchise in disarray watching everything fall apart",
+        "2026-10-05: franchise in disarray"
+      ],
+      "per_week": 1.3,
+      "cooldown_floor": 3,
+      "freshness_target": 12,
+      "shortfall": 11,
+      "fill_rank": 12
+    },
+    {
+      "mood": "domination",
+      "id": "blowout_statement",
+      "description": "A rout as a statement; standing over the opponent.",
+      "use_when": "Blowouts, knockouts, running up the score.",
+      "placements": 10,
+      "placement_share": 0.029,
+      "pass1_requests": 3,
+      "supply_estimate": 4,
+      "supply_ids_by_label": [
+        "3iLisDUozEvfIRyf9X",
+        "3ohhwssY8BhybLFeDe",
+        "PZ58x6tqfRkrwyFlrw",
+        "fZEz565zA4ARwUDawo"
+      ],
+      "placement_contexts": [
+        "2026-09-11: …lockers to the run. Once Garrett and the Rams' front got worn down, Purdy opened up the downfield stuff. Williams took his lunch money and gave him the receipt.",
+        "2026-09-11: …rd TD drive in the third to bury it. Mike Evans caught a touchdown in his 49ers debut. The 49ers rushed for 174 yards at 5.8 a pop and picked up 23 first downs.",
+        "2026-09-20: …He walked out unconscious 12 seconds later.",
+        "2026-09-27: …out how to stop him. Joenel Aguero got ejected for targeting. Second targeting call of the night in this newsletter alone. The Gators are going into the top 10.",
+        "2026-09-30: …th an infield single. The Cubs went 5-1 against the Padres this year with 9.2 runs per game. Tuesday night: one infield single, zero runs, three PCA strikeouts.",
+        "2026-10-01: …s, three different kinds of carnage. The Yankees finished burying Boston. The White Sox finished a 21-year wait. And the Phillies finished the day with a pulse.",
+        "2026-10-02: …Michael Harris II took a first-inning swing and the series was effectively over. 3-run bomb. Braves up 3-0 before Philadelphia had batted.",
+        "2026-10-06: …chise record for a game. Michael Penix hasn't lost yet. Alvin Kamara scored his first touchdown of the year, which was the one bright moment the home crowd got.",
+        "2026-10-07: …Mauricio Dubón also robbed Freddie Freeman of a home run. The defending Dodgers are one win from the NLCS, and the Braves are one loss from going home.",
+        "2026-10-10: …Isaac Brown went for 235 and two touchdowns on 17 carries. The Cardinals ran straight through Florida State."
+      ],
+      "pass1_requests_text": [
+        "2026-09-11: This wasn't just a blowout. This was a statement that Miami has no interest in sportsmanship when they can instead send a message to the rest of college football.",
+        "2026-09-13: dominance — landing the knockout blow and standing over the opponent",
+        "2026-10-10: smug dominance — Iowa just steamrolled Washington on the road, and they're not supposed to be this good"
+      ],
+      "per_week": 1.6,
+      "cooldown_floor": 4,
+      "freshness_target": 14,
+      "shortfall": 10,
+      "fill_rank": 13
+    },
+    {
+      "mood": "respect_awe",
+      "id": "superhuman_play",
+      "description": "Something that shouldn't be physically possible.",
+      "use_when": "Diving catches, 105-mph throws, absurd goals.",
+      "placements": 9,
+      "placement_share": 0.026,
+      "pass1_requests": 4,
+      "supply_estimate": 3,
+      "supply_ids_by_label": [
+        "yidUzHnBk32Um9aMMw",
+        "9x53b0DRuorXEGOaTh",
+        "MUeQeEQaDCjE4"
+      ],
+      "placement_contexts": [
+        "2026-09-05: …e, he came up batting righty and hit the walk-off solo homer. 405 feet, career-longest. Different sides of the plate. Same game. Both game-changers. Final: 7-6.",
+        "2026-09-07: …rter and hit the five, bounced to the two, and side-spun to the sideline before rolling out at the one-foot line. Sixty-nine yards. Coffin corner from a coffin.",
+        "2026-09-09: …That is closer velocity. From a shortstop. Playing center field.",
+        "2026-09-12: …Shelton is serving a tennis ball 50% harder than Aroldis Chapman throws a baseball. After three sets.",
+        "2026-09-19: …ltuve of extra bases with the Astros creeping back into it. The offense clinched the game. The defense sealed it. October is going to be a problem for somebody.",
+        "2026-09-19: …Mensah did it in the first two quarters of a September road game.",
+        "2026-09-19: …completion percentage that shouldn't exist outside of a video game on rookie sliders. Miami won 33-20 and The U being back is starting to sound less like a bit.",
+        "2026-10-02: …ty-netter to seal a 5-1 beatdown of Tampa. A franchise that has been around since 1926 has now watched exactly one of its goalies put the puck in the other net.",
+        "2026-10-09: …A 100-mph fastball at the top of the zone. Gone. 3-2 Guardians."
+      ],
+      "pass1_requests_text": [
+        "2026-09-03: Superman flying catch—Nico Hoerner going full extension",
+        "2026-09-09: Superhuman dominance—someone doing something that should not be physically possible",
+        "2026-09-17: quiet awe—watching Messi do something rare and beautiful",
+        "2026-09-21: Ja'Marr Chase one-handed circus catch"
+      ],
+      "per_week": 1.5,
+      "cooldown_floor": 3,
+      "freshness_target": 13,
+      "shortfall": 10,
+      "fill_rank": 14
     },
     {
       "mood": "domination",
       "id": "shell_shocked_loser",
       "description": "The losing side's thousand-yard stare after getting worked.",
       "use_when": "The pitcher who gave up three straight HRs; a defense shredded by a backup.",
-      "demand": 2,
-      "demand_share": 0.013,
+      "placements": 7,
+      "placement_share": 0.02,
+      "pass1_requests": 2,
       "supply_estimate": 0,
       "supply_ids_by_label": [],
-      "requests": [
+      "placement_contexts": [
+        "2026-09-11: …Rams fans watching this in the middle of the night:",
+        "2026-09-13: …r. Week 3, at home, against a team he was favored against. The CFP path just got infinitely tighter for a coach who already lives under a heat lamp in Columbus.",
+        "2026-09-20: …Jon Jones was cageside to watch his prized pupil ascend. He watched him get starched instead.",
+        "2026-09-28: …Aces up 1-0 on the Fever, and Indiana is going to need a coaching intervention, a scheme change, and possibly divine assistance.",
+        "2026-09-29: …Somewhere Jalen Hurts is staring at a wall.",
+        "2026-10-04: …Yankees hitters trying to figure out what Rasmussen was throwing:",
+        "2026-10-11: …Philadelphia 106, Boston 144. Jaylen watched that from a chair in the visitors' tunnel."
+      ],
+      "pass1_requests_text": [
         "2026-09-06: Shell-shocked disbelief after getting absolutely worked — the thousand-yard stare when you just got embarrassed on national TV",
         "2026-09-29: Weary, stunned disbelief at being outplayed by a 38-year-old who hasn't started in 1,009 days — the 'how is this happening' face"
       ],
-      "per_week": 0.3,
-      "target_supply": 3,
-      "shortfall": 3,
-      "fill_rank": 11
+      "per_week": 1.1,
+      "cooldown_floor": 3,
+      "freshness_target": 10,
+      "shortfall": 10,
+      "fill_rank": 15
+    },
+    {
+      "mood": "financial_pain",
+      "id": "buyers_remorse",
+      "description": "Regret after paying for something that didn't work.",
+      "use_when": "A bad contract, a lopsided trade, a wasted pick, a guarantee that wasn't.",
+      "placements": 7,
+      "placement_share": 0.02,
+      "pass1_requests": 0,
+      "supply_estimate": 3,
+      "supply_ids_by_label": [
+        "aKT1Wdp8XpNbmf2suv",
+        "3oEjHGnY8oB4BHVTP2",
+        "ASM4IvHzkop00e6sUN"
+      ],
+      "placement_contexts": [
+        "2026-09-02: …ion for two productive months, and Anthony Rendon to $245 million for a highlight reel of press conferences about ranking baseball fifth in his life priorities.",
+        "2026-09-03: …s. Shai Gilgeous-Alexander — the reigning MVP currently making Oklahoma City the best team on the planet. All of it for the Kawhi era. The receipts on that era:",
+        "2026-09-09: …Every guy who took the guaranteed money over the PGA Tour is now finding out the \"guarantee\" part was doing a lot of heavy lifting.",
+        "2026-09-10: …Every fantasy manager who spent a second-round pick on the best tight end in football:",
+        "2026-09-21: …Somewhere in Florham Park a Jets scout is still explaining the 40 time.",
+        "2026-09-28: …cting historically bad records, and Myles Garrett looking at his new locker room the way you look at a rental car you just realized has a check engine light on.",
+        "2026-10-10: … two years ago. Mike Norvell's buyout is reportedly too fat to eat and the leadership can't agree on a path forward, so he just keeps coaching. Everybody loses."
+      ],
+      "pass1_requests_text": [],
+      "per_week": 1.1,
+      "cooldown_floor": 3,
+      "freshness_target": 10,
+      "shortfall": 7,
+      "fill_rank": 16
+    },
+    {
+      "mood": "relief (NEW)",
+      "id": "dodged_disaster",
+      "description": "Exhale after a scare or a near-collapse.",
+      "use_when": "An injury that turned out fine, a team that nearly blew it.",
+      "placements": 5,
+      "placement_share": 0.014,
+      "pass1_requests": 4,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "placement_contexts": [
+        "2026-09-18: …ptoms but avoided the scariest outcomes. Real fear early, real relief late. The Phillies won 3-0, but nobody in either dugout was thinking about the scoreboard.",
+        "2026-09-22: …o return in the postseason\" is one of those sentences that reads like great news and terrible news depending on which half you emphasize. The Cubs will take it.",
+        "2026-09-23: … single digits, and still won by 19. Not clean. But Indiana held. Kelsey Mitchell kept her 20-point streak alive. The Big Three all showed up in the same night.",
+        "2026-09-25: …The bracket is locked. The Valkyries trailed the Sparks late, scraped out a 76-75 win, grabbed the No. 2 seed.",
+        "2026-09-26: …rom last year's title team and it shows. Nearly losing to Northwestern at home is the kind of Saturday that gets included in the documentary two years from now."
+      ],
+      "pass1_requests_text": [
+        "2026-09-18: The reader feels the mix of fear and relief: it looked bad, but the thumbs up is always a good sign.",
+        "2026-09-22: Bregman dodged a career-altering injury, and the Cubs dodged losing their star before October",
+        "2026-09-26: Disaster narrowly averted — frantic scrambling that somehow results in survival",
+        "2026-10-12: relief after narrowly escaping disaster"
+      ],
+      "per_week": 0.8,
+      "cooldown_floor": 3,
+      "freshness_target": 7,
+      "shortfall": 7,
+      "fill_rank": 17
+    },
+    {
+      "mood": "fatigue_over_it",
+      "id": "long_drought",
+      "description": "Decades without it, and the drought keeps going.",
+      "use_when": "Title droughts, 'first since 1948', a nation still waiting on a major.",
+      "placements": 5,
+      "placement_share": 0.014,
+      "pass1_requests": 0,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "placement_contexts": [
+        "2026-09-12: …en presidents. The entire careers of Sampras, Agassi, Federer, Nadal, and Djokovic. Every single US Open ever played inside the stadium named after Arthur Ashe.",
+        "2026-09-14: …agram didn't exist. The iPhone didn't exist. The Big Three ran off 66 majors in the meantime and are all effectively retired, and Americans STILL can't get one.",
+        "2026-09-14: …on in 2009. That's how bad the drought is. Not \"first title in decades.\" Not even \"first final appearance in years.\" First SET won in a Major final in 17 years.",
+        "2026-09-25: … Series. They squandered a 3-1 lead in 2016 to a Cubs team ending a historic drought. Cleveland helped end everybody else's drought. Their own just keeps going.",
+        "2026-09-30: …1980. Reagan hadn't been elected yet. Mark Howe was playing for the Hartford Whalers, a franchise that no longer exists."
+      ],
+      "pass1_requests_text": [],
+      "per_week": 0.8,
+      "cooldown_floor": 3,
+      "freshness_target": 7,
+      "shortfall": 7,
+      "fill_rank": 18
+    },
+    {
+      "mood": "cockiness_smugness",
+      "id": "taunting_the_rival",
+      "description": "Rubbing it in a rival's face: stare-downs, chants, revenge.",
+      "use_when": "Revenge games, student-section chants, staring down an enemy.",
+      "placements": 6,
+      "placement_share": 0.017,
+      "pass1_requests": 2,
+      "supply_estimate": 2,
+      "supply_ids_by_label": [
+        "xUA7beT9PDJoDNAmgU",
+        "34qsir9hxG8sloNtXQ"
+      ],
+      "placement_contexts": [
+        "2026-09-13: …welterweight champion Lopez into the ring to face off. Security refused. Knock a guy out and call out the next champ before your gloves are off. That's the job.",
+        "2026-09-13: …At some point \"rivalry\" becomes \"personal problem.\"",
+        "2026-09-14: …- Zverev to Rodman: \"Trinity, I thought you had a game today… You're the lucky charm… not today, but usually.\"",
+        "2026-09-20: …Oxford was ready for him. Fans lined the stairwells. The boos started early and never stopped.",
+        "2026-10-03: …Northwestern earned theirs by running the ball down their throat for sixty minutes in front of a student section chanting \"Safety School.\"",
+        "2026-10-08: …inero, 22 years old, standing in the visiting clubhouse at Yankee Stadium with a microphone in his face, deciding this was the moment to hit the Sinatra button."
+      ],
+      "pass1_requests_text": [
+        "2026-09-02: cold-blooded vengeance—guy staring down his enemy after exacting revenge",
+        "2026-10-03: Smug satisfaction — Northwestern students chanting 'Safety School' at Penn State"
+      ],
+      "per_week": 1.0,
+      "cooldown_floor": 3,
+      "freshness_target": 8,
+      "shortfall": 6,
+      "fill_rank": 19
+    },
+    {
+      "mood": "celebratory",
+      "id": "pure_joy_breakthrough",
+      "description": "A kid living the dream; a first or a record.",
+      "use_when": "Prospects' first big night, a record broken by surprise.",
+      "placements": 6,
+      "placement_share": 0.017,
+      "pass1_requests": 2,
+      "supply_estimate": 2,
+      "supply_ids_by_label": [
+        "D7T5m0AFV8Yg0",
+        "iOMSfTen1pZUPTx2QF"
+      ],
+      "placement_contexts": [
+        "2026-09-05: … produced Michael Irvin and Reggie Wayne and Andre Johnson and Santana Moss — for decades. A high school senior from a year ago just broke it in three quarters.",
+        "2026-09-19: …Her first thought was that coach Stephanie White had passed a milestone. Then everybody started coming her way.",
+        "2026-10-01: …Andrew Painter threw three scoreless. The only Wild Card series not ending in a sweep. Series tied 1-1. Game 3 Thursday.",
+        "2026-10-02: …on before Thursday. He threw the biggest outing of his life in relief, saluted the crowd on his way off, and later dropped F-bombs on the celebration interview.",
+        "2026-10-07: …nto beat Nashville 5-4 in overtime, and Matthews also set up Gavin McKenna's first NHL goal in the process. Nashville's last win at Toronto was January 7, 2019.",
+        "2026-10-09: …Logan Stankoven got his first career hat trick in the same night he notched his 100th career point. He's 22."
+      ],
+      "pass1_requests_text": [
+        "2026-09-17: pure joy—kid living out his dream, hitting two homers in one night",
+        "2026-09-19: Celebration — pure joy after breaking a record you didn't know you were chasing until someone told you mid-interview"
+      ],
+      "per_week": 1.0,
+      "cooldown_floor": 3,
+      "freshness_target": 8,
+      "shortfall": 6,
+      "fill_rank": 20
+    },
+    {
+      "mood": "cockiness_smugness",
+      "id": "got_away_with_it",
+      "description": "Grinning after an undeserved escape or bailout.",
+      "use_when": "A controversial call or lucky break saves someone.",
+      "placements": 4,
+      "placement_share": 0.012,
+      "pass1_requests": 2,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "placement_contexts": [
+        "2026-09-02: …The lesson: you don't have to be good, you just have to hold.",
+        "2026-09-03: …ed. He gets to keep the money Aspiration paid him and gets traded to the team he wanted anyway. He made at least $28M on the deal. The fine is 2.5% of the haul.",
+        "2026-09-06: …e replay review may have been different than the clock seen on the broadcast replay. Two different clocks disagreed and the refs picked the one Michigan needed.",
+        "2026-09-16: …alk-off double in the bottom of the ninth. That walk-off hit had an expected batting average of .060. Sixty points. He got jammed, bloop found grass, game over."
+      ],
+      "pass1_requests_text": [
+        "2026-09-02: smug satisfaction after a long, exhausting ordeal finally ends",
+        "2026-09-06: Smug satisfaction at getting away with something you absolutely did not deserve — the vibe when you know you got bailed out and you're just gonna grin and take it"
+      ],
+      "per_week": 0.7,
+      "cooldown_floor": 3,
+      "freshness_target": 6,
+      "shortfall": 6,
+      "fill_rank": 21
+    },
+    {
+      "mood": "embarrassing_awkward",
+      "id": "dud_performance",
+      "description": "Showed up empty: a star or lineup that did nothing.",
+      "use_when": "0-for-4 nights, 19 strikeouts, a debut that fits on a business card.",
+      "placements": 5,
+      "placement_share": 0.014,
+      "pass1_requests": 0,
+      "supply_estimate": 2,
+      "supply_ids_by_label": [
+        "bpz6Jo3vrrsfS",
+        "3o6Zt1TrXW8uW2lE2I"
+      ],
+      "placement_contexts": [
+        "2026-09-15: …Denver was the only team in Week 1 to score fewer than 10 points. Jaylen Waddle had a debut that would fit on a business card:",
+        "2026-09-17: …tters by batting average all play for the same team. Colson Montgomery, Braden Montgomery, Munetaka Murakami — 165, 166, 167. A clean sweep of the bottom three.",
+        "2026-09-19: …Seven games. 4-for-23. One homer. Thirteen strikeouts.",
+        "2026-10-08: …A .485 OPS from everyone not named Harris or Albies. Nine starters minus two.",
+        "2026-10-08: …The White Sox struck out 19 times."
+      ],
+      "pass1_requests_text": [],
+      "per_week": 0.8,
+      "cooldown_floor": 3,
+      "freshness_target": 7,
+      "shortfall": 5,
+      "fill_rank": 22
+    },
+    {
+      "mood": "sadness_resignation",
+      "id": "farewell_to_a_legend",
+      "description": "Grief and respect together: a death or a retirement.",
+      "use_when": "Obituaries, retirement announcements.",
+      "placements": 4,
+      "placement_share": 0.012,
+      "pass1_requests": 2,
+      "supply_estimate": 1,
+      "supply_ids_by_label": [
+        "rvxMJNyHAgwlW4YWpJ"
+      ],
+      "placement_contexts": [
+        "2026-09-05: …lam finals. Three Olympic golds. A career doubles Grand Slam. All of it done as a side project while they were also two of the best singles players of all time.",
+        "2026-09-15: …lonso is a free agent. That might have been his last at-bat in a Mets uniform, and it ended one foot from a milestone. Mets fans processing all of that at once:",
+        "2026-10-06: …One more year of The Great Eight. Every goal from here is the new ceiling of the sport.",
+        "2026-10-06: …une and lost 1-0 to Spain, which is the closest a Messi era has come to ending on a sour note. Tonight is the correction. One shirt, one stadium, one more time."
+      ],
+      "pass1_requests_text": [
+        "2026-09-25: Grief and respect for a foundational figure in NBA history whose name has faded from casual memory but whose achievements were monumental in their era",
+        "2026-10-06: Quiet resignation tinged with respect — a legend is hanging up his skates and the hockey world is saying goodbye"
+      ],
+      "per_week": 0.7,
+      "cooldown_floor": 3,
+      "freshness_target": 6,
+      "shortfall": 5,
+      "fill_rank": 23
     },
     {
       "mood": "confusion",
       "id": "upset_shock",
       "description": "Mouth agape at a result nobody predicted.",
       "use_when": "Big underdog wins, a No. 1 falling, a 3-0 nobody saw coming.",
-      "demand": 6,
-      "demand_share": 0.039,
+      "placements": 4,
+      "placement_share": 0.012,
+      "pass1_requests": 6,
       "supply_estimate": 1,
       "supply_ids_by_label": [
         "KD2gfeYLy6T5V7eMzp"
       ],
-      "requests": [
+      "placement_contexts": [
+        "2026-10-02: …The opponent was the defending Stanley Cup champion Florida Panthers. San Jose won 4-3 in OT.",
+        "2026-10-08: …ion team — is up 2-0 on the Aces. In Las Vegas. A'ja Wilson. Becky Hammon. Four straight Finals appearances. Down 0-2 to a team that didn't exist 24 months ago.",
+        "2026-10-11: …Kentucky is ranked for the first time since 2023 and just took down a top-10 SEC team at home. Lane Kiffin's job description now includes losing to Kentucky.",
+        "2026-10-11: …to open a season, which they hadn't done since 2022. Oregon's playoff path just got demolished by a team nobody picked to finish in the top half of the Big Ten."
+      ],
+      "pass1_requests_text": [
         "2026-09-13: shock — disbelief at the underdog winning",
         "2026-09-24: Disbelief — two teams at .500 battling for a division title like it's the World Series.",
         "2026-09-27: quiet resignation turning to stunned disbelief — Michigan fans watching the clock hit zero and realizing it's over",
@@ -286,201 +907,396 @@
         "2026-10-03: Mouth agape shock — the moment Brent Vigen realized he just gave Idaho a free play",
         "2026-10-11: The reader sees Arch's INT, knows Texas is mortal, and realizes the Red River Rivalry still bites"
       ],
-      "per_week": 1.0,
-      "target_supply": 3,
-      "shortfall": 2,
-      "fill_rank": 12
+      "per_week": 0.7,
+      "cooldown_floor": 3,
+      "freshness_target": 6,
+      "shortfall": 5,
+      "fill_rank": 24
+    },
+    {
+      "mood": "celebratory",
+      "id": "clinch_or_title_party",
+      "description": "Champagne-and-dogpile celebration of a clinch or title.",
+      "use_when": "Division clinches, titles, signature upsets at home.",
+      "placements": 8,
+      "placement_share": 0.023,
+      "pass1_requests": 3,
+      "supply_estimate": 8,
+      "supply_ids_by_label": [
+        "tFXCQpZf3Q95S",
+        "FX6SNOWqjUmzJlor4J",
+        "TLO3uEaFDbd58RUpIl",
+        "ugcpY6mLKO1XwLuEEA",
+        "Uqepe3KjEVzPYep8oW",
+        "l4FGIG0CE6nJxnc1q",
+        "zdjQpEtni7XIX4ncNg",
+        "t3sZxY5zS5B0z5zMIz"
+      ],
+      "placement_contexts": [
+        "2026-09-12: …ro came to the plate in the ninth with the Rays needing one swing to secure a postseason berth. Number 40 on the year, walk-off, ballgame over, playoffs locked.",
+        "2026-09-12: …Yandy Diaz celebrated by walking around the clubhouse eating a tomahawk steak.",
+        "2026-09-18: … first regular season game. Allen scored the first touchdown in the building. Bills fans got a housewarming gift and a laminated MVP campaign flyer at the door.",
+        "2026-09-20: …Then Chambliss got the mic postgame and gave the sideline reporter a live-TV \"HOTTY F*CKING TODDY.\" New king of Oxford, crowned in prime time, cursing on ESPN.",
+        "2026-09-25: … in 1982 when they went to the World Series. Not in any of the recent playoff runs. Tonight they got to 100 for the first time — and they still have games left.",
+        "2026-09-25: …Beating the Dodgers to clinch. Doing it with the guy you traded for last winter. Extremely Padres.",
+        "2026-09-27: …Cleveland beat the Royals 11-5 and the White Sox lost 9-6 to the Rockies. Brayan Rocchio hit two homers in the clinch.",
+        "2026-10-01: …bomb to seal it. Cleveland next — first time these division rivals have ever met in the playoffs. Also: the Pope is now 1-0 as a baseball operations consultant."
+      ],
+      "pass1_requests_text": [
+        "2026-09-16: Celebration energy — champagne showers, the euphoria of locking up a title after a long grind.",
+        "2026-09-21: celebration after dominating",
+        "2026-09-27: ecstatic celebration — Florida fans and players after a 24-point upset of a top-5 team at home"
+      ],
+      "per_week": 1.3,
+      "cooldown_floor": 3,
+      "freshness_target": 12,
+      "shortfall": 4,
+      "fill_rank": 25
+    },
+    {
+      "mood": "anger_outrage",
+      "id": "controversial_call",
+      "description": "A disputed officiating call decides it.",
+      "use_when": "Non-reviewable calls, missed PI, timeout mix-ups, replay rulings.",
+      "placements": 4,
+      "placement_share": 0.012,
+      "pass1_requests": 0,
+      "supply_estimate": 2,
+      "supply_ids_by_label": [
+        "JI5Na0rpieV8bSuKgO",
+        "1r94hfYcoLFCdsRyhY"
+      ],
+      "placement_contexts": [
+        "2026-09-19: … to see. If you had Texas Tech, he was down a yard short. If you had Houston, that ball crossed the plane and someone recovered it. The refs got the final word.",
+        "2026-09-28: … the fourth quarter and came down with what should have been a game-sealing interception. The refs saw pass interference. Rams win, gone. Broncos life, granted.",
+        "2026-10-03: …staring up into a cold Virginia sky decides a top-25 ACC game. Everyone with a decent angle thought it was good. The one guy with the whistle thought otherwise.",
+        "2026-10-08: …ef's explanation afterward was that Stewart was standing behind the referee when he confirmed the timeout situation with his partner, so she must have misheard."
+      ],
+      "pass1_requests_text": [],
+      "per_week": 0.7,
+      "cooldown_floor": 3,
+      "freshness_target": 6,
+      "shortfall": 4,
+      "fill_rank": 26
+    },
+    {
+      "mood": "respect_awe",
+      "id": "carrying_the_load",
+      "description": "Accepting a burden; doing everything for the team.",
+      "use_when": "A young captain named, a veteran playing three positions.",
+      "placements": 3,
+      "placement_share": 0.009,
+      "pass1_requests": 2,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "placement_contexts": [
+        "2026-09-15: …Andy Reid trying to run the ball with whatever running back was walking past the facility, ended by one guy in one night.",
+        "2026-09-16: …5M extension this summer, and he's already put up 203 points in 219 games. Chicago is handing the entire rebuild to a kid who was in high school four years ago.",
+        "2026-10-09: …enter, and the best player on a team that currently employs Joel Embiid — who, in the same game, flopped so hard he nearly injured the guy he was flopping into."
+      ],
+      "pass1_requests_text": [
+        "2026-09-16: The weight of responsibility — a young player accepting a massive burden with quiet confidence.",
+        "2026-10-09: Year 24, first time in Philly threads, and he's still got to carry everything—the memes about being point guard AND backup center land because they're true"
+      ],
+      "per_week": 0.5,
+      "cooldown_floor": 3,
+      "freshness_target": 4,
+      "shortfall": 4,
+      "fill_rank": 27
     },
     {
       "mood": "cockiness_smugness",
-      "id": "smug_indifference",
-      "description": "Unbothered by criticism or by a mess; a shrug at your own failure.",
-      "use_when": "Someone brushes off a blowout loss, a call-out, or a plan falling apart.",
-      "demand": 3,
-      "demand_share": 0.02,
-      "supply_estimate": 1,
+      "id": "bold_move_swagger",
+      "description": "Swagger after a bold declaration or a big move.",
+      "use_when": "Media-day boasts, a GM sure a trade fixes everything.",
+      "placements": 5,
+      "placement_share": 0.014,
+      "pass1_requests": 2,
+      "supply_estimate": 4,
       "supply_ids_by_label": [
-        "Nx2Lx1RmLadtC"
+        "qOnWoPxXnm0Vi",
+        "STYcRDzNO6AYNmMgvA",
+        "eKDrGTXLrLqqJMA7NC",
+        "U8TJaBmNwVY5Ie2crg"
       ],
-      "requests": [
-        "2026-09-21: smug indifference watching a plan fall apart",
-        "2026-09-27: smug indifference — Don Mattingly saying 'I was encouraged' after a blowout loss",
-        "2026-10-05: smug indifference after being called out"
+      "placement_contexts": [
+        "2026-09-05: …ted him is in hell. The kid himself is out here posing for a trophy that gets handed out in December, in September, in Week 1, after his first career touchdown.",
+        "2026-09-12: …callback. Same cadence. Same energy. Except LeBron delivered his after winning a title and Caminero delivered his after clinching a Wild Card spot in September.",
+        "2026-09-17: …Alonso got mic'd up postgame: \"Keep your words sweet, I'm on the mic.\"",
+        "2026-09-29: …LeBron's quote of the day: \"I didn't leave my family to lose in the second round.\" The Sixers have not made the Eastern Conference Finals in decades.",
+        "2026-09-29: …Turning down $200 million guaranteed to bet on a $9.6 million qualifying offer is a stance. Thursday is going to be interesting."
       ],
-      "per_week": 0.5,
-      "target_supply": 3,
-      "shortfall": 2,
-      "fill_rank": 13
+      "pass1_requests_text": [
+        "2026-09-29: Confident swagger after making a bold declaration — the 'I said what I said' face",
+        "2026-10-01: Smug confidence after making a big move — Jerry Jones after trading for Joey Porter Jr., convinced this fixes the Cowboys' secondary"
+      ],
+      "per_week": 0.8,
+      "cooldown_floor": 3,
+      "freshness_target": 7,
+      "shortfall": 3,
+      "fill_rank": 28
+    },
+    {
+      "mood": "escalation",
+      "id": "escalating_panic",
+      "description": "It keeps getting worse, and someone is watching it unfold.",
+      "use_when": "Investigations widening, scandals compounding.",
+      "placements": 5,
+      "placement_share": 0.014,
+      "pass1_requests": 1,
+      "supply_estimate": 4,
+      "supply_ids_by_label": [
+        "1n4iuWZFnTeN6qvdpD",
+        "K9m5k3LN95osDAL8RC",
+        "qpCYWYWC0CimN5GteN",
+        "5kFWWtxR0UCHgLaM4O"
+      ],
+      "placement_contexts": [
+        "2026-09-03: …is banned from team business for five years. Kawhi himself: a $700K fine and a plane ticket to Toronto, where the trade is expected to close in the coming days.",
+        "2026-09-03: …mal appeals process with the league, which means the avenue is court. Ballmer, the richest owner in American sports, is about to sue the league he owns 3.5% of.",
+        "2026-09-11: …The Clippers said they'd fight it through every avenue. Today, federal prosecutors in Brooklyn opened a criminal investigation into the same conduct.",
+        "2026-09-22: … Giants' entire offensive plan was built around — the ones who barely got 23 snaps together all of last year — all hit the turf on the same primetime broadcast.",
+        "2026-09-29: …Baker Mayfield out three weeks with a thumb. De'Von Achane to IR. Travis Etienne hamstring. Jaycee Horn out indefinitely with a quad injury. It's Week 3."
+      ],
+      "pass1_requests_text": [
+        "2026-09-11: escalating panic — Ballmer watching the news that federal prosecutors are now involved"
+      ],
+      "per_week": 0.8,
+      "cooldown_floor": 3,
+      "freshness_target": 7,
+      "shortfall": 3,
+      "fill_rank": 29
     },
     {
       "mood": "celebratory",
       "id": "together_again",
       "description": "Celebrating together: reunions, brothers, chaotic fun.",
       "use_when": "Reunions, sibling feats, fun signings.",
-      "demand": 3,
-      "demand_share": 0.02,
+      "placements": 3,
+      "placement_share": 0.009,
+      "pass1_requests": 3,
       "supply_estimate": 1,
       "supply_ids_by_label": [
         "DfLwM9kttDFEQ"
       ],
-      "requests": [
+      "placement_contexts": [
+        "2026-09-02: …ys for him in Miami, they both get out, and now they're running it back in Minnesota days before Week 1. The scheme fit is already installed in Van Noy's brain.",
+        "2026-09-15: …Kawhi and Kyle Anderson have won a lot of games together. Anderson just signed in Toronto too.",
+        "2026-10-14: …Lundell in 2022. Brady's hat trick was the fourth of his career. On the night the NHL puts all 32 teams on ice at once, the two brothers hijacked the broadcast."
+      ],
+      "pass1_requests_text": [
         "2026-09-02: chaotic celebration—everybody vibing, nobody knows what's happening but it's fun",
         "2026-09-02: reunion hug after years apart—old friends back together",
         "2026-10-14: brothers celebrating together after dominating on the same night"
       ],
       "per_week": 0.5,
-      "target_supply": 3,
-      "shortfall": 2,
-      "fill_rank": 14
+      "cooldown_floor": 3,
+      "freshness_target": 4,
+      "shortfall": 3,
+      "fill_rank": 30
     },
     {
       "mood": "sadness_resignation",
-      "id": "farewell_to_a_legend",
-      "description": "Grief and respect together: a death or a retirement.",
-      "use_when": "Obituaries, retirement announcements.",
-      "demand": 2,
-      "demand_share": 0.013,
-      "supply_estimate": 1,
-      "supply_ids_by_label": [
-        "rvxMJNyHAgwlW4YWpJ"
+      "id": "bad_news_accepted",
+      "description": "Taking bad news on the chin: a suspension, a benching, a forced exit.",
+      "use_when": "Off-field news delivered to someone who can only accept it.",
+      "placements": 1,
+      "placement_share": 0.003,
+      "pass1_requests": 3,
+      "supply_estimate": 0,
+      "supply_ids_by_label": [],
+      "placement_contexts": [
+        "2026-09-20: … three games. Which means it could be more. The Colts just lost their veteran WR1 for a chunk of the schedule to something that had nothing to do with football."
       ],
-      "requests": [
-        "2026-09-25: Grief and respect for a foundational figure in NBA history whose name has faded from casual memory but whose achievements were monumental in their era",
-        "2026-10-06: Quiet resignation tinged with respect — a legend is hanging up his skates and the hockey world is saying goodbye"
-      ],
-      "per_week": 0.3,
-      "target_supply": 3,
-      "shortfall": 2,
-      "fill_rank": 15
-    },
-    {
-      "mood": "betrayal_self_sabotage",
-      "id": "franchise_meltdown",
-      "description": "A franchise in disarray, watching everything fall apart.",
-      "use_when": "Upset losses that expose a broken organization.",
-      "demand": 2,
-      "demand_share": 0.013,
-      "supply_estimate": 1,
-      "supply_ids_by_label": [
-        "BsIZ9aNAv69iKMNC39"
-      ],
-      "requests": [
-        "2026-09-14: franchise in disarray watching everything fall apart",
-        "2026-10-05: franchise in disarray"
-      ],
-      "per_week": 0.3,
-      "target_supply": 3,
-      "shortfall": 2,
-      "fill_rank": 16
-    },
-    {
-      "mood": "relief (NEW)",
-      "id": "emotional_release",
-      "description": "Tears and hands on face after a pressure win.",
-      "use_when": "A first major, a career-defining win.",
-      "demand": 1,
-      "demand_share": 0.007,
-      "supply_estimate": 1,
-      "supply_ids_by_label": [
-        "rvxMJNyHAgwlW4YWpJ"
-      ],
-      "requests": [
-        "2026-09-12: Emotional relief after a massive, pressure-packed win — tears, hands on face, can't believe it moment"
+      "pass1_requests_text": [
+        "2026-09-03: Quiet resignation—Mendoza watching from the sideline as his moment gets delayed",
+        "2026-09-03: Betrayal and resignation—the quiet heartbreak of being put in an impossible position",
+        "2026-09-20: Resigned acceptance of bad news"
       ],
       "per_week": 0.2,
-      "target_supply": 3,
+      "cooldown_floor": 3,
+      "freshness_target": 3,
+      "shortfall": 3,
+      "fill_rank": 31
+    },
+    {
+      "mood": "fatigue_over_it",
+      "id": "survived_and_exhausted",
+      "description": "Wiped out after a marathon or a thriller you barely survived.",
+      "use_when": "Five-set matches, multi-OT games, a game ending past midnight.",
+      "placements": 4,
+      "placement_share": 0.012,
+      "pass1_requests": 5,
+      "supply_estimate": 4,
+      "supply_ids_by_label": [
+        "U4jtIORqlc4svxFPUe",
+        "Ma1nnKL3XqZFEtaKs8",
+        "3FckanO0xoIDJo98OO",
+        "35BUnGH2e25bn8U6Qh"
+      ],
+      "placement_contexts": [
+        "2026-09-02: …e is the tennis version of your quarterback throwing two picks in the first quarter of Week 1 against the Panthers. It counts. It shouldn't have been that hard.",
+        "2026-09-08: …Every East Coast college football fan clocking in Tuesday morning:",
+        "2026-09-09: …Fans who stayed up:",
+        "2026-09-09: … minutes. Shelton, the No. 8 seed, ended Alcaraz's long winning streak in Grand Slam tournaments. At one point the Spaniard could be seen vomiting into a towel."
+      ],
+      "pass1_requests_text": [
+        "2026-09-07: Maxed-out exhaustion, can't believe we survived that",
+        "2026-09-08: Exhausted resignation after staying up way too late for a game you thought would be over hours ago—the game ending at 12:20 AM Tuesday is the punchline",
+        "2026-09-09: Exhausted relief after a marathon—Shelton collapsing or celebrating after the final ace, the '5 a.m. bedtime' energy",
+        "2026-09-09: Exhausted vindication after a comeback—Tiafoe collapsing or celebrating after the final point",
+        "2026-09-21: exhausted relief after barely surviving"
+      ],
+      "per_week": 0.7,
+      "cooldown_floor": 3,
+      "freshness_target": 6,
       "shortfall": 2,
-      "fill_rank": 17
-    },
-    {
-      "mood": "cockiness_smugness",
-      "id": "taunting_the_rival",
-      "description": "Rubbing it in a rival's face: stare-downs, chants, revenge.",
-      "use_when": "Revenge games, student-section chants, staring down an enemy.",
-      "demand": 2,
-      "demand_share": 0.013,
-      "supply_estimate": 2,
-      "supply_ids_by_label": [
-        "xUA7beT9PDJoDNAmgU",
-        "34qsir9hxG8sloNtXQ"
-      ],
-      "requests": [
-        "2026-09-02: cold-blooded vengeance—guy staring down his enemy after exacting revenge",
-        "2026-10-03: Smug satisfaction — Northwestern students chanting 'Safety School' at Penn State"
-      ],
-      "per_week": 0.3,
-      "target_supply": 3,
-      "shortfall": 1,
-      "fill_rank": 18
-    },
-    {
-      "mood": "celebratory",
-      "id": "pure_joy_breakthrough",
-      "description": "A kid living the dream; a first or a record.",
-      "use_when": "Prospects' first big night, a record broken by surprise.",
-      "demand": 2,
-      "demand_share": 0.013,
-      "supply_estimate": 2,
-      "supply_ids_by_label": [
-        "D7T5m0AFV8Yg0",
-        "iOMSfTen1pZUPTx2QF"
-      ],
-      "requests": [
-        "2026-09-17: pure joy—kid living out his dream, hitting two homers in one night",
-        "2026-09-19: Celebration — pure joy after breaking a record you didn't know you were chasing until someone told you mid-interview"
-      ],
-      "per_week": 0.3,
-      "target_supply": 3,
-      "shortfall": 1,
-      "fill_rank": 19
+      "fill_rank": 32
     },
     {
       "mood": "hiding_avoidance",
       "id": "caught_red_handed",
       "description": "Frozen, caught doing something embarrassing.",
       "use_when": "Burner accounts, hot-mic moments.",
-      "demand": 1,
-      "demand_share": 0.007,
+      "placements": 3,
+      "placement_share": 0.009,
+      "pass1_requests": 1,
       "supply_estimate": 2,
       "supply_ids_by_label": [
         "jUwpNzg9IcyrK",
         "xT5LMBhbii9Emb642Q"
       ],
-      "requests": [
+      "placement_contexts": [
+        "2026-09-02: …g Week 1 after a season the Dolphins missed the playoffs, coming off years of concussion discourse, writing love letters to himself in the third person on main.",
+        "2026-10-05: …F**K YOU, F**K YOU\" at Cardinals TE Trey McBride. McBride started laughing, pointed directly at the camera, and let the ref know this was going to be a problem.",
+        "2026-10-07: …The LeBron part was the ugly part. He was filmed laughing while a teammate was being carried off the floor after the Achilles tear."
+      ],
+      "pass1_requests_text": [
         "2026-09-02: Blooper: guy caught red-handed doing something embarrassing, frozen deer-in-headlights moment"
       ],
+      "per_week": 0.5,
+      "cooldown_floor": 3,
+      "freshness_target": 4,
+      "shortfall": 2,
+      "fill_rank": 33
+    },
+    {
+      "mood": "cockiness_smugness",
+      "id": "smug_indifference",
+      "description": "Unbothered by criticism or by a mess; a shrug at your own failure.",
+      "use_when": "Someone brushes off a blowout loss, a call-out, or a plan falling apart.",
+      "placements": 2,
+      "placement_share": 0.006,
+      "pass1_requests": 3,
+      "supply_estimate": 1,
+      "supply_ids_by_label": [
+        "Nx2Lx1RmLadtC"
+      ],
+      "placement_contexts": [
+        "2026-09-13: …Then Sarkisian gave us the postgame moment of the year. Sideline reporter tried to ask him a question. He was not interested.",
+        "2026-09-18: …ore than the Braves and three more than the Yankees. This clinch got a Champagne shower and a passing mention on the ticker. Just another Thursday in September."
+      ],
+      "pass1_requests_text": [
+        "2026-09-21: smug indifference watching a plan fall apart",
+        "2026-09-27: smug indifference — Don Mattingly saying 'I was encouraged' after a blowout loss",
+        "2026-10-05: smug indifference after being called out"
+      ],
+      "per_week": 0.3,
+      "cooldown_floor": 3,
+      "freshness_target": 3,
+      "shortfall": 2,
+      "fill_rank": 34
+    },
+    {
+      "mood": "relief (NEW)",
+      "id": "emotional_release",
+      "description": "Tears and hands on face after a pressure win.",
+      "use_when": "A first major, a career-defining win.",
+      "placements": 1,
+      "placement_share": 0.003,
+      "pass1_requests": 1,
+      "supply_estimate": 1,
+      "supply_ids_by_label": [
+        "rvxMJNyHAgwlW4YWpJ"
+      ],
+      "placement_contexts": [
+        "2026-09-14: …25. He wasn't sure he'd play until two hours before kickoff, so his family didn't fly in. He caught passes anyway. After the win, Dart handed him the game ball."
+      ],
+      "pass1_requests_text": [
+        "2026-09-12: Emotional relief after a massive, pressure-packed win — tears, hands on face, can't believe it moment"
+      ],
       "per_week": 0.2,
-      "target_supply": 3,
+      "cooldown_floor": 3,
+      "freshness_target": 3,
+      "shortfall": 2,
+      "fill_rank": 35
+    },
+    {
+      "mood": "getting_paid",
+      "id": "secured_the_bag",
+      "description": "Smug or contented after a big contract.",
+      "use_when": "Market-resetting extensions, loyal-but-rich re-signings.",
+      "placements": 4,
+      "placement_share": 0.012,
+      "pass1_requests": 3,
+      "supply_estimate": 5,
+      "supply_ids_by_label": [
+        "9HQRIttS5C4Za",
+        "3o6gDWzmAzrpi5DQU8",
+        "CglumrQL3ilVGivRHo",
+        "me7IYiufNb1JSV01EN",
+        "gQdejV5BBChHi"
+      ],
+      "placement_contexts": [
+        "2026-09-08: …Robert Kraft signing off on a nine-figure guarantee for a cornerback:",
+        "2026-09-08: …Every corner with an agent watching this offseason:",
+        "2026-09-09: …ght read like a team-friendly deal by 2027. Caleb Williams, Jayden Daniels, Drake Maye, and Bo Nix are all extension-eligible for the first time next offseason.",
+        "2026-10-01: …nd share an agent — David Mulugheta, who also reps Micah Parsons, the guy Dallas traded away. Jerry Jones is going to pay that man's clients one way or another."
+      ],
+      "pass1_requests_text": [
+        "2026-09-08: Smug satisfaction after securing the bag—player knowing they just reset the market and got paid more than anyone at their position ever",
+        "2026-09-23: This isn't a small discount. Kawhi sacrificed real money to help the Raptors build a contender.",
+        "2026-09-26: Quiet contentment after securing the bag and staying loyal — resignation that this is home, this is right"
+      ],
+      "per_week": 0.7,
+      "cooldown_floor": 3,
+      "freshness_target": 6,
       "shortfall": 1,
-      "fill_rank": 20
+      "fill_rank": 36
     },
     {
       "mood": "join_the_failure",
       "id": "schadenfreude",
       "description": "Enjoying a rival's pain.",
       "use_when": "A rival's kicker misses; a hated team collapses.",
-      "demand": 1,
-      "demand_share": 0.007,
+      "placements": 1,
+      "placement_share": 0.003,
+      "pass1_requests": 1,
       "supply_estimate": 2,
       "supply_ids_by_label": [
         "holej0e9EgHgmvEVv4",
         "4PUjcUBXIzQYfI8iVa"
       ],
-      "requests": [
+      "placement_contexts": [
+        "2026-09-20: …LSU and walked out with a 32-24 loss. Ole Miss led 24-7 at halftime before LSU stormed back to tie it, and then Trinidad Chambliss put a bow on the whole thing."
+      ],
+      "pass1_requests_text": [
         "2026-10-03: Disbelief mixed with schadenfreude — Virginia Tech fans watching the kick sail over the upright and the ref wave it no good"
       ],
       "per_week": 0.2,
-      "target_supply": 3,
+      "cooldown_floor": 3,
+      "freshness_target": 3,
       "shortfall": 1,
-      "fill_rank": 21
+      "fill_rank": 37
     },
     {
       "mood": "sadness_resignation",
       "id": "season_over",
       "description": "Quiet resignation when the season ends.",
       "use_when": "Elimination, a sweep, a final loss with nothing left.",
-      "demand": 17,
-      "demand_share": 0.112,
+      "placements": 6,
+      "placement_share": 0.017,
+      "pass1_requests": 17,
       "supply_estimate": 10,
       "supply_ids_by_label": [
         "26FPImXfDlv4AFbBC",
@@ -494,7 +1310,15 @@
         "bHUajSIMIRcDY73Pti",
         "l4LfagGUuIOouvWijX"
       ],
-      "requests": [
+      "placement_contexts": [
+        "2026-09-11: …eorgia national champ who has never taken a regular-season NFL snap. Not injury-related. McVay just pulled his 38-year-old QB from a game that was already over.",
+        "2026-09-11: …set 6-3 on Arthur Ashe with Michelle Obama in the crowd. Elena Rybakina cut down her errors and won the next two sets 6-4, 6-4 to reach her first US Open final.",
+        "2026-09-30: …Jonquel Jones went 21-13. Sabrina Ionescu went 18 and 7. Napheesa Collier's MVP season ends in two games against the last team anyone would've picked.",
+        "2026-10-02: …2-1 series lead and will face the defending-champion Dodgers in the NLDS if they close it out. For Philadelphia the window keeps closing on the same aging core.",
+        "2026-10-07: …A Sixers 7-footer losing a season to an Achilles in a preseason game before the real season starts.",
+        "2026-10-08: … head home with another postseason that ended one swing short. Fernando Tatis Jr. homered. Machado almost tied it. Almost doesn't send you to October next week."
+      ],
+      "pass1_requests_text": [
         "2026-09-04: quiet resignation as the season ends",
         "2026-09-06: Quiet, resigned acceptance that it's over — the vibe when you know you're cooked and there's nothing left to say",
         "2026-09-10: Quiet resignation as the season ends — Patriots fans watching Maye throw the game-ending INT",
@@ -513,275 +1337,20 @@
         "2026-10-10: quiet resignation as the season ends — Mike Norvell watching another blowout loss, knowing his seat is blazing but the buyout is too big",
         "2026-10-11: Quiet resignation as the season ends — Brown sitting alone in the locker room, refusing to watch on the bench"
       ],
-      "per_week": 2.8,
-      "target_supply": 6,
+      "per_week": 1.0,
+      "cooldown_floor": 3,
+      "freshness_target": 8,
       "shortfall": 0,
-      "fill_rank": 22
-    },
-    {
-      "mood": "respect_awe",
-      "id": "calm_dominance",
-      "description": "Quiet, unbothered greatness; the calm assassin.",
-      "use_when": "Repeated clutch performances, routine excellence, a closer shutting the door.",
-      "demand": 8,
-      "demand_share": 0.053,
-      "supply_estimate": 3,
-      "supply_ids_by_label": [
-        "Aas1NtStlvy7EYcDBY",
-        "A28CxD7W6d4B2",
-        "xUOrwq55SJxeiUBsPu"
-      ],
-      "requests": [
-        "2026-09-09: Quiet competence—a professional returning to work, the 'I never left' energy",
-        "2026-09-16: Quiet, unbothered dominance — the calm confidence of someone who just keeps delivering in the biggest moments.",
-        "2026-09-18: quiet, unstoppable dominance — Allen doing something no one has ever done, making it look routine",
-        "2026-09-28: effortless dominance, barely breaking a sweat",
-        "2026-10-01: Ice-cold clutch under pressure — Arike hitting the fading corner three to tie it late in regulation, then the OT bomb",
-        "2026-10-02: Wilson was unstoppable: 36 points, 10 rebounds, 11-18 FG. She now has more playoff double-doubles than everyone except one player in WNBA history. The Aces' championship pedigree showed.",
-        "2026-10-04: Quiet dominance — the calm assassin just closed the door without breaking a sweat",
-        "2026-10-12: calm, quiet dominance"
-      ],
-      "per_week": 1.3,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 23
-    },
-    {
-      "mood": "fatigue_over_it",
-      "id": "here_we_go_again",
-      "description": "Same story, again. Weary at a repeat failure.",
-      "use_when": "Another injury, another losing streak, the same QB carousel.",
-      "demand": 7,
-      "demand_share": 0.046,
-      "supply_estimate": 3,
-      "supply_ids_by_label": [
-        "nFzZ3X5D3fyb4WTRz4",
-        "eKsDAtyWPxkGRpEEtU",
-        "UnCXCkq3cs1uCv6uy2"
-      ],
-      "requests": [
-        "2026-09-07: Disbelief, head in hands, how did this happen AGAIN",
-        "2026-09-07: Here we go again, same story different team",
-        "2026-09-10: Resignation as another star goes down — Yankees fans have seen this movie before",
-        "2026-09-14: quiet resignation as the American drought continues",
-        "2026-09-18: exasperated resignation — Syracuse fans watching their team commit another penalty",
-        "2026-10-01: Quiet resignation as the Steelers' playoff failures pile up — Steelers fans watching Tomlin give a Minecraft tour while their team hasn't won a playoff game in years",
-        "2026-10-14: watching your team lose for the 8th straight time with no end in sight"
-      ],
-      "per_week": 1.1,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 24
-    },
-    {
-      "mood": "fatigue_over_it",
-      "id": "survived_and_exhausted",
-      "description": "Wiped out after a marathon or a thriller you barely survived.",
-      "use_when": "Five-set matches, multi-OT games, a game ending past midnight.",
-      "demand": 5,
-      "demand_share": 0.033,
-      "supply_estimate": 4,
-      "supply_ids_by_label": [
-        "U4jtIORqlc4svxFPUe",
-        "Ma1nnKL3XqZFEtaKs8",
-        "3FckanO0xoIDJo98OO",
-        "35BUnGH2e25bn8U6Qh"
-      ],
-      "requests": [
-        "2026-09-07: Maxed-out exhaustion, can't believe we survived that",
-        "2026-09-08: Exhausted resignation after staying up way too late for a game you thought would be over hours ago—the game ending at 12:20 AM Tuesday is the punchline",
-        "2026-09-09: Exhausted relief after a marathon—Shelton collapsing or celebrating after the final ace, the '5 a.m. bedtime' energy",
-        "2026-09-09: Exhausted vindication after a comeback—Tiafoe collapsing or celebrating after the final point",
-        "2026-09-21: exhausted relief after barely surviving"
-      ],
-      "per_week": 0.8,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 25
-    },
-    {
-      "mood": "respect_awe",
-      "id": "superhuman_play",
-      "description": "Something that shouldn't be physically possible.",
-      "use_when": "Diving catches, 105-mph throws, absurd goals.",
-      "demand": 4,
-      "demand_share": 0.026,
-      "supply_estimate": 3,
-      "supply_ids_by_label": [
-        "yidUzHnBk32Um9aMMw",
-        "9x53b0DRuorXEGOaTh",
-        "MUeQeEQaDCjE4"
-      ],
-      "requests": [
-        "2026-09-03: Superman flying catch—Nico Hoerner going full extension",
-        "2026-09-09: Superhuman dominance—someone doing something that should not be physically possible",
-        "2026-09-17: quiet awe—watching Messi do something rare and beautiful",
-        "2026-09-21: Ja'Marr Chase one-handed circus catch"
-      ],
-      "per_week": 0.7,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 26
-    },
-    {
-      "mood": "celebratory",
-      "id": "clinch_or_title_party",
-      "description": "Champagne-and-dogpile celebration of a clinch or title.",
-      "use_when": "Division clinches, titles, signature upsets at home.",
-      "demand": 3,
-      "demand_share": 0.02,
-      "supply_estimate": 8,
-      "supply_ids_by_label": [
-        "tFXCQpZf3Q95S",
-        "FX6SNOWqjUmzJlor4J",
-        "TLO3uEaFDbd58RUpIl",
-        "ugcpY6mLKO1XwLuEEA",
-        "Uqepe3KjEVzPYep8oW",
-        "l4FGIG0CE6nJxnc1q",
-        "zdjQpEtni7XIX4ncNg",
-        "t3sZxY5zS5B0z5zMIz"
-      ],
-      "requests": [
-        "2026-09-16: Celebration energy — champagne showers, the euphoria of locking up a title after a long grind.",
-        "2026-09-21: celebration after dominating",
-        "2026-09-27: ecstatic celebration — Florida fans and players after a 24-point upset of a top-5 team at home"
-      ],
-      "per_week": 0.5,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 27
-    },
-    {
-      "mood": "domination",
-      "id": "blowout_statement",
-      "description": "A rout as a statement; standing over the opponent.",
-      "use_when": "Blowouts, knockouts, running up the score.",
-      "demand": 3,
-      "demand_share": 0.02,
-      "supply_estimate": 4,
-      "supply_ids_by_label": [
-        "3iLisDUozEvfIRyf9X",
-        "3ohhwssY8BhybLFeDe",
-        "PZ58x6tqfRkrwyFlrw",
-        "fZEz565zA4ARwUDawo"
-      ],
-      "requests": [
-        "2026-09-11: This wasn't just a blowout. This was a statement that Miami has no interest in sportsmanship when they can instead send a message to the rest of college football.",
-        "2026-09-13: dominance — landing the knockout blow and standing over the opponent",
-        "2026-10-10: smug dominance — Iowa just steamrolled Washington on the road, and they're not supposed to be this good"
-      ],
-      "per_week": 0.5,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 28
-    },
-    {
-      "mood": "bad_dumb_move",
-      "id": "saw_it_coming",
-      "description": "Disbelief at a completely foreseeable failure; a plan imploding.",
-      "use_when": "Self-inflicted collapses, botched trick plays, obvious consequences.",
-      "demand": 3,
-      "demand_share": 0.02,
-      "supply_estimate": 4,
-      "supply_ids_by_label": [
-        "XsUtdIeJ0MWMo",
-        "xT9DPJVjlYHwWsZRxm",
-        "pajLsGB0Hub0naPw0p",
-        "STXfoyQhOKTRmdmZQR"
-      ],
-      "requests": [
-        "2026-09-04: shocked disbelief at a completely foreseeable consequence",
-        "2026-09-12: Disbelief after a completely foreseeable collapse — the moment you realize you saw this coming and it still hurts",
-        "2026-09-20: Horrified disbelief as a plan implodes"
-      ],
-      "per_week": 0.5,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 29
-    },
-    {
-      "mood": "getting_paid",
-      "id": "secured_the_bag",
-      "description": "Smug or contented after a big contract.",
-      "use_when": "Market-resetting extensions, loyal-but-rich re-signings.",
-      "demand": 3,
-      "demand_share": 0.02,
-      "supply_estimate": 5,
-      "supply_ids_by_label": [
-        "9HQRIttS5C4Za",
-        "3o6gDWzmAzrpi5DQU8",
-        "CglumrQL3ilVGivRHo",
-        "me7IYiufNb1JSV01EN",
-        "gQdejV5BBChHi"
-      ],
-      "requests": [
-        "2026-09-08: Smug satisfaction after securing the bag—player knowing they just reset the market and got paid more than anyone at their position ever",
-        "2026-09-23: This isn't a small discount. Kawhi sacrificed real money to help the Raptors build a contender.",
-        "2026-09-26: Quiet contentment after securing the bag and staying loyal — resignation that this is home, this is right"
-      ],
-      "per_week": 0.5,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 30
-    },
-    {
-      "mood": "cockiness_smugness",
-      "id": "bold_move_swagger",
-      "description": "Swagger after a bold declaration or a big move.",
-      "use_when": "Media-day boasts, a GM sure a trade fixes everything.",
-      "demand": 2,
-      "demand_share": 0.013,
-      "supply_estimate": 4,
-      "supply_ids_by_label": [
-        "qOnWoPxXnm0Vi",
-        "STYcRDzNO6AYNmMgvA",
-        "eKDrGTXLrLqqJMA7NC",
-        "U8TJaBmNwVY5Ie2crg"
-      ],
-      "requests": [
-        "2026-09-29: Confident swagger after making a bold declaration — the 'I said what I said' face",
-        "2026-10-01: Smug confidence after making a big move — Jerry Jones after trading for Joey Porter Jr., convinced this fixes the Cowboys' secondary"
-      ],
-      "per_week": 0.3,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 31
-    },
-    {
-      "mood": "confusion",
-      "id": "what_just_happened",
-      "description": "Bewildered by a bizarre moment or conflicting information.",
-      "use_when": "Benches clearing for unclear reasons, officials contradicting each other.",
-      "demand": 2,
-      "demand_share": 0.013,
-      "supply_estimate": 9,
-      "supply_ids_by_label": [
-        "g01ZnwAUvutuK8GIQn",
-        "1wnZt7VY9yPDZRZ9M6",
-        "kWcAYqxFQi6e6NGb9d",
-        "3rlkIb3L5zPTsQEn81",
-        "FcuiZUneg1YRAu1lH2",
-        "bm02BE6DQ4Oag8GXep",
-        "400IbOQGqOWQgTLCvx",
-        "3iwRj8JrhaBfvQMSx9",
-        "N86lbPjFROJIQUzqOq"
-      ],
-      "requests": [
-        "2026-09-05: confused bewilderment — the Red Sox are trying to figure out what just happened and why Alexander is upset",
-        "2026-10-08: Frustration and confusion — a coach being told conflicting information by officials in a crucial playoff moment"
-      ],
-      "per_week": 0.3,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 32
+      "fill_rank": 38
     },
     {
       "mood": "hiding_avoidance",
       "id": "im_out",
       "description": "Walking away from something you were invested in.",
       "use_when": "A player released or leaving after a reunion that didn't work.",
-      "demand": 1,
-      "demand_share": 0.007,
+      "placements": 0,
+      "placement_share": 0.0,
+      "pass1_requests": 1,
       "supply_estimate": 5,
       "supply_ids_by_label": [
         "m93v8Rl9GBaW61AmOK",
@@ -790,57 +1359,15 @@
         "09tH4BmFeKA0QwQnph",
         "hLsCCNF5wlxuE99mxV"
       ],
-      "requests": [
+      "placement_contexts": [],
+      "pass1_requests_text": [
         "2026-09-30: weary 'I'm out' exit from something the subject was invested in — OBJ thought the Giants reunion would work, it didn't, and now he's gone again"
       ],
-      "per_week": 0.2,
-      "target_supply": 3,
+      "per_week": 0.0,
+      "cooldown_floor": 3,
+      "freshness_target": 3,
       "shortfall": 0,
-      "fill_rank": 33
-    },
-    {
-      "mood": "respect_awe",
-      "id": "historic_company",
-      "description": "Joining a legend's company; the weight of history.",
-      "use_when": "Comparisons to all-time greats, firsts in history.",
-      "demand": 1,
-      "demand_share": 0.007,
-      "supply_estimate": 4,
-      "supply_ids_by_label": [
-        "zBBPQUhyV6qWjOVbKn",
-        "nWWGEOdq8394Qs4qUw",
-        "fCUTTqU2u2SjwM401F",
-        "x0qyzmrDa7LpAEDftB"
-      ],
-      "requests": [
-        "2026-10-07: The reader understands Yamamoto just joined Kershaw-level October company, and feels the weight of that historical comp"
-      ],
-      "per_week": 0.2,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 34
-    },
-    {
-      "mood": "escalation",
-      "id": "escalating_panic",
-      "description": "It keeps getting worse, and someone is watching it unfold.",
-      "use_when": "Investigations widening, scandals compounding.",
-      "demand": 1,
-      "demand_share": 0.007,
-      "supply_estimate": 4,
-      "supply_ids_by_label": [
-        "1n4iuWZFnTeN6qvdpD",
-        "K9m5k3LN95osDAL8RC",
-        "qpCYWYWC0CimN5GteN",
-        "5kFWWtxR0UCHgLaM4O"
-      ],
-      "requests": [
-        "2026-09-11: escalating panic — Ballmer watching the news that federal prosecutors are now involved"
-      ],
-      "per_week": 0.2,
-      "target_supply": 3,
-      "shortfall": 0,
-      "fill_rank": 35
+      "fill_rank": 39
     }
   ]
 }

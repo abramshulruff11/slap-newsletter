@@ -210,6 +210,8 @@ slap-newsletter/
 │   ├── promote.py             ← diff-and-confirm prompt promotion (USE THIS, never copy by hand)
 │   ├── probe_meme_box_order.py ← renders marker captions to verify meme panel order
 │   ├── probe_retry.py         ← the API retry drill, plain-English PASS/FAIL, 0 API calls
+│   ├── gif_tagger.py          ← SLA-133 vision tagger: frame strip → Claude → gif_tags.json
+│   ├── review_gif_tags.py     ← right/wrong review page for the tagger; --score checks the bar
 │   ├── tests/                 ← offline suites, 0 API calls — run before any prompt/code change
 │   │   ├── test_runner_drift.py ← fails if a change reaches one runner and not the other
 │   │   └── test_pipeline_status.py ← locks the status email + the stage list vs the workflow
@@ -791,10 +793,21 @@ through `library_json.dumps_matching_style()`; meme `status` gates nothing until
 `active_templates()` is respected; and a decisions export replays every verdict ever stored in that
 browser, so its row count is not the size of the review.
 
-**GIF subcategories start at `docs/gif_taxonomy.md` (SLA-132):** 35 situations derived from
-what Pass 1 actually asked for, ranked by shortfall, with the entity-tag rule (metadata and
-visible cues, never face recognition). `prompts/gif_taxonomy.DRAFT.json` is not read by any code
-yet; SLA-133 wires it in UAT.
+**GIF subcategories start at `docs/gif_taxonomy.md` (SLA-132/133):** 39 situations, sized by
+what actually SHIPS (345 placements classified by the paragraph above each GIF), not by Pass 1's
+requests, which over-ask for "vindication" and seed under half of what ships. Each situation has a
+`freshness_target` (its share of a ~500-GIF pool, SLA-134). Entity tags come from metadata and
+visible cues, never face recognition. `prompts/gif_taxonomy.DRAFT.json` is not read by the
+pipeline yet; SLA-137 wires it into selection in UAT.
+
+**GIFs are tagged by looking at them (SLA-133).** `uat/gif_tagger.py` sends Claude a strip of 6
+frames spread across each GIF (the API sees only an animated GIF's FIRST frame) plus its Giphy
+metadata, and gets moods (all 22, multi-select) and situations back as structured output. It
+writes proposals to `uat/output/gif_tags.json` and never touches the library. Frames live in
+memory for one request; only ids and tags reach disk. `uat/review_gif_tags.py` builds the
+right/wrong review page, and `--score` checks the export against the bar set before the run (85% of
+situation tags). Needs Giphy + Anthropic, so it runs on Abram's machine. Locked by
+`uat/tests/test_gif_tagger.py`, which drives the real pinned SDK through a mock transport.
 
 **A fact bundle for a new sport starts at `docs/sport_bundle_pattern.md` (SLA-118):** read it
 before opening the first ticket to give MLB, the NBA or the NHL what football has (a connected
@@ -1144,7 +1157,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (29 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (30 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,

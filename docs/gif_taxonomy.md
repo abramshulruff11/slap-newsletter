@@ -1,8 +1,37 @@
 # GIF subcategory taxonomy (SLA-132)
 
-**Status:** draft for Abram's review. Nothing reads it yet. The machine-readable copy is
-`prompts/gif_taxonomy.DRAFT.json`. Follow-ups: SLA-133 (vision tagging of the existing library,
-selection in UAT), then SLA-134 (bulk expansion).
+**Status:** 39 situations; targets rebased on what actually ships (SLA-133, 2026-10-14). Nothing
+reads it yet. The machine-readable copy is `prompts/gif_taxonomy.DRAFT.json`. SLA-132's three open
+decisions went with the recommendations (35+ situations rather than 10–15 per mood; `relief` and
+`anticipation` added; writer demand recovered, below). Follow-ups: SLA-133 (vision tagger),
+SLA-137 (selection in UAT), SLA-134 (pool to ~500), SLA-135, SLA-136.
+
+## Update (SLA-133): what the writer actually uses
+
+Pass 1's requests turned out to be the wrong demand signal. All **345 library GIFs that shipped**
+over the same 43 days were each classified by the paragraph directly above them, which is what
+the GIF was reacting to. That is real consumption, and it now drives every target.
+
+- **The taxonomy holds up.** 279 of 345 placements (81%) fit an existing situation, and 34 fit a
+  mood but no situation. Moods are tagged as well, so those still get matched.
+- **Four situations recur often enough to add.** 21 placements:
+  - `buyers_remorse` (7): a bad contract, a lopsided trade, a wasted pick.
+  - `long_drought` (5): decades without a title, still going.
+  - `dud_performance` (5): a star or lineup that showed up empty.
+  - `controversial_call` (4): a disputed call decides it.
+
+  Ten more candidates appeared 1–3 times each and stay out until they recur.
+- **Real demand is far less lopsided than Pass 1's.** The writer's top situations:
+  - `calm_dominance` 23
+  - `vindication_doubters_silenced` 19 (Pass 1 asked for it 34 times)
+  - `big_game_buildup` 17
+  - `saw_it_coming`, `cruel_twist`, `season_slipping_away` 16 each
+  - `what_just_happened` 15
+
+  `season_over`, Pass 1's second favourite at 17 requests, shipped only 6 times. Nothing takes
+  more than 7% of placements.
+- **Targets now size the SLA-134 pool.** `freshness_target = placement share × 500` (about two
+  months between repeats). The old cooldown floor stays as `cooldown_floor`.
 
 ## What was measured
 
@@ -22,7 +51,7 @@ selection in UAT), then SLA-134 (bulk expansion).
    `gif_library_select.pick_entry()` then picks a **random** verified GIF from that mood. So a
    "told you so" request can ship the cocky strut, and a "season slipping away" request can ship
    the Michael Jordan crying face. The taxonomy only helps once selection reads the subcategory
-   (SLA-133 step 5).
+   (SLA-137).
 
 2. **Demand is very concentrated.** Two situations account for a third of all requests:
    - `vindication_doubters_silenced`: 34 (22%), about 5.5 a week. Only ~5 library GIFs fit it.
@@ -46,8 +75,8 @@ selection in UAT), then SLA-134 (bulk expansion).
 5. **Pass 1 seeds only 44% of the GIFs that ship.** 352 GIFs shipped against 155 seeds; the writer
    adds the rest with only a mood. `respect_awe` shipped 66 times from 11 GIFs, so each one
    repeated about every 6 days against a 7-day cooldown. That demand is real but unrecorded. It
-   can be recovered from the paragraph above each GIF in the archived drafts, which is a cheap
-   check worth adding to SLA-133.
+   can be recovered from the paragraph above each GIF in the archived drafts. That was done in
+   SLA-133; see the update above.
 
 6. **Pass 1's wording is formulaic.** "Smug vindication after being doubted all summer" appears
    almost verbatim most days. Some of the concentration may be habit rather than real variety in
@@ -60,23 +89,24 @@ selection in UAT), then SLA-134 (bulk expansion).
 
 ## Fill order (top of the list)
 
-`target_supply = max(3, 2 × weekly demand)`. With a 7-day cooldown a subcategory needs at least
-a week's demand in stock, and double that so the pick isn't forced. Ranked by shortfall:
+Ranked by `shortfall = freshness_target − supply_estimate`. Supply is still estimated from labels
+until the SLA-133 tagger has run.
 
-| # | Subcategory | Requests | Supply (by label) | Short |
-|---|---|---|---|---|
-| 1 | vindication_doubters_silenced | 34 | 5 | 7 |
-| 2 | season_slipping_away | 7 | 0 | 3 |
-| 3 | cruel_twist | 4 | 0 | 3 |
-| 4 | relief: dodged_disaster *(new mood)* | 4 | 0 | 3 |
-| 5 | relief: drought_over_or_star_back *(new mood)* | 4 | 0 | 3 |
-| 6 | anticipation: big_game_buildup *(new mood)* | 4 | 0 | 3 |
-| 7 | bad_news_accepted | 3 | 0 | 3 |
-| 8 | comeback_euphoria | 3 | 0 | 3 |
-| 9–11 | got_away_with_it, carrying_the_load, shell_shocked_loser | 2 each | 0 | 3 |
+| # | Situation | Shipped | Pass 1 asked | Supply (by label) | Target | Short |
+|---|---|---|---|---|---|---|
+| 1 | calm_dominance | 23 | 8 | 3 | 34 | 31 |
+| 2 | big_game_buildup *(anticipation)* | 17 | 4 | 0 | 24 | 24 |
+| 3 | vindication_doubters_silenced | 19 | 34 | 5 | 28 | 23 |
+| 4 | season_slipping_away | 16 | 7 | 0 | 23 | 23 |
+| 5 | cruel_twist | 16 | 4 | 0 | 23 | 23 |
+| 6 | saw_it_coming | 16 | 3 | 4 | 23 | 19 |
+| 7 | comeback_euphoria | 12 | 3 | 0 | 18 | 18 |
+| 8 | here_we_go_again | 13 | 7 | 3 | 19 | 16 |
+| 9 | historic_company | 13 | 1 | 4 | 19 | 15 |
+| 10 | drought_over_or_star_back *(relief)* | 10 | 4 | 0 | 14 | 14 |
 
-Closing every shortfall takes about 53 GIFs, and 7 of them are for the first row alone.
-The full list of 35, with descriptions, use_when and every request classified into it, is in the JSON.
+The full list of 39 is in the JSON. Each situation carries every Pass 1 request and every shipped
+placement classified into it.
 
 ## Entity layer
 
@@ -88,12 +118,6 @@ Each GIF carries optional `players`, `teams`, `figures` (associated public figur
   metadata nor a visible cue supports an entity tag, it isn't written.
 - **Use:** a secondary filter inside the chosen subcategory. An entity match never justifies
   picking a GIF from the wrong situation.
-
-## For Abram to decide
-
-- Approve the 35-subcategory shape over the ticket's 10–15 per mood (finding 3).
-- Add `relief` and `anticipation` as real moods (finding 4).
-- Whether SLA-133 should also recover the writer's unrecorded demand (finding 5).
 
 ## Accepted risk
 
