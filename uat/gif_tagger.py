@@ -32,6 +32,8 @@ Usage:
     python -X utf8 uat/gif_tagger.py --limit 5        # try a handful first
     python -X utf8 uat/gif_tagger.py                  # every untagged verified GIF
     python -X utf8 uat/gif_tagger.py --ids ID1,ID2 --retag
+    python -X utf8 uat/gif_tagger.py --ids ID1,ID2 --retag --model claude-opus-5-5
+    python -X utf8 uat/gif_tagger.py --effort low     # default medium
     python -X utf8 uat/gif_tagger.py --dry-run        # print the prompt, no calls
 """
 from __future__ import annotations
@@ -55,17 +57,26 @@ TAXONOMY_PATH = REPO_ROOT / "prompts" / "gif_taxonomy.DRAFT.json"
 OUTPUT_PATH = Path(__file__).resolve().parent / "output" / "gif_tags.json"
 ENV_PATH = REPO_ROOT / ".env"
 
-MODEL = "claude-opus-5-5"
+# Sonnet 5.5, decided 2026-10-15: the same model does the later bulk tagging
+# (SLA-134), so the accuracy check has to measure it. --model claude-opus-5-5
+# retags failures with Opus to tell model quality from taxonomy quality.
+MODEL = "claude-sonnet-5-5"
+# Set explicitly: Sonnet 5.5 defaults to high. Try --effort low if medium passes.
 EFFORT = "medium"
 MAX_TOKENS = 16000
-# Opus 5.5 reruns a refused request on a fallback model when asked to; tagging
-# a sports GIF should never be refused, but a refusal must not end the batch.
+# A refused request reruns on a fallback model; tagging a sports GIF should
+# never be refused, but a refusal must not end the batch. Sonnet 5.5 accepts
+# only the "default" form, and only on the Claude API.
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 SDK_MAX_RETRIES = 4
 REQUEST_TIMEOUT = 180.0
-# $ per million tokens for MODEL, from the claude-api skill's table (2026-10-06).
-# Used only to print an estimate; re-check before a large run.
-PRICE_IN, PRICE_OUT = 4.00, 20.00
+# $ per million tokens (input, output), from the claude-api skill's table
+# (2026-10-06). Used only to print an estimate; re-check before a large run.
+PRICES = {
+    "claude-sonnet-5-5": (2.00, 10.00),
+    "claude-opus-5-5": (4.00, 20.00),
+}
+PRICE_IN, PRICE_OUT = PRICES[MODEL]
 
 FRAME_COUNT = 6
 FRAME_HEIGHT = 180          # px per frame in the strip; ~1.1K input tokens total
@@ -291,15 +302,16 @@ def frame_strip(gif_bytes: bytes, count: int = FRAME_COUNT,
 
 
 def build_request(entry: dict, giphy: dict | None, strip_png: bytes,
-                  library: dict, taxonomy: dict) -> dict:
+                  library: dict, taxonomy: dict,
+                  model: str = MODEL, effort: str = EFFORT) -> dict:
     """Keyword arguments for client.beta.messages.create()."""
     return {
-        "model": MODEL,
+        "model": model,
         "max_tokens": MAX_TOKENS,
         "betas": [FALLBACK_BETA],
         "fallbacks": "default",
         "output_config": {
-            "effort": EFFORT,
+            "effort": effort,
             "format": {"type": "json_schema", "schema": output_schema(subcategory_ids(taxonomy),
                                                                 mood_ids(library, taxonomy))},
         },
@@ -346,12 +358,14 @@ def parse_response(response, ids: list[str], moods: list[str]) -> dict:
     return tags
 
 
-def cost(usage) -> float:
+def cost(usage, model: str = MODEL) -> float:
+    # A fallback model we have no price for is estimated at the requested one's.
+    price_in, price_out = PRICES.get(model, (PRICE_IN, PRICE_OUT))
     read = getattr(usage, "cache_read_input_tokens", 0) or 0
     write = getattr(usage, "cache_creation_input_tokens", 0) or 0
     fresh = getattr(usage, "input_tokens", 0) or 0
-    return ((fresh + 1.25 * write + 0.1 * read) * PRICE_IN
-            + (getattr(usage, "output_tokens", 0) or 0) * PRICE_OUT) / 1_000_000
+    return ((fresh + 1.25 * write + 0.1 * read) * price_in
+            + (getattr(usage, "output_tokens", 0) or 0) * price_out) / 1_000_000
 
 
 # ---------------------------------------------------------------------------
@@ -400,7 +414,11 @@ def main(argv=None) -> int:
     ap.add_argument("--ids", default="", help="comma-separated Giphy ids to tag")
     ap.add_argument("--retag", action="store_true", help="re-tag ids already in the output")
     ap.add_argument("--dry-run", action="store_true", help="print the system prompt and plan; no network")
+    ap.add_argument("--model", default=MODEL, choices=sorted(PRICES), help=f"default {MODEL}")
+    ap.add_argument("--effort", default=EFFORT, choices=("low", "medium", "high", "xhigh", "max"),
+                    help=f"default {EFFORT}")
     args = ap.parse_args(argv)
+    model, effort = args.model, args.effort
 
     library = load_json(LIBRARY_PATH)
     taxonomy = load_json(TAXONOMY_PATH)
@@ -419,7 +437,7 @@ def main(argv=None) -> int:
 
     if args.dry_run:
         print(system_prompt(library, taxonomy))
-        print(f"\nWould tag {len(entries)} GIF(s) with {MODEL} (effort {EFFORT}).")
+        print(f"\nWould tag {len(entries)} GIF(s) with {model} (effort {effort}).")
         return 0
     if not entries:
         print("Nothing to tag (use --retag to redo).")
@@ -431,7 +449,7 @@ def main(argv=None) -> int:
     client = make_client()
 
     existing["_meta"] = {
-        "model": MODEL, "effort": EFFORT, "frames": FRAME_COUNT,
+        "model": model, "effort": effort, "frames": FRAME_COUNT,
         "taxonomy": TAXONOMY_PATH.name,
         "note": "Proposals only. Not read by the pipeline. Merge after review_gif_tags.py --score passes.",
     }
@@ -446,25 +464,31 @@ def main(argv=None) -> int:
             if not rendition:
                 raise ValueError("no rendition URL from Giphy")
             strip, used = frame_strip(fetch_bytes(rendition))
-            response = client.beta.messages.create(**build_request(entry, giphy, strip, library, taxonomy))
+            response = client.beta.messages.create(**build_request(entry, giphy, strip, library, taxonomy,
+                                                                   model=model, effort=effort))
             del strip  # the frames go no further than this request
             tags = parse_response(response, ids, moods)
         except Exception as e:  # noqa: BLE001 — one bad GIF must not end the batch
             print(f"    !! {type(e).__name__}: {e}")
             failed.append(gid)
             continue
-        spent += cost(response.usage)
+        served_by = getattr(response, "model", None) or model
+        this_cost = cost(response.usage, served_by)
+        spent += this_cost
         existing["tags"][gid] = {
             **tags,
             "label": entry.get("label", ""),
             "category": entry["category"],
             "frames_used": used,
-            "served_by": getattr(response, "model", MODEL),
+            # Per GIF, since an --model retag of failures mixes models in one file.
+            "effort": effort,
+            "served_by": served_by,
             "tagged_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         }
         save_output(existing)  # after every GIF, so a crash loses at most one
         subs = ", ".join(f"{s['id']}({s['fit'][0]})" for s in tags["subcategories"]) or "-"
-        print(f"    {tags['confidence']:<6} {'/'.join(tags['moods']) or 'REJECT'} | {subs}")
+        print(f"    {tags['confidence']:<6} {'/'.join(tags['moods']) or 'REJECT'} | {subs}"
+              f"  (${this_cost:.4f}, {served_by})")
 
     print(f"\nTagged {len(entries) - len(failed)}/{len(entries)}; est. cost ${spent:.2f}. "
           f"Output: {OUTPUT_PATH}")

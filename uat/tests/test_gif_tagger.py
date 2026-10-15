@@ -195,12 +195,21 @@ def stub_client():
 req = GT.build_request(entries[0], {"title": "t"}, png, LIBRARY, TAXONOMY)
 resp = stub_client().beta.messages.create(**req)
 body = SENT[-1]["body"]
-check("model", body["model"], "claude-opus-5-5")
+check("model (Sonnet 5.5, decided 2026-10-15)", body["model"], "claude-sonnet-5-5")
 check("structured output is requested", body["output_config"]["format"]["type"], "json_schema")
-check("effort is set explicitly (Opus 5.5 defaults lower)", body["output_config"]["effort"], GT.EFFORT)
-check("refusal fallback is on", body.get("fallbacks"), "default")
+check("effort is set explicitly (Sonnet 5.5 defaults to high)", body["output_config"]["effort"], "medium")
+check("refusal fallback is on, in the only form Sonnet 5.5 accepts", body.get("fallbacks"), "default")
 check_true("the fallback beta header is sent", GT.FALLBACK_BETA in SENT[-1]["headers"].get("anthropic-beta", ""))
-check_true("no thinking parameter (cannot be disabled on Opus 5.5)", "thinking" not in body)
+check_true("no thinking parameter", "thinking" not in body)
+check_true("no forced tool_choice (400 on Sonnet 5.5)", "tool_choice" not in body)
+check("default prices are Sonnet 5.5's", (GT.PRICE_IN, GT.PRICE_OUT), (2.00, 10.00))
+req_opus = GT.build_request(entries[0], {"title": "t"}, png, LIBRARY, TAXONOMY,
+                            model="claude-opus-5-5", effort="low")
+check("--model / --effort reach the request", (req_opus["model"], req_opus["output_config"]["effort"]),
+      ("claude-opus-5-5", "low"))
+_u = type("U", (), {"input_tokens": 1_000_000, "output_tokens": 0,
+                    "cache_read_input_tokens": 0, "cache_creation_input_tokens": 0})()
+check("cost uses the model that served it", (GT.cost(_u), GT.cost(_u, "claude-opus-5-5")), (2.0, 4.0))
 img = body["messages"][0]["content"][0]
 check("the image is the strip, as PNG", img["source"]["media_type"], "image/png")
 check("the image bytes are the strip's", base64.b64decode(img["source"]["data"]), png)

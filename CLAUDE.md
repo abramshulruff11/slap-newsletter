@@ -808,6 +808,15 @@ memory for one request; only ids and tags reach disk. `uat/review_gif_tags.py` b
 right/wrong review page, and `--score` checks the export against the bar set before the run (85% of
 situation tags). Needs Giphy + Anthropic, so it runs on Abram's machine. Locked by
 `uat/tests/test_gif_tagger.py`, which drives the real pinned SDK through a mock transport.
+- **Model: Sonnet 5.5 (`claude-sonnet-5-5`) at effort `medium`, decided 2026-10-15**, not Opus:
+  the same tagger does SLA-134's bulk tagging, so the 85% bar must measure the model that will do
+  it. Effort is set explicitly (Sonnet 5.5 defaults to `high`). Refusal fallback stays
+  `fallbacks: "default"`, the only form Sonnet 5.5 accepts. Library target ~500 GIFs (~two months
+  between repeats).
+- **If the score fails, retag only the failures with Opus first**
+  (`--ids ... --retag --model claude-opus-5-5`) before touching the prompt or taxonomy: it
+  separates model quality from taxonomy quality. Each tag records its own `served_by` and
+  `effort`, and the cost estimate prices the model that served it.
 
 **A fact bundle for a new sport starts at `docs/sport_bundle_pattern.md` (SLA-118):** read it
 before opening the first ticket to give MLB, the NBA or the NHL what football has (a connected
