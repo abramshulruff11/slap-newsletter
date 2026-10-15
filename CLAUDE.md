@@ -817,6 +817,15 @@ situation tags). Needs Giphy + Anthropic, so it runs on Abram's machine. Locked 
   (`--ids ... --retag --model claude-opus-5-5`) before touching the prompt or taxonomy: it
   separates model quality from taxonomy quality. Each tag records its own `served_by` and
   `effort`, and the cost estimate prices the model that served it.
+- **Accepted on a spot-check, NOT scored (2026-10-15).** Abram looked over the review page for the
+  first 113 GIFs, judged the tags right, and chose to skip the mark-by-mark review, so the 85% bar
+  was waived, not measured. There is no accuracy number for this tagger. If SLA-134's bulk
+  tagging looks off, a scored review (`review_gif_tags.py --score`) is the first thing to run.
+  Measured cost: ~$0.0047 per GIF at medium (the first call ~$0.017 writes the cache); low effort
+  cost the same and dropped a situation, so medium stays.
+- **Giphy's per-key cap stops a batch.** The first full run 429'd after ~120 Giphy calls in ~20
+  minutes (~100/hour). The tagger now stops at the first Giphy 429 and prints what's left;
+  wait an hour and re-run. SLA-134's sourcing will need the same bound.
 
 **A fact bundle for a new sport starts at `docs/sport_bundle_pattern.md` (SLA-118):** read it
 before opening the first ticket to give MLB, the NBA or the NHL what football has (a connected

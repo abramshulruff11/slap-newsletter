@@ -44,6 +44,7 @@ import io
 import json
 import os
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
@@ -455,11 +456,22 @@ def main(argv=None) -> int:
     }
     spent = 0.0
     failed = []
+    rate_limited = False
     for n, entry in enumerate(entries, 1):
         gid = entry["id"]
         print(f"[{n}/{len(entries)}] {gid}  {entry.get('label', '')[:60]}")
         try:
-            giphy = fetch_giphy(gid, giphy_key)
+            try:
+                giphy = fetch_giphy(gid, giphy_key)
+            except urllib.error.HTTPError as e:
+                if e.code != 429:
+                    raise
+                # Giphy's per-key cap (the 2026-08-26 exhaustion). Every further
+                # call would 429 too and may extend the lockout, so stop here.
+                failed.extend(x["id"] for x in entries[n - 1:])
+                rate_limited = True
+                print("    !! Giphy rate limit (429): stopping. Wait for the window to reset, then re-run.")
+                break
             rendition = pick_rendition(giphy or {})
             if not rendition:
                 raise ValueError("no rendition URL from Giphy")
@@ -494,7 +506,7 @@ def main(argv=None) -> int:
           f"Output: {OUTPUT_PATH}")
     if failed:
         print("Failed (re-run to retry): " + ",".join(failed))
-    return 1 if failed and len(failed) == len(entries) else 0
+    return 1 if rate_limited or (failed and len(failed) == len(entries)) else 0
 
 
 if __name__ == "__main__":

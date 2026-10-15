@@ -253,6 +253,23 @@ with tempfile.TemporaryDirectory() as tmp:
         rc = GT.main(["--ids", first_id, "--retag"])
     check("a total failure exits non-zero", rc, 1)
     check("a failed retag keeps the earlier tags", first_id in json.loads(GT.OUTPUT_PATH.read_text())["tags"], True)
+
+    import urllib.error  # noqa: E402
+
+    def giphy_429(gid, key):
+        fetches.append(gid)
+        raise urllib.error.HTTPError("https://api.giphy.com", 429, "Too Many Requests", {}, None)
+
+    GT.fetch_giphy = giphy_429
+    n_before = len(fetches)
+    log = io.StringIO()
+    with redirect_stdout(log):
+        rc = GT.main(["--limit", "3"])
+    check("a Giphy 429 stops the batch after one call", len(fetches) - n_before, 1)
+    check("a rate-limited run exits non-zero", rc, 1)
+    retry = [l for l in log.getvalue().splitlines() if l.startswith("Failed (re-run to retry): ")]
+    check("every untried GIF is listed for the re-run",
+          len(retry[0].split(": ", 1)[1].split(",")) if retry else 0, 3)
 check("the library file is byte-for-byte unchanged", hashlib.sha256(GT.LIBRARY_PATH.read_bytes()).hexdigest(), lib_hash)
 
 print("\n7. Review page and score")
