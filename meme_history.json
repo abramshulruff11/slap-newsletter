@@ -1,5 +1,22 @@
 [
   {
+    "date": "2026-10-15",
+    "slug": "bike-fall",
+    "boxes": [
+      "BLAKE SNELL CRUISING WITH A 2-1 LEAD IN THE 7TH",
+      "WALKS THE LEADOFF MAN, GROOVES ONE TO BAUERS",
+      "BACK-TO-BACK NUKES, SEASON ON LIFE SUPPORT"
+    ]
+  },
+  {
+    "date": "2026-10-15",
+    "slug": "drake",
+    "boxes": [
+      "LETTING WEMBY COOK LIKE EVERYONE ELSE DOES",
+      "ROTATING FOUR 7-FOOTERS AT HIM UNTIL HE QUITS BASKETBALL"
+    ]
+  },
+  {
     "date": "2026-10-14",
     "slug": "gru-plan",
     "boxes": [
@@ -511,23 +528,6 @@
       "THE OREGON RUSHING ATTACK",
       "RANKED TOP-10 PRESEASON",
       "GOT OUTRUSHED BY A FORMER PUNTER"
-    ]
-  },
-  {
-    "date": "2026-09-12",
-    "slug": "hide-the-pain-harold",
-    "boxes": [
-      "STILL MATHEMATICALLY IN THE WILD CARD RACE",
-      "JUST GAVE UP TWENTY UNANSWERED TO THE TEAM AHEAD OF US"
-    ]
-  },
-  {
-    "date": "2026-09-12",
-    "slug": "panik-kalm-panik",
-    "boxes": [
-      "DOWN TO THE FINAL OUT IN THE 9TH",
-      "KIM TIES IT, EXTRA INNINGS",
-      "PHILLIES SCORE IN THE 11TH"
     ]
   }
 ]

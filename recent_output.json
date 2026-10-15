@@ -1,5 +1,122 @@
 [
   {
+    "date": "2026-10-15",
+    "story_log": [
+      {
+        "topic_key": "brewers-nlcs-2026",
+        "title": "Brewers one win from World Series after taking 3-0 NLCS lead over Dodgers",
+        "section": "lead",
+        "development": "CONTINUING [Day 4, TIER 1 ELIMINATION-ROUND GAME]: Milwaukee beat Los Angeles 6-2 per ground truth. Series now 3-0 Brewers. Jackson Chourio leadoff HR on first pitch of Game 3 per TalkinBaseball/ESPN/JomboyMedia/CespedesBBQ. Blake Snell gave up back-to-back HRs to Jake Bauers (11-pitch AB, 2-run HR) and Garrett Mitchell in 7th after Dodgers took lead per HaterReport/TalkinBaseball/ClutchPoints. Will Smith double off wall gave Dodgers 2-1 lead in 6th per TalkinBaseball. Robert Gasser: 5.0 IP, 0 R per TalkinBaseball. Joey Ortiz tacked on insurance run per TalkinBaseball. Brice Turang scored on wild pitch per TalkinBaseball. Brewers can sweep Thursday in Milwaukee. Dodgers facing elimination down 3-0. Shohei Ohtani batting sixth per CespedesBBQ — last time was Sept 19 2020 per CespedesBBQ. Max Muncy postgame: didn't mince words per TalkinBaseball.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "nba-preseason-oct-15-2026",
+        "title": "NBA preseason Oct 15 — Celtics beat Hornets, Spurs rout Suns, Clippers beat Nuggets, Pelicans edge Mavs",
+        "section": "supporting",
+        "development": "Boston beat Charlotte 114-93 per ground truth. San Antonio demolished Phoenix 123-103 per ground truth. LA Clippers beat Denver 122-110 per ground truth. New Orleans beat Dallas 97-101 per ground truth. Chicago beat Milwaukee 125-104 per ground truth. Detroit beat Minnesota 128-106 per ground truth. Miami beat Brooklyn 144-128 per ground truth. Preseason continues ahead of season openers.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "nhl-oct-14-2026",
+        "title": "NHL action Oct 14 — Capitals beat Canadiens 5-4, Stars beat Avalanche 3-2 in OT",
+        "section": "supporting",
+        "development": "Washington beat Montreal 5-4 per ground truth. Dallas beat Colorado 3-2 in OT per ground truth. Regular season continues.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "ant-edwards-melo-timberwolves-2026",
+        "title": "Anthony Edwards wilding with Carmelo Anthony on Timberwolves — 'you got the light skin, brown skin, black ass n***a'",
+        "section": "atl",
+        "development": "Edwards on video: 'When yall see the Timberwolves come in town yall n****s need to know they on bullsh*t…you got the light skin, you got the brown skin and you got the black ass n***a' per HaterReport. Season hasn't even started per HaterReport. Ant already wilding with Melo on team.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "kyle-hamilton-tua-celebration-2026",
+        "title": "Kyle Hamilton and Ravens celebrated when Tua came in game — 'WE GOT TUA, BABY', first pass was INT",
+        "section": "atl",
+        "development": "Ravens immediately started celebrating when Tua entered game per HaterReport — 'WE GOT TUA, BABY', 'LET'S GO GET HIS ASS' per HaterReport. Tua's first pass was interception per HaterReport. Marlon Humphrey: Kyle was most excited he's ever seen him, knew he was getting INT per HaterReport.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "aday-mara-thunder-frontcourt-2026",
+        "title": "Thunder's 7-foot-3 Aday Mara dominating preseason — hyper-efficient 22 points on 10-for-10, OKC's terrifying frontcourt rotation",
+        "section": "atl",
+        "development": "Mara (7'3\") having absolute show throughout preseason per ClutchPoints — hyper-efficient 22-point, 10-for-10 night against Milwaukee, elite rim protection, crisp passing, smooth touch per ClutchPoints. Sam Presti built nightmare lineup of size and length per ClutchPoints — rotating Chet Holmgren, Isaiah Hartenstein, Aday Mara, Jaylin Williams per ClutchPoints. Thunder assembled 'Wemby Stoppers' per ClutchPoints.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "alaric-jackson-suspension-reduced-2026",
+        "title": "Alaric Jackson's 2-game suspension reduced to 1 game on appeal — Rams LT punched Bills' Bradley Chubb",
+        "section": "atl",
+        "development": "CONTINUING [Day 3, RESOLVED]: Hearing officer Derrick Brooks reduced Jackson's suspension from 2 games to 1 game per AdamSchefter/TomPelissero. Jackson punched Chubb during Monday night's postgame gathering per recent history. Suspension now final at one game. Chubb detailed his side per AdamSchefter — finger incident during game.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "josh-allen-rams-butt-finger-2026",
+        "title": "Josh Allen nearly had finger up butt by Rams defender — 'trying any and everything to stop him'",
+        "section": "atl",
+        "development": "Rams defender tried finger up Allen's butt per HaterReport — 'Rams were trying any and everything to stop Josh Allen. A finger up the a** is CRAZY' per HaterReport. Video shows incident from Monday night game.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "wide-deceiver-netflix-documentary-2026",
+        "title": "Netflix announces 'Untold: Wide Deceiver' documentary about fake 49ers WR Daejon Love — scammer story coming",
+        "section": "atl",
+        "development": "Netflix announced documentary 'Untold: Wide Deceiver' about Daejon Love per HaterReport — fake 49ers receiver/scammer. SharpFootball: 'memes of \"Wide Deceiver\" movie posters with terrible WRs photoshopped in will put kids thru college.'",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "porzingis-aids-denial-2026",
+        "title": "Kristaps Porzingis on health rumors: 'I don't have HIV or AIDS' — Warriors C addresses online speculation",
+        "section": "atl",
+        "development": "Porzingis on rumors about his health: 'I don't have HIV or AIDS' per HaterReport. Warriors center indefinitely out with mysterious health issues per CBS Sports, tried to quiet online rumors per CBS Sports.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "will-zalatoris-back-surgery-2026",
+        "title": "Will Zalatoris to miss entire 2027 PGA Tour season — another back surgery ends once-budding star's campaign",
+        "section": "atl",
+        "development": "Zalatoris will miss entire 2027 season per CBS Sports — set to undergo another back surgery per CBS Sports. Played in only four 2026 tournaments as injuries hampered ability to compete at high level per CBS Sports. Once-budding star's career derailed by injuries.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "cam-christie-clippers-waived-2026",
+        "title": "Clippers waive 2024 second-round pick Cam Christie",
+        "section": "atl",
+        "development": "LA Clippers waived guard Cam Christie per ShamsCharania — 2024 second-round pick. Clippers trim roster.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "joe-espada-astros-fired-2026",
+        "title": "Astros fire Joe Espada after three seasons — guided Houston to two AL West titles, won't return in 2027",
+        "section": "atl",
+        "development": "Espada guided Houston to two American League West titles in three seasons as manager, will not return in 2027 per ESPN. Astros move on from manager.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "don-mattingly-phillies-extension-2026",
+        "title": "Phillies sign Don Mattingly to 2-year extension — interim manager gets full-time job after playoff run",
+        "section": "atl",
+        "development": "Mattingly reached two-year deal to return as Phillies' full-time manager per ESPN — guided team to playoffs after taking over as interim just 28 games into season per ESPN. Philadelphia locks in manager who steadied ship.",
+        "is_new": true,
+        "resolved": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-14",
     "story_log": [
       {
@@ -3805,131 +3922,6 @@
         "development": "Gibson retired after 17 NBA seasons, returning to Bulls as assistant coach under Splitter per Shams. Career comes full circle.",
         "is_new": true,
         "resolved": true
-      }
-    ]
-  },
-  {
-    "date": "2026-09-14",
-    "story_log": [
-      {
-        "topic_key": "zverev-shelton-us-open-final-2026",
-        "title": "Alexander Zverev defeats Ben Shelton in US Open final to win second Grand Slam of 2026",
-        "section": "lead",
-        "development": "CONTINUING [Day 2]: Zverev defeated Shelton in US Open final to win his second Grand Slam title of 2026 (French Open earlier this year) per ground truth/ESPN/SportsCenter. Zverev won convincingly, took final set per ESPN. Trinity Rodman in stands supporting boyfriend Shelton per ESPN/HaterReport. Zverev to Rodman after match: 'Trinity I thought you have a game today…You're the lucky charm … not today but usually' per ESPN/HaterReport. First time an American man has won a Major set in final since Andy Roddick at 2009 Wimbledon per ESPN. Shelton lost in four sets. Zverev now has two Majors in 2026 after French Open victory, extends American men's Grand Slam drought to 23 years.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "cowboys-giants-snf-week-1-2026",
-        "title": "Giants defeat Cowboys 28-20 on Sunday Night Football in John Harbaugh's debut — Jaxson Dart, Cam Skattebo, Isaiah Likely shine",
-        "section": "lead",
-        "development": "Giants beat Cowboys 28-20 on SNF per ground truth/SportsCenter/ClutchPoints. Dart: 23-29, 230 pass yds, 3 TD, 57 rush yds per ClutchPoints/StatMuse. Skattebo scored TD with backflip celebration per JomboyMedia/SportsCenter/ClutchPoints. Likely: 8 REC, 78 YDS, 2 TD — first Giants TE with 75+ REC YDS and 2+ REC TD in game since 2009 per StatMuse. Malik Nabers was game-time decision (first game since Sept 2025), family didn't attend because he was unsure he'd play until 2 hours before kickoff per Schefter. Dart gave Nabers the game ball per SportsCenter. Schottenheimer postgame: 'We were pretty poor' per SportsCenter. Giants' three second-half drives: 12 plays/74 yds/8:01 TD, 13 plays/65 yds/8:11 TD, 13 plays/46 yds/final 5:21 run out to win per FieldYates. Giants and Jets both won their season openers for first time since 2009 per BackAftaThis. John Harbaugh's Giants debut wins in primetime.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "vikings-packers-week-1-2026",
-        "title": "Vikings overcome Kyler Murray concussion, Carson Wentz rallies Minnesota to 39-22 blowout of Packers — Justin Jefferson dominates",
-        "section": "supporting",
-        "development": "Vikings beat Packers 39-22 per ground truth/ESPN. Murray threw INT on first pass as Viking per JomboyMedia, then left game with concussion after brutal hit in 1Q per JomboyMedia/AlbertBreer/AdamSchefter — ruled out for remainder per Schefter. Wentz entered and led comeback. Jefferson: 8 REC, 92 YDS, 2 TD per StatMuse/SportsCenter — first game without (Nine) at QB and Jefferson is god again per SleeperHQ. Vikings threw pick on first pass, lost QB in 1Q, down with 7 minutes left, won by 17 per StatMuse. Scorigami: 39-22 final score never happened before in NFL history per CBS Sports. Jefferson now 8,572 career receiving yards in 95 games, third-fastest to 8,500 (behind Lance Alworth 90, Julio Jones 90) per Schefter. Christian Watson: 5-131-2 in first half per Ihartitz. Brian Flores' defense dominated per AlbertBreer. Vikings bullied Packers start to finish.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "bears-panthers-week-1-2026",
-        "title": "Bears explode for 59 points vs Panthers — Caleb Williams 4 total TDs, D'Andre Swift 3 rush TDs in 59-37 blowout",
-        "section": "supporting",
-        "development": "Bears demolished Panthers 59-37 per ground truth. Caleb: 21-29, 269 pass yds, 1 pass TD, 6 rush, 52 rush yds, 2 rush TD per FieldYates. Swift: 124 rush yds, 3 TD — first Bear with 100+ rush yds and 3+ TD in game since Jordan Howard in 2016 per StatMuse. Bears' 59 points tied for 2nd-most by any team in Week 1 in NFL history (behind 1973 Falcons 62) per Schefter. Six rushing TDs tied 1920 Detroit Heralds, 1920 Rock Island Independents, 1922 Canton Bulldogs for most in season-opening game in NFL history per Schefter. Most points for Bears in single game since 1980, third-most in franchise history, most without return TD per BillBarnwell. Colston Loveland, Luther Burden, Rome Odunze had 0 of 7 TDs per Ihartitz. Ben Johnson said he wants to set scoring records — Bears on pace per FieldYates. W_B_Rick: 'Thank you Ryan Poles for Caleb. I wish you well in future endeavors.'",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "bills-texans-week-1-2026",
-        "title": "Bills edge Texans 36-31 after CJ Stroud comeback falls short — Josh Allen 5 completions of 30+ yards, career-high",
-        "section": "supporting",
-        "development": "Bills beat Texans 36-31 per ground truth. Allen had 5 completions of 30+ yards, most in game in his career per CBS Sports. Kamari Lassiter dropped game-sealing INT on Allen, then gave up game-winning TD on very next play per ghetto_gronk. Bills won with three-man rush stripsack on Stroud to end game per BillBarnwell. Dalton Kincaid big-time difference-maker when healthy per AlbertBreer. Bills ran hook-and-ladder again in 1Q per BillBarnwell. Parker Washington: pay him per BillBarnwell. Joe Brady already with downfield laterals in 1Q per SharpFootball/PFTCommenter. Texans had two guys wide open on 35-yard completion to Jaylin Noel per BillBarnwell. Ed Oliver got game ball per Schefter. Allen ended road woes vs Texans per CBS Sports.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "ravens-colts-week-1-2026",
-        "title": "Ravens demolish Colts 41-23 in dominant Week 1 showing — Lamar Jackson MVP campaign starts hot",
-        "section": "supporting",
-        "development": "Ravens destroyed Colts 41-23 per ground truth. Lamar doing Lamar things per SharpFootball. PatMcAfeeShow: 'The Baltimore Ravens might be the greatest team in the history of the NFL.. we don't know right now.' Ravens rookie WR Ja'Kobi Lane fractured wrist, will miss several weeks per ESPN/Schefter — ruled out in game. Ravens rolled to A- per CBS Sports Week 1 grades. Baltimore offense clicking.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "chargers-cardinals-week-1-upset-2026",
-        "title": "Cardinals upset Chargers 26-14 as Mike LaFleur becomes first Cardinals coach to win debut since Don Coryell in 1973",
-        "section": "supporting",
-        "development": "Cardinals beat Chargers 26-14 per ground truth. LaFleur became first Cardinals full-time coach to win debut since Don Coryell in 1973 per Schefter. Trey McBride: 9 REC, 95 YDS, 1 TD — now has 38 career games with 5+ catches, tied with Antonio Gates and Kellen Winslow Sr. for 2nd-most by TE in first five seasons (behind Jimmy Graham 46) per Schefter/StatMuse. Ladd McConkey: 3-60-0 on first drive per Ihartitz. Justin Herbert and Madison Beer watched disaster unfold per NFLMemes/SportsCenter. Chris O'Leary's defense carved up by Jacoby Brissett per JackKennedy — Cardinals first punt with 17 minutes left per JackKennedy. Mike McDaniel's 'I'll fix run game' offense totaled 52 yards on ground, nobody on same page per JackKennedy. Chargers disasterclass spoiled survivor pools per JackKennedy. SharpFootball: 'this was supposed to be their easy game. now the Chargers will play #2 TOUGHEST schedule in NFL after Week 2.'",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "lions-saints-week-1-overtime-2026",
-        "title": "Lions survive Saints in OT thriller 31-30 — Amon-Ra St. Brown game-winning TD after New Orleans nearly completes comeback",
-        "section": "atl",
-        "development": "Lions beat Saints 31-30 in OT per ground truth. Amon-Ra: 10 REC, 67 YDS, 2 TD including game-winner per StatMuse. Jahmyr Gibbs: 34 touches, 186 total yds, 2 TD (career-high in touches) per StatMuse/FieldYates. Chris Olave in loss: 10 REC, 182 YDS career-high, leading NFL in receiving yards per StatMuse. Lions led 21-0, almost blew it per ghetto_gronk. Saints had back-to-back TDs after FieldYates said offense looked disorganized. AlbertBreer: 'Lions survive. Heck of an effort from Saints tho.'",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "browns-jaguars-week-1-watson-disaster-2026",
-        "title": "Deshaun Watson disastrous in Browns' 34-10 loss to Jaguars — three possessions end in INT, dropped INT, stripsack",
-        "section": "atl",
-        "development": "Jaguars demolished Browns 34-10 per ground truth. Watson threw INT on first drive per SharpFootball, then Browns had dropped INT and stripsack on next two possessions per BillBarnwell. SharpFootball: 'IT BEGINS - DESHAUN WATSON INTERCEPTION.' CBS Sports: 'Deshaun Watson disastrous in Browns offense.' PFTCommenter: 'Browns cut lead from 31 to 28 w that field goal making it slightly closer 4 score game. Smart.' NFLMemes: 'Cleveland Browns football is back baby 🔥.'",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "stefon-diggs-commanders-penalty-2026",
-        "title": "Stefon Diggs scores first TD with Commanders, costs Washington chance to tie game with goalpost celebration penalty",
-        "section": "atl",
-        "development": "Diggs scored TD for Washington per SportsCenter/ClutchPoints. Commanders wanted to go for 2 to tie game, but Diggs jumped on goalpost and drew 15-yard penalty, forcing XP per SharpFootball. Washington lost to Eagles 24-22 per ground truth. Jayden Daniels postgame: 'There's a time and place for everything' per ESPN. AlbertBreer: 'Penalty on Stefon Diggs TD is KILLER, because it makes it really hard to go for two.' SharpFootball: 'idiotic.'",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "bengals-buccaneers-week-1-2026",
-        "title": "Bengals rally to beat Buccaneers 33-27 in Week 1 opener — Lou Anarumo's defense forces turnovers, Ja'Marr Chase quiet",
-        "section": "atl",
-        "development": "Bengals beat Buccaneers 33-27 per ground truth. Bengals defense forced two fumbles in one quarter per BillBarnwell. Bucs last 3 drives: -2 net yards, 2 fumbles per SharpFootball. Baker Mayfield fumbled after first touch per ghetto_gronk. BackAftaThis: 'Fire Lou Anarumo at halftime and be done with it.' Chase: 3.2 fantasy points, second-fewest in career (fewest since Week 15 rookie season) per FieldYates. Ihartitz: 'Ja'Marr Chase last four Week 1 games: 5-39-0, 6-62-0, 2-26-0, 2-12-0.'",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "sonny-styles-saquon-barkley-hit-2026",
-        "title": "Sonny Styles absolutely destroys Saquon Barkley with massive hit — Eagles RB gets stood up",
-        "section": "atl",
-        "development": "Styles delivered huge hit on Barkley per Ihartitz/SharpFootball/PFTCommenter. Ihartitz: 'SAQUON BARKLEY GET OFF THE TRACKS WHEN THE SONNY STYLES TRAIN IS COMING THROUGH.' SharpFootball: 'OMG SONNY STYLES KILLED SAQUON 💀💀.' PFTCommenter: 'Sonny styles looks awesome.' Commanders lost to Eagles 24-22 per ground truth.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "mlb-games-sept-13-2026",
-        "title": "MLB Friday: Padres sweep Giants, Rays sweep Astros, Marlins walk off Dodgers, Athletics walk off Mariners, Pirates beat Cubs",
-        "section": "atl",
-        "development": "Padres swept Giants 6-4, now have 2.5-game cushion for last NL Wild Card spot, won 7th straight per TalkinBaseball. Ethan Salas tripled for first big league hit per TalkinBaseball. Lawrence Butler walk-off HR for Athletics beat Mariners 8-7 per TalkinBaseball/ground truth. Agustin Ramirez walk-off HR beat Dodgers 6-4 per TalkinBaseball/ClutchPoints/ground truth. D-backs display of defense you can't have when fighting for playoff life per TalkinBaseball. Rays swept Astros per TalkinBaseball — first division title since 2021. Payton Tolle threw immaculate inning for Red Sox per JomboyMedia/TalkinBaseball — realized it right before ninth pitch. Cam Schlittler lowered ERA to 1.95, tied with Jacob Misiorowski for best in MLB per TalkinBaseball. Emmet Sheehan has initials EF on hat honoring uncle Edward Fergus who died on 9/11 per TalkinBaseball. Giants placed Rafael Devers on 60-day IL (core muscle), ending season per TalkinBaseball. Vlad hit first HR in Toronto this year per JomboyMedia/TalkinBaseball. Josue De Paula's first career hit was HR per TalkinBaseball. Ben Rice leadoff shot for Yankees per TalkinBaseball. Yankees beat Mets 2-0 per ground truth. Tigers swept Rockies 8-1 per ground truth. White Sox are 12-1 this season when allowing 0 ER per JayCuda.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "clippers-accept-nba-penalties-2026",
-        "title": "Steve Ballmer accepts NBA penalties against Clippers, won't pursue legal action — apologizes to fans, employees, fellow owners",
-        "section": "atl",
-        "development": "CONTINUING [Day 11]: Ballmer released statement accepting penalties, won't pursue legal action per ClutchPoints/Shams. Statement: 'This has been a very difficult time for everybody associated with the Clippers, and for that, I have sincere regrets. I want to apologize to our fans, employees, and my fellow NBA team owners for the distraction and distress this matter has caused, for which I accept responsibility as principal owner. We are committing to put this chapter behind us. We have communicated to the NBA that we are complying with the penalties assessed by the league, have paid the fine, and are moving forward. While there are still disagreements concerning the findings in the report, this is not where I want to focus. Team owners should support, not distract.' Clippers moving forward after losing five first-round picks, $30M fine, Ballmer/Frank/Zucker suspensions, Kawhi $700K fine, Uncle Dennis 5-year ban.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "myles-garrett-rams-ir-2026",
-        "title": "Rams place Myles Garrett on IR after arthroscopic knee surgery — hope he's back in four weeks, will miss Giants/Broncos/Eagles/Bills",
-        "section": "atl",
-        "development": "CONTINUING [Day 2]: Garrett will undergo arthroscopic surgery on ailing knee, headed to IR per Pelissero/RapSheet. Has been dealing with lower-leg pain, wasn't himself in Thursday opener per Pelissero. Hope is he's back in four weeks per Pelissero. Will miss games vs Giants, Broncos, Eagles, Bills per Pelissero — L.A. hosts Cardinals in Week 6. FieldYates: 'The two biggest trades of offseason were Myles Garrett to Rams and AJ Brown to Patriots. Both placed on IR after one game. Tough starts.'",
-        "is_new": false,
-        "resolved": false
       }
     ]
   }
