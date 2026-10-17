@@ -1,5 +1,98 @@
 [
   {
+    "date": "2026-10-17",
+    "story_log": [
+      {
+        "topic_key": "nba-opening-night-2026-27",
+        "title": "NBA 2026-27 season opens with 12 games — Celtics-Sixers OT thriller, Bucks edge Pacers in OT, Bulls rout Wolves, Jazz upset Suns",
+        "section": "lead",
+        "development": "2026-27 NBA season tipped off with 12 games per ground truth. Boston beat Philadelphia 125-120 in OT per ground truth — defending champs open against LeBron's new team in instant classic. Milwaukee beat Indiana 128-127 in OT per ground truth — Bucks survive in thriller. Chicago demolished Minnesota 133-116 per ground truth — Bulls statement win. Utah upset Phoenix 119-116 per ground truth — Jazz spoil Suns' opener. Denver beat LA Lakers 121-106 per ground truth — Nuggets dominate LeBron-less Lakers. Golden State beat Portland 128-118 per ground truth. Orlando demolished Miami 136-115 per ground truth. Detroit beat Toronto 129-125 per ground truth. New Orleans edged Washington 107-106 per ground truth. Memphis beat Charlotte 117-98 per ground truth. San Antonio demolished Sacramento 126-97 per ground truth. Opening night delivered drama across league.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nhl-oct-16-2026",
+        "title": "NHL action Oct 16 — Avalanche rout Penguins 5-2, Bruins beat Ducks 4-2",
+        "section": "supporting",
+        "development": "Colorado beat Pittsburgh 5-2 per ground truth. Boston beat Anaheim 4-2 per ground truth — Bruins beat Ducks yesterday, their first win over them since 2023-10-22 per ground truth, won at Anaheim yesterday, their first win there since 2023-10-22 per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "college-football-week-7-fri-2026",
+        "title": "Week 7 college football Friday action — Washington rallies past Purdue 38-26, Tulane beats Memphis 31-17, App State edges Coastal 35-32",
+        "section": "supporting",
+        "development": "Washington beat Purdue 38-26 per ground truth (Fri 2026-10-16, at Purdue) — Huskies rally on road. Tulane beat Memphis 31-17 per ground truth (Fri 2026-10-16, at Tulane). App State edged Coastal Carolina 35-32 per ground truth (Fri 2026-10-16, at Coastal Carolina). Friday night action kicks off Week 7.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "mlb-alcs-rainout-2026",
+        "title": "ALCS Game 4 Rays-Guardians postponed to Saturday due to rain — Brewers await winner in World Series",
+        "section": "supporting",
+        "development": "ALCS Game 4 between Tampa Bay and Cleveland postponed due to rain, now set for Saturday per CBS Sports. Brewers await winner before Fall Classic begins per CBS Sports. Weather delays championship series.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "oregon-qb-change-2026",
+        "title": "Oregon benches Dylan Raiola for Brock Thomas — Ducks make QB change as CFP hopes hang in balance ahead of Nebraska game",
+        "section": "atl",
+        "development": "Oregon likely to start Brock Thomas at QB per CBS Sports — Raiola will be on bench against Nebraska as Thomas steps in to see if he can get Ducks back on track per CBS Sports. CFP hopes hang in balance per CBS Sports. Major QB change for Ducks.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "florida-qb-injury-2026",
+        "title": "Florida trending toward starting Tramell Jones vs Texas — Aaron Philo dealing with injury",
+        "section": "atl",
+        "development": "Gators appear ready to turn to young QB Tramell Jones on road against Longhorns on Saturday per CBS Sports — Aaron Philo dealing with injury per CBS Sports. Florida QB situation uncertain ahead of ranked matchup.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "washington-qb-injury-week-7-2026",
+        "title": "Washington QB Demond Williams Jr. missed game vs Purdue with rib injury — Elijah Brown started",
+        "section": "atl",
+        "development": "Williams missed game vs Purdue with rib injury per CBS Sports — junior backup Elijah Brown got start for Huskies as they look to correct offensive woes against Boilermakers per CBS Sports. Washington won 38-26 per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "thomas-castellanos-eligibility-2026",
+        "title": "Texas Tech QB Thomas Castellanos regains eligibility after judge grants injunction against NCAA — will play Saturday vs Arizona State",
+        "section": "atl",
+        "development": "Castellanos missed Texas Tech's game against Colorado after being ruled ineligible, but he'll be available on Saturday against Arizona State per CBS Sports — judge granted injunction against NCAA per CBS Sports. Eligibility restored for Red Raiders QB.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "jacobs-cooper-exempt-list-2026",
+        "title": "Josh Jacobs, Jonathon Cooper to come off NFL commissioner exempt list — eligible to return Week 7",
+        "section": "atl",
+        "development": "Both players will become eligible for Week 7 per CBS Sports — teams must determine whether they are ready to play per CBS Sports. NFL players cleared after exempt list stint.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "allisha-gray-wnba-finals-injury-2026",
+        "title": "Dream star Allisha Gray 'making progress' — status for Game 1 of WNBA Finals vs Valkyries unclear",
+        "section": "atl",
+        "development": "Gray making progress per CBS Sports — status for Game 1 of WNBA Finals vs Golden State unclear per CBS Sports. Atlanta's title chances may hinge on Gray's availability per CBS Sports. Dream await key player's health ahead of Finals.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "dewanna-bonner-dream-finals-2026",
+        "title": "DeWanna Bonner could be WNBA Finals' biggest X-Factor — took unlikely path to Dream, joined Atlanta just two months ago",
+        "section": "atl",
+        "development": "Bonner joined Atlanta just two months ago, is now one of biggest reasons why Dream are in Finals per CBS Sports. Veteran could be Finals' biggest X-Factor per CBS Sports. Unlikely late-season addition paying off for Dream.",
+        "is_new": true,
+        "resolved": false
+      }
+    ]
+  },
+  {
     "date": "2026-10-16",
     "story_log": [
       {
@@ -3789,123 +3882,6 @@
         "development": "Reese vs Connecticut: 30 PTS, 10 REB, 2 BLK, 11-14 FG, +31 per StatMuse. Ties franchise record for most 30/10 games in single season per StatMuse. Dream demolished Sun 103-59 per ground truth. Dominant performance.",
         "is_new": true,
         "resolved": true
-      }
-    ]
-  },
-  {
-    "date": "2026-09-16",
-    "story_log": [
-      {
-        "topic_key": "pete-alonso-300-homers-2026",
-        "title": "Pete Alonso hits 300th career home run at Citi Field against his former team the Mets, receives curtain call from Mets fans",
-        "section": "lead",
-        "development": "Alonso hit 300th career HR with 2-run shot in 9th inning at Citi Field to tie game 5-5, then received curtain call from Mets fans per ground truth/TalkinBaseball/JomboyMedia/ClutchPoints. Orioles won 7-5 in extras per ground truth. First time Alonso reached 300 HR milestone. Mets fans chanted 'fire Stearns' after Alonso's curtain call per JomboyMedia. Mets pitcher Sean Manaea postgame: 'I got nothing but respect for him, I love him to death. I know we have definitely underperformed but the guys in here work their ass off every single day and to have that reaction to an opposing player is crazy to me' per TalkinBaseball/SNY.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "junior-caminero-rays-walkoffs-2026",
-        "title": "Junior Caminero hits second walk-off homer in five days, now leads AL with 41 homers and mounts late MVP run",
-        "section": "supporting",
-        "development": "Caminero hit walk-off HR to beat Athletics 3-1 per ground truth/TalkinBaseball/ClutchPoints—his second walk-off HR in five days (also had one Sept. 12 to clinch playoff berth per recent history). Now leads AL with 41 HR per Passan. Passan: 'Within the span of five days, Junior Caminero has hit two walk-off homers, including one to clinch a playoff berth. He leads the AL with 41 homers and has done his best to mount a late run at stealing the AL MVP award away from the favored Yordan Alvarez.'",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "guardians-white-sox-walkoff-sept-16-2026",
-        "title": "Guardians walk off White Sox to pull within half game of AL Central lead—Travis Bazzana's double after two HR from him earlier",
-        "section": "supporting",
-        "development": "Guardians walked off White Sox per ESPN/TalkinBaseball/ClutchPoints—Cleveland now half game back of Chicago in AL Central per ESPN/TalkinBaseball. Bazzana hit 2 HRs earlier (including one in 5th per ClutchPoints), then delivered walk-off double per JayCuda. Expected BA of walk-off hit was .060 per JayCuda. ESPN: 'White Sox-Guardians, tomorrow at 1 ET on ESPN. FIRST PLACE ON THE LINE!'",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "brewers-clinch-nl-central-2026",
-        "title": "Brewers clinch NL Central for fourth straight season—first four-peat in NL Central history",
-        "section": "supporting",
-        "development": "Brewers beat Pirates 5-1 per ground truth, clinched NL Central for fourth straight year per ClutchPoints/TalkinBaseball—first ever four-peat in NL Central history per ClutchPoints. Milwaukee celebrating after locking up division.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "connor-bedard-blackhawks-captain-2026",
-        "title": "Connor Bedard named 37th captain of Chicago Blackhawks at 20 years old",
-        "section": "supporting",
-        "development": "Bedard named 37th captain of Blackhawks per ESPN/SportsCenter. Youngest captain in franchise history at 20 years old. NHL season returns Sept. 29 with ESPN triple-header starting at 5 PM ET per ESPN.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "cutter-gauthier-ducks-extension-2026",
-        "title": "Cutter Gauthier and Ducks agree to six-year, $81M extension ($13.5M AAV)",
-        "section": "atl",
-        "development": "Gauthier and Anaheim agreed to 6yr contract with $13.5M AAV per ESPN/emilymkaplan. Major extension for young Ducks star. NHL returning in two weeks.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "coby-mayo-inside-park-homer-2026",
-        "title": "Coby Mayo hits 3-run inside-the-park home run in 11th inning for Orioles after AJ Ewing crashes into wall",
-        "section": "atl",
-        "development": "Mayo hit 3-run inside-the-park HR in 11th inning after Ewing crashed into wall per TalkinBaseball/ClutchPoints. Orioles beat Mets 7-5 in extras per ground truth. Wild finish after Alonso's 300th HR tied it.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "yamamoto-dodgers-sept-16-2026",
-        "title": "Yoshinobu Yamamoto dominates Reds: 7.0 IP, 1 H, 0 ER, 7 SO—sixth straight start with 7+ strikeouts",
-        "section": "atl",
-        "development": "Yamamoto vs Reds: 7.0 IP, 1 H, 0 ER, 2 BB, 7 SO per StatMuse—his sixth straight start with 7+ SO per StatMuse. Dodgers beat Reds 4-0 per ground truth. Dominant stretch continues.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "chris-olave-saints-week-1-2026",
-        "title": "Chris Olave has more receiving yards this season than Chase, Lamb, London, Metcalf, Pickens, Loveland, Pitts, Rice, Waddle combined",
-        "section": "atl",
-        "development": "Olave has more receiving yards this season than Ja'Marr Chase, CeeDee Lamb, Drake London, DK Metcalf, George Pickens, Colston Loveland, Kyle Pitts, Rashee Rice, Jaylen Waddle combined per StatMuse. Insane Week 1 stat after Olave's last three games: 10-182, 8-119, 10-148 per StatMuse.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "acuna-braves-cubs-sept-16-2026",
-        "title": "Ronald Acuña Jr. homers into Wrigley bleachers as Braves rally vs Cubs",
-        "section": "atl",
-        "development": "Acuña smoked 2-run HR into Wrigley bleachers to put Braves back in game per TalkinBaseball/ClutchPoints. Atlanta beat Chicago 6-3 per ground truth. Ozzie Albies also went deep per TalkinBaseball.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "john-konchar-knicks-signing-2026",
-        "title": "John Konchar signs one-year deal with Knicks, entering eighth NBA season",
-        "section": "atl",
-        "development": "Konchar agreed to 1yr deal with New York per Shams/ESPN. Entering eighth NBA season. Knicks add veteran depth.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "taj-gibson-retirement-bulls-2026",
-        "title": "Taj Gibson officially joins Bulls coaching staff as assistant under Tiago Splitter after retiring from 17-year NBA career",
-        "section": "atl",
-        "development": "CONTINUING [Day 3]: Gibson now working as assistant on Bulls coaching staff under Splitter per ClutchPoints. Retired after 17 NBA seasons per recent history (announced Sept. 15), immediately returned to Chicago to coach. Full circle moment: started career with Bulls, played 8 seasons there, now back as coach.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "mlb-passan-labor-war-2026",
-        "title": "Jeff Passan: MLB owners refuse to speak on camera about salary cap proposal with lockout three months away—no owner agreed to talk",
-        "section": "atl",
-        "development": "Passan asked every MLB team to speak with owner on camera about salary cap proposal ahead of December lockout—none agreed to talk per Passan. Passan released full analysis of labor war, where things stand, where compromise can be found. Owners pushing salary cap, won't publicly defend it three months from shutting down sport.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "bears-ben-johnson-scoring-record-2026",
-        "title": "Adam Schefter: Bears HC Ben Johnson has not shied away from pursuing Broncos' NFL single-season scoring record after Week 1's 59 points",
-        "section": "atl",
-        "development": "Schefter reported Bears scored 59 in opener, Johnson pursuing 2013 Broncos' NFL single-season record of 606 points (37.9 PPG) per Schefter. Bears on historic scoring pace after Week 1 demolition of Panthers.",
-        "is_new": true,
-        "resolved": false
       }
     ]
   }

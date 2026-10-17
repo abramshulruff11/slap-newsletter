@@ -1,5 +1,21 @@
 [
   {
+    "date": "2026-10-17",
+    "slug": "mocking-spongebob",
+    "boxes": [
+      "THE BULLS ARE REBUILDING",
+      "ThE bUlLs ArE rEbUiLdInG"
+    ]
+  },
+  {
+    "date": "2026-10-17",
+    "slug": "waiting-skeleton",
+    "boxes": [
+      "BREWERS WAITING FOR THEIR WORLD SERIES OPPONENT",
+      "SINCE THE NLCS ENDED A WEEK AGO"
+    ]
+  },
+  {
     "date": "2026-10-16",
     "slug": "trade-offer",
     "boxes": [
@@ -511,23 +527,6 @@
     "boxes": [
       "GIANTS MARCHING DOWN THE FIELD FOR 8 STRAIGHT MINUTES",
       "WE'RE PLAYING BEND-BUT-DON'T-BREAK"
-    ]
-  },
-  {
-    "date": "2026-09-14",
-    "slug": "panik-kalm-panik",
-    "boxes": [
-      "KYLER PICKED OFF ON HIS FIRST PASS",
-      "HE'S GETTING UP AND WALKING OFF",
-      "HE'S IN THE CONCUSSION PROTOCOL AND WENTZ IS WARMING UP"
-    ]
-  },
-  {
-    "date": "2026-09-14",
-    "slug": "hide-the-pain-harold",
-    "boxes": [
-      "WE WON BY 22 IN OUR NFL DEBUT",
-      "THE OTHER GUYS SCORED ALL SEVEN TDS"
     ]
   }
 ]
