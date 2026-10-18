@@ -1,5 +1,31 @@
 [
   {
+    "date": "2026-10-18",
+    "slug": "clown-applying-makeup",
+    "boxes": [
+      "GEORGIA, OUR SCHEDULE IS SOFT",
+      "WE JUST SURVIVE THE SEC GAUNTLET",
+      "WE CONTROL OUR PLAYOFF DESTINY",
+      "AT HOME TO AUBURN AS 18.5-POINT FAVORITES"
+    ]
+  },
+  {
+    "date": "2026-10-18",
+    "slug": "always-has-been",
+    "boxes": [
+      "WAIT, THE CLOCK STILL HAD A SECOND LEFT?",
+      "ALWAYS HAS BEEN"
+    ]
+  },
+  {
+    "date": "2026-10-18",
+    "slug": "laughing-leo",
+    "boxes": [
+      "FSU CAUGHT TWO TOUCHDOWNS IN OVERTIME",
+      "NEITHER ONE COUNTED"
+    ]
+  },
+  {
     "date": "2026-10-17",
     "slug": "mocking-spongebob",
     "boxes": [
@@ -502,31 +528,6 @@
     "boxes": [
       "CAMINERO WALKS OFF AGAIN, PASSES ME IN HR, PASSAN WRITES HIS MVP CASE",
       "I'M STILL THE FAVORITE"
-    ]
-  },
-  {
-    "date": "2026-09-15",
-    "slug": "always-has-been",
-    "boxes": [
-      "WAIT, THE DODGERS ARE IN THE PLAYOFFS AGAIN?",
-      "ALWAYS HAS BEEN"
-    ]
-  },
-  {
-    "date": "2026-09-15",
-    "slug": "eric-andre-shooting",
-    "boxes": [
-      "KAWHI LEONARD",
-      "HIS OWN CLIPPERS FRANCHISE",
-      "WHY WOULD ANYONE DO THIS?"
-    ]
-  },
-  {
-    "date": "2026-09-14",
-    "slug": "this-is-fine",
-    "boxes": [
-      "GIANTS MARCHING DOWN THE FIELD FOR 8 STRAIGHT MINUTES",
-      "WE'RE PLAYING BEND-BUT-DON'T-BREAK"
     ]
   }
 ]
