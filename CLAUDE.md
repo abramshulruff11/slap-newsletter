@@ -213,6 +213,7 @@ slap-newsletter/
 │   ├── gif_tagger.py          ← SLA-133 vision tagger: frame strip → Claude → gif_tags.json
 │   ├── review_gif_tags.py     ← right/wrong review page for the tagger; --score checks the bar
 │   ├── apply_gif_tags.py      ← SLA-137: merges gif_tags.json into the GIF library (re-runnable)
+│   ├── replay_gif_situations.py ← SLA-138: free replay, mood-only vs situation-aware picks
 │   ├── tests/                 ← offline suites, 0 API calls — run before any prompt/code change
 │   │   ├── test_runner_drift.py ← fails if a change reaches one runner and not the other
 │   │   └── test_pipeline_status.py ← locks the status email + the stage list vs the workflow
@@ -798,8 +799,8 @@ browser, so its row count is not the size of the review.
 what actually SHIPS (345 placements classified by the paragraph above each GIF), not by Pass 1's
 requests, which over-ask for "vindication" and seed under half of what ships. Each situation has a
 `freshness_target` (its share of a ~500-GIF pool, SLA-134). Entity tags come from metadata and
-visible cues, never face recognition. `prompts/gif_taxonomy.DRAFT.json` is not read by the
-pipeline yet; SLA-138 wires it into selection in UAT.
+visible cues, never face recognition. `prompts/gif_taxonomy.DRAFT.json` is read by
+`gif_library_select` since SLA-138 (UAT): its situations are the menu Pass 1 and Pass 2 pick from.
 
 **GIFs are tagged by looking at them (SLA-133).** `uat/gif_tagger.py` sends Claude a strip of 6
 frames spread across each GIF (the API sees only an animated GIF's FIRST frame) plus its Giphy
@@ -834,7 +835,8 @@ the old file reflowed; a second run changes nothing, so re-run it after SLA-134'
 Each tagged entry carries `moods`, `subcategories` (`[{id, fit}]`, the SLA-132 situations; empty
 = a mood-only GIF), `intensity`, `reaction_readiness`, `caption_text`, `what_happens`,
 `entities`, `confidence` and `tagged_by` (`{model, effort, at}`, plus `edited` once a human
-changes them in the studio). **Selection does not read them yet**; SLA-138 does that, in UAT.
+changes them in the studio). Selection reads `subcategories` and `entities` since SLA-138
+(below).
 - **`rejected` is a fourth GIF status:** the 9 the tagger judged unusable, each with its
   `reject_reason`. Never selected (every reader takes `verified` only), kept so the two possible
   mislabels can be checked. `apply_gif_decisions.py` refuses to un-reject one, because a decisions
@@ -846,6 +848,47 @@ changes them in the studio). **Selection does not read them yet**; SLA-138 does 
   picked; `test_library_studio.mjs` covers the page's checks and edit helpers.
 - `domination` is down to 3 verified GIFs and `betrayal_self_sabotage` has 3; every mood keeps at
   least one.
+
+**GIF selection prefers the beat's situation (SLA-138, 2026-10-17; UAT prompts only).** A Tier 1
+placeholder can carry `data-library-subcategory="<situation id>"` (and optionally
+`data-library-entities="Team, Player"`). `gif_library_select.choose_entry()` (wrapped by
+`pick_entry()`, whose `(entry, relaxed)` shape is unchanged) takes the first non-empty pool:
+situation-tagged with a strong fit, then partial, then a FRESH GIF from the mood category, then a
+situation GIF inside its cooldown, then a cooling mood GIF. Never anything already used in the issue.
+- **A situation GIF is searched across every category**, not just the one the writer named: the
+  tagger files a GIF under one mood but tags situations from another mood's corner.
+- **A fresh mood GIF beats repeating a situation GIF inside its cooldown.** The library exists
+  because one "best" GIF ran in 3 of 4 issues; a situation preference must not bring that back.
+- **Entities only break ties inside the situation pool**, never on the mood fallback, so a
+  matching face on the wrong beat is never chosen. Nothing in the prompts emits entities yet; the
+  attribute is read when present.
+- **No situation = exactly the old mood-only pick.** An id outside the taxonomy is ignored (mood
+  pick) and named in the run log; history rows carry `library_subcategory` (the request, hit or
+  miss), which is SLA-134's demand record.
+- **Prompts (UAT only):** Pass 1 emits `gif_situation` on a Tier 1 seed; Pass 2 copies it into the
+  placeholder and may choose one for its own GIFs from the same menu. The menu is
+  `{{GIF_SITUATION_INDEX}}`, built from the taxonomy at load time (all 39, stocked or not, ~1.5K
+  tokens) in `pass1_story_selector.txt` and `gif_reference.txt`. Both runners substitute it and
+  carry `gif_situation` in Pass 1's schema (`KNOWN_DIVERGENT` re-pinned); `normalize_plan()`
+  keeps it only on a Tier 1 seed with a known id, and leaves it absent otherwise, so production,
+  whose prompts don't ask for it, gets plans exactly as before.
+- **Promotion is NOT done and is not a plain `promote.py --promote`.** `gif_reference.txt` and
+  `pass2_writer.txt` show as diverged only because lines were edited (4 and 1 prod-only lines,
+  all superseded); review those and use `--allow-delete`. `pass1_story_selector.txt` was already
+  diverged on purpose (the video-tweet policy, see `run_pass1`'s ledger entry), so its SLA-138
+  lines (two schema lines, the `gif_situation` bullet, the index block at the end) must be
+  carried across without the UAT video lines. Waits on Abram.
+- **The free replay** (`uat/replay_gif_situations.py`, 0 API calls): the 345 library GIFs that
+  shipped 09-02..10-14, 300 of them classified into a situation by SLA-133 step 5, re-picked issue
+  by issue with their own cooldown history, 200 seeds. Picked GIF tagged with the paragraph's
+  situation: **what shipped 21.3%; mood-only 19.6%; situation-aware 58.5%**; ceiling 83.3% (the
+  share whose situation has any GIF). The 50 placements in the six empty situations
+  (`calm_dominance` 23, `drought_over_or_star_back` 10, `long_drought`, `dodged_disaster`,
+  `got_away_with_it`, `carrying_the_load`) miss whatever selection does; most of the rest is
+  cooldown on thin situations (`cruel_twist` 16 placements / 2 GIFs, `comeback_euphoria` 12 / 1,
+  `historic_company` 13 / 1). **It assumes Pass 1 / Pass 2 always name the right situation**;
+  only a real run measures that.
+  Locked by `uat/tests/test_gif_situation_select.py` (mutation-checked: mood-first order fails 11).
 
 **A fact bundle for a new sport starts at `docs/sport_bundle_pattern.md` (SLA-118):** read it
 before opening the first ticket to give MLB, the NBA or the NHL what football has (a connected
@@ -1195,7 +1238,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (31 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (32 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -1242,6 +1285,15 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-17 — GIF selection prefers the beat's situation, in UAT (SLA-138)**
+- `gif_library_select.choose_entry()`: situation (strong, then partial) before mood, a fresh mood
+  GIF before a cooling situation GIF, entities as a tie-break inside the situation only.
+- UAT prompts: Pass 1 emits `gif_situation`, Pass 2 writes `data-library-subcategory`; the menu is
+  `{{GIF_SITUATION_INDEX}}`, substituted by both runners. Production prompts untouched.
+- `uat/replay_gif_situations.py`, free: situation hit rate 19.6% (mood-only) -> 58.5%, ceiling
+  83.3%; six empty situations cost 50 of 300 placements (SLA-134).
+- New `uat/tests/test_gif_situation_select.py`.
 
 **2026-10-17 — GIF tags merged into the library; the studio edits them (SLA-137, part A)**
 - `uat/apply_gif_tags.py` merged the 175 SLA-133 proposals into `gif_library.DRAFT.json` (format

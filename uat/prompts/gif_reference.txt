@@ -15,11 +15,23 @@ picking a GIF.
 
 Any face doing that emotion would land. Nobody specific has to be on screen.
 
-<div class="gif-placeholder" data-library-category="CATEGORY_NAME"></div>
+<div class="gif-placeholder" data-library-category="CATEGORY_NAME" data-library-subcategory="SITUATION_ID"></div>
 
-You pick the emotional CATEGORY only. The pipeline picks the actual GIF from a
-hand-verified set and handles rotation, so you never check history for these.
-Leave the div empty — no search term.
+You pick the emotional CATEGORY and, when one fits, the SITUATION. The pipeline
+picks the actual GIF from a hand-verified set and handles rotation, so you never
+check history for these. Leave the div empty — no search term.
+
+- If the story plan gave this story a `gif_situation`, copy it into
+  data-library-subcategory exactly as written.
+- For a GIF the plan did not seed, pick the situation from AVAILABLE SITUATIONS
+  below that matches the paragraph directly above the GIF — what the reader just
+  read is what the GIF reacts to.
+- If no situation fits, leave the data-library-subcategory attribute out. The
+  category alone still works; a wrong situation is worse than none.
+
+The situation is a preference, never a requirement: when it has no fresh GIF the
+pipeline serves one from the category. So the CATEGORY must still be right on its
+own.
 
 ### TIER 3 — True one-off, where a SPECIFIC person or moment IS the joke
 
@@ -56,6 +68,14 @@ Use the category name EXACTLY as written. An unrecognized name is dropped and
 the GIF is lost.
 
 {{GIF_LIBRARY_CATEGORIES}}
+
+### AVAILABLE SITUATIONS (data-library-subcategory)
+
+Narrower than a category: the specific sports moment the GIF reacts to. Use the
+id EXACTLY as written. Grouped by mood, but a situation may pair with whichever
+category fits the beat.
+
+{{GIF_SITUATION_INDEX}}
 
 ## ⚠️ HIGH-RISK OVERUSE — CHECK BEFORE USING
 

@@ -45,7 +45,7 @@ UAT = REPO / "uat" / "generate_newsletter_uat.py"
 # pinned: touch either copy and this test fails until you have looked at the
 # counterpart and deliberately re-recorded the hash.
 KNOWN_DIVERGENT = {
-    "run_pass1": dict(prod="cbde6de6b254", uat="afcaa3c4975b", reason=(
+    "run_pass1": dict(prod="79188849f3bf", uat="f4e2c934a86e", reason=(
         "Bidirectional, and the two now hold DIFFERENT video policies on "
         "purpose. Prod (2026-09-04): video tweets are tagged by fetch_content, "
         "marked for Pass 1 in the payload, and removed from the headliners by "
@@ -60,16 +60,19 @@ KNOWN_DIVERGENT = {
         "BOTH copies became a named function handed to retry_api_call, so a "
         "transient failure no longer burns one of the three VALIDATION attempts "
         "this loop exists for. Prod additionally stopped asserting that an API "
-        "error was caused by unescaped quotes — UAT never carried that text.)"
+        "error was caused by unescaped quotes — UAT never carried that text. "
+        "2026-10-17 (SLA-138): the {{GIF_SITUATION_INDEX}} substitution and "
+        "the gif_situation schema field went into BOTH copies identically.)"
     )),
-    "run_pass2": dict(prod="67437f3363f6", uat="aad9967e6967", reason=(
+    "run_pass2": dict(prod="046e81e12bf9", uat="c644ea4e23bc", reason=(
         "Bidirectional. Prod carries degraded-mode wiring UAT lacks; UAT "
         "carries highlight-plan wiring prod has no Pass 1B for. (2026-09-04: "
         "the {{MEME_SELECTOR_INDEX}} substitution was added to BOTH copies "
         "identically — the meme library is now the only template list the "
         "writer sees. 2026-09-05: the bounded tool loop, MAX_TOKENS_WRITER and "
         "the was_truncated check likewise went into both. 2026-09-20 (SLA-54): so did "
-        "retry_api_call around the per-turn call.)"
+        "retry_api_call around the per-turn call. 2026-10-17 (SLA-138): so did "
+        "the {{GIF_SITUATION_INDEX}} substitution in gif_reference.)"
     )),
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."

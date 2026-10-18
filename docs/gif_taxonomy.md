@@ -1,10 +1,32 @@
 # GIF subcategory taxonomy (SLA-132)
 
-**Status:** 39 situations; targets rebased on what actually ships (SLA-133, 2026-10-14). Nothing
-reads it yet. The machine-readable copy is `prompts/gif_taxonomy.DRAFT.json`. SLA-132's three open
+**Status:** 39 situations; targets rebased on what actually ships (SLA-133, 2026-10-14). UAT
+selection reads it since SLA-138 (2026-10-17); production does not until the prompts are promoted. The machine-readable copy is `prompts/gif_taxonomy.DRAFT.json`. SLA-132's three open
 decisions went with the recommendations (35+ situations rather than 10–15 per mood; `relief` and
 `anticipation` added; writer demand recovered, below). Follow-ups: SLA-133 (vision tagger),
 SLA-137 (selection in UAT), SLA-134 (pool to ~500), SLA-135, SLA-136.
+
+## Update (SLA-138): selection prefers the situation
+
+In UAT, Pass 1 names a situation per Tier 1 seed and Pass 2 writes it on the placeholder;
+`gif_library_select.choose_entry()` serves a GIF tagged with it before falling back to the mood.
+A free replay (`uat/replay_gif_situations.py`) re-picked all 300 situation-classified placements
+from 09-02..10-14, issue by issue, with cooldowns:
+
+| | GIF fits the moment |
+|---|---|
+| What actually shipped | 21% |
+| Mood-only pick (before) | 20% |
+| Situation-aware pick (after) | 58% |
+| Ceiling with today's library | 83% |
+
+The six situations with no GIF (`calm_dominance` 23 placements, `drought_over_or_star_back` 10,
+`long_drought` 5, `dodged_disaster` 5, `got_away_with_it` 4, `carrying_the_load` 3) cost 50 of the
+300 whatever selection does. Most of the remaining misses are thin situations running into the
+7-day cooldown: `cruel_twist` (16 placements, 2 GIFs), `comeback_euphoria` (12, 1),
+`historic_company` (13, 1), `big_game_buildup` (17, 2). Those, not just the empty six, are where
+SLA-134's fill pays off. The replay assumes Pass 1 and Pass 2 name the right situation every time;
+only a real run can measure that.
 
 ## Update (SLA-133): what the writer actually uses
 

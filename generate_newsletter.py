@@ -234,6 +234,13 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         selector_prompt = selector_prompt + "\n\n" + "=" * 80 + "\n\n" + _meme_index
     if not selector_prompt:
         raise SystemExit("Error: prompts/pass1_story_selector.txt not found.")
+    # SLA-138: the GIF situation menu is built from the taxonomy at load time,
+    # like the GIF category and meme indexes. A prompt without the placeholder
+    # (production's, until it is promoted) is left exactly as it was.
+    if "{{GIF_SITUATION_INDEX}}" in selector_prompt:
+        import gif_library_select as _GL
+        selector_prompt = selector_prompt.replace(
+            "{{GIF_SITUATION_INDEX}}", _GL.situation_prompt_block())
 
     story_history = format_story_history(
         recent_output if isinstance(recent_output, list) else []
@@ -364,6 +371,10 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
                     "empty."
                 ),
             },
+            # SLA-138: the beat's situation id from the GIF SITUATION INDEX.
+            # Free text rather than an enum so a new situation never needs a
+            # schema change; normalize_plan() blanks an id the taxonomy lacks.
+            "gif_situation":  {"type": "string"},
             "meme_concept":   {"type": "string"},
             # Pass 1 picks the TEMPLATE, not just a prose concept.
             # meme_template must be a slug from the MEME SELECTOR INDEX;
@@ -812,6 +823,12 @@ def run_pass2(story_plan: str, client: anthropic.Anthropic, game_state: dict | N
         import gif_library_select as _GL
         gif_reference = gif_reference.replace(
             "{{GIF_LIBRARY_CATEGORIES}}", _GL.category_prompt_block())
+    # SLA-138: the situation menu, same reason. Only UAT's gif_reference.txt
+    # carries the placeholder until the prompt is promoted.
+    if "{{GIF_SITUATION_INDEX}}" in gif_reference:
+        import gif_library_select as _GL
+        gif_reference = gif_reference.replace(
+            "{{GIF_SITUATION_INDEX}}", _GL.situation_prompt_block())
 
     # The meme template index is injected from the library at load time, for the
     # same reason the GIF categories are: a hand-kept copy in the prompt file

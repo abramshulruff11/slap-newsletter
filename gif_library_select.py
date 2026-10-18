@@ -47,6 +47,9 @@ import gif_url_cache as GC
 # carrying a second copy. REPO_ROOT is now this file's own directory.
 REPO_ROOT = Path(__file__).resolve().parent
 LIBRARY_PATH = REPO_ROOT / "prompts" / "gif_library.DRAFT.json"
+# SLA-132's situations (descriptions, use-when): the menu Pass 1 and Pass 2
+# choose a situation from. Which GIFs carry a situation is in the library.
+TAXONOMY_PATH = REPO_ROOT / "prompts" / "gif_taxonomy.DRAFT.json"
 
 GIPHY_BY_ID_URL = "https://api.giphy.com/v1/gifs/{gif_id}?api_key={key}"
 
@@ -59,6 +62,42 @@ def load_library() -> dict:
     if not LIBRARY_PATH.exists():
         return {"_meta": {}, "categories": {}}
     return json.loads(LIBRARY_PATH.read_text(encoding="utf-8"))
+
+
+def load_taxonomy() -> dict:
+    if not TAXONOMY_PATH.exists():
+        return {"_meta": {}, "subcategories": []}
+    return json.loads(TAXONOMY_PATH.read_text(encoding="utf-8"))
+
+
+def known_situations(taxonomy: dict | None = None) -> set:
+    taxonomy = taxonomy if taxonomy is not None else load_taxonomy()
+    return {s["id"] for s in taxonomy.get("subcategories", []) if s.get("id")}
+
+
+def situation_prompt_block(taxonomy: dict | None = None) -> str:
+    """
+    Render the situation menu (SLA-138) for {{GIF_SITUATION_INDEX}}.
+
+    Every situation is listed, stocked or not: a situation with no GIF yet
+    still falls back to the mood, and the request it records is the demand
+    SLA-134 fills against. Grouped by the taxonomy's mood so the two choices
+    read together.
+    """
+    taxonomy = taxonomy if taxonomy is not None else load_taxonomy()
+    by_mood: dict = {}
+    for s in taxonomy.get("subcategories", []):
+        mood = (s.get("mood") or "").split(" ")[0]       # "relief (NEW)" -> "relief"
+        by_mood.setdefault(mood, []).append(s)
+    lines = []
+    for mood, items in by_mood.items():
+        lines.append(f"{mood}:")
+        for s in items:
+            line = f"- `{s['id']}` — {s.get('description', '')}"
+            if s.get("use_when"):
+                line += f" USE WHEN: {s['use_when']}"
+            lines.append(line)
+    return "\n".join(lines)
 
 
 def category_prompt_block(library: dict | None = None) -> str:
@@ -86,9 +125,10 @@ def category_prompt_block(library: dict | None = None) -> str:
 # Cooldown
 # ---------------------------------------------------------------------------
 
-def _recent_library_ids(history: list, default_days: int, per_id_days: dict) -> set:
+def _recent_library_ids(history: list, default_days: int, per_id_days: dict,
+                        today: date | None = None) -> set:
     """ids whose most recent use is still inside their own cooldown window."""
-    today = date.today()
+    today = today or date.today()
     blocked = set()
     for entry in history:
         gid = entry.get("library_id")
@@ -104,7 +144,14 @@ def _recent_library_ids(history: list, default_days: int, per_id_days: dict) -> 
     return blocked
 
 
-def eligible_entries(library: dict, category: str, history: list) -> tuple[list, list]:
+def _blocked(library: dict, entries: list, history: list, today: date | None) -> set:
+    default_days = library.get("_meta", {}).get("cooldown_days_default", 7)
+    per_id = {g["id"]: g["cooldown_days"] for g in entries if g.get("cooldown_days")}
+    return _recent_library_ids(history, default_days, per_id, today)
+
+
+def eligible_entries(library: dict, category: str, history: list,
+                     today: date | None = None) -> tuple[list, list]:
     """
     Returns (eligible, all_verified) for a category.
 
@@ -114,29 +161,113 @@ def eligible_entries(library: dict, category: str, history: list) -> tuple[list,
     if not cat:
         return [], []
     verified = [g for g in cat.get("gifs", []) if g.get("status") == "verified"]
-    default_days = library.get("_meta", {}).get("cooldown_days_default", 7)
-    per_id = {g["id"]: g["cooldown_days"] for g in verified if g.get("cooldown_days")}
-    blocked = _recent_library_ids(history, default_days, per_id)
+    blocked = _blocked(library, verified, history, today)
     return [g for g in verified if g["id"] not in blocked], verified
 
 
-def pick_entry(library: dict, category: str, history: list, used_this_run: set):
+def situation_entries(library: dict, subcategory: str) -> list:
     """
-    Choose one entry for a category.
+    Every verified entry tagged with a situation, in ANY mood category, as
+    (entry, fit) pairs. A situation is narrower than a mood, and the tagger
+    files a GIF under one category but may tag a situation from another
+    mood's corner of the taxonomy.
+    """
+    out = []
+    for cat in library.get("categories", {}).values():
+        for g in cat.get("gifs", []):
+            if g.get("status") != "verified":
+                continue
+            for sub in g.get("subcategories") or []:
+                if sub.get("id") == subcategory:
+                    out.append((g, sub.get("fit")))
+                    break
+    return out
+
+
+def _entity_names(entry: dict) -> list:
+    ent = entry.get("entities") or {}
+    names = []
+    for key in ("players", "teams", "figures"):
+        names += [str(n).lower().strip() for n in ent.get(key) or [] if str(n).strip()]
+    return names
+
+
+def _entity_match(entry: dict, wanted: list) -> bool:
+    """A requested name matches a whole-word run of a tagged name, either way
+    round, so "Yankees" matches "New York Yankees"."""
+    for w in wanted:
+        for h in _entity_names(entry):
+            short, long_ = sorted((w, h), key=len)
+            if f" {short} " in f" {long_} ":
+                return True
+    return False
+
+
+def choose_entry(library: dict, category: str, history: list, used_this_run: set,
+                 subcategory: str | None = None, entities: list | None = None,
+                 today: date | None = None) -> dict:
+    """
+    Choose one entry, preferring the requested situation (SLA-138).
+
+    Order, first non-empty pool wins:
+      1. tagged with the situation, fit "strong", not cooling down
+      2. tagged with the situation, fit "partial", not cooling down
+      3. the mood category, not cooling down          (the old behaviour)
+      4. tagged with the situation, cooling down      (relaxed)
+      5. the mood category, cooling down              (relaxed)
+    Nothing already used in this issue is ever picked.
+
+    A fresh GIF from the right mood beats repeating a situation GIF inside its
+    cooldown: the library exists because one "best" GIF ran in 3 of 4 issues.
+
+    An entity match is a tie-breaker INSIDE a situation pool only. It never
+    pulls in a GIF from another situation, and it is not applied to the mood
+    fallback, where a matching face on the wrong beat is still the wrong GIF.
+
+    Returns {"entry", "relaxed", "matched"}; matched is "situation", "mood"
+    or None.
+    """
+    wanted = [str(e).lower().strip() for e in entities or [] if str(e).strip()]
+    sit = situation_entries(library, subcategory) if subcategory else []
+    sit_all = [g for g, _ in sit]
+    sit_blocked = _blocked(library, sit_all, history, today)
+    eligible, verified = eligible_entries(library, category, history, today)
+
+    def fresh_sit(fit):
+        return [g for g, f in sit if f == fit and g["id"] not in sit_blocked]
+
+    pools = [
+        ("situation", False, fresh_sit("strong")),
+        ("situation", False, fresh_sit("partial")),
+        ("mood", False, eligible),
+        ("situation", True, sit_all),
+        ("mood", True, verified),
+    ]
+    for matched, relaxed, pool in pools:
+        pool = [g for g in pool if g["id"] not in used_this_run]
+        if not pool:
+            continue
+        if matched == "situation" and wanted:
+            pool = [g for g in pool if _entity_match(g, wanted)] or pool
+        return {"entry": random.choice(pool), "relaxed": relaxed, "matched": matched}
+    return {"entry": None, "relaxed": False, "matched": None}
+
+
+def pick_entry(library: dict, category: str, history: list, used_this_run: set,
+               subcategory: str | None = None, entities: list | None = None,
+               today: date | None = None):
+    """
+    Choose one entry for a category, preferring a situation when one is given.
 
     Prefers entries not in cooldown and not already used in this issue. If
     everything is in cooldown the freshest-eligible rule relaxes rather than
     dropping the GIF — a repeat beats a hole, and the report surfaces it.
+    Without a subcategory this is exactly the mood-only pick it always was.
+    See choose_entry() for the order.
     """
-    eligible, verified = eligible_entries(library, category, history)
-    pool = [g for g in eligible if g["id"] not in used_this_run]
-    relaxed = False
-    if not pool:
-        pool = [g for g in verified if g["id"] not in used_this_run]
-        relaxed = bool(pool)
-    if not pool:
-        return None, relaxed
-    return random.choice(pool), relaxed
+    r = choose_entry(library, category, history, used_this_run,
+                     subcategory=subcategory, entities=entities, today=today)
+    return r["entry"], r["relaxed"]
 
 
 # ---------------------------------------------------------------------------
@@ -191,9 +322,12 @@ def render_library_gifs(html: str, api_key: str, history: list) -> tuple[str, li
 
     stats = {"requested": 0, "rendered": 0, "dropped": 0,
              "unknown_category": [], "relaxed_cooldown": 0,
+             "situation_requested": 0, "situation_matched": 0,
+             "situation_missed": [], "unknown_subcategory": [],
              "sources": {"cache": 0, "api": 0, "stale": 0, "miss": 0}}
     if not placeholders:
         return html, [], stats
+    situations = known_situations()
 
     url_cache = GC.load_cache()
 
@@ -211,7 +345,21 @@ def render_library_gifs(html: str, api_key: str, history: list) -> tuple[str, li
             stats["dropped"] += 1
             continue
 
-        entry, relaxed = pick_entry(library, category, history, used_this_run)
+        # SLA-138: the beat's situation, when the writer passed one through.
+        # An id outside the taxonomy is ignored (mood-only pick) and named.
+        subcategory = (div.get("data-library-subcategory") or "").strip() or None
+        if subcategory and subcategory not in situations:
+            stats["unknown_subcategory"].append(subcategory)
+            subcategory = None
+        if subcategory:
+            stats["situation_requested"] += 1
+        entities = [e.strip() for e in
+                    (div.get("data-library-entities") or "").replace(";", ",").split(",")
+                    if e.strip()]
+
+        choice = choose_entry(library, category, history, used_this_run,
+                              subcategory=subcategory, entities=entities)
+        entry, relaxed = choice["entry"], choice["relaxed"]
         if not entry:
             print(f"  [gif-lib] no available entry for '{category}' — dropped")
             div.decompose()
@@ -236,16 +384,28 @@ def render_library_gifs(html: str, api_key: str, history: list) -> tuple[str, li
         stats["rendered"] += 1
         if relaxed:
             stats["relaxed_cooldown"] += 1
+        if subcategory and choice["matched"] == "situation":
+            stats["situation_matched"] += 1
+        elif subcategory:
+            stats["situation_missed"].append(subcategory)
         # search_term keeps the entry readable by the existing history reader
         # and by format_recent_media_block()'s concept de-duplication.
-        new_entries.append({
+        hist = {
             "date": today,
             "url": url,
             "search_term": f"[library:{category}] {entry.get('label','')}",
             "library_id": entry["id"],
             "library_category": category,
-        })
-        print(f"  [gif-lib] {category:26s} -> {entry.get('label','')}"
+        }
+        if subcategory:
+            # The request, hit or miss: what SLA-134 sizes its fill against.
+            hist["library_subcategory"] = subcategory
+        new_entries.append(hist)
+        tag = ""
+        if subcategory:
+            tag = (f"  [{subcategory}]" if choice["matched"] == "situation"
+                   else f"  [{subcategory}: no fresh GIF, mood fallback]")
+        print(f"  [gif-lib] {category:26s} -> {entry.get('label','')}{tag}"
               f"{'  (cooldown relaxed)' if relaxed else ''}")
 
     GC.save_cache(url_cache)
@@ -378,6 +538,16 @@ def report(stats: dict, search_count: int | None = None) -> None:
     if stats["unknown_category"]:
         bad = ", ".join(sorted(set(stats["unknown_category"])))
         print(f"  [gif-lib] ⚠ writer used unknown category name(s): {bad}")
+    if stats.get("situation_requested"):
+        print(f"  [gif-lib] situation matched {stats['situation_matched']}"
+              f"/{stats['situation_requested']}")
+        if stats.get("situation_missed"):
+            missed = ", ".join(sorted(set(stats["situation_missed"])))
+            print(f"  [gif-lib] ⚠ no fresh GIF for situation(s): {missed} "
+                  f"— served from the mood instead")
+    if stats.get("unknown_subcategory"):
+        bad = ", ".join(sorted(set(stats["unknown_subcategory"])))
+        print(f"  [gif-lib] ⚠ writer used unknown situation id(s): {bad}")
     if stats["relaxed_cooldown"]:
         print(f"  [gif-lib] ⚠ {stats['relaxed_cooldown']} pick(s) had to reuse a "
               f"cooling-down entry — category may be too thin")

@@ -960,6 +960,17 @@ def normalize_plan(plan: dict) -> dict:
         except (TypeError, ValueError):
             tier = 1
         s["gif_tier"]     = tier if tier in (1, 3) else 1
+        # SLA-138: a situation only means something on a Tier 1 seed, and only
+        # if the taxonomy knows the id. Anything else is dropped, not passed to
+        # the writer, so a made-up id can never reach a placeholder. Absent
+        # (rather than "") when unset, so a plan from a prompt that never asks
+        # for one is unchanged.
+        situation = safe_str(s.get("gif_situation")).strip()
+        s.pop("gif_situation", None)
+        if situation and s["gif_tier"] == 1 and s["gif_concept"].strip():
+            import gif_library_select as _GL
+            if situation in _GL.known_situations():
+                s["gif_situation"] = situation
         s["meme_concept"] = safe_str(s.get("meme_concept"))
         s["beats"]        = normalize_beat_list(s.get("beats"))
         return s

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "status": "DRAFT for Abram's review (SLA-132). Not read by any code.",
+    "status": "DRAFT (SLA-132). Read by gif_library_select (SLA-138, UAT): its situations are the menu Pass 1 and Pass 2 choose from, and the ids selection prefers.",
     "source": "155 Pass 1 gif_concept values in archive/*/story_plan.json, 2026-09-02 to 2026-10-14; 152 classified, 3 left out (2 empty, 1 Tier 3 specific clip).",
     "supply_note": "supply_ids_by_label is a judgment from each verified GIF's label, not from looking at it. SLA-133's vision tagging replaces it.",
     "demand": "placements = library GIFs that actually shipped 2026-09-02..10-14 (345), each classified by the paragraph above it (SLA-133 step 5). This is the real consumption and drives every target. pass1_requests = Pass 1's gif_concept for the same window (SLA-132), kept for comparison; Pass 1 seeds under half of what ships and over-asks for vindication.",
