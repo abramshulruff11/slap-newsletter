@@ -42,7 +42,8 @@ const b = src.indexOf("const validate =", a);
 if (a < 0 || b < 0) throw new Error("could not locate the pure helpers in library_studio.html");
 
 const F = new Function(consts + "\n" + src.slice(a, b) +
-  "\nreturn {dumpsMatchingStyle, usesCompactArrays, validateMemes, validateGifs};")();
+  "\nreturn {dumpsMatchingStyle, usesCompactArrays, validateMemes, validateGifs," +
+  " gifTagErrors, applyGifTagEdit, setGifStatus, blankGifTags, GIF_TAG_FIELDS};")();
 
 let failures = 0;
 function check(label, cond, extra = "") {
@@ -153,6 +154,95 @@ check("catches the same Giphy id in two categories",
     const [c1, c2] = Object.keys(l.categories);
     l.categories[c2].gifs.push(structuredClone(l.categories[c1].gifs[0]));
   }, gif)).some(e => e.includes("appears in both")));
+
+// --- 4. GIF tags (SLA-137) --------------------------------------------------
+// The tagger's fields are merged into the library; a page save must neither
+// drop them nor let a hand edit write something SLA-138's selection cannot read.
+const allGifs = Object.values(gif.categories).flatMap(c => c.gifs);
+const tagged = allGifs.filter(g => "moods" in g);
+const vocab = gif._meta.tag_vocabulary;
+check("the live library carries tags and their vocabulary",
+      tagged.length > 0 && vocab && vocab.subcategories.length > 0, `${tagged.length} tagged`);
+check("every rejected GIF has a reject_reason, and only rejected ones do",
+      allGifs.every(g => (g.status === "rejected") === ("reject_reason" in g)));
+
+// A save is serialise(parse(file)): the round-trip above already proves no tag
+// is lost, but say it directly for the fields SLA-137 added.
+{
+  const raw = read("prompts/gif_library.DRAFT.json");
+  const again = JSON.parse(F.dumpsMatchingStyle(JSON.parse(raw), raw));
+  const fields = l => Object.values(l.categories).flatMap(c => c.gifs)
+    .map(g => JSON.stringify(F.GIF_TAG_FIELDS.map(k => g[k]))).join("\n");
+  check("a save keeps every tag field of every GIF", fields(again) === fields(gif));
+}
+
+const firstTagged = l => Object.values(l.categories).flatMap(c => c.gifs)
+  .find(g => "moods" in g && g.status === "verified");
+const gifErr = (mutate, needle) => F.validateGifs(broken(l => mutate(firstTagged(l), l), gif))
+  .some(e => e.includes(needle));
+
+check("catches an unknown mood", gifErr(g => g.moods.push("vibes"), 'unknown mood "vibes"'));
+check("catches an unknown situation",
+      gifErr(g => g.subcategories.push({id: "no_such_situation", fit: "strong"}), "unknown situation"));
+check("catches a situation fit that is not strong/partial",
+      gifErr(g => { g.subcategories = [{id: vocab.subcategories[0], fit: "great"}]; }, "fit must be"));
+check("catches the same situation twice",
+      gifErr(g => { g.subcategories = [{id: vocab.subcategories[0], fit: "strong"},
+                                       {id: vocab.subcategories[0], fit: "partial"}]; }, "listed twice"));
+check("catches more than three situations",
+      gifErr(g => { g.subcategories = vocab.subcategories.slice(0, 4).map(id => ({id, fit: "partial"})); },
+             "at most 3"));
+check("catches a bad intensity", gifErr(g => { g.intensity = "extreme"; }, "intensity must be"));
+check("catches a bad reaction_readiness",
+      gifErr(g => { g.reaction_readiness = "sure"; }, "reaction_readiness must be"));
+check("catches a bad confidence", gifErr(g => { g.confidence = "certain"; }, "confidence must be"));
+check("catches entities.players that is not a list",
+      gifErr(g => { g.entities.players = "LeBron"; }, "entities.players must be a list"));
+check("catches a partly tagged GIF (the half-written entry SLA-138 would trip on)",
+      gifErr(g => { delete g.intensity; }, "partly tagged, missing intensity"));
+check("catches tags with no vocabulary to check them against",
+      gifErr((g, l) => { delete l._meta.tag_vocabulary; }, "no _meta.tag_vocabulary"));
+check("catches a rejected GIF with no reason",
+      gifErr(g => { g.status = "rejected"; delete g.reject_reason; }, "needs a reject_reason"));
+check("catches a reject_reason left on a GIF that is back in rotation",
+      gifErr(g => { g.reject_reason = "off_topic"; }, "only for a rejected GIF"));
+check("accepts 'rejected' as a status", !F.validateGifs(gif).some(e => e.includes("status must be")));
+
+// The edit helpers, as the page calls them.
+{
+  const g = structuredClone(firstTagged(gif));
+  const day = "2026-10-17";
+  const before = JSON.stringify(g.moods);
+  const m = vocab.moods.find(x => !g.moods.includes(x));
+  F.applyGifTagEdit(g, "moods.toggle", m, day, vocab);
+  check("ticking a mood adds it", g.moods.includes(m));
+  F.applyGifTagEdit(g, "moods.toggle", m, day, vocab);
+  check("ticking it again restores the original list exactly", JSON.stringify(g.moods) === before);
+  check("a hand edit is recorded in tagged_by.edited", g.tagged_by.edited === day);
+  F.applyGifTagEdit(g, "entities.teams", "Lakers, , Celtics ", day, vocab);
+  check("entity lists split on commas and drop blanks",
+        JSON.stringify(g.entities.teams) === '["Lakers","Celtics"]');
+  g.subcategories = [];
+  F.applyGifTagEdit(g, "subcategories.add", vocab.subcategories[5], day, vocab);
+  F.applyGifTagEdit(g, "subcategories.0.fit", "strong", day, vocab);
+  check("a situation can be added and its fit set",
+        g.subcategories[0].id === vocab.subcategories[5] && g.subcategories[0].fit === "strong");
+  F.applyGifTagEdit(g, "subcategories.del", "0", day, vocab);
+  check("…and removed", g.subcategories.length === 0);
+  F.setGifStatus(g, "rejected");
+  check("rejecting by hand fails until a reason is picked", F.gifTagErrors(g, vocab).length > 0);
+  F.applyGifTagEdit(g, "reject_reason", "off_topic", day, vocab);
+  check("…and passes once one is", F.gifTagErrors(g, vocab).length === 0,
+        F.gifTagErrors(g, vocab).join(" | "));
+  F.setGifStatus(g, "verified");
+  check("putting it back in rotation drops the reject_reason", !("reject_reason" in g));
+  const fresh = {id: "abc123", label: "x", status: "candidate", ...F.blankGifTags(day)};
+  check("a GIF tagged by hand from blank validates", F.gifTagErrors(fresh, vocab).length === 0,
+        F.gifTagErrors(fresh, vocab).join(" | "));
+  let threw = false;
+  try { F.applyGifTagEdit(g, "label", "x", day, vocab); } catch { threw = true; }
+  check("the tag editor refuses a non-tag field", threw);
+}
 
 console.log();
 if (failures) {

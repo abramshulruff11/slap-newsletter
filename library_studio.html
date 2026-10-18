@@ -92,7 +92,7 @@
   .list li[aria-current="true"]{background:var(--focus)}
   .list .nm{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .dot{width:8px;height:8px;border-radius:50%;flex:none}
-  .dot.candidate{background:#d99a00}.dot.verified{background:var(--ok)}.dot.retired{background:var(--muted)}
+  .dot.candidate{background:#d99a00}.dot.verified{background:var(--ok)}.dot.retired{background:var(--muted)}.dot.rejected{background:var(--bad)}
   .grp{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);
     margin:12px 0 4px;padding-left:9px}
   label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
@@ -102,6 +102,9 @@
   textarea{resize:vertical;min-height:60px}
   .row{display:flex;gap:10px;flex-wrap:wrap}
   .row>div{flex:1 1 180px;min-width:0}
+  .chips{display:flex;flex-wrap:wrap;gap:4px 12px}
+  label.chk{display:inline-flex;gap:5px;align-items:center;margin:0;text-transform:none;
+    letter-spacing:0;font-size:13px;color:var(--ink);cursor:pointer}
   .chip{display:inline-block;background:var(--chip);border-radius:999px;padding:2px 9px;font-size:12px}
   .msg{padding:9px 12px;border-radius:8px;margin:10px 0;font-size:13px}
   .msg.bad{background:color-mix(in srgb,var(--bad) 14%,transparent);border:1px solid var(--bad)}
@@ -149,6 +152,7 @@
           <option value="candidate">candidate</option>
           <option value="verified">verified</option>
           <option value="retired">retired</option>
+          <option value="rejected">rejected (GIFs)</option>
         </select></div>
         <div><select id="fGroup"><option value="">all groups</option></select></div>
       </div>
@@ -332,13 +336,117 @@ function validateGifs(data){
       if (g.status !== "retired" && !/^[A-Za-z0-9]+$/.test(String(g.id||"")))
         errs.push(`${cat}/${g.id||"(no id)"}: Giphy id must be alphanumeric`);
       if (!(g.label||"").trim()) errs.push(`${cat}/${g.id}: needs a label`);
-      if (!["candidate","verified","retired"].includes(g.status))
-        errs.push(`${cat}/${g.id}: status must be candidate, verified or retired`);
+      if (!GIF_STATUSES.includes(g.status))
+        errs.push(`${cat}/${g.id}: status must be ${GIF_STATUSES.join(", ")}`);
       if (seen.has(g.id)) errs.push(`${g.id}: appears in both ${seen.get(g.id)} and ${cat}`);
       else seen.set(g.id, cat);
+      errs.push(...gifTagErrors(g, ((data||{})._meta||{}).tag_vocabulary).map(e => `${cat}/${g.id}: ${e}`));
     }
   }
   return errs;
+}
+
+/* ===================================================================
+   4. GIF tags (SLA-137) -- the fields uat/gif_tagger.py writes and
+   uat/apply_gif_tags.py merges. The allowed values live in the library's
+   own _meta.tag_vocabulary, copied from the tagger's constants, so this page
+   checks against exactly the lists the tagger was constrained to.
+   SLA-138's selection reads these fields; an entry with half of them would
+   break it, so a tagged entry must carry all of them.
+   =================================================================== */
+const MEME_STATUSES = ["candidate","verified","retired"];
+// "rejected": the tagger judged it unusable. Like retired, never selected;
+// kept so it can be checked (it may be a library mislabel).
+const GIF_STATUSES = ["candidate","verified","retired","rejected"];
+const GIF_TAG_FIELDS = ["moods","subcategories","intensity","reaction_readiness","caption_text",
+                        "what_happens","entities","confidence","tagged_by"];
+const ENTITY_LISTS = ["players","teams","figures"];
+const MAX_SUBCATEGORIES = 3;     // the tagger's own limit
+
+const isTagged = g => GIF_TAG_FIELDS.some(k => k in g);
+const isStrList = v => Array.isArray(v) && v.every(x => typeof x === "string");
+
+function gifTagErrors(g, vocab){
+  const errs = [];
+  if (g.status === "rejected" && !(vocab && (vocab.reject_reason||[]).includes(g.reject_reason)))
+    errs.push("a rejected GIF needs a reject_reason");
+  if (g.status !== "rejected" && "reject_reason" in g)
+    errs.push(`reject_reason is only for a rejected GIF (status is ${g.status})`);
+  if (!isTagged(g)) return errs;
+  if (!vocab) return [...errs, "tagged, but the library has no _meta.tag_vocabulary"];
+  const missing = GIF_TAG_FIELDS.filter(k => !(k in g));
+  if (missing.length) return [...errs, `partly tagged, missing ${missing.join(", ")}`];
+
+  if (!isStrList(g.moods)) errs.push("moods must be a list");
+  else {
+    for (const m of g.moods) if (!vocab.moods.includes(m)) errs.push(`unknown mood "${m}"`);
+    if (new Set(g.moods).size !== g.moods.length) errs.push("a mood is listed twice");
+  }
+  if (!Array.isArray(g.subcategories)) errs.push("subcategories must be a list");
+  else {
+    const ids = g.subcategories.map(s => (s||{}).id);
+    for (const s of g.subcategories){
+      if (!vocab.subcategories.includes((s||{}).id)) errs.push(`unknown situation "${(s||{}).id}"`);
+      if (!vocab.fit.includes((s||{}).fit)) errs.push(`situation ${(s||{}).id}: fit must be ${vocab.fit.join(" or ")}`);
+    }
+    if (new Set(ids).size !== ids.length) errs.push("a situation is listed twice");
+    if (ids.length > MAX_SUBCATEGORIES) errs.push(`at most ${MAX_SUBCATEGORIES} situations`);
+  }
+  for (const k of ["intensity","reaction_readiness","confidence"])
+    if (!vocab[k].includes(g[k])) errs.push(`${k} must be one of ${vocab[k].join(", ")}`);
+  for (const k of ["caption_text","what_happens"])
+    if (typeof g[k] !== "string") errs.push(`${k} must be text`);
+  const e = g.entities;
+  if (!e || typeof e !== "object") errs.push("entities must be an object");
+  else {
+    for (const k of ENTITY_LISTS) if (!isStrList(e[k])) errs.push(`entities.${k} must be a list`);
+    for (const k of ["league","evidence"]) if (typeof e[k] !== "string") errs.push(`entities.${k} must be text`);
+  }
+  if (!g.tagged_by || typeof g.tagged_by !== "object") errs.push("tagged_by must say who tagged it");
+  return errs;
+}
+
+// Blank tags for a GIF tagged by hand in this page.
+function blankGifTags(today){
+  return {moods:[], subcategories:[], intensity:"medium", reaction_readiness:"ready",
+          caption_text:"", what_happens:"",
+          entities:{players:[], teams:[], figures:[], league:"none", evidence:""},
+          confidence:"medium", tagged_by:{model:"library_studio (by hand)", effort:"", at:today}};
+}
+
+// Changing status keeps reject_reason honest: it only exists on a rejected GIF.
+function setGifStatus(g, status){
+  g.status = status;
+  if (status !== "rejected") delete g.reject_reason;
+}
+
+// One edit to a tag field, from the editor's raw input value. A human edit to
+// model output is recorded in tagged_by.edited, so the file says these tags
+// are no longer exactly what the tagger proposed.
+function applyGifTagEdit(g, path, raw, today, vocab){
+  const top = path.split(".")[0];
+  if (path === "moods.toggle"){
+    const on = new Set(g.moods || []);
+    on.has(raw) ? on.delete(raw) : on.add(raw);
+    // Vocabulary order, so toggling twice is a no-op on the file.
+    g.moods = (vocab ? vocab.moods : [...on]).filter(m => on.has(m));
+  } else if (path === "subcategories.add"){
+    (g.subcategories ||= []).push({id: raw, fit: "partial"});
+  } else if (path === "subcategories.del"){
+    g.subcategories.splice(+raw, 1);
+  } else if (/^subcategories\.\d+\.(id|fit)$/.test(path)){
+    const [, n, k] = path.split(".");
+    g.subcategories[+n][k] = raw;
+  } else if (path.startsWith("entities.")){
+    const k = path.slice(9);
+    g.entities[k] = ENTITY_LISTS.includes(k) ? raw.split(",").map(s=>s.trim()).filter(Boolean) : raw;
+  } else if (top === "reject_reason" || GIF_TAG_FIELDS.includes(top)){
+    g[path] = raw;
+  } else {
+    throw new Error(`not a tag field: ${path}`);
+  }
+  if (top !== "reject_reason" && g.tagged_by && typeof g.tagged_by === "object")
+    g.tagged_by.edited = today;
 }
 const validate = () => S.tab === "meme"
   ? validateMemes(cur().data, S.templateBoxCounts)
@@ -566,7 +674,9 @@ function gifRows(){
   for (const [cat,c] of Object.entries(d.categories))
     (c.gifs||[]).forEach((g,j) => out.push({
       i:`${cat}|${j}`, key:g.id, name:g.label||g.id, group:cat,
-      status:g.status||"candidate", hay:[g.id,g.label,g.note,(g.tags||[]).join(" ")].join(" ").toLowerCase()
+      status:g.status||"candidate", hay:[g.id,g.label,g.note,(g.tags||[]).join(" "),(g.moods||[]).join(" "),
+          (g.subcategories||[]).map(s=>s.id).join(" "),g.what_happens,g.caption_text,
+          Object.values(g.entities||{}).flat().join(" ")].join(" ").toLowerCase()
     }));
   return out;
 }
@@ -602,7 +712,8 @@ function render(){
 
   const counts = rows.reduce((a,r)=>(a[r.status]=(a[r.status]||0)+1,a),{});
   $("counts").textContent = `${rows.length} entries · ` +
-    ["candidate","verified","retired"].map(s=>`${counts[s]||0} ${s}`).join(" · ");
+    (S.tab === "gif" ? GIF_STATUSES : MEME_STATUSES)
+      .map(s=>`${counts[s]||0} ${s}`).join(" · ");
 
   const errs = c.data ? validate() : [];
   $("btnSave").disabled = !c.data || errs.length > 0 || c.roundTrip === false;
@@ -641,7 +752,7 @@ function selGif(){
 }
 
 function statusButtons(val, path){
-  return ["candidate","verified","retired"].map(s =>
+  return (S.tab === "gif" ? GIF_STATUSES : MEME_STATUSES).map(s =>
     `<button data-set="${esc(path)}" data-val="${s}"${s===val?' class="primary"':''}>${s}</button>`).join(" ");
 }
 
@@ -762,9 +873,60 @@ function memeEditor(){
   </div>`;
 }
 
+const pick = (label, opts, val, path) => `
+  <label>${esc(label)}</label>
+  <select data-path="${esc(path)}">${opts.map(o =>
+    `<option value="${esc(o)}"${o===val?" selected":""}>${esc(o || "(choose)")}</option>`).join("")}</select>`;
+
+function gifTagsEditor(g, vocab){
+  if (!isTagged(g)) return `
+  <h2>Tags</h2>
+  <div class="hint">Not tagged yet. uat/gif_tagger.py tags verified GIFs and
+    uat/apply_gif_tags.py merges them in; you can also tag this one by hand.</div>
+  <div class="row" style="margin-top:6px"><button data-act="tags-init"${vocab.moods ? "" : " disabled"}>Tag by hand</button></div>`;
+  const tb = g.tagged_by || {};
+  const subs = g.subcategories || [];
+  const e = g.entities || {};
+  return `
+  <h2>Tags <span class="tagline">— ${esc(tb.model||"?")}${tb.effort?` (${esc(tb.effort)})`:""}${
+    tb.at?`, ${esc(String(tb.at).slice(0,10))}`:""}${tb.edited?`; edited here ${esc(tb.edited)}`:""}</span></h2>
+  ${field("what happens", g.what_happens||"", "what_happens", true)}
+  <label>moods <span class="tagline">(every one it fits)</span></label>
+  <div class="chips">${(vocab.moods||[]).map(m => `<label class="chk"><input type="checkbox"
+     data-mood="${esc(m)}"${(g.moods||[]).includes(m)?" checked":""}> ${esc(m)}</label>`).join("")}</div>
+  <label>situations <span class="tagline">(SLA-132 subcategories, at most ${MAX_SUBCATEGORIES};
+    none = a mood-only GIF)</span></label>
+  ${subs.map((s,n) => `
+    <div class="boxrow">
+      <div class="ix">${n+1}</div>
+      <div><select data-path="subcategories.${n}.id">${(vocab.subcategories||[]).map(o =>
+        `<option${o===s.id?" selected":""}>${esc(o)}</option>`).join("")}</select></div>
+      <div class="row" style="gap:6px;flex-wrap:nowrap"><select data-path="subcategories.${n}.fit">${(vocab.fit||[]).map(o =>
+        `<option${o===s.fit?" selected":""}>${esc(o)}</option>`).join("")}</select>
+        <button data-act="sub-del" data-n="${n}" class="danger" title="remove">−</button></div>
+    </div>`).join("") || `<div class="hint">No situation.</div>`}
+  <div class="row"><button data-act="sub-add"${subs.length >= MAX_SUBCATEGORIES ? " disabled" : ""}>+ situation</button></div>
+  <div class="row">
+    <div>${pick("intensity", vocab.intensity||[], g.intensity, "intensity")}</div>
+    <div>${pick("reaction readiness", vocab.reaction_readiness||[], g.reaction_readiness, "reaction_readiness")}</div>
+    <div>${pick("tagger confidence", vocab.confidence||[], g.confidence, "confidence")}</div>
+  </div>
+  ${field("caption text burned into the GIF (blank if none)", g.caption_text||"", "caption_text")}
+  <div class="row">
+    <div>${field("players (comma separated)", (e.players||[]).join(", "), "entities.players")}</div>
+    <div>${field("teams (comma separated)", (e.teams||[]).join(", "), "entities.teams")}</div>
+  </div>
+  <div class="row">
+    <div>${field("figures (comma separated)", (e.figures||[]).join(", "), "entities.figures")}</div>
+    <div>${field("league", e.league||"", "entities.league")}</div>
+  </div>
+  ${field("entity evidence (metadata or visible cues; never a face)", e.evidence||"", "entities.evidence", true)}`;
+}
+
 function gifEditor(){
   const {cat, g} = selGif();
   const c = cur().data.categories[cat];
+  const vocab = (cur().data._meta||{}).tag_vocabulary || {};
   return `
   <div class="row" style="align-items:center">
     <div style="flex:0 0 auto"><span class="chip mono">${esc(g.id)}</span></div>
@@ -776,6 +938,11 @@ function gifEditor(){
     <div>${field("tags (comma separated)", (g.tags||[]).join(", "), "tags")}</div>
     <div>${field("cooldown days (blank = default)", g.cooldown_days ?? "", "cooldown_days")}</div>
   </div>
+
+  ${g.status === "rejected" ? `<div class="row"><div>${pick("reject reason (why it is never selected)",
+      [""].concat(vocab.reject_reason||[]), g.reject_reason||"", "reject_reason")}</div></div>` : ""}
+
+  ${gifTagsEditor(g, vocab)}
 
   <h2>Preview</h2>
   <div class="prev">
@@ -813,6 +980,13 @@ function applyEdit(path, raw){
   } else {
     const {cat, g} = selGif();
     if (path.startsWith("@cat.")) { setPath(c.data.categories[cat], path.slice(5), raw); c.dirty = true; return; }
+    const top = path.split(".")[0];
+    if (path === "status"){ setGifStatus(g, raw); c.dirty = true; return; }
+    if (top === "reject_reason" || GIF_TAG_FIELDS.includes(top)){
+      applyGifTagEdit(g, path, raw, new Date().toISOString().slice(0,10),
+                      (c.data._meta||{}).tag_vocabulary);
+      c.dirty = true; return;
+    }
     target = g;
     if (path === "tags") value = raw.split(",").map(s=>s.trim()).filter(Boolean);
     if (path === "cooldown_days"){
@@ -1046,7 +1220,11 @@ $("editor").addEventListener("input", e => {
   scheduleAutoSave();
 });
 $("editor").addEventListener("change", e => {
-  if (e.target.dataset.path && e.target.tagName === "SELECT") render();
+  if (e.target.dataset.mood){
+    applyEdit("moods.toggle", e.target.dataset.mood);
+    render(); scheduleAutoSave(); return;
+  }
+  if (e.target.dataset.path && e.target.tagName === "SELECT"){ render(); scheduleAutoSave(); }
 });
 $("banner").addEventListener("click", e => {
   if (!e.target.hasAttribute("data-force-save")) return;
@@ -1089,6 +1267,18 @@ $("editor").addEventListener("click", e => {
     t.box_count = t.boxes.length; cur().dirty = true; render();
   }
   if (act === "render") renderWorked();
+  if (S.tab === "gif" && ["tags-init","sub-add","sub-del"].includes(act)){
+    const {g} = selGif(), vocab = (cur().data._meta||{}).tag_vocabulary || {};
+    const today = new Date().toISOString().slice(0,10);
+    if (act === "tags-init") Object.assign(g, blankGifTags(today));
+    if (act === "sub-add"){
+      const used = new Set((g.subcategories||[]).map(s => s.id));
+      applyGifTagEdit(g, "subcategories.add",
+        (vocab.subcategories||[]).find(i => !used.has(i)), today, vocab);
+    }
+    if (act === "sub-del") applyGifTagEdit(g, "subcategories.del", e.target.dataset.n, today, vocab);
+    cur().dirty = true; render(); scheduleAutoSave();
+  }
 });
 
 window.addEventListener("beforeunload", e => {

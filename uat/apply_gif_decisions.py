@@ -48,6 +48,48 @@ def clear_eyeball_marker(note: str) -> str:
     return " ".join(note.split())
 
 
+def apply_decisions(library: dict, decisions: list) -> tuple[list, list]:
+    """Apply decisions to library in place. Returns (applied, skipped)."""
+    categories = library.get("categories", {})
+
+    # Index every gif entry by id for fast lookup
+    by_id = {}
+    for cat_key, cat in categories.items():
+        for entry in cat.get("gifs", []):
+            by_id[entry["id"]] = entry
+
+    applied = []
+    skipped = []
+
+    for d in decisions:
+        gif_id = d["id"]
+        new_status = d["new_status"]
+        entry = by_id.get(gif_id)
+        if entry is None:
+            skipped.append((gif_id, "not found in library — may have moved/been removed"))
+            continue
+        old_status_in_file = entry.get("status")
+        # A decisions export replays every verdict ever stored in that browser,
+        # including "verified" clicks from before the vision tagger rejected
+        # the clip (SLA-137). Replaying one would put a rejected GIF back in
+        # rotation and leave its reject_reason behind. Un-rejecting is a
+        # deliberate act: do it in library_studio.html.
+        if old_status_in_file == "rejected" and new_status != "rejected":
+            skipped.append((gif_id, f"rejected by the vision tagger ({entry.get('reject_reason', '?')}); "
+                                    "change it in library_studio.html if that was wrong"))
+            continue
+        entry["status"] = new_status
+        note = entry.get("note")
+        if note:
+            cleared = clear_eyeball_marker(note)
+            if cleared:
+                entry["note"] = cleared
+            else:
+                entry.pop("note", None)
+        applied.append((gif_id, entry.get("label", ""), old_status_in_file, new_status))
+    return applied, skipped
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--file", type=Path, default=DEFAULT_DECISIONS_PATH,
@@ -68,34 +110,7 @@ def main():
 
     raw = LIBRARY_PATH.read_text(encoding="utf-8")
     library = json.loads(raw)
-    categories = library.get("categories", {})
-
-    # Index every gif entry by id for fast lookup
-    by_id = {}
-    for cat_key, cat in categories.items():
-        for entry in cat.get("gifs", []):
-            by_id[entry["id"]] = entry
-
-    applied = []
-    skipped = []
-
-    for d in decisions:
-        gif_id = d["id"]
-        new_status = d["new_status"]
-        entry = by_id.get(gif_id)
-        if entry is None:
-            skipped.append((gif_id, "not found in library — may have moved/been removed"))
-            continue
-        old_status_in_file = entry.get("status")
-        entry["status"] = new_status
-        note = entry.get("note")
-        if note:
-            cleared = clear_eyeball_marker(note)
-            if cleared:
-                entry["note"] = cleared
-            else:
-                entry.pop("note", None)
-        applied.append((gif_id, entry.get("label", ""), old_status_in_file, new_status))
+    applied, skipped = apply_decisions(library, decisions)
 
     print(f"\n{len(applied)} change(s) to apply:")
     for gif_id, label, old, new in applied:
@@ -103,7 +118,7 @@ def main():
         print(f"  {gif_id:<24} {change:<30} ({label})")
 
     if skipped:
-        print(f"\n{len(skipped)} skipped (not found):")
+        print(f"\n{len(skipped)} skipped:")
         for gif_id, reason in skipped:
             print(f"  {gif_id}: {reason}")
 

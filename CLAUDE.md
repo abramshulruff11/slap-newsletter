@@ -212,6 +212,7 @@ slap-newsletter/
 │   ├── probe_retry.py         ← the API retry drill, plain-English PASS/FAIL, 0 API calls
 │   ├── gif_tagger.py          ← SLA-133 vision tagger: frame strip → Claude → gif_tags.json
 │   ├── review_gif_tags.py     ← right/wrong review page for the tagger; --score checks the bar
+│   ├── apply_gif_tags.py      ← SLA-137: merges gif_tags.json into the GIF library (re-runnable)
 │   ├── tests/                 ← offline suites, 0 API calls — run before any prompt/code change
 │   │   ├── test_runner_drift.py ← fails if a change reaches one runner and not the other
 │   │   └── test_pipeline_status.py ← locks the status email + the stage list vs the workflow
@@ -798,7 +799,7 @@ what actually SHIPS (345 placements classified by the paragraph above each GIF),
 requests, which over-ask for "vindication" and seed under half of what ships. Each situation has a
 `freshness_target` (its share of a ~500-GIF pool, SLA-134). Entity tags come from metadata and
 visible cues, never face recognition. `prompts/gif_taxonomy.DRAFT.json` is not read by the
-pipeline yet; SLA-137 wires it into selection in UAT.
+pipeline yet; SLA-138 wires it into selection in UAT.
 
 **GIFs are tagged by looking at them (SLA-133).** `uat/gif_tagger.py` sends Claude a strip of 6
 frames spread across each GIF (the API sees only an animated GIF's FIRST frame) plus its Giphy
@@ -826,6 +827,25 @@ situation tags). Needs Giphy + Anthropic, so it runs on Abram's machine. Locked 
 - **Giphy's per-key cap stops a batch.** The first full run 429'd after ~120 Giphy calls in ~20
   minutes (~100/hour). The tagger now stops at the first Giphy 429 and prints what's left;
   wait an hour and re-run. SLA-134's sourcing will need the same bound.
+
+**The tags live in the library now (SLA-137, 2026-10-17).** `uat/apply_gif_tags.py` merged all
+175 proposals into `prompts/gif_library.DRAFT.json` through `dumps_matching_style()` (no line of
+the old file reflowed; a second run changes nothing, so re-run it after SLA-134's bulk tagging).
+Each tagged entry carries `moods`, `subcategories` (`[{id, fit}]`, the SLA-132 situations; empty
+= a mood-only GIF), `intensity`, `reaction_readiness`, `caption_text`, `what_happens`,
+`entities`, `confidence` and `tagged_by` (`{model, effort, at}`, plus `edited` once a human
+changes them in the studio). **Selection does not read them yet**; SLA-138 does that, in UAT.
+- **`rejected` is a fourth GIF status:** the 9 the tagger judged unusable, each with its
+  `reject_reason`. Never selected (every reader takes `verified` only), kept so the two possible
+  mislabels can be checked. `apply_gif_decisions.py` refuses to un-reject one, because a decisions
+  export replays every verdict that browser ever stored; un-reject in the studio.
+- **The allowed values are `_meta.tag_vocabulary`**, written from the tagger's own constants and
+  the taxonomy. The studio validates hand edits against it, and a tagged entry must carry every
+  field (SLA-138 would trip on half an entry). `uat/tests/test_gif_library_tags.py` checks the
+  vocabulary equals the tagger's, that every proposal landed exactly, and that `rejected` is never
+  picked; `test_library_studio.mjs` covers the page's checks and edit helpers.
+- `domination` is down to 3 verified GIFs and `betrayal_self_sabotage` has 3; every mood keeps at
+  least one.
 
 **A fact bundle for a new sport starts at `docs/sport_bundle_pattern.md` (SLA-118):** read it
 before opening the first ticket to give MLB, the NBA or the NHL what football has (a connected
@@ -1175,7 +1195,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (30 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (31 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -1222,6 +1242,17 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-17 — GIF tags merged into the library; the studio edits them (SLA-137, part A)**
+- `uat/apply_gif_tags.py` merged the 175 SLA-133 proposals into `gif_library.DRAFT.json` (format
+  preserved, idempotent). The 9 the tagger rejected are status `rejected` with a `reject_reason`;
+  `_meta.tag_vocabulary` holds the allowed values.
+- `library_studio.html` shows and edits every tag field (mood checkboxes, situations with fit,
+  intensity, readiness, confidence, caption, entities, reject reason) and refuses to save a
+  half-tagged or out-of-vocabulary entry. Checked in a browser against the real library.
+- `apply_gif_decisions.py` no longer un-rejects a GIF from a replayed export.
+- New `uat/tests/test_gif_library_tags.py`; `test_library_studio.mjs` gains 35 checks.
+- Selection, prompts and the before/after comparison are SLA-138.
 
 **2026-10-04 — The pattern the next sport copies (SLA-118)**
 - `docs/sport_bundle_pattern.md`: views and query lessons, the assembly-file interface, checker
