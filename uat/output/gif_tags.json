@@ -1,0 +1,5720 @@
+{
+  "_meta": {
+    "model": "claude-sonnet-5-5",
+    "effort": "medium",
+    "frames": 6,
+    "taxonomy": "gif_taxonomy.DRAFT.json",
+    "note": "Proposals only. Not read by the pipeline. Merge after review_gif_tags.py --score passes."
+  },
+  "tags": {
+    "dZQR7P1lxgi4mUmsjY": {
+      "what_happens": "A man in a blue suit holding a drink sits reclined in an office while yellow text appears: \"Boy... That Escalated Quickly. I mean that really got out of hand fast!\"",
+      "usable": true,
+      "moods": [
+        "escalation",
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "escalating_panic",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "Boy... That Escalated Quickly. I mean that really got out of hand fast!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Will Ferrell"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Will Ferrell and Anchorman (Ron Burgundy character); the caption is the famous 'that escalated quickly' line."
+      },
+      "confidence": "high",
+      "label": "Anchorman — 'that escalated quickly'",
+      "category": "escalation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:20:34Z"
+    },
+    "Ihy9GQCDUWX8fXcQ8R": {
+      "what_happens": "A man in a suit speaks at a congressional hearing table while captioned 'Things sure did escalate quickly.' with aides seated behind him.",
+      "usable": false,
+      "moods": [],
+      "reject_reason": "off_topic",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "needs_context",
+      "caption_text": "Things sure did escalate quickly.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Steve Castor"
+        ],
+        "league": "none",
+        "evidence": "Giphy slug and label name Steve Castor in the impeachment inquiry; caption on screen reads 'Things sure did escalate quickly.'"
+      },
+      "confidence": "medium",
+      "label": "Impeachment inquiry — Steve Castor",
+      "category": "escalation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:20:38Z"
+    },
+    "4FmAj1XiioCVW": {
+      "what_happens": "A man in a tan jacket at ringside, with a WWF logo in the corner, gapes in shock with his mouth open, then tilts his head back and the shot flips upside down as his reaction grows more intense, before cycling back to the wide-eyed stare.",
+      "usable": true,
+      "moods": [
+        "confusion",
+        "escalation",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "upset_shock",
+          "fit": "strong"
+        },
+        {
+          "id": "what_just_happened",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Vince McMahon"
+        ],
+        "league": "other_sport",
+        "evidence": "Giphy title and the team's own label name Vince McMahon; a WWF logo is visible in the frames."
+      },
+      "confidence": "high",
+      "label": "Vince McMahon progressive excitement (example 1)",
+      "category": "escalation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:20:42Z"
+    },
+    "7FyMQm2vBiTjG": {
+      "what_happens": "A man in a tan blazer seated ringside looks over, then his expression builds from curiosity to wide-eyed surprise to an open-mouthed, gleeful gasp, with WWF logos in the corner.",
+      "usable": true,
+      "moods": [
+        "escalation",
+        "celebratory",
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Vince McMahon"
+        ],
+        "league": "other_sport",
+        "evidence": "Giphy title and slug name Vince McMahon; WWF logos visible in the frames"
+      },
+      "confidence": "medium",
+      "label": "Vince McMahon progressive excitement (example 2)",
+      "category": "escalation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:20:46Z"
+    },
+    "1n4iuWZFnTeN6qvdpD": {
+      "what_happens": "Elmo stands with arms raised in front of roaring flames that grow larger across the frames, a chaotic meme of disaster unfolding around a figure who stays put.",
+      "usable": true,
+      "moods": [
+        "denial_copium",
+        "escalation",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "escalating_panic",
+          "fit": "partial"
+        },
+        {
+          "id": "franchise_meltdown",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Elmo"
+        ],
+        "league": "none",
+        "evidence": "Elmo character visible in frames; Giphy title 'This Is Fine On Fire'; not sports footage"
+      },
+      "confidence": "medium",
+      "label": "'This is fine' dog - room on fire",
+      "category": "escalation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:20:50Z"
+    },
+    "K9m5k3LN95osDAL8RC": {
+      "what_happens": "A man in a room decorated with horror memorabilia talks to the camera, gesturing and tilting his head, with the caption 'BUT WAIT, IT GETS WORSE' across the bottom of every frame.",
+      "usable": true,
+      "moods": [
+        "escalation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "escalating_panic",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "BUT WAIT, IT GETS WORSE",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Dead Meat James"
+        ],
+        "league": "none",
+        "evidence": "Giphy channel and title name Dead Meat James; no sports content in the frames."
+      },
+      "confidence": "medium",
+      "label": "'But wait, it gets worse' (Dead Meat James)",
+      "category": "escalation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:35:38Z"
+    },
+    "qpCYWYWC0CimN5GteN": {
+      "what_happens": "A man in a blazer gives a talking-head interview on A&E's Inmate to Roommate, with the caption 'It's just one thing after another' while he looks weary and frustrated.",
+      "usable": true,
+      "moods": [
+        "fatigue_over_it",
+        "escalation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "here_we_go_again",
+          "fit": "strong"
+        },
+        {
+          "id": "escalating_panic",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "IT'S JUST ONE THING AFTER ANOTHER",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "A&E Inmate to Roommate logo and caption; not sports footage, no identifiable sports figure."
+      },
+      "confidence": "medium",
+      "label": "'One thing after another' (A&E)",
+      "category": "escalation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:35:41Z"
+    },
+    "5kFWWtxR0UCHgLaM4O": {
+      "what_happens": "A man in a suit in an office speaks animatedly with wide eyes, raises a hand to a phone, then throws an arm up as the subtitle 'CHAOS GRENADE.' stays on screen; this is a scene from the TV show Billions.",
+      "usable": true,
+      "moods": [
+        "escalation",
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "escalating_panic",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "needs_context",
+      "caption_text": "CHAOS GRENADE.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata identifies the source as the Showtime series Billions; no sports content or identifiable sports figures."
+      },
+      "confidence": "medium",
+      "label": "'Chaos grenade' (Billions)",
+      "category": "escalation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:35:44Z"
+    },
+    "XHeLeuirRbwptHhSWd": {
+      "what_happens": "A man in a backwards leather cap laughs hard and sprays a spit-take of liquid from his mouth, then wipes his face and keeps laughing while looking down.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Not sports footage; no legible names or logos tied to a player or team. Shirt text is a Black Panther Party graphic, not an identifier."
+      },
+      "confidence": "medium",
+      "label": "Can't-stop-laughing / spit-take laugh",
+      "category": "embarrassing_awkward",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:35:47Z"
+    },
+    "LM2AKwFXf4SPHOUPCn": {
+      "what_happens": "A man in a gray hoodie sits in an empty arena and talks to camera, with subtitles reading \"It was pretty painful to watch, I had second-hand embarrassment.\"",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "needs_context",
+      "caption_text": "It was pretty painful to watch, I had second-hand embarrassment.",
+      "entities": {
+        "players": [
+          "Paul Bissonnette"
+        ],
+        "teams": [],
+        "figures": [],
+        "league": "nhl",
+        "evidence": "Giphy slug names paul-bissonnette, NHL channel, NHL.TV logo in the frames"
+      },
+      "confidence": "medium",
+      "label": "NHL - 'painful to watch' (Paul Bissonnette)",
+      "category": "embarrassing_awkward",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:35:51Z"
+    },
+    "YrBRYRDN4M5ryrNOND": {
+      "what_happens": "After a blurry whoosh of motion, a wide-eyed young man in a silver jacket freezes with a tight grimace, eyes darting sideways in an 'uh oh, my bad' yikes expression, while a blonde person sits behind him.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward",
+        "hiding_avoidance"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "caught_red_handed",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata only shows Bounce TV as the source; it is a TV show clip, not sports footage, and no one is identified."
+      },
+      "confidence": "medium",
+      "label": "'Uh oh / my bad' yikes reaction (Bounce)",
+      "category": "embarrassing_awkward",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:35:54Z"
+    },
+    "l41lJQLdSdoezQ1I4": {
+      "what_happens": "A woman in a pink top covers her face with both hands in a reality-TV confessional while the caption reads \"I can't look\".",
+      "usable": true,
+      "moods": [
+        "anticipation",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "big_game_buildup",
+          "fit": "partial"
+        },
+        {
+          "id": "escalating_panic",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "I can't look",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Heather Dubrow"
+        ],
+        "league": "none",
+        "evidence": "Giphy slug names rhoc-heather-dubrow; Real Housewives of Orange County in title"
+      },
+      "confidence": "medium",
+      "label": "'I can't look' - covering eyes (RHOC)",
+      "category": "embarrassing_awkward",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:35:57Z"
+    },
+    "5bpZkvrwx0B4PqgQFd": {
+      "what_happens": "A Warriors guard dribbles up the court at the Lakers' arena, loses his footing mid-dribble, slips and falls to the floor while the ball bounces away and players run the other way.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward",
+        "bad_dumb_move"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [
+          "Golden State Warriors",
+          "Los Angeles Lakers"
+        ],
+        "figures": [],
+        "league": "nba",
+        "evidence": "Giphy title/slug names Golden State Warriors and Bleacher Report; Warriors blue jersey and Lakers gold uniforms with purple court visible. No legible jersey number, so player not named."
+      },
+      "confidence": "high",
+      "label": "Warriors blooper (Bleacher Report)",
+      "category": "embarrassing_awkward",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:00Z"
+    },
+    "bpz6Jo3vrrsfS": {
+      "what_happens": "A mascot in a white jersey with number 00 tumbles head over heels down the arena stairs, flipping and sprawling out at the bottom among the folding chairs.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward",
+        "bad_dumb_move"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "nba",
+        "evidence": "Giphy channel is NBA and title says Basketball Fail; the figure appears to be a mascot in a jersey numbered 00, but no specific team or mascot is legible."
+      },
+      "confidence": "medium",
+      "label": "NBA dunk fail",
+      "category": "embarrassing_awkward",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:03Z"
+    },
+    "3o6Zt1TrXW8uW2lE2I": {
+      "what_happens": "A baserunner in a gray Giants uniform slides headfirst into a base, his helmet comes off, and he lies face-down on the bag while a fielder in white stands over him and the runner stays sprawled in the dirt.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward",
+        "bad_dumb_move"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "dud_performance",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [
+          "San Francisco Giants"
+        ],
+        "figures": [],
+        "league": "mlb",
+        "evidence": "Giphy title and slug reference SF Giants and MLB; MLB.com watermark in frames; gray road uniform"
+      },
+      "confidence": "medium",
+      "label": "Giants fielding fail (MLB)",
+      "category": "embarrassing_awkward",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:07Z"
+    },
+    "ji6zzUZwNIuLS": {
+      "what_happens": "A young blonde girl in a car seat gives a skeptical, distrustful side-eye with a scrunched, grimacing face across all frames, a flat 'no' look.",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "No sports context, jersey, logo or text visible; Giphy metadata only says confused little girl."
+      },
+      "confidence": "high",
+      "label": "Flat 'no' reaction",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:10Z"
+    },
+    "XsUtdIeJ0MWMo": {
+      "what_happens": "A bald man in a red Starfleet uniform sits across from another person, glances down, then buries his face in his hands in a long, weary facepalm.",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "embarrassing_awkward",
+        "fatigue_over_it"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "strong"
+        },
+        {
+          "id": "here_we_go_again",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Jean-Luc Picard"
+        ],
+        "league": "none",
+        "evidence": "Giphy slug 'captain-facepalm-picard' and the label 'Picard facepalm (Star Trek)'; Starfleet uniform visible in the frames."
+      },
+      "confidence": "high",
+      "label": "Picard facepalm (Star Trek)",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:13Z"
+    },
+    "xT9DPJVjlYHwWsZRxm": {
+      "what_happens": "A chef in a white jacket covers his face with one hand and shakes his head, laughing or groaning in disbelief in front of a red tile wall.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward",
+        "bad_dumb_move"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Gordon Ramsay"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Gordon Ramsay and Hell's Kitchen; channel is hells-kitchen"
+      },
+      "confidence": "medium",
+      "label": "Gordon Ramsay - head shake / disbelief",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:16Z"
+    },
+    "c2PEJz1ZRoO9UlSz0A": {
+      "what_happens": "A man in a suit on a BBC game show set points a finger and scolds someone, with subtitles reading \"You had one job to do.\"",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "You had one job to do.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Jimmy Carr"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Jimmy Carr; BBC logo visible in frames"
+      },
+      "confidence": "medium",
+      "label": "Jimmy Carr 'oops' - you had one job (BBC)",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:19Z"
+    },
+    "pajLsGB0Hub0naPw0p": {
+      "what_happens": "A man in a white baseball jersey sitting in a dugout shakes his head in disbelief with a pained, disappointed grimace and then looks down, clearly dismayed by something he just saw.",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "sadness_resignation",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        },
+        {
+          "id": "here_we_go_again",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "#Laff",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Bernie Mac"
+        ],
+        "league": "mlb",
+        "evidence": "Giphy label and slug name Bernie Mac in Mr. 3000 (a movie scene); the dugout setting and baseball uniforms suggest MLB-style baseball, though it is a film, not real footage."
+      },
+      "confidence": "medium",
+      "label": "Bernie Mac smh (Mr. 3000)",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:22Z"
+    },
+    "26CaLpDvg2oDf9rAk": {
+      "what_happens": "A woman with wavy hair and glasses on a Dragons' Den set rubs her forehead with her hand, then rests her fingers against her temple and shakes her head in disapproval.",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "fatigue_over_it",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata names Dragons' Den and CBC; the person is not identified."
+      },
+      "confidence": "medium",
+      "label": "Dragons' Den - 'no' / smh (CBC)",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:25Z"
+    },
+    "3o7WINl7VzLJOAJFVS": {
+      "what_happens": "A man in headphones with arms crossed in a radio studio asks via captions \"What were you thinking?\" then winces with a hand at his mouth and says \"Ooooh you weren't.\"",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "mocking_sarcastic_praise",
+        "financial_pain"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "buyers_remorse",
+          "fit": "partial"
+        },
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "What were you thinking? Ooooooooh you weren't.",
+      "entities": {
+        "players": [],
+        "teams": [
+          "Tennessee Volunteers"
+        ],
+        "figures": [
+          "Dave Ramsey"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and channel name Dave Ramsey / Ramsey Solutions; Tennessee helmet visible on shelf (background only)"
+      },
+      "confidence": "medium",
+      "label": "Dave Ramsey - 'why would you do that' no",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:30Z"
+    },
+    "Y2tdaxOkw9QgQKUm8F": {
+      "what_happens": "Three people stand together in a kitchen while a man in a brown shirt reacts with disbelief, asking 'Why? Why would you do that?' as the woman beside him holds her hand to her chest.",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "confusion",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "WHY? WHY WOULD YOU DO THAT?",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata identifies the show Friends season 5; no sports content, and no named individuals are identified from faces."
+      },
+      "confidence": "high",
+      "label": "Friends - 'why would you do that' (S5)",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:33Z"
+    },
+    "FZMkgYmrPYVHnjEzhE": {
+      "what_happens": "A boxer in a green-brimmed WBC cap talks in a post-fight interview while the caption 'ROOKIE MISTAKE' sits over the bottom of every frame, and he gives a small, measured shrug-like expression.",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "smug_indifference",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "ROOKIE MISTAKE",
+      "entities": {
+        "players": [
+          "Errol Spence Jr"
+        ],
+        "teams": [],
+        "figures": [],
+        "league": "boxing",
+        "evidence": "Giphy title and label name Errol Spence Jr; WBC logo on cap and PBC Live bug visible in frames"
+      },
+      "confidence": "medium",
+      "label": "Errol Spence Jr reaction (Showtime Sports)",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:36Z"
+    },
+    "jITjaQ9OWbASi8qiwH": {
+      "what_happens": "A shirtless wrestler in a black open jacket is being interviewed backstage by a woman with a microphone, and he shouts \"I AM NOT A ROOKIE!\" in an agitated, defensive rant, with the caption burned across every frame.",
+      "usable": true,
+      "moods": [
+        "anger_outrage",
+        "denial_copium"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "I AM NOT A ROOKIE!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "other_sport",
+        "evidence": "Giphy channel is WWE and the title and slug reference WWE; no legible name or jersey identifies the wrestler, so no one is named."
+      },
+      "confidence": "medium",
+      "label": "'You live, you learn' (WWE)",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:39Z"
+    },
+    "STXfoyQhOKTRmdmZQR": {
+      "what_happens": "A woman in a purple floral dress and flower headpiece at a wedding-style gathering winces and puts her hand to her forehead, ending in a full facepalm while guests smile behind her.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward",
+        "bad_dumb_move"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "KUNG FU",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Not sports footage; Giphy metadata and on-screen logos indicate the CW show Kung Fu."
+      },
+      "confidence": "high",
+      "label": "Facepalm (CW Kung Fu)",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:42Z"
+    },
+    "1r94hfYcoLFCdsRyhY": {
+      "what_happens": "A bald man in a black shirt at ringside laughs, then points and shouts angrily at someone off-screen, with the caption \"That's on you!\" while fans look on.",
+      "usable": true,
+      "moods": [
+        "anger_outrage",
+        "betrayal_self_sabotage",
+        "debate_takes"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "That's on you!",
+      "entities": {
+        "players": [
+          "Baron Corbin"
+        ],
+        "teams": [],
+        "figures": [],
+        "league": "other_sport",
+        "evidence": "Giphy slug names Baron Corbin and WWE channel; caption 'That's on you!' visible"
+      },
+      "confidence": "medium",
+      "label": "WWE Raw - blaming / bad call",
+      "category": "bad_dumb_move",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:46Z"
+    },
+    "g01ZnwAUvutuK8GIQn": {
+      "what_happens": "A man in a dark suit holding a coat looks around an apartment room, turning and gesturing with an open hand as if lost and searching for someone or something.",
+      "usable": true,
+      "moods": [
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Film clip with no legible text or sports context; no identification made from appearance."
+      },
+      "confidence": "high",
+      "label": "Confused reaction",
+      "category": "confusion",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:50Z"
+    },
+    "1wnZt7VY9yPDZRZ9M6": {
+      "what_happens": "A woman with a puzzled squint looks off to the side while geometry and algebra equations float around her head, the classic confused-math-lady meme.",
+      "usable": true,
+      "moods": [
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Meme footage with no sports identifiers; equations on screen are overlays, not captions."
+      },
+      "confidence": "high",
+      "label": "Confused math lady (floating equations)",
+      "category": "confusion",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:54Z"
+    },
+    "kWcAYqxFQi6e6NGb9d": {
+      "what_happens": "A man in a tie-dye shirt sits talking in a video chat, then it cuts to the well-known confused-face meme: a smiling man in a white shirt with question marks floating around his head.",
+      "usable": true,
+      "moods": [
+        "confusion",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "???",
+      "entities": {
+        "players": [
+          "Nick Young"
+        ],
+        "teams": [],
+        "figures": [],
+        "league": "nba",
+        "evidence": "Giphy title, slug and label name Nick Young (BuzzFeed NBA); the confused-face meme is tied to him in the metadata."
+      },
+      "confidence": "high",
+      "label": "Confused Nick Young ('?' overlay)",
+      "category": "confusion",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:57Z"
+    },
+    "3rlkIb3L5zPTsQEn81": {
+      "what_happens": "A close-up of a man's face as he stares off to the side, then slowly blinks with a stunned, disbelieving look in a loop; it is the well-known blinking meme.",
+      "usable": true,
+      "moods": [
+        "confusion",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "strong"
+        },
+        {
+          "id": "upset_shock",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Drew Scanlon"
+        ],
+        "league": "none",
+        "evidence": "The label provided identifies the meme as the blinking white guy (Drew Scanlon). Nothing in the frames confirms this, and I am not identifying anyone from their face."
+      },
+      "confidence": "high",
+      "label": "Blinking white guy (Drew Scanlon)",
+      "category": "confusion",
+      "frames_used": 3,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:36:59Z"
+    },
+    "FcuiZUneg1YRAu1lH2": {
+      "what_happens": "A man at an outdoor table presses his fingers to his temples with eyes closed, then opens them and rolls his eyes around as if struggling to process something baffling.",
+      "usable": true,
+      "moods": [
+        "confusion",
+        "fatigue_over_it"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata names It's Always Sunny in Philadelphia; FX on Hulu logo visible in frames. Non-sports TV footage, no sports entity."
+      },
+      "confidence": "medium",
+      "label": "It's Always Sunny - confused",
+      "category": "confusion",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:02Z"
+    },
+    "bm02BE6DQ4Oag8GXep": {
+      "what_happens": "A man in a black leather jacket sits in front of a no-smoking sign, looks off to the side, then says \"I'm sorry, what?\" with a puzzled, incredulous expression.",
+      "usable": true,
+      "moods": [
+        "confusion",
+        "debate_takes"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "I'M SORRY, WHAT?",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata names The Office (TV show); no sports content, and no one identified from their face."
+      },
+      "confidence": "medium",
+      "label": "The Office - 'what?' (S5)",
+      "category": "confusion",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:05Z"
+    },
+    "400IbOQGqOWQgTLCvx": {
+      "what_happens": "A man in a red cap and patterned jacket on a talk show set smirks, then cups his hand to his ear as if saying 'what?' or 'I can't hear you', with a mocking, expectant look.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "confusion",
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "taunting_the_rival",
+          "fit": "partial"
+        },
+        {
+          "id": "vindication_doubters_silenced",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "The Kid Mero",
+          "Desus & Mero"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and channel name The Kid Mero / Desus & Mero; Desus & Mero Showtime logo in frames"
+      },
+      "confidence": "medium",
+      "label": "The Kid Mero - 'what' (Desus & Mero)",
+      "category": "confusion",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:08Z"
+    },
+    "3iwRj8JrhaBfvQMSx9": {
+      "what_happens": "A woman in blue scrubs gestures with her hands, then freezes with a puzzled, deadpan look and glances sideways, in a Schitt's Creek scene.",
+      "usable": true,
+      "moods": [
+        "confusion",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Schitt's Creek watermark and Giphy metadata; not sports footage, no identifiable sports entities."
+      },
+      "confidence": "medium",
+      "label": "Schitt's Creek - 'what' (CBC)",
+      "category": "confusion",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:12Z"
+    },
+    "N86lbPjFROJIQUzqOq": {
+      "what_happens": "A man in dark clothing holds a phone to his ear with a shocked, bewildered expression while the caption 'WHAT?' stays on screen across all frames.",
+      "usable": true,
+      "moods": [
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "strong"
+        },
+        {
+          "id": "upset_shock",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "WHAT?",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata indicates Netflix Squid Game season 3; no sports content or identifiable sports figures."
+      },
+      "confidence": "high",
+      "label": "Record scratch 'what' (Netflix/Squid Game)",
+      "category": "confusion",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:15Z"
+    },
+    "KD2gfeYLy6T5V7eMzp": {
+      "what_happens": "A player in a yellow Lakers jersey grimaces and winces with a disbelieving, pained expression, shaking his head and turning away before grimacing again, as people stand behind him on the sideline.",
+      "usable": true,
+      "moods": [
+        "confusion",
+        "bad_dumb_move",
+        "anger_outrage"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "partial"
+        },
+        {
+          "id": "controversial_call",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [
+          "Los Angeles Lakers"
+        ],
+        "figures": [],
+        "league": "nba",
+        "evidence": "Yellow Lakers jersey visible in frames; Giphy channel NBA. No player named in metadata, so no player identified."
+      },
+      "confidence": "medium",
+      "label": "'No way' (NBA)",
+      "category": "confusion",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:19Z"
+    },
+    "zBBPQUhyV6qWjOVbKn": {
+      "what_happens": "A Phillies player in a number 12 jersey raises his arms and bows deeply toward Albert Pujols, who walks toward him on the field at a ballpark event, with cameramen around them.",
+      "usable": true,
+      "moods": [
+        "respect_awe"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "historic_company",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [
+          "Kyle Schwarber",
+          "Albert Pujols"
+        ],
+        "teams": [
+          "Philadelphia Phillies"
+        ],
+        "figures": [],
+        "league": "mlb",
+        "evidence": "Giphy slug names Albert Pujols and Kyle Schwarber; jersey reads SCHWARBER 12 in Phillies pinstripes; MLB title and logo."
+      },
+      "confidence": "high",
+      "label": "MLB - bowing down to Albert Pujols",
+      "category": "respect_awe",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:22Z"
+    },
+    "A28CxD7W6d4B2": {
+      "what_happens": "A Kansas City Royals player in a light blue jersey, number 31, tips his cap and then raises it high in the air, acknowledging the crowd from the field.",
+      "usable": true,
+      "moods": [
+        "respect_awe",
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "farewell_to_a_legend",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "MLB.com",
+      "entities": {
+        "players": [],
+        "teams": [
+          "Kansas City Royals"
+        ],
+        "figures": [],
+        "league": "mlb",
+        "evidence": "KC logo on cap and jersey, Royals script, and Giphy title/slug naming Kansas City Royals; the slug hints at 'ian' but no full player name is legible, so no player is named."
+      },
+      "confidence": "medium",
+      "label": "MLB - tip of the cap (Royals)",
+      "category": "respect_awe",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:26Z"
+    },
+    "xUOrwq55SJxeiUBsPu": {
+      "what_happens": "A late-night host at his desk mimes tipping a hat by touching his forehead and flicking his hand outward, then points toward the camera with a smile.",
+      "usable": true,
+      "moods": [
+        "respect_awe",
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Seth Meyers"
+        ],
+        "league": "none",
+        "evidence": "Giphy title, slug and channel (Late Night with Seth Meyers) name Seth Meyers; the frames also show a watermark for the show's account."
+      },
+      "confidence": "medium",
+      "label": "Seth Meyers - tip of the hat",
+      "category": "respect_awe",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:28Z"
+    },
+    "nWWGEOdq8394Qs4qUw": {
+      "what_happens": "Audience members in formal wear at the Oscars cheer and clap enthusiastically, with a man cupping his hands around his mouth to shout while a smiling woman beside him applauds.",
+      "usable": true,
+      "moods": [
+        "celebratory",
+        "respect_awe"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy title/channel indicate The Academy Awards (Oscars 2024); no one is identified by face and no legible names in frames."
+      },
+      "confidence": "medium",
+      "label": "Oscars - standing ovation",
+      "category": "respect_awe",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:31Z"
+    },
+    "MUeQeEQaDCjE4": {
+      "what_happens": "Two long-haired men in a movie scene bow down repeatedly, raising their hands and then bowing to the floor in the 'we're not worthy' gesture.",
+      "usable": true,
+      "moods": [
+        "respect_awe",
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "superhuman_play",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Wayne Campbell",
+          "Garth Algar"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug reference Wayne's World and Wayne Campbell; a cap reads 'Wayne's World'."
+      },
+      "confidence": "medium",
+      "label": "Wayne's World - 'we're not worthy'",
+      "category": "respect_awe",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:34Z"
+    },
+    "iP3GyAWP9NrlpI0Ilt": {
+      "what_happens": "A man in a suit and glasses slowly claps with a smug, pursed-lip expression while another man sits in the background of an office, in a clip from The Office.",
+      "usable": true,
+      "moods": [
+        "mocking_sarcastic_praise",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Dwight Schrute"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and channel identify The Office, Season 6 slow clap; the character is Dwight per the show context, not identified from the face alone. Peacock logo visible in the frames."
+      },
+      "confidence": "high",
+      "label": "The Office - slow clap",
+      "category": "respect_awe",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:38Z"
+    },
+    "x0qyzmrDa7LpAEDftB": {
+      "what_happens": "A man in a white shirt and black vest at a microphone on the Olivier Awards stage tips his cowboy hat off in a respectful gesture, then stands looking out with a composed, impressed expression.",
+      "usable": true,
+      "moods": [
+        "respect_awe"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Olivier Awards logo visible in frames; Giphy channel londontheatre. Not sports footage; person not identified."
+      },
+      "confidence": "medium",
+      "label": "'Take your hat off' - impressed (Olivier Awards)",
+      "category": "respect_awe",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:42Z"
+    },
+    "fCUTTqU2u2SjwM401F": {
+      "what_happens": "A woman in a bright pink top on a TV talent show panel laughs heartily and waves her hand animatedly, apparently reacting with amusement or applause, with a #DRAMEBAAZ watermark.",
+      "usable": false,
+      "moods": [],
+      "reject_reason": "off_topic",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "not_a_reaction",
+      "caption_text": "#DRAMEBAAZ",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Hashtag #DRAMEBAAZ and Giphy channel ZEE TV indicate a TV show; no sports content and no one is named by legible evidence."
+      },
+      "confidence": "high",
+      "label": "Standing ovation (Zee TV)",
+      "category": "respect_awe",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:45Z"
+    },
+    "yidUzHnBk32Um9aMMw": {
+      "what_happens": "A bearded, long-haired man in a light robe against a golden glowing background stares wide-eyed with his mouth open in awe or amazement, barely changing across the frames.",
+      "usable": true,
+      "moods": [
+        "respect_awe",
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "partial"
+        },
+        {
+          "id": "upset_shock",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Hugh Jackman"
+        ],
+        "league": "none",
+        "evidence": "Giphy slug and title name Hugh Jackman; no on-frame text or sports context."
+      },
+      "confidence": "medium",
+      "label": "Hugh Jackman - amazed / in awe",
+      "category": "respect_awe",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:48Z"
+    },
+    "9x53b0DRuorXEGOaTh": {
+      "what_happens": "A woman in a sparkly sequined top gasps, rubs her arms and looks down at them as if checking for goosebumps, then looks up with a wide-eyed impressed expression.",
+      "usable": true,
+      "moods": [
+        "respect_awe"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "superhuman_play",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Drew Barrymore"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Drew Barrymore on the CBS channel"
+      },
+      "confidence": "medium",
+      "label": "Goosebumps / chills (CBS)",
+      "category": "respect_awe",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:51Z"
+    },
+    "Aas1NtStlvy7EYcDBY": {
+      "what_happens": "A man in a beanie and baseball tee, labeled Uriah Hall 'Prime Time', talks to the camera with a subtitle reading 'Nah player, I'm a different breed,' then settles into a confident, knowing smirk.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "respect_awe"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "bold_move_swagger",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "Nah player, I'm a different breed.",
+      "entities": {
+        "players": [
+          "Uriah Hall"
+        ],
+        "teams": [],
+        "figures": [],
+        "league": "ufc",
+        "evidence": "On-screen 'Uriah Hall Prime Time' logo, Giphy title 'Uriah Hall Sport GIF by UFC', and UFC channel."
+      },
+      "confidence": "medium",
+      "label": "UFC - operating on another level",
+      "category": "respect_awe",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:55Z"
+    },
+    "rvxMJNyHAgwlW4YWpJ": {
+      "what_happens": "A man in a suit in front of a WWE-style logo closes his eyes, lowers his head and looks down in a somber, emotional pose, then the shot pushes in closer as he stays downcast.",
+      "usable": true,
+      "moods": [
+        "sadness_resignation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "bad_news_accepted",
+          "fit": "partial"
+        },
+        {
+          "id": "season_over",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Vince McMahon"
+        ],
+        "league": "other_sport",
+        "evidence": "Giphy title and slug name Sad Vince McMahon; WWE-style logo visible in background"
+      },
+      "confidence": "medium",
+      "label": "Sad Vince McMahon — sadness / happy tears",
+      "category": "sadness_resignation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:37:58Z"
+    },
+    "26FPImXfDlv4AFbBC": {
+      "what_happens": "A man with a crying face (the 'Crying Jordan' meme edit) sobs, collapses to the floor, then sits and weeps with his eyes shut and tears streaming down his face.",
+      "usable": true,
+      "moods": [
+        "sadness_resignation",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "season_over",
+          "fit": "strong"
+        },
+        {
+          "id": "shell_shocked_loser",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [
+          "Michael Jordan"
+        ],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy title and label name Michael Jordan crying; this is the well-known meme, and the slug supports it. The frames show only a face edit, not sports footage, and the identification comes from metadata only."
+      },
+      "confidence": "medium",
+      "label": "Crying Michael Jordan",
+      "category": "sadness_resignation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:01Z"
+    },
+    "5O0E0jOnTDVfjtXz0k": {
+      "what_happens": "A close-up of a Tampa Bay Rays player in a World Series cap looking up, then closing his eyes and lowering his head in dejection, as if absorbing a crushing loss.",
+      "usable": true,
+      "moods": [
+        "sadness_resignation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "season_over",
+          "fit": "partial"
+        },
+        {
+          "id": "cruel_twist",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [
+          "Blake Snell"
+        ],
+        "teams": [
+          "Tampa Bay Rays"
+        ],
+        "figures": [],
+        "league": "mlb",
+        "evidence": "Giphy slug names Blake Snell; TB logo and World Series patch on the cap; MLB logo watermark."
+      },
+      "confidence": "medium",
+      "label": "MLB - postseason gut punch (Blake Snell)",
+      "category": "sadness_resignation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:05Z"
+    },
+    "QAJ1uCAQDQiBg0mEzN": {
+      "what_happens": "A Mets infielder crouched in his ready fielding stance lowers his head and hangs it, then stays hunched with his hands on his knees.",
+      "usable": true,
+      "moods": [
+        "sadness_resignation",
+        "fatigue_over_it"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "season_slipping_away",
+          "fit": "partial"
+        },
+        {
+          "id": "here_we_go_again",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [
+          "JD Davis"
+        ],
+        "teams": [
+          "New York Mets"
+        ],
+        "figures": [],
+        "league": "mlb",
+        "evidence": "Giphy slug and label name JD Davis; the Mets channel upload and the Mets uniform support the team."
+      },
+      "confidence": "medium",
+      "label": "Mets - head hung (JD Davis)",
+      "category": "sadness_resignation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:08Z"
+    },
+    "3d2kMNpdOWQan2sQrG": {
+      "what_happens": "England staff on the bench at the Rugby World Cup 2015 slump in despair: one tilts his head back, another drops his head, and the man in the foreground puts his hand over his face in dismay.",
+      "usable": true,
+      "moods": [
+        "sadness_resignation",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "season_over",
+          "fit": "strong"
+        },
+        {
+          "id": "season_slipping_away",
+          "fit": "partial"
+        },
+        {
+          "id": "shell_shocked_loser",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [
+          "England"
+        ],
+        "figures": [],
+        "league": "other_sport",
+        "evidence": "Legible RWC2015 / England 2015 Rugby World Cup boards, England-crest jackets, World Rugby channel; individuals not identified"
+      },
+      "confidence": "high",
+      "label": "World Rugby - gutted",
+      "category": "sadness_resignation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:13Z"
+    },
+    "fJXFGEicIov9QGjCkj": {
+      "what_happens": "A man in a blue cap and white polo, apparently a coach watching from the box, grimaces at a point, then drops his head down in defeat as the serve speed display changes from 204 to 193 km/h.",
+      "usable": true,
+      "moods": [
+        "sadness_resignation",
+        "fatigue_over_it"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "season_slipping_away",
+          "fit": "partial"
+        },
+        {
+          "id": "here_we_go_again",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "tennis",
+        "evidence": "Tennis TV logo and km/h serve speed display in frames; Giphy channel tennistv. No individual identified."
+      },
+      "confidence": "medium",
+      "label": "Tennis TV - defeated sigh",
+      "category": "sadness_resignation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:17Z"
+    },
+    "I9OPK7PtlsALTepOq2": {
+      "what_happens": "A bearded man in a jersey and jeans sits alone on a park bench, looking down and slumped in quiet dejection, with a small sandwich and a cup nearby.",
+      "usable": true,
+      "moods": [
+        "sadness_resignation",
+        "fatigue_over_it"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "season_over",
+          "fit": "strong"
+        },
+        {
+          "id": "here_we_go_again",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Keanu Reeves"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Keanu Reeves (the well-known 'Sad Keanu' meme); not identified from face. No sports teams or players legible."
+      },
+      "confidence": "high",
+      "label": "Sad Keanu on a bench",
+      "category": "sadness_resignation",
+      "frames_used": 1,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:19Z"
+    },
+    "9S5j6xr0sCuouLklM2": {
+      "what_happens": "A race driver in a red Formula E suit closes his eyes, then repeatedly rubs his face and head with his hand in dismay, clearly upset after something went wrong.",
+      "usable": true,
+      "moods": [
+        "sadness_resignation",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "cruel_twist",
+          "fit": "partial"
+        },
+        {
+          "id": "season_slipping_away",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "other_sport",
+        "evidence": "Giphy channel fiaformulae (ABB Formula E) and title indicate Formula E; driver not identified."
+      },
+      "confidence": "medium",
+      "label": "Formula E - facepalm sad (ABB FIA)",
+      "category": "sadness_resignation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:22Z"
+    },
+    "YlMJ1e00nwoZdVTIDQ": {
+      "what_happens": "A man in a navy suit and orange tie holds a martini glass and walks across a talk-show set with his head down, wincing and grimacing in a dejected walk of shame.",
+      "usable": true,
+      "moods": [
+        "sadness_resignation",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "bad_news_accepted",
+          "fit": "partial"
+        },
+        {
+          "id": "season_over",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "John Cena"
+        ],
+        "league": "none",
+        "evidence": "Giphy title, slug and label name John Cena on The Late Late Show with James Corden; no on-screen text in frames."
+      },
+      "confidence": "medium",
+      "label": "John Cena - defeated (Late Late Show)",
+      "category": "sadness_resignation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:26Z"
+    },
+    "l4LfagGUuIOouvWijX": {
+      "what_happens": "A woman in a pink jacket stands by a glass wall in an airport-like space and buries her face in her scarf, crying or hiding, while the camera moves closer; a TLC logo sits in the corner.",
+      "usable": true,
+      "moods": [
+        "sadness_resignation",
+        "embarrassing_awkward",
+        "hiding_avoidance"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "bad_news_accepted",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "TLC logo in the frames and Giphy channel TLC Europe; no sports content or identifiable people."
+      },
+      "confidence": "medium",
+      "label": "Walk of shame - sad (TLC Europe)",
+      "category": "sadness_resignation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:29Z"
+    },
+    "bHUajSIMIRcDY73Pti": {
+      "what_happens": "A man in a green Squid Game uniform shouts at the camera with captions 'That's it! It's over! You're dead!' while his anger builds across the frames.",
+      "usable": true,
+      "moods": [
+        "anger_outrage",
+        "escalation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "THAT'S IT! IT'S OVER! YOU'RE DEAD!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Lee Byung-Hun"
+        ],
+        "league": "none",
+        "evidence": "Giphy title names Lee Byung-Hun; Netflix watermark and slug reference Squid Game Front Man"
+      },
+      "confidence": "medium",
+      "label": "'It's over' (Netflix/Squid Game)",
+      "category": "sadness_resignation",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:32Z"
+    },
+    "qOnWoPxXnm0Vi": {
+      "what_happens": "A man in a gray suit with a WWE logo behind him struts toward the camera with exaggerated swinging arms and a cocky swagger.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "bold_move_swagger",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Vince McMahon"
+        ],
+        "league": "other_sport",
+        "evidence": "Giphy title says 'vince mcmahon'; WWE logo visible in the background."
+      },
+      "confidence": "medium",
+      "label": "Cocky strut / smug reaction",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:35Z"
+    },
+    "xUA7beT9PDJoDNAmgU": {
+      "what_happens": "A grinning, talkative man at a boxing face-off leans in and speaks right up close to a red-haired opponent whose ear and neck fill the right side of the frame, smirking throughout.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "domination"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "taunting_the_rival",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [
+          "Floyd Mayweather"
+        ],
+        "teams": [],
+        "figures": [],
+        "league": "boxing",
+        "evidence": "Giphy title and the provided label name Floyd Mayweather; the setting looks like a boxing face-off."
+      },
+      "confidence": "medium",
+      "label": "Floyd Mayweather stare-down",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:38Z"
+    },
+    "DT3gYifPXBt5voafS1": {
+      "what_happens": "A man in a dark suit and red tie stands in front of a blue curtain, leaning and tilting his head smugly while the caption 'TOLD YA!' stays on screen.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "vindication_doubters_silenced",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "TOLD YA!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Jimmy Fallon"
+        ],
+        "league": "none",
+        "evidence": "Giphy title, slug and channel (fallontonight, The Tonight Show Starring Jimmy Fallon) name Jimmy Fallon"
+      },
+      "confidence": "high",
+      "label": "Jimmy Fallon - 'told you so / admit it'",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:42Z"
+    },
+    "25OBBnY9j1uiVDV4lJ": {
+      "what_happens": "A man in a red cardigan seated at a table gestures with open palms and a tilted head, making his point with a smug 'see what I mean?' look while others sit nearby.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "debate_takes"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "vindication_doubters_silenced",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "#LastCall",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy channel Bounce TV; not sports footage, hashtag #LastCall on screen; no identifiable sports figure."
+      },
+      "confidence": "medium",
+      "label": "'Told you so' point-made (Bounce)",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:45Z"
+    },
+    "3o72F0Bvsi8CLuY5KE": {
+      "what_happens": "A man in a floral sweater squints and grimaces, says \"I knew it\" in on-screen text, then turns and storms off to the side against a backdrop of string lights.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "anger_outrage"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "I KNEW IT",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "David Rose",
+          "Dan Levy"
+        ],
+        "league": "none",
+        "evidence": "Giphy title/slug and label name Schitt's Creek, David Rose, Dan Levy; not sports footage"
+      },
+      "confidence": "medium",
+      "label": "Schitt's Creek - 'I knew it' (David Rose)",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:48Z"
+    },
+    "Nx2Lx1RmLadtC": {
+      "what_happens": "A man in a red shirt with sunglasses perched on his head slowly lowers them onto his face and turns his head, with the caption 'DEAL WITH IT' appearing in the final frames.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "domination"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "smug_indifference",
+          "fit": "strong"
+        },
+        {
+          "id": "bold_move_swagger",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "DEAL WITH IT",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Jack Nicholson"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Jack Nicholson"
+      },
+      "confidence": "high",
+      "label": "Jack Nicholson - 'deal with it' sunglasses",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:50Z"
+    },
+    "tFdqLBcwrh3AdgzYgT": {
+      "what_happens": "A blond man in a black leather vest stands at ringside, talks to someone off-screen, then breaks into a knowing smirk and laughs with his head tilted back.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "smug_indifference",
+          "fit": "partial"
+        },
+        {
+          "id": "bold_move_swagger",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "other_sport",
+        "evidence": "WWE logo visible in the frames and Giphy channel is WWE; no name is given in the metadata, so no individual is identified."
+      },
+      "confidence": "medium",
+      "label": "'You know' smirk (WWE)",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:54Z"
+    },
+    "STYcRDzNO6AYNmMgvA": {
+      "what_happens": "Animated Morty from Rick and Morty swaggers down a school hallway with a smug half-lidded look, hand swinging at his side, past lockers.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "bold_move_swagger",
+          "fit": "strong"
+        },
+        {
+          "id": "smug_indifference",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "[adult swim]",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy title and channel identify Rick and Morty; the [adult swim] watermark is legible in the frames. Not sports footage."
+      },
+      "confidence": "high",
+      "label": "Rick and Morty - swag (S4)",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:38:57Z"
+    },
+    "34qsir9hxG8sloNtXQ": {
+      "what_happens": "A digitally distorted caricature of a blond long-haired player in a dark Manchester City-style kit smirks and raises one eyebrow in a smug 'sigma' look, nearly unchanged across all frames.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "smug_indifference",
+          "fit": "partial"
+        },
+        {
+          "id": "bold_move_swagger",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [
+          "Erling Haaland"
+        ],
+        "teams": [
+          "Manchester City"
+        ],
+        "figures": [],
+        "league": "soccer",
+        "evidence": "Giphy title and label name Erling Haaland; the badge on the kit resembles the Manchester City crest."
+      },
+      "confidence": "medium",
+      "label": "'Sigma' Erling Haaland",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:01Z"
+    },
+    "U8TJaBmNwVY5Ie2crg": {
+      "what_happens": "An OKC player in orange drives and handles the ball near the basket, then a Clippers player wearing #5 (jersey reads 'Harrell') jogs back up the court past the camera while play continues.",
+      "usable": false,
+      "moods": [],
+      "reject_reason": "not_reaction_usable",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "not_a_reaction",
+      "caption_text": "",
+      "entities": {
+        "players": [
+          "Montrezl Harrell"
+        ],
+        "teams": [
+          "Los Angeles Clippers",
+          "Oklahoma City Thunder"
+        ],
+        "figures": [],
+        "league": "nba",
+        "evidence": "Jersey reads 'Harrell' with number 5 on a Clippers uniform; Clippers wordmark and OKC orange uniforms visible; channel is NBA."
+      },
+      "confidence": "medium",
+      "label": "NBA reaction",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:04Z"
+    },
+    "s1iCWGBXye6FOM6rSo": {
+      "what_happens": "A cartoon blue cat in sunglasses reflecting flames leans back with hands behind its head, a bucket of popcorn on its lap, watching a screen under the caption 'I Told You So'.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "denial_copium"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "vindication_doubters_silenced",
+          "fit": "strong"
+        },
+        {
+          "id": "schadenfreude",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "I Told You So",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Cartoon cat from Giphy channel Nope Cat; no sports entities shown."
+      },
+      "confidence": "high",
+      "label": "'Told you so' - Blue Cat",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:07Z"
+    },
+    "eKDrGTXLrLqqJMA7NC": {
+      "what_happens": "A wrestler in pink gear stands on ring steps flexing and posing with arms raised while an opponent lies motionless on the floor below her, with a crowd behind.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "domination"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "blowout_statement",
+          "fit": "strong"
+        },
+        {
+          "id": "taunting_the_rival",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "other_sport",
+        "evidence": "Giphy title and slug reference WWE flex; no name or jersey legible, so no individual identified."
+      },
+      "confidence": "medium",
+      "label": "WWE flex",
+      "category": "cockiness_smugness",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:10Z"
+    },
+    "D7T5m0AFV8Yg0": {
+      "what_happens": "A man in a dark blazer seated at a TV talent show judges' desk raises both hands and points upward, tilting his head back in delighted, animated appreciation before settling back.",
+      "usable": true,
+      "moods": [
+        "celebratory",
+        "respect_awe"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Sony TV logo visible in frames; no legible name identifying the person. Giphy slug mentions 'mick-jenkins' but that is not reliable for identifying him."
+      },
+      "confidence": "medium",
+      "label": "Celebratory reaction",
+      "category": "celebratory",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:13Z"
+    },
+    "t3sZxY5zS5B0z5zMIz": {
+      "what_happens": "A young kid in glasses and an Oilers #29 jersey, held by a laughing adult, screams and pumps his fists in pure excitement as the crowd around him cheers.",
+      "usable": true,
+      "moods": [
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "pure_joy_breakthrough",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [
+          "Edmonton Oilers"
+        ],
+        "figures": [],
+        "league": "nhl",
+        "evidence": "Oilers logo and #29 jersey visible on the kid's sweater, orange and blue Oilers fan gear in the crowd, @NHLGIFs watermark, NHL channel on Giphy"
+      },
+      "confidence": "high",
+      "label": "NHL - 'let's go' fan celebration",
+      "category": "celebratory",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:17Z"
+    },
+    "zdjQpEtni7XIX4ncNg": {
+      "what_happens": "A packed stadium crowd of fans roars, jumps and throws their fists and arms up in celebration, with the 'Welcome to Wrexham' watermark in the corner.",
+      "usable": true,
+      "moods": [
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "comeback_euphoria",
+          "fit": "partial"
+        },
+        {
+          "id": "pure_joy_breakthrough",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "WREXHAM",
+      "entities": {
+        "players": [],
+        "teams": [
+          "Wrexham"
+        ],
+        "figures": [],
+        "league": "soccer",
+        "evidence": "Giphy channel/title (Welcome to Wrexham) and the Wrexham watermark in the frames"
+      },
+      "confidence": "medium",
+      "label": "Welcome to Wrexham - crowd goes wild",
+      "category": "celebratory",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:20Z"
+    },
+    "FX6SNOWqjUmzJlor4J": {
+      "what_happens": "A Bucks fan in a crowd rips off his black Bucks shirt, pulling it up over his chest, and screams in celebration with his shirt bunched around his shoulders while fans cheer around him.",
+      "usable": true,
+      "moods": [
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "clinch_or_title_party",
+          "fit": "strong"
+        },
+        {
+          "id": "pure_joy_breakthrough",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [
+          "Milwaukee Bucks"
+        ],
+        "figures": [],
+        "league": "nba",
+        "evidence": "Giphy channel bucks (Milwaukee Bucks), title mentions NBA Finals, Bucks logo visible on the shirt"
+      },
+      "confidence": "high",
+      "label": "Bucks - NBA Finals celebration",
+      "category": "celebratory",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:23Z"
+    },
+    "iOMSfTen1pZUPTx2QF": {
+      "what_happens": "A man in sunglasses and a black sweater shouts and hypes up against a red background while the words 'OK!!' pop up in big stylized text, throwing his head back as he yells.",
+      "usable": true,
+      "moods": [
+        "celebratory",
+        "anticipation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "OK!!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Lil Jon"
+        ],
+        "league": "none",
+        "evidence": "Giphy channel and title name Lil Jon (liljon)."
+      },
+      "confidence": "medium",
+      "label": "Lil Jon - 'hell yeah' hype",
+      "category": "celebratory",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:26Z"
+    },
+    "tFXCQpZf3Q95S": {
+      "what_happens": "Players in Pirates jerseys spray champagne and drench each other in a packed clubhouse, arms raised, as the room fills with mist and spray.",
+      "usable": true,
+      "moods": [
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "clinch_or_title_party",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [
+          "Pittsburgh Pirates"
+        ],
+        "figures": [],
+        "league": "mlb",
+        "evidence": "Pirates jerseys legible in frames and MLB.com watermark; Giphy slug mentions mlb"
+      },
+      "confidence": "high",
+      "label": "Champagne celebration (MLB clubhouse)",
+      "category": "celebratory",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:29Z"
+    },
+    "DfLwM9kttDFEQ": {
+      "what_happens": "A man in a tuxedo with slicked-back hair smiles warmly and raises a champagne coupe in a toast toward the camera while fireworks glow behind him.",
+      "usable": true,
+      "moods": [
+        "celebratory",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "clinch_or_title_party",
+          "fit": "partial"
+        },
+        {
+          "id": "vindication_doubters_silenced",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Leonardo DiCaprio"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Leonardo DiCaprio and The Great Gatsby; not identified from face."
+      },
+      "confidence": "medium",
+      "label": "Leonardo DiCaprio cheers (Great Gatsby)",
+      "category": "celebratory",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:32Z"
+    },
+    "TLO3uEaFDbd58RUpIl": {
+      "what_happens": "Liverpool players in red gather on a stage and lift the Champions League trophy as fireworks and pyrotechnics erupt behind them in a packed stadium.",
+      "usable": true,
+      "moods": [
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "clinch_or_title_party",
+          "fit": "strong"
+        },
+        {
+          "id": "emotional_release",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [
+          "Jordan Henderson"
+        ],
+        "teams": [
+          "Liverpool"
+        ],
+        "figures": [],
+        "league": "soccer",
+        "evidence": "Giphy slug mentions Henderson, channel is Liverpool FC, Liverpool crest visible on stage, Champions League branding and LFCTV watermark in frames"
+      },
+      "confidence": "high",
+      "label": "Liverpool FC - Champions League celebration",
+      "category": "celebratory",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:35Z"
+    },
+    "ugcpY6mLKO1XwLuEEA": {
+      "what_happens": "A team in black championship gear huddles together under falling confetti, hoisting the NBA Cup trophy overhead while hugging and cheering.",
+      "usable": true,
+      "moods": [
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "clinch_or_title_party",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "nba",
+        "evidence": "Giphy title 'Celebrate New York GIF by NBA' and slug reference the NBA Cup; the trophy is visible in frames. Team not clearly identified from the frames, so left empty."
+      },
+      "confidence": "high",
+      "label": "NBA Cup celebration",
+      "category": "celebratory",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:39Z"
+    },
+    "Uqepe3KjEVzPYep8oW": {
+      "what_happens": "Two men on a stage take a selfie with a phone while one raises a fist in celebration, with a huge parade crowd behind them and a Stanley Cup Champions logo in the corner.",
+      "usable": true,
+      "moods": [
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "clinch_or_title_party",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "Stanley Cup Champions",
+      "entities": {
+        "players": [],
+        "teams": [
+          "St. Louis Blues"
+        ],
+        "figures": [],
+        "league": "nhl",
+        "evidence": "Giphy slug and title reference the Blues parade and NHL champions; the Stanley Cup Champions logo is visible in the frames."
+      },
+      "confidence": "high",
+      "label": "Stanley Cup parade (NHL)",
+      "category": "celebratory",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:42Z"
+    },
+    "l4FGIG0CE6nJxnc1q": {
+      "what_happens": "People in Warriors championship shirts wave and cheer atop a parade bus labeled 'James McAdoo 20 Golden State Champions' as it rolls past trees and buildings.",
+      "usable": true,
+      "moods": [
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "clinch_or_title_party",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "JAMES MCADOO GOLDEN STATE CHAMPIONS",
+      "entities": {
+        "players": [
+          "James McAdoo"
+        ],
+        "teams": [
+          "Golden State Warriors"
+        ],
+        "figures": [],
+        "league": "nba",
+        "evidence": "Bus banner reads 'James McAdoo 20 Golden State Champions'; Giphy title and slug reference Golden State Warriors champions, NBA channel."
+      },
+      "confidence": "high",
+      "label": "Warriors champions (NBA)",
+      "category": "celebratory",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:46Z"
+    },
+    "jUwpNzg9IcyrK": {
+      "what_happens": "Homer Simpson from The Simpsons slowly backs into a hedge and disappears into it until only green bushes remain.",
+      "usable": true,
+      "moods": [
+        "hiding_avoidance",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "caught_red_handed",
+          "fit": "partial"
+        },
+        {
+          "id": "im_out",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Homer Simpson"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug identify The Simpsons' Homer Simpson; cartoon character visible in frames"
+      },
+      "confidence": "high",
+      "label": "Homer Simpson hiding/scared",
+      "category": "hiding_avoidance",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:49Z"
+    },
+    "m93v8Rl9GBaW61AmOK": {
+      "what_happens": "A bald man in glasses, a tweed jacket and a tie speaks to someone off-camera, then turns his head away as the on-screen text \"MOVING ON.\" appears, in a Farmers Insurance ad.",
+      "usable": true,
+      "moods": [
+        "fatigue_over_it",
+        "sadness_resignation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "im_out",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "needs_context",
+      "caption_text": "MOVING ON.",
+      "entities": {
+        "players": [
+          "James Harden"
+        ],
+        "teams": [],
+        "figures": [],
+        "league": "nba",
+        "evidence": "Giphy title references 'Leaving James Harden' by Farmers Insurance; the frames show an ad character and a Farmers Insurance logo, not Harden himself. The slug mentions JK Simmons and Professor Burke, but I am not identifying anyone from their face."
+      },
+      "confidence": "medium",
+      "label": "James Harden walking out (Farmers Insurance)",
+      "category": "hiding_avoidance",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:52Z"
+    },
+    "B7RQNl4rKdOuFgW8FA": {
+      "what_happens": "A figure in a white bunny mask and red blazer walks backward down a dim office hallway, shrinking into the distance until the hall is empty.",
+      "usable": true,
+      "moods": [
+        "hiding_avoidance",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "im_out",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata (Film Riot channel) indicates a film-style skit; no sports content or identifiable people in the frames."
+      },
+      "confidence": "medium",
+      "label": "Backing away slowly / see ya",
+      "category": "hiding_avoidance",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:56Z"
+    },
+    "hLsCCNF5wlxuE99mxV": {
+      "what_happens": "A man in a red velvet smoking jacket and black turtleneck stands in front of a Christmas tree, gives an awkward tight smile to the camera, then slowly turns and walks out of frame, leaving the tree empty.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward",
+        "hiding_avoidance"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "caught_red_handed",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "#SewingBee",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata identifies The Great British Sewing Bee; not sports footage and no individual named."
+      },
+      "confidence": "medium",
+      "label": "Slowly leaving an awkward moment (Sewing Bee)",
+      "category": "hiding_avoidance",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:39:59Z"
+    },
+    "J6Ox66ByIbq04mHvKG": {
+      "what_happens": "A man in an orange and grey team jacket against a dark backdrop covers his face with both hands, peeking through his fingers as if he can't bear to watch.",
+      "usable": true,
+      "moods": [
+        "hiding_avoidance",
+        "anticipation",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "big_game_buildup",
+          "fit": "partial"
+        },
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [
+          "Nick Schonert"
+        ],
+        "teams": [
+          "Worcester Warriors"
+        ],
+        "figures": [],
+        "league": "other_sport",
+        "evidence": "Giphy title and slug name Nick Schonert and the Worcester Warriors channel (rugby club); no on-screen text."
+      },
+      "confidence": "medium",
+      "label": "'Look away' - can't watch (Worcester Warriors)",
+      "category": "hiding_avoidance",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:02Z"
+    },
+    "jgulk8628iAZnq2zwN": {
+      "what_happens": "A bald man in a black polo looks wide-eyed and uneasy at the camera, then turns and walks out of frame to the right on a white background.",
+      "usable": true,
+      "moods": [
+        "hiding_avoidance",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "im_out",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Steve Wilkos"
+        ],
+        "league": "none",
+        "evidence": "Giphy title, slug and channel (The Steve Wilkos Show) identify Steve Wilkos"
+      },
+      "confidence": "high",
+      "label": "'I'm gone / ima head out' (Steve Wilkos)",
+      "category": "hiding_avoidance",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:06Z"
+    },
+    "xT5LMBhbii9Emb642Q": {
+      "what_happens": "Smithers from The Simpsons tiptoes away from a doorway holding a fishbowl, leaving squishing pink shoes behind, then sneaks off with exaggerated high-stepping movements.",
+      "usable": true,
+      "moods": [
+        "hiding_avoidance",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "caught_red_handed",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "(SQUISHING)",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Waylon Smithers"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug reference The Simpsons season 20; character is Smithers, a cartoon character."
+      },
+      "confidence": "medium",
+      "label": "The Simpsons - sneaking away (S20)",
+      "category": "hiding_avoidance",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:09Z"
+    },
+    "sfPlC3WxH1ARi": {
+      "what_happens": "A turtle on a wooden surface peeks its head out of its shell, looks forward briefly, then pulls its head back in and hides.",
+      "usable": true,
+      "moods": [
+        "hiding_avoidance"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "caught_red_handed",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Animal footage of a turtle; no sports identifiers in frames or metadata."
+      },
+      "confidence": "high",
+      "label": "Turtle retreating into its shell",
+      "category": "hiding_avoidance",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:12Z"
+    },
+    "BgjfoFQLZUrelvRm9H": {
+      "what_happens": "A man in a blue shirt in front of a spooky horror-themed set talks to the camera with a smirk while burned-in text reads \"DON'T SIDESTEP IT LIKE THAT!\"",
+      "usable": true,
+      "moods": [
+        "debate_takes",
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "DON'T SIDESTEP IT LIKE THAT!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Dead Meat James"
+        ],
+        "league": "none",
+        "evidence": "Giphy channel and slug name deadmeatjames / Dead Meat James; no sports content visible."
+      },
+      "confidence": "medium",
+      "label": "'Don't avoid, sidestep' (Dead Meat James)",
+      "category": "hiding_avoidance",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:16Z"
+    },
+    "kRCqgi9tyHcQSZibBw": {
+      "what_happens": "A woman in a dark interrogation-room setting looks down, then looks up with a tight, knowing smile, with subtitles reading \"You're not answering. That's your right.\" in a clip from the TV show Line of Duty.",
+      "usable": false,
+      "moods": [],
+      "reject_reason": "off_topic",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "not_a_reaction",
+      "caption_text": "YOU'RE NOT ANSWERING. THAT'S YOUR RIGHT.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata and the on-screen watermark identify the BBC TV show Line of Duty; this is not sports footage."
+      },
+      "confidence": "high",
+      "label": "'Not talking' (Line of Duty, BBC)",
+      "category": "hiding_avoidance",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:20Z"
+    },
+    "09tH4BmFeKA0QwQnph": {
+      "what_happens": "A woman in an office glances sideways awkwardly, then turns and walks out of frame as the caption reads \"WELP...I'M GOING TO GO NOW.\"",
+      "usable": true,
+      "moods": [
+        "hiding_avoidance",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "im_out",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "WELP...I'M GOING TO GO NOW.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Not sports footage; office setting with 2TON watermark and Giphy metadata from 2TON Agency."
+      },
+      "confidence": "medium",
+      "label": "Exit stage left (2TON Agency)",
+      "category": "hiding_avoidance",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:23Z"
+    },
+    "oWjyixDbWuAk8": {
+      "what_happens": "In a dark living room, Homer and Bart Simpson sit side by side on a couch, wide-eyed and frozen in stunned silence, staring ahead as Homer's arm shifts slightly.",
+      "usable": true,
+      "moods": [
+        "join_the_failure",
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Homer Simpson",
+          "Bart Simpson"
+        ],
+        "league": "none",
+        "evidence": "Cartoon characters recognizable as Homer and Bart Simpson from The Simpsons; Giphy title 'One Of Us GIF' suggests a 'join us' reading."
+      },
+      "confidence": "medium",
+      "label": "'Join us' after a failure",
+      "category": "join_the_failure",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:26Z"
+    },
+    "holej0e9EgHgmvEVv4": {
+      "what_happens": "Nelson Muntz from The Simpsons points and laughs 'HA-ha!' mockingly while the camera pulls back across a schoolyard.",
+      "usable": true,
+      "moods": [
+        "mocking_sarcastic_praise",
+        "join_the_failure",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "schadenfreude",
+          "fit": "strong"
+        },
+        {
+          "id": "taunting_the_rival",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "HA-HA!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Nelson Muntz"
+        ],
+        "league": "none",
+        "evidence": "Giphy slug and title identify Nelson from The Simpsons; channel is thesimpsons"
+      },
+      "confidence": "high",
+      "label": "Nelson (Simpsons) - 'HA-ha'",
+      "category": "join_the_failure",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:30Z"
+    },
+    "kHs1lBhZWaK5rj7lt3": {
+      "what_happens": "A looming robed, masked statue-like figure beckons with its arms while bold text reads \"JOIN US!\" and silhouetted theater-seat watchers sit at the bottom, in the Mystery Science Theater style.",
+      "usable": true,
+      "moods": [
+        "join_the_failure"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "schadenfreude",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "JOIN US!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Not sports footage; Giphy title 'One Of Us GIF by MOODMAN' and on-screen text 'JOIN US!' only."
+      },
+      "confidence": "medium",
+      "label": "'One of us' - welcome to the cult",
+      "category": "join_the_failure",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:34Z"
+    },
+    "mCbUi0FyYhHHhutEV8": {
+      "what_happens": "A woman in a red outfit holding a microphone throws her arms wide and shouts excitedly while confetti falls, with rainbow text reading 'WELCOME TO THE TEAM!' across the bottom.",
+      "usable": true,
+      "moods": [
+        "celebratory",
+        "join_the_failure"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "together_again",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "WELCOME TO THE TEAM!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "No sports context; the Giphy title and slug only say 'Welcome To The Team' and the uploader is MOODMAN. No one is named from the frames."
+      },
+      "confidence": "medium",
+      "label": "'Welcome to the team'",
+      "category": "join_the_failure",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:37Z"
+    },
+    "l0MYC0LajbaPoEADu": {
+      "what_happens": "A bald man in a blue Nehru-style jacket (Dr. Evil from Austin Powers) gestures with open hands in a welcoming, inviting way while the caption 'WELCOME' stays on screen.",
+      "usable": true,
+      "moods": [
+        "join_the_failure",
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "schadenfreude",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "WELCOME",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Dr. Evil"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Austin Powers Doctor Evil; the character is fictional and the label says Dr. Evil 'welcome aboard'."
+      },
+      "confidence": "medium",
+      "label": "Dr. Evil - 'welcome aboard'",
+      "category": "join_the_failure",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:40Z"
+    },
+    "bmflC6LkR20Blu1UQu": {
+      "what_happens": "A close-up of a man in sunglasses with chains and rings smoking a cigarette toward the camera, with a music video title card reading 'EST Gee - Misery Loves Company' overlaid across all frames.",
+      "usable": false,
+      "moods": [],
+      "reject_reason": "text_overlay_dominates",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "not_a_reaction",
+      "caption_text": "EST GEE MISERY LOVES COMPANY DIRECTED BY DIESEL FILMZ EDITED BY JAY KASTLE",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "EST Gee"
+        ],
+        "league": "none",
+        "evidence": "Giphy channel estgee, title and on-screen text name EST Gee and the song Misery Loves Company; this is a music video title card, not sports footage."
+      },
+      "confidence": "high",
+      "label": "'Misery loves company' (EST Gee)",
+      "category": "join_the_failure",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:44Z"
+    },
+    "4PUjcUBXIzQYfI8iVa": {
+      "what_happens": "A shirtless singer in white shorts and a cap performs on stage with a microphone while the lyric text 'Another One Bites the Dust' sits beside him in every frame.",
+      "usable": true,
+      "moods": [
+        "mocking_sarcastic_praise",
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "schadenfreude",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "ANOTHER ONE BITES THE DUST",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Freddie Mercury",
+          "Queen"
+        ],
+        "league": "none",
+        "evidence": "Giphy title names Freddie Mercury; channel is Queen; slug and on-screen text reference 'Another One Bites the Dust'."
+      },
+      "confidence": "medium",
+      "label": "Queen - 'Another One Bites the Dust'",
+      "category": "join_the_failure",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:47Z"
+    },
+    "WwC8RcSlxbneKlhh0B": {
+      "what_happens": "Animated butterflies flap around the text \"You're Not Alone\" on a purple-pink background; it is a generic encouragement graphic with no sports footage.",
+      "usable": false,
+      "moods": [],
+      "reject_reason": "off_topic",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "not_a_reaction",
+      "caption_text": "You're Not Alone",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "No sports content; Giphy metadata shows a generic 3D artist greeting graphic."
+      },
+      "confidence": "high",
+      "label": "'You are not alone' - hang in there",
+      "category": "join_the_failure",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:49Z"
+    },
+    "s8t6Ym0zHnLb2": {
+      "what_happens": "A close-up of Milhouse from The Simpsons with half-lidded eyes, shifting his eyebrows up and down in a sly, awkward sideways look.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward",
+        "promiscuous_flirty"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Cartoon character appears to be Milhouse from The Simpsons (blue hair, red glasses); Giphy slug mentions Simpsons awkward eyebrows. No sports content."
+      },
+      "confidence": "medium",
+      "label": "Awkward eyebrows / flirty look (Simpsons)",
+      "category": "promiscuous_flirty",
+      "frames_used": 5,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:53Z"
+    },
+    "cInRB3UQMkkouSUQ3a": {
+      "what_happens": "A Cubs baserunner slides into a base on his side, then lies propped back on his elbows in a relaxed, casual pose while an umpire and a fielder move behind him, playing as a 'slide into your DMs' joke.",
+      "usable": true,
+      "moods": [
+        "promiscuous_flirty",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [
+          "Javier Baez"
+        ],
+        "teams": [
+          "Chicago Cubs"
+        ],
+        "figures": [],
+        "league": "mlb",
+        "evidence": "Giphy title and label name Javier Baez; Cubs 'C' logo on the jersey and Wrigley-style crowd in blue."
+      },
+      "confidence": "high",
+      "label": "ESPN - Javier Baez 'slide into your DMs'",
+      "category": "promiscuous_flirty",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:56Z"
+    },
+    "47DGndFXqif24qtlDd": {
+      "what_happens": "A guy in a tie-dye shirt and sunglasses holds a basketball with a 'Sup?' text bubble on screen, then turns and shoots a jump shot on an indoor court, with the 'Sup?' bubble sticking in the corner as he follows through.",
+      "usable": true,
+      "moods": [
+        "promiscuous_flirty",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "Sup?",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata names Barstool Sports as the channel; no identifiable player or team in the frames."
+      },
+      "confidence": "medium",
+      "label": "Barstool - 'shoot your shot / sup'",
+      "category": "promiscuous_flirty",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:40:59Z"
+    },
+    "BkETEb27qKusSr0lEG": {
+      "what_happens": "A woman in a purple cardigan holds an open binder and smiles coyly, tilting her head and waggling her eyebrows in a playful, flirty way in a living room set.",
+      "usable": true,
+      "moods": [
+        "promiscuous_flirty"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Beth Behrs"
+        ],
+        "league": "none",
+        "evidence": "Giphy title names Beth Behrs and slug references CBS The Neighborhood; not sports footage."
+      },
+      "confidence": "high",
+      "label": "Eyebrow waggle (The Neighborhood, CBS)",
+      "category": "promiscuous_flirty",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:41:02Z"
+    },
+    "fqcDmrg6OPAR19jeL7": {
+      "what_happens": "A bearded man in an orange hi-vis shirt in a construction setting raises his eyebrows and gives a sly, knowing smirk with a slight head tilt, then a wink-like expression, as if sharing a cheeky secret.",
+      "usable": true,
+      "moods": [
+        "promiscuous_flirty",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata indicates The Block (Channel 9) reality show; the person is not identified, and this is not sports footage."
+      },
+      "confidence": "medium",
+      "label": "Wink (The Block, Channel 9)",
+      "category": "promiscuous_flirty",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:41:05Z"
+    },
+    "UQsfXTwnwJLHrqY93f": {
+      "what_happens": "A red-haired woman in a dark striped top tilts her head, gives a sly sideways smile and a slow wink-like blink while glancing around coyly.",
+      "usable": true,
+      "moods": [
+        "promiscuous_flirty",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Reba McEntire"
+        ],
+        "league": "none",
+        "evidence": "Giphy title, slug and channel identify Reba McEntire; no sports content in frames."
+      },
+      "confidence": "high",
+      "label": "'Why haven't I heard from you' flirt (Reba McEntire)",
+      "category": "promiscuous_flirty",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:41:08Z"
+    },
+    "6WmyDIKwGvKFO": {
+      "what_happens": "The Simpsons family lies laughing in a living room piled with cash while bills rain down around them, Homer with his arms crossed and everyone gleeful.",
+      "usable": true,
+      "moods": [
+        "getting_paid",
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "secured_the_bag",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "The Simpsons"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug reference The Simpsons; cartoon characters Homer, Marge, Lisa, Maggie and Bart are visible"
+      },
+      "confidence": "high",
+      "label": "Simpsons — money / getting paid",
+      "category": "getting_paid",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:41:11Z"
+    },
+    "9HQRIttS5C4Za": {
+      "what_happens": "A man on a phone shouts with growing intensity while on-screen text builds to 'SHOW ME THE MONEY!!!' in a clip from the movie Jerry Maguire.",
+      "usable": true,
+      "moods": [
+        "getting_paid",
+        "anger_outrage",
+        "escalation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "secured_the_bag",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "SHOW ME THE MONEY!!!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Movie clip; the Giphy slug and label reference Jerry Maguire. No sports entities are identified."
+      },
+      "confidence": "medium",
+      "label": "Jerry Maguire - 'show me the money'",
+      "category": "getting_paid",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:41:14Z"
+    },
+    "67ThRZlYBvibtdF9JH": {
+      "what_happens": "Bugs Bunny sits at a desk happily counting stacks of green cash from a bag, smiling smugly and flipping through bills across the frames.",
+      "usable": true,
+      "moods": [
+        "getting_paid",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "secured_the_bag",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Bugs Bunny"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Bugs Bunny; Looney Tunes logo visible in frames"
+      },
+      "confidence": "high",
+      "label": "Bugs Bunny - payday money",
+      "category": "getting_paid",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:41:18Z"
+    },
+    "3o6gDWzmAzrpi5DQU8": {
+      "what_happens": "A woman against a blue backdrop calmly flicks bills off a stack of cash toward the camera, making it rain, with a deadpan expression and a GQ logo in the corner.",
+      "usable": true,
+      "moods": [
+        "getting_paid",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "secured_the_bag",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Kim Kardashian"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Kim Kardashian; GQ logo visible in the frames"
+      },
+      "confidence": "high",
+      "label": "'Pay me' / make it rain (GQ)",
+      "category": "getting_paid",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:41:20Z"
+    },
+    "yL558PFPKeCtFxkiUi": {
+      "what_happens": "A man in a suit in an office conference room shouts 'Damn it! I knew it! I knew it!' while gesturing and turning in frustration, ending by storming away.",
+      "usable": true,
+      "moods": [
+        "anger_outrage",
+        "bad_dumb_move"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "DAMN IT! I KNEW IT! I KNEW IT!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Michael Scott"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and channel identify The Office (Season 4); the character is Michael Scott from the show, not identified by face."
+      },
+      "confidence": "medium",
+      "label": "The Office - angry (S4)",
+      "category": "anger_outrage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:41:24Z"
+    },
+    "2oUfvvUgQHnLsQWFMW": {
+      "what_happens": "A man in glasses, a brown suit and a yellow shirt grimaces, then screams at the camera with his mouth wide open in rage or panic, in a clip from The Office.",
+      "usable": true,
+      "moods": [
+        "anger_outrage",
+        "escalation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "escalating_panic",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata names The Office (Season 6, meeting). The only on-screen text is a Peacock watermark. No sports entities are identified."
+      },
+      "confidence": "medium",
+      "label": "The Office - angry meeting (S6)",
+      "category": "anger_outrage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T00:41:27Z"
+    },
+    "d7BFcx9NB4l2vJ4yIw": {
+      "what_happens": "Two judges at a reality dance competition desk: a woman with long braids says \"This is your shot.\" while the man beside her looks forward and fiddles with his watch and cuffs.",
+      "usable": false,
+      "moods": [],
+      "reject_reason": "not_reaction_usable",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "not_a_reaction",
+      "caption_text": "This is your shot.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata names So You Think You Can Dance; no sports footage or legible identifiers for the judges."
+      },
+      "confidence": "high",
+      "label": "'Shoot your shot' - dancing (So You Think You Can Dance)",
+      "category": "promiscuous_flirty",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:11Z"
+    },
+    "3o6nUNqTH1lZPqsOti": {
+      "what_happens": "A bill-counting machine rapidly flips through stacks of hundred-dollar bills while more cash sits piled beside it, with a Showtime logo in the corner.",
+      "usable": true,
+      "moods": [
+        "getting_paid",
+        "escalation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "secured_the_bag",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "boxing",
+        "evidence": "Giphy channel is SHOWTIME Sports and the slug references showtime boxing; a Showtime logo is visible in the frames. No individual is identifiable."
+      },
+      "confidence": "medium",
+      "label": "Showtime Sports - stacks of cash (boxing)",
+      "category": "getting_paid",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:14Z"
+    },
+    "pReb5Koy6JmihUYBLx": {
+      "what_happens": "A man in a red track jacket stands with hands on his hips and stares ahead while the caption 'PAY THAT MAN HIS MONEY' stays on screen, a clip from the movie Rounders.",
+      "usable": true,
+      "moods": [
+        "getting_paid",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "secured_the_bag",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "PAY THAT MAN HIS MONEY",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "John Malkovich"
+        ],
+        "league": "none",
+        "evidence": "Giphy slug names John Malkovich and Rounders; caption reads 'PAY THAT MAN HIS MONEY'."
+      },
+      "confidence": "medium",
+      "label": "Rounders - 'pay that man his money'",
+      "category": "getting_paid",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:18Z"
+    },
+    "gQdejV5BBChHi": {
+      "what_happens": "Cartoon Scrooge McDuck dives from a vault doorway into an enormous pile of gold coins and pops up grinning amid flying coins.",
+      "usable": true,
+      "moods": [
+        "getting_paid",
+        "celebratory",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "secured_the_bag",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Scrooge McDuck"
+        ],
+        "league": "none",
+        "evidence": "Giphy title/slug name Scrooge McDuck (DuckTales cartoon); character is a cartoon, not a real person"
+      },
+      "confidence": "high",
+      "label": "Scrooge McDuck diving into money",
+      "category": "getting_paid",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:27Z"
+    },
+    "3o7abJiK9ou8NM64y4": {
+      "what_happens": "A bearded fighter in a tank top speaks into a UFC microphone at a press event while two men sit behind him, with yellow subtitles reading 'my checks are always super heavy weight'.",
+      "usable": true,
+      "moods": [
+        "getting_paid",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "bold_move_swagger",
+          "fit": "partial"
+        },
+        {
+          "id": "secured_the_bag",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "MY CHECKS ARE ALWAYS SUPER HEAVY WEIGHT",
+      "entities": {
+        "players": [
+          "Conor McGregor"
+        ],
+        "teams": [],
+        "figures": [],
+        "league": "ufc",
+        "evidence": "Giphy channel and title name Conor McGregor and UFC 196; UFC logo visible on the microphone."
+      },
+      "confidence": "medium",
+      "label": "Conor McGregor - money talk (UFC)",
+      "category": "getting_paid",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:30Z"
+    },
+    "foIUVRRggFTXNI5uuZ": {
+      "what_happens": "SpongeBob happily juggles and tosses a paycheck in the air, catching it and bouncing it around while grinning, celebrating payday.",
+      "usable": true,
+      "moods": [
+        "getting_paid",
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "secured_the_bag",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "SpongeBob SquarePants"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and channel (SpongeBob SquarePants); Nick logo in frames"
+      },
+      "confidence": "high",
+      "label": "SpongeBob - 'happy payday'",
+      "category": "getting_paid",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:33Z"
+    },
+    "CglumrQL3ilVGivRHo": {
+      "what_happens": "A bearded man in a patterned short-sleeve shirt gestures and claps against a plain gray background while a green caption reads \"GO SECURE THE BAG!\" in a QuickBooks promo.",
+      "usable": true,
+      "moods": [
+        "getting_paid",
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "secured_the_bag",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "GO SECURE THE BAG!",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy channel is QuickBooks (intuitquickbooks); the slug mentions secure-the-bag. The person is not named in the metadata, so no figure is listed."
+      },
+      "confidence": "medium",
+      "label": "'Secure the bag' (QuickBooks)",
+      "category": "getting_paid",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:36Z"
+    },
+    "me7IYiufNb1JSV01EN": {
+      "what_happens": "A bald man in glasses and a white bathrobe talks and gestures animatedly to the camera, with the caption 'Go get the money' on screen throughout.",
+      "usable": true,
+      "moods": [
+        "getting_paid",
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "secured_the_bag",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "Go get the money",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Robert E Blackmon"
+        ],
+        "league": "none",
+        "evidence": "Giphy channel/uploader and title name Robert E Blackmon; the caption is legible in the frames. Not identified from appearance."
+      },
+      "confidence": "medium",
+      "label": "'Secure the bag' motivation",
+      "category": "getting_paid",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:39Z"
+    },
+    "PizLWrCCo2HK83jI0g": {
+      "what_happens": "Bugs Bunny stands in a bullring reading a paper while a huge black bull charges up behind him, looms over him, and he calmly stays put, then turns with a tense look as the bull's horns surround him.",
+      "usable": true,
+      "moods": [
+        "confusion",
+        "hiding_avoidance"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "smug_indifference",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Bugs Bunny"
+        ],
+        "league": "none",
+        "evidence": "Looney Tunes logo in frames, Giphy channel looneytunes, and title naming Bugs Bunny"
+      },
+      "confidence": "low",
+      "label": "Angry Bugs Bunny (Looney Tunes)",
+      "category": "anger_outrage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:42Z"
+    },
+    "HB5jPAoy51vVJXFMsR": {
+      "what_happens": "A person in a white tank top and orange shorts sits close to the camera, tilts his head and stares into the lens with a skeptical, deadpan look, then glances off to the side.",
+      "usable": true,
+      "moods": [
+        "confusion",
+        "bad_dumb_move"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "IShowSpeed"
+        ],
+        "league": "none",
+        "evidence": "Giphy slug and label name ishowspeed / I Show Speed as the streamer; not identified from face."
+      },
+      "confidence": "medium",
+      "label": "Angry disbelief (IShowSpeed)",
+      "category": "anger_outrage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:45Z"
+    },
+    "11mPvWj3R3mCKA": {
+      "what_happens": "A woman with long curly dark hair in a red top sips from a red mug while giving a side-eye glare, her eyes rolling and staring intensely over the rim.",
+      "usable": true,
+      "moods": [
+        "anger_outrage",
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Not sports footage; Giphy title references Bad Girls Club (reality TV), no sports entities identified."
+      },
+      "confidence": "medium",
+      "label": "Fuming (Bad Girls Club)",
+      "category": "anger_outrage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:48Z"
+    },
+    "M6TiHJCalbjaWzzBmv": {
+      "what_happens": "A cartoon rage-comic character screams and flips a table, which flies off, then a table reappears and he grabs and hurls it again in a repeating loop.",
+      "usable": true,
+      "moods": [
+        "anger_outrage",
+        "escalation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Cartoon rage-comic character; Giphy channel Rageguy; no sports footage or legible identifiers."
+      },
+      "confidence": "high",
+      "label": "Rage quit / table flip (Rageguy)",
+      "category": "anger_outrage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:51Z"
+    },
+    "JI5Na0rpieV8bSuKgO": {
+      "what_happens": "An MLB umpire makes repeated ejection thumb-and-fist signals, then the grounds crew in orange shirts walk off along the outfield wall.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward",
+        "bad_dumb_move",
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "what_just_happened",
+          "fit": "strong"
+        },
+        {
+          "id": "controversial_call",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "mlb",
+        "evidence": "Jomboy Media channel, slug mentions umpire ejecting grounds crew; MLB patch on umpire's sleeve."
+      },
+      "confidence": "medium",
+      "label": "MLB umpire ejects grounds crew (Jomboy Media)",
+      "category": "anger_outrage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:54Z"
+    },
+    "FnXgJ5KG1DqhzD0dF6": {
+      "what_happens": "A man in a suit at a desk stares tensely, then erupts in a shouting, flailing fit, slapping his hands against his face in frustration.",
+      "usable": true,
+      "moods": [
+        "anger_outrage"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata identifies the source as The Office (TV show); no sports content or named person in frames."
+      },
+      "confidence": "high",
+      "label": "The Office - angry (S2)",
+      "category": "anger_outrage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:56Z"
+    },
+    "O6aGvxBFr1frfrkHNw": {
+      "what_happens": "A woman in a red outfit sits in an interview setting, speaking and making dismissive, sassy expressions while the caption \"Why you mad?\" stays on screen.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "smug_indifference",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "Why you mad?",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Mariah Carey"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Mariah Carey and Apple Music; Apple Music logo visible in frames."
+      },
+      "confidence": "medium",
+      "label": "Angry (Apple Music/Mariah Carey)",
+      "category": "anger_outrage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:45:59Z"
+    },
+    "xwDfTNUNxEqZkR06bn": {
+      "what_happens": "A cartoon blue fish with arms crossed and a deep frown slowly turns bright red with anger while puffs of steam blow out from the sides of its head.",
+      "usable": true,
+      "moods": [
+        "anger_outrage"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Cartoon fish character from Bubba's LA per Giphy metadata; no sports entities present."
+      },
+      "confidence": "high",
+      "label": "'Blowing off steam' angry",
+      "category": "anger_outrage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:02Z"
+    },
+    "q2NigSUGQtF1YbDk2p": {
+      "what_happens": "A man with glasses on a phone call says in subtitles 'I'm not the one making a truly idiotic decision,' pointing the blame at the other party, with a Hulu/FX The Bear watermark.",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "debate_takes"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "I'm not the one making a truly idiotic decision.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata identifies the show The Bear (FX); not sports footage, no one named from face."
+      },
+      "confidence": "medium",
+      "label": "The Bear - sarcastic reaction",
+      "category": "mocking_sarcastic_praise",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:05Z"
+    },
+    "gRxjhVNfFgqI0": {
+      "what_happens": "A man in a blue shirt against a plain white background gives a slow, deadpan sarcastic clap with a flat, unimpressed expression across all frames.",
+      "usable": true,
+      "moods": [
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "James Van Der Beek"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and label name James Van Der Beek; not identified from face."
+      },
+      "confidence": "high",
+      "label": "James Van Der Beek - sarcastic slow clap",
+      "category": "mocking_sarcastic_praise",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:07Z"
+    },
+    "37Ez5CZ8P0jSM": {
+      "what_happens": "A man in a dark suit and red tie slowly claps with a tight, pursed-lip smirk, delivering a sarcastic slow clap to the camera.",
+      "usable": true,
+      "moods": [
+        "mocking_sarcastic_praise",
+        "sadness_resignation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Comedy Central-style logo in the corner; no legible name, so no one is identified."
+      },
+      "confidence": "high",
+      "label": "Mocking slow clap",
+      "category": "mocking_sarcastic_praise",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:10Z"
+    },
+    "65fiHpjKxyBgc": {
+      "what_happens": "A black-and-white shot of the Joker in face paint and a tuxedo slowly clapping his hands in a theater-like setting, with other figures behind him.",
+      "usable": true,
+      "moods": [
+        "mocking_sarcastic_praise",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "The Joker"
+        ],
+        "league": "none",
+        "evidence": "Giphy slug and title reference Batman Joker slow clap; the character is identified by the title, not by face."
+      },
+      "confidence": "high",
+      "label": "Joker slow clap (Batman)",
+      "category": "mocking_sarcastic_praise",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:13Z"
+    },
+    "1pofg0cTz5mak": {
+      "what_happens": "In a movie clip, two men in work coveralls and bandanas trade looks, the caption 'GOLF CLAP.' appears, and both deliver a slow, deadpan gloved golf clap.",
+      "usable": true,
+      "moods": [
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "GOLF CLAP.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "The frames show a movie scene with the caption 'GOLF CLAP.' The Giphy slug mentions Tiger Woods, but nothing visible shows him or any sports footage, so no entity is tagged."
+      },
+      "confidence": "high",
+      "label": "Golf clap (Tiger Woods)",
+      "category": "mocking_sarcastic_praise",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:16Z"
+    },
+    "3Tu6hYkQNJ7DncYhUa": {
+      "what_happens": "A woman with natural curly hair in a bun holds a phone to her ear, tilts her head and gives a skeptical side-eye while pink caption text reads \"MMHMM...\" in a scene from a Bounce TV show.",
+      "usable": true,
+      "moods": [
+        "mocking_sarcastic_praise",
+        "denial_copium",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "smug_indifference",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "MMHMM...",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Not sports footage; Giphy channel Bounce_TV and Bounce logo in frames. No individual identified."
+      },
+      "confidence": "medium",
+      "label": "'Uh huh, whatever' / sure Jan (Bounce)",
+      "category": "mocking_sarcastic_praise",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:18Z"
+    },
+    "l4JyNPwLCWt6mSxlS": {
+      "what_happens": "A man in a shirt and tie squints and grimaces in puzzled discomfort while the caption reads \"Um...thank you?\", reacting to an awkward backhanded compliment in a BBC Three show clip.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward",
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "Um...thank you?",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "BBC Three HD logo and Giphy metadata (BBC channel); no sports content or named individuals identified"
+      },
+      "confidence": "medium",
+      "label": "'Um, thank you' - backhanded (BBC)",
+      "category": "mocking_sarcastic_praise",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:21Z"
+    },
+    "5QYlRFvlqidWU064i5": {
+      "what_happens": "A dark-haired woman in a plaid shirt with arms crossed glances around with a skeptical, slightly annoyed look while the caption \"THANKS?\" sits at the bottom, from a Schitt's Creek clip.",
+      "usable": true,
+      "moods": [
+        "mocking_sarcastic_praise",
+        "confusion"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "THANKS?",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata and watermark indicate Schitt's Creek by CBC; not sports footage, no individual named."
+      },
+      "confidence": "medium",
+      "label": "Sarcastic 'thank you' (Schitt's Creek, CBC)",
+      "category": "mocking_sarcastic_praise",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:24Z"
+    },
+    "7XmgAwugUlYWHWKcGt": {
+      "what_happens": "A man in a suit stands against a blue background with a deadpan face, flicking bills from his hands one after another so they fly off in a 'make it rain' motion.",
+      "usable": true,
+      "moods": [
+        "financial_pain",
+        "getting_paid",
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "buyers_remorse",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata mentions truTV's Paid Off and a Michael Torpey slug, but this is non-sports footage and no one is named as a sports figure."
+      },
+      "confidence": "medium",
+      "label": "'Paid Off' - throwing money (truTV)",
+      "category": "financial_pain",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:27Z"
+    },
+    "ASM4IvHzkop00e6sUN": {
+      "what_happens": "An open briefcase full of cash sits on a rocky shoreline and burns, with the flames growing larger as the camera pushes closer across the frames.",
+      "usable": true,
+      "moods": [
+        "financial_pain",
+        "escalation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "buyers_remorse",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata names Epitaph Records as the uploader. No sports entities are visible in the frames."
+      },
+      "confidence": "high",
+      "label": "Money on fire (Epitaph Records)",
+      "category": "financial_pain",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:29Z"
+    },
+    "NxJZnWD1RiWOCCwKgE": {
+      "what_happens": "Hands open an empty wallet to show nothing inside, then a man tilts his head back with eyes closed in weary, resigned defeat.",
+      "usable": true,
+      "moods": [
+        "financial_pain",
+        "sadness_resignation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "buyers_remorse",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "No sports footage; generic meme-style clip with no legible jerseys, logos, or text."
+      },
+      "confidence": "medium",
+      "label": "Empty wallet / broke",
+      "category": "financial_pain",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:32Z"
+    },
+    "aKT1Wdp8XpNbmf2suv": {
+      "what_happens": "A man in a dark room sits down on a couch, settles in and looks at the camera with a regretful, deadpan expression as the caption 'THAT WAS A MISTAKE' appears.",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "THAT WAS A MISTAKE",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy channel is Film Riot, a filmmaking creator; no sports content or identifiable sports figures in frames."
+      },
+      "confidence": "medium",
+      "label": "'What have I done' (Film Riot)",
+      "category": "financial_pain",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:34Z"
+    },
+    "3oEjHGnY8oB4BHVTP2": {
+      "what_happens": "A man in a hospital gown smiles, then his expression drops and the caption 'I've made a huge mistake' appears as he stares ahead with regret.",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "embarrassing_awkward",
+        "financial_pain"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "buyers_remorse",
+          "fit": "strong"
+        },
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "I've made a huge mistake",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Gob Bluth"
+        ],
+        "league": "none",
+        "evidence": "Giphy slug names Gob Bluth and Arrested Development; caption 'I've made a huge mistake'"
+      },
+      "confidence": "high",
+      "label": "Arrested Development - 'I've made a huge mistake'",
+      "category": "financial_pain",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:37Z"
+    },
+    "PyoyQRPyZXYq7mfxxs": {
+      "what_happens": "A man in glasses sits at a wooden table and carefully counts out a handful of coins, picking through them one by one, under the caption \"Me:\".",
+      "usable": true,
+      "moods": [
+        "financial_pain",
+        "sadness_resignation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "buyers_remorse",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "Me:",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Robert E Blackmon"
+        ],
+        "league": "none",
+        "evidence": "Giphy channel/uploader is RobertEBlackmon; the title and slug say pinching pennies and financial struggles. Not identified from his face."
+      },
+      "confidence": "medium",
+      "label": "Pinching pennies / financial struggle",
+      "category": "financial_pain",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:40Z"
+    },
+    "4KEjT4zno9bM6zPIor": {
+      "what_happens": "Two women in 1920s attire sit side by side in a TV scene while the caption reads \"Honey, she can't afford that,\" with the woman in the red hat giving a deadpan look.",
+      "usable": true,
+      "moods": [
+        "financial_pain",
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "buyers_remorse",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "Honey, she can't afford that.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata names CBS and the show Ghosts; no sports entities appear."
+      },
+      "confidence": "medium",
+      "label": "'Can't afford it' (Ghosts, CBS)",
+      "category": "financial_pain",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:42Z"
+    },
+    "irgI4GQkigmt0YpyTb": {
+      "what_happens": "A bearded man in a tan shirt speaks to the camera in an interview-style shot, with a subtitle reading \"My net worth is a minus sign,\" and he winces and smirks while delivering the line.",
+      "usable": true,
+      "moods": [
+        "financial_pain",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "buyers_remorse",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "My net worth is a minus sign.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata shows Peacock's show 'Killing It'; on-screen subtitle and logo. No sports content, and no identification of the person."
+      },
+      "confidence": "medium",
+      "label": "'Killing it' - no money (Peacock)",
+      "category": "financial_pain",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:45Z"
+    },
+    "xT9DPIQtwwvGFEqY6c": {
+      "what_happens": "A group of FBI agents in navy jackets and a man in a suit stride purposefully down a bright corridor toward the camera, with a #Billions Showtime watermark.",
+      "usable": false,
+      "moods": [],
+      "reject_reason": "not_reaction_usable",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "not_a_reaction",
+      "caption_text": "#Billions SHOWTIME",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata and watermark identify the TV show Billions on Showtime; not sports footage. No individuals identified."
+      },
+      "confidence": "high",
+      "label": "'Trouble' (Billions, Showtime)",
+      "category": "financial_pain",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:48Z"
+    },
+    "ArzpFLBUJEaur0kUOs": {
+      "what_happens": "In a grainy black-and-white comedy clip, a man comes into focus and his face crumples into a pained, teary grimace, with banknotes or a money box visible behind him.",
+      "usable": true,
+      "moods": [
+        "financial_pain",
+        "sadness_resignation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "buyers_remorse",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata names the comedy group Foil Arms and Hog, which is not sports content. No sports players or teams are identifiable."
+      },
+      "confidence": "medium",
+      "label": "Money - crying (Foil Arms and Hog)",
+      "category": "financial_pain",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:51Z"
+    },
+    "3iLisDUozEvfIRyf9X": {
+      "what_happens": "A UFC fighter holding a UFC microphone in the cage says 'When I land those big shots, I'm going to knock you out' while an EA Sports UFC 4 ad overlay appears at the bottom.",
+      "usable": false,
+      "moods": [],
+      "reject_reason": "interview_or_talking",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "not_a_reaction",
+      "caption_text": "When I land those big shots, I'm going to knock you out.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "ufc",
+        "evidence": "UFC mic flag and UFC channel metadata; no legible name identifying the fighter, so none listed."
+      },
+      "confidence": "high",
+      "label": "UFC knockout",
+      "category": "domination",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:54Z"
+    },
+    "3ohhwssY8BhybLFeDe": {
+      "what_happens": "In a boxing ring, a fighter in gray trunks lands a punch that drops his opponent in white trunks, who ends up flat on the canvas while the referee steps in and the winner turns away.",
+      "usable": true,
+      "moods": [
+        "domination",
+        "respect_awe"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "blowout_statement",
+          "fit": "partial"
+        },
+        {
+          "id": "superhuman_play",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "#Showtime",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "boxing",
+        "evidence": "Giphy channel is SHOWTIME Sports and the title says knock out punch; no fighter names are legible, so none are listed."
+      },
+      "confidence": "medium",
+      "label": "Boxing knockout punch (SHOWTIME Sports)",
+      "category": "domination",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:46:57Z"
+    },
+    "PZ58x6tqfRkrwyFlrw": {
+      "what_happens": "A BYU men's volleyball player in a #20 black jersey stands in front of a blue Go Cougs backdrop and holds a finger to his lips in a shushing gesture, glancing around smugly.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "domination"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "taunting_the_rival",
+          "fit": "strong"
+        },
+        {
+          "id": "vindication_doubters_silenced",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "go cougs",
+      "entities": {
+        "players": [],
+        "teams": [
+          "BYU Cougars"
+        ],
+        "figures": [],
+        "league": "other_sport",
+        "evidence": "Giphy channel BYUCougars, title 'by BYU Cougars', slug byumvb (men's volleyball), 'go cougs' text and BYU logo on backdrop; jersey #20 seen but player not identified."
+      },
+      "confidence": "high",
+      "label": "'Shut up' - BYU volleyball shutout energy",
+      "category": "domination",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:01Z"
+    },
+    "fZEz565zA4ARwUDawo": {
+      "what_happens": "A shirtless UFC fighter in the cage grins, mimes a chin-check with his gloves, flexes and swaggers, wipes his face, then stands with a cocky look after his win.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "celebratory"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "bold_move_swagger",
+          "fit": "partial"
+        },
+        {
+          "id": "taunting_the_rival",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "ufc",
+        "evidence": "Giphy title/slug and channel indicate UFC 275; UFC glove logos and Monster Energy cage branding visible. No fighter name given, so none listed."
+      },
+      "confidence": "medium",
+      "label": "UFC knockout win (round 2)",
+      "category": "domination",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:05Z"
+    },
+    "dVhXUugTrtfV0KslQh": {
+      "what_happens": "Two women sit side by side in a dim room looking uneasy and tense while a caption reading 'THIS IS FINE.' appears, a deadpan show clip about putting on a brave face.",
+      "usable": true,
+      "moods": [
+        "denial_copium",
+        "hiding_avoidance"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "THIS IS FINE.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata indicates Hulu's Little Fires Everywhere; no sports content or identifiable sports figures."
+      },
+      "confidence": "medium",
+      "label": "'This is fine' (Hulu)",
+      "category": "denial_copium",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:07Z"
+    },
+    "DTihDMWhrc5XWjdjnd": {
+      "what_happens": "A woman in a trench coat stands on a street, whistling and glancing around nervously, then waves her hands dismissively as the caption reads 'NOTHING TO SEE HERE'.",
+      "usable": true,
+      "moods": [
+        "hiding_avoidance",
+        "denial_copium"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "caught_red_handed",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "NOTHING TO SEE HERE",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Holly Logan"
+        ],
+        "league": "none",
+        "evidence": "Giphy channel and slug name ComedianHollyLogan (Holly Logan)"
+      },
+      "confidence": "high",
+      "label": "'Nothing to see here' - suspicious",
+      "category": "denial_copium",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:17Z"
+    },
+    "1ZJyFLH8l2QfuFe04S": {
+      "what_happens": "A cartoon blue cat with teary eyes sits at a desk in front of a computer, taking slow deep breaths under the on-screen text \"Just Breathe\" as it tries to stay calm.",
+      "usable": true,
+      "moods": [
+        "denial_copium",
+        "fatigue_over_it"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "Just Breathe",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Cartoon cat from Giphy channel Nope Cat; no sports content or identifiable people."
+      },
+      "confidence": "medium",
+      "label": "Deep breath - coping mechanism",
+      "category": "denial_copium",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:20Z"
+    },
+    "XILbmVh4MJV7POZg3Y": {
+      "what_happens": "A woman in teal cat-eye sunglasses and a black top perks up with a hand raised as the caption reads 'Did somebody say unhealthy coping mechanisms?', then lowers her glasses with interest.",
+      "usable": true,
+      "moods": [
+        "denial_copium",
+        "promiscuous_flirty"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "DID SOMEBODY SAY unhealthy coping mechanisms?",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy channel okjessofficial; no sports content visible"
+      },
+      "confidence": "medium",
+      "label": "'Unhealthy coping mechanisms'",
+      "category": "denial_copium",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:23Z"
+    },
+    "3oz8xVyxeOgWj5rcSA": {
+      "what_happens": "In a South Park desert scene, a group of cartoon characters including Kyle bury their heads in the sand with their bodies sticking up, while a subtitle reads \"HELLO?\".",
+      "usable": true,
+      "moods": [
+        "denial_copium",
+        "hiding_avoidance"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "HELLO?",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy title and channel identify Kyle Broflovski from South Park, a cartoon character, not a sports figure."
+      },
+      "confidence": "medium",
+      "label": "Head in the sand (South Park)",
+      "category": "denial_copium",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:25Z"
+    },
+    "kT46ZFdf9GkJJPE9NM": {
+      "what_happens": "A smiling cartoon girl sits calmly, then her face zooms in with a fixed smile, and the scene cuts to a chaotic scribbled backdrop where other versions of her panic, hug themselves, eat from a bag, and lie collapsed.",
+      "usable": true,
+      "moods": [
+        "denial_copium",
+        "escalation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "escalating_panic",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Animated cartoon with no sports content or legible identifiers; Giphy channel is Holler Studios."
+      },
+      "confidence": "medium",
+      "label": "Nervous 'everything is fine'",
+      "category": "denial_copium",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:28Z"
+    },
+    "2fkfXZ9ENmOIR4SoAN": {
+      "what_happens": "A South Park cartoon kid sits at a table speaking into a microphone in front of a He-Man supplement banner, with the caption 'PROVE ME WRONG' while another kid looks on.",
+      "usable": true,
+      "moods": [
+        "debate_takes",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "bold_move_swagger",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "PROVE ME WRONG",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata identifies South Park cartoon; no real sports figures."
+      },
+      "confidence": "medium",
+      "label": "South Park - 'prove me wrong'",
+      "category": "debate_takes",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:31Z"
+    },
+    "GvNFPkAskkSafDozqD": {
+      "what_happens": "A curly-haired man in a dark jacket on a late-night talk show set raises a finger and gestures as if correcting someone, with the caption \"WELL... ACTUALLY\" across all frames.",
+      "usable": true,
+      "moods": [
+        "debate_takes"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "WELL... ACTUALLY",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy channel is Late Night with Seth Meyers and the watermark reads @LateNightSeth, but the guest is not named in the metadata, so no figure is tagged."
+      },
+      "confidence": "high",
+      "label": "Seth Meyers - argue",
+      "category": "debate_takes",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:34Z"
+    },
+    "M8uYzNT0ZkI6b9uiWm": {
+      "what_happens": "A cartoon penguin in a red cap and black hoodie sits behind a table with a 'Change my mind' sign, surrounded by plush polar-bear-hooded penguins, blinking and shifting slightly in a confident debate pose.",
+      "usable": true,
+      "moods": [
+        "debate_takes",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "CHANGE MY MIND",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy channel/title: Pudgy Penguins cartoon; no sports entities"
+      },
+      "confidence": "high",
+      "label": "'Change my mind' - polar bear (Pudgy Penguins)",
+      "category": "debate_takes",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:36Z"
+    },
+    "Ihd7gcvA2PkooJvUjt": {
+      "what_happens": "A woman in a burgundy leather outfit sits on a couch, speaks and tucks her hair behind her ear while a caption reads \"well, actually...\" as if correcting someone.",
+      "usable": true,
+      "moods": [
+        "debate_takes"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "well, actually...",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Blake Lively"
+        ],
+        "league": "none",
+        "evidence": "Giphy channel and slug reference Blake Lively Fan (blakelivelyfan); caption reads 'well, actually...'"
+      },
+      "confidence": "high",
+      "label": "'Well, actually...' correction",
+      "category": "debate_takes",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:38Z"
+    },
+    "JpMsFaD0IThH6wLi3S": {
+      "what_happens": "A man in a navy suit on a TV studio set talks, then pulls an exaggerated pursed-lip face, glances up and side to side with raised eyebrows like he's reconsidering or biting his tongue.",
+      "usable": true,
+      "moods": [
+        "embarrassing_awkward",
+        "debate_takes",
+        "denial_copium"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Stephen A. Smith"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Stephen A Smith, ESPN channel; 'New York' signage on set"
+      },
+      "confidence": "medium",
+      "label": "Stephen A. Smith - laughing off a take",
+      "category": "debate_takes",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:41Z"
+    },
+    "U1xERzPdSQA2leN6xp": {
+      "what_happens": "A man in a suit on a 'First Take' set looks down, then looks up with a pursed, tight-lipped smirk and slowly shakes his head in knowing disapproval.",
+      "usable": true,
+      "moods": [
+        "cockiness_smugness",
+        "bad_dumb_move",
+        "mocking_sarcastic_praise"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "smug_indifference",
+          "fit": "partial"
+        },
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Stephen A. Smith"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and label name Stephen A Smith; 'FIRST T...' signage visible in frames and ESPN channel."
+      },
+      "confidence": "medium",
+      "label": "Stephen A. Smith - 'smh, unbelievable'",
+      "category": "debate_takes",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:45Z"
+    },
+    "Rf51wBC75B4BNEnuBG": {
+      "what_happens": "A suited man at a studio desk talks heatedly, then flings papers through the air in frustration and goes back to speaking to camera.",
+      "usable": true,
+      "moods": [
+        "anger_outrage",
+        "debate_takes"
+      ],
+      "reject_reason": "none",
+      "subcategories": [],
+      "intensity": "high",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Stephen A. Smith"
+        ],
+        "league": "none",
+        "evidence": "Giphy title and slug name Stephen A Smith, ESPN channel"
+      },
+      "confidence": "high",
+      "label": "Stephen A. Smith - angry take",
+      "category": "debate_takes",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:47Z"
+    },
+    "8L0T7i6v8DgPeoMII0": {
+      "what_happens": "In a wide shot of a soccer match, a play develops near one goal and the ball ends up in the net as a goalkeeper lies on the ground, which the metadata labels an own goal; the footage is distant and the action is small.",
+      "usable": true,
+      "moods": [
+        "betrayal_self_sabotage",
+        "bad_dumb_move",
+        "embarrassing_awkward"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "needs_context",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "soccer",
+        "evidence": "Giphy title/slug reference an own goal by Eleven Sports/MyCujoo; the frames show only a mycujoo watermark and Canon pitch-side ads, with no legible team or player identifiers."
+      },
+      "confidence": "medium",
+      "label": "Own goal - 'bad luck' (Eleven Sports)",
+      "category": "betrayal_self_sabotage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:50Z"
+    },
+    "BsIZ9aNAv69iKMNC39": {
+      "what_happens": "A bearded man in a kitchen holds up a device, it cuts to a fiery explosion, then he reappears with a soot-covered face and singed hair, looking stunned.",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "embarrassing_awkward",
+        "betrayal_self_sabotage"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "saw_it_coming",
+          "fit": "partial"
+        },
+        {
+          "id": "franchise_meltdown",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Non-sports footage; no legible names or logos tied to a player or team. Giphy title only says Self Destruct by Squirrel Monkey."
+      },
+      "confidence": "medium",
+      "label": "'Self destruct'",
+      "category": "betrayal_self_sabotage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:53Z"
+    },
+    "fnQhN4MbhbUNSyypav": {
+      "what_happens": "A bearded man in a dark gothic-hallway setting points accusingly at the camera, his face shifting from stern to a grimacing grin and back to a scowl, with the caption 'You betrayed me' across the bottom.",
+      "usable": true,
+      "moods": [
+        "betrayal_self_sabotage",
+        "anger_outrage"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "franchise_meltdown",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "You betrayed me",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [
+          "Emile Aleman"
+        ],
+        "league": "none",
+        "evidence": "On-screen watermark reads 'Emile Aleman @emileappeal' and the Giphy channel is emileappeal; no sports content shown."
+      },
+      "confidence": "medium",
+      "label": "'Betrayal'",
+      "category": "betrayal_self_sabotage",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:47:57Z"
+    },
+    "U4jtIORqlc4svxFPUe": {
+      "what_happens": "A bald man in a patterned shirt in a kitchen sets a hand to his face, rubs his forehead, and closes his eyes in weary exasperation as he slumps slightly.",
+      "usable": true,
+      "moods": [
+        "fatigue_over_it"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "here_we_go_again",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata only mentions Bounce TV; this is not sports footage and no person is identified from the frames."
+      },
+      "confidence": "high",
+      "label": "Tired / over it (Bounce)",
+      "category": "fatigue_over_it",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:48:00Z"
+    },
+    "Ma1nnKL3XqZFEtaKs8": {
+      "what_happens": "A woman in a dim, blurry-foreground scene closes her eyes, sighs, then looks up with a weary stare while the subtitle reads \"I'm just tired and annoyed.\"",
+      "usable": true,
+      "moods": [
+        "fatigue_over_it"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "here_we_go_again",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "I'm just tired and annoyed.",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata indicates FOX TV show Deputy (character Paula Reyes); not sports footage, so no sports entities."
+      },
+      "confidence": "medium",
+      "label": "Tired / over it (FOX TV)",
+      "category": "fatigue_over_it",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:48:03Z"
+    },
+    "3FckanO0xoIDJo98OO": {
+      "what_happens": "A woman in a colorful patterned top lies back on a dark leather couch, then flings her arm up dramatically as the caption reads \"I'm so tired.\"",
+      "usable": true,
+      "moods": [
+        "fatigue_over_it"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "here_we_go_again",
+          "fit": "partial"
+        },
+        {
+          "id": "survived_and_exhausted",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "I'M SO TIRED",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata and the #SchittsCreek watermark identify the show; no sports content and no one is named."
+      },
+      "confidence": "high",
+      "label": "Tired (Schitt's Creek, CBC)",
+      "category": "fatigue_over_it",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:48:05Z"
+    },
+    "mpRZbC5izVeBv0eyUI": {
+      "what_happens": "In black-and-white footage from I Love Lucy, a woman in a convertible slumps back with her head thrown back in exasperation, then slowly sits up and slumps forward in weary resignation.",
+      "usable": true,
+      "moods": [
+        "fatigue_over_it",
+        "sadness_resignation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "here_we_go_again",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy title and channel reference I Love Lucy on Paramount+; no sports entities present."
+      },
+      "confidence": "medium",
+      "label": "'Over it' (I Love Lucy, Paramount+)",
+      "category": "fatigue_over_it",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:48:08Z"
+    },
+    "35BUnGH2e25bn8U6Qh": {
+      "what_happens": "A man in a dark room buries his face in his hands, rubs his eyes in exhaustion, then lowers his hands and looks off to the side with a weary stare; a Clipped (FX) logo sits in the corner.",
+      "usable": true,
+      "moods": [
+        "fatigue_over_it",
+        "sadness_resignation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "here_we_go_again",
+          "fit": "strong"
+        },
+        {
+          "id": "survived_and_exhausted",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "CLIPPED",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Not sports footage; the FX Clipped watermark and Giphy metadata point to a TV show clip, and no person is named."
+      },
+      "confidence": "high",
+      "label": "'I'm so tired, I can't do this' (FX Networks)",
+      "category": "fatigue_over_it",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:48:11Z"
+    },
+    "nFzZ3X5D3fyb4WTRz4": {
+      "what_happens": "A player in a red Liverpool shirt against a maroon backdrop closes his eyes, rolls his head and sighs, then looks down with a weary, bored expression.",
+      "usable": true,
+      "moods": [
+        "fatigue_over_it",
+        "sadness_resignation"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "here_we_go_again",
+          "fit": "strong"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "",
+      "entities": {
+        "players": [],
+        "teams": [
+          "Liverpool"
+        ],
+        "figures": [],
+        "league": "soccer",
+        "evidence": "Liverpool FC shirt with LFC crest and Standard Chartered sponsor, LFCTV watermark, Giphy channel lfc; player not named in metadata so left blank"
+      },
+      "confidence": "high",
+      "label": "'Bored, here we go again' (Liverpool FC)",
+      "category": "fatigue_over_it",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:48:13Z"
+    },
+    "eKsDAtyWPxkGRpEEtU": {
+      "what_happens": "A man in glasses and a collared shirt looks down, then glances up with a wry, knowing half-smile while the caption reads \"It wouldn't be the first time\" (a scene from Hulu's Little Fires Everywhere).",
+      "usable": true,
+      "moods": [
+        "fatigue_over_it",
+        "cockiness_smugness"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "here_we_go_again",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "low",
+      "reaction_readiness": "ready",
+      "caption_text": "IT WOULDN'T BE THE FIRST TIME",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "Giphy metadata names Hulu's Little Fires Everywhere; this is TV footage, not sports, and no sports figures are identifiable."
+      },
+      "confidence": "medium",
+      "label": "'Here we go again' (Hulu, Little Fires Everywhere)",
+      "category": "fatigue_over_it",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:48:16Z"
+    },
+    "UnCXCkq3cs1uCv6uy2": {
+      "what_happens": "A man with glasses in a BuzzFeed interview setting shakes his head and repeats 'No, no, no, no, no' in escalating subtitles, rejecting something with weary disbelief.",
+      "usable": true,
+      "moods": [
+        "bad_dumb_move",
+        "fatigue_over_it",
+        "denial_copium"
+      ],
+      "reject_reason": "none",
+      "subcategories": [
+        {
+          "id": "here_we_go_again",
+          "fit": "partial"
+        }
+      ],
+      "intensity": "medium",
+      "reaction_readiness": "ready",
+      "caption_text": "No. No, No, No, no, No, no, no, no, No, no, no, no, no",
+      "entities": {
+        "players": [],
+        "teams": [],
+        "figures": [],
+        "league": "none",
+        "evidence": "BuzzFeed watermark and Giphy metadata; no legible name for the person, so none identified."
+      },
+      "confidence": "medium",
+      "label": "'Ah, here we go again' (BuzzFeed)",
+      "category": "fatigue_over_it",
+      "frames_used": 6,
+      "effort": "medium",
+      "served_by": "claude-sonnet-5-5",
+      "tagged_at": "2026-10-15T01:48:19Z"
+    }
+  }
+}
