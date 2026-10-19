@@ -1,0 +1,2338 @@
+{
+  "news_headlines": [
+    {
+      "title": "Thunder extend Cason Wallace on five-year, $139M deal, setting up another summer of second apron questions",
+      "description": "Locking up Wallace follows an offseason of moves intended to shed payroll and duck under the second apron",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T13:21:37+00:00"
+    },
+    {
+      "title": "Guardians vs. Rays ALCS Game 6 picks: Back at Trop, Tampa Bay poised for World Series behind Freddy Peralta",
+      "description": "The Rays look to punch their World Series ticket in Game 6 of the ALCS back home vs. the Guardians",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T13:10:08+00:00"
+    },
+    {
+      "title": "College football's 10 bold predictions for season's second half: Playoff carnage and high-profile divorces",
+      "description": "Expect the Big 12 to grab multiple bids, UCLA to stage a Cinderella run to a home game and Bryce Underwood to seek a fresh start outside Ann Arbor",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T13:00:06+00:00"
+    },
+    {
+      "title": "Revisiting 2026 preseason college football predictions: 10 things we were dead wrong about",
+      "description": "From Oregon's rocky national title pursuit and Utah's undefeated rise to Michigan's offensive misery, the CBS Sports staff owns up to its biggest midseason misses",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T13:16:15+00:00"
+    },
+    {
+      "title": "Rams, Giants among NFL Week 6 disasters; inside wildest day ever in college football",
+      "description": "Plus, why the Rays have all the momentum entering ALCS Game 6",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T12:53:55+00:00"
+    },
+    {
+      "title": "Rams' Kyren Williams questions playing time after offensive issues: 'Probably because I'm not out there'",
+      "description": "Williams logged a season-low 13 touches in Los Angeles' loss to the Cardinals",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T12:50:16+00:00"
+    },
+    {
+      "title": "Rams, Giants among NFL Week 6 disasters | Inside college football's wildest week ever",
+      "description": "Plus, why the Rays have all the momentum entering ALCS Game 6",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T12:45:51+00:00"
+    },
+    {
+      "title": "NFL Week 7 early odds: Undefeated Chiefs are underdogs, first-place Browns are favorites",
+      "description": "The early Week 7 board includes a surprising underdog spot for the undefeated Chiefs and a dramatic Cowboys-Eagles shift following the Jalen Hurts news",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T12:48:06+00:00"
+    },
+    {
+      "title": "Cover 32: C.J. Stroud has flipped the script, is set to cash in; plus game balls, biggest gaffes from Week 6",
+      "description": "Tyler Sullivan dives into the biggest items from Week 6 in the NFL, including Travis Hunter's costly penalty and a breakout performance from a Steelers rookie",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T12:38:00+00:00"
+    },
+    {
+      "title": "Why Cowboys' star-studded offense has suddenly gone silent under Brian Schottenheimer",
+      "description": "The Cowboys' defensive problems were predictable, but their offensive collapse was not",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T12:13:15+00:00"
+    },
+    {
+      "title": "'Monday Night Football' prediction, odds, time: 49ers vs. Commanders picks by expert who's on 19-5 roll",
+      "description": "Micah Roberts reveals his picks for Washington Commanders vs. San Francisco 49ers in the 2026 Week 6 'Monday Night Football' matchup",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T11:53:33+00:00"
+    },
+    {
+      "title": "Commanders vs. 49ers prediction, odds, time: 'Monday Night Football' picks by proven model",
+      "description": "SportsLine's model has revealed its San Francisco 49ers vs. Washington Commanders picks for 'Monday Night Football'",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T11:43:28+00:00"
+    },
+    {
+      "title": "49ers vs. Commanders how to watch: 'Monday Night Football' time, channel, odds and prediction",
+      "description": "San Francisco can improve to 6-0 and strengthen its NFC West lead, while Washington enters Levi's Stadium looking to pull off a sizable road upset",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T11:31:45+00:00"
+    },
+    {
+      "title": "Giants have a QB controversy: J.J. McCarthy makes case to replace Jameis Winston",
+      "description": "The Giants must decide whether to ride McCarthy's momentum immediately or give him the Week 8 bye to prepare for a potential change",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T11:31:12+00:00"
+    },
+    {
+      "title": "NFL Week 6 grades for every team that played so far: Browns, Steelers earn high marks, Colts get 'F'",
+      "description": "We're handing out grades for every Week 6 game, and we don't hold back",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T13:22:05+00:00"
+    },
+    {
+      "title": "Champions League Vibe Check: Barcelona, Bayern Munich impress; Manchester United in trouble",
+      "description": "Matchday 3's action is headlined by Barcelona's clash with Paris Saint-Germain and Arsenal's trip to Bayern Munich",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T01:09:12+00:00"
+    },
+    {
+      "title": "NFL Week 6 overreactions: Time for Colts to clean house? A.J. Brown trade a mistake for Patriots?",
+      "description": "Indianapolis blew a 13-0 lead in a loss to the previously winless Titans",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T00:24:50+00:00"
+    },
+    {
+      "title": "Meltdown in LA: What went wrong for Rams as Cardinals earn largest upset of the season",
+      "description": "The Rams fall to 2-4 and have a whole host of issues",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T00:22:35+00:00"
+    },
+    {
+      "title": "2026 MLB playoff bracket: Schedule and scores as Rays take ALCS lead, Guardians facing elimination in Game 6",
+      "description": "The Brewers await the winner of the Rays vs. Guardians ALCS before the Fall Classic gets underway",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-19T00:51:21+00:00"
+    },
+    {
+      "title": "NFL Week 6 winners and losers: Giants face QB, RB turmoil while Browns take control of AFC North",
+      "description": "Jameis Winston and Cam Skattebo spent time on the bench in a disappointing home loss for New York, but the story in Cleveland is much happier",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-18T23:53:01+00:00"
+    },
+    {
+      "title": "Week 6 Fantasy football standouts: Early Week 7 waiver wire adds to boost your rest-of-season rosters",
+      "description": "Jaylin Noel offers big-play upside in Houston, while Isaiah Likely and Chuba Hubbard continue to solidify dominant roles worth targeting in trades",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-18T23:48:15+00:00"
+    },
+    {
+      "title": "Aaron Rodgers calls for NFL to examine Buccaneers' field over player-safety concerns",
+      "description": "Rodgers threw the game-winning touchdown in overtime before calling attention to a field on which he had previously suffered two injuries",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-18T23:45:03+00:00"
+    },
+    {
+      "title": "LOOK: Josh Allen channels Brett Favre with unbelievable backhanded touchdown pass",
+      "description": "Allen avoided a potential sack and improvised an extraordinary touchdown pass that immediately drew comparisons to a legendary Brett Favre play",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-18T23:45:49+00:00"
+    },
+    {
+      "title": "NFL DFS, Cowboys vs. Packers: Top daily Fantasy picks, lineups, advice for 'Sunday Night Football'",
+      "description": "DFS millionaire Mike McClure shares his top daily Fantasy picks and lineups for Packers vs. Cowboys on 'Sunday Night Football'",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-18T23:24:13+00:00"
+    },
+    {
+      "title": "Cowboys vs. Packers SGP: 'Sunday Night Football' same-game parlay picks, bets, props from SportsLine AI",
+      "description": "SportsLine's Machine Learning Model AI reveals its 'Sunday Night Football' SGP for Packers vs. Cowboys",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-18T23:21:02+00:00"
+    },
+    {
+      "title": "Fantasy football Week 6 stock watch: Colston Loveland and Kyle Pitts are still in buy-low window",
+      "description": "Target A.J. Brown after a heavy target share, find out why Chuba Hubbard is worth top-tier value, and navigate backfield shifts for Breece Hall and Cam Skattebo",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-18T23:20:25+00:00"
+    },
+    {
+      "title": "'Sunday Night Football' prediction, odds, time: Packers vs. Cowboys picks by expert who's on a 49-20 run",
+      "description": "R.J. White reveals his picks for Dallas Cowboys vs. Green Bay Packers in the 2026 Week 6 'Sunday Night Football' matchup",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-18T23:14:59+00:00"
+    },
+    {
+      "title": "Ben Simmons' comeback ends before it began: Kings guard suffers torn Achilles, likely to miss season",
+      "description": "Simmons, who didn't play during the 2025-26 season, was expected to start for Sacramento this year",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-18T23:06:26+00:00"
+    },
+    {
+      "title": "Cowboys vs. Packers prediction, spread, odds, time: 'Sunday Night Football' picks from advanced model",
+      "description": "SportsLine's model has revealed its Green Bay Packers vs. Dallas Cowboys picks for 'Sunday Night Football'",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-18T23:01:31+00:00"
+    },
+    {
+      "title": "Cowboys vs. Packers picks, prediction, player props: Expert's NFL Week 6 best bets for Sunday Night Football",
+      "description": "Back Dallas to cover the spread in an expected shootout at Green Bay, plus prime-time player props for Christian Watson, Javonte Williams and CeeDee Lamb",
+      "source": "CBS Sports",
+      "pubDate": "2026-10-18T23:01:25+00:00"
+    }
+  ],
+  "tweets": [
+    {
+      "account": "TalkinBaseball_",
+      "text": "Advantage Rays!\n\nhttps://shop.jomboymedia.com/collections/tb",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111970327790010447#m",
+      "pubDate": "2026-10-18T23:58:59+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Rays are one win away from the World Series!",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111970196542144722#m",
+      "pubDate": "2026-10-18T23:58:28+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Rays are three outs away from a 3-2 series lead!\n\nWe're live: https://youtube.com/live/TvGosJcrHeQ?si=kKkwGNAHI5SR7mz3",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111969050976784585#m",
+      "pubDate": "2026-10-18T23:53:54+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Steven Kwan has put on a SHOW defensively tonight!",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111968632276242441#m",
+      "pubDate": "2026-10-18T23:52:15+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Joez reading time had us all enthralled",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111966912855073095#m",
+      "pubDate": "2026-10-18T23:45:25+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Jose Ramirez strikes out representing the tying run in a big spot",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111965336048439491#m",
+      "pubDate": "2026-10-18T23:39:09+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Huge spot for J-Ram!\n\nWatch with us: https://youtube.com/live/TvGosJcrHeQ?si=d9_T3S3Z5X7g2dxD",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111964864960934045#m",
+      "pubDate": "2026-10-18T23:37:16+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Rays are bringing in Tyler Wells with Jose Ramirez due up as the tying run with two outs in the eighth",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111964336335847586#m",
+      "pubDate": "2026-10-18T23:35:10+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Could've challenged for strike three, got the inning-ending double play instead.\n\nRays ball",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111962908468953385#m",
+      "pubDate": "2026-10-18T23:29:30+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Can't field a Chandler Simpson bunt much better than Jose Ramirez did here",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111960889729622265#m",
+      "pubDate": "2026-10-18T23:21:29+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Drew Rasmussen continues his stellar postseason!",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111959879649014095#m",
+      "pubDate": "2026-10-18T23:17:28+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Drew Rasmussen gets Patrick Bailey to bounce into an inning-ending double play and the Rays are six outs away from going up 3-2 in the ALCS",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111959239782432943#m",
+      "pubDate": "2026-10-18T23:14:55+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Guardians get on the board as Chase DeLauter pushes a run across with an RBI groundout",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111954803307708579#m",
+      "pubDate": "2026-10-18T22:57:17+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Guardians are making a bit of noise as they have their first runner in scoring position of the night",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111954466991726905#m",
+      "pubDate": "2026-10-18T22:55:57+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Ben Williamson flashes the leather and takes a hit away from Jose Ramirez!",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111946158008414429#m",
+      "pubDate": "2026-10-18T22:22:56+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Steven Kwan with a HUGE play when Cleveland desperately needed it!",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111946058431635722#m",
+      "pubDate": "2026-10-18T22:22:33+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Steven Kwan shows off the cannon to keep the Guardians from going down 4-0!",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111944887968878954#m",
+      "pubDate": "2026-10-18T22:17:53+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Rays are cruising early",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111942516262228363#m",
+      "pubDate": "2026-10-18T22:08:28+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TalkinBaseball_",
+      "text": "Chandler Simpson takes a trip around the bases and scores on a Liam Hicks single as the Rays go up 3-0",
+      "link": "https://twitter.com/TalkinBaseball_/status/2111940173369901535#m",
+      "pubDate": "2026-10-18T21:59:09+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "#poll Are The University of Miami’s RPOs sexually graphic?",
+      "link": "https://twitter.com/LeBatardShow/status/2112172947653660881#m",
+      "pubDate": "2026-10-19T13:24:07+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "A toast to Nathan Fielder's Elizabeth Holmes Doc 🥂\n\n🤝 @JoseCuervo",
+      "link": "https://twitter.com/LeBatardShow/status/2112168811117822222#m",
+      "pubDate": "2026-10-19T13:07:41+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "x.com/i/broadcasts/1jGXgBNnm…",
+      "link": "https://twitter.com/LeBatardShow/status/2112164675236307278#m",
+      "pubDate": "2026-10-19T12:51:15+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "💰💰💰💰💰💰💰💰💰💰💰💰💰💰💰",
+      "link": "https://twitter.com/LeBatardShow/status/2111968685514510578#m",
+      "pubDate": "2026-10-18T23:52:27+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "1 spread. 1 O/U. 1 underdog. \n\nWho does Football America like in NFL Week 6?\n\n🤝 @DraftKings",
+      "link": "https://twitter.com/LeBatardShow/status/2111850428178874441#m",
+      "pubDate": "2026-10-18T16:02:33+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "LeBatardShow",
+      "text": "The breeziest win of this NFL weekend? Look no further than the Indianapolis Colts. \n\n@littlecaesars",
+      "link": "https://twitter.com/LeBatardShow/status/2111840207381401966#m",
+      "pubDate": "2026-10-18T15:21:56+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "BarstoolReags",
+      "text": "Football is a violent sport. Hit people or make it two hand touch. None of this soft shit",
+      "link": "https://twitter.com/BarstoolReags/status/2111926944644431904#m",
+      "pubDate": "2026-10-18T21:06:35+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolReags",
+      "text": "Just fucking throw it to Fields for a first down",
+      "link": "https://twitter.com/BarstoolReags/status/2111916461924987164#m",
+      "pubDate": "2026-10-18T20:24:56+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolReags",
+      "text": "Yeah, it’s 18 time",
+      "link": "https://twitter.com/BarstoolReags/status/2111912554129707041#m",
+      "pubDate": "2026-10-18T20:09:24+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolReags",
+      "text": "Put in JJ",
+      "link": "https://twitter.com/BarstoolReags/status/2111904050572845178#m",
+      "pubDate": "2026-10-18T19:35:37+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolReags",
+      "text": "Tyrone Tracy? Tyrone Tracy.",
+      "link": "https://twitter.com/BarstoolReags/status/2111870281887191100#m",
+      "pubDate": "2026-10-18T17:21:26+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolReags",
+      "text": "Will Stein taunting the Oklahoma bench after the flea flicker is perfect. This is our guy. Enough of a lunatic combined with genius.",
+      "link": "https://twitter.com/BarstoolReags/status/2111823094243615107#m",
+      "pubDate": "2026-10-18T14:13:56+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "JoeyMulinaro",
+      "text": "What a beautifully miserable experience. The Steelers Way 😂 W!!!!",
+      "link": "https://twitter.com/JoeyMulinaro/status/2111921634508501166#m",
+      "pubDate": "2026-10-18T20:45:29+00:00",
+      "media_kind": "gif",
+      "has_video": true
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Any disqualification always is reviewed for potential additional discipline, and it is true here: the NFL is reviewing Bills safety C.J. Gardner-Johnson spitting at Raiders TE Brock Bowers for discipline.",
+      "link": "https://twitter.com/AdamSchefter/status/2112167040492695833#m",
+      "pubDate": "2026-10-19T13:00:39+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "If the Commanders lose tonight on Monday Night Football to the 49ers, the NFC East would become the first division in NFL history to be winless in consecutive weeks in which all teams in the division played a game. And two of the teams played each other last week.",
+      "link": "https://twitter.com/AdamSchefter/status/2112162580106203178#m",
+      "pubDate": "2026-10-19T12:42:55+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Bills safety C.J. Gardner-Johnson apologized on IG after cameras captured him spitting at Raiders TE Brock Bowers.",
+      "link": "https://twitter.com/AdamSchefter/status/2112122913172103622#m",
+      "pubDate": "2026-10-19T10:05:18+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Caleb Williams is back, as are Ben Johnson’s victory speeches.",
+      "link": "https://twitter.com/AdamSchefter/status/2111977872416006380#m",
+      "pubDate": "2026-10-19T00:28:58+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Mack Wilson wasn’t wrong:",
+      "link": "https://twitter.com/AdamSchefter/status/2111976161593249940#m",
+      "pubDate": "2026-10-19T00:22:10+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "After today’s loss in Kansas City, this is the Chargers’ first 0-6 start since 2000.",
+      "link": "https://twitter.com/AdamSchefter/status/2111963616387678718#m",
+      "pubDate": "2026-10-18T23:32:19+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Josh Allen:",
+      "link": "https://twitter.com/AdamSchefter/status/2111947754847047694#m",
+      "pubDate": "2026-10-18T22:29:17+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Bills S CJ Gardner-Johnson was ejected.",
+      "link": "https://twitter.com/AdamSchefter/status/2111936207634714807#m",
+      "pubDate": "2026-10-18T21:43:24+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Ladd McConkey now has been ruled out with a concussion.",
+      "link": "https://twitter.com/AdamSchefter/status/2111927279219863686#m",
+      "pubDate": "2026-10-18T21:07:55+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Chargers WR Ladd McConkey is being evaluated for a head injury.",
+      "link": "https://twitter.com/AdamSchefter/status/2111926529433243695#m",
+      "pubDate": "2026-10-18T21:04:56+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "New Rams K Blake Grupe hurt his knee and is doubtful to return today.",
+      "link": "https://twitter.com/AdamSchefter/status/2111917348991160500#m",
+      "pubDate": "2026-10-18T20:28:28+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Browns are in first place in the AFC North.",
+      "link": "https://twitter.com/AdamSchefter/status/2111909472259969070#m",
+      "pubDate": "2026-10-18T19:57:10+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "AdamSchefter",
+      "text": "Falcons say Kendal Daniels is alert and has movement in all his extremities. He was taken to Grady Memorial Hospital for further evaluation.",
+      "link": "https://twitter.com/AdamSchefter/status/2111906145128304900#m",
+      "pubDate": "2026-10-18T19:43:56+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "💥💥  10.19 MMQB Takeaways 💥💥\n\n➡️ @Eagles hit crossroads. \n➡️ @Panthers deserve your respect.\n➡️ @Browns got swagger.\n➡️ Value of K9 to the @Chiefs.\n➡️ Where are the @RamsNFL headed?\n➡️ Rise of the @AZCardinals.\n➡️ @BuffaloBills, @Saints road show.\n\nhttps://www.si.com/nfl/albert-breer-week-6-nfl-takeaways-trust-howie-roseman-eagles",
+      "link": "https://twitter.com/AlbertBreer/status/2112163341489594523#m",
+      "pubDate": "2026-10-19T12:45:57+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "The Chiefs are 5-0.\n\nThe Chargers go into their bye at 0-6. Coming out of it ...\n\n• at Rams\n• vs. Texans\n• at Ravens",
+      "link": "https://twitter.com/AlbertBreer/status/2111962495829135535#m",
+      "pubDate": "2026-10-18T23:27:52+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "I can actually see where in real time you might throw it.\n\nBut replay assist should jump in to fix it.",
+      "link": "https://twitter.com/AlbertBreer/status/2111958487005823280#m",
+      "pubDate": "2026-10-18T23:11:56+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "The Cardinals are now 2-0 in Los Angeles.\n\nRams fall to 2-4, and three-and-a-half games out of first in the NFC West. They're actually even with Arizona in the division now.",
+      "link": "https://twitter.com/AlbertBreer/status/2111956021681992102#m",
+      "pubDate": "2026-10-18T23:02:08+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "Another tough call on Josh Wallace there, and I don't love it, but the Rams put themselves in this position to lose this game.",
+      "link": "https://twitter.com/AlbertBreer/status/2111955085580239097#m",
+      "pubDate": "2026-10-18T22:58:25+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "The punter just kicked a PAT to give the Rams the lead over Arizona.\n\nWas pure too.",
+      "link": "https://twitter.com/AlbertBreer/status/2111954086098534708#m",
+      "pubDate": "2026-10-18T22:54:26+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "Josh Allen",
+      "link": "https://twitter.com/AlbertBreer/status/2111953714584211879#m",
+      "pubDate": "2026-10-18T22:52:58+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "Cardinals taking the Rams into deep water now.",
+      "link": "https://twitter.com/AlbertBreer/status/2111942892176453947#m",
+      "pubDate": "2026-10-18T22:09:58+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "Love this ...",
+      "link": "https://twitter.com/AlbertBreer/status/2111942404135887014#m",
+      "pubDate": "2026-10-18T22:08:01+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "Chiefs 19, Chargers 3 at the half ...\n\n• Yards: Chiefs 268, Chargers 103\n\n• First downs: Chiefs 14, Chargers 7.\n\n• Yards/play: Chiefs 8.6, Chargers 3.7.\n\nLA staring at 0-6 with the bye coming.",
+      "link": "https://twitter.com/AlbertBreer/status/2111938725894909969#m",
+      "pubDate": "2026-10-18T21:53:24+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "Whenever there’s a fight, CJ Gardner-Johnson is on the scene.",
+      "link": "https://twitter.com/AlbertBreer/status/2111936874088730813#m",
+      "pubDate": "2026-10-18T21:46:03+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "If there's an NFL cliche I'd like to retire, it's definitely \"next-man-up mentality\". I get the idea. But ... as opposed to what exactly? A wave-the-white-flag mentality? A next-guy-isn't-good-enough mentality?",
+      "link": "https://twitter.com/AlbertBreer/status/2111926094915924125#m",
+      "pubDate": "2026-10-18T21:03:13+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "Saints survive, but JJ McCarthy sure gave the Giants a spark.\n\nSaints are now 2-4. Giants are 3-2-1.",
+      "link": "https://twitter.com/AlbertBreer/status/2111916565721489746#m",
+      "pubDate": "2026-10-18T20:25:21+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "After the Steelers FG lost track of the game clock, Chris Boswell just drilled a second 58-yard field goal to pull Pittsburgh even with Tampa.",
+      "link": "https://twitter.com/AlbertBreer/status/2111910327398830137#m",
+      "pubDate": "2026-10-18T20:00:34+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "The Browns are 4-2, and lead the AFC North this late in the season for the first time in 12 years. They pull even with the Ravens, with their win over the Ravens.",
+      "link": "https://twitter.com/AlbertBreer/status/2111909575255593267#m",
+      "pubDate": "2026-10-18T19:57:34+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "Hard to watch this stuff. Hope he's alright.",
+      "link": "https://twitter.com/AlbertBreer/status/2111905333220438185#m",
+      "pubDate": "2026-10-18T19:40:43+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "Massive win for the Texans.\n\nPath back to .500 is there for them. And then we’ll see.",
+      "link": "https://twitter.com/AlbertBreer/status/2111862297345859763#m",
+      "pubDate": "2026-10-18T16:49:42+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "AlbertBreer",
+      "text": "With a struggling run game, CJ Stroud’s playing really, really good ball. And not just today, but all year to this point.",
+      "link": "https://twitter.com/AlbertBreer/status/2111835655571390975#m",
+      "pubDate": "2026-10-18T15:03:50+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "SharpFootball",
+      "text": "Image",
+      "link": "https://twitter.com/SharpFootball/status/2111962388568404044#m",
+      "pubDate": "2026-10-18T23:27:26+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SharpFootball",
+      "text": "UNREAL PERSONAL FOUL \n\nWHAT DO YOU WANT HIM TO DO???",
+      "link": "https://twitter.com/SharpFootball/status/2111955394797121543#m",
+      "pubDate": "2026-10-18T22:59:39+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SharpFootball",
+      "text": "how dumb is it to punch a guy’s helmet like this on a scale of 1-10?",
+      "link": "https://twitter.com/SharpFootball/status/2111952088263721004#m",
+      "pubDate": "2026-10-18T22:46:30+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SharpFootball",
+      "text": "what a graphic",
+      "link": "https://twitter.com/SharpFootball/status/2111950245219189247#m",
+      "pubDate": "2026-10-18T22:39:11+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SharpFootball",
+      "text": "the spit that got CJ Gardner-Johnson ejected\n\n“it’s childish, it’s immature, it’s unprofessional”",
+      "link": "https://twitter.com/SharpFootball/status/2111939795958059331#m",
+      "pubDate": "2026-10-18T21:57:39+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SharpFootball",
+      "text": "how does Demeco not call a timeout after that catch???\n\nwhole team has to run 60 yards down the field\n\ncompletely idiotic",
+      "link": "https://twitter.com/SharpFootball/status/2111834358331953574#m",
+      "pubDate": "2026-10-18T14:58:41+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "SharpFootball",
+      "text": "Nico Collins cooked Travis Hunter",
+      "link": "https://twitter.com/SharpFootball/status/2111819511800422796#m",
+      "pubDate": "2026-10-18T13:59:41+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "Good morning beautiful people..\n\nWe have arrived at another Magical Overreaction Monday.. SO MUCH HAS HAPPENED\n\nUse #IDontWantToOverreactBUT and let it alllll AHT.. you will not be judged, NO NO\n\nCelebrated actually.. best 1’s in @tyschmit’s eyes make The Progrum \n\nLet’s GOOOOO",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2112174024709341590#m",
+      "pubDate": "2026-10-19T13:28:24+00:00",
+      "media_kind": "gif",
+      "has_video": true
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "The Colts are 2-11 in the last 13 games.",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2112018175114326105#m",
+      "pubDate": "2026-10-19T03:09:07+00:00",
+      "media_kind": "gif",
+      "has_video": true
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "WHAT A GAME\n\nRyland sends The Rams to 2-4 👀👀",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2111955782707376277#m",
+      "pubDate": "2026-10-18T23:01:11+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "HELLLL YEAH @ethanevans \n\nWHAT A KICK",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2111954101965824492#m",
+      "pubDate": "2026-10-18T22:54:30+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "PatMcAfeeShow",
+      "text": "Need an update on Coach ASAP @MarkKaboly",
+      "link": "https://twitter.com/PatMcAfeeShow/status/2111891430687814072#m",
+      "pubDate": "2026-10-18T18:45:28+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "HaterReport",
+      "text": "Defenses in the endzone after a pick-six",
+      "link": "https://twitter.com/HaterReport/status/2112165777419682039#m",
+      "pubDate": "2026-10-19T12:55:38+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "She smacked Josh Allen on the ass after his postgame interview 😭💀",
+      "link": "https://twitter.com/HaterReport/status/2112164212919414905#m",
+      "pubDate": "2026-10-19T12:49:25+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "REAL TEARS 😂😂😂",
+      "link": "https://twitter.com/HaterReport/status/2112039093789942083#m",
+      "pubDate": "2026-10-19T04:32:14+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "The guy that said \"embarrassing\" to Dak Prescott last week",
+      "link": "https://twitter.com/HaterReport/status/2112033632713908286#m",
+      "pubDate": "2026-10-19T04:10:32+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "The Dallas Cowboys are 0-2 since Dak Prescott told CJ Stroud to “get some wins”\n\nThe Texans are 2-0 LMFAOO 😂",
+      "link": "https://twitter.com/HaterReport/status/2112028324742807778#m",
+      "pubDate": "2026-10-19T03:49:26+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "How ass are the Dallas Cowboys",
+      "link": "https://twitter.com/HaterReport/status/2112026127539606006#m",
+      "pubDate": "2026-10-19T03:40:43+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "HaterReport",
+      "text": "CeeDee Lamb praying to God to free him from Dak Prescott 😂😂😂",
+      "link": "https://twitter.com/HaterReport/status/2112024407149539567#m",
+      "pubDate": "2026-10-19T03:33:52+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "Dak Prescott when the lights get too bright 💩",
+      "link": "https://twitter.com/HaterReport/status/2112023659451908115#m",
+      "pubDate": "2026-10-19T03:30:54+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "HaterReport",
+      "text": "Dak Prescott trying to lead a 4th quarter comeback",
+      "link": "https://twitter.com/HaterReport/status/2112022994948174228#m",
+      "pubDate": "2026-10-19T03:28:16+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "HaterReport",
+      "text": "Dak Prescott CLUTCH touchdown on 4th down 🔥",
+      "link": "https://twitter.com/HaterReport/status/2112022756271522097#m",
+      "pubDate": "2026-10-19T03:27:19+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "The Packers got ROBBED. Dak Prescott threw a NASTY interception and they called ROUGHING THE PASSER\n\nThis is RIDICULOUS",
+      "link": "https://twitter.com/HaterReport/status/2112020695555436547#m",
+      "pubDate": "2026-10-19T03:19:07+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "DAK PRESCOTT MEATBALL SUB🔥",
+      "link": "https://twitter.com/HaterReport/status/2112020029718106538#m",
+      "pubDate": "2026-10-19T03:16:29+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "CeeDee Lamb and George Pickens HATE Dak Prescott 😂😂",
+      "link": "https://twitter.com/HaterReport/status/2112019020010410144#m",
+      "pubDate": "2026-10-19T03:12:28+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "Arch Manning killed this sh*t 😭😭",
+      "link": "https://twitter.com/HaterReport/status/2112016480095400107#m",
+      "pubDate": "2026-10-19T03:02:22+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "The Packers have DROPPED THREE Jordan Love TDs tonight:\n\nMatthew Golden - 2\nChristian Watson - 1\n\nALL THREE ⬇️",
+      "link": "https://twitter.com/HaterReport/status/2112014355445264671#m",
+      "pubDate": "2026-10-19T02:53:56+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "Matthew Golden when Jordan Love throws him a perfect pass",
+      "link": "https://twitter.com/HaterReport/status/2112000846896800154#m",
+      "pubDate": "2026-10-19T02:00:15+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "Mathew Golden wanna be AJ Brown SO BAD \n\nBRO HAS DROPPED TWO TOUCHDOWNS 😭",
+      "link": "https://twitter.com/HaterReport/status/2111998366536355991#m",
+      "pubDate": "2026-10-19T01:50:24+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "HaterReport",
+      "text": "I’m convinced that Dak Prescott’s receivers HATE HIM. They do this EVERY week 😂😂",
+      "link": "https://twitter.com/HaterReport/status/2111996471004242051#m",
+      "pubDate": "2026-10-19T01:42:52+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "TomPelissero",
+      "text": "We're live now! Join us.\n\nhttps://substack.com/chat/group/dcd6edca-864d-417b-9b4f-cadca1bf8115/post/cff7554d-5686-41ca-82da-dc91f5ce0859",
+      "link": "https://twitter.com/TomPelissero/status/2111849723887800742#m",
+      "pubDate": "2026-10-18T15:59:45+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "OldTakesExposed",
+      "text": "Image",
+      "link": "https://twitter.com/OldTakesExposed/status/2111963793207255407#m",
+      "pubDate": "2026-10-18T23:33:01+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "JackKennedy",
+      "text": "Gase has not coached at any level in the league since getting canned by the Jets in 2020.\n\nHis last year there, the Jets offense was DEAD LAST in yards and scoring. \n\nOn what planet is he the guy to take over? Give it to Shane Day",
+      "link": "https://twitter.com/JackKennedy/status/2112007563575529571#m",
+      "pubDate": "2026-10-19T02:26:57+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "JackKennedy",
+      "text": "First Harbaugh post conference where I’ve seen him pointedly acknowledge the offense is dogshit",
+      "link": "https://twitter.com/JackKennedy/status/2111971635901477335#m",
+      "pubDate": "2026-10-19T00:04:11+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JackKennedy",
+      "text": "We're coming for you my prince",
+      "link": "https://twitter.com/JackKennedy/status/2111962203234414934#m",
+      "pubDate": "2026-10-18T23:26:42+00:00",
+      "media_kind": "gif",
+      "has_video": true
+    },
+    {
+      "account": "JackKennedy",
+      "text": "Second half Chiefs drives:\n- Turnover on downs \n- Fumbled punt return \n- 3 and out \n- Missed FG \n\nThe Chargers offense has converted this into: \n- 3 and out (1 yard)\n- 3 and out (-2 yards)\n- Turnover on downs (24 yards)\n- Fumble (19 yards)",
+      "link": "https://twitter.com/JackKennedy/status/2111958222839894196#m",
+      "pubDate": "2026-10-18T23:10:53+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JackKennedy",
+      "text": "Incredible forced fumble for Quentin Johnston #ChargerFootball",
+      "link": "https://twitter.com/JackKennedy/status/2111956318970138897#m",
+      "pubDate": "2026-10-18T23:03:19+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JackKennedy",
+      "text": "\"Close to turning things around\"",
+      "link": "https://twitter.com/JackKennedy/status/2111954742158991698#m",
+      "pubDate": "2026-10-18T22:57:03+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "JackKennedy",
+      "text": "#ChargerFootball",
+      "link": "https://twitter.com/JackKennedy/status/2111948570823655717#m",
+      "pubDate": "2026-10-18T22:32:32+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "JackKennedy",
+      "text": "Incredible how I can set the bar at the floor and McDaniel & co still manage to do worse",
+      "link": "https://twitter.com/JackKennedy/status/2111946623970369985#m",
+      "pubDate": "2026-10-18T22:24:47+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "JackKennedy",
+      "text": "Drive ended with a field goal btw",
+      "link": "https://twitter.com/JackKennedy/status/2111943192673464659#m",
+      "pubDate": "2026-10-18T22:11:09+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "JackKennedy",
+      "text": "Put Herbert on ice and factory reset him in 2027",
+      "link": "https://twitter.com/JackKennedy/status/2111928667383140497#m",
+      "pubDate": "2026-10-18T21:13:26+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JackKennedy",
+      "text": "Blue tent take him out of the game!!!!",
+      "link": "https://twitter.com/JackKennedy/status/2111922798616838491#m",
+      "pubDate": "2026-10-18T20:50:07+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JackKennedy",
+      "text": "Need this to be a 60 point loss. Ownership doesn't seem to respond to anything but a divisional obliteration. GIVE ME EVERYTHING YOU GOT MAHOMES!",
+      "link": "https://twitter.com/JackKennedy/status/2111921409907695774#m",
+      "pubDate": "2026-10-18T20:44:36+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JackKennedy",
+      "text": "Gun to your head, Smith, Boston or Moore for final WR slot?",
+      "link": "https://twitter.com/JackKennedy/status/2111819386776695033#m",
+      "pubDate": "2026-10-18T13:59:12+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "coleadamss",
+      "text": "Exhibition basketball has been absolutely insane today 😭",
+      "link": "https://twitter.com/coleadamss/status/2111918297721590174#m",
+      "pubDate": "2026-10-18T20:32:14+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "coleadamss",
+      "text": "Triple OT exhibition between St John’s and Rutgers \n\nMarch in October",
+      "link": "https://twitter.com/coleadamss/status/2111893318422446427#m",
+      "pubDate": "2026-10-18T18:52:58+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "coleadamss",
+      "text": "It’s gonna be coffee and hoops at the Vatican \n\nI have pure and genuine chills",
+      "link": "https://twitter.com/coleadamss/status/2111843740046262363#m",
+      "pubDate": "2026-10-18T15:35:58+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "Packer Devil Magic + Packer Ref Ball + Dak Unluckiest Man Alive Curse. This is an unwatchable product right now.",
+      "link": "https://twitter.com/W_B_Rick/status/2111997816876712232#m",
+      "pubDate": "2026-10-19T01:48:13+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "It’s such a Rewatch The Andy Samberg Comedic And Musical Masterpiece Popstar: Never Stop Never Stopping kinda night",
+      "link": "https://twitter.com/W_B_Rick/status/2111968783233679604#m",
+      "pubDate": "2026-10-18T23:52:51+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "I am hearing whispers that Indiana basketball might be awesome this year.",
+      "link": "https://twitter.com/W_B_Rick/status/2111959562127311108#m",
+      "pubDate": "2026-10-18T23:16:12+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "Get Fernando up and moving around.",
+      "link": "https://twitter.com/W_B_Rick/status/2111944360405209315#m",
+      "pubDate": "2026-10-18T22:15:48+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "No funny shit I would go to fucking war for these two",
+      "link": "https://twitter.com/W_B_Rick/status/2111937597333209497#m",
+      "pubDate": "2026-10-18T21:48:55+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "Holy shit I know that guy",
+      "link": "https://twitter.com/W_B_Rick/status/2111931931298308376#m",
+      "pubDate": "2026-10-18T21:26:24+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "The Colts lost Seth Da Flow. \n\nThe most damning indictment of Chris Ballard yet.",
+      "link": "https://twitter.com/W_B_Rick/status/2111922326031786483#m",
+      "pubDate": "2026-10-18T20:48:14+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "#IMSORRYKYLERGORDON",
+      "link": "https://twitter.com/W_B_Rick/status/2111912502682361973#m",
+      "pubDate": "2026-10-18T20:09:12+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "There’s too many flags happening in football now.",
+      "link": "https://twitter.com/W_B_Rick/status/2111883193385148533#m",
+      "pubDate": "2026-10-18T18:12:44+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "I Believe In Josh Hoover",
+      "link": "https://twitter.com/W_B_Rick/status/2111879188542038452#m",
+      "pubDate": "2026-10-18T17:56:50+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "Jaylon Johnson runs like he has an actual dump in his pants.",
+      "link": "https://twitter.com/W_B_Rick/status/2111877375403188245#m",
+      "pubDate": "2026-10-18T17:49:37+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "W_B_Rick",
+      "text": "The sun came up today",
+      "link": "https://twitter.com/W_B_Rick/status/2111849723967529357#m",
+      "pubDate": "2026-10-18T15:59:45+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "ROTHSTEIN 45.                          \n\nTOP 10:                          \n\n1. Florida             \n2. Duke             \n3. Illinois             \n4. UConn             \n5. Michigan State             \n6. Arizona             \n7. Virginia             \n8. Texas             \n9. Michigan             \n10. Louisville                          \n\nCC: @FanDuel, @FanDuelResearch.          \n\nhttps://bit.ly/4wKdkLX",
+      "link": "https://twitter.com/JonRothstein/status/2112166876881051672#m",
+      "pubDate": "2026-10-19T13:00:00+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "There are SIX players on the All-Atlantic 10 First-Team —— SIX!  \n\n“Inconceivable.\" - Vizzini, The Princess Bride, circa 1987",
+      "link": "https://twitter.com/JonRothstein/status/2112158481939828791#m",
+      "pubDate": "2026-10-19T12:26:38+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "All-Atlantic 10 Preseason First Team, per release.\n\nAmaël L’Etang, Dayton\nJaiden Glover-Toscano, St. Joe's\nTrey Green, Saint Louis\nKellen Thames, Saint Louis\nLazar Djokovic, VCU\nNyk Lewis, VCU",
+      "link": "https://twitter.com/JonRothstein/status/2112158349185683513#m",
+      "pubDate": "2026-10-19T12:26:07+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Atlantic 10 Preseason Poll, per release.\n\n1. VCU \n2. Saint Louis \n3. Dayton \n4. George Mason\n5. GW\n6. St. Joe's\n7. Fordham\n8. Davidson\n9. Richmond\n10. Duquesne\n11. Loyola Chicago\n12. Rhode Island\n13. La Salle\n14. St. Bonaventure",
+      "link": "https://twitter.com/JonRothstein/status/2112158144126128228#m",
+      "pubDate": "2026-10-19T12:25:18+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "TODAY'S NOTABLE EXHIBITION GAMES:\n\nMarquette at Green Bay\nUAB at Vanderbilt",
+      "link": "https://twitter.com/JonRothstein/status/2112124094892458208#m",
+      "pubDate": "2026-10-19T10:10:00+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Only 13 days until the 2026-27 college basketball season officially begins…..#countdown",
+      "link": "https://twitter.com/JonRothstein/status/2112122836857004159#m",
+      "pubDate": "2026-10-19T10:05:00+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "\"Most things I worry about never happen anyway.\" - Tom Petty",
+      "link": "https://twitter.com/JonRothstein/status/2112122333695484286#m",
+      "pubDate": "2026-10-19T10:03:00+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "“The action is the juice.” - Tom Sizemore as Michael Cheritto in Heat, circa 1995",
+      "link": "https://twitter.com/JonRothstein/status/2112122081873956903#m",
+      "pubDate": "2026-10-19T10:02:00+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "\"Every day is a gift.\" - Art Loveley",
+      "link": "https://twitter.com/JonRothstein/status/2112121830421287220#m",
+      "pubDate": "2026-10-19T10:01:00+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "\"Stay hungry, Stay humble\"",
+      "link": "https://twitter.com/JonRothstein/status/2112121590104408551#m",
+      "pubDate": "2026-10-19T10:00:03+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Indiana is so much more dynamic than it was last season. Better guards, better shooting, and so much better up front. Hoosiers beat UNC decisively in Indy. Will be 1 of 76 in Year 2 under Darian DeVries.",
+      "link": "https://twitter.com/JonRothstein/status/2111956544971559001#m",
+      "pubDate": "2026-10-18T23:04:13+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "North Carolina/Indiana.\n\nStandalone Power Conference Exhibition Game.",
+      "link": "https://twitter.com/JonRothstein/status/2111934474464444482#m",
+      "pubDate": "2026-10-18T21:36:31+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Amadou Seini. Buy Stock Now.",
+      "link": "https://twitter.com/JonRothstein/status/2111934285150331305#m",
+      "pubDate": "2026-10-18T21:35:46+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Kaden House. Buy Stock Now.",
+      "link": "https://twitter.com/JonRothstein/status/2111934182209298455#m",
+      "pubDate": "2026-10-18T21:35:21+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "There's a lot of reasons why Maryland will be one of the most improved teams in college basketball, but the one that's not getting enough attention?\n\nThe Terps' ascent back to relevance started by retaining Pharrel Payne and Andre Mills.\n\nCombined for 53 and 21 today vs. WVU.",
+      "link": "https://twitter.com/JonRothstein/status/2111933969260216568#m",
+      "pubDate": "2026-10-18T21:34:30+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Looking closely at Baylor's Isaac Williams as an under-the-radar Glue Guy in the Big 12.\n\nHad 15 off the bench, but the most impressive thing to me was ZERO turnovers in 36 minutes off the bench.\n\nRemember The Name.",
+      "link": "https://twitter.com/JonRothstein/status/2111920857396187272#m",
+      "pubDate": "2026-10-18T20:42:24+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Baylor gets an incredible confidence boost with an OT win over Florida in Jacksonville. 31 for Penn State transfer Kayden Mingo in the win. Gators were just 4-29 from 3 and 22-35 from the FT line.",
+      "link": "https://twitter.com/JonRothstein/status/2111919396721770565#m",
+      "pubDate": "2026-10-18T20:36:36+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Creighton makes 14 three-point shots in an 83-80 win over Iowa State at Hilton Coliseum.\n\nTamin Lipsey DNP for the Clones.\n\nJays had 14 assists to 19 turnovers in the win.",
+      "link": "https://twitter.com/JonRothstein/status/2111901466319298640#m",
+      "pubDate": "2026-10-18T19:25:21+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Christian Gurdak in Rutgers' two exhibition games:\n\n19.5 PPG, 11.5 RPG.",
+      "link": "https://twitter.com/JonRothstein/status/2111901090161803334#m",
+      "pubDate": "2026-10-18T19:23:51+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JonRothstein",
+      "text": "Christian Gurdak. Buy Stock Now.",
+      "link": "https://twitter.com/JonRothstein/status/2111900833004867686#m",
+      "pubDate": "2026-10-18T19:22:50+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SportsCenter",
+      "text": "\"As a quarterback, I want to be aggressive. ... I want to put pressure on the defense.\"\n\nJordan Love joins SportsCenter with @notthefakeSVP following the Packers' 23-13 victory over the Cowboys 😤",
+      "link": "https://twitter.com/SportsCenter/status/2112043299007549534#m",
+      "pubDate": "2026-10-19T04:48:57+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "\"The last two weeks feels like the Green Bay team everyone kind of expected to see for the entire season.\"\n\n@tthasselbeck joins @notthefakeSVP following the Packers' 23-13 win against the Cowboys 🏈",
+      "link": "https://twitter.com/SportsCenter/status/2112033537528361175#m",
+      "pubDate": "2026-10-19T04:10:09+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "Jordan Love takes it in himself 😤\n\nThe Packers are up 17-0 😳\n\n(via @NFL)",
+      "link": "https://twitter.com/SportsCenter/status/2111998211388748142#m",
+      "pubDate": "2026-10-19T01:49:47+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "Jordan Love was cookin' on the Packers' opening drive vs. Dallas 🔥",
+      "link": "https://twitter.com/SportsCenter/status/2111983535355482422#m",
+      "pubDate": "2026-10-19T00:51:28+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SportsCenter",
+      "text": "LOVE ➡️ GOLDEN 🔥\n\nPackers score first vs. the Cowboys!\n\n(via @NFL)",
+      "link": "https://twitter.com/SportsCenter/status/2111981728306745444#m",
+      "pubDate": "2026-10-19T00:44:17+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "TAMPA BAY IS ONE WIN AWAY FROM THE WORLD SERIES!\n\nThey take a 3-2 series lead heading back home 😤",
+      "link": "https://twitter.com/SportsCenter/status/2111973473815830940#m",
+      "pubDate": "2026-10-19T00:11:29+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "\"We won't win a game unless we figure out how to not beat ourselves.\"\n\nRams HC Sean McVay after losing to the Cardinals.",
+      "link": "https://twitter.com/SportsCenter/status/2111959698857394378#m",
+      "pubDate": "2026-10-18T23:16:45+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "CHAD RYLAND'S SIXTH FG WINS IT FOR ARIZONA VS. THE RAMS 🔥\n\nRams are now last place in the NFC West 😳\n\n(via @NFL)",
+      "link": "https://twitter.com/SportsCenter/status/2111956222211707375#m",
+      "pubDate": "2026-10-18T23:02:56+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "JOSH ALLEN IS UNREAL 🤯\n\nWHAT A SEQUENCE FOR THE TOUCHDOWN.\n\n(via @BuffaloBills)",
+      "link": "https://twitter.com/SportsCenter/status/2111947655903613385#m",
+      "pubDate": "2026-10-18T22:28:53+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "C.J. Gardner-Johnson has been disqualified from the game after an unsportsmanlike conduct penalty.\n\n(📺 CBS)",
+      "link": "https://twitter.com/SportsCenter/status/2111936483032526868#m",
+      "pubDate": "2026-10-18T21:44:30+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "Giants RB Cam Skattebo didn't record a single carry in the team's loss to the Saints today 😳",
+      "link": "https://twitter.com/SportsCenter/status/2111925091185361258#m",
+      "pubDate": "2026-10-18T20:59:14+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SportsCenter",
+      "text": "KENNETH WALKER WAS GONE 💨😮‍💨\n\n(via @NFL)",
+      "link": "https://twitter.com/SportsCenter/status/2111921420552868098#m",
+      "pubDate": "2026-10-18T20:44:38+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "THE TITANS GET THEIR FIRST WIN OF THE SEASON VS. THE COLTS 🔥\n\n(📺 FOX)",
+      "link": "https://twitter.com/SportsCenter/status/2111913494614278543#m",
+      "pubDate": "2026-10-18T20:13:09+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "BROWNS TAKE DOWN THE RAVENS 🔥\n\nFirst place in the AFC North belongs to Cleveland!\n\n(via @NFL)",
+      "link": "https://twitter.com/SportsCenter/status/2111909949119111250#m",
+      "pubDate": "2026-10-18T19:59:03+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SportsCenter",
+      "text": "Alvin Kamara joins elite company 👏\n\nHe becomes the 6th player with 5,000+ rushing and 5,000+ receiving yards in NFL history 🔥",
+      "link": "https://twitter.com/SportsCenter/status/2111894855672586721#m",
+      "pubDate": "2026-10-18T18:59:05+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SportsCenter",
+      "text": "Caleb Williams first drive back from injury:\n\n 🔥 6/6\n🔥 64 passing yards \n🔥 1 TD\n\n(via @ChicagoBears)",
+      "link": "https://twitter.com/SportsCenter/status/2111869505685393890#m",
+      "pubDate": "2026-10-18T17:18:21+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "NBAMemes",
+      "text": "Kobe really hated everyone... except one guy",
+      "link": "https://twitter.com/NBAMemes/status/2112163552580784581#m",
+      "pubDate": "2026-10-19T12:46:47+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "NBAMemes",
+      "text": "Who's going to retire first?\n\n• Ben Simmons\n• Bronny James",
+      "link": "https://twitter.com/NBAMemes/status/2112045949560512566#m",
+      "pubDate": "2026-10-19T04:59:28+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "NBAMemes",
+      "text": "My guess is Nikola Jokic.\n\nWho do y'all think this is?",
+      "link": "https://twitter.com/NBAMemes/status/2112040730151821591#m",
+      "pubDate": "2026-10-19T04:38:44+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "NBAMemes",
+      "text": "Warriors fans letting out a big sigh of relief 😮‍💨",
+      "link": "https://twitter.com/NBAMemes/status/2112038122586599667#m",
+      "pubDate": "2026-10-19T04:28:22+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "NBAMemes",
+      "text": "Me in every job interview explaining why I see myself at this company for the next 10 years. 😂",
+      "link": "https://twitter.com/NBAMemes/status/2112027855295271152#m",
+      "pubDate": "2026-10-19T03:47:34+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "NBAMemes",
+      "text": "Comeback stronger, @BenSimmons25! 🙏🏻💪",
+      "link": "https://twitter.com/NBAMemes/status/2111987748521541910#m",
+      "pubDate": "2026-10-19T01:08:12+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "NBAMemes",
+      "text": "Ben Simmons can't catch a break from this injuries 😫",
+      "link": "https://twitter.com/NBAMemes/status/2111977593025232928#m",
+      "pubDate": "2026-10-19T00:27:51+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "NBAMemes",
+      "text": "NBA fans watching Ben Simmons go down with an injury 😢",
+      "link": "https://twitter.com/NBAMemes/status/2111963732821909635#m",
+      "pubDate": "2026-10-18T23:32:46+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "NBAMemes",
+      "text": "BREAKING: Ben Simmons has suffered a season ending injury after tearing his Achilles tendon at practice on Sunday.\n\nThis is heartbreaking 💔",
+      "link": "https://twitter.com/NBAMemes/status/2111950158690722260#m",
+      "pubDate": "2026-10-18T22:38:50+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "NBAMemes",
+      "text": "Who got snubbed and who’s ranked too high?",
+      "link": "https://twitter.com/NBAMemes/status/2111928482716696730#m",
+      "pubDate": "2026-10-18T21:12:42+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "NBAMemes",
+      "text": "When Harden will shave his beard: https://bit.ly/HardenShavesBeard",
+      "link": "https://twitter.com/NBAMemes/status/2111928129208107166#m",
+      "pubDate": "2026-10-18T21:11:18+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "NBAMemes",
+      "text": "Who wins in a 7 game series? 🤔",
+      "link": "https://twitter.com/NBAMemes/status/2111874735785361861#m",
+      "pubDate": "2026-10-18T17:39:08+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "NBAMemes",
+      "text": "Nike’s official tribute to KD 🐐",
+      "link": "https://twitter.com/NBAMemes/status/2111868099805032677#m",
+      "pubDate": "2026-10-18T17:12:46+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "CJZero",
+      "text": "put some heat on that punch",
+      "link": "https://twitter.com/cjzero/status/2111933131280294135#m",
+      "pubDate": "2026-10-18T21:31:10+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "CJZero",
+      "text": "😂",
+      "link": "https://twitter.com/cjzero/status/2111905977733628225#m",
+      "pubDate": "2026-10-18T19:43:17+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "CJZero",
+      "text": "camera losing the ball on consecutive plays and missing the pick entirely",
+      "link": "https://twitter.com/cjzero/status/2111858341467115781#m",
+      "pubDate": "2026-10-18T16:33:59+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Who is the WR1 in Green Bay? 🤔",
+      "link": "https://twitter.com/SleeperHQ/status/2112029548598509920#m",
+      "pubDate": "2026-10-19T03:54:18+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "When the garbage time TD goes to Ryan Flournoy…",
+      "link": "https://twitter.com/SleeperHQ/status/2112027049078436122#m",
+      "pubDate": "2026-10-19T03:44:22+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Dak Prescott in primetime:",
+      "link": "https://twitter.com/SleeperHQ/status/2112022059945775149#m",
+      "pubDate": "2026-10-19T03:24:33+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "George Pickens when I desperately need fantasy points:",
+      "link": "https://twitter.com/SleeperHQ/status/2112013206868926724#m",
+      "pubDate": "2026-10-19T02:49:22+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "The first 5 weeks:",
+      "link": "https://twitter.com/SleeperHQ/status/2112010555116683358#m",
+      "pubDate": "2026-10-19T02:38:50+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Packers receivers when they get a perfect pass from Jordan Love:",
+      "link": "https://twitter.com/SleeperHQ/status/2112009391960715621#m",
+      "pubDate": "2026-10-19T02:34:12+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "The NFL forcing us to watch the Cowboys in primetime every week:",
+      "link": "https://twitter.com/SleeperHQ/status/2112006378500096242#m",
+      "pubDate": "2026-10-19T02:22:14+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Matthew Golden deciding who he's going to be before each snap",
+      "link": "https://twitter.com/SleeperHQ/status/2111999564605690143#m",
+      "pubDate": "2026-10-19T01:55:09+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Image",
+      "link": "https://twitter.com/SleeperHQ/status/2111996604395978763#m",
+      "pubDate": "2026-10-19T01:43:24+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "“Alright one last Marshawn Lloyd start before Josh Jacobs comes back. Show em what you got Marshawn!”\n\nMarshawn Lloyd:",
+      "link": "https://twitter.com/SleeperHQ/status/2111996177944400360#m",
+      "pubDate": "2026-10-19T01:41:42+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Whataburger Patty Melt with extra grilled onions and a large fry",
+      "link": "https://twitter.com/SleeperHQ/status/2111988067489943712#m",
+      "pubDate": "2026-10-19T01:09:28+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Dak and Jordan Love going sub for sub while everyone is in desperate need of fantasy points",
+      "link": "https://twitter.com/SleeperHQ/status/2111987974149668921#m",
+      "pubDate": "2026-10-19T01:09:06+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Gif",
+      "link": "https://twitter.com/SleeperHQ/status/2111977552185115065#m",
+      "pubDate": "2026-10-19T00:27:41+00:00",
+      "media_kind": "gif",
+      "has_video": true
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "What goes on in Kyren Williams’ brain before he speaks:",
+      "link": "https://twitter.com/SleeperHQ/status/2111972125146001431#m",
+      "pubDate": "2026-10-19T00:06:07+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "James Dalvin Cook. 🧑‍🍳\n(yes that's actually his full name)",
+      "link": "https://twitter.com/SleeperHQ/status/2111965796893401097#m",
+      "pubDate": "2026-10-18T23:40:59+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Seattle could use a guy like this 😭",
+      "link": "https://twitter.com/SleeperHQ/status/2111965191269499096#m",
+      "pubDate": "2026-10-18T23:38:34+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Image",
+      "link": "https://twitter.com/SleeperHQ/status/2111962677090361396#m",
+      "pubDate": "2026-10-18T23:28:35+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "Germie Bernard might be a league winner 🔥",
+      "link": "https://twitter.com/SleeperHQ/status/2111960915268829481#m",
+      "pubDate": "2026-10-18T23:21:35+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "The perfect Sunday",
+      "link": "https://twitter.com/SleeperHQ/status/2111955125539315832#m",
+      "pubDate": "2026-10-18T22:58:34+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "SleeperHQ",
+      "text": "“F it Keon Coleman down there somewhere”",
+      "link": "https://twitter.com/SleeperHQ/status/2111949204587454790#m",
+      "pubDate": "2026-10-18T22:35:03+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ArtButSports",
+      "text": "Joshua Commanding the Sun to Stand Still, after Luca Giordano, 1690, 📸 by Grace Urbanski",
+      "link": "https://twitter.com/ArtButSports/status/2111993637655769377#m",
+      "pubDate": "2026-10-19T01:31:36+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "BillBarnwell",
+      "text": "The Rams narrowly miss a long touchdown pass to Puka Nacua",
+      "link": "https://twitter.com/billbarnwell/status/2112076125950067011#m",
+      "pubDate": "2026-10-19T06:59:23+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "BillBarnwell",
+      "text": "96.9 Total QBR for C.J. Stroud in today's win over the Jags. Second-best performance by any QB this season behind Brock Purdy's Week 2 game against the Dolphins.",
+      "link": "https://twitter.com/billbarnwell/status/2111971928407781469#m",
+      "pubDate": "2026-10-19T00:05:20+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BillBarnwell",
+      "text": "We've had more throughout the season, including one there that wasn't even close. A truly great player in just about every way except for one very conspicuous one",
+      "link": "https://twitter.com/billbarnwell/status/2111933476152758616#m",
+      "pubDate": "2026-10-18T21:32:33+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BillBarnwell",
+      "text": "🤔",
+      "link": "https://twitter.com/billbarnwell/status/2111932761866907809#m",
+      "pubDate": "2026-10-18T21:29:42+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "BillBarnwell",
+      "text": "Zero touches for Cam Skattebo today. Giants RB snaps:\n\nDevin Singletary 14\nTyrone Tracy 13\nNajee Harris 11\nSkattebo 6",
+      "link": "https://twitter.com/billbarnwell/status/2111901746632986837#m",
+      "pubDate": "2026-10-18T19:26:28+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BillBarnwell",
+      "text": "I don't see the vision with J.J. McCarthy coming in every week to run power read and zone read",
+      "link": "https://twitter.com/billbarnwell/status/2111881957906772271#m",
+      "pubDate": "2026-10-18T18:07:50+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BillBarnwell",
+      "text": "Good example of why coaches typically rely on \"game flow\" as an excuse to be more conservative, but rarely more aggressive, even when needed. Jags had struggled to stop Texans all day (even the INT on the prior drive came after a 78-yard drive).",
+      "link": "https://twitter.com/billbarnwell/status/2111864984154296456#m",
+      "pubDate": "2026-10-18T17:00:23+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BillBarnwell",
+      "text": "The virtual measurement should have been in centimeters for the UK, come on",
+      "link": "https://twitter.com/billbarnwell/status/2111861378999021877#m",
+      "pubDate": "2026-10-18T16:46:03+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BillBarnwell",
+      "text": "Five weeks into a three-year, $60 million deal",
+      "link": "https://twitter.com/billbarnwell/status/2111843546747510939#m",
+      "pubDate": "2026-10-18T15:35:12+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JeffPassan",
+      "text": "News: The Baltimore Orioles are hiring Jared Banner as general manager, sources tell ESPN. Banner, who was an assistant GM with the Cubs, joins Mike Elias in Baltimore’s leadership after nearly two decades working a range of executive jobs with the Cubs, Mets and Red Sox.",
+      "link": "https://twitter.com/JeffPassan/status/2112163575485939745#m",
+      "pubDate": "2026-10-19T12:46:53+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "JeffPassan",
+      "text": "FINAL: Rays 3, Guardians 1\n\nTampa Bay heads home one win away from the World Series. Drew Rasmussen was brilliant over seven innings, the Rays hit and ran and bunted their way to enough offense and their defense was exceptional. A classic Rays win leading into Game 6 on Monday.",
+      "link": "https://twitter.com/JeffPassan/status/2111970360740442621#m",
+      "pubDate": "2026-10-18T23:59:07+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "ESPN",
+      "text": "It's going to be electric 🎇\n\nWatch Commanders-49ers at 8 ET on ESPN, ABC and the ESPN App!",
+      "link": "https://twitter.com/espn/status/2112151784231723302#m",
+      "pubDate": "2026-10-19T12:00:01+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ESPN",
+      "text": "PACKERS BEAT DAK AND DALLAS IN PRIMETIME TO MOVE TO 4-2 😤\n\nCowboys fall to 2-4 after losses in back-to-back weeks 👀",
+      "link": "https://twitter.com/espn/status/2112028573687017553#m",
+      "pubDate": "2026-10-19T03:50:26+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ESPN",
+      "text": "A DREW RASMUSSEN GEM POWERS TAMPA BAY TO A 3-2 SERIES LEAD IN THE ALCS! 🔥",
+      "link": "https://twitter.com/espn/status/2111971823969579346#m",
+      "pubDate": "2026-10-19T00:04:56+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ESPN",
+      "text": "The Chargers are still searching for a win 😳\n\nIt's the franchise's first 0-6 start since 2000.",
+      "link": "https://twitter.com/espn/status/2111963375018094641#m",
+      "pubDate": "2026-10-18T23:31:21+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ESPN",
+      "text": "TROUBLE IN LA LA LAND? 😯\n\nAfter losing to the Cardinals, the Rams are LAST in the NFC West.",
+      "link": "https://twitter.com/espn/status/2111956730015785059#m",
+      "pubDate": "2026-10-18T23:04:57+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ESPN",
+      "text": "JALEN RAMSEY CALLS GAME 😤\n\nThe Steelers win in OT after being down 13 in the 4th!\n\n(via @NFL)",
+      "link": "https://twitter.com/espn/status/2111922378317938821#m",
+      "pubDate": "2026-10-18T20:48:27+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ESPN",
+      "text": "Kendal Daniels is alert and has movement in all his extremities, the Falcons said Sunday, after he injured his neck on a tackle attempt vs. the Bears. https://spr.ly/6014BHueGK",
+      "link": "https://twitter.com/espn/status/2111911615394087105#m",
+      "pubDate": "2026-10-18T20:05:41+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ESPN",
+      "text": "THE CANES ARE THE NEW NO. 1 🙌👀\n\nHere's the full AP Top 25 for Week 8 📊",
+      "link": "https://twitter.com/espn/status/2111883832504762473#m",
+      "pubDate": "2026-10-18T18:15:17+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ESPN",
+      "text": "The second set has started on ESPN and the ESPN App! 🙌",
+      "link": "https://twitter.com/espn/status/2111874872980787527#m",
+      "pubDate": "2026-10-18T17:39:41+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "ESPN",
+      "text": "Kansas comes back to take the first set at home 🏐 @KUVolleyball",
+      "link": "https://twitter.com/espn/status/2111874869495238790#m",
+      "pubDate": "2026-10-18T17:39:40+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ESPN",
+      "text": "The Big 12 said officials incorrectly ended Saturday night's game between BYU and Notre Dame and that the Irish should have had another second on the clock to run a final play. https://spr.ly/6012BHu8VK",
+      "link": "https://twitter.com/espn/status/2111849541456547987#m",
+      "pubDate": "2026-10-18T15:59:01+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "Matthew Golden vs Cowboys:\n\n6 REC\n104 YDS\n1 TD\n\nTwo straight games with 100+ receiving yards.",
+      "link": "https://twitter.com/statmuse/status/2112028364483830207#m",
+      "pubDate": "2026-10-19T03:49:36+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "⚾️ | Rays at Guardians | ALCS Game 5",
+      "link": "https://twitter.com/statmuse/status/2111987935306490123#m",
+      "pubDate": "2026-10-19T01:08:57+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "StatMuse",
+      "text": "Yandy Diaz this postseason:\n\n11 H (4 2B)\n.314 AVG\n\nOnly Jose Ramirez (12) has more hits than him.",
+      "link": "https://twitter.com/statmuse/status/2111976520390742122#m",
+      "pubDate": "2026-10-19T00:23:35+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "🏈 | Bills at Raiders | Oct. 18, 2026",
+      "link": "https://twitter.com/statmuse/status/2111974028772880836#m",
+      "pubDate": "2026-10-19T00:13:41+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "StatMuse",
+      "text": "James Cook vs Raiders:\n\n25 TCH\n153 TOT YDS\n1 TOT TD\n\nFive straight games with a rushing TD.",
+      "link": "https://twitter.com/statmuse/status/2111973926691885346#m",
+      "pubDate": "2026-10-19T00:13:17+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "Kenneth Walker III vs Chargers:\n\n21 TCH\n139 TOT YDS\n2 TOT TD\n\nTwo straight games with 2+ rushing TDs.",
+      "link": "https://twitter.com/statmuse/status/2111962065053343829#m",
+      "pubDate": "2026-10-18T23:26:09+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "Wow",
+      "link": "https://twitter.com/statmuse/status/2111956452793622805#m",
+      "pubDate": "2026-10-18T23:03:51+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "Jalen Ramsey vs Bucs:\n\n— 10 TKL\n— 4 TFL\n— 2 SACK\n\ngame-winning sack.",
+      "link": "https://twitter.com/statmuse/status/2111921573817135450#m",
+      "pubDate": "2026-10-18T20:45:15+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "🏈 | Ravens at Browns | Oct. 18, 2026",
+      "link": "https://twitter.com/statmuse/status/2111917869852479874#m",
+      "pubDate": "2026-10-18T20:30:32+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "StatMuse",
+      "text": "Chuba Hubbard vs Eagles:\n\n29 TCH\n121 TOT YDS\n1 TOT TD\n\nTwo straight games with 100+ rushing yards.",
+      "link": "https://twitter.com/statmuse/status/2111917797752377661#m",
+      "pubDate": "2026-10-18T20:30:15+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "Tyler Shough vs Giants:\n\n3 TD\n0 INT\n1 RUSH TD\n\nHis first career game with 3 TD passes and a rushing TD.",
+      "link": "https://twitter.com/statmuse/status/2111917546530283667#m",
+      "pubDate": "2026-10-18T20:29:15+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "D'Andre Swift vs Falcons:\n\n20 TCH\n70 TOT YDS\n2 TOT TD\n\nHis second multi-TD game this season.",
+      "link": "https://twitter.com/statmuse/status/2111916055803412695#m",
+      "pubDate": "2026-10-18T20:23:19+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "Drake Maye vs Jets:\n\n18-32\n235 YDS\n3 TD\n0 INT\n\nThree straight games with 3+ TD passes.",
+      "link": "https://twitter.com/statmuse/status/2111913861171535913#m",
+      "pubDate": "2026-10-18T20:14:36+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "TDs in Colts history:\n\n83 — Jonathan Taylor\n82 — Reggie Wayne",
+      "link": "https://twitter.com/statmuse/status/2111913539078328351#m",
+      "pubDate": "2026-10-18T20:13:19+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "Fun Fact: Nine threw his first touchdown of the season to #9.",
+      "link": "https://twitter.com/statmuse/status/2111911356417138823#m",
+      "pubDate": "2026-10-18T20:04:39+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "Kyle Pitts touchdowns:\n\n2 — 4th quarter today \n1 — first 23 quarters this season",
+      "link": "https://twitter.com/statmuse/status/2111910280167145868#m",
+      "pubDate": "2026-10-18T20:00:22+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "The Cleveland Browns are 1st in the AFC North.\n\nThe latest they’ve been 1st in the division since Week 10 in 2014.",
+      "link": "https://twitter.com/statmuse/status/2111909814364447091#m",
+      "pubDate": "2026-10-18T19:58:31+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "Alvin Kamara is the 6th player in NFL history with 5,000+ RUSH YDS and 5,000+ REC YDS.",
+      "link": "https://twitter.com/statmuse/status/2111893204723536270#m",
+      "pubDate": "2026-10-18T18:52:31+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "StatMuse",
+      "text": "Kenneth Walker per game as a Chief:\n\n134.3 RUSH YDS\n21.0 REC YDS\n1.5 TOT TD\n\n45% on fans on @Novig think he'll rush for 100+ yards today.",
+      "link": "https://twitter.com/statmuse/status/2111876611113107933#m",
+      "pubDate": "2026-10-18T17:46:35+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "You have to feel bad for Ben Simmons.\n\nNot because he gave up an open layup in one of the biggest games of his career, but because his body gave up on him after trying to make a comeback in the league.\n\nSimmons suffered a ruptured Achilles tendon just days before the Sacramento Kings open their regular season.\n\nAnd just like that, another chapter of hope turns into absolute heartbreak.\n\nIt feels like a lifetime ago when Simmons was the undisputed future of basketball.\n\nA 6'10\" point guard with elite vision, lightning transition speed, and All-Defensive First Team chops.\n\nHe was dubbed THE next LeBron James, a generational marvel set to dominate for the next decade.\n\nThen came the play in 2021. The passed-up dunk against the Hawks.\n\nThe fallout was loud, immediate, and unforgiving. The memes took over, and the internet turned his name into a punchline.\n\nWhat most people missed through all the noise was a man fighting a losing battle with his own physical frame.\n\nMultiple back surgeries, nerve damage, microdiscectomies, and endless rehab sessions. Every single time he tried to build momentum, his body put up a stop sign.\n\nStints with the Nets and Clippers faded away simply because his back wouldn't let him be Ben Simmons.\n\nHe could have walked away. He had the money and every reason to avoid the relentless scrutiny.\n\nInstead, he spent a full year in silence rebuilding himself.\n\nHe grinded back to health, earned a spot with the Kings, and looked genuinely happy, sharp, and rejuvenated during preseason. He was finally ready to rewrite his story.\n\nTo put in all that unseen labor only for a freak Achilles tear to wipe it away days before opening night is nothing short of cruel.\n\nBasketball fans love a slander train, but this isn't about stats or jump shots anymore.\n\nThis is a human story about a guy who kept trying to get back up, only to have the door slammed on him again.\n\nGet well soon, Ben. The hustle to get back deserved a better ending 🙏🏼",
+      "link": "https://twitter.com/ClutchPoints/status/2112175198988382347#m",
+      "pubDate": "2026-10-19T13:33:04+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "LeBron James was among the guests at Jaylen Brown’s 30th birthday celebration 🙌\n\n(via fashiondree/ Instagram)",
+      "link": "https://twitter.com/ClutchPoints/status/2112054048404730281#m",
+      "pubDate": "2026-10-19T05:31:39+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Song choice: “She’s A Bad Mama Jama”\n\nYaxel Lendeborg absolutely stole the show with one of the best karaoke performances ever from a rookie 😅\n\n(via @957thegame)",
+      "link": "https://twitter.com/ClutchPoints/status/2112034837997494474#m",
+      "pubDate": "2026-10-19T04:15:19+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Jordan Love and the Packers handle the Cowboys with care for the SNF victory 🔥\n\n23/41\n288 TOT yards\n2 TOT TDs\n1 INT",
+      "link": "https://twitter.com/ClutchPoints/status/2112028225924993130#m",
+      "pubDate": "2026-10-19T03:49:03+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Ryan Flournoy makes the touchdown catch for the Cowboys 😤",
+      "link": "https://twitter.com/ClutchPoints/status/2112027118267970039#m",
+      "pubDate": "2026-10-19T03:44:39+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Karl Brooks is flagged for a roughing-the-passer penalty on Dak Prescott on this play.\n\nThoughts? 🤔",
+      "link": "https://twitter.com/ClutchPoints/status/2112022526951833617#m",
+      "pubDate": "2026-10-19T03:26:24+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Lukas Van Ness was flagged for roughing the passer after this hit on Dak Prescott 👀",
+      "link": "https://twitter.com/ClutchPoints/status/2112021326776926330#m",
+      "pubDate": "2026-10-19T03:21:38+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Carrington Valentine intercepts Dak Prescott, who has now thrown three picks tonight, but the play is nullified by a roughing-the-passer penalty.\n\nThoughts? 🤔",
+      "link": "https://twitter.com/ClutchPoints/status/2112020861444321387#m",
+      "pubDate": "2026-10-19T03:19:47+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Kenny Clark gets another sack at Lambeau Field, this time as a member of the Cowboys 😤",
+      "link": "https://twitter.com/ClutchPoints/status/2112011442165617016#m",
+      "pubDate": "2026-10-19T02:42:21+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Cason Wallace is signing a 5-year, $139 million rookie-scale contract extension with the Thunder, per @ShamsCharania.",
+      "link": "https://twitter.com/ClutchPoints/status/2112009593370845589#m",
+      "pubDate": "2026-10-19T02:35:00+00:00",
+      "media_kind": "image",
+      "has_video": false
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Jordan Love dives across the goal line for the touchdown 😤",
+      "link": "https://twitter.com/ClutchPoints/status/2111998630349418579#m",
+      "pubDate": "2026-10-19T01:51:27+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "What a CATCH from Matthew Golden 🔥",
+      "link": "https://twitter.com/ClutchPoints/status/2111997868366307382#m",
+      "pubDate": "2026-10-19T01:48:25+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Brandon Cisse PICKS OFF Dak Prescott for his first NFL INT 🔥",
+      "link": "https://twitter.com/ClutchPoints/status/2111995678717063282#m",
+      "pubDate": "2026-10-19T01:39:43+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Dak Prescott avoids the sack and connects with George Pickens 🔥",
+      "link": "https://twitter.com/ClutchPoints/status/2111994408467919349#m",
+      "pubDate": "2026-10-19T01:34:40+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Malik Hooker makes a flying play to deny the Packers touchdown 😤",
+      "link": "https://twitter.com/ClutchPoints/status/2111991596069933463#m",
+      "pubDate": "2026-10-19T01:23:30+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Matthew Golden fails to hold on to Jordan Love’s touchdown pass 👀",
+      "link": "https://twitter.com/ClutchPoints/status/2111990273115099524#m",
+      "pubDate": "2026-10-19T01:18:14+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Evan Williams and the Packers answer back with an interception of their own 😤",
+      "link": "https://twitter.com/ClutchPoints/status/2111987463631601981#m",
+      "pubDate": "2026-10-19T01:07:04+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "The Cowboys had a pick-six overturned after Dee Winters was ruled down by contact 👀",
+      "link": "https://twitter.com/ClutchPoints/status/2111986730299748601#m",
+      "pubDate": "2026-10-19T01:04:09+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "MATTHEW GOLDEN WITH THE FIRST TD OF THE GAME 🔥",
+      "link": "https://twitter.com/ClutchPoints/status/2111981835341250863#m",
+      "pubDate": "2026-10-19T00:44:42+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "ClutchPoints",
+      "text": "Matthew Golden was penalised for taunting after celebrating with a flex following a first down 👀",
+      "link": "https://twitter.com/ClutchPoints/status/2111980406400532585#m",
+      "pubDate": "2026-10-19T00:39:02+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "We talked to the worlds number 1 Tanner McKee fan, Pug!",
+      "link": "https://twitter.com/BarstoolBigCat/status/2112172683567776047#m",
+      "pubDate": "2026-10-19T13:23:04+00:00",
+      "media_kind": "video",
+      "has_video": true
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Dak big stupid pick guy",
+      "link": "https://twitter.com/BarstoolBigCat/status/2111987013448810978#m",
+      "pubDate": "2026-10-19T01:05:17+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Harbaugh is in hell",
+      "link": "https://twitter.com/BarstoolBigCat/status/2111962256481378521#m",
+      "pubDate": "2026-10-18T23:26:54+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Nevermind they suck. That call was bullshit though",
+      "link": "https://twitter.com/BarstoolBigCat/status/2111954955200238061#m",
+      "pubDate": "2026-10-18T22:57:54+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "What a kick from the punter. Nails",
+      "link": "https://twitter.com/BarstoolBigCat/status/2111953918548980105#m",
+      "pubDate": "2026-10-18T22:53:47+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Correction. Maybe not? But still kind of do",
+      "link": "https://twitter.com/BarstoolBigCat/status/2111952345621745823#m",
+      "pubDate": "2026-10-18T22:47:32+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "So the Rams just suck?",
+      "link": "https://twitter.com/BarstoolBigCat/status/2111949197918585150#m",
+      "pubDate": "2026-10-18T22:35:01+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "JOSH ALLEN 😂",
+      "link": "https://twitter.com/BarstoolBigCat/status/2111946572464636136#m",
+      "pubDate": "2026-10-18T22:24:35+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Absolute laser from Kwan",
+      "link": "https://twitter.com/BarstoolBigCat/status/2111944297499013592#m",
+      "pubDate": "2026-10-18T22:15:33+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Justin Herbert cannon. Gotta say when he does something good",
+      "link": "https://twitter.com/BarstoolBigCat/status/2111942091739705422#m",
+      "pubDate": "2026-10-18T22:06:47+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Big stupid pick guy",
+      "link": "https://twitter.com/BarstoolBigCat/status/2111928295008690560#m",
+      "pubDate": "2026-10-18T21:11:57+00:00",
+      "media_kind": "text",
+      "has_video": false
+    },
+    {
+      "account": "BarstoolBigCat",
+      "text": "Congrats @DanielCane1970!",
+      "link": "https://twitter.com/BarstoolBigCat/status/2111920264250376371#m",
+      "pubDate": "2026-10-18T20:40:03+00:00",
+      "media_kind": "image",
+      "has_video": false
+    }
+  ]
+}

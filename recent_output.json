@@ -1,5 +1,162 @@
 [
   {
+    "date": "2026-10-19",
+    "story_log": [
+      {
+        "topic_key": "rays-guardians-alcs-2026",
+        "title": "Rays beat Guardians 3-1 in ALCS Game 5, take 3-2 series lead — one win from World Series",
+        "section": "lead",
+        "development": "CONTINUING [Day 13, TIER 1 ELIMINATION-ROUND GAME]: Tampa Bay beat Cleveland 3-1 per ground truth. Rays lead series 3-2, Game 6 Monday at Tropicana Field. Tampa Bay one win from reaching World Series for first time since 2020. Drew Rasmussen: 7.0 IP, 4 H, 1 ER, 2 BB, 6 SO per TalkinBaseball. Liam Hicks 2-RBI single in 5th gave Rays 2-0 lead per TalkinBaseball. Chandler Simpson scored on Ben Williamson single in 5th per TalkinBaseball. Chase DeLauter RBI groundout in 6th cut lead to 2-1 per TalkinBaseball. Tyler Wells entered in 8th with Jose Ramirez due up as tying run per TalkinBaseball — got inning-ending double play instead of challenging for strike three per TalkinBaseball. Steven Kwan defensive highlights throughout night per TalkinBaseball.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "cowboys-packers-snf-week-6-2026",
+        "title": "Packers beat Cowboys 23-13 on SNF — Jordan Love 2 total TD, Dallas drops to 2-4 with back-to-back losses",
+        "section": "supporting",
+        "development": "Green Bay beat Dallas 23-13 per ground truth. Cowboys now 2-4 after 6 games, last start this bad or worse 2020 per ground truth. Jordan Love: 23-41, 288 total YDS, 2 total TD, 1 INT per ClutchPoints. Matthew Golden: 6 REC, 104 YDS, 1 TD per StatMuse — two straight games with 100+ receiving yards per StatMuse. Cowboys lost to Packers for first time since 2022-11-13 per ground truth. Three roughing-the-passer penalties on Dak Prescott drew controversy per ClutchPoints — Carrington Valentine INT overturned on roughing call per ClutchPoints/HaterReport. Packers 4-2, tied for 2nd in NFC North per ground truth. Dallas 2-4, 3rd in NFC East per ground truth.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "ben-simmons-achilles-tear-2026",
+        "title": "Ben Simmons suffers torn Achilles at Kings practice — season-ending injury days before opener",
+        "section": "supporting",
+        "development": "Simmons tore Achilles tendon at practice Sunday per CBS Sports/NBAMemes — season-ending injury per CBS Sports. Didn't play during 2025-26 season, was expected to start for Sacramento this year per CBS Sports. Former No. 1 pick's comeback attempt ends before it began. ClutchPoints: 'You have to feel bad for Ben Simmons... because his body gave up on him after trying to make a comeback in the league.' Kings lose starting guard before season opener.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "cason-wallace-thunder-extension-2026",
+        "title": "Thunder extend Cason Wallace on 5-year, $139M deal — setting up another summer of second apron questions",
+        "section": "supporting",
+        "development": "Oklahoma City signed Wallace to 5yr/$139M rookie-scale extension per CBS Sports/ShamsCharania. Locking up Wallace follows offseason of moves intended to shed payroll and duck under second apron per CBS Sports. Thunder's depth and payroll management under spotlight. Deal sets up more luxury tax questions next summer.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "josh-allen-backhanded-td-2026",
+        "title": "Josh Allen throws unbelievable backhanded TD pass vs Raiders — channels Brett Favre on extraordinary improvisation",
+        "section": "atl",
+        "development": "Allen avoided potential sack and improvised extraordinary backhanded touchdown pass per CBS Sports/AdamSchefter — immediately drew comparisons to legendary Brett Favre play per CBS Sports. Buffalo beat Las Vegas 33-30 per ground truth. James Cook: 25 touches, 153 total YDS, 1 total TD per StatMuse — five straight games with rushing TD per StatMuse. Allen's play already viral.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "cj-gardner-johnson-spitting-incident-2026",
+        "title": "Bills S C.J. Gardner-Johnson ejected for spitting at Raiders TE Brock Bowers — NFL reviewing for discipline",
+        "section": "atl",
+        "development": "Gardner-Johnson ejected after cameras captured him spitting at Bowers per AdamSchefter/SharpFootball. NFL reviewing disqualification for potential additional discipline per AdamSchefter. Gardner-Johnson apologized on Instagram per AdamSchefter. Any disqualification always reviewed for potential additional discipline. Bills won 33-30 per ground truth.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "browns-afc-north-lead-2026",
+        "title": "Browns take first place in AFC North after beating Ravens 13-10 — latest they've led division since Week 10 in 2014",
+        "section": "atl",
+        "development": "Cleveland beat Baltimore 13-10 per ground truth. Browns now 4-2, 1st in AFC North (tied on record, provisional 3+ team tie) per ground truth. Latest they've been first in division since Week 10 in 2014 per StatMuse/AlbertBreer. Ravens fall to 4-2, 3rd in AFC North per ground truth. Cleveland leads division this late for first time in 12 years.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "steelers-bucs-ot-thriller-2026",
+        "title": "Steelers rally from 13 down in 4th to beat Bucs 26-19 in OT — Jalen Ramsey game-winning sack, Chris Boswell two 58-yard FGs",
+        "section": "atl",
+        "development": "Pittsburgh beat Tampa Bay 26-19 in OT per ground truth. Steelers down 13 in 4th quarter, rallied back per ESPN. Boswell: two 58-yard FGs per AlbertBreer — first after FG lost track of game clock, second to pull even per AlbertBreer. Ramsey: 10 TKL, 4 TFL, 2 SACK per StatMuse — game-winning sack in OT per StatMuse/ESPN. Steelers improve to 4-2 per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "chargers-start-2026",
+        "title": "Chargers fall to 0-6 after loss to Chiefs — franchise's first 0-6 start since 2000",
+        "section": "atl",
+        "development": "CONTINUING [Day 6]: Kansas City beat LA 22-6 per ground truth. Chargers now 0-6 after 6 games, last start this bad or worse 2000 per ground truth. 6 straight losses this season, last 6+ within a season 2015 per ground truth. Coming into bye at 0-6 with at Rams, vs Texans, at Ravens after per AlbertBreer. Herbert continues to struggle. Harbaugh's seat getting hotter.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "rams-cardinals-upset-2026",
+        "title": "Cardinals upset Rams 18-16 — Chad Ryland punter kicks PAT to give LA lead, Arizona wins on FG",
+        "section": "atl",
+        "development": "Arizona beat LA 18-16 per ground truth. Rams punter Ethan Evans kicked PAT to give Rams lead after kicker Blake Grupe hurt knee per AlbertBreer/PatMcAfeeShow — was pure per AlbertBreer. Ryland kicked game-winning FG for Cardinals per PatMcAfeeShow/SportsCenter. Controversial roughing call on Josh Wallace late per AlbertBreer. Rams fall to 2-4, last place in NFC West per ground truth. Cardinals 2-4, tied with Rams per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "titans-first-win-2026",
+        "title": "Titans get first win of season 26-20 over Colts — previously 0-5 Tennessee ends drought",
+        "section": "atl",
+        "development": "Tennessee beat Indianapolis 26-20 per ground truth. Titans were 0-5 entering game, get first win per SportsCenter. Beat Colts for first time since 2022-10-23 per ground truth, won at Indianapolis for first time since 2022-10-02 per ground truth. Tennessee now 1-5, Colts 2-4 per ground truth. Colts blew 13-0 lead per CBS Sports.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "panthers-eagles-upset-2026",
+        "title": "Panthers beat Eagles 25-14 — Carolina improves to 3-2, Philadelphia drops to 2-4 after 4-game losing streak",
+        "section": "atl",
+        "development": "Carolina beat Philadelphia 25-14 per ground truth. Panthers now 3-2 after 5 games, last start this good or better 2021 per ground truth. Beat Eagles for first time since 2018-10-21 per ground truth, won at Philadelphia for first time since 2018-10-21 per ground truth. Eagles now 2-4 after 6 games, last start this bad or worse 2021 per ground truth. 4 straight losses this season, last 4+ within a season 2020 per ground truth. Chuba Hubbard continues strong season.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "bears-falcons-week-6-2026",
+        "title": "Bears beat Falcons 31-23 — Caleb Williams returns, Chicago improves to 4-2",
+        "section": "atl",
+        "development": "Chicago beat Atlanta 31-23 per ground truth. Bears now 4-2, tied for 3rd in NFC North per ground truth. Williams back from injury per AdamSchefter — Ben Johnson victory speeches return per AdamSchefter. D'Andre Swift: 20 touches, 70 total YDS, 2 total TD per StatMuse. Falcons fall to 2-4 per ground truth, now 2-4 after 6 games (last start this bad or worse 2020) per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "texans-jaguars-week-6-2026",
+        "title": "Texans beat Jaguars 34-31 to improve to 2-4 — CJ Stroud having excellent season despite record",
+        "section": "atl",
+        "development": "Houston beat Jacksonville 34-31 per ground truth. Texans now 2-4 per ground truth. Stroud: 96.9 Total QBR per BillBarnwell — second-best performance by any QB this season behind Brock Purdy's Week 2 game per BillBarnwell. AlbertBreer: With struggling run game, Stroud playing really good ball all year. Jaguars fall to 4-2 per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "saints-giants-week-6-2026",
+        "title": "Saints beat Giants 34-27 — JJ McCarthy sparks NY comeback attempt, Cam Skattebo zero touches",
+        "section": "atl",
+        "development": "New Orleans beat NY 34-27 per ground truth. McCarthy gave Giants spark after entering game per AlbertBreer/BillBarnwell. Skattebo: 0 touches per SportsCenter/BillBarnwell — Giants RB snaps: Devin Singletary 14, Tyrone Tracy 13, Najee Harris 11, Skattebo 6 per BillBarnwell. Saints improve to 2-4 per ground truth. Giants 3-2-1, still 1st in NFC East per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "patriots-jets-week-6-2026",
+        "title": "Patriots beat Jets 26-19 — Drake Maye 3 TD passes, New England improves to 4-2",
+        "section": "atl",
+        "development": "New England beat NY 26-19 per ground truth. Maye: 18-32, 235 YDS, 3 TD, 0 INT per StatMuse — three straight games with 3+ TD passes per StatMuse. Patriots now 4-2, 2nd in AFC East per ground truth. Jets fall to 2-4 per ground truth. New England beat Jets for first time since 2022 per recent history.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "wild-blue-jackets-oct-18-2026",
+        "title": "Wild beat Blue Jackets 2-1 in NHL action",
+        "section": "atl",
+        "development": "Minnesota beat Columbus 2-1 per ground truth. Wild improve. Blue Jackets fall. Regular season continues.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "flames-hurricanes-oct-18-2026",
+        "title": "Flames beat Hurricanes 3-2 — Calgary upsets defending champs",
+        "section": "atl",
+        "development": "Calgary beat Carolina 3-2 per ground truth. Flames upset defending Stanley Cup champions. Hurricanes fall. Regular season continues.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "orioles-hire-jared-banner-2026",
+        "title": "Orioles hire Jared Banner as general manager — former Cubs assistant GM joins Mike Elias in Baltimore",
+        "section": "atl",
+        "development": "Baltimore hired Banner as general manager per JeffPassan. Banner was assistant GM with Cubs, joins Elias in Orioles leadership per JeffPassan. Nearly two decades working executive jobs with Cubs, Mets and Red Sox per JeffPassan. Baltimore adds front office piece.",
+        "is_new": true,
+        "resolved": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-18",
     "story_log": [
       {
@@ -3845,131 +4002,6 @@
         "development": "NFL modified video board rules for FG/XP attempts after viral social-media post per Schefter/Pelissero — teams must now use same All-22 angle or static image for both kicking teams per Schefter. Modification designed to ensure competitive equity, violations will result in discipline per Schefter. Came after Patriots viral gamesmanship.",
         "is_new": true,
         "resolved": true
-      }
-    ]
-  },
-  {
-    "date": "2026-09-19",
-    "story_log": [
-      {
-        "topic_key": "aaron-judge-yankees-injury-2026",
-        "title": "Yankees place Aaron Judge back on IL with calf strain — seven games after return from three-month absence",
-        "section": "lead",
-        "development": "Yankees placed Judge on 10-day IL with right calf strain per Passan/ESPN — just seven games after he returned from three-month absence (broken rib). Back for only a week, now shut down again right before postseason. Status uncertain for playoffs.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "kelsey-mitchell-wnba-scoring-record-2026",
-        "title": "Kelsey Mitchell breaks A'ja Wilson's WNBA single-season scoring record in Fever's win over Tempo",
-        "section": "supporting",
-        "development": "Mitchell had 33 points vs Tempo, bringing season total to 1,034 per CBS Sports — breaks Wilson's single-season record. Caitlin Clark also went off: 28 PTS, 14 AST, 6 REB per StatMuse — has as many 20/10a games this season as rest of league combined. Fever won, now 8 of last 10.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "braves-clinch-playoffs-2026",
-        "title": "Braves clinch playoff berth for eighth time in nine years after beating Astros",
-        "section": "supporting",
-        "development": "Braves clinched playoff berth (8th in 9 years) after beating Houston 6-2 per ground truth/TalkinBaseball/CBS Sports. Matt Olson hit 40th HR of season (second 40+ HR season of career) per TalkinBaseball/ClutchPoints. Acuña robbed Altuve at wall to end inning per TalkinBaseball. CBS Sports: Atlanta has impressively rebounded from losing season in 2025, looks poised to make noise in October.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "houston-texas-tech-week-3-2026",
-        "title": "Texas Tech survives Houston comeback bid — Cougars stopped inches short on two-point conversion",
-        "section": "supporting",
-        "development": "Texas Tech survived Houston's late comeback, won 28-26 per ground truth/CBS Sports. Houston scored TD with under a minute left, went for 2 to tie — stopped inches short on goal-line stand per CBS Sports/RedditCFB/ground truth. Ruled down short, reviewed, upheld per RedditCFB. Friday night thriller.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "miami-darian-mensah-completion-streak-2026",
-        "title": "Miami's Darian Mensah shatters ACC record for consecutive completions vs Wake Forest",
-        "section": "supporting",
-        "development": "Mensah completed first 24 passes vs Wake Forest per CBS Sports — shattered ACC record for consecutive completions. Finished first half 20-20 per StatMuse/FieldYates, now 61-of-65 (93.8%) through 10 quarters this season per FieldYates. Miami won 33-20 per ground truth. Dominant start to 2026.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "ausar-thompson-pistons-extension-2026",
-        "title": "Ausar Thompson and Pistons agree to 5-year, $155M extension — Thompson twins now $363M combined",
-        "section": "atl",
-        "development": "Ausar agreed 5yr/$155M extension with Detroit per Shams — finished 3rd in DPOY voting last season, led NBA in steals per game per Shams/StatMuse. Ausar and twin Amen now first brothers in NBA history to each receive $100M+ deal, signed for combined $363M this offseason per Shams. Amen got 5yr/$208M from Rockets earlier.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "keyonte-george-jazz-extension-2026",
-        "title": "Keyonte George and Jazz agree to 5-year, $157.5M extension after breakout 23.6 PPG season",
-        "section": "atl",
-        "development": "George agreed 5yr/$157.5M extension with Utah per Shams — no player or team options. Breakout season: 23.6 PPG, 6.1 APG, 46/37/89% shooting, led Jazz in scoring per Shams/StatMuse. KevinOConnor: 'Incredible value deal at $31.5M annually… Making a leap every year and no reason to believe progress will stop.' Jazz lock up young star.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "dodgers-giants-sept-18-2026",
-        "title": "Dodgers hit two pairs of back-to-back homers in same inning vs Giants — Betts two-homer game",
-        "section": "atl",
-        "development": "Dodgers demolished Giants 8-2 per ground truth. Betts two-homer game per TalkinBaseball. Muncy and Tucker went back-to-back, then Betts and Will Smith went back-to-back later in same inning per TalkinBaseball. Edwin Diaz in to close 8-2 game in 9th per TalkinBaseball. Dodgers piled on runs late.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "aaron-donald-rams-return-2026",
-        "title": "Aaron Donald plans to play Monday night vs Giants — first game since 2024",
-        "section": "atl",
-        "development": "CONTINUING [Day 4]: Donald told reporters Friday 'that's the plan' for Monday night vs Giants per Schefter/AlbertBreer/SportsCenter — will be first game since 2024. Rams want to ease him in after not traveling to Australia. AlbertBreer: 'Not Injury Related/Conditioning/Back is quite the trifecta.' Return imminent after two-year retirement.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "caitlin-clark-fever-tempo-sept-18-2026",
-        "title": "Caitlin Clark ties rookie scoring record — 769 points same as Olivia Miles",
-        "section": "atl",
-        "development": "Clark vs Tempo: 28 PTS, 14 AST, 6 REB per StatMuse/ClutchPoints — now tied with Olivia Miles for most points by rookie all-time at 769 per StatMuse. Mitchell broke single-season scoring record same game. Fever won 103-85 per ground truth.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "breanna-stewart-liberty-lynx-sept-18-2026",
-        "title": "Breanna Stewart passes Sue Bird on all-time scoring list in Liberty's win over Lynx",
-        "section": "atl",
-        "development": "Stewart vs Minnesota: 24 PTS, 10 REB, 3 STL, +13 per StatMuse — passed Sue Bird on all-time scoring list per StatMuse. Liberty won 93-81 per ground truth. Milestone night for Stewart.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "pirates-marlins-eliminated-2026",
-        "title": "Pirates and Marlins eliminated from playoff contention — Pittsburgh's drought hits 11 straight seasons",
-        "section": "atl",
-        "development": "Pirates eliminated, will miss playoffs for 11th straight season per TalkinBaseball. Marlins also eliminated per TalkinBaseball. Cardinals eliminated too (fourth straight year missing postseason) per TalkinBaseball. Playoff races tighten.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "lane-kiffin-ole-miss-return-2026",
-        "title": "Lane Kiffin returns to Oxford with LSU — hired frat members to heckle his own players at practice",
-        "section": "atl",
-        "development": "Kiffin hired fraternity members to heckle his own LSU players at practice to prepare them for hostile Ole Miss environment per HaterReport. Top-10 matchup Saturday. SportsCenter recapped Kiffin's exit from Ole Miss per SportsCenter. ESPN/Wright Thompson: 'thin line between love and hate' in LSU-Ole Miss rivalry. Kiffin's return dominates CFB weekend.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "oregon-portland-state-blowout-2026",
-        "title": "Oregon demolishes Portland State 84-0 — most points Ducks have scored since 1916",
-        "section": "atl",
-        "development": "Oregon destroyed Portland State 84-0 per ground truth/RedditCFB — most points since 97-0 win over Willamette in 1916 per RedditCFB. Led 70-0 start of 4Q per RedditCFB. 579 yards to PSU's 92 per RedditCFB. Dan Lanning angry after losing to Oklahoma State, took it out on 0-3 FCS opponent per BackAftaThis. Beatdown after upset loss.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "josh-allen-bills-week-2-2026",
-        "title": "Josh Allen now has more rushing TDs than three entire divisions — 5 pass TD, 4 rush TD through two games",
-        "section": "atl",
-        "development": "CONTINUING [Day 2]: Allen has more rushing TDs than AFC West, NFC East, NFC West combined per StatMuse — also more passing TDs than AFC North per StatMuse. SleeperHQ: 'Life when you have Josh Allen on your fantasy team.' First player in NFL history with 5+ pass TD and 4+ rush TD in first two games per yesterday. Story continues from TNF dominance.",
-        "is_new": false,
-        "resolved": false
       }
     ]
   }
