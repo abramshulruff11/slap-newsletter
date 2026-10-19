@@ -1,3 +1,4 @@
+<!-- bridge test 2 -->
 # SLAP Newsletter
 
 SLAP is a daily sports newsletter designed to replace doomscrolling. Instead of falling down a
