@@ -1,5 +1,122 @@
 [
   {
+    "date": "2026-10-20",
+    "story_log": [
+      {
+        "topic_key": "rays-brewers-world-series-2026",
+        "title": "Rays beat Guardians 7-3 in ALCS Game 6, advance to World Series to face Brewers — first-time champion guaranteed",
+        "section": "lead",
+        "development": "CONTINUING [Day 14, TIER 1 ELIMINATION GAME, RESOLVED]: Tampa Bay beat Cleveland 7-3 per ground truth, won series 4-2 per ground truth. Rays advance to World Series to face Milwaukee Brewers per ground truth. First World Series matchup between two teams that have never won a title in over 100 years (last: Phillies-Royals 1980) per ESPN. Freddy Peralta named ALCS MVP after two starts including Game 6 clincher, plus one relief appearance per CBS Sports. Peralta acquired from Mets at trade deadline, turnaround propelled Rays to Fall Classic per CBS Sports. Tampa Bay last World Series appearance 2020 per ground truth. Cleveland last won title 1948, last appearance 2016 per ground truth. Brewers swept Dodgers 4-0 in NLCS per recent history. One of these two teams will win first championship in franchise history.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "49ers-commanders-mnf-week-6-2026",
+        "title": "49ers stay unbeaten at 6-0 with 23-17 win over Commanders — Jayden Daniels throws ball away on 4th down, Terry McLaurin carted off with knee injury",
+        "section": "lead",
+        "development": "San Francisco beat Washington 23-17 per ground truth. 49ers now 6-0, 1st in NFC West per ground truth — second 6-0 start under Kyle Shanahan per ESPN. Commanders fall to 1-4-1, 4th in NFC East, 2 games back per ground truth. Jayden Daniels threw ball away on 4th down in second quarter per ghetto_gronk/ESPN — even Dan Quinn didn't know it was 4th down per ghetto_gronk. Second straight week Daniels made inexcusable mental error (forgot he had no timeouts last week) per ghetto_gronk. Terry McLaurin carted off after knee injury late in first quarter per AdamSchefter/CBS Sports — 'there's fear' of significant injury per CBS Sports. Mike Evans (49ers WR) ruled out with Achilles injury after leaving game late in first half per AdamSchefter/CBS Sports. CMC: 30+ fantasy points, only player to score 30+ in Week 6 per SleeperHQ. George Kittle dominant 9 months removed from torn Achilles per SleeperHQ. NFC East made history going two straight weeks without a win (0-6-2 since Week 5) per AdamSchefter/CBS Sports — first division ever to go winless in consecutive weeks.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "angel-reese-wnba-finals-2026",
+        "title": "Angel Reese dominates Game 2 with 30-16 as Dream even WNBA Finals 1-1 — 'I need the ball' fueled one of best Finals performances in history",
+        "section": "supporting",
+        "development": "Atlanta beat Golden State 79-65 per ground truth. Reese: 30 PTS, 16 REB per CBS Sports — demanded the ball and delivered one of the best performances in WNBA Finals history per CBS Sports. Series now tied 1-1, Game 3 next per ground truth. 'I need the ball': Inside what fueled Angel Reese per CBS Sports. Dream bounced back after Game 1 loss.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nfc-east-winless-streak-2026",
+        "title": "NFC East makes history going winless in consecutive weeks — 0-6-2 since Week 5, first division ever to achieve this futility",
+        "section": "supporting",
+        "development": "NFC East went 0-3-1 in Week 6 (49ers beat Commanders 23-17, other games earlier in week) per ground truth/AdamSchefter. Division now 0-6-2 since Week 5 per CBS Sports — first division ever to go winless in consecutive weeks per CBS Sports. Giants 3-1-1 lead division per ground truth. Eagles 2-4, Cowboys 2-4, Commanders 1-4-1 per ground truth.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "dalton-knecht-lakers-waived-2026",
+        "title": "Lakers waive 2024 first-round pick Dalton Knecht — former No. 17 pick falls hard after fast start, Bronny James survives roster cut",
+        "section": "supporting",
+        "development": "LA Lakers waived Knecht per CBS Sports/KevinOConnor — 2024 first-round pick (No. 17) now off roster day before 2026-27 season begins per CBS Sports. Already 25 years old, was late bloomer in college after multiple transfers per KevinOConnor. Things turned after reversed Mark Williams trade per KevinOConnor. Four lottery picks from 2024 draft already traded, Knecht now waived per CBS Sports — '2024 draft class was doomed from the start' per CBS Sports. Bronny James kept Lakers roster spot over Knecht per CBS Sports — with father on 76ers, James is last survivor of Lakers' 2024 draft class per CBS Sports. Wild how far Knecht has fallen after fast start to career per KevinOConnor.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "flyers-start-2026",
+        "title": "Flyers fall to 2-9 after loss to Avalanche — worst start in franchise history continues",
+        "section": "atl",
+        "development": "CONTINUING [Day 4]: Philadelphia lost to Colorado 3-2 per ground truth. Flyers now 2-9 after 11 games, their worst start in franchise history (since 1967-68) per ground truth. Philadelphia historically bad to open season.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "maple-leafs-start-2026",
+        "title": "Maple Leafs fall to Sharks 3-1 — Toronto struggling at 3-6 after nine games",
+        "section": "atl",
+        "development": "San Jose beat Toronto 3-1 per ground truth. Maple Leafs now 3-6 after 9 games per ground truth. Toronto off to poor start.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "rangers-ducks-oct-19-2026",
+        "title": "Rangers beat Ducks 5-2 — New York improves in NHL action",
+        "section": "atl",
+        "development": "New York Rangers beat Anaheim 5-2 per ground truth. Rangers improve. Regular season continues.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "penguins-utah-oct-19-2026",
+        "title": "Utah Mammoth edge Penguins 5-4 — Mammoth get win in NHL action",
+        "section": "atl",
+        "development": "Utah beat Pittsburgh 5-4 per ground truth. Mammoth get victory. Regular season continues.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "aaron-boone-yankees-2027-2026",
+        "title": "Yankees bring back Aaron Boone for 10th season as manager — guided NY to two AL West titles but no World Series",
+        "section": "atl",
+        "development": "New York will bring Boone back for 2027 season per CBS Sports — 10th season as Yankees manager per CBS Sports. Great regular-season success in nine seasons but hasn't led Yankees to World Series title per CBS Sports. Yankees eliminated by Rays in ALDS sweep per recent history.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "jalen-hurts-blood-clot-eagles-2026",
+        "title": "Jalen Hurts blood clots revelation — Eagles and agent reveal more details about QB's condition, lingering questions remain",
+        "section": "atl",
+        "development": "CONTINUING [Day 3]: Eagles and Hurts' agent revealed more information about quarterback's blood clot situation Monday per CBS Sports. Still lingering questions about star QB's health per CBS Sports. Hurts on injured reserve per recent history. Story continues to develop.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "mike-evans-49ers-injury-2026",
+        "title": "49ers WR Mike Evans ruled out with Achilles injury — exited MNF late in first half",
+        "section": "atl",
+        "development": "Evans ruled out with Achilles injury after leaving game late in first half per AdamSchefter/CBS Sports. Was having good first half before exiting per CBS Sports. 49ers lose receiver.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "terry-mclaurin-commanders-injury-2026",
+        "title": "Commanders fear Terry McLaurin suffered 'significant' knee injury — WR carted off during MNF loss to 49ers",
+        "section": "atl",
+        "development": "Washington fears McLaurin suffered 'significant' knee injury during MNF loss per AdamSchefter. Carted off after knee injury late in first quarter per CBS Sports. Commanders WR facing potential long-term issue.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "guardians-offseason-2026",
+        "title": "Guardians head home after ALCS loss — biggest offseason questions about José Ramírez, Steven Kwan, core players",
+        "section": "atl",
+        "development": "Cleveland lost to Tampa Bay 7-3 in ALCS Game 6 per ground truth, eliminated 4-2 per ground truth. After losing to Rays in ALCS, headed home with major questions about several core players per CBS Sports. José Ramírez, Steven Kwan among key names per CBS Sports. Offseason begins for Guardians.",
+        "is_new": true,
+        "resolved": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-19",
     "story_log": [
       {
@@ -3869,139 +3986,6 @@
         "development": "Banks (Saints LT, 2025 No. 9 pick) suffered ankle injury after sack per CBS Sports. Pierce (Colts WR) left with heel injury, X-rays negative per Pelissero/ClutchPoints — left stadium in walking boot and crutches per ClutchPoints. Price (Seahawks RB) chest injury, X-rays negative per Pelissero. More tests Monday for all three.",
         "is_new": true,
         "resolved": false
-      }
-    ]
-  },
-  {
-    "date": "2026-09-20",
-    "story_log": [
-      {
-        "topic_key": "ole-miss-lsu-kiffin-return-2026",
-        "title": "Ole Miss defeats LSU 32-24 in Lane Kiffin's hostile return to Oxford — Trinidad Chambliss dominates, Rebels exact revenge",
-        "section": "lead",
-        "development": "Ole Miss beat LSU 32-24 per ground truth. Chambliss: 325+ pass yds, 2+ pass TD per StatMuse — now 3 such games since Kiffin left vs 2 in 11 games under Kiffin per StatMuse. Chambliss scored go-ahead rush TD, sealed win with INT per ClutchPoints/ESPN. Ole Miss led 24-7 at half per ESPN, LSU rallied to make it close per ESPN. Kiffin's return dominated CFB week — fans lined staircases as he arrived per JomboyMedia, ESPN cut from Holly Rowe to Laura Rutledge per HaterReport, Chambliss cursed on live TV: 'HOTTY F*CKING TODDY' per HaterReport.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "gable-steveson-ufc-knockout-2026",
-        "title": "Gable Steveson knocked out cold in 12 seconds by Sean Sharaf on UFC 331 debut — Jon Jones watched in horror",
-        "section": "supporting",
-        "development": "Sharaf KO'd Steveson 12 seconds into UFC 331 debut with left hook per LeBatardShow/HaterReport/SportsCenter. Steveson out cold per HaterReport. Jon Jones watched in horror per HaterReport. Olympic gold medalist wrestler's MMA debut disaster.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "arman-tsarukyan-knockout-ufc-331-2026",
-        "title": "Arman Tsarukyan brutally knocks out Mauricio Ruffy with elbow, calls for title shot after UFC 331 victory",
-        "section": "supporting",
-        "development": "Tsarukyan KO'd Ruffy with brutal elbow at UFC 331 per LeBatardShow/HaterReport/SportsCenter. Called for title shot after win per SportsCenter/CBS Sports headline. Emphatic lightweight contender statement per CBS Sports.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "mlb-walkoffs-sept-19-2026",
-        "title": "MLB walkoff bonanza: Ethan Salas, Pavin Smith, Christian Moore all end games in dramatic fashion",
-        "section": "supporting",
-        "development": "Salas (20 years old) hit pinch-hit walkoff for Padres to beat Marlins 7-6 per TalkinBaseball/ClutchPoints/ground truth. Pavin Smith walkoff HR for Dbacks beat Yankees 5-3 on night celebrating 2001 WS team per TalkinBaseball/ground truth. Christian Moore walkoff hit in 11th for Angels beat Twins 6-5 per ClutchPoints/ground truth. Griffin Conine tied game in 9th off Mason Miller before Salas ended it per TalkinBaseball. Vaughn Grissom tied Angels-Twins in 9th before Moore's winner per ClutchPoints. Wild finishes across MLB.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "vanderbilt-nc-state-fumble-2026",
-        "title": "NC State fumbles intentional safety, Vanderbilt scores TD on return to win 35-31 — all-time ending in college football",
-        "section": "supporting",
-        "development": "NC State led 31-28, attempted intentional safety to run clock, fumbled snap, Vanderbilt returned it for TD to win 35-31 per ground truth/JomboyMedia/PatMcAfeeShow/SharpFootball/CBS Sports. Vandy never led all game until final play per SharpFootball. NC State QB CJ Bailey now under investigation for gambling-related policies, temporarily suspended per BallsackSports. One of craziest endings in CFB history per CBS Sports.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "keenan-allen-suspension-dui-2026",
-        "title": "Colts WR Keenan Allen facing minimum 3-game suspension for DUI arrest in Indianapolis",
-        "section": "supporting",
-        "development": "Allen facing minimum 3-game suspension stemming from drunk driving arrest in downtown Indianapolis last month per Schefter/ESPN. Will miss at least Colts' first three games. Major blow to Indianapolis offense.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "michael-penix-jr-return-week-3-2026",
-        "title": "Michael Penix Jr. nearing return, could start Thursday night vs Packers — Falcons' preferred starter back from knee surgery",
-        "section": "atl",
-        "development": "Penix nearing return, could make 2026 debut Thursday vs Packers per Schefter/RapSheet. Falcons' preferred starter per Schefter. Fully cleared but timing piece of Tua starting Week 1 per AlbertBreer (from Sept 19). Return imminent.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "trinidad-chambliss-heisman-2026",
-        "title": "Trinidad Chambliss surges to Heisman favorite after leading Ole Miss past LSU with clutch TD drive",
-        "section": "atl",
-        "development": "Chambliss now Heisman frontrunner after leading Rebels past No. 7 LSU with clutch game-winning TD drive per CBS Sports. Former D-II transfer takes over Heisman race. 325+ pass yds, 2+ pass TD, game-winning rush TD, sealing INT per StatMuse/ClutchPoints/ESPN.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "kentucky-texas-am-upset-2026",
-        "title": "Kentucky shocks No. 9 Texas A&M 31-21 on road — Will Stein's first marquee victory, Wildcats explode in third quarter",
-        "section": "atl",
-        "development": "Kentucky upset No. 9 Texas A&M 31-21 in College Station per ground truth/CBS Sports. Third-quarter explosion delivered Stein's first signature win per CBS Sports. BarstoolReags: 'Feed the studs. Will Stein coached a perfect game. We were the better team.' Kentucky now face of SEC per BarstoolReags.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "colorado-northwestern-blowout-2026",
-        "title": "Northwestern demolishes Colorado 41-7 after Buffs player called stadium 'a f*cking library'",
-        "section": "atl",
-        "development": "Northwestern destroyed Colorado 41-7 per ground truth. Colorado player called Ryan Field 'a f*cking library' before game per JomboyMedia. 'This place fucking sucks. Shit sounds like a fucking library. Colorado proceeded to lose 41-7 at Northwestern' per JomboyMedia. Got what they asked for.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "dbacks-yankees-2001-celebration-2026",
-        "title": "Diamondbacks celebrate 25th anniversary of 2001 World Series — Randy Johnson and Curt Schilling hoist trophy, scoreboards altered to look like 2001",
-        "section": "atl",
-        "development": "Dbacks celebrated 25th anniversary of 2001 WS team before Yankees game per TalkinBaseball/SportsCenter. Randy Johnson and Schilling hoisted trophy together per TalkinBaseball. Scoreboards altered to look like 2001 per TalkinBaseball. Pavin Smith walkoff HR completed night per TalkinBaseball. Arizona won 5-3 per ground truth.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "ronald-acuna-grand-slam-2026",
-        "title": "Ronald Acuña Jr. crushes grand slam to put Braves on top in Houston — Astros fall out of playoff spot",
-        "section": "atl",
-        "development": "Acuña hit grand slam to put Braves up in Houston per TalkinBaseball/ClutchPoints. If everything holds Astros will not be in playoff spot at end of night per TalkinBaseball. Atlanta won 6-3 per ground truth. Houston slipping in AL West race.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "cal-raleigh-472-foot-homer-2026",
-        "title": "Cal Raleigh launches 472-foot home run — longest of his career — to extend Mariners lead over Rockies",
-        "section": "atl",
-        "development": "Raleigh hit 472-foot HR vs Colorado per TalkinBaseball/ClutchPoints — longest of his career per TalkinBaseball. Mariners beat Rockies 5-3 per ground truth.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "angel-reese-500-rebounds-2026",
-        "title": "Angel Reese becomes first WNBA player to record 500+ rebounds in single season — 30 double-doubles breaks league record",
-        "section": "atl",
-        "development": "Reese vs Chicago: 23 PTS, 10 REB, 4 AST, 3 BLK, 2 STL per ClutchPoints — became first player in WNBA history to record 500+ rebounds in single season per ClutchPoints. Now has 30 double-doubles (WNBA record) and 505 rebounds (WNBA record) per ClutchPoints. Made history vs former team at 24 years old.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "golden-state-valkyries-seattle-2026",
-        "title": "Golden State Valkyries beat Seattle Storm 70-57 — defensive stocks bonanza with 18 steals and 8 blocks",
-        "section": "atl",
-        "development": "Valkyries beat Storm 70-57 per ground truth. Defensive stocks: Amihere 1 STL/2 BLK, Burton 1/1, Charles 4 STL, Chen 1 STL, Jocyte 1 STL, Stokes 4 BLK, Thornton 4 STL per StatMuse. 'Valkatraz' per StatMuse. Dominant defense.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "nfl-video-board-rule-change-2026",
-        "title": "NFL changes video board rules for field goals after viral Patriots gamesmanship — teams must use same All-22 angle for both kicking teams",
-        "section": "atl",
-        "development": "NFL modified video board rules for FG/XP attempts after viral social-media post per Schefter/Pelissero — teams must now use same All-22 angle or static image for both kicking teams per Schefter. Modification designed to ensure competitive equity, violations will result in discipline per Schefter. Came after Patriots viral gamesmanship.",
-        "is_new": true,
-        "resolved": true
       }
     ]
   }
