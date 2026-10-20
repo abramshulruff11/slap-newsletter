@@ -14972,8 +14972,8 @@
         {
           "id": "z23hGvopHu7w4",
           "label": "relief GIF",
-          "status": "verified",
-          "note": "SLA-141: sourced for dodged_disaster (Giphy search “that was close”); accepted by Abram 2026-10-19.",
+          "status": "retired",
+          "note": "SLA-141: sourced for dodged_disaster (Giphy search “that was close”); accepted by Abram 2026-10-19. Retired 2026-10-19 (SLA-144): Abram rated it a bad reaction in the UAT run; an unnamed man's facepalm at a press junket, no recognizable reference.",
           "tags": ["dodged-disaster"],
           "moods": ["fatigue_over_it", "embarrassing_awkward", "sadness_resignation"],
           "subcategories": [
