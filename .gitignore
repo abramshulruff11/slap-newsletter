@@ -34,6 +34,9 @@ uat/gif_decisions.json
 # proposals themselves are in uat/output/ (ignored above).
 uat/gif_tag_review.html
 uat/gif_tag_decisions.json
+# SLA-141 situation sourcing page + its export (gif_situation_probe.py).
+uat/gif_situation_review.html
+uat/gif_situation_decisions.json
 
 # Meme library — same deal (review_memes.py, apply_meme_decisions.py). The
 # render cache holds Imgflip URLs for each template's worked example; it is

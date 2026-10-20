@@ -214,6 +214,8 @@ slap-newsletter/
 │   ├── review_gif_tags.py     ← right/wrong review page for the tagger; --score checks the bar
 │   ├── apply_gif_tags.py      ← SLA-137: merges gif_tags.json into the GIF library (re-runnable)
 │   ├── replay_gif_situations.py ← SLA-138: free replay, mood-only vs situation-aware picks
+│   ├── gif_situation_probe.py ← SLA-141: Giphy search per thin situation + review page
+│   ├── apply_gif_situation_decisions.py ← SLA-141: accepted ids -> library; --refile after tagging
 │   ├── tests/                 ← offline suites, 0 API calls — run before any prompt/code change
 │   │   ├── test_runner_drift.py ← fails if a change reaches one runner and not the other
 │   │   └── test_pipeline_status.py ← locks the status email + the stage list vs the workflow
@@ -828,6 +830,12 @@ situation tags). Needs Giphy + Anthropic, so it runs on Abram's machine. Locked 
 - **Giphy's per-key cap stops a batch.** The first full run 429'd after ~120 Giphy calls in ~20
   minutes (~100/hour). The tagger now stops at the first Giphy 429 and prints what's left;
   wait an hour and re-run. SLA-134's sourcing will need the same bound.
+- **Metadata is looked up 100 ids per call (SLA-141).** `fetch_giphy_many()` uses Giphy's
+  `/v1/gifs?ids=` before the loop, so 291 GIFs cost 3 Giphy calls, not 291; a failed batch falls
+  back to the per-id path (which still stops at its own 429). `save_output()` retries its rename
+  for ~25 s: OneDrive briefly locks a file it just saw change, and the first SLA-141 batch died
+  on GIF 23 with "Access is denied". One GIF's reply was blocked by the API's content filter
+  (400); a re-run went through.
 
 **The tags live in the library now (SLA-137, 2026-10-17).** `uat/apply_gif_tags.py` merged all
 175 proposals into `prompts/gif_library.DRAFT.json` through `dumps_matching_style()` (no line of
@@ -889,6 +897,31 @@ situation GIF inside its cooldown, then a cooling mood GIF. Never anything alrea
   `historic_company` 13 / 1). **It assumes Pass 1 / Pass 2 always name the right situation**;
   only a real run measures that.
   Locked by `uat/tests/test_gif_situation_select.py` (mutation-checked: mood-first order fails 11).
+
+**The ten thin situations were filled (SLA-141, 2026-10-19; library only, prompts untouched).**
+`uat/gif_situation_probe.py` searches Giphy with hand-written references per situation (68
+queries, short: Giphy returns nothing for "kawhi leonard blank stare") and builds
+`uat/gif_situation_review.html`; Abram accepted 294 of 457. `uat/apply_gif_situation_decisions.py`
+added 291 as verified (3 partisan clips from The Democrats' channel left out), then the tagger and
+`apply_gif_tags.py` ran as usual. Library 223 -> 514 entries, **406 verified**.
+- **The tagger overruled 51 of Abram's 291 accepts** (status `rejected`, reason in the entry:
+  mostly `off_topic` and `text_overlay_dominates`, e.g. three John Wick clips, Vader's "Nooo",
+  six SpongeBob time cards). That is the SLA-137 rule, applied unchanged; un-reject in the studio.
+- **It also re-filed situations.** A GIF sourced for `calm_dominance` often came back tagged
+  `smug_indifference` or `bold_move_swagger`, so the per-situation counts are the tagger's, not the
+  search's: all ten now have >= 6 verified (`comeback_euphoria` exactly 6, 0 strong;
+  `historic_company` 9, 0 strong; `carrying_the_load` 9, 1 strong).
+- **No new categories.** `relief` and `anticipation` have no category, and adding one would
+  change production's Pass 2 menu (`category_prompt_block`). Those GIFs were held in
+  `celebratory` / `escalation`, then `--refile` moved each to its first tagged mood that is a
+  category (45 moved). Situation selection searches every category, so this only touches the
+  mood-only fallback.
+- **Replay (200 seeds): situation-aware 58.5% -> 97.7%** (strong fit 57.2%), ceiling 83.3% ->
+  100%; mood-only 19.6% -> 17.9% (bigger pools, same moods). Remaining misses are cooldown:
+  `dud_performance` 40%, `shell_shocked_loser` 68%, `franchise_meltdown` 85%.
+- **Production reads this file too.** Prod's mood picks take any verified GIF in the category,
+  so merging this branch to `main` puts the 240 new GIFs into production's mood-only picks the
+  next morning, situation prompts or not.
 
 **A fact bundle for a new sport starts at `docs/sport_bundle_pattern.md` (SLA-118):** read it
 before opening the first ticket to give MLB, the NBA or the NHL what football has (a connected
@@ -1285,6 +1318,15 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-19 — Ten thin GIF situations filled; library 223 -> 514 (SLA-141)**
+- `uat/gif_situation_probe.py` (Giphy search + review page) and
+  `uat/apply_gif_situation_decisions.py` (add accepted ids, then `--refile`). Abram accepted 294
+  of 457; 291 added, tagged ($1.28); the tagger rejected 51. 406 verified GIFs.
+- Every one of the ten situations >= 6 verified. Replay: situation-aware 58.5% -> 97.7%,
+  ceiling 100%.
+- `gif_tagger.py`: Giphy metadata 100 ids per call; the output rename survives a OneDrive lock.
+  The batched lookup is tested in `test_gif_tagger.py`; the rename retry is not.
 
 **2026-10-17 — GIF selection prefers the beat's situation, in UAT (SLA-138)**
 - `gif_library_select.choose_entry()`: situation (strong, then partial) before mood, a fresh mood

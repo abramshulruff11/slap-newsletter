@@ -44,6 +44,7 @@ import io
 import json
 import os
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -82,6 +83,10 @@ PRICE_IN, PRICE_OUT = PRICES[MODEL]
 FRAME_COUNT = 6
 FRAME_HEIGHT = 180          # px per frame in the strip; ~1.1K input tokens total
 GIPHY_BY_ID_URL = "https://api.giphy.com/v1/gifs/{gif_id}?api_key={key}"
+# Up to 100 ids per call (SLA-141): 294 GIFs is 3 calls instead of 294, which
+# is what keeps a big batch inside Giphy's ~100/hour per-key cap.
+GIPHY_BY_IDS_URL = "https://api.giphy.com/v1/gifs?ids={ids}&api_key={key}"
+GIPHY_BATCH = 100
 # Small rendition: enough to read a jersey number, small to download.
 RENDITION_PREFERENCE = ("fixed_height", "downsized", "downsized_medium", "original")
 
@@ -390,6 +395,21 @@ def fetch_giphy(gif_id: str, key: str) -> dict | None:
         return json.loads(resp.read()).get("data")
 
 
+def fetch_giphy_many(gif_ids: list[str], key: str) -> dict[str, dict]:
+    """Metadata for many GIFs, GIPHY_BATCH per call. Anything missing from the
+    answer is simply absent; the caller fetches it one at a time."""
+    out: dict[str, dict] = {}
+    for i in range(0, len(gif_ids), GIPHY_BATCH):
+        chunk = gif_ids[i:i + GIPHY_BATCH]
+        url = GIPHY_BY_IDS_URL.format(ids=urllib.parse.quote(",".join(chunk), safe=","), key=key)
+        req = urllib.request.Request(url, headers={"User-Agent": "SLAP-Newsletter/1.0"})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            for d in json.loads(resp.read()).get("data") or []:
+                if d.get("id"):
+                    out[d["id"]] = d
+    return out
+
+
 def fetch_bytes(url: str) -> bytes:
     req = urllib.request.Request(url, headers={"User-Agent": "SLAP-Newsletter/1.0"})
     with urllib.request.urlopen(req, timeout=30) as resp:
@@ -406,7 +426,17 @@ def save_output(data: dict) -> None:
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     tmp = OUTPUT_PATH.with_suffix(".tmp")
     tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
-    tmp.replace(OUTPUT_PATH)
+    # The repo lives under OneDrive, whose sync briefly locks a file it just
+    # saw change; on Windows that makes the rename fail with "Access is denied"
+    # (SLA-141's first batch died on GIF 23). Wait it out rather than lose the run.
+    for attempt in range(10):
+        try:
+            tmp.replace(OUTPUT_PATH)
+            return
+        except PermissionError:
+            if attempt == 9:
+                raise
+            time.sleep(0.5 * (attempt + 1))
 
 
 def main(argv=None) -> int:
@@ -454,6 +484,13 @@ def main(argv=None) -> int:
         "taxonomy": TAXONOMY_PATH.name,
         "note": "Proposals only. Not read by the pipeline. Merge after review_gif_tags.py --score passes.",
     }
+    # One batched lookup up front; a failure here (a 429 included) just means
+    # every GIF falls back to its own lookup, which handles a 429 by stopping.
+    try:
+        prefetched = fetch_giphy_many([e["id"] for e in entries], giphy_key)
+    except Exception as e:  # noqa: BLE001
+        print(f"  batched Giphy lookup failed ({type(e).__name__}: {e}); looking up one at a time")
+        prefetched = {}
     spent = 0.0
     failed = []
     rate_limited = False
@@ -462,7 +499,7 @@ def main(argv=None) -> int:
         print(f"[{n}/{len(entries)}] {gid}  {entry.get('label', '')[:60]}")
         try:
             try:
-                giphy = fetch_giphy(gid, giphy_key)
+                giphy = prefetched.get(gid) or fetch_giphy(gid, giphy_key)
             except urllib.error.HTTPError as e:
                 if e.code != 429:
                     raise

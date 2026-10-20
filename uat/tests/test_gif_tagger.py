@@ -228,6 +228,7 @@ with tempfile.TemporaryDirectory() as tmp:
     GT.env_value = lambda name: "test-key"
     GT.fetch_giphy = lambda gid, key: (fetches.append(gid) or
                                        {"title": "t", "images": {"fixed_height": {"url": "https://x/g.gif"}}})
+    GT.fetch_giphy_many = lambda ids, key: {}   # batched lookup returns nothing: per-id path
     GT.fetch_bytes = lambda url: gif_bytes
     with redirect_stdout(io.StringIO()):
         rc = GT.main(["--limit", "3"])
@@ -270,6 +271,27 @@ with tempfile.TemporaryDirectory() as tmp:
     retry = [l for l in log.getvalue().splitlines() if l.startswith("Failed (re-run to retry): ")]
     check("every untried GIF is listed for the re-run",
           len(retry[0].split(": ", 1)[1].split(",")) if retry else 0, 3)
+
+    # SLA-141: one batched lookup covers the run, so no per-GIF Giphy call.
+    GT.fetch_giphy_many = lambda ids, key: {i: {"id": i, "title": "t",
+                                                "images": {"fixed_height": {"url": "https://x/g.gif"}}}
+                                            for i in ids}
+    GT.fetch_bytes = lambda url: gif_bytes
+    n_before = len(fetches)
+    with redirect_stdout(io.StringIO()):
+        rc = GT.main(["--limit", "2"])
+    check("batched metadata: the run succeeds", rc, 0)
+    check("batched metadata: no per-GIF Giphy call", len(fetches) - n_before, 0)
+
+    def batch_429(ids, key):
+        raise urllib.error.HTTPError("https://api.giphy.com", 429, "Too Many Requests", {}, None)
+
+    GT.fetch_giphy_many = batch_429
+    n_before = len(fetches)
+    with redirect_stdout(io.StringIO()):
+        rc = GT.main(["--limit", "3"])
+    check("a failed batch falls back to per-id lookups (which stop on their own 429)",
+          len(fetches) - n_before, 1)
 check("the library file is byte-for-byte unchanged", hashlib.sha256(GT.LIBRARY_PATH.read_bytes()).hexdigest(), lib_hash)
 
 print("\n7. Review page and score")
