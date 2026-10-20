@@ -1138,17 +1138,57 @@ def _parse_nhl_box(summary: dict) -> dict:
     # Period scores
     periods = _parse_period_scores(summary)
     n       = periods["count"]
+    goals, shootout = _parse_nhl_goals(summary)
     if n <= 3:
         labels = ["P1", "P2", "P3"][:n]
     else:
         labels = ["P1", "P2", "P3"] + [f"OT{i}" for i in range(1, n - 2)]
+        if shootout:
+            # A regular-season shootout is the last "period" ESPN lists; its
+            # entry is the one goal credited to the winner. It is not an OT.
+            labels[-1] = "SO"
     result["linescore"] = {
         "period_labels": labels,
         "away_periods":  periods["away_periods"],
         "home_periods":  periods["home_periods"],
     }
+    # SLA-148: every goal in order with the running score, shootout excluded,
+    # for nhl_bundle.py. Costs no extra request: the summary is already here.
+    result["agate"] = {"goals": goals, "shootout": shootout}
     result["notes"] = _parse_game_notes(summary)
     return result
+
+
+def _parse_nhl_goals(summary: dict) -> tuple[list[dict], bool]:
+    """(goals, shootout) from an NHL summary.
+
+    ESPN has no top-level scoringPlays for hockey; the goals are the plays
+    with scoringPlay true, each carrying the score AFTER it (the shootout's
+    own goals restart the running score, so they are dropped, and the game is
+    marked `shootout` so the flow knows the timeline ends level).
+    """
+    goals: list[dict] = []
+    shootout = False
+    for play in summary.get("plays") or []:
+        play = play or {}
+        ptype = ((play.get("type") or {}).get("text") or "")
+        text = play.get("text") or ""
+        if text.startswith("Start of Shootout") or ptype.lower() in ("shootout start", "start of shootout"):
+            shootout = True
+        if shootout or not play.get("scoringPlay"):
+            continue
+        period = (play.get("period") or {}).get("number")
+        away, home = play.get("awayScore"), play.get("homeScore")
+        if not isinstance(period, int) or away is None or home is None:
+            continue
+        goals.append({
+            "period": period,
+            "clock":  (play.get("clock") or {}).get("displayValue", ""),
+            "away":   away,
+            "home":   home,
+            "text":   text,
+        })
+    return goals, shootout
 
 
 # Football stat columns we keep. ESPN returns far more per group, but the box
