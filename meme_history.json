@@ -1,5 +1,22 @@
 [
   {
+    "date": "2026-10-21",
+    "slug": "surprised-pikachu",
+    "boxes": [
+      "FINALS MVP SCORES 15 IN THE FIRST HALF",
+      "GOES 2-FOR-10 AFTER HALFTIME",
+      "KNICKS BLOW A RING NIGHT LEAD"
+    ]
+  },
+  {
+    "date": "2026-10-21",
+    "slug": "hide-the-pain-harold",
+    "boxes": [
+      "FIRST GAME OF A WEMBY MVP SEASON",
+      "ONE MADE FIELD GOAL IN TWELVE TRIES"
+    ]
+  },
+  {
     "date": "2026-10-20",
     "slug": "eric-andre-shooting",
     "boxes": [
@@ -512,23 +529,6 @@
       "GO FOR THE WIN",
       "KICK THE FG AND PRAY",
       "SHANE STEICHEN"
-    ]
-  },
-  {
-    "date": "2026-09-20",
-    "slug": "panik-kalm-panik",
-    "boxes": [
-      "OLYMPIC GOLD, JON JONES IN MY CORNER, -2000 FAVORITE",
-      "I'M GOING TO WALK THROUGH THIS GUY",
-      "THAT WAS ONLY THE SECOND PUNCH HE THREW"
-    ]
-  },
-  {
-    "date": "2026-09-19",
-    "slug": "laughing-leo",
-    "boxes": [
-      "THE BRAVES ARE COOKED AND THE DYNASTY IS OVER",
-      "THEY JUST CLINCHED THEIR EIGHTH PLAYOFF BERTH IN NINE YEARS"
     ]
   }
 ]

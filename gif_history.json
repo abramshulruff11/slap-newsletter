@@ -1,5 +1,68 @@
 [
   {
+    "date": "2026-10-21",
+    "url": "https://media3.giphy.com/media/v1.Y2lkPWMwZDQzNDliNWptMzJ4dmplNTM2Mnl6ajQ2a2o1cmxvMHV0OXl2MnhmZ25jaXp6MyZlcD12MV9naWZzX2dpZklkJmN0PWc/DT3gYifPXBt5voafS1/giphy.gif",
+    "search_term": "[library:cockiness_smugness] Jimmy Fallon - 'told you so / admit it'",
+    "library_id": "DT3gYifPXBt5voafS1",
+    "library_category": "cockiness_smugness",
+    "library_subcategory": "vindication_doubters_silenced"
+  },
+  {
+    "date": "2026-10-21",
+    "url": "https://media2.giphy.com/media/v1.Y2lkPWMwZDQzNDliOHhiZnh6aTJ6djF1NjN3aHBvaXl2cWd0MWhveHVwbnIzMDhibnU5dCZlcD12MV9naWZzX2dpZklkJmN0PWc/2A7xcn2yGkb8hoya38/giphy.gif",
+    "search_term": "[library:respect_awe] GIF by Bleacher Report",
+    "library_id": "2A7xcn2yGkb8hoya38",
+    "library_category": "respect_awe",
+    "library_subcategory": "calm_dominance"
+  },
+  {
+    "date": "2026-10-21",
+    "url": "https://media0.giphy.com/media/v1.Y2lkPWMwZDQzNDlibzc1bWRvZmxxNGRtZG9lcjhjMHQ0MWxoNnowemxlYnE0bXhkY2hlZiZlcD12MV9naWZzX2dpZklkJmN0PWc/N4qEPJxBJ7dWrd6Vry/giphy.gif",
+    "search_term": "[library:sadness_resignation] I Dont Deserve This Why Me GIF by CBS",
+    "library_id": "N4qEPJxBJ7dWrd6Vry",
+    "library_category": "sadness_resignation",
+    "library_subcategory": "cruel_twist"
+  },
+  {
+    "date": "2026-10-21",
+    "url": "https://media0.giphy.com/media/v1.Y2lkPWMwZDQzNDliOW9iaTAxZXF0cHlzdTZwbnQ2enpyNzc0bWlxdGp5azZwMWVqdDJlbiZlcD12MV9naWZzX2dpZklkJmN0PWc/bpz6Jo3vrrsfS/giphy.gif",
+    "search_term": "[library:embarrassing_awkward] NBA dunk fail",
+    "library_id": "bpz6Jo3vrrsfS",
+    "library_category": "embarrassing_awkward"
+  },
+  {
+    "date": "2026-10-21",
+    "url": "https://media4.giphy.com/media/v1.Y2lkPWMwZDQzNDliOTQxaXd5N3E1Z2ppbHN5anY3djY4Zms1MmpucW9kcHkxazNndWI5YyZlcD12MV9naWZzX2dpZklkJmN0PWc/QS0KOjNRG0tfG/giphy.gif",
+    "search_term": "[library:respect_awe] the matrix 90s GIF",
+    "library_id": "QS0KOjNRG0tfG",
+    "library_category": "respect_awe",
+    "library_subcategory": "calm_dominance"
+  },
+  {
+    "date": "2026-10-21",
+    "url": "https://media1.giphy.com/media/v1.Y2lkPWMwZDQzNDlicWQxeHh5NDRyMHQ1d2F0cnJ2bXJ2cjE5b2lyaWh3amozZXR6aWpibSZlcD12MV9naWZzX2dpZklkJmN0PWc/QwnbJC6EMTjDJ7la8T/giphy.gif",
+    "search_term": "[library:cockiness_smugness] Robert Deniro GIF by Film Independent Spirit Awards",
+    "library_id": "QwnbJC6EMTjDJ7la8T",
+    "library_category": "cockiness_smugness",
+    "library_subcategory": "vindication_doubters_silenced"
+  },
+  {
+    "date": "2026-10-21",
+    "url": "https://media3.giphy.com/media/v1.Y2lkPWMwZDQzNDlieTV3MDE4YnI2cHFubDNod2xkYWsydzcxNXNxaXUzbnJ1dzBkMnRpaiZlcD12MV9naWZzX2dpZklkJmN0PWc/7Ee6I8ecvwFCU/giphy.gif",
+    "search_term": "[library:respect_awe] michael jordan basketball GIF",
+    "library_id": "7Ee6I8ecvwFCU",
+    "library_category": "respect_awe",
+    "library_subcategory": "superhuman_play"
+  },
+  {
+    "date": "2026-10-21",
+    "url": "https://media0.giphy.com/media/v1.Y2lkPWMwZDQzNDliNDNzZzNweDJ5MnA5OHhqNGxkNWJxcmcwYzl5emI5cDZ0cWhwcmVzaiZlcD12MV9naWZzX2dpZklkJmN0PWc/qLWdMYX1NYF2g/giphy-downsized-medium.gif",
+    "search_term": "[library:sadness_resignation] The Office Jim GIF",
+    "library_id": "qLWdMYX1NYF2g",
+    "library_category": "sadness_resignation",
+    "library_subcategory": "bad_news_accepted"
+  },
+  {
     "date": "2026-10-20",
     "url": "https://media2.giphy.com/media/v1.Y2lkPWMwZDQzNDlidWY0ZzY3cThpdm5icWdrNmppdDlvdGhmajNsaXgyM2Q5ODZ3eWlzZCZlcD12MV9naWZzX2dpZklkJmN0PWc/FX6SNOWqjUmzJlor4J/giphy.gif",
     "search_term": "[library:celebratory] Bucks - NBA Finals celebration",
@@ -373,61 +436,5 @@
     "search_term": "[library:celebratory] Stanley Cup parade (NHL)",
     "library_id": "Uqepe3KjEVzPYep8oW",
     "library_category": "celebratory"
-  },
-  {
-    "date": "2026-10-13",
-    "url": "https://media3.giphy.com/media/v1.Y2lkPWMwZDQzNDlicGgxdjJyYndvMHJ0b241eml4cGFvOWtyZTlyM3YwcGZrZHAyc2tzYiZlcD12MV9naWZzX2dpZklkJmN0PWc/XHeLeuirRbwptHhSWd/giphy-downsized-medium.gif",
-    "search_term": "[library:embarrassing_awkward] Can't-stop-laughing / spit-take laugh",
-    "library_id": "XHeLeuirRbwptHhSWd",
-    "library_category": "embarrassing_awkward"
-  },
-  {
-    "date": "2026-10-13",
-    "url": "https://media4.giphy.com/media/v1.Y2lkPWMwZDQzNDliN3lhanluZDNjdzJ3ZmpieWZwOWQ1bWRqMWd0cThwN3MwYXBibzJ2eSZlcD12MV9naWZzX2dpZklkJmN0PWc/nWWGEOdq8394Qs4qUw/giphy.gif",
-    "search_term": "[library:respect_awe] Oscars - standing ovation",
-    "library_id": "nWWGEOdq8394Qs4qUw",
-    "library_category": "respect_awe"
-  },
-  {
-    "date": "2026-10-13",
-    "url": "https://media1.giphy.com/media/v1.Y2lkPWMwZDQzNDliZGFoZ3Nmamp4Mzc4bmduOHZkOXAwOXl1dGZ4czNjMmZzamJkdDR3NCZlcD12MV9naWZzX2dpZklkJmN0PWc/nFzZ3X5D3fyb4WTRz4/giphy.gif",
-    "search_term": "[library:fatigue_over_it] 'Bored, here we go again' (Liverpool FC)",
-    "library_id": "nFzZ3X5D3fyb4WTRz4",
-    "library_category": "fatigue_over_it"
-  },
-  {
-    "date": "2026-10-12",
-    "url": "https://media2.giphy.com/media/v1.Y2lkPWMwZDQzNDlieTFwZTU3NGU3Y24ycG5pbG91Y28xZWc0cWl0YjFtaHQ4N2VjczV1aiZlcD12MV9naWZzX2dpZklkJmN0PWc/KD2gfeYLy6T5V7eMzp/giphy.gif",
-    "search_term": "[library:confusion] 'No way' (NBA)",
-    "library_id": "KD2gfeYLy6T5V7eMzp",
-    "library_category": "confusion"
-  },
-  {
-    "date": "2026-10-12",
-    "url": "https://media4.giphy.com/media/v1.Y2lkPWMwZDQzNDliaDF1b2JrZGUxZG5hODk2N210bHhqNDdiNnBhdzhoNjB2bW1iaGQ4dyZlcD12MV9naWZzX2dpZklkJmN0PWc/bHUajSIMIRcDY73Pti/giphy.gif",
-    "search_term": "[library:sadness_resignation] 'It's over' (Netflix/Squid Game)",
-    "library_id": "bHUajSIMIRcDY73Pti",
-    "library_category": "sadness_resignation"
-  },
-  {
-    "date": "2026-10-12",
-    "url": "https://media0.giphy.com/media/v1.Y2lkPWMwZDQzNDlibWNxODk4Zm54ZHliZzV2NGtuc3gwNXg3ZTRya2htdTlnNnB3YzZ3ZiZlcD12MV9naWZzX2dpZklkJmN0PWc/s1iCWGBXye6FOM6rSo/giphy.gif",
-    "search_term": "[library:cockiness_smugness] 'Told you so' - Blue Cat",
-    "library_id": "s1iCWGBXye6FOM6rSo",
-    "library_category": "cockiness_smugness"
-  },
-  {
-    "date": "2026-10-12",
-    "url": "https://media0.giphy.com/media/v1.Y2lkPWMwZDQzNDlic2w2Y3NwaHcxcmJhd3NpbnZ5Nmx6dTM5aW9hNGRqaWhwZnJrMWxqaiZlcD12MV9naWZzX2dpZklkJmN0PWc/fCUTTqU2u2SjwM401F/giphy.gif",
-    "search_term": "[library:respect_awe] Standing ovation (Zee TV)",
-    "library_id": "fCUTTqU2u2SjwM401F",
-    "library_category": "respect_awe"
-  },
-  {
-    "date": "2026-10-12",
-    "url": "https://media1.giphy.com/media/v1.Y2lkPWMwZDQzNDlibXh4ZGl5YmYweWYzenQyN3c2aTVxb285dnJ3YmgzNWJkNXQ4OW1pMSZlcD12MV9naWZzX2dpZklkJmN0PWc/bpz6Jo3vrrsfS/giphy.gif",
-    "search_term": "[library:embarrassing_awkward] NBA dunk fail",
-    "library_id": "bpz6Jo3vrrsfS",
-    "library_category": "embarrassing_awkward"
   }
 ]

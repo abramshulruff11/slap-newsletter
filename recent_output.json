@@ -1,5 +1,146 @@
 [
   {
+    "date": "2026-10-21",
+    "story_log": [
+      {
+        "topic_key": "76ers-knicks-opening-night-2026",
+        "title": "76ers spoil Knicks' ring night with 106-100 win — LeBron debuts for Philly, Tyrese Maxey leads with 28",
+        "section": "lead",
+        "development": "Philadelphia beat New York 106-100 per ground truth. LeBron: 14 PTS, 9 REB, 7 AST in Sixers debut per StatMuse — most PTS/REB/AST by 40+ year old in franchise history per StatMuse. Maxey: 28 PTS, 5 AST, 3 STL, 3 BLK per StatMuse — team-high 28 points. Jaylen Brown: 19 PTS, 8 REB, 6 AST in Philly debut per StatMuse. Paul George: 38 PTS (scoring leader), highest debut in career per StatMuse. Andre Drummond solid minutes for Knicks per KevinOConnor. Jalen Brunson: 21 PTS total, 6 PTS in second half (2-10 FG, 0-2 3PM) per HaterReport. Knicks raised first championship banner in 53 years per SportsCenter/JomboyMedia — Mike Breen on mic, 1973 team handing out rings, Ewing and Starks in stands per BarstoolReags. Tracy Morgan drunk, called out Bronny per HaterReport. Refs let LeBron shove Landry Shamet all over per HaterReport. Jaylen Brown spraying on hairline per HaterReport. Disputed goaltending call per HaterReport. LeBron yelling at Knicks fan courtside: 'I'm not from West Coast, I'm from Ohio baby' per HaterReport/SportsCenter. Andre Drummond snatched ball out of air with ref standing there per HaterReport. Core Four's first regular-season game together per SportsCenter. 76ers 1-0, Knicks 0-1 per ground truth.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "thunder-spurs-opening-night-2026",
+        "title": "Thunder dominate Spurs 116-104 on opening night — Shai 32-5-4, Wemby 1-13 shooting, Jared McCain 20 off bench",
+        "section": "lead",
+        "development": "Oklahoma City beat San Antonio 116-104 per ground truth. Shai Gilgeous-Alexander: 32 PTS, 5 REB, 4 AST, 2 STL, 2 BLK, 13-27 FG per StatMuse/SportsCenter/KevinOConnor/ClutchPoints — 'SGA is unstoppable, my goodness gracious' per KevinOConnor, passed Charles Barkley in all-time 30-point games per StatMuse. Victor Wembanyama: 12 PTS, 13 REB, 6 BLK, 3 AST, 1-13 FG (0-7 in first half, 0-12 before dunk) per ClutchPoints/NBAMemes/HaterReport — 'Wemby as soon as he gets put in best player in world conversations' per HaterReport. Chet Holmgren: 14 PTS, 7 REB, 4 BLK, 3-8 FG per ClutchPoints — spent all offseason thinking about revenge on Wemby, went right at him per HaterReport. Jared McCain off bench: 20 PTS, 7-9 FG, 6-8 3PT, +20, 22 MIN per StatMuse/ClutchPoints — leads league in bench points per StatMuse. Dylan Harper attacks: finished over Shai, had multiple strong takes per ClutchPoints. Stephon Castle: 24 PTS per StatMuse. Chet and Wemby battle of bigs: Chet 14-7-4blk 3-8 FG, Wemby 12-13-6blk 1-13 FG per ClutchPoints. 'OKC/Spurs rivalry is beautiful for NBA fans' per KevinOConnor. Thunder played HIGH LEVEL basketball, very prepared attacking Wemby lineups per KevinOConnor. Thunder make opening-day statement per SportsCenter. OKC 1-0, Spurs 0-1 per ground truth.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "connor-mcdavid-26-points-2026",
+        "title": "Connor McDavid has 26 points through 9 games — 6 goals, 20 assists, on pace for 242 points (Gretzky record 215)",
+        "section": "supporting",
+        "development": "McDavid: 26 PTS (6 goals, 20 assists) in 9 games per SportsCenter/StatMuse. 20 assists alone more than 2nd-place scorer (Jack Eichel 18 total points) per StatMuse. On pace for 242 points per SportsCenter — Gretzky's NHL record is 215 per SportsCenter. Auston Matthews 18 PTS (2nd in league, only McDavid has more) per StatMuse. Edmonton 7-2 after 9 games, last start this good or better 2021-22 per ground truth. McDavid dominating at historic pace.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "ohio-state-julian-sayin-injury-2026",
+        "title": "Ohio State QB Julian Sayin out 'indefinitely' — Buckeyes' CFP and national title hopes take major blow",
+        "section": "supporting",
+        "development": "Sayin out 'indefinitely' per CBS Sports — Ryan Day indicated Buckeyes could be without starting QB for season per CBS Sports. Luke Fahey will likely be charged with keeping Buckeyes' Big Ten title hopes and Jeremiah Smith's Heisman campaign afloat per CBS Sports. Blow to Ohio State's CFP and national championship hopes per CBS Sports. Major injury for defending Big Ten champions.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nhl-frozen-frenzy-oct-21-2026",
+        "title": "NHL Tuesday action — Macklin Celebrini OT winner for Sharks, Mikko Rantanen hat trick OT winner for Stars, Connor McDavid 26 points on season",
+        "section": "supporting",
+        "development": "Macklin Celebrini: 2 goals, 3 points, 6 SOG, 23:07 TOI vs Montreal per StatMuse — scored OT winner for Sharks per SportsCenter. San Jose beat Montreal 4-3 in OT per ground truth. Mikko Rantanen: 3 goals (hat trick), 6 SOG, 22:12 TOI vs Boston per StatMuse — completed hat trick with OT winner for Stars per ESPN/SportsCenter. Dallas beat Boston 3-2 in OT per ground truth. McDavid: 26 PTS (6 goals, 20 assists) in 9 games per SportsCenter/StatMuse — assisted OT winner for Oilers vs Minnesota per ESPN, on pace for 242 points (Gretzky record 215) per SportsCenter. Edmonton beat Minnesota 4-3 in OT per ground truth. Jeremy Swayman kept Bruins in it in OT per ESPN. Anthony Cirelli on natty hatty watch (2 goals) for Lightning per ESPN. Nikita Kucherov: 3 PTS (1 goal, 2 assists), 1 SOG, breakaway goal tied Steven Stamkos for most in Tampa Bay history per ESPN/StatMuse. Tampa Bay beat Vegas 6-2 per ground truth. Seattle beat Detroit 4-3 in OT per ground truth — Kraken 6-4 after 10 games, best start in franchise history (since 2021-22) per ground truth. Toronto beat Columbus 6-2, Carolina beat Vancouver 6-3, New Jersey beat Colorado 4-3, NY Islanders beat Anaheim 3-2, LA Kings beat Washington 5-2, St. Louis beat Winnipeg 2-1 per ground truth. Los Angeles 1-6 after 7 games, last start this bad or worse 2021-22 per ground truth — won at Washington, first win there since 2021-12-19 per ground truth. Vancouver 2-9 after 11 games, last start this bad or worse 1984-85 per ground truth. Auston Matthews 18 PTS in 11 games, only McDavid (22) has more per StatMuse. NHL action across league.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "middle-tennessee-fiu-4th-down-2026",
+        "title": "Middle Tennessee wins 26-23 on stones 4th-and-10 call — went for it from FIU 40 with 1:38 left up 3, converted 25-yard pass",
+        "section": "atl",
+        "development": "Middle Tennessee beat Florida International 26-23 per ground truth (Tue 2026-10-20, at Florida International). MTSU went for it on 4th & 10 from FIU 40 with 1:38 to play up 3 per RedditCFB — absolute stones to go for it, completed 25-yd pass per RedditCFB. 'This was fairly insane decision and could have backfired massively. Insane decisions are fun and they won 26-23!' per RedditCFB. Tuesday night college football wild finish.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "delaware-missouri-state-blowout-2026",
+        "title": "Delaware demolishes Missouri State 61-38 — Bron's Sixers debut getting upstaged by Tuesday shootout",
+        "section": "atl",
+        "development": "Delaware beat Missouri State 61-38 per ground truth (Tue 2026-10-20, at Delaware). 'Classic Tuesday night 61-38 Football game' per RedditCFB. 'Bron's '6ers debut getting upstaged by Delaware going absolutely nuclear on a Tuesday' per RedditCFB. Tuesday night offense everywhere.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "marshall-south-alabama-tuesday-2026",
+        "title": "Marshall beats South Alabama 20-13 on Tuesday night",
+        "section": "atl",
+        "development": "Marshall beat South Alabama 20-13 per ground truth (Tue 2026-10-20, at Marshall). Tuesday night college football continues.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "lebron-jaylen-brown-lob-2026",
+        "title": "Jaylen Brown throws lob to LeBron, tries to recreate Wade meme — 'FIRST game with LeBron and he COULDN'T WAIT'",
+        "section": "atl",
+        "development": "Brown threw lob to LeBron and tried to recreate LeBron-Wade meme per HaterReport/SportsCenter — 'Jaylen Brown is HILARIOUS player. FIRST game with LeBron and he COULDN'T WAIT to try to do this' per HaterReport. 'LeBron's first lob with the Sixers' per SportsCenter. 'Every masterpiece has its cheap copy' per HaterReport. 'JB trying to get that perfect photo' per SportsCenter/HaterReport. Already iconic attempt on opening night.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "lebron-knicks-fan-argument-2026",
+        "title": "Year 24 LeBron goes off on Knicks fan courtside — 'I'm not from West Coast, I'm from Ohio baby, f*ck is you talking about?'",
+        "section": "atl",
+        "development": "LeBron yelling at Knicks fan courtside: 'I'm not from the West Coast, I'm from Ohio baby, f*ck is you talking about?' per HaterReport. 'Year 24 LeBron GOING OFF on a Knicks fan' per HaterReport. 'I'M CRYING' per HaterReport. Fiery exchange caught on camera opening night.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "knicks-ring-ceremony-2026",
+        "title": "Knicks raise first championship banner in 53 years — 'What a moment for the city', Mike Breen on mic, 1973 team hands out rings",
+        "section": "atl",
+        "development": "New York raised first championship banner in 53 years per SportsCenter/JomboyMedia — 'What a moment for the city' per SportsCenter. Mike Breen on mic, 1973 team handing out rings per BarstoolReags. Patrick Ewing and John Starks in stands smiling per BarstoolReags. Jalen Brunson's 'Ring Night' Kobe 6 PEs are TOUGH per SportsCenter. 'That crowd pop for Brunson' per SportsCenter. 'This is enough to make anyone cry. I can't believe we get to see this' per BarstoolReags. Josh Hart had hair braided to look like NBA Finals trophy per JomboyMedia. Reggie Miller sitting there watching Knicks raise banner per BarstoolReags. Historic night at MSG.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "chet-wemby-rivalry-2026",
+        "title": "Chet spent all offseason thinking about Wemby revenge — 'HE WENT RIGHT AT HIM', battle of 7-footers in opener",
+        "section": "atl",
+        "development": "Chet Holmgren: 14 PTS, 7 REB, 4 BLK, 3-8 FG per ClutchPoints — 'spent ALL OFFSEASON thinking about getting REVENGE on Wemby... HE WENT RIGHT AT HIM' per HaterReport. Victor Wembanyama: 12 PTS, 13 REB, 6 BLK, 1-13 FG per ClutchPoints. Chet added weight in offseason, still got ragdolled by De'Aaron Fox per HaterReport — 'How you 7'1 and getting RAGDOLLED by De'Aaron Fox' per HaterReport. Fox body-slammed Chet per HaterReport. Battle of young bigs living up to hype.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "paul-george-38-points-celtics-debut-2026",
+        "title": "Paul George drops 38 points in Celtics debut — highest scoring debut of his career, leads all scorers opening night",
+        "section": "atl",
+        "development": "Paul George: 38 PTS per StatMuse — scoring leader opening night, highest debut in his career per KevinOConnor. Boston beat Detroit 121-113 per ground truth. 'PAUL GEORGE!! What a debut' per KevinOConnor. SleeperHQ: 'Watching Paul George become unwashed.' Celtics lose opening night without Jaylen Brown.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "pistons-celtics-opening-night-2026",
+        "title": "Pistons upset Celtics 121-113 on opening night — defending champs' first loss, Jaylen Brown trade haunts Boston",
+        "section": "atl",
+        "development": "Detroit beat Boston 121-113 per ground truth. Cade Cunningham: 22 PTS per StatMuse. Jalen Duren: 22 PTS per StatMuse. Duncan Robinson: 21 PTS per StatMuse. Ausar Thompson everywhere all at once per KevinOConnor. Jayson Tatum all the way back, best statistical season of career coming per KevinOConnor. Celtics' surplus of 3-point shooting contrasted with Detroit's lack per KevinOConnor — 'Just on different tier from Pistons' but Pistons won anyway. StatMuse: 'Wins this season: 1 — Jaylen Brown, 0 — Celtics.' Defending champs start 0-1 without Brown.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "jalen-hurts-blood-clot-eagles-2026",
+        "title": "NFLPA demands 'full investigation' into Jalen Hurts medical care — statement calls for probe after blood clot situation",
+        "section": "atl",
+        "development": "CONTINUING [Day 4]: NFLPA issued statement Tuesday night calling for 'full investigation' into medical care provided to Hurts per AdamSchefter/ESPN. 'NFLPA is not aware of any NFL investigation into medical care provided to Jalen Hurts. In fact, league previously informed union that it did not plan to review care he received. Before conclusions are drawn about how this situation was handled, there must be full investigation into what occurred. Determining facts is essential to ensuring players receive highest level of care and protection going forward' per AlbertBreer. NFL concluded process to clear Hurts for Week 5 London game was handled appropriately per CBS Sports. Eagles placed Hurts on IR per recent history. Story continues to develop with union involvement.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "terry-mclaurin-commanders-injury-2026",
+        "title": "Commanders WR Terry McLaurin tears patellar tendon — out for season after injury in MNF loss to 49ers",
+        "section": "atl",
+        "development": "CONTINUING [Day 2, RESOLVED]: McLaurin tore patellar tendon, will miss rest of season per AdamSchefter/ESPN — team announced Tuesday. Carted off after knee injury late in first quarter during MNF per recent history. Washington feared 'significant' injury per recent history. Jayden Daniels on McLaurin: 'He's a brother to me. It sucks. You see how hard he works... Praying for Terry' per AdamSchefter. Commanders lose top receiver for year.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "rays-brewers-world-series-2026",
+        "title": "World Series matchup set: Rays vs Brewers — first-time champion guaranteed, two teams with no titles meet in Fall Classic",
+        "section": "atl",
+        "development": "CONTINUING [Day 15, TIER 1 SERIES PREVIEW]: Tampa Bay and Milwaukee will meet in World Series per ground truth/ESPN. First World Series matchup between two teams that have never won title in over 100 years (last: Phillies-Royals 1980) per ESPN. Freddy Peralta named ALCS MVP per recent history — acquired from Mets at deadline, turnaround propelled Rays to Fall Classic per recent history. Tampa Bay last World Series appearance 2020 per ground truth. Brewers last World Series appearance 1982 per recent history. StatMuse: 'Payrolls: $143.5M — Brewers, $98M — Rays.' One of these teams will win first championship in franchise history. Fall Classic begins later this week.",
+        "is_new": false,
+        "resolved": false
+      }
+    ]
+  },
+  {
     "date": "2026-10-20",
     "story_log": [
       {
@@ -3884,107 +4025,6 @@
         "section": "atl",
         "development": "CONTINUING [Day 3]: Allen has more rushing TDs than AFC West, NFC East, NFC West combined per StatMuse — also more passing TDs than AFC North per StatMuse. First player in NFL history with 5+ pass TD and 4+ rush TD in first two games per recent history. Story continues from TNF dominance and Sunday stat drops.",
         "is_new": false,
-        "resolved": false
-      }
-    ]
-  },
-  {
-    "date": "2026-09-21",
-    "story_log": [
-      {
-        "topic_key": "caleb-williams-hamstring-injury-2026",
-        "title": "Caleb Williams suffers non-contact hamstring injury, carted off in tears — Bears QB status uncertain for Week 3",
-        "section": "lead",
-        "development": "Williams went down untouched in 4th quarter vs Vikings with apparent hamstring injury per ground truth/SportsCenter/AlbertBreer. Helped off field in significant pain per CBS Sports, carted off in tears giving thumbs up to crowd per SportsCenter/NFLMemes. Ben Johnson: 'He's in good spirits. Won't know severity until Monday' per Pelissero. Bears lost 9-3 per ground truth. Williams emotional after being carted off.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "jayden-daniels-elbow-injury-2026",
-        "title": "Jayden Daniels dislocates left elbow vs Cowboys, X-rays show no fracture — will miss some time, Commanders rally around Marcus Mariota",
-        "section": "supporting",
-        "development": "Daniels dislocated left elbow on final play of first half vs Cowboys per ground truth/Pelissero/AlbertBreer/SportsCenter. Tried to brace fall, elbow bent backwards per AlbertBreer. X-ray didn't show fracture per Pelissero/Quinn. More tests Monday, will be out for some time per Pelissero. Quinn: 'We'll rally around Marcus (Mariota)' per Pelissero. Washington lost 37-20 per ground truth.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "chiefs-colts-ot-thriller-week-2-2026",
-        "title": "Chiefs survive Colts in OT thriller 33-30 — Mahomes 3 TD, controversial replay, Colts play for tie late",
-        "section": "supporting",
-        "development": "Chiefs beat Colts 33-30 in OT per ground truth. Mahomes: 32-47, 382 pass yds, 3 TD per ClutchPoints. Jonathan Taylor tied it twice: once in regulation, once in OT per SportsCenter/ClutchPoints. Laquon Treadwell controversial play: ruled down by contact, Chiefs didn't recover fumble per ClutchPoints/Mahomes. Colts played for FG in OT instead of going for win per KevinOConnor. Butker game-winner per ClutchPoints. Alec Pierce (heel) left in walking boot per ClutchPoints.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "ja-marr-chase-bengals-texans-2026",
-        "title": "Ja'Marr Chase dominates Texans with absurd TD catch — Bengals roll 20-6, Derek Stingley Jr. helpless",
-        "section": "supporting",
-        "development": "Chase made absurd mid-air adjustment TD catch vs former LSU teammate Stingley per CBS Sports/SportsCenter. Adjusted in mid-air, dragged toes in bounds to break scoreless tie per CBS Sports. Chase clinic vs Houston per SportsCenter. Bengals demolished Texans 20-6 per ground truth. DeMeco Ryans settled for 58-yard FG on 4th & 1 trailing by 7, missed per BackAftaThis.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "jaxon-smith-njigba-seahawks-cardinals-2026",
-        "title": "Jaxon Smith-Njigba hat trick vs Cardinals — reigning OPOY dominates with 3 TD, Drew Lock deep shots, Seahawks cruise 31-7",
-        "section": "supporting",
-        "development": "JSN: 3 TD vs Cardinals per SportsCenter — reigning OPOY per SportsCenter. Drew Lock hit JSN for two deep TD strikes per SportsCenter/ClutchPoints. JSN now has 3 TD in two games per SportsCenter. BallsackSports: 'Jets saw JSN drop 447 receiving yards in Rose Bowl and said No Thanks' per BallsackSports. Seahawks demolished Cardinals 31-7 per ground truth.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "saints-ravens-week-2-2026",
-        "title": "Saints stun Ravens 24-17 — Tyler Shough goal-line QB sneak caps comeback, missed facemask not reviewable",
-        "section": "atl",
-        "development": "Saints beat Ravens 24-17 per ground truth. Shough may not have been across line BUT took brutal facemask (not reviewable) per AlbertBreer. Review upheld per AlbertBreer. Big comeback week after falling short last week per AlbertBreer. Kellen Moore Era win in Baltimore.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "chargers-raiders-upset-week-2-2026",
-        "title": "Raiders demolish Chargers 26-14 to start 2-0 — Chargers face brutal schedule at 0-2, Jim Harbaugh offense disaster",
-        "section": "atl",
-        "development": "Raiders destroyed Chargers 26-14 per ground truth. AlbertBreer: Chargers 0-2, next four at Bills, at Seahawks, vs Broncos, at Chiefs per AlbertBreer. SportsCenter: next 7 games no joke per SportsCenter. Chargers now tied with Raiders at 2-0 in AFC West per AlbertBreer. Getting late early for LA per AlbertBreer.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "dak-prescott-passing-td-record-cowboys-2026",
-        "title": "Dak Prescott surpasses Tony Romo atop Cowboys all-time passing TD list — aims to 'double' the mark",
-        "section": "atl",
-        "development": "Prescott passed Romo for most passing TD in Cowboys history per CBS Sports. Entered Sunday three behind, now No. 1 per CBS Sports. Prescott aims to 'double' top mark per CBS Sports headline. Dallas beat Washington 37-20 per ground truth.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "steelers-patriots-week-2-2026",
-        "title": "Patriots demolish Steelers 20-3 — Aaron Rodgers' Steelers offense broken, Monken fires back at Tomlin's 'Browns is the Browns' diss",
-        "section": "atl",
-        "development": "Patriots destroyed Steelers 20-3 per ground truth. CBS Sports: Steelers offense broken under Rodgers per CBS Sports. Steelers went 3rd & 7 to 4th & 43 per JoeyMulinaro — sums up offense for last 8 years per JoeyMulinaro. Todd Monken fired back at Tomlin's 'Browns is the Browns' diss after win: 'F--- that. Tomlin's words motivated team' per CBS Sports.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "packers-jets-ot-week-2-2026",
-        "title": "Packers edge Jets 20-17 in OT — Matt LaFleur under heat after sloppy 1-1 start",
-        "section": "atl",
-        "development": "Packers beat Jets 20-17 in OT per ground truth. CBS Sports: LaFleur should feel heat amid sloppiness, ugly 1-1 start per CBS Sports. Despite being extended this offseason, deserves scrutiny for eye-popping poor play per CBS Sports.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "mlb-playoffs-clinching-sept-20-2026",
-        "title": "Red Sox clinch playoff berth, Braves clinch NL East — Twins and Tigers eliminated from contention",
-        "section": "atl",
-        "development": "Red Sox clinched playoff berth (second straight season) per CBS Sports. Braves clinched NL East (7th in last 9 years) per TalkinBaseball — beat Astros 2-0 per ground truth. Twins eliminated per TalkinBaseball. Tigers eliminated per TalkinBaseball. Playoff races tighten with one week left.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "nfl-week-2-injuries-2026",
-        "title": "NFL Week 2 injury carnage: Kelvin Banks Jr. ankle, Alec Pierce heel, Jadarian Price chest — X-rays negative across board",
-        "section": "atl",
-        "development": "Banks (Saints LT, 2025 No. 9 pick) suffered ankle injury after sack per CBS Sports. Pierce (Colts WR) left with heel injury, X-rays negative per Pelissero/ClutchPoints — left stadium in walking boot and crutches per ClutchPoints. Price (Seahawks RB) chest injury, X-rays negative per Pelissero. More tests Monday for all three.",
-        "is_new": true,
         "resolved": false
       }
     ]
