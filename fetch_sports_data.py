@@ -467,11 +467,19 @@ def parse_game(event: dict) -> dict | None:
 # ESPN API fetchers
 # ---------------------------------------------------------------------------
 
+# Men's college basketball: without groups=50 ESPN returns only the featured /
+# Top-25 slate (5 of 54 games on 2026-01-21, 7 of 21 on 2026-03-14). 50 is the
+# Division I group; a heavy March day is ~150 games, so the limit is generous.
+SCOREBOARD_QUERY = {
+    "mens-college-basketball": "&groups=50&limit=300",
+}
+
+
 def fetch_scoreboard(sport: str, league: str, target_date: date) -> list[dict]:
     """Fetch all games for a given date. Returns list of parsed game dicts."""
     url = (
         f"{ESPN_BASE}/{sport}/{league}/scoreboard"
-        f"?dates={format_date(target_date)}&limit=50"
+        f"?dates={format_date(target_date)}{SCOREBOARD_QUERY.get(league, '&limit=50')}"
     )
     data = fetch_url(url)
     if not data:
