@@ -1,0 +1,578 @@
+{
+ "as_of_date": "2026-10-07",
+ "yesterday_date": "2026-10-06",
+ "sports": {
+  "mlb": {
+   "label": "MLB",
+   "yesterday_games": [
+    {
+     "game_id": "401908015",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-10-06T22:00Z",
+     "season_year": 2026,
+     "season_type": 3,
+     "week": null,
+     "matchup": "Los Angeles Dodgers @ Atlanta Braves",
+     "home_team": "Atlanta Braves",
+     "home_abbr": "ATL",
+     "home_id": "15",
+     "away_team": "Los Angeles Dodgers",
+     "away_abbr": "LAD",
+     "away_id": "19",
+     "home_score": 1,
+     "away_score": 3,
+     "winner": "Los Angeles Dodgers",
+     "loser": "Atlanta Braves",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": true,
+     "series": {
+      "home_wins": 1,
+      "away_wins": 2,
+      "total_games_played": 3,
+      "next_game_number": 4,
+      "series_over": false,
+      "home_leads": false,
+      "tied": false,
+      "clinching_game_for_home": false,
+      "clinching_game_for_away": false,
+      "elimination_game_for_home": false,
+      "elimination_game_for_away": false,
+      "summary": "LAD lead series 2-1",
+      "title": "Playoff Series"
+     },
+     "home_records": {
+      "total": "94-68",
+      "home": "52-29",
+      "road": "42-39"
+     },
+     "away_records": {
+      "total": "100-62",
+      "home": "51-30",
+      "road": "49-32"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "LAD",
+       "batting": [
+        {
+         "name": "M. Betts",
+         "pos": "SS",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".300"
+         },
+         "note": ""
+        },
+        {
+         "name": "F. Freeman",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".364"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Hernández",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".167"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Muncy",
+         "pos": "3B",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".250"
+         },
+         "note": ""
+        },
+        {
+         "name": "W. Smith",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".083"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Ohtani",
+         "pos": "DH",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".200"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Rojas",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".250"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Edman",
+         "pos": "2B",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".000"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Pages",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".182"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Tucker",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".333"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Hernández",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "2",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".250"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "Y. Yamamoto",
+         "pos": "SP",
+         "stats": {
+          "IP": "7.0",
+          "H": "4",
+          "R": "1",
+          "ER": "1",
+          "BB": "1",
+          "K": "10",
+          "ERA": "1.29"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Scott",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "2",
+          "ERA": "10.80"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Diaz",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "0.00"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "ATL",
+       "batting": [
+        {
+         "name": "D. Baldwin",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "1",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".130"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Acuna Jr.",
+         "pos": "RF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".143"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Olson",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".174"
+         },
+         "note": ""
+        },
+        {
+         "name": "O. Albies",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".250"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Harris II",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".375"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Dubon",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".217"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Thomas",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".167"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Yastrzemski",
+         "pos": "LF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".091"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Riley",
+         "pos": "3B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".105"
+         },
+         "note": ""
+        },
+        {
+         "name": "H. Kim",
+         "pos": "SS",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".000"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Tellez",
+         "pos": "1B",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".000"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Hicklen",
+         "pos": "RF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".000"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "C. Sale",
+         "pos": "SP",
+         "stats": {
+          "IP": "5.0",
+          "H": "7",
+          "R": "3",
+          "ER": "3",
+          "BB": "0",
+          "K": "7",
+          "ERA": "4.26"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Dodd",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "1.93"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Lee",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "5.40"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Suter",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "0",
+          "ERA": "0.00"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Iglesias",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "2",
+          "ERA": "0.00"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "0",
+        "0",
+        "3",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+       ],
+       "home_innings": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+       ],
+       "away_rhe": {
+        "R": "3",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "1",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "E. 4th",
+        "Freeman 4th"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 4,
+         "half": "top",
+         "score": "LAD 2, ATL 0",
+         "text": "E. Hernández homered to left (406 feet), Pages scored."
+        },
+        {
+         "inning": 4,
+         "half": "top",
+         "score": "LAD 3, ATL 0",
+         "text": "Freeman homered to right center (399 feet)."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "LAD 3, ATL 1",
+         "text": "Baldwin grounded out to first, Dubón scored, Hicklen to second, Thomas to third."
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "today_games": []
+  }
+ }
+}

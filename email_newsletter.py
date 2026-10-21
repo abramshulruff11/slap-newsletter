@@ -222,7 +222,7 @@ def _history_claims_html(status: dict) -> str:
         wrong = c.get("level") == "HIGH"
         colour = "#b42318" if wrong and not c.get("cut") else "#9a6700"
         what = "CONTRADICTED by the database" if wrong else "unconfirmed"
-        if c.get("kind"):                      # SLA-117: a football rank or record claim
+        if c.get("kind"):                      # SLA-117/142: a football rank or record, an MLB game-flow claim
             what = f"{c['kind']} {'CONTRADICTED by the game data' if wrong else 'unconfirmed'}"
         done = " — sentence was cut" if c.get("cut") else ""
         out += (f'<div style="color:{colour};margin-top:2px;">{"✗" if wrong else "⚠"} {what}{done} '

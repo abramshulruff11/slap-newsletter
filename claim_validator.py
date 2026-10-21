@@ -953,6 +953,431 @@ def check_football_claims(own_text: str, game_state: dict, outcomes: list | None
 
 
 # ---------------------------------------------------------------------------
+# Check 3D: MLB game-flow claims vs the line score (SLA-142)
+#
+# The 2026-10-19 ALCS recap had Hicks's single "in the 5th to put the Rays up
+# 2-0" (it was the 3rd, and made it 3-0) and "a Ben Williamson single to make
+# it 3-0" (Williamson scored on Aranda's single; Hicks's made it 3-0). Each
+# claim below is checked against mlb_bundle.claim_facts():
+#
+#   score in an inning  "up 2-0 in the 5th": a score a play in that inning
+#                       PRODUCED ("make it", "put ... up", "took a 3-0 lead"),
+#                       or one the game stood at during it ("led 3-0 in the 5th")
+#   go-ahead / for good "took the lead in the 7th", "go-ahead homer in the 8th"
+#   tie                 "tied it in the 9th"
+#   runs in an inning   "a four-run 6th"
+#   a scoring play      "Hicks's RBI single in the 5th": that batter scored a
+#                       run in that inning; "two-RBI" no more than it scored
+#   who made a score    "a Williamson single to make it 3-0": the play that
+#                       made it 3-0 was that batter's
+#   no runs at all      a run-scoring claim in an inning nobody scored in
+#   walk-off, wire to wire, never trailed, came back from N down
+#
+# HIGH only when the sentence ties to exactly one of yesterday's MLB games and
+# the facts contradict it. A claim the facts can't settle (several candidate
+# games, no reconciled plays, a past game) is left alone: before this, nothing
+# checked game flow at all, and a LOW asks the editor to blur a claim that may
+# be right. Only sections that read as baseball are checked, so "took the
+# lead in the third" about the Cardinals' football game is not.
+# ---------------------------------------------------------------------------
+
+_ORD_WORDS = {w: i + 1 for i, w in enumerate(
+    "first second third fourth fifth sixth seventh eighth ninth tenth eleventh twelfth thirteenth "
+    "fourteenth fifteenth".split())}
+_NOT_INNING = (r"(?!\s*-?\s*(?:place|seed|round|pick|quarter|period|half|straight|consecutive|time|times|"
+               r"game|games|win|wins|loss|year|years|season|career|ranked|overall|start|title|series|team|"
+               r"of\s+the\s+(?:season|year|night|postseason|series|playoffs)|homer|home\s+run|hit|batter|pitch|"
+               r"save|appearance|meeting|matchup)\b)")
+_INNING_RE = re.compile(
+    r"\b(?:(?P<half>top|bottom)\s+(?:half\s+)?(?:of\s+)?(?:the\s+)?|(?P<pre>in|of|the|an?|during|by)\s+(?:the\s+)?)?"
+    r"(?P<n>\d{1,2}(?:st|nd|rd|th)|" + "|".join(_ORD_WORDS) + r")\b(?P<inning>\s+inning)?" + _NOT_INNING,
+    re.IGNORECASE)
+_BASEBALL_RE = re.compile(r"\b(innings?|homer\w*|home\s+runs?|RBIs?|bullpen|pitch\w*|strikeouts?|struck\s+out|"
+                          r"walk-?\s?off|ALCS|NLCS|ALDS|NLDS|World\s+Series|MLB|starter|reliever|"
+                          r"singled|doubled|tripled|bases\s+loaded)\b", re.IGNORECASE)
+_SCORE_PAIR_RE = re.compile(r"(?<![\d-])(\d{1,2})-(\d{1,2})(?![\d-])")
+_NOT_A_SCORE_AFTER = re.compile(r"^\s*(?:series|in\s+the\s+series|lead\s+in\s+the\s+series|record|win|victory|"
+                                r"loss|defeat|final|count|edge\s+in\s+the\s+series)\b", re.IGNORECASE)
+_NOT_A_SCORE_BEFORE = re.compile(r"\b(?:series|ALCS|NLCS|ALDS|NLDS|World\s+Series|won|beat|beats|beating|topped|"
+                                 r"edged|over)\s+(?:the\s+)?(?:[A-Z][\w.'-]*\s+){0,3}$")
+# A score that isn't the score at that inning: one already overcome, or a count.
+_EARLIER_SCORE_BEFORE = re.compile(r"\b(?:erase[sd]?|erasing|overc[ao]me|overcoming|blew|blown|blowing|squander\w*|"
+                                   r"from|after)\s+(?:a\s+|an\s+|the\s+|their\s+|his\s+)?$", re.IGNORECASE)
+_EARLIER_SCORE_AFTER = re.compile(r"^\s*(?:deficit|hole|count|slider|fastball|sinker|cutter|curveball|curve|"
+                                  r"changeup|splitter|sweeper|heater|pitch|knuckle\w*)\b", re.IGNORECASE)
+_WEEKDAYS = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+_MADE_CUE = re.compile(r"\b(?:make|made|makes|making|put|puts|putting|gave|give|gives|giving|cut|cuts|cutting|"
+                       r"pulled\s+within|stretched|extended|extends|pushed|took|takes|take|taking|grabbed|opened|"
+                       r"tied\s+it\s+at|knotted\s+it\s+at)\b[^.;]*$", re.IGNORECASE)
+_LEAD_CUE = re.compile(r"\b(?:up|ahead|lead|led|leading|in\s+front)\b", re.IGNORECASE)
+_TRAIL_CUE = re.compile(r"\b(?:down|behind|trailed|trailing|trail)\b", re.IGNORECASE)
+_GO_AHEAD_RE = re.compile(
+    r"\b(?:took|take|takes|taking|grabbed|grabs|seized|seizes|regained|retook|reclaimed)\s+(?:the|a)\s+lead\b|"
+    r"\bwent\s+ahead\b|\bgo-ahead\b|\bpulled\s+ahead\b|\bmoved\s+ahead\b", re.IGNORECASE)
+_TIE_RE = re.compile(r"\b(?:tied|ties|knotted|evened|leveled|levelled)\s+(?:it|things|the\s+game|the\s+score)\b|"
+                     r"\btying\s+(?:homer|home\s+run|hit|single|double|triple|sac(?:rifice)?\s+fly)\b", re.IGNORECASE)
+_N_RUN_INNING_RE = re.compile(r"\b" + _N + r"-run\s+(?:top\s+of\s+the\s+|bottom\s+of\s+the\s+)?(\d{1,2}(?:st|nd|rd|th)|"
+                              + "|".join(_ORD_WORDS) + r")\b(?!\s+(?:lead|win|deficit))", re.IGNORECASE)
+_HIT = (r"single|singled|singles|double|doubled|doubles|triple|tripled|triples|homer|homered|homers|home\s+run|"
+        r"blast|shot|grand\s+slam|walk|walked|sac(?:rifice)?\s+fly|groundout|grounder|grounded\s+out|bunt")
+_RBI_CUE = re.compile(r"\bRBIs?\b|\bdr(?:ove|ives|iving)\s+in\b|\bknock(?:ed|s)\s+in\b|\bplated\b|"
+                      r"\brun-scoring\b|\bscored\s+on\b|\bgrand\s+slam\b|\bhomer\w*\b|\bhome\s+run\b|\bsac(?:rifice)?\s+fly\b|"
+                      r"\b" + _N + r"-run\s+(?:" + _HIT + r")\b", re.IGNORECASE)
+_RBI_COUNT_RE = re.compile(r"\b" + _N + r"-(?:RBI|run)\s+(?:" + _HIT + r")\b|\b" + _N + r"\s+RBIs?\b", re.IGNORECASE)
+_WALKOFF_RE = re.compile(r"\bwalk-?\s?off\b", re.IGNORECASE)
+_WIRE_RE = re.compile(r"\bwire[- ]to[- ]wire\b|\bnever\s+trailed\b|\bled\s+(?:the\s+)?(?:whole|entire)\s+(?:way|game)\b",
+                      re.IGNORECASE)
+_COMEBACK_RE = re.compile(r"\b(?:came|comes|coming|rallied|rallies|rallying|stormed|fought|climbed)\s+back\s+from\s+"
+                          r"(?:a\s+)?" + _N + r"-run\s+(?:deficit|hole)|\berased?\s+(?:a\s+)?" + _N +
+                          r"-run\s+(?:deficit|lead)|\bfrom\s+" + _N + r"\s+(?:runs\s+)?down\b", re.IGNORECASE)
+_ELSEWHERE_RE = re.compile(r"\bGame\s+\d\b|\b(?:19|20)\d{2}\b|\blast\s+(?:night'?s?\s+)?(?:week|year|season|time)\b|"
+                           r"\bearlier\s+in\s+the\s+series\b", re.IGNORECASE)
+
+
+_SHARED_MLB_CITIES = {"new york", "chicago", "los angeles"}
+_SCORED_RE = re.compile(r"\bscor(?:ed|es|ing)\b|\bcame\s+(?:around|home)\s+to\s+score\b|\bcrossed\s+the\s+plate\b",
+                        re.IGNORECASE)
+
+
+def _ascii(text: str) -> str:
+    import unicodedata
+    return unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
+
+
+def _num(s: str) -> int:
+    s = s.lower()
+    return _NUM_WORDS[s] if s in _NUM_WORDS else int(s)
+
+
+def _ord(n: int) -> str:
+    return f"{n}{'th' if n % 100 in (11, 12, 13) else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+
+
+def _inning_no(token: str) -> int:
+    t = token.lower()
+    return _ORD_WORDS[t] if t in _ORD_WORDS else int(re.match(r"\d+", t).group(0))
+
+
+def _innings_in(sentence: str) -> list[tuple[int, int]]:
+    """(inning, position) for every inning a sentence names. A word ordinal
+    ("the fifth") counts only with "inning" after it, a half before it, or
+    "in the" before it and the clause ending after it; "the third straight
+    win" and "for the second time" are not innings."""
+    out = []
+    for m in _INNING_RE.finditer(sentence):
+        word = m.group("n").lower() in _ORD_WORDS
+        if not (m.group("half") or m.group("pre") or m.group("inning")):
+            continue                                    # a bare "5th": only "5th inning" or "in the 5th"
+        if re.search(r"\b(?:before|until|till|through|after|since)\s+(?:the\s+)?$", sentence[:m.start()],
+                     re.IGNORECASE):
+            continue                                    # "Six RBI before the second inning started": a boundary
+        if word and not (m.group("inning") or m.group("half") or
+                         (m.group("pre") or "").lower() == "in" and
+                         re.match(r"\s*(?:$|[,.;:!?—–-]|(?:to|on|with|when|and|off|after|before|as)\b)",
+                                  sentence[m.end():])):
+            continue
+        n = _inning_no(m.group("n"))
+        if 1 <= n <= 25:
+            out.append((n, m.start("n")))
+    return out
+
+
+def _nearest(innings: list[tuple[int, int]], pos: int) -> int | None:
+    return min(innings, key=lambda x: abs(x[1] - pos))[0] if innings else None
+
+
+def _hn(play: dict) -> str:
+    return f"{play['half']} {_ord(play['inning'])}"
+
+
+def _batter_hits(sentence: str, roster: set[str]) -> list[tuple[str, int]]:
+    """(surname, position) for each player in the game credited with a hit or
+    play in the sentence: "Hicks dropped a two-RBI single", "a Ben Williamson
+    single", "Hicks: 2-RBI single". A runner who scored is not a batter."""
+    import unicodedata
+    plain = unicodedata.normalize("NFKD", sentence).encode("ascii", "ignore").decode()
+    out = []
+    for name in roster:
+        for m in re.finditer(r"\b" + re.escape(name) + r"(?:['’]s)?\b\W{0,2}((?:\s+\S+){0,3}?)\s+(?:" + _HIT + r")\b",
+                             plain, re.IGNORECASE):
+            if re.search(r"\b(?:scored|came|on|after|ahead|behind|for|off|against)\b", m.group(1), re.IGNORECASE):
+                continue                                  # "Simpson came around on a ... single"
+            out.append((name, m.start()))
+    return out
+
+
+def _flow_claims(sentence: str, f: dict, side: str | None) -> list[tuple[str, str, str]]:
+    """(verdict, what the claim said, the fact) for every game-flow claim in
+    one sentence about game `f`. `side` is the one team the sentence names,
+    or None."""
+    out: list[tuple[str, str, str]] = []
+
+    def abbr(s):
+        return f["teams"][s]["abbr"] or f["teams"][s]["name"]
+
+    def sc(a, h):
+        if a == h:
+            return f"tied {a}-{h}"
+        return f"{abbr('away' if a > h else 'home')} {max(a, h)}-{min(a, h)}"
+
+    innings = _innings_in(sentence)
+    plays = f["plays"]
+
+    # A score in an inning.
+    for m in _SCORE_PAIR_RE.finditer(sentence):
+        x, y = int(m.group(1)), int(m.group(2))
+        if x + y > 40 or _NOT_A_SCORE_AFTER.search(sentence[m.end():]) or \
+                _NOT_A_SCORE_BEFORE.search(sentence[:m.start()]):
+            continue
+        inn = _nearest(innings, m.start())
+        if inn is None:
+            continue
+        pre = sentence[max(0, m.start() - 60):m.start()]
+        if _EARLIER_SCORE_BEFORE.search(pre) or _EARLIER_SCORE_AFTER.search(sentence[m.end():]):
+            continue                                    # "erased a 4-0 deficit", "a 2-2 slider": not then
+        made = bool(_MADE_CUE.search(pre))
+
+        # Unordered on purpose: the team a sentence names is often not the
+        # subject ("Down 7-5 heading into the ninth against the Phillies" is
+        # the Marlins down), so who led is not read off it.
+        def fits(st, x=x, y=y):
+            return sorted(st) == sorted((x, y))
+        pool = f["made"].get(inn, set()) if made else f["moments"].get(inn, [])
+        if any(fits(st) for st in pool):
+            out.append(("confirm", m.group(0), ""))
+            continue
+        if made and not plays and any(fits(st) for st in f["moments"].get(inn, [])):
+            continue                                    # no plays: half-level only, can't tell
+        where = sorted(i for i, sts in f["made"].items() if any(fits(st) for st in sts))
+        fact = (f"the score became {sc(*next(st for st in f['made'][where[0]] if fits(st)))} in the "
+                + " and ".join(_ord(w) for w in where)) if where else f"the score was never {x}-{y}"
+        out.append(("contradict", f"{m.group(0)} in the {_ord(inn)}", fact))
+    # Go-ahead, for good.
+    for m in _GO_AHEAD_RE.finditer(sentence):
+        inn = _nearest(innings, m.start())
+        if inn is None or re.match(r"\s+(?:a|the)\s+\d", sentence[m.end():]):
+            continue                                    # "took a 3-0 lead": the score check has it
+        good = bool(re.search(r"\bfor\s+good\b", sentence[m.start():m.end() + 40], re.IGNORECASE))
+        if good:
+            fg = f["for_good"]
+            ok = fg is not None and fg[1] == inn and (side is None or fg[0] == side)
+            fact = f"{abbr(fg[0])} took the lead for good in the {_ord(fg[1])}" if fg else "no lead held"
+        else:
+            ok = any(i == inn and (side is None or s == side) for s, i in f["go_ahead"])
+            ga = [f"{abbr(s)} in the {_ord(i)}" for s, i in f["go_ahead"] if side is None or s == side]
+            fact = ("the lead was taken only " + ", ".join(ga)) if ga else \
+                   f"{abbr(side) if side else 'nobody'} never took the lead"
+        out.append(("confirm" if ok else "contradict", f"{m.group(0)} in the {_ord(inn)}", fact))
+    # Tie.
+    for m in _TIE_RE.finditer(sentence):
+        inn = _nearest(innings, m.start())
+        if inn is None:
+            continue
+        if any(st[0] == st[1] for st in f["made"].get(inn, set())):
+            out.append(("confirm", m.group(0), ""))
+        elif plays:
+            ties = sorted(i for i, sts in f["made"].items() if any(st[0] == st[1] for st in sts))
+            out.append(("contradict", f"{m.group(0)} in the {_ord(inn)}",
+                        "a play tied it only in the " + " and ".join(_ord(i) for i in ties)
+                        if ties else "the game was never tied after the first run"))
+    # Runs in an inning.
+    for m in _N_RUN_INNING_RE.finditer(sentence):
+        n, inn = _num(m.group(1)), _inning_no(m.group(2))
+        got = {s: f["runs"].get((s, inn)) for s in ("away", "home")}
+        ok = any(v == n for s, v in got.items() if side is None or s == side)
+        fact = "; ".join(f"{abbr(s)} scored {v} in the {_ord(inn)}" for s, v in got.items() if v is not None)
+        out.append(("confirm" if ok else "contradict", m.group(0), fact or f"there was no {_ord(inn)}"))
+    # A batter's scoring play in an inning, and who made a score.
+    hits = _batter_hits(sentence, f["roster"])
+    rbi = bool(_RBI_CUE.search(sentence))
+    for name, pos in hits:
+        mine = [p for p in plays if p["surname"] == name]
+        inn = _nearest(innings, pos)
+        if inn is None or not rbi or not plays:
+            continue
+        here = [p for p in mine if p["inning"] == inn]
+        if here:
+            cm = _RBI_COUNT_RE.search(sentence[pos:])
+            claimed = _num(next(g for g in cm.groups() if g)) if cm else None
+            most = max(p["runs"] for p in here)
+            if claimed and claimed > most:
+                out.append(("contradict", cm.group(0), f"{name.title()}'s play in the {_ord(inn)} scored {most} run(s)"))
+            else:
+                out.append(("confirm", name, ""))
+        elif mine:
+            out.append(("contradict", f"{name.title()} in the {_ord(inn)}",
+                        f"{name.title()}'s run-scoring play(s) came in the " +
+                        ", ".join(f"{_hn(p)} ({sc(p['away'], p['home'])})" for p in mine)))
+        elif not any(f["runs"].get((s, inn)) for s in ("away", "home")):
+            out.append(("contradict", f"{name.title()} in the {_ord(inn)}", f"nobody scored in the {_ord(inn)}"))
+    if hits and plays:
+        for m in _SCORE_PAIR_RE.finditer(sentence):
+            x, y = int(m.group(1)), int(m.group(2))
+            if not _MADE_CUE.search(sentence[max(0, m.start() - 60):m.start()]):
+                continue
+            makers = [p for p in plays if sorted((p["away"], p["home"])) == sorted((x, y))]
+            if len(makers) != 1 or makers[0]["surname"] is None:
+                continue
+            p = makers[0]
+            if any(n == p["surname"] for n, _ in hits):
+                out.append(("confirm", m.group(0), ""))
+            else:
+                out.append(("contradict", f"{', '.join(n.title() for n, _ in hits)} making it {x}-{y}",
+                            f"{sc(p['away'], p['home'])} came on {p['surname'].title()}'s play in the {_hn(p)}"))
+    # A run-scoring claim in an inning nobody scored in.
+    if rbi and not hits:
+        for inn, _ in innings:
+            if inn <= f["innings"] and not any(f["runs"].get((s, inn)) for s in ("away", "home")):
+                out.append(("contradict", f"a run in the {_ord(inn)}", f"nobody scored in the {_ord(inn)}"))
+    # Who scored: "Mangum walked, scored on a wild pitch" (a real Pass 2 replay
+    # of ALCS G5; it was DeLuca's bases-loaded walk, Díaz scoring). The player
+    # named nearest before the verb must have crossed the plate in this game.
+    if plays and f.get("scorers") is not None and \
+            not re.search(r"\b(?:didn'?t|never|without|not|no)\b[^.;]*\bscor", sentence, re.IGNORECASE):
+        plain = _ascii(sentence)
+        for m in _SCORED_RE.finditer(plain):
+            after = plain[m.end():]
+            if re.match(r"\s+(?:[A-Z]|a\b|an\b|the\b|two\b|three\b|four\b|\d|runs?\b|him\b|both\b)", after):
+                continue                                # transitive: "Hicks's single scored Simpson"
+            near = None
+            for w in reversed(re.findall(r"[A-Za-z'’]+", plain[max(0, m.start() - 60):m.start()])[-6:]):
+                if re.search(r"['’]s$", w):
+                    break                               # "Hicks's single ... scored": not the runner
+                if w.lower() in f["roster"]:
+                    near = w.lower()
+                    break
+            if near is None:
+                # A full name as the subject, with only lowercase words between it
+                # and the verb ("Jake Mangum walked, scored"), of someone not in
+                # this game's box score at all.
+                pm = re.search(r"\b([A-Z][a-z]+)\s+([A-Z][a-zA-Z'-]+)((?:,?\s+[a-z]+){0,3},?\s*)$",
+                               plain[max(0, m.start() - 60):m.start()])
+                team_words = {w for s in ("away", "home") for w in _tokens(f["teams"][s]["name"])}
+                if pm and pm.group(1).lower() not in team_words | _NOT_A_TEAM and \
+                        pm.group(2).lower() not in team_words and pm.group(1) not in ("Game", "World"):
+                    out.append(("contradict", f"{pm.group(1)} {pm.group(2)} scored",
+                                f"{pm.group(2)} is not in this game's box score"))
+                continue
+            if near in f["scorers"]:
+                out.append(("confirm", f"{near.title()} scored", ""))
+            else:
+                who = ", ".join(f"{s.title()} ({_hn(p)})" for p in plays for s in p["scorers"])
+                out.append(("contradict", f"{near.title()} scored", f"{near.title()} did not score; the runs "
+                            f"were scored by {who}"))
+    # Walk-off, wire to wire, comebacks.
+    win = f["winner"]
+    if _WALKOFF_RE.search(sentence):
+        # Whether there WAS one, not whose: "Waldschmidt Walk-Off Sinks
+        # Dodgers" names the team that lost it.
+        fact = (f"no walk-off: {abbr(win)}, the road team, won it in the top of the {_ord(f['innings'])}"
+                if win == "away" else
+                f"no walk-off: {abbr(win)} already led going into the bottom of the {_ord(f['innings'])}")
+        out.append(("confirm" if f["walk_off"] else "contradict", "walk-off", fact))
+    m = _WIRE_RE.search(sentence)
+    if m:
+        who = side or win
+        never_trailed = f["max_deficit"][who] == 0
+        ok = (f["wire_to_wire"] and who == win) if "wire" in m.group(0).lower() else never_trailed
+        out.append(("confirm" if ok else "contradict", m.group(0),
+                    f"{abbr(who)} trailed by as many as {f['max_deficit'][who]}" if not never_trailed
+                    else f"{abbr(who)} did not lead from the first run on"))
+    for m in _COMEBACK_RE.finditer(sentence):
+        n = _num(next(g for g in m.groups() if g))
+        who = side or win
+        ok = f["max_deficit"][who] >= n
+        out.append(("confirm" if ok else "contradict", m.group(0),
+                    f"{abbr(who)} trailed by at most {f['max_deficit'][who]}"))
+    return out
+
+
+def check_mlb_flow_claims(own_text: str, game_state: dict, outcomes: list | None = None) -> list[str]:
+    """`own_text`: one section's own prose (no tweets), one block per line.
+    `outcomes`, if given, collects (level, quoted, sentence, kind, figure)
+    for every sentence with a game-flow claim, confirmed ones included."""
+    import mlb_bundle
+    facts = mlb_bundle.claim_facts(game_state or {})
+    if not facts or not _BASEBALL_RE.search(own_text):
+        return []
+    by_name, twice = {}, set()
+    for f in facts:
+        for s in ("away", "home"):
+            n = f["teams"][s]["name"]
+            if n in by_name:
+                twice.add(n)                            # a doubleheader: which game is unknowable
+            by_name[n] = (f, s)
+    for n in twice:
+        by_name.pop(n)
+    facts = [f for f in facts if not {f["teams"][s]["name"] for s in ("away", "home")} & twice]
+    idx = _alias_index([{"team": n, "sport": "mlb", "opponent": ""} for n in by_name])
+    strong_idx = dict(idx)
+    # Recaps name teams by city ("Tampa Bay 3, Cleveland 1"); not a city two
+    # MLB teams share.
+    for f in facts:
+        for s in ("away", "home"):
+            t = f["teams"][s]
+            city = _tokens(t["name"])[:-len(_tokens(t["nick"]))] if t["nick"] else []
+            if city and " ".join(city) not in _SHARED_MLB_CITIES:
+                idx.setdefault(tuple(city), set()).add(t["name"])
+
+    def games_of(text):
+        return {by_name[n][0]["game_id"]: by_name[n][0] for n in _named(text, idx) if n in by_name}
+
+    yday = (game_state or {}).get("yesterday_date") or ""
+    try:
+        from datetime import date as _date
+        yday_name = _WEEKDAYS[_date.fromisoformat(yday).weekday()]
+    except ValueError:
+        yday_name = None
+    section_games = games_of(own_text)
+    flags = []
+    for sentence in _sentences(own_text):
+        if _ELSEWHERE_RE.search(sentence):
+            continue                                    # another game, another year
+        days = {d for d in _WEEKDAYS if re.search(r"\b" + d + r"\b", sentence, re.IGNORECASE)}
+        if days and (yday_name is None or days != {yday_name}):
+            continue                                    # "late Tuesday night": another day's game
+        # Unless the sentence names an MLB team by name or nickname, it must
+        # itself read as baseball: "Wemby went 1-5 in the fourth" in a
+        # section that mentions Cleveland is a quarter, not an inning.
+        if not (_named(sentence, strong_idx) & set(by_name)) and not _BASEBALL_RE.search(sentence) and \
+                not re.search(r"\binnings?\b|\b(?:top|bottom)\s+(?:half\s+)?of\b|\b\d{1,2}(?:st|nd|rd|th)\b|"
+                              r"\b(?:single|double|triple|sac(?:rifice)?\s+fly)s?\b(?!-)", sentence, re.IGNORECASE):
+            continue
+        named = [n for n in _named(sentence, idx) if n in by_name]
+        cands = games_of(sentence) or section_games
+        if not cands:
+            # A sentence naming no team: a batter only one game has.
+            cands = {f["game_id"]: f for f in facts if _batter_hits(sentence, f["roster"])}
+        if len(cands) != 1:
+            continue
+        f = next(iter(cands.values()))
+        sides = {by_name[n][1] for n in named if by_name[n][0] is f}
+        side = next(iter(sides)) if len(sides) == 1 else None
+        results = _flow_claims(sentence, f, side)
+        if not results:
+            continue
+        quoted = _quote(sentence)
+        bad = [(said, fact) for v, said, fact in results if v == "contradict"]
+        # What a tweet would have to carry to source the sentence: one of its
+        # scores, or an inning it names.
+        figs = [r"(?<![\d-])" + re.escape(m.group(0)) + r"(?![\d-])" for m in _SCORE_PAIR_RE.finditer(sentence)]
+        figs += [r"\b" + _ord(n) + r"\b" for n, _ in _innings_in(sentence)]
+        fig = "|".join(figs) or r"(?!x)x"
+        if not bad:
+            if outcomes is not None:
+                outcomes.append(("confirmed", quoted, sentence, "game flow", fig))
+            continue
+        t = f["teams"]
+        why = "; ".join(f"{s} -> but {x}" for s, x in bad).replace('"', "'").replace("--", "-")
+        flags.append(
+            f'\n<!-- FACT FLAG [HIGH]: "{quoted}" contradicts the line score of {t["away"]["name"]} @ '
+            f'{t["home"]["name"]}: {why} (ESPN; the MLB GAME FLOW block has the full sequence). Correct it '
+            f'to the block, or cut it. -->')
+        if outcomes is not None:
+            outcomes.append(("HIGH", quoted, sentence, "game flow", fig))
+    return flags
+
+# ---------------------------------------------------------------------------
 # SLA-112: after the editor. Pass 3 flags a history claim and the editor is
 # ASKED to fix it; nothing checked that it did. This re-runs the same check
 # on the final draft and reports what is still standing. It never rewrites
@@ -1053,6 +1478,20 @@ def final_history_check(html: str, game_state: dict, autocut: bool | None = None
             if not cut:
                 sec = inject_flag_after_heading(
                     sec, f'\n<!-- ⚠ FOOTBALL {kind.upper()} CLAIM LEFT IN BY THE EDITOR [{level}]: "{quoted}" -->')
+            report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut, "kind": kind})
+        # SLA-142: MLB game-flow claims, the same way. A tweet in the section
+        # carrying one of the sentence's scores or innings sources it.
+        mlb: list = []
+        check_mlb_flow_claims(own_text(sec), game_state, mlb)
+        for level, quoted, sentence, kind, fig in mlb:
+            if level == "confirmed" or re.search(fig, tweets, re.IGNORECASE):
+                continue
+            cut = False
+            if autocut:
+                sec, cut = _cut_sentence(sec, sentence)
+            if not cut:
+                sec = inject_flag_after_heading(
+                    sec, f'\n<!-- ⚠ MLB GAME FLOW CLAIM LEFT IN BY THE EDITOR [{level}]: "{quoted}" -->')
             report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut, "kind": kind})
         parts.append(sec)
     return "".join(parts), report
@@ -1448,6 +1887,9 @@ def validate_section(heading: str, section_html: str, game_state: dict) -> tuple
 
     # ── CHECK 3C: Football rank and record claims (SLA-117) ──────────────────
     flags.extend(check_football_claims(own_text(section_html), game_state))
+
+    # ── CHECK 3D: MLB game-flow claims vs the line score (SLA-142) ───────────
+    flags.extend(check_mlb_flow_claims(own_text(section_html), game_state))
 
     # ── CHECK 4: Series score claim vs game_state ─────────────────────────────
     score_matches = SERIES_SCORE_RE.findall(plain_text)

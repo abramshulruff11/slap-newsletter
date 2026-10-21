@@ -423,6 +423,11 @@ def format_game_state_summary(game_state: dict) -> str:
     bundle carries its facts verbatim). A game or team the budget cut keeps
     its plain line, so nothing is lost to the cap.
 
+    MLB games get their game flow the same way (SLA-142, mlb_bundle.py): the
+    score after every scoring half-inning, lead changes, ties, the go-ahead
+    for good, each scoring play. Computed from the line score in game_state,
+    so nothing extra is fetched.
+
     NHL games get their game flow the same way (SLA-148, nhl_bundle.py): the
     score after each period, lead changes, ties, the goal that won it, every
     goal. Computed from the goal log fetch_sports_data.py stores per game.
@@ -430,16 +435,21 @@ def format_game_state_summary(game_state: dict) -> str:
     import champions_source
     import football_bundle
     import history_source
+    import game_flow
+    import mlb_bundle
     import nhl_bundle
     football_lines = football_bundle.summary_lines(game_state)
     in_bundles, full_teams = football_bundle.shown(game_state) if football_lines else (set(), set())
     in_bundles.discard(None)
-    # SLA-148: NHL game flow. A game the block shows opens with the same
-    # result and series lines, so it leaves the results list too.
+    # SLA-142 / SLA-148: MLB and NHL game flow. A game a block shows opens with the
+    # same result and series lines, so it leaves the results list too.
+    mlb_lines = mlb_bundle.summary_lines(game_state) if game_state else []
+    if mlb_lines:
+        in_bundles |= mlb_bundle.shown(game_state) - {None}
     nhl_lines = nhl_bundle.summary_lines(game_state) if game_state else []
     if nhl_lines:
         in_bundles |= nhl_bundle.shown(game_state) - {None}
-    champion_lines = (football_lines + nhl_lines + champions_source.summary_lines(game_state)
+    champion_lines = (football_lines + mlb_lines + nhl_lines + champions_source.summary_lines(game_state)
                       + history_source.summary_lines(game_state, skip=full_teams))
     if not game_state or not game_state.get("sports"):
         return "\n".join(champion_lines)
@@ -464,27 +474,7 @@ def format_game_state_summary(game_state: dict) -> str:
         found_any = True
         lines.append(f"{label}:")
         for game in completed:
-            home  = game.get("home_team", "?")
-            away  = game.get("away_team", "?")
-            hs    = game.get("home_score", 0)
-            as_   = game.get("away_score", 0)
-            ot    = " (OT)" if game.get("overtime") else ""
-            winner = game.get("winner", "")
-            lines.append(f"  {away} {as_}, {home} {hs}{ot}" + (f" — {winner} wins" if winner else ""))
-            series = game.get("series")
-            if series:
-                if series.get("series_over"):
-                    lines.append(f"    SERIES OVER. {winner} advances. Final: {series.get('home_wins',0)}-{series.get('away_wins',0)}.")
-                else:
-                    summary  = series.get("summary", "")
-                    next_g   = series.get("next_game_number", "?")
-                    elim_h   = series.get("elimination_game_for_home", False)
-                    elim_a   = series.get("elimination_game_for_away", False)
-                    elim_who = []
-                    if elim_h: elim_who.append(home)
-                    if elim_a: elim_who.append(away)
-                    elim_str = f" {', '.join(elim_who)} eliminated." if elim_who else ""
-                    lines.append(f"    PLAYOFFS — {summary}. Next: Game {next_g}.{elim_str}")
+            lines.extend("  " + x for x in game_flow.result_lines(game))
         lines.append("")
 
     if not found_any:

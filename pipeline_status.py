@@ -281,7 +281,7 @@ def verdict(status: dict) -> tuple[str, str]:
     wrong = [c for c in (status.get("history_claims") or [])
              if c.get("level") == "HIGH" and not c.get("cut")]
     if wrong:
-        return "partial", (f"newsletter shipped, but {len(wrong)} history, rank or record claim(s) "
+        return "partial", (f"newsletter shipped, but {len(wrong)} history, rank, record or game-flow claim(s) "
                            f"the sports data contradicts are still in it")
     # "pending" counts as not-run here: an after-email stage is never recorded
     # when the email is built, so a run that never started has one of those too.

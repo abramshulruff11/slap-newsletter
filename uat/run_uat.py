@@ -425,6 +425,9 @@ def main() -> None:
         # here on. In memory only; never raises.
         import football_bundle
         print("  " + football_bundle.attach_story(game_state, story_plan))
+        # SLA-142: MLB game flow puts story games in full the same way.
+        import mlb_bundle
+        print("  " + mlb_bundle.attach_story(game_state, story_plan))
         # SLA-148: NHL game flow puts story games in full the same way.
         import nhl_bundle
         print("  " + nhl_bundle.attach_story(game_state, story_plan))

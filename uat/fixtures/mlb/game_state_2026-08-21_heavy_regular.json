@@ -1,0 +1,8356 @@
+{
+ "as_of_date": "2026-08-22",
+ "yesterday_date": "2026-08-21",
+ "sports": {
+  "mlb": {
+   "label": "MLB",
+   "yesterday_games": [
+    {
+     "game_id": "401816617",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-21T20:10Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Atlanta Braves @ Milwaukee Brewers",
+     "home_team": "Milwaukee Brewers",
+     "home_abbr": "MIL",
+     "home_id": "8",
+     "away_team": "Atlanta Braves",
+     "away_abbr": "ATL",
+     "away_id": "15",
+     "home_score": 2,
+     "away_score": 1,
+     "winner": "Milwaukee Brewers",
+     "loser": "Atlanta Braves",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "80-49",
+      "home": "44-23",
+      "road": "36-26"
+     },
+     "away_records": {
+      "total": "75-54",
+      "home": "42-23",
+      "road": "33-31"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "ATL",
+       "batting": [
+        {
+         "name": "R. Acuna Jr.",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".234"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Baldwin",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".269"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Olson",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".261"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Harris II",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".293"
+         },
+         "note": ""
+        },
+        {
+         "name": "O. Albies",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".249"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Dubon",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".266"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Smith",
+         "pos": "DH",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".261"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Riley",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".221"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Yastrzemski",
+         "pos": "LF",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "2",
+          "K": "0",
+          "AVG": ".232"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Thomas",
+         "pos": "LF",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".229"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "C. Sale",
+         "pos": "SP",
+         "stats": {
+          "IP": "6.0",
+          "H": "8",
+          "R": "2",
+          "ER": "2",
+          "BB": "0",
+          "K": "6",
+          "ERA": "2.20"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Suter",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "2",
+          "ERA": "3.86"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Dodd",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "1",
+          "ERA": "2.21"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "MIL",
+       "batting": [
+        {
+         "name": "J. Chourio",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".280"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Turang",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".262"
+         },
+         "note": ""
+        },
+        {
+         "name": "W. Contreras",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "4",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".264"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Vaughn",
+         "pos": "1B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".303"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Mitchell",
+         "pos": "CF",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".261"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Bauers",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".273"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Sanchez",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".216"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Ortiz",
+         "pos": "SS",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".249"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Pratt",
+         "pos": "SS",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".259"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Lara",
+         "pos": "RF",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".245"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "J. Misiorowski",
+         "pos": "SP",
+         "stats": {
+          "IP": "6.0",
+          "H": "4",
+          "R": "0",
+          "ER": "0",
+          "BB": "2",
+          "K": "6",
+          "ERA": "1.68"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Senzatela",
+         "pos": "RP",
+         "stats": {
+          "IP": "2.0",
+          "H": "3",
+          "R": "1",
+          "ER": "1",
+          "BB": "2",
+          "K": "1",
+          "ERA": "3.90"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Megill",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "2.34"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+       ],
+       "home_innings": [
+        "0",
+        "0",
+        "2",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "-"
+       ],
+       "away_rhe": {
+        "R": "1",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "2",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 3,
+         "half": "bottom",
+         "score": "ATL 0, MIL 1",
+         "text": "Contreras singled to center, Lara scored, Chourio to third."
+        },
+        {
+         "inning": 3,
+         "half": "bottom",
+         "score": "ATL 0, MIL 2",
+         "text": "Vaughn grounded into fielder's choice to shortstop, Chourio scored, Contreras out at second."
+        },
+        {
+         "inning": 8,
+         "half": "top",
+         "score": "ATL 1, MIL 2",
+         "text": "Harris II singled to left, Acuña Jr. scored, Olson to second."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816611",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-21T22:40Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "St. Louis Cardinals @ Philadelphia Phillies",
+     "home_team": "Philadelphia Phillies",
+     "home_abbr": "PHI",
+     "home_id": "22",
+     "away_team": "St. Louis Cardinals",
+     "away_abbr": "STL",
+     "away_id": "24",
+     "home_score": 7,
+     "away_score": 6,
+     "winner": "Philadelphia Phillies",
+     "loser": "St. Louis Cardinals",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "71-58",
+      "home": "36-30",
+      "road": "35-28"
+     },
+     "away_records": {
+      "total": "66-64",
+      "home": "32-34",
+      "road": "34-30"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "STL",
+       "batting": [
+        {
+         "name": "J. Wetherholt",
+         "pos": "2B",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "4",
+          "AVG": ".241"
+         },
+         "note": ""
+        },
+        {
+         "name": "I. Herrera",
+         "pos": "DH",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".244"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Walker",
+         "pos": "RF",
+         "stats": {
+          "AB": "5",
+          "R": "2",
+          "H": "2",
+          "RBI": "2",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".289"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Baez",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "2",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".179"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Burleson",
+         "pos": "1B",
+         "stats": {
+          "AB": "2",
+          "R": "2",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".289"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Jordan",
+         "pos": "3B",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".241"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Fermin",
+         "pos": "LF",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".251"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Pereira",
+         "pos": "RF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".235"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Winn",
+         "pos": "SS",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".238"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Torres",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".237"
+         },
+         "note": ""
+        },
+        {
+         "name": "P. Pages",
+         "pos": "C",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".213"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Church",
+         "pos": "CF",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".235"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Crooks",
+         "pos": "C",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".172"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "H. Dobbins",
+         "pos": "SP",
+         "stats": {
+          "IP": "4.0",
+          "H": "5",
+          "R": "3",
+          "ER": "3",
+          "BB": "3",
+          "K": "3",
+          "ERA": "3.67"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Ferguson",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.1",
+          "H": "2",
+          "R": "2",
+          "ER": "2",
+          "BB": "1",
+          "K": "1",
+          "ERA": "4.50"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Graceffo",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "0",
+          "ERA": "3.13"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Bruihl",
+         "pos": "RP",
+         "stats": {
+          "IP": "2.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "3.39"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Gastelum",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "2",
+          "R": "2",
+          "ER": "1",
+          "BB": "0",
+          "K": "2",
+          "ERA": "5.66"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "PHI",
+       "batting": [
+        {
+         "name": "K. Schwarber",
+         "pos": "DH",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".242"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Turner",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "2",
+          "AVG": ".246"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Harper",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".257"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Arraez",
+         "pos": "2B",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "3",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".322"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Sosa",
+         "pos": "LF",
+         "stats": {
+          "AB": "0",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".219"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Bohm",
+         "pos": "3B",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "3",
+          "RBI": "3",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".246"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Stott",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".262"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Marsh",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "2",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".277"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. De La Cruz",
+         "pos": "RF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".355"
+         },
+         "note": ""
+        },
+        {
+         "name": "J.T. Realmuto",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "2",
+          "RBI": "2",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".219"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Crawford",
+         "pos": "CF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".270"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Hill",
+         "pos": "CF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".235"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "J. Luzardo",
+         "pos": "SP",
+         "stats": {
+          "IP": "5.2",
+          "H": "5",
+          "R": "4",
+          "ER": "2",
+          "BB": "1",
+          "K": "9",
+          "ERA": "3.23"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Mayza",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "2",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "3.47"
+         },
+         "note": ""
+        },
+        {
+         "name": "O. Kerkering",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.1",
+          "H": "1",
+          "R": "1",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "3.53"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Raley",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.1",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "2.23"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Duran",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "1.75"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. McFarlane",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "1",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "1.69"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 10,
+       "away_innings": [
+        "2",
+        "0",
+        "0",
+        "0",
+        "0",
+        "2",
+        "0",
+        "1",
+        "0",
+        "1"
+       ],
+       "home_innings": [
+        "0",
+        "2",
+        "1",
+        "0",
+        "0",
+        "2",
+        "0",
+        "0",
+        "0",
+        "2"
+       ],
+       "away_rhe": {
+        "R": "6",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "7",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Báez 1st",
+        "Walker 6th"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 1,
+         "half": "top",
+         "score": "STL 2, PHI 0",
+         "text": "Báez homered to right center (360 feet), Walker scored."
+        },
+        {
+         "inning": 2,
+         "half": "bottom",
+         "score": "STL 2, PHI 1",
+         "text": "Marsh doubled to right, Stott scored."
+        },
+        {
+         "inning": 2,
+         "half": "bottom",
+         "score": "STL 2, PHI 2",
+         "text": "Realmuto doubled to left, Marsh scored."
+        },
+        {
+         "inning": 3,
+         "half": "bottom",
+         "score": "STL 2, PHI 3",
+         "text": "Bohm singled to right, Arraez scored."
+        },
+        {
+         "inning": 6,
+         "half": "top",
+         "score": "STL 4, PHI 3",
+         "text": "Walker homered to right center (392 feet), Herrera scored."
+        },
+        {
+         "inning": 6,
+         "half": "bottom",
+         "score": "STL 4, PHI 4",
+         "text": "Realmuto doubled to left, Bohm scored, Marsh to third."
+        },
+        {
+         "inning": 6,
+         "half": "bottom",
+         "score": "STL 4, PHI 5",
+         "text": "Crawford hit sacrifice fly to center, Marsh scored, Realmuto to third."
+        },
+        {
+         "inning": 8,
+         "half": "top",
+         "score": "STL 5, PHI 5",
+         "text": "Torres singled to center, Burleson scored, Pereira to second."
+        },
+        {
+         "inning": 10,
+         "half": "top",
+         "score": "STL 6, PHI 5",
+         "text": "Fermín singled to left, Burleson scored."
+        },
+        {
+         "inning": 10,
+         "half": "bottom",
+         "score": "STL 6, PHI 7",
+         "text": "Bohm tripled to center, Harper scored and Sosa scored."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816613",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-21T23:05Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Toronto Blue Jays @ New York Yankees",
+     "home_team": "New York Yankees",
+     "home_abbr": "NYY",
+     "home_id": "10",
+     "away_team": "Toronto Blue Jays",
+     "away_abbr": "TOR",
+     "away_id": "14",
+     "home_score": 3,
+     "away_score": 1,
+     "winner": "New York Yankees",
+     "loser": "Toronto Blue Jays",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "73-55",
+      "home": "32-27",
+      "road": "41-28"
+     },
+     "away_records": {
+      "total": "63-67",
+      "home": "33-33",
+      "road": "30-34"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "TOR",
+       "batting": [
+        {
+         "name": "B. Bateman",
+         "pos": "CF",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "3",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".302"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Lukes",
+         "pos": "RF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".256"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Springer",
+         "pos": "DH",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".235"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Schneider",
+         "pos": "LF",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".142"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Kirk",
+         "pos": "C",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "1",
+          "RBI": "1",
+          "BB": "2",
+          "K": "1",
+          "AVG": ".284"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Sanchez",
+         "pos": "DH",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".264"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Clement",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".285"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Okamoto",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".230"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Valenzuela",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".230"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. McAdoo",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".263"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Straw",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".212"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "M. Fluharty",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "2",
+          "K": "0",
+          "ERA": "3.66"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Arrighetti",
+         "pos": "SP",
+         "stats": {
+          "IP": "3.1",
+          "H": "3",
+          "R": "3",
+          "ER": "3",
+          "BB": "2",
+          "K": "4",
+          "ERA": "4.73"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Little",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "8.50"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Fisher",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "3.46"
+         },
+         "note": ""
+        },
+        {
+         "name": "P. Sewald",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "5.79"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Woods Richardson",
+         "pos": "SP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "3",
+          "ERA": "5.91"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "NYY",
+       "batting": [
+        {
+         "name": "P. Goldschmidt",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".247"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Rosario",
+         "pos": "3B",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".226"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Chisholm Jr.",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".214"
+         },
+         "note": ""
+        },
+        {
+         "name": "H. Ramos",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".243"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Garcia Jr.",
+         "pos": "1B",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".278"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Schuemann",
+         "pos": "LF",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".194"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Rice",
+         "pos": "DH",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "2",
+          "K": "1",
+          "AVG": ".249"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Lombard Jr.",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".288"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Grisham",
+         "pos": "CF",
+         "stats": {
+          "AB": "2",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "2",
+          "K": "1",
+          "AVG": ".223"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Jones",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "2",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".229"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Caballero",
+         "pos": "SS",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".237"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Sanchez",
+         "pos": "C",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".254"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Wells",
+         "pos": "C",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".175"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "C. Schlittler",
+         "pos": "SP",
+         "stats": {
+          "IP": "6.0",
+          "H": "6",
+          "R": "1",
+          "ER": "1",
+          "BB": "3",
+          "K": "4",
+          "ERA": "2.16"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Headrick",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "1.52"
+         },
+         "note": ""
+        },
+        {
+         "name": "P. Blackburn",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "1.77"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Bednar",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "2.35"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+       ],
+       "home_innings": [
+        "0",
+        "2",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "-"
+       ],
+       "away_rhe": {
+        "R": "1",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "3",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Jones 2nd"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 2,
+         "half": "bottom",
+         "score": "TOR 0, NYY 2",
+         "text": "Jones homered to right (385 feet), Grisham scored.  Umpire review: call on the field was upheld."
+        },
+        {
+         "inning": 4,
+         "half": "bottom",
+         "score": "TOR 0, NYY 3",
+         "text": "Caballero hit sacrifice fly to center, Lombard Jr. scored, Grisham to third."
+        },
+        {
+         "inning": 5,
+         "half": "top",
+         "score": "TOR 1, NYY 3",
+         "text": "Kirk singled to right, Bateman scored."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816610",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-21T23:10Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "San Francisco Giants @ Boston Red Sox",
+     "home_team": "Boston Red Sox",
+     "home_abbr": "BOS",
+     "home_id": "2",
+     "away_team": "San Francisco Giants",
+     "away_abbr": "SF",
+     "away_id": "26",
+     "home_score": 6,
+     "away_score": 4,
+     "winner": "Boston Red Sox",
+     "loser": "San Francisco Giants",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "69-59",
+      "home": "32-32",
+      "road": "37-27"
+     },
+     "away_records": {
+      "total": "52-76",
+      "home": "29-33",
+      "road": "23-43"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "SF",
+       "batting": [
+        {
+         "name": "D. Gilbert",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "2",
+          "RBI": "2",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".241"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Cox",
+         "pos": "CF",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".233"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Devers",
+         "pos": "1B",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".245"
+         },
+         "note": ""
+        },
+        {
+         "name": "W. Adames",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".227"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Eldridge",
+         "pos": "DH",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".248"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Lee",
+         "pos": "RF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".291"
+         },
+         "note": ""
+        },
+        {
+         "name": "O. Basabe",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".235"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Hill",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".250"
+         },
+         "note": ""
+        },
+        {
+         "name": "V. Bericoto",
+         "pos": "LF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".250"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Cavanaugh",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".226"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Kennedy",
+         "pos": "3B",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".111"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Koss",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "2",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".204"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "L. Webb",
+         "pos": "SP",
+         "stats": {
+          "IP": "2.2",
+          "H": "6",
+          "R": "5",
+          "ER": "5",
+          "BB": "3",
+          "K": "2",
+          "ERA": "3.75"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Sanmartin",
+         "pos": "RP",
+         "stats": {
+          "IP": "2.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "0",
+          "ERA": "6.17"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Harris",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.1",
+          "H": "2",
+          "R": "1",
+          "ER": "1",
+          "BB": "1",
+          "K": "0",
+          "ERA": "7.50"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Foley",
+         "pos": "RP",
+         "stats": {
+          "IP": "2.0",
+          "H": "2",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "3.86"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "BOS",
+       "batting": [
+        {
+         "name": "N. Sogard",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "2",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".267"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Rafaela",
+         "pos": "CF",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".285"
+         },
+         "note": ""
+        },
+        {
+         "name": "W. Abreu",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "3",
+          "RBI": "1",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".261"
+         },
+         "note": ""
+        },
+        {
+         "name": "W. Contreras",
+         "pos": "1B",
+         "stats": {
+          "AB": "2",
+          "R": "1",
+          "H": "1",
+          "RBI": "3",
+          "BB": "2",
+          "K": "0",
+          "AVG": ".285"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Rutschman",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".245"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Durbin",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".254"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Duran",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".209"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Monasterio",
+         "pos": "SS",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "1",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".258"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Gasper",
+         "pos": "DH",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".250"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "S. Gray",
+         "pos": "SP",
+         "stats": {
+          "IP": "6.0",
+          "H": "7",
+          "R": "4",
+          "ER": "4",
+          "BB": "2",
+          "K": "6",
+          "ERA": "2.79"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Miller",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "2.20"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Gamboa",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "1.40"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Chapman",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "3",
+          "ERA": "1.90"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "0",
+        "1",
+        "3",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+       ],
+       "home_innings": [
+        "0",
+        "0",
+        "5",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "-"
+       ],
+       "away_rhe": {
+        "R": "4",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "6",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Contreras 3rd",
+        "Gilbert 4th",
+        "Devers 4th"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 3,
+         "half": "top",
+         "score": "SF 1, BOS 0",
+         "text": "Eldridge singled to right, Koss scored, Devers to second."
+        },
+        {
+         "inning": 3,
+         "half": "bottom",
+         "score": "SF 1, BOS 3",
+         "text": "Contreras homered to left, Sogard scored and Abreu scored."
+        },
+        {
+         "inning": 3,
+         "half": "bottom",
+         "score": "SF 1, BOS 4",
+         "text": "Monasterio walked, Rutschman scored, Duran to second, Durbin to third."
+        },
+        {
+         "inning": 3,
+         "half": "bottom",
+         "score": "SF 1, BOS 5",
+         "text": "Gasper hit by pitch, Durbin scored, Monasterio to second, Duran to third."
+        },
+        {
+         "inning": 4,
+         "half": "top",
+         "score": "SF 3, BOS 5",
+         "text": "Gilbert homered to right (389 feet), Koss scored."
+        },
+        {
+         "inning": 4,
+         "half": "top",
+         "score": "SF 4, BOS 5",
+         "text": "Devers homered to center (412 feet)."
+        },
+        {
+         "inning": 6,
+         "half": "bottom",
+         "score": "SF 4, BOS 6",
+         "text": "Abreu tripled to right, Sogard scored."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816614",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-21T23:10Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Washington Nationals @ Miami Marlins",
+     "home_team": "Miami Marlins",
+     "home_abbr": "MIA",
+     "home_id": "28",
+     "away_team": "Washington Nationals",
+     "away_abbr": "WSH",
+     "away_id": "20",
+     "home_score": 3,
+     "away_score": 2,
+     "winner": "Miami Marlins",
+     "loser": "Washington Nationals",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "65-64",
+      "home": "39-25",
+      "road": "26-39"
+     },
+     "away_records": {
+      "total": "61-69",
+      "home": "27-36",
+      "road": "34-33"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "WSH",
+       "batting": [
+        {
+         "name": "D. Lile",
+         "pos": "LF",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "3",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".244"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Vivas",
+         "pos": "3B",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".232"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Chaparro",
+         "pos": "1B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".244"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Ortiz",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".241"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. House",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".238"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Ruiz",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".276"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Crews",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".210"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Nunez",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".225"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Tena",
+         "pos": "DH",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".237"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Young",
+         "pos": "CF",
+         "stats": {
+          "AB": "2",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "2",
+          "K": "0",
+          "AVG": ".249"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "B. Lord",
+         "pos": "RP",
+         "stats": {
+          "IP": "2.2",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "1",
+          "ERA": "3.88"
+         },
+         "note": ""
+        },
+        {
+         "name": "W. Dion",
+         "pos": "RP",
+         "stats": {
+          "IP": "3.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "2",
+          "K": "4",
+          "ERA": "2.84"
+         },
+         "note": ""
+        },
+        {
+         "name": "O. Ribalta",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.1",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "2",
+          "ERA": "3.20"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Cosgrove",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.1",
+          "H": "2",
+          "R": "2",
+          "ER": "2",
+          "BB": "0",
+          "K": "1",
+          "ERA": "5.40"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Beeter",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "3",
+          "R": "1",
+          "ER": "1",
+          "BB": "3",
+          "K": "0",
+          "ERA": "3.63"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "MIA",
+       "batting": [
+        {
+         "name": "J. Marsee",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "2",
+          "K": "1",
+          "AVG": ".206"
+         },
+         "note": ""
+        },
+        {
+         "name": "O. Caissie",
+         "pos": "RF",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".224"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Sanoja",
+         "pos": "3B",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "2",
+          "RBI": "2",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".282"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Conine",
+         "pos": "RF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "2",
+          "AVG": ".267"
+         },
+         "note": ""
+        },
+        {
+         "name": "X. Edwards",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".286"
+         },
+         "note": ""
+        },
+        {
+         "name": "O. Lopez",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".307"
+         },
+         "note": ""
+        },
+        {
+         "name": "H. Hernandez",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".226"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Mack",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".231"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Ramirez",
+         "pos": "DH",
+         "stats": {
+          "AB": "2",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "2",
+          "K": "1",
+          "AVG": ".240"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Jimenez",
+         "pos": "3B",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".205"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Ruiz",
+         "pos": "RF",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".253"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "R. Gusto",
+         "pos": "SP",
+         "stats": {
+          "IP": "4.0",
+          "H": "5",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "2",
+          "ERA": "4.37"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Ekness",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "1.32"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Zuber",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "2",
+          "R": "1",
+          "ER": "1",
+          "BB": "1",
+          "K": "0",
+          "ERA": "3.42"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Gibson",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.2",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "5.40"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Faucher",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "4.05"
+         },
+         "note": ""
+        },
+        {
+         "name": "P. Fairbanks",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "1",
+          "ER": "1",
+          "BB": "1",
+          "K": "2",
+          "ERA": "5.95"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "1"
+       ],
+       "home_innings": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "2",
+        "1"
+       ],
+       "away_rhe": {
+        "R": "2",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "3",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Ruiz 6th"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 6,
+         "half": "top",
+         "score": "WSH 1, MIA 0",
+         "text": "Ruiz homered to right (388 feet)."
+        },
+        {
+         "inning": 8,
+         "half": "bottom",
+         "score": "WSH 1, MIA 1",
+         "text": "Sanoja singled to right, Marsee scored."
+        },
+        {
+         "inning": 8,
+         "half": "bottom",
+         "score": "WSH 1, MIA 2",
+         "text": "Lopez singled to right, Sanoja scored."
+        },
+        {
+         "inning": 9,
+         "half": "top",
+         "score": "WSH 2, MIA 2",
+         "text": "Lile singled to left, Young scored, Lile to second."
+        },
+        {
+         "inning": 9,
+         "half": "bottom",
+         "score": "WSH 2, MIA 3",
+         "text": "Sanoja singled to center, Ramírez scored, Marsee to second, Ruiz to third."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816612",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-21T23:15Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Tampa Bay Rays @ Baltimore Orioles",
+     "home_team": "Baltimore Orioles",
+     "home_abbr": "BAL",
+     "home_id": "1",
+     "away_team": "Tampa Bay Rays",
+     "away_abbr": "TB",
+     "away_id": "30",
+     "home_score": 5,
+     "away_score": 3,
+     "winner": "Baltimore Orioles",
+     "loser": "Tampa Bay Rays",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "62-67",
+      "home": "33-33",
+      "road": "29-34"
+     },
+     "away_records": {
+      "total": "76-52",
+      "home": "43-23",
+      "road": "33-29"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "TB",
+       "batting": [
+        {
+         "name": "Y. Diaz",
+         "pos": "DH",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".305"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Vilade",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".264"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. DeLuca",
+         "pos": "RF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".264"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Aranda",
+         "pos": "1B",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".282"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Caminero",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".276"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Simpson",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".306"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Mateo",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".232"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Piper",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "2",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".286"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Mullins",
+         "pos": "CF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".207"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Hicks",
+         "pos": "C",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".282"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Walls",
+         "pos": "SS",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".222"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "F. Peralta",
+         "pos": "SP",
+         "stats": {
+          "IP": "7.0",
+          "H": "7",
+          "R": "5",
+          "ER": "5",
+          "BB": "1",
+          "K": "6",
+          "ERA": "5.33"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Cleavinger",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "3.86"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "BAL",
+       "batting": [
+        {
+         "name": "J. Holliday",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".232"
+         },
+         "note": ""
+        },
+        {
+         "name": "P. Alonso",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "3",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".271"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Henderson",
+         "pos": "SS",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".222"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. O'Neill",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".216"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Basallo",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".236"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Beavers",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".241"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Mayo",
+         "pos": "3B",
+         "stats": {
+          "AB": "2",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".210"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Cowser",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".214"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Taveras",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".231"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "T. Rogers",
+         "pos": "SP",
+         "stats": {
+          "IP": "7.0",
+          "H": "6",
+          "R": "3",
+          "ER": "3",
+          "BB": "1",
+          "K": "6",
+          "ERA": "4.14"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Kittredge",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "3.52"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Garcia",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "3.29"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "3",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+       ],
+       "home_innings": [
+        "1",
+        "1",
+        "0",
+        "0",
+        "3",
+        "0",
+        "0",
+        "0",
+        "-"
+       ],
+       "away_rhe": {
+        "R": "3",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "5",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Piper 2nd",
+        "Beavers 2nd",
+        "Alonso 5th"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 1,
+         "half": "bottom",
+         "score": "TB 0, BAL 1",
+         "text": "Alonso singled to center, Holliday scored."
+        },
+        {
+         "inning": 2,
+         "half": "top",
+         "score": "TB 1, BAL 1",
+         "text": "Simpson singled to right, Caminero scored."
+        },
+        {
+         "inning": 2,
+         "half": "top",
+         "score": "TB 3, BAL 1",
+         "text": "Piper homered to center (410 feet), Mateo scored."
+        },
+        {
+         "inning": 2,
+         "half": "bottom",
+         "score": "TB 3, BAL 2",
+         "text": "Beavers homered to center (396 feet)."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "TB 3, BAL 3",
+         "text": "Holliday hit sacrifice fly to center, Mayo scored."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "TB 3, BAL 5",
+         "text": "Alonso homered to left center (443 feet), Cowser scored."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816619",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-21T23:40Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "New York Mets @ Chicago White Sox",
+     "home_team": "Chicago White Sox",
+     "home_abbr": "CHW",
+     "home_id": "4",
+     "away_team": "New York Mets",
+     "away_abbr": "NYM",
+     "away_id": "21",
+     "home_score": 6,
+     "away_score": 4,
+     "winner": "Chicago White Sox",
+     "loser": "New York Mets",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "67-61",
+      "home": "38-25",
+      "road": "29-36"
+     },
+     "away_records": {
+      "total": "58-71",
+      "home": "30-35",
+      "road": "28-36"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "NYM",
+       "batting": [
+        {
+         "name": "A.J. Ewing",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".245"
+         },
+         "note": ""
+        },
+        {
+         "name": "F. Lindor",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".236"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Bichette",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".266"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Benge",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".272"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Young",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".270"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Robert Jr.",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".217"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Baty",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "2",
+          "RBI": "2",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".215"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Semien",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".212"
+         },
+         "note": ""
+        },
+        {
+         "name": "F. Alvarez",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".236"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "S. Manaea",
+         "pos": "SP",
+         "stats": {
+          "IP": "6.0",
+          "H": "5",
+          "R": "4",
+          "ER": "4",
+          "BB": "2",
+          "K": "4",
+          "ERA": "4.31"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Lavender",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.1",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "0.00"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Duarte",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "0.82"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Yan",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "1",
+          "R": "2",
+          "ER": "2",
+          "BB": "1",
+          "K": "0",
+          "ERA": "4.26"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "CHW",
+       "batting": [
+        {
+         "name": "C. Meidroth",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".270"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Murakami",
+         "pos": "1B",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".225"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Vargas",
+         "pos": "3B",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "2",
+          "RBI": "2",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".243"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Grichuk",
+         "pos": "DH",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".282"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Antonacci",
+         "pos": "LF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".268"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Montgomery",
+         "pos": "SS",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".217"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Montgomery",
+         "pos": "RF",
+         "stats": {
+          "AB": "0",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".235"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Doyle",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".209"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Acuna",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".232"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Rogers",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "2",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".178"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Peters",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".268"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "S. Burke",
+         "pos": "SP",
+         "stats": {
+          "IP": "6.0",
+          "H": "7",
+          "R": "4",
+          "ER": "4",
+          "BB": "0",
+          "K": "4",
+          "ERA": "3.27"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Hicks",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "3.23"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Hudson",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "3.35"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Taylor",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "2",
+          "ERA": "2.01"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "1",
+        "0",
+        "2",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+       ],
+       "home_innings": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "4",
+        "0",
+        "0",
+        "2"
+       ],
+       "away_rhe": {
+        "R": "4",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "6",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Bichette 5th",
+        "Vargas 6th",
+        "Grichuk 6th",
+        "C. 6th",
+        "Rogers 9th"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 2,
+         "half": "top",
+         "score": "NYM 1, CHW 0",
+         "text": "Semien singled to left, Benge scored, Baty to third."
+        },
+        {
+         "inning": 4,
+         "half": "top",
+         "score": "NYM 3, CHW 0",
+         "text": "Baty doubled to right, Robert Jr. scored and Young scored."
+        },
+        {
+         "inning": 5,
+         "half": "top",
+         "score": "NYM 4, CHW 0",
+         "text": "Bichette homered to left (345 feet)."
+        },
+        {
+         "inning": 6,
+         "half": "bottom",
+         "score": "NYM 4, CHW 2",
+         "text": "Vargas homered to left (405 feet), Murakami scored."
+        },
+        {
+         "inning": 6,
+         "half": "bottom",
+         "score": "NYM 4, CHW 3",
+         "text": "Grichuk homered to left center (400 feet)."
+        },
+        {
+         "inning": 6,
+         "half": "bottom",
+         "score": "NYM 4, CHW 4",
+         "text": "C. Montgomery homered to right (399 feet)."
+        },
+        {
+         "inning": 9,
+         "half": "bottom",
+         "score": "NYM 4, CHW 6",
+         "text": "Rogers homered to center (401 feet), B. Montgomery scored."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816616",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-22T00:10Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Athletics @ Houston Astros",
+     "home_team": "Houston Astros",
+     "home_abbr": "HOU",
+     "home_id": "18",
+     "away_team": "Athletics",
+     "away_abbr": "ATH",
+     "away_id": "11",
+     "home_score": 4,
+     "away_score": 0,
+     "winner": "Houston Astros",
+     "loser": "Athletics",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "65-64",
+      "home": "33-33",
+      "road": "32-31"
+     },
+     "away_records": {
+      "total": "49-80",
+      "home": "23-40",
+      "road": "26-40"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "ATH",
+       "batting": [
+        {
+         "name": "H. Bolte",
+         "pos": "CF",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "2",
+          "K": "1",
+          "AVG": ".267"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. McNeil",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".261"
+         },
+         "note": ""
+        },
+        {
+         "name": "Z. Gelof",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".265"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Cortes",
+         "pos": "RF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".261"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Williams",
+         "pos": "SS",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".261"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Butler",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".216"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. White",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".248"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Heim",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".207"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Walton",
+         "pos": "2B",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "2",
+          "K": "0",
+          "AVG": ".284"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Muncy",
+         "pos": "3B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".213"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "J.T. Ginn",
+         "pos": "SP",
+         "stats": {
+          "IP": "5.0",
+          "H": "6",
+          "R": "3",
+          "ER": "3",
+          "BB": "2",
+          "K": "4",
+          "ERA": "3.60"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Alvarado",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "4.39"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Rom",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.1",
+          "H": "2",
+          "R": "1",
+          "ER": "1",
+          "BB": "1",
+          "K": "1",
+          "ERA": "6.97"
+         },
+         "note": ""
+        },
+        {
+         "name": "H. Juenger",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "7.63"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "HOU",
+       "batting": [
+        {
+         "name": "J. Altuve",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".247"
+         },
+         "note": ""
+        },
+        {
+         "name": "Y. Alvarez",
+         "pos": "DH",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "2",
+          "RBI": "2",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".321"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Trammell",
+         "pos": "LF",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".211"
+         },
+         "note": ""
+        },
+        {
+         "name": "I. Paredes",
+         "pos": "3B",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".262"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Varsho",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".229"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Walker",
+         "pos": "1B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".233"
+         },
+         "note": ""
+        },
+        {
+         "name": "Y. Diaz",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".254"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Smith",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".218"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Delgado",
+         "pos": "2B",
+         "stats": {
+          "AB": "2",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".243"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Allen",
+         "pos": "SS",
+         "stats": {
+          "AB": "1",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".258"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "H. Wesneski",
+         "pos": "SP",
+         "stats": {
+          "IP": "5.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "3",
+          "K": "4",
+          "ERA": "4.23"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Sousa",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "2",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "3",
+          "ERA": "3.31"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Abreu",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "2",
+          "K": "2",
+          "ERA": "4.21"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Okert",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "1.98"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. De Los Santos",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "4.07"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+       ],
+       "home_innings": [
+        "0",
+        "0",
+        "0",
+        "1",
+        "2",
+        "0",
+        "1",
+        "0",
+        "-"
+       ],
+       "away_rhe": {
+        "R": "0",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "4",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 4,
+         "half": "bottom",
+         "score": "ATH 0, HOU 1",
+         "text": "Walker hit sacrifice fly to center, Paredes scored."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "ATH 0, HOU 2",
+         "text": "Alvarez doubled to center, Allen scored."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "ATH 0, HOU 3",
+         "text": "Paredes doubled to right, Alvarez scored."
+        },
+        {
+         "inning": 7,
+         "half": "bottom",
+         "score": "ATH 0, HOU 4",
+         "text": "Alvarez doubled to shortstop, Delgado scored."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816618",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-22T00:10Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Detroit Tigers @ Kansas City Royals",
+     "home_team": "Kansas City Royals",
+     "home_abbr": "KC",
+     "home_id": "7",
+     "away_team": "Detroit Tigers",
+     "away_abbr": "DET",
+     "away_id": "6",
+     "home_score": 5,
+     "away_score": 2,
+     "winner": "Kansas City Royals",
+     "loser": "Detroit Tigers",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "56-74",
+      "home": "34-30",
+      "road": "22-44"
+     },
+     "away_records": {
+      "total": "61-67",
+      "home": "32-31",
+      "road": "29-36"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "DET",
+       "batting": [
+        {
+         "name": "G. Torres",
+         "pos": "2B",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".266"
+         },
+         "note": ""
+        },
+        {
+         "name": "H. Lee",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".277"
+         },
+         "note": ""
+        },
+        {
+         "name": "Z. McKinstry",
+         "pos": "RF",
+         "stats": {
+          "AB": "2",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".224"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. McGonigle",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "2",
+          "RBI": "1",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".284"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Dingler",
+         "pos": "C",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".252"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Valencia",
+         "pos": "DH",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".344"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Keith",
+         "pos": "3B",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".272"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Torkelson",
+         "pos": "1B",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "3",
+          "K": "0",
+          "AVG": ".224"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Malgeri",
+         "pos": "RF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".250"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Callahan",
+         "pos": "LF",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".308"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Clark",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".260"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Baez",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".255"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "T. Melton",
+         "pos": "SP",
+         "stats": {
+          "IP": "5.2",
+          "H": "7",
+          "R": "3",
+          "ER": "3",
+          "BB": "3",
+          "K": "3",
+          "ERA": "1.70"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. De Jesus",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.1",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "3.83"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Holton",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "2",
+          "R": "1",
+          "ER": "1",
+          "BB": "0",
+          "K": "1",
+          "ERA": "3.17"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Madden",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "2",
+          "R": "1",
+          "ER": "1",
+          "BB": "0",
+          "K": "0",
+          "ERA": "2.89"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "KC",
+       "batting": [
+        {
+         "name": "C. Jensen",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".221"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Witt Jr.",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".290"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Caglianone",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".277"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Perez",
+         "pos": "DH",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".219"
+         },
+         "note": ""
+        },
+        {
+         "name": "V. Pasquantino",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "2",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".247"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Loftin",
+         "pos": "3B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".228"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Massey",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".281"
+         },
+         "note": ""
+        },
+        {
+         "name": "I. Collins",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".227"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Isbel",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "2",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".234"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "N. Cameron",
+         "pos": "SP",
+         "stats": {
+          "IP": "5.0",
+          "H": "2",
+          "R": "0",
+          "ER": "0",
+          "BB": "3",
+          "K": "2",
+          "ERA": "4.02"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Cuas",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "2",
+          "K": "0",
+          "ERA": "1.50"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Schreiber",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "1",
+          "R": "2",
+          "ER": "2",
+          "BB": "1",
+          "K": "1",
+          "ERA": "3.86"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Cruz",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.1",
+          "H": "2",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "4.25"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Pearson",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "1",
+          "ERA": "2.56"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "2",
+        "0",
+        "0"
+       ],
+       "home_innings": [
+        "0",
+        "0",
+        "0",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "-"
+       ],
+       "away_rhe": {
+        "R": "2",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "5",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Isbel 5th",
+        "Pasquantino 6th",
+        "Jensen 7th"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 4,
+         "half": "bottom",
+         "score": "DET 0, KC 1",
+         "text": "Massey reached on infield single to shortstop, Pasquantino scored."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "DET 0, KC 2",
+         "text": "Isbel homered to right center (387 feet)."
+        },
+        {
+         "inning": 6,
+         "half": "bottom",
+         "score": "DET 0, KC 3",
+         "text": "Pasquantino homered to right (420 feet)."
+        },
+        {
+         "inning": 7,
+         "half": "top",
+         "score": "DET 1, KC 3",
+         "text": "McKinstry doubled to center, Clark scored."
+        },
+        {
+         "inning": 7,
+         "half": "top",
+         "score": "DET 2, KC 3",
+         "text": "McGonigle singled to right, McKinstry scored."
+        },
+        {
+         "inning": 7,
+         "half": "bottom",
+         "score": "DET 2, KC 4",
+         "text": "Jensen homered to center (443 feet)."
+        },
+        {
+         "inning": 8,
+         "half": "bottom",
+         "score": "DET 2, KC 5",
+         "text": "Isbel doubled to left, Massey scored."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816615",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-22T00:15Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Los Angeles Angels @ Texas Rangers",
+     "home_team": "Texas Rangers",
+     "home_abbr": "TEX",
+     "home_id": "13",
+     "away_team": "Los Angeles Angels",
+     "away_abbr": "LAA",
+     "away_id": "3",
+     "home_score": 2,
+     "away_score": 1,
+     "winner": "Texas Rangers",
+     "loser": "Los Angeles Angels",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "64-65",
+      "home": "35-28",
+      "road": "29-37"
+     },
+     "away_records": {
+      "total": "51-78",
+      "home": "29-36",
+      "road": "22-42"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "LAA",
+       "batting": [
+        {
+         "name": "Z. Neto",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".231"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Trout",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".236"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Ballesteros",
+         "pos": "DH",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".204"
+         },
+         "note": ""
+        },
+        {
+         "name": "V. Grissom",
+         "pos": "1B",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".247"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Siri",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".255"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Guzman",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".237"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Lowe",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".209"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. d'Arnaud",
+         "pos": "C",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".180"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Frazier",
+         "pos": "2B",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".243"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Heineman",
+         "pos": "C",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".182"
+         },
+         "note": ""
+        },
+        {
+         "name": "O. Peraza",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "2",
+          "AVG": ".226"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "R. Detmers",
+         "pos": "SP",
+         "stats": {
+          "IP": "6.0",
+          "H": "6",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "5",
+          "ERA": "3.62"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Fermin",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "3.16"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Saucedo",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "5.23"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Watson",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "3",
+          "ERA": "4.20"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Joyce",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "2",
+          "R": "2",
+          "ER": "0",
+          "BB": "1",
+          "K": "1",
+          "ERA": "0.00"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "TEX",
+       "batting": [
+        {
+         "name": "J. Foscue",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".259"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Seager",
+         "pos": "SS",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".221"
+         },
+         "note": ""
+        },
+        {
+         "name": "W. Langford",
+         "pos": "LF",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".250"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Nimmo",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".266"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Duran",
+         "pos": "SS",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "4",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".271"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Burger",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".235"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Freeman",
+         "pos": "3B",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".276"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Kelenic",
+         "pos": "RF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".219"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Lopez",
+         "pos": "2B",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".261"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Diaz",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".230"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Pederson",
+         "pos": "DH",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".239"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Jansen",
+         "pos": "C",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".162"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Carter",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".197"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "M. Gore",
+         "pos": "SP",
+         "stats": {
+          "IP": "6.0",
+          "H": "2",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "7",
+          "ERA": "4.26"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Winn",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "5.60"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Silseth",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "1",
+          "ERA": "2.72"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Latz",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "2",
+          "ERA": "1.71"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Alexander",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "1",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "3.23"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 10,
+       "away_innings": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1"
+       ],
+       "home_innings": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "2"
+       ],
+       "away_rhe": {
+        "R": "1",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "2",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 10,
+         "half": "top",
+         "score": "LAA 1, TEX 0",
+         "text": "Guzman doubled to left, Siri scored."
+        },
+        {
+         "inning": 10,
+         "half": "bottom",
+         "score": "LAA 1, TEX 1",
+         "text": "Langford doubled to right, Carter scored."
+        },
+        {
+         "inning": 10,
+         "half": "bottom",
+         "score": "LAA 1, TEX 2",
+         "text": "Duran reached on infield single to third, Langford scored on throwing error by third baseman Guzman, Nimmo to second."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816620",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-22T00:40Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Cleveland Guardians @ Colorado Rockies",
+     "home_team": "Colorado Rockies",
+     "home_abbr": "COL",
+     "home_id": "27",
+     "away_team": "Cleveland Guardians",
+     "away_abbr": "CLE",
+     "away_id": "5",
+     "home_score": 1,
+     "away_score": 9,
+     "winner": "Cleveland Guardians",
+     "loser": "Colorado Rockies",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "50-78",
+      "home": "27-36",
+      "road": "23-42"
+     },
+     "away_records": {
+      "total": "63-66",
+      "home": "31-34",
+      "road": "32-32"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "CLE",
+       "batting": [
+        {
+         "name": "S. Kwan",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "2",
+          "K": "0",
+          "AVG": ".265"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. DeLauter",
+         "pos": "RF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".286"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Martinez",
+         "pos": "LF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".241"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Ramirez",
+         "pos": "3B",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".235"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Adell",
+         "pos": "RF",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".237"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Lowe",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "3",
+          "H": "2",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".266"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Genao",
+         "pos": "2B",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".320"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Bazzana",
+         "pos": "2B",
+         "stats": {
+          "AB": "5",
+          "R": "2",
+          "H": "4",
+          "RBI": "3",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".241"
+         },
+         "note": ""
+        },
+        {
+         "name": "P. Bailey",
+         "pos": "C",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "2",
+          "RBI": "3",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".193"
+         },
+         "note": ""
+        },
+        {
+         "name": "P. Halpin",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".216"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "J. Cantillo",
+         "pos": "SP",
+         "stats": {
+          "IP": "4.2",
+          "H": "4",
+          "R": "1",
+          "ER": "1",
+          "BB": "4",
+          "K": "5",
+          "ERA": "3.73"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Herrin",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.1",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "3.45"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Holderman",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "2",
+          "K": "0",
+          "ERA": "2.34"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Yoho",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "2",
+          "ERA": "4.67"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Festa",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "3.86"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "COL",
+       "batting": [
+        {
+         "name": "J. McCarthy",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".292"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Karros",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".265"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Carrigg",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "2",
+          "AVG": ".282"
+         },
+         "note": ""
+        },
+        {
+         "name": "Z. Veen",
+         "pos": "LF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".263"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Rumfield",
+         "pos": "1B",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "2",
+          "K": "0",
+          "AVG": ".291"
+         },
+         "note": ""
+        },
+        {
+         "name": "W. Castro",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".264"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Beck",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".190"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Moniak",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "2",
+          "AVG": ".264"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Fulford",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".176"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Tovar",
+         "pos": "SS",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".204"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Norby",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".212"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "T. Gordon",
+         "pos": "SP",
+         "stats": {
+          "IP": "5.1",
+          "H": "9",
+          "R": "5",
+          "ER": "5",
+          "BB": "2",
+          "K": "2",
+          "ERA": "5.75"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Manfredi",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "2",
+          "K": "1",
+          "ERA": "0.00"
+         },
+         "note": ""
+        },
+        {
+         "name": "Z. Agnos",
+         "pos": "RP",
+         "stats": {
+          "IP": "2.1",
+          "H": "4",
+          "R": "4",
+          "ER": "4",
+          "BB": "1",
+          "K": "3",
+          "ERA": "5.84"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Sullivan",
+         "pos": "C",
+         "stats": {
+          "IP": "0.2",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "4.70"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "0",
+        "1",
+        "2",
+        "1",
+        "1",
+        "3",
+        "0",
+        "1"
+       ],
+       "home_innings": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+       ],
+       "away_rhe": {
+        "R": "9",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "1",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Halpin 3rd",
+        "Bailey 7th"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 1,
+         "half": "bottom",
+         "score": "CLE 0, COL 1",
+         "text": "Castro singled to center, McCarthy scored, Rumfield to second."
+        },
+        {
+         "inning": 3,
+         "half": "top",
+         "score": "CLE 1, COL 1",
+         "text": "Halpin homered to right center (422 feet)."
+        },
+        {
+         "inning": 4,
+         "half": "top",
+         "score": "CLE 3, COL 1",
+         "text": "Bazzana singled to left, Lowe scored and Genao scored."
+        },
+        {
+         "inning": 5,
+         "half": "top",
+         "score": "CLE 4, COL 1",
+         "text": "Adell singled to left, Kwan scored, Ramírez to second."
+        },
+        {
+         "inning": 6,
+         "half": "top",
+         "score": "CLE 5, COL 1",
+         "text": "Kwan grounded out to shortstop, Bazzana scored, Halpin to second."
+        },
+        {
+         "inning": 7,
+         "half": "top",
+         "score": "CLE 8, COL 1",
+         "text": "Bailey homered to right center (418 feet), Lowe scored and Bazzana scored."
+        },
+        {
+         "inning": 9,
+         "half": "top",
+         "score": "CLE 9, COL 1",
+         "text": "Bazzana singled to right, Lowe scored."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816622",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-22T01:40Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Cincinnati Reds @ Arizona Diamondbacks",
+     "home_team": "Arizona Diamondbacks",
+     "home_abbr": "ARI",
+     "home_id": "29",
+     "away_team": "Cincinnati Reds",
+     "away_abbr": "CIN",
+     "away_id": "17",
+     "home_score": 9,
+     "away_score": 0,
+     "winner": "Arizona Diamondbacks",
+     "loser": "Cincinnati Reds",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "68-61",
+      "home": "37-27",
+      "road": "31-34"
+     },
+     "away_records": {
+      "total": "61-68",
+      "home": "32-36",
+      "road": "29-32"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "CIN",
+       "batting": [
+        {
+         "name": "E. De La Cruz",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".257"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Stewart",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".259"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Myers",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".257"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Suarez",
+         "pos": "DH",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "2",
+          "K": "0",
+          "AVG": ".207"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. McLain",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".198"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Bleday",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".217"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Trevino",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".238"
+         },
+         "note": ""
+        },
+        {
+         "name": "W. Banfield",
+         "pos": "C",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".000"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Toglia",
+         "pos": "1B",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".115"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Friedl",
+         "pos": "CF",
+         "stats": {
+          "AB": "2",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".160"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Hayes",
+         "pos": "3B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".155"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "N. Lodolo",
+         "pos": "SP",
+         "stats": {
+          "IP": "3.1",
+          "H": "10",
+          "R": "6",
+          "ER": "6",
+          "BB": "2",
+          "K": "2",
+          "ERA": "5.04"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Garcia",
+         "pos": "RP",
+         "stats": {
+          "IP": "2.2",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "0",
+          "ERA": "2.67"
+         },
+         "note": ""
+        },
+        {
+         "name": "P. Johnson",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "2",
+          "R": "1",
+          "ER": "1",
+          "BB": "2",
+          "K": "1",
+          "ERA": "4.58"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Moll",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "3",
+          "R": "2",
+          "ER": "2",
+          "BB": "0",
+          "K": "1",
+          "ERA": "4.73"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "ARI",
+       "batting": [
+        {
+         "name": "I. Vargas",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".261"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Carroll",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "2",
+          "H": "2",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".248"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Barrosa",
+         "pos": "CF",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".197"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Moreno",
+         "pos": "C",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".308"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Perdomo",
+         "pos": "SS",
+         "stats": {
+          "AB": "5",
+          "R": "2",
+          "H": "3",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".248"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. McCann",
+         "pos": "C",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".296"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Arenado",
+         "pos": "3B",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".243"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Tawa",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "1",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".240"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Lawlar",
+         "pos": "CF",
+         "stats": {
+          "AB": "5",
+          "R": "2",
+          "H": "3",
+          "RBI": "3",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".283"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Fernandez",
+         "pos": "DH",
+         "stats": {
+          "AB": "2",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "2",
+          "K": "0",
+          "AVG": ".264"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Waldschmidt",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "1",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".280"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "E. Rodriguez",
+         "pos": "SP",
+         "stats": {
+          "IP": "5.2",
+          "H": "4",
+          "R": "0",
+          "ER": "0",
+          "BB": "2",
+          "K": "4",
+          "ERA": "2.61"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Santana",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.1",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "5.82"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Martinez",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "1",
+          "ERA": "0.00"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Clarke",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "2.37"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+       ],
+       "home_innings": [
+        "1",
+        "3",
+        "1",
+        "1",
+        "0",
+        "0",
+        "1",
+        "2",
+        "-"
+       ],
+       "away_rhe": {
+        "R": "0",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "9",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Lawlar 2nd"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 1,
+         "half": "bottom",
+         "score": "CIN 0, ARI 1",
+         "text": "Moreno singled to center, Carroll scored."
+        },
+        {
+         "inning": 2,
+         "half": "bottom",
+         "score": "CIN 0, ARI 3",
+         "text": "Lawlar homered to left (377 feet), Tawa scored."
+        },
+        {
+         "inning": 2,
+         "half": "bottom",
+         "score": "CIN 0, ARI 4",
+         "text": "Vargas hit sacrifice fly to center, Fernandez scored."
+        },
+        {
+         "inning": 3,
+         "half": "bottom",
+         "score": "CIN 0, ARI 5",
+         "text": "Waldschmidt doubled to left, Lawlar scored, Fernandez to third."
+        },
+        {
+         "inning": 4,
+         "half": "bottom",
+         "score": "CIN 0, ARI 6",
+         "text": "Perdomo singled to center, Carroll scored."
+        },
+        {
+         "inning": 7,
+         "half": "bottom",
+         "score": "CIN 0, ARI 7",
+         "text": "Lawlar singled to center, Perdomo scored, Tawa to second."
+        },
+        {
+         "inning": 8,
+         "half": "bottom",
+         "score": "CIN 0, ARI 8",
+         "text": "Arenado singled to left, Perdomo scored."
+        },
+        {
+         "inning": 8,
+         "half": "bottom",
+         "score": "CIN 0, ARI 9",
+         "text": "Tawa doubled to center, Arenado scored."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816623",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-22T01:40Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Minnesota Twins @ San Diego Padres",
+     "home_team": "San Diego Padres",
+     "home_abbr": "SD",
+     "home_id": "25",
+     "away_team": "Minnesota Twins",
+     "away_abbr": "MIN",
+     "away_id": "9",
+     "home_score": 6,
+     "away_score": 2,
+     "winner": "San Diego Padres",
+     "loser": "Minnesota Twins",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "69-60",
+      "home": "38-26",
+      "road": "31-34"
+     },
+     "away_records": {
+      "total": "63-66",
+      "home": "35-31",
+      "road": "28-35"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "MIN",
+       "batting": [
+        {
+         "name": "L. Keaschall",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".272"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Buxton",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".254"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Bell",
+         "pos": "DH",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".257"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Jeffers",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".279"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Clemens",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "2",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".237"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Lewis",
+         "pos": "1B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".238"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Larnach",
+         "pos": "LF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".266"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Lee",
+         "pos": "3B",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".242"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Culpepper",
+         "pos": "SS",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".289"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "C. Prielipp",
+         "pos": "SP",
+         "stats": {
+          "IP": "6.0",
+          "H": "8",
+          "R": "6",
+          "ER": "6",
+          "BB": "2",
+          "K": "7",
+          "ERA": "5.57"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Adams",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "2",
+          "K": "0",
+          "ERA": "5.49"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Rogers",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "4.82"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "SD",
+       "batting": [
+        {
+         "name": "F. Tatis Jr.",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "3",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".284"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Rengifo",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".250"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Machado",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".217"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. France",
+         "pos": "1B",
+         "stats": {
+          "AB": "1",
+          "R": "1",
+          "H": "1",
+          "RBI": "3",
+          "BB": "2",
+          "K": "0",
+          "AVG": ".293"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Merrill",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".238"
+         },
+         "note": ""
+        },
+        {
+         "name": "X. Bogaerts",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".218"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Hays",
+         "pos": "DH",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".238"
+         },
+         "note": ""
+        },
+        {
+         "name": "F. Fermin",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".191"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Cronenworth",
+         "pos": "2B",
+         "stats": {
+          "AB": "1",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "2",
+          "K": "1",
+          "AVG": ".224"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "R. Vasquez",
+         "pos": "SP",
+         "stats": {
+          "IP": "7.0",
+          "H": "2",
+          "R": "2",
+          "ER": "2",
+          "BB": "0",
+          "K": "3",
+          "ERA": "4.19"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Rodriguez",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "2.04"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Miller",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "3",
+          "ERA": "0.84"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "0",
+        "0",
+        "2",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+       ],
+       "home_innings": [
+        "2",
+        "0",
+        "0",
+        "0",
+        "4",
+        "0",
+        "0",
+        "0",
+        "-"
+       ],
+       "away_rhe": {
+        "R": "2",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "6",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "France 1st"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 1,
+         "half": "bottom",
+         "score": "MIN 0, SD 2",
+         "text": "France homered to left center (421 feet), Machado scored."
+        },
+        {
+         "inning": 4,
+         "half": "top",
+         "score": "MIN 2, SD 2",
+         "text": "Clemens tripled to right, Buxton scored and Bell scored."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "MIN 2, SD 3",
+         "text": "Tatis Jr. singled to right, Hays scored, Cronenworth to third."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "MIN 2, SD 4",
+         "text": "Rengifo singled to left, Cronenworth scored, Tatis Jr. to second."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "MIN 2, SD 5",
+         "text": "Machado singled to right, Tatis Jr. scored, Rengifo to third."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "MIN 2, SD 6",
+         "text": "France hit sacrifice fly to right, Rengifo scored, Machado to second."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816621",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-22T02:10Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Chicago Cubs @ Seattle Mariners",
+     "home_team": "Seattle Mariners",
+     "home_abbr": "SEA",
+     "home_id": "12",
+     "away_team": "Chicago Cubs",
+     "away_abbr": "CHC",
+     "away_id": "16",
+     "home_score": 6,
+     "away_score": 5,
+     "winner": "Seattle Mariners",
+     "loser": "Chicago Cubs",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "61-68",
+      "home": "34-29",
+      "road": "27-39"
+     },
+     "away_records": {
+      "total": "74-55",
+      "home": "38-27",
+      "road": "36-28"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "CHC",
+       "batting": [
+        {
+         "name": "P. Crow-Armstrong",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".279"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Suzuki",
+         "pos": "RF",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".267"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Busch",
+         "pos": "1B",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".244"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Bregman",
+         "pos": "3B",
+         "stats": {
+          "AB": "5",
+          "R": "2",
+          "H": "3",
+          "RBI": "3",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".258"
+         },
+         "note": ""
+        },
+        {
+         "name": "I. Happ",
+         "pos": "LF",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".216"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Hoerner",
+         "pos": "2B",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".263"
+         },
+         "note": ""
+        },
+        {
+         "name": "P. Ramirez",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".277"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Conforto",
+         "pos": "DH",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".217"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Kelly",
+         "pos": "C",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".262"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "M. Boyd",
+         "pos": "SP",
+         "stats": {
+          "IP": "6.0",
+          "H": "6",
+          "R": "5",
+          "ER": "4",
+          "BB": "2",
+          "K": "3",
+          "ERA": "4.15"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Palencia",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "2.55"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Rea",
+         "pos": "SP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "1",
+          "ERA": "4.55"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Webb",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "2.21"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Zeferjahn",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "1",
+          "R": "1",
+          "ER": "0",
+          "BB": "1",
+          "K": "0",
+          "ERA": "4.06"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "SEA",
+       "batting": [
+        {
+         "name": "B. Donovan",
+         "pos": "3B",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".277"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Arozarena",
+         "pos": "LF",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".271"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Canzone",
+         "pos": "DH",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".259"
+         },
+         "note": ""
+        },
+        {
+         "name": "V. Robles",
+         "pos": "RF",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".260"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Rodriguez",
+         "pos": "CF",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".252"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Naylor",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".268"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Ward",
+         "pos": "DH",
+         "stats": {
+          "AB": "2",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "2",
+          "K": "1",
+          "AVG": ".238"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Rivas",
+         "pos": "3B",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".138"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Raleigh",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "3",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".157"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Young",
+         "pos": "2B",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".255"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Rodden",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".250"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "E. Hancock",
+         "pos": "SP",
+         "stats": {
+          "IP": "5.2",
+          "H": "8",
+          "R": "3",
+          "ER": "3",
+          "BB": "0",
+          "K": "6",
+          "ERA": "3.37"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Speier",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.1",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "2.65"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Bazardo",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "2",
+          "R": "1",
+          "ER": "1",
+          "BB": "2",
+          "K": "1",
+          "ERA": "3.10"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Munoz",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "1",
+          "ER": "1",
+          "BB": "0",
+          "K": "2",
+          "ERA": "4.37"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Dominguez",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "4.84"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 10,
+       "away_innings": [
+        "3",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "1",
+        "0"
+       ],
+       "home_innings": [
+        "0",
+        "4",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1"
+       ],
+       "away_rhe": {
+        "R": "5",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "6",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Crow-Armstrong 1st",
+        "Bregman 1st",
+        "Raleigh 2nd",
+        "Happ 8th",
+        "Bregman 9th"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 1,
+         "half": "top",
+         "score": "CHC 1, SEA 0",
+         "text": "Crow-Armstrong homered to right center (367 feet)."
+        },
+        {
+         "inning": 1,
+         "half": "top",
+         "score": "CHC 3, SEA 0",
+         "text": "Bregman homered to left (373 feet), Busch scored."
+        },
+        {
+         "inning": 2,
+         "half": "bottom",
+         "score": "CHC 3, SEA 3",
+         "text": "Raleigh homered to left center (410 feet), Naylor scored and Ward scored."
+        },
+        {
+         "inning": 2,
+         "half": "bottom",
+         "score": "CHC 3, SEA 4",
+         "text": "Donovan singled to right, Young scored."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "CHC 3, SEA 5",
+         "text": "Arozarena singled to center, Rodden scored."
+        },
+        {
+         "inning": 8,
+         "half": "top",
+         "score": "CHC 4, SEA 5",
+         "text": "Happ homered to right center (432 feet)."
+        },
+        {
+         "inning": 9,
+         "half": "top",
+         "score": "CHC 5, SEA 5",
+         "text": "Bregman homered to left center (405 feet)."
+        },
+        {
+         "inning": 10,
+         "half": "bottom",
+         "score": "CHC 5, SEA 6",
+         "text": "Rivas singled to center, Arozarena scored, Naylor to second."
+        }
+       ]
+      }
+     }
+    },
+    {
+     "game_id": "401816624",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-08-22T02:10Z",
+     "season_year": 2026,
+     "season_type": 2,
+     "week": null,
+     "matchup": "Pittsburgh Pirates @ Los Angeles Dodgers",
+     "home_team": "Los Angeles Dodgers",
+     "home_abbr": "LAD",
+     "home_id": "19",
+     "away_team": "Pittsburgh Pirates",
+     "away_abbr": "PIT",
+     "away_id": "23",
+     "home_score": 5,
+     "away_score": 4,
+     "winner": "Los Angeles Dodgers",
+     "loser": "Pittsburgh Pirates",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": false,
+     "series": null,
+     "home_records": {
+      "total": "78-51",
+      "home": "38-26",
+      "road": "40-25"
+     },
+     "away_records": {
+      "total": "63-67",
+      "home": "34-32",
+      "road": "29-35"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "PIT",
+       "batting": [
+        {
+         "name": "S. Horwitz",
+         "pos": "1B",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".252"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Lowe",
+         "pos": "2B",
+         "stats": {
+          "AB": "5",
+          "R": "2",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".254"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Reynolds",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".263"
+         },
+         "note": ""
+        },
+        {
+         "name": "N. Gonzales",
+         "pos": "3B",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "2",
+          "RBI": "2",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".311"
+         },
+         "note": ""
+        },
+        {
+         "name": "O. Cruz",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "2",
+          "BB": "2",
+          "K": "0",
+          "AVG": ".266"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Flores Jr.",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".288"
+         },
+         "note": ""
+        },
+        {
+         "name": "H. Davis",
+         "pos": "C",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".170"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Mangum",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".297"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Gonzalez",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".224"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Triolo",
+         "pos": "SS",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".236"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "B. Chandler",
+         "pos": "SP",
+         "stats": {
+          "IP": "4.0",
+          "H": "4",
+          "R": "4",
+          "ER": "4",
+          "BB": "2",
+          "K": "6",
+          "ERA": "4.38"
+         },
+         "note": ""
+        },
+        {
+         "name": "Y. Ramirez",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "1",
+          "ERA": "2.99"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Yates",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "3.50"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Bachar",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "3",
+          "K": "1",
+          "ERA": "3.75"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Weaver",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "3",
+          "ERA": "2.20"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Montgomery",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "3.33"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Soto",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "1",
+          "R": "1",
+          "ER": "0",
+          "BB": "1",
+          "K": "1",
+          "ERA": "3.44"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "LAD",
+       "batting": [
+        {
+         "name": "S. Ohtani",
+         "pos": "DH",
+         "stats": {
+          "AB": "3",
+          "R": "2",
+          "H": "1",
+          "RBI": "0",
+          "BB": "2",
+          "K": "1",
+          "AVG": ".291"
+         },
+         "note": ""
+        },
+        {
+         "name": "F. Freeman",
+         "pos": "1B",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".300"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Pages",
+         "pos": "CF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".272"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Hernández",
+         "pos": "3B",
+         "stats": {
+          "AB": "2",
+          "R": "1",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".235"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Muncy",
+         "pos": "3B",
+         "stats": {
+          "AB": "3",
+          "R": "1",
+          "H": "1",
+          "RBI": "2",
+          "BB": "1",
+          "K": "2",
+          "AVG": ".252"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Call",
+         "pos": "LF",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".252"
+         },
+         "note": ""
+        },
+        {
+         "name": "M. Betts",
+         "pos": "SS",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "2",
+          "BB": "2",
+          "K": "0",
+          "AVG": ".238"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Tucker",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".230"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Edman",
+         "pos": "2B",
+         "stats": {
+          "AB": "5",
+          "R": "0",
+          "H": "2",
+          "RBI": "1",
+          "BB": "0",
+          "K": "3",
+          "AVG": ".274"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Hernández",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".247"
+         },
+         "note": ""
+        },
+        {
+         "name": "H. Feduccia",
+         "pos": "C",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".233"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "Y. Yamamoto",
+         "pos": "SP",
+         "stats": {
+          "IP": "6.1",
+          "H": "5",
+          "R": "2",
+          "ER": "2",
+          "BB": "1",
+          "K": "9",
+          "ERA": "2.61"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Stewart",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "2.20"
+         },
+         "note": ""
+        },
+        {
+         "name": "K. Hurt",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.1",
+          "H": "2",
+          "R": "2",
+          "ER": "2",
+          "BB": "0",
+          "K": "1",
+          "ERA": "4.61"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Henriquez",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.2",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "2",
+          "ERA": "2.96"
+         },
+         "note": ""
+        },
+        {
+         "name": "E. Phillips",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "1",
+          "ERA": "4.91"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 10,
+       "away_innings": [
+        "1",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "2",
+        "0",
+        "0"
+       ],
+       "home_innings": [
+        "2",
+        "0",
+        "2",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1"
+       ],
+       "away_rhe": {
+        "R": "4",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "5",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Muncy 1st",
+        "Cruz 8th"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 1,
+         "half": "top",
+         "score": "PIT 1, LAD 0",
+         "text": "Gonzales singled to center, Lowe scored, Reynolds to second."
+        },
+        {
+         "inning": 1,
+         "half": "bottom",
+         "score": "PIT 1, LAD 2",
+         "text": "Muncy homered to right (392 feet), Ohtani scored."
+        },
+        {
+         "inning": 3,
+         "half": "top",
+         "score": "PIT 2, LAD 2",
+         "text": "Gonzales singled to center, Lowe scored."
+        },
+        {
+         "inning": 3,
+         "half": "bottom",
+         "score": "PIT 2, LAD 4",
+         "text": "Betts singled to center, Feduccia scored and Ohtani scored, Pages to second."
+        },
+        {
+         "inning": 8,
+         "half": "top",
+         "score": "PIT 4, LAD 4",
+         "text": "Cruz homered to center (424 feet), Reynolds scored."
+        },
+        {
+         "inning": 10,
+         "half": "bottom",
+         "score": "PIT 4, LAD 5",
+         "text": "Edman singled to left, E. Hernández scored, Tucker to second."
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "today_games": []
+  }
+ }
+}
