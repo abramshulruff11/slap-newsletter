@@ -148,6 +148,8 @@ slap-newsletter/
 ├── football_bundle.py         ← SLA-116: one connected fact bundle per NFL/college game
 │                                 → game_state["football"]; summary_lines() renders it under 10K
 │                                 into every pass's GROUND TRUTH (SLA-119)
+├── mlb_bundle.py              ← SLA-142: MLB game flow per game from ESPN's line score
+│                                 (lead changes, go-ahead for good, scoring plays), 4K cap
 ├── run_status.py              ← per-run state on disk, shared across processes
 ├── pipeline_status.py         ← per-STAGE outcomes on top of run_status.json;
 │                                 PIPELINE_STAGES is the declared stage list
@@ -923,6 +925,65 @@ added 291 as verified (3 partisan clips from The Democrats' channel left out), t
   so merging this branch to `main` puts the 240 new GIFs into production's mood-only picks the
   next morning, situation prompts or not.
 
+**MLB games get their game flow, computed from the line score (SLA-142, 2026-10-19).** The
+2026-10-19 ALCS Game 5 recap put Hicks's single in the 5th "to put the Rays up 2-0" (it came in
+the 3rd and made it 3-0), credited the 3-0 run to the wrong batter, and called a strikeout a
+double play. The writer had only the final score and the series state.
+- **No new source.** `fetch_sports_data.py` already fetched ESPN's summary for EVERY completed
+  MLB game (no cap) and stored `box_score.linescore` and `box_score.agate.scoring_plays`
+  (half-inning, running score, ESPN's text); only the box score image read them. The spike
+  cross-checked ALCS G5 against the MLB Stats API: identical line score and scoring plays. The
+  Stats API is not used (SLA-58: non-commercial, non-bulk only). ESPN's series state already
+  reached the ground truth, so series score does not wait on SLA-77.
+- **`mlb_bundle.py` reads game_state only** (no database, no network, no fetch step), at
+  prompt-build time. Per game: the score after every half-inning with runs, who scored first,
+  every go-ahead and tie, the go-ahead for good, the winner's biggest deficit, wire to wire,
+  walk-off (home win where the home team didn't lead after the last top half), extras, each
+  scoring play with the runs it scored. In `format_game_state_summary()` as the MLB GAME FLOW
+  block, so Passes 1, 2 and 6 all get it; a game the block shows opens with the same
+  result/series lines and leaves YESTERDAY'S GAME RESULTS. `mlb_bundle.game_result_lines()` is
+  now the one copy of those lines for every sport.
+- **Checked, or left out.** A line score that doesn't sum to the final drops the game (plain
+  result line as before); scoring plays that don't reconcile with the line score half by half
+  drop the play lines and keep the flow; a non-final game has no box score, so no bundle.
+- **4,000-character cap.** Postseason games and games a story names (`attach_story()`, both
+  runners, after Pass 1, next to the football one) in full; every other game gets its one
+  flow line, close games first (walk-offs, extras, lead swings, comebacks). Measured: ALCS G5
+  1,085 chars; 2026-08-21's 15 games, 4 extra-inning walk-offs, all 15 shown at 3,856. The log
+  line `mlb flow: block A -> B chars (cap 4,000); N of M game(s) shown, K in full` is how a
+  live run shows its size.
+- **Timing:** ESPN is final at the last out (ALCS G5: 23:58 UTC); the fetch runs ~11:20 UTC. No
+  database lag, unlike SLA-120's CFBD.
+- **Check 3D** (`claim_validator.check_mlb_flow_claims()`): a score in an inning (produced by a
+  play in it — "make it", "put ... up", "took a 3-0 lead" — or held during it — "led 3-0 in the
+  5th"), go-ahead / for good, tie, "N-run 6th", a batter's run-scoring play in an inning and its
+  RBI count, who made a score ("a Williamson single to make it 3-0"), a run claimed in an inning
+  nobody scored in, walk-off, wire to wire / never trailed, "came back from N down".
+  - **HIGH only, and only when the sentence ties to exactly one of yesterday's games** (a team
+    named in it, a team by city unless two MLB teams share it, the section's one game, or a
+    batter only one game has). Anything the facts can't settle is left alone, with no LOW:
+    nothing checked game flow before, and a LOW would ask the editor to blur a claim that
+    may be right. Only sections that read as baseball are checked ("took the lead in the
+    third" about the Cardinals' football game is not), and a sentence naming "Game N" or a
+    year is about another game.
+  - Every flag says what the line score shows ("2-0 in the 5th -> but the score became TB 2-0
+    in the 2nd"). `final_history_check()` re-checks the final draft (kind `game flow`); one
+    left in makes the run PARTIAL and is listed in the email, like SLA-112's. A tweet in the
+    section carrying the same score or inning sources it.
+- **Prompts:** RULE 3 item 5 (both copies, via `promote.py`) sources the block and tells the
+  writer to take game flow from it; editor Check 8 (source 2 and a new Category E) and Check 9
+  (how to act on a game-flow flag), edited in both copies by hand (UAT-ahead file).
+- **Replay** (`uat/replay_mlb_flow.py --cache <dir> --build`, needs ESPN, ~2 min per day to build):
+  162 issues, 8 HIGH, all real errors that shipped, 0 false. Its first pass had 12 false HIGHs,
+  each fixed and locked: a pitch count ("a 2-2 slider") or final ("beat Houston 6-5") or overcome
+  score ("erased a 4-0 deficit") read as the score at an inning; whose walk-off (only WHETHER there
+  was one is checked: "Walk-Off Sinks Dodgers" names the loser); who led read off the named team
+  ("down 7-5 ... against the Phillies" is the Marlins); a weekday naming another day; an NBA line
+  in a section naming Cleveland (a sentence matched only by city or section must read as
+  baseball itself); "before the second inning" as a boundary. Doubleheaders are skipped. Cost of
+  the guards: one real 09-12 error ("Seattle had tied it in the ninth") is no longer caught. Locked by `uat/tests/test_mlb_flow.py` against two frozen ESPN fixtures in
+  `uat/fixtures/mlb/` (ALCS G5, and 2026-08-21's 15-game day).
+
 **A fact bundle for a new sport starts at `docs/sport_bundle_pattern.md` (SLA-118):** read it
 before opening the first ticket to give MLB, the NBA or the NHL what football has (a connected
 bundle per game, and Pass 3 checking every claim kind it states). It covers what the database
@@ -1271,7 +1332,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (32 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (33 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -1318,6 +1379,20 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-19 — MLB game flow reaches the writer; Pass 3 checks inning claims (SLA-142)**
+- Spike: ESPN already held every MLB game's line score and scoring plays; nothing read them but
+  the box score image. Matches the MLB Stats API exactly on ALCS G5; final long before the run.
+- `mlb_bundle.py`: the MLB GAME FLOW block (score by half-inning, go-aheads, ties, the go-ahead
+  for good, walk-offs, scoring plays), 4,000-char cap, in every pass's ground truth, both runners.
+- Check 3D in `claim_validator.py`: HIGH-only, one-game-only; catches all three errors in the
+  2026-10-19 ALCS G5 recap. Final re-check, email and PARTIAL verdict cover it.
+- RULE 3 item 5 (both copies, `promote.py`), editor Check 8 Category E and Check 9 (both copies).
+- Replayed on all 162 archived issues (MLB rebuilt from ESPN as of each morning): 8 HIGH, all real
+  shipped errors (07-07 a road win called a walk-off; 07-30 "led 4-0 in the ninth", tied by the 8th;
+  09-26 a "five-run sixth" of six; 10-06 and 10-07 homers in the wrong inning; 10-19 x3), 0 false,
+  58 confirmed. The first pass had 12 false HIGHs, all fixed and tested (see Check 3D above).
+- New `uat/tests/test_mlb_flow.py`; `KNOWN_DIVERGENT["main"]` re-pinned.
 
 **2026-10-19 — Ten thin GIF situations filled; library 223 -> 514 (SLA-141)**
 - `uat/gif_situation_probe.py` (Giphy search + review page) and

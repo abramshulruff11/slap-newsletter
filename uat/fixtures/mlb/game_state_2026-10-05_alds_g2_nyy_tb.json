@@ -1,0 +1,596 @@
+{
+ "as_of_date": "2026-10-06",
+ "yesterday_date": "2026-10-05",
+ "sports": {
+  "mlb": {
+   "label": "MLB",
+   "yesterday_games": [
+    {
+     "game_id": "401907986",
+     "home_rank": null,
+     "away_rank": null,
+     "date": "2026-10-06T00:00Z",
+     "season_year": 2026,
+     "season_type": 3,
+     "week": null,
+     "matchup": "New York Yankees @ Tampa Bay Rays",
+     "home_team": "Tampa Bay Rays",
+     "home_abbr": "TB",
+     "home_id": "30",
+     "away_team": "New York Yankees",
+     "away_abbr": "NYY",
+     "away_id": "10",
+     "home_score": 5,
+     "away_score": 2,
+     "winner": "Tampa Bay Rays",
+     "loser": "New York Yankees",
+     "completed": true,
+     "status": "final",
+     "overtime": false,
+     "playoffs": true,
+     "series": {
+      "home_wins": 2,
+      "away_wins": 0,
+      "total_games_played": 2,
+      "next_game_number": 3,
+      "series_over": false,
+      "home_leads": true,
+      "tied": false,
+      "clinching_game_for_home": false,
+      "clinching_game_for_away": false,
+      "elimination_game_for_home": false,
+      "elimination_game_for_away": false,
+      "summary": "TB leads series 2-0",
+      "title": "Playoff Series"
+     },
+     "home_records": {
+      "total": "98-64",
+      "home": "55-26",
+      "road": "43-38"
+     },
+     "away_records": {
+      "total": "93-68",
+      "home": "46-34",
+      "road": "47-34"
+     },
+     "neutral_site": false,
+     "box_score": {
+      "away": {
+       "team": "NYY",
+       "batting": [
+        {
+         "name": "B. Rice",
+         "pos": "DH",
+         "stats": {
+          "AB": "3",
+          "R": "2",
+          "H": "2",
+          "RBI": "2",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".467"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Bellinger",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".235"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Garcia Jr.",
+         "pos": "1B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".231"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Caballero",
+         "pos": "SS",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".000"
+         },
+         "note": ""
+        },
+        {
+         "name": "S. Jones",
+         "pos": "CF",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".133"
+         },
+         "note": ""
+        },
+        {
+         "name": "G. Lombard Jr.",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".267"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Chisholm Jr.",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".222"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Grisham",
+         "pos": "CF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".200"
+         },
+         "note": ""
+        },
+        {
+         "name": "A. Wells",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "2",
+          "AVG": ".417"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. McMahon",
+         "pos": "3B",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "0",
+          "AVG": ".143"
+         },
+         "note": ""
+        },
+        {
+         "name": "P. Goldschmidt",
+         "pos": "1B",
+         "stats": {
+          "AB": "1",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".000"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "C. Schlittler",
+         "pos": "SP",
+         "stats": {
+          "IP": "4.1",
+          "H": "6",
+          "R": "4",
+          "ER": "2",
+          "BB": "1",
+          "K": "2",
+          "ERA": "1.69"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Headrick",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.2",
+          "H": "1",
+          "R": "1",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "0.00"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Schreiber",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "1",
+          "ERA": "0.00"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Weathers",
+         "pos": "SP",
+         "stats": {
+          "IP": "0.2",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "0",
+          "ERA": "0.00"
+         },
+         "note": ""
+        },
+        {
+         "name": "P. Blackburn",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "0.00"
+         },
+         "note": ""
+        },
+        {
+         "name": "D. Bednar",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.1",
+          "H": "1",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "0.00"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "home": {
+       "team": "TB",
+       "batting": [
+        {
+         "name": "Y. Diaz",
+         "pos": "DH",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".250"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Mateo",
+         "pos": "SS",
+         "stats": {
+          "AB": "0",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".000"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Aranda",
+         "pos": "1B",
+         "stats": {
+          "AB": "5",
+          "R": "1",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".333"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. Caminero",
+         "pos": "3B",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "2",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".333"
+         },
+         "note": ""
+        },
+        {
+         "name": "L. Hicks",
+         "pos": "C",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".167"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Simpson",
+         "pos": "LF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "1",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".125"
+         },
+         "note": ""
+        },
+        {
+         "name": "V. Mesa Jr.",
+         "pos": "RF",
+         "stats": {
+          "AB": "3",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "1",
+          "K": "1",
+          "AVG": ".167"
+         },
+         "note": ""
+        },
+        {
+         "name": "J. DeLuca",
+         "pos": "RF",
+         "stats": {
+          "AB": "4",
+          "R": "1",
+          "H": "1",
+          "RBI": "0",
+          "BB": "0",
+          "K": "0",
+          "AVG": ".143"
+         },
+         "note": ""
+        },
+        {
+         "name": "R. Palacios",
+         "pos": "2B",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "1",
+          "RBI": "2",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".286"
+         },
+         "note": ""
+        },
+        {
+         "name": "T. Walls",
+         "pos": "SS",
+         "stats": {
+          "AB": "4",
+          "R": "0",
+          "H": "0",
+          "RBI": "0",
+          "BB": "0",
+          "K": "1",
+          "AVG": ".000"
+         },
+         "note": ""
+        }
+       ],
+       "pitching": [
+        {
+         "name": "F. Peralta",
+         "pos": "SP",
+         "stats": {
+          "IP": "4.2",
+          "H": "3",
+          "R": "1",
+          "ER": "1",
+          "BB": "1",
+          "K": "3",
+          "ERA": "1.93"
+         },
+         "note": ""
+        },
+        {
+         "name": "C. Booser",
+         "pos": "RP",
+         "stats": {
+          "IP": "0.1",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "1",
+          "K": "0",
+          "ERA": "0.00"
+         },
+         "note": ""
+        },
+        {
+         "name": "I. Seymour",
+         "pos": "SP",
+         "stats": {
+          "IP": "3.0",
+          "H": "1",
+          "R": "1",
+          "ER": "1",
+          "BB": "0",
+          "K": "4",
+          "ERA": "3.00"
+         },
+         "note": ""
+        },
+        {
+         "name": "B. Baker",
+         "pos": "RP",
+         "stats": {
+          "IP": "1.0",
+          "H": "0",
+          "R": "0",
+          "ER": "0",
+          "BB": "0",
+          "K": "0",
+          "ERA": "0.00"
+         },
+         "note": ""
+        }
+       ]
+      },
+      "linescore": {
+       "num_innings": 9,
+       "away_innings": [
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+       ],
+       "home_innings": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "4",
+        "0",
+        "0",
+        "0",
+        "-"
+       ],
+       "away_rhe": {
+        "R": "2",
+        "H": "-",
+        "E": "-"
+       },
+       "home_rhe": {
+        "R": "5",
+        "H": "-",
+        "E": "-"
+       }
+      },
+      "notes": [],
+      "agate": {
+       "home_runs": [
+        "Rice 4th",
+        "Rice 8th"
+       ],
+       "doubles": [],
+       "triples": [],
+       "errors": [],
+       "lob": {},
+       "scoring_plays": [
+        {
+         "inning": 1,
+         "half": "bottom",
+         "score": "NYY 0, TB 1",
+         "text": "Caminero grounded into fielder's choice to shortstop, Díaz scored on throwing error by second baseman Chisholm Jr., Aranda out at second, Caminero to second."
+        },
+        {
+         "inning": 4,
+         "half": "top",
+         "score": "NYY 1, TB 1",
+         "text": "Rice homered to right (372 feet)."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "NYY 1, TB 2",
+         "text": "Hicks grounded out to second, Aranda scored, Caminero to third."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "NYY 1, TB 3",
+         "text": "Simpson grounded into fielder's choice to shortstop, Caminero scored."
+        },
+        {
+         "inning": 5,
+         "half": "bottom",
+         "score": "NYY 1, TB 5",
+         "text": "Palacios singled to center, Simpson scored and DeLuca scored."
+        },
+        {
+         "inning": 8,
+         "half": "top",
+         "score": "NYY 2, TB 5",
+         "text": "Rice homered to right (358 feet)."
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "today_games": []
+  }
+ }
+}

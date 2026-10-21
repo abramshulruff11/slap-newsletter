@@ -77,7 +77,7 @@ KNOWN_DIVERGENT = {
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
     )),
-    "main": dict(prod="ee0ac2dbdd2c", uat="0e25f4ba71c9", reason=(
+    "main": dict(prod="09297c62e444", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
         "5-line stub. Expected to stay divergent permanently. (2026-09-04: prod "
         "now strips HTML comments from the published Substack file. Nothing to "
@@ -104,7 +104,9 @@ KNOWN_DIVERGENT = {
         "it to run_status; run_uat.py runs it after its own Pass 6 and prints it. "
         "2026-10-04 (SLA-119): prod's main() calls football_bundle.attach_story "
         "after extend_for_stories; run_uat.py does the same at its own Pass 2 call "
-        "site, and test_football_ground_truth.py checks both.)"
+        "site, and test_football_ground_truth.py checks both. 2026-10-19 (SLA-142): "
+        "prod's main() calls mlb_bundle.attach_story next to it; run_uat.py does the "
+        "same at the same call site.)"
     )),
 }
 

@@ -198,7 +198,7 @@ panel = email_newsletter._history_claims_html({"history_claims": [
     {"level": "HIGH", "section": "SEC Chaos", "sentence": "Missouri fell to 3-2", "cut": False, "kind": "record"}]})
 check("the email labels it as a record claim", "record CONTRADICTED by the game data" in panel, True)
 src = (REPO / "pipeline_status.py").read_text(encoding="utf-8")
-check("the PARTIAL headline names rank and record claims", "history, rank or record claim(s)" in src, True)
+check("the PARTIAL headline names rank and record claims", "history, rank, record or game-flow claim(s)" in src, True)
 
 print("The editor is told how to act on them (both copies)")
 for d in ("prompts", "uat/prompts"):
