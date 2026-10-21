@@ -148,6 +148,11 @@ slap-newsletter/
 ├── football_bundle.py         ← SLA-116: one connected fact bundle per NFL/college game
 │                                 → game_state["football"]; summary_lines() renders it under 10K
 │                                 into every pass's GROUND TRUTH (SLA-119)
+├── game_flow.py               ← SLA-148: sport-neutral game-flow arithmetic from a scoring timeline
+│                                 (lead changes, ties, go-ahead for good, deficits); NHL first,
+│                                 NBA / college football / college basketball reuse it
+├── nhl_bundle.py              ← SLA-148: NHL game flow, one bundle per game from the goal log
+│                                 (box_score.agate.goals); summary_lines() renders it under 3.5K
 ├── run_status.py              ← per-run state on disk, shared across processes
 ├── pipeline_status.py         ← per-STAGE outcomes on top of run_status.json;
 │                                 PIPELINE_STAGES is the declared stage list
@@ -776,6 +781,40 @@ It reads slap-sports-db's SLA-115 views.
   stale-game rule, not this change; Missouri (No. 25) over No. 8 Florida shipped without its upset
   line. Locked by `uat/tests/test_football_ground_truth.py`.
 
+**NHL games get game flow, computed in Python (SLA-148, 2026-10-20).** The writer had each NHL
+game's final score and rebuilt the rest from tweets. `fetch_sports_data._parse_nhl_goals()` now keeps
+every goal (period, clock, score after, ESPN's text) under `box_score.agate.goals`, from the
+summary the fetch already requested, and `nhl_bundle.py` turns it into the NHL GAME FLOW part of
+every pass's GROUND TRUTH: the score after each period, who scored first, every lead change and tie,
+the goal that won it for good, comebacks, wire to wire, overtime, shutouts, and each goal. The
+arithmetic is `game_flow.py`, which knows no sport; the next sport's file only turns ESPN's
+payload into a timeline.
+- **Checked, or left out.** Goals must add up to the line score period by period and to the final
+  score, or that game's flow is dropped and it stays a plain result line. Replayed over every NHL
+  game in the archived issues (266, 2026-04-20 to 10-19): 4 dropped, all ESPN line scores that don't
+  sum to ESPN's own final.
+- **A shootout is not a goal.** ESPN restarts the running score for it and lists it as a fifth
+  "period". The fetch drops the attempts, the box score labels that period `SO` (it used to read
+  OT2), and the bundle says "level N-N after overtime; X won the shootout (no game-winning goal)".
+- **Cap 3,500 chars** (replay: mean 2,196, max 3,447): postseason and story games in full, the rest as
+  a flow line, close games first. `attach_story()` runs in both runners after Pass 1, next to
+  football's. A game the block shows leaves YESTERDAY'S GAME RESULTS (`game_flow.result_lines`).
+- **Pass 3 Check 3E** (`check_nhl_flow_claims`): "took the lead in the third", "tied it in the
+  second", "up 2-0 after the first", "Stankoven scored in the second", "never trailed", "came back
+  from a two-goal deficit" against `nhl_bundle.claim_facts()`; HIGH only when the sentence ties to
+  exactly one game. The archive replay (`uat/replay_nhl_flow.py`) first produced 5 false HIGHs, all
+  fixed and locked in the test: "midway through the second" is not after it, a final score after
+  "beat" is not a period score, a series score ("take a 2-1 lead") is not a game score, "after
+  trailing 3-1 in the first" does not place the goals, and a bare record ("1-3 in overtime") is not a
+  claim. After the fixes: 7 claims confirmed, 0 HIGH. `final_history_check` re-checks the final draft.
+- **Known limits.** No empty-net or power-play facts (ESPN's goal text doesn't carry them reliably),
+  no season stats (SLA-102), series state comes from ESPN, not the database (SLA-77 is for history).
+  Locked by `uat/tests/test_nhl_flow.py` (real games in `uat/fixtures/nhl/`, built by
+  `uat/build_nhl_fixture.py`).
+- **Shared with the MLB work (SLA-142), not yet merged with it:** `game_flow.result_lines` is the
+  same function as `mlb_bundle.game_result_lines`; whichever branch merges second should point one at
+  the other so there is one copy.
+
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
 
@@ -1318,6 +1357,17 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-20 — NHL game flow: goals, lead changes and the go-ahead goal for the writer (SLA-148)**
+- Built the shared `game_flow.py` core and `nhl_bundle.py` on it; the fetch keeps the goal log;
+  both runners attach the story order; Check 3E confirms or flags period / lead / tie / scorer /
+  comeback claims; RULE 3 and editor Check 9 (both prompt copies) treat the block as sourced.
+- Found by looking at ESPN's NHL shootout data: the box score image called a shootout a second
+  overtime. It now says SO.
+- Replay over the archive: 266 games, 4 unusable goal logs (ESPN's own line score disagrees with its
+  final), block max 3,447 / mean 2,196 chars, 0 HIGH after fixing 5 false alarms the replay found.
+- `uat/tests/test_nhl_flow.py`; `test_runner_drift.py` `main` re-pinned.
+- Next in the SLA-143 order: NBA (SLA-147) and college football (SLA-145) reuse `game_flow.py`.
 
 **2026-10-19 — Ten thin GIF situations filled; library 223 -> 514 (SLA-141)**
 - `uat/gif_situation_probe.py` (Giphy search + review page) and

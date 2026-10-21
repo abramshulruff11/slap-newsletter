@@ -1279,6 +1279,9 @@ def main() -> None:
     # full, for every pass from here on. In memory only; never raises.
     import football_bundle
     print("  " + football_bundle.attach_story(game_state, story_plan))
+    # SLA-148: NHL game flow puts story games in full the same way.
+    import nhl_bundle
+    print("  " + nhl_bundle.attach_story(game_state, story_plan))
 
     draft_html    = run_pass2(story_plan, client, game_state, degraded=degraded)
 

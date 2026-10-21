@@ -1,0 +1,3048 @@
+{
+ "playoff": {
+  "game_id": "401871406",
+  "home_rank": null,
+  "away_rank": null,
+  "date": "2026-05-10T23:00Z",
+  "season_year": 2026,
+  "season_type": 3,
+  "week": null,
+  "matchup": "Buffalo Sabres @ Montreal Canadiens",
+  "home_team": "Montreal Canadiens",
+  "home_abbr": "MTL",
+  "home_id": "10",
+  "away_team": "Buffalo Sabres",
+  "away_abbr": "BUF",
+  "away_id": "2",
+  "home_score": 6,
+  "away_score": 2,
+  "winner": "Montreal Canadiens",
+  "loser": "Buffalo Sabres",
+  "completed": true,
+  "status": "final",
+  "overtime": false,
+  "playoffs": true,
+  "series": {
+   "home_wins": 2,
+   "away_wins": 1,
+   "total_games_played": 3,
+   "next_game_number": 4,
+   "series_over": false,
+   "home_leads": true,
+   "tied": false,
+   "clinching_game_for_home": false,
+   "clinching_game_for_away": false,
+   "elimination_game_for_home": false,
+   "elimination_game_for_away": false,
+   "summary": "MTL leads series 2-1",
+   "title": "Playoff Series"
+  },
+  "home_records": {
+   "total": "48-24-10",
+   "home": "24-15-2",
+   "road": "24-9-8"
+  },
+  "away_records": {
+   "total": "50-23-9",
+   "home": "26-10-5",
+   "road": "24-13-4"
+  },
+  "neutral_site": false,
+  "box_score": {
+   "away": {
+    "team": "BUF",
+    "players": [
+     {
+      "name": "Z. Benson",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "18:07",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "12"
+      }
+     },
+     {
+      "name": "S. Carrick",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "6:17",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "J. Doan",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "15:32",
+       "G": "0",
+       "A": "1",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "4"
+      }
+     },
+     {
+      "name": "J. Greenway",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "13:31",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "P. Krebs",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "16:53",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "B. Malenstyn",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "12:15",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "R. McLeod",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "13:51",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Norris",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "13:45",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "J. Quinn",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "15:28",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "T. Thompson",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "21:06",
+       "G": "1",
+       "A": "1",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Tuch",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "20:06",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "J. Zucker",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "6:47",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "B. Byram",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "20:32",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "R. Dahlin",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "23:04",
+       "G": "1",
+       "A": "1",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "O. Power",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "19:42",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "M. Samuelsson",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "23:05",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "L. Stanley",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "11:51",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "12"
+      }
+     },
+     {
+      "name": "C. Timmins",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "17:22",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "A. Lyon",
+      "pos": "G",
+      "starter": false,
+      "stats": {
+       "TOI": "58:39",
+       "PIM": "0"
+      }
+     }
+    ]
+   },
+   "home": {
+    "team": "MTL",
+    "players": [
+     {
+      "name": "J. Anderson",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "15:26",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "Z. Bolduc",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "10:43",
+       "G": "1",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "16"
+      }
+     },
+     {
+      "name": "C. Caufield",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "17:17",
+       "G": "1",
+       "A": "1",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "K. Dach",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "12:12",
+       "G": "1",
+       "A": "0",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "P. Danault",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "14:39",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "I. Demidov",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "14:52",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Evans",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "13:12",
+       "G": "0",
+       "A": "2",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Newhook",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "16:43",
+       "G": "2",
+       "A": "0",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "J. Slafkovsky",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "18:12",
+       "G": "1",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "N. Suzuki",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "19:44",
+       "G": "0",
+       "A": "1",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Texier",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "13:38",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Veleno",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "12:18",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Carrier",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "24:31",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "N. Dobson",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "17:45",
+       "G": "0",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "K. Guhle",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "17:48",
+       "G": "0",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "14"
+      }
+     },
+     {
+      "name": "L. Hutson",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "20:35",
+       "G": "0",
+       "A": "2",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "M. Matheson",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "25:06",
+       "G": "0",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Xhekaj",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "7:10",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "J. Dobes",
+      "pos": "G",
+      "starter": false,
+      "stats": {
+       "TOI": "59:53",
+       "PIM": "0"
+      }
+     }
+    ]
+   },
+   "linescore": {
+    "period_labels": [
+     "P1",
+     "P2",
+     "P3"
+    ],
+    "away_periods": [
+     "1",
+     "1",
+     "0"
+    ],
+    "home_periods": [
+     "1",
+     "3",
+     "2"
+    ]
+   },
+   "agate": {
+    "goals": [
+     {
+      "period": 1,
+      "clock": "0:53",
+      "away": 1,
+      "home": 0,
+      "text": "Tage Thompson Goal (3) Slap Shot, assists: Rasmus Dahlin (4)"
+     },
+     {
+      "period": 1,
+      "clock": "15:31",
+      "away": 1,
+      "home": 1,
+      "text": "Alex Newhook Goal (4) Snap Shot, assists: Jake Evans (3)"
+     },
+     {
+      "period": 2,
+      "clock": "6:05",
+      "away": 1,
+      "home": 2,
+      "text": "Cole Caufield Goal (2) Slap Shot, assists: Lane Hutson (6), Ivan Demidov (3)"
+     },
+     {
+      "period": 2,
+      "clock": "10:43",
+      "away": 1,
+      "home": 3,
+      "text": "Zachary Bolduc Goal (2) Snap Shot, assists: Joseph Veleno (1), Alexandre Carrier (2)"
+     },
+     {
+      "period": 2,
+      "clock": "12:17",
+      "away": 1,
+      "home": 4,
+      "text": "Juraj Slafkovský Goal (4) Slap Shot, assists: Lane Hutson (7), Cole Caufield (4)"
+     },
+     {
+      "period": 2,
+      "clock": "14:46",
+      "away": 2,
+      "home": 4,
+      "text": "Rasmus Dahlin Goal (2) Snap Shot, assists: Tage Thompson (6), Josh Doan (5)"
+     },
+     {
+      "period": 3,
+      "clock": "8:46",
+      "away": 2,
+      "home": 5,
+      "text": "Kirby Dach Goal (4) Slap Shot, assists: Alexandre Texier (3), Phillip Danault (3)"
+     },
+     {
+      "period": 3,
+      "clock": "15:14",
+      "away": 2,
+      "home": 6,
+      "text": "Alex Newhook Goal (5) , assists: Nick Suzuki (6), Jake Evans (4)"
+     }
+    ],
+    "shootout": false
+   },
+   "notes": []
+  }
+ },
+ "ot": {
+  "game_id": "401871413",
+  "home_rank": null,
+  "away_rank": null,
+  "date": "2026-05-09T22:00Z",
+  "season_year": 2026,
+  "season_type": 3,
+  "week": null,
+  "matchup": "Carolina Hurricanes @ Philadelphia Flyers",
+  "home_team": "Philadelphia Flyers",
+  "home_abbr": "PHI",
+  "home_id": "15",
+  "away_team": "Carolina Hurricanes",
+  "away_abbr": "CAR",
+  "away_id": "7",
+  "home_score": 2,
+  "away_score": 3,
+  "winner": "Carolina Hurricanes",
+  "loser": "Philadelphia Flyers",
+  "completed": true,
+  "status": "final",
+  "overtime": true,
+  "playoffs": true,
+  "series": {
+   "home_wins": 0,
+   "away_wins": 4,
+   "total_games_played": 4,
+   "next_game_number": null,
+   "series_over": true,
+   "home_leads": false,
+   "tied": false,
+   "clinching_game_for_home": false,
+   "clinching_game_for_away": true,
+   "elimination_game_for_home": true,
+   "elimination_game_for_away": false,
+   "summary": "CAR wins series 4-0",
+   "title": "Playoff Series"
+  },
+  "home_records": {
+   "total": "43-27-12",
+   "home": "20-13-8",
+   "road": "23-14-4"
+  },
+  "away_records": {
+   "total": "53-22-7",
+   "home": "29-10-2",
+   "road": "24-12-5"
+  },
+  "neutral_site": false,
+  "box_score": {
+   "away": {
+    "team": "CAR",
+    "players": [
+     {
+      "name": "S. Aho",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "21:18",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "J. Blake",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "17:29",
+       "G": "2",
+       "A": "1",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "W. Carrier",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "11:34",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "N. Ehlers",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "18:31",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "T. Hall",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "16:36",
+       "G": "0",
+       "A": "3",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "M. Jankowski",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "14:04",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "S. Jarvis",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "20:07",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Martinook",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "14:26",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "E. Robinson",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "11:29",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Staal",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "17:05",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "L. Stankoven",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "16:12",
+       "G": "1",
+       "A": "0",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Svechnikov",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "17:17",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Chatfield",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "22:42",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "S. Gostisbehere",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "18:57",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "K. Miller",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "24:30",
+       "G": "0",
+       "A": "1",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Nikishin",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "15:08",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Slavin",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "21:09",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "S. Walker",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "23:13",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "F. Andersen",
+      "pos": "G",
+      "starter": false,
+      "stats": {
+       "TOI": "65:19",
+       "PIM": "0"
+      }
+     }
+    ]
+   },
+   "home": {
+    "team": "PHI",
+    "players": [
+     {
+      "name": "D. Barkey",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "13:51",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Bump",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "14:06",
+       "G": "1",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "S. Couturier",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "20:32",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "C. Dvorak",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "16:49",
+       "G": "0",
+       "A": "1",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "T. Foerster",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "19:20",
+       "G": "1",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "L. Glendening",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "14:59",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "C. Grundstrom",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "14:02",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "G. Hathaway",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "15:21",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "T. Konecny",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "16:33",
+       "G": "0",
+       "A": "1",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Luchanko",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "12:31",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "P. Martone",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "17:37",
+       "G": "0",
+       "A": "1",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "T. Zegras",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "18:31",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "O. Bonk",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "12:36",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Drysdale",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "22:41",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "R. Ristolainen",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "23:34",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "T. Sanheim",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "28:46",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "N. Seeler",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "15:11",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "C. York",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "24:35",
+       "G": "0",
+       "A": "0",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "D. Vladar",
+      "pos": "G",
+      "starter": false,
+      "stats": {
+       "TOI": "65:31",
+       "PIM": "0"
+      }
+     }
+    ]
+   },
+   "linescore": {
+    "period_labels": [
+     "P1",
+     "P2",
+     "P3",
+     "OT1"
+    ],
+    "away_periods": [
+     "0",
+     "1",
+     "1",
+     "1"
+    ],
+    "home_periods": [
+     "1",
+     "0",
+     "1",
+     "0"
+    ]
+   },
+   "agate": {
+    "goals": [
+     {
+      "period": 1,
+      "clock": "7:50",
+      "away": 0,
+      "home": 1,
+      "text": "Tyson Foerster Goal (1) Snap Shot, assists: Trevor Zegras (4), Porter Martone (3)"
+     },
+     {
+      "period": 2,
+      "clock": "12:35",
+      "away": 1,
+      "home": 1,
+      "text": "Jackson Blake Goal (3) Wrist Shot, assists: K'Andre Miller (6), Taylor Hall (7)"
+     },
+     {
+      "period": 3,
+      "clock": "4:13",
+      "away": 2,
+      "home": 1,
+      "text": "Logan Stankoven Goal (7) Wrist Shot, assists: Taylor Hall (8), Jackson Blake (7)"
+     },
+     {
+      "period": 3,
+      "clock": "5:52",
+      "away": 2,
+      "home": 2,
+      "text": "Alex Bump Goal (2) Snap Shot, assists: Travis Konecny (4), Christian Dvorak (4)"
+     },
+     {
+      "period": 4,
+      "clock": "5:31",
+      "away": 3,
+      "home": 2,
+      "text": "Jackson Blake Goal (4) Wrist Shot, assists: Taylor Hall (9), Jaccob Slavin (1)"
+     }
+    ],
+    "shootout": false
+   },
+   "notes": []
+  }
+ },
+ "shutout": {
+  "game_id": "401871166",
+  "home_rank": null,
+  "away_rank": null,
+  "date": "2026-05-03T00:00Z",
+  "season_year": 2026,
+  "season_type": 3,
+  "week": null,
+  "matchup": "Philadelphia Flyers @ Carolina Hurricanes",
+  "home_team": "Carolina Hurricanes",
+  "home_abbr": "CAR",
+  "home_id": "7",
+  "away_team": "Philadelphia Flyers",
+  "away_abbr": "PHI",
+  "away_id": "15",
+  "home_score": 3,
+  "away_score": 0,
+  "winner": "Carolina Hurricanes",
+  "loser": "Philadelphia Flyers",
+  "completed": true,
+  "status": "final",
+  "overtime": false,
+  "playoffs": true,
+  "series": {
+   "home_wins": 1,
+   "away_wins": 0,
+   "total_games_played": 1,
+   "next_game_number": 2,
+   "series_over": false,
+   "home_leads": true,
+   "tied": false,
+   "clinching_game_for_home": false,
+   "clinching_game_for_away": false,
+   "elimination_game_for_home": false,
+   "elimination_game_for_away": false,
+   "summary": "CAR leads series 1-0",
+   "title": "Playoff Series"
+  },
+  "home_records": {
+   "total": "53-22-7",
+   "home": "29-10-2",
+   "road": "24-12-5"
+  },
+  "away_records": {
+   "total": "43-27-12",
+   "home": "20-13-8",
+   "road": "23-14-4"
+  },
+  "neutral_site": false,
+  "box_score": {
+   "away": {
+    "team": "PHI",
+    "players": [
+     {
+      "name": "D. Barkey",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "15:13",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Bump",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "12:43",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "N. Cates",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "15:51",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "S. Couturier",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "15:42",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "C. Dvorak",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "18:37",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "T. Foerster",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "16:29",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "L. Glendening",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "13:37",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "G. Hathaway",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "9:31",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "T. Konecny",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "19:48",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "P. Martone",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "16:03",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "M. Michkov",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "12:08",
+       "G": "0",
+       "A": "0",
+       "+/-": "-3",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "T. Zegras",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "16:31",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "14"
+      }
+     },
+     {
+      "name": "J. Drysdale",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "21:13",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "N. Juulsen",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "10:42",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "R. Ristolainen",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "23:57",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "T. Sanheim",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "23:29",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "N. Seeler",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "13:15",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "12"
+      }
+     },
+     {
+      "name": "C. York",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "19:59",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "D. Vladar",
+      "pos": "G",
+      "starter": false,
+      "stats": {
+       "TOI": "55:12",
+       "PIM": "0"
+      }
+     }
+    ]
+   },
+   "home": {
+    "team": "CAR",
+    "players": [
+     {
+      "name": "S. Aho",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "19:59",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Blake",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "14:36",
+       "G": "1",
+       "A": "1",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "12"
+      }
+     },
+     {
+      "name": "W. Carrier",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "8:51",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "N. Ehlers",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "18:17",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "T. Hall",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "11:43",
+       "G": "0",
+       "A": "1",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "4"
+      }
+     },
+     {
+      "name": "M. Jankowski",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "11:56",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "S. Jarvis",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "19:24",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Martinook",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "13:48",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "E. Robinson",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "10:46",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Staal",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "17:19",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "L. Stankoven",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "13:17",
+       "G": "2",
+       "A": "0",
+       "+/-": "3",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Svechnikov",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "17:52",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "J. Chatfield",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "20:30",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "S. Gostisbehere",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "17:58",
+       "G": "0",
+       "A": "0",
+       "+/-": "3",
+       "SOG": "0",
+       "PIM": "10"
+      }
+     },
+     {
+      "name": "K. Miller",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "20:56",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "M. Reilly",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "11:28",
+       "G": "0",
+       "A": "2",
+       "+/-": "3",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "J. Slavin",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "21:44",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "S. Walker",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "19:36",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "F. Andersen",
+      "pos": "G",
+      "starter": false,
+      "stats": {
+       "TOI": "60:00",
+       "PIM": "2"
+      }
+     }
+    ]
+   },
+   "linescore": {
+    "period_labels": [
+     "P1",
+     "P2",
+     "P3"
+    ],
+    "away_periods": [
+     "0",
+     "0",
+     "0"
+    ],
+    "home_periods": [
+     "2",
+     "1",
+     "0"
+    ]
+   },
+   "agate": {
+    "goals": [
+     {
+      "period": 1,
+      "clock": "1:31",
+      "away": 0,
+      "home": 1,
+      "text": "Logan Stankoven Goal (5) Tip-In, assists: Mike Reilly (1), Jackson Blake (4)"
+     },
+     {
+      "period": 1,
+      "clock": "7:30",
+      "away": 0,
+      "home": 2,
+      "text": "Jackson Blake Goal (2) Backhand, assists: Taylor Hall (6), Mike Reilly (2)"
+     },
+     {
+      "period": 2,
+      "clock": "16:16",
+      "away": 0,
+      "home": 3,
+      "text": "Logan Stankoven Goal (6) Snap Shot, assists: Seth Jarvis (3), Andrei Svechnikov (1)"
+     }
+    ],
+    "shootout": false
+   },
+   "notes": []
+  }
+ },
+ "comeback": {
+  "game_id": "401803375",
+  "home_rank": null,
+  "away_rank": null,
+  "date": "2026-03-11T02:00Z",
+  "season_year": 2026,
+  "season_type": 2,
+  "week": null,
+  "matchup": "Nashville Predators @ Seattle Kraken",
+  "home_team": "Seattle Kraken",
+  "home_abbr": "SEA",
+  "home_id": "124292",
+  "away_team": "Nashville Predators",
+  "away_abbr": "NSH",
+  "away_id": "27",
+  "home_score": 2,
+  "away_score": 4,
+  "winner": "Nashville Predators",
+  "loser": "Seattle Kraken",
+  "completed": true,
+  "status": "final",
+  "overtime": false,
+  "playoffs": false,
+  "series": null,
+  "home_records": {
+   "ytd": "29-25-9",
+   "home": "16-12-5",
+   "road": "13-13-4"
+  },
+  "away_records": {
+   "ytd": "29-27-8",
+   "home": "17-13-3",
+   "road": "12-14-5"
+  },
+  "neutral_site": false,
+  "box_score": {
+   "away": {
+    "team": "NSH",
+    "players": [
+     {
+      "name": "L. Evangelista",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "18:25",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "F. Forsberg",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "19:34",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "E. Haula",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "18:03",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "T. Jost",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "9:52",
+       "G": "1",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Kemell",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "7:11",
+       "G": "0",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "Z. L'Heureux",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "14:51",
+       "G": "0",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Marchessault",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "17:56",
+       "G": "0",
+       "A": "2",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "R. O'Reilly",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "19:39",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "R. Schaefer",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "11:09",
+       "G": "1",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "S. Stamkos",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "19:20",
+       "G": "1",
+       "A": "0",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "F. Svechkov",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "11:32",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "M. Wood",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "12:11",
+       "G": "0",
+       "A": "1",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Barron",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "10:45",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "7"
+      }
+     },
+     {
+      "name": "N. Hague",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "24:31",
+       "G": "0",
+       "A": "1",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "R. Josi",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "24:42",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "N. Perbix",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "22:06",
+       "G": "0",
+       "A": "0",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "B. Skjei",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "23:24",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "R. Ufko",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "13:05",
+       "G": "1",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Saros",
+      "pos": "G",
+      "starter": false,
+      "stats": {
+       "TOI": "59:44",
+       "PIM": "0"
+      }
+     }
+    ]
+   },
+   "home": {
+    "team": "SEA",
+    "players": [
+     {
+      "name": "M. Beniers",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "17:58",
+       "G": "1",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "5"
+      }
+     },
+     {
+      "name": "B. Catton",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "14:27",
+       "G": "0",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Eberle",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "20:21",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "F. Gaudreau",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "17:15",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "K. Kakko",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "14:30",
+       "G": "1",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "J. McCann",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "19:26",
+       "G": "0",
+       "A": "1",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Melanson",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "8:25",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "B. Meyers",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "8:51",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "C. Stephenson",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "19:55",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "E. Tolvanen",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "16:41",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "R. Winterton",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "9:28",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "S. Wright",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "14:26",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "V. Dunn",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "21:54",
+       "G": "0",
+       "A": "1",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "R. Evans",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "17:28",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Larsson",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "19:31",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "R. Lindgren",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "19:42",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "B. Montour",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "24:42",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Oleksiak",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "14:49",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Daccord",
+      "pos": "G",
+      "starter": false,
+      "stats": {
+       "TOI": "58:11",
+       "PIM": "0"
+      }
+     }
+    ]
+   },
+   "linescore": {
+    "period_labels": [
+     "P1",
+     "P2",
+     "P3"
+    ],
+    "away_periods": [
+     "0",
+     "3",
+     "1"
+    ],
+    "home_periods": [
+     "2",
+     "0",
+     "0"
+    ]
+   },
+   "agate": {
+    "goals": [
+     {
+      "period": 1,
+      "clock": "2:14",
+      "away": 0,
+      "home": 1,
+      "text": "Kaapo Kakko Goal (9) Wrist Shot, assists: Shane Wright (13)"
+     },
+     {
+      "period": 1,
+      "clock": "9:46",
+      "away": 0,
+      "home": 2,
+      "text": "Matty Beniers Goal (17) Wrist Shot, assists: Jared McCann (18), Vince Dunn (29)"
+     },
+     {
+      "period": 2,
+      "clock": "4:14",
+      "away": 1,
+      "home": 2,
+      "text": "Tyson Jost Goal (4) Wrist Shot, assists: Fedor Svechkov (9), Jonathan Marchessault (9)"
+     },
+     {
+      "period": 2,
+      "clock": "10:19",
+      "away": 2,
+      "home": 2,
+      "text": "Reid Schaefer Goal (5) Wrist Shot, assists: Matthew Wood (10), Brady Skjei (18)"
+     },
+     {
+      "period": 2,
+      "clock": "14:25",
+      "away": 3,
+      "home": 2,
+      "text": "Ryan Ufko Goal (1) Wrist Shot, assists: Jonathan Marchessault (10), Ryan O'Reilly (39)"
+     },
+     {
+      "period": 3,
+      "clock": "19:55",
+      "away": 4,
+      "home": 2,
+      "text": "Steven Stamkos Goal (31) Wrist Shot, assists: Nicolas Hague (10)"
+     }
+    ],
+    "shootout": false
+   },
+   "notes": []
+  }
+ },
+ "so": {
+  "game_id": "401803369",
+  "home_rank": null,
+  "away_rank": null,
+  "date": "2026-03-10T23:00Z",
+  "season_year": 2026,
+  "season_type": 2,
+  "week": null,
+  "matchup": "Pittsburgh Penguins @ Carolina Hurricanes",
+  "home_team": "Carolina Hurricanes",
+  "home_abbr": "CAR",
+  "home_id": "7",
+  "away_team": "Pittsburgh Penguins",
+  "away_abbr": "PIT",
+  "away_id": "16",
+  "home_score": 5,
+  "away_score": 4,
+  "winner": "Carolina Hurricanes",
+  "loser": "Pittsburgh Penguins",
+  "completed": true,
+  "status": "final",
+  "overtime": true,
+  "playoffs": false,
+  "series": null,
+  "home_records": {
+   "ytd": "41-17-6",
+   "home": "24-8-2",
+   "road": "17-9-4"
+  },
+  "away_records": {
+   "ytd": "32-17-15",
+   "home": "16-9-8",
+   "road": "16-8-7"
+  },
+  "neutral_site": false,
+  "box_score": {
+   "away": {
+    "team": "PIT",
+    "players": [
+     {
+      "name": "N. Acciari",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "15:24",
+       "G": "1",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "E. Chinakhov",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "22:26",
+       "G": "0",
+       "A": "2",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "C. Dewar",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "12:58",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Hayes",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "9:24",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "B. Kindel",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "13:47",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "V. Koivunen",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "10:37",
+       "G": "0",
+       "A": "1",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "B. Lizotte",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "14:12",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Mantha",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "14:23",
+       "G": "1",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "T. Novak",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "18:35",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "R. Rakell",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "20:51",
+       "G": "0",
+       "A": "1",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "B. Rust",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "23:14",
+       "G": "2",
+       "A": "1",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "E. Soderblom",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "12:23",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "C. Clifton",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "16:00",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "E. Karlsson",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "28:01",
+       "G": "0",
+       "A": "2",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "K. Letang",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "22:14",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "R. Shea",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "20:43",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "I. Solovyov",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "14:01",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "P. Wotherspoon",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "18:10",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "4"
+      }
+     },
+     {
+      "name": "S. Skinner",
+      "pos": "G",
+      "starter": false,
+      "stats": {
+       "TOI": "63:06",
+       "PIM": "0"
+      }
+     }
+    ]
+   },
+   "home": {
+    "team": "CAR",
+    "players": [
+     {
+      "name": "S. Aho",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "22:07",
+       "G": "0",
+       "A": "1",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Blake",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "15:14",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "W. Carrier",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "10:01",
+       "G": "0",
+       "A": "1",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "N. Ehlers",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "17:18",
+       "G": "0",
+       "A": "1",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "T. Hall",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "14:05",
+       "G": "0",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "M. Jankowski",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "10:46",
+       "G": "1",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "S. Jarvis",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "20:45",
+       "G": "1",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Martinook",
+      "pos": "RW",
+      "starter": false,
+      "stats": {
+       "TOI": "17:47",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "E. Robinson",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "8:49",
+       "G": "0",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Staal",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "18:07",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "L. Stankoven",
+      "pos": "C",
+      "starter": false,
+      "stats": {
+       "TOI": "13:54",
+       "G": "1",
+       "A": "0",
+       "+/-": "1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Svechnikov",
+      "pos": "LW",
+      "starter": false,
+      "stats": {
+       "TOI": "17:45",
+       "G": "0",
+       "A": "1",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "4"
+      }
+     },
+     {
+      "name": "J. Chatfield",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "20:51",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "K. Miller",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "24:01",
+       "G": "0",
+       "A": "0",
+       "+/-": "-1",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "A. Nikishin",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "19:49",
+       "G": "1",
+       "A": "1",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "M. Reilly",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "12:11",
+       "G": "0",
+       "A": "1",
+       "+/-": "2",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "J. Slavin",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "22:00",
+       "G": "0",
+       "A": "0",
+       "+/-": "-2",
+       "SOG": "0",
+       "PIM": "2"
+      }
+     },
+     {
+      "name": "S. Walker",
+      "pos": "D",
+      "starter": false,
+      "stats": {
+       "TOI": "20:38",
+       "G": "0",
+       "A": "0",
+       "+/-": "0",
+       "SOG": "0",
+       "PIM": "0"
+      }
+     },
+     {
+      "name": "F. Andersen",
+      "pos": "G",
+      "starter": false,
+      "stats": {
+       "TOI": "65:00",
+       "PIM": "0"
+      }
+     }
+    ]
+   },
+   "linescore": {
+    "period_labels": [
+     "P1",
+     "P2",
+     "P3",
+     "OT1",
+     "SO"
+    ],
+    "away_periods": [
+     "1",
+     "1",
+     "2",
+     "0",
+     "0"
+    ],
+    "home_periods": [
+     "1",
+     "0",
+     "3",
+     "0",
+     "1"
+    ]
+   },
+   "agate": {
+    "goals": [
+     {
+      "period": 1,
+      "clock": "7:46",
+      "away": 0,
+      "home": 1,
+      "text": "Logan Stankoven Goal (12) Snap Shot, assists: Mike Reilly (7), Jackson Blake (21)"
+     },
+     {
+      "period": 1,
+      "clock": "19:04",
+      "away": 1,
+      "home": 1,
+      "text": "Anthony Mantha Goal (24) Snap Shot, assists: Ville Koivunen (5)"
+     },
+     {
+      "period": 2,
+      "clock": "11:44",
+      "away": 2,
+      "home": 1,
+      "text": "Bryan Rust Goal (22) Snap Shot, assists: Egor Chinakhov (10), Erik Karlsson (37)"
+     },
+     {
+      "period": 3,
+      "clock": "2:49",
+      "away": 2,
+      "home": 2,
+      "text": "Mark Jankowski Goal (6) Backhand, assists: William Carrier (8), Alexander Nikishin (16)"
+     },
+     {
+      "period": 3,
+      "clock": "3:48",
+      "away": 2,
+      "home": 3,
+      "text": "Seth Jarvis Goal (28) Snap Shot, assists: Andrei Svechnikov (33)"
+     },
+     {
+      "period": 3,
+      "clock": "11:21",
+      "away": 2,
+      "home": 4,
+      "text": "Alexander Nikishin Goal (9) Snap Shot, assists: Sebastian Aho (43), Nikolaj Ehlers (31)"
+     },
+     {
+      "period": 3,
+      "clock": "17:52",
+      "away": 3,
+      "home": 4,
+      "text": "Noel Acciari Goal (7) Wrist Shot, assists: Bryan Rust (26), Egor Chinakhov (11)"
+     },
+     {
+      "period": 3,
+      "clock": "19:24",
+      "away": 4,
+      "home": 4,
+      "text": "Bryan Rust Goal (23) Snap Shot, assists: Rickard Rakell (17), Erik Karlsson (38)"
+     }
+    ],
+    "shootout": true
+   },
+   "notes": []
+  }
+ }
+}

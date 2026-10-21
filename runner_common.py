@@ -422,14 +422,24 @@ def format_game_state_summary(game_state: dict) -> str:
     whose bundle is shown in full is left out of HISTORICAL CONTEXT (the
     bundle carries its facts verbatim). A game or team the budget cut keeps
     its plain line, so nothing is lost to the cap.
+
+    NHL games get their game flow the same way (SLA-148, nhl_bundle.py): the
+    score after each period, lead changes, ties, the goal that won it, every
+    goal. Computed from the goal log fetch_sports_data.py stores per game.
     """
     import champions_source
     import football_bundle
     import history_source
+    import nhl_bundle
     football_lines = football_bundle.summary_lines(game_state)
     in_bundles, full_teams = football_bundle.shown(game_state) if football_lines else (set(), set())
     in_bundles.discard(None)
-    champion_lines = (football_lines + champions_source.summary_lines(game_state)
+    # SLA-148: NHL game flow. A game the block shows opens with the same
+    # result and series lines, so it leaves the results list too.
+    nhl_lines = nhl_bundle.summary_lines(game_state) if game_state else []
+    if nhl_lines:
+        in_bundles |= nhl_bundle.shown(game_state) - {None}
+    champion_lines = (football_lines + nhl_lines + champions_source.summary_lines(game_state)
                       + history_source.summary_lines(game_state, skip=full_teams))
     if not game_state or not game_state.get("sports"):
         return "\n".join(champion_lines)

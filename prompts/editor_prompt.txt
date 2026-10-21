@@ -331,6 +331,13 @@ top-10 team since 2013", "first playoff win since 2019") are history claims
 too: Pass 3 checks them against the FOOTBALL GAMES bundles, so act on their
 flags the same way.
 
+An NHL game-flow flag quotes a sentence about a period, a lead, a tie, a
+scorer or a comeback ("took the lead in the third", "tied it in the second",
+"Stankoven scored in the second", "never trailed"). [HIGH]: the NHL GAME FLOW
+block it cites is right and the sentence is wrong - rewrite the period, score
+or scorer to the block, or cut the clause. Nothing is ever downgraded for
+these: the block either shows the goal or the sentence says less.
+
 A football rank, record or standings flag names the rank ("No. 8"), record
 ("4-1", "1-1 in SEC play") or standing ("leads the AFC West", "a game back")
 it is about. [HIGH]: the game data it quotes is right and the sentence is
