@@ -82,6 +82,17 @@ RULES:
    Every fact in a bundle is sourced: state it as written, keeping its kind,
    its "since at least" and "regular season" wording. A football team whose
    bundle carries its history has no separate HISTORICAL CONTEXT line.
+   The MLB GAME FLOW part of the GROUND TRUTH block is how yesterday's MLB
+   games actually went, computed from ESPN's line score: the score after
+   every half-inning in which runs scored, who scored first, every lead
+   change and tie, the inning the winner went ahead for good, walk-offs, and
+   each scoring play (who hit what, in which half-inning, and the score it
+   made). Every fact there is sourced. When you write how an MLB game
+   unfolded — which inning, who led, what made it 3-0, who drove in the go-
+   ahead run — take it from that block, never from a tweet's paraphrase or
+   from memory. If the block doesn't show it, don't say it. (2026-10-19: the
+   ALCS Game 5 recap put Hicks's single in the 5th "to put the Rays up 2-0";
+   it came in the 3rd and made it 3-0.)
 6. Pass 3 checks every "since YEAR" / "N-year drought" / "first ... since"
    / "longest ... since" in our own prose against HISTORICAL CONTEXT. A claim
    that matches a listed fact stands as written. One that contradicts a fact

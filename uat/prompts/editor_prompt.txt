@@ -245,8 +245,10 @@ WHAT COUNTS AS SOURCED — leave these completely alone:
      Finals and playoff droughts, head-to-head, polls) and the FOOTBALL GAMES
      bundles (records and AP ranks going in, standings after, the series,
      upset and playoff-win facts, each team's history) from the SLAP sports
-     database. If it is absent, or silent on this particular claim, it does
-     not source the claim.
+     database, and the MLB GAME FLOW bundles (the score after every scoring
+     half-inning, lead changes, ties, the go-ahead for good, walk-offs, each
+     scoring play) from ESPN's line score. If it is absent, or silent on this
+     particular claim, it does not source the claim.
   3. It carries no specific number, year, title or league placement. A general
      statement is not checkable and is not this check's business.
 
@@ -295,6 +297,17 @@ Scoring lines, season totals, game counts, franchise records.
         ->  "Judge is having the best year in that lineup"
     When the number IS the entire sentence, cut the sentence.
 
+--- CATEGORY E: HOW AN MLB GAME UNFOLDED ---
+Which inning a run scored in, who led when, what made it 3-0, who drove in a
+run, a walk-off, a comeback. The MLB GAME FLOW block has the real sequence for
+yesterday's games. Where the prose disagrees with it, CORRECT the prose to the
+block (the inning, the score, the batter); where it can't be corrected cleanly,
+cut the clause. Where the block doesn't show the game, leave the sentence to
+the other categories.
+    Block: "top 3rd, TB 3-0: Hicks singled to center, Simpson scored"
+    "Hicks's two-run single in the 5th put the Rays up 2-0"
+    ->  "Hicks's RBI single in the 3rd made it 3-0"
+
 --- THE ONE THING TO GET RIGHT ---
 Do not strip a number just because you cannot personally confirm it. Strip it
 when it is the kind of claim that CAN be checked and nothing in this document
@@ -340,6 +353,12 @@ or cut it. [LOW]: nothing confirms it — cut the rank, record or standing and
 keep the sentence ("No. 8 Florida" -> "Florida"; "fell to 3-2" -> "fell";
 "Missouri leads the SEC" -> cut the clause), unless a tweet in the same
 section states it.
+
+An MLB game-flow flag ("contradicts the line score of ...") lists each part of
+the sentence that is wrong and what the line score says instead ("2-0 in the
+5th -> but the score became TB 2-0 in the 2nd"). It is always [HIGH]: rewrite
+the inning, score or batter to what the flag and the MLB GAME FLOW block say,
+or cut the clause. Don't move a run to an inning the block doesn't show.
 
 If a claim cannot be corrected because the surrounding sentence would stop
 making sense, DELETE the sentence instead. Never leave the claim standing.
