@@ -898,7 +898,7 @@ changes them in the studio). Selection reads `subcategories` and `entities` sinc
 - `domination` is down to 3 verified GIFs and `betrayal_self_sabotage` has 3; every mood keeps at
   least one.
 
-**GIF selection prefers the beat's situation (SLA-138, 2026-10-17; UAT prompts only).** A Tier 1
+**GIF selection prefers the beat's situation (SLA-138, 2026-10-17; in production since SLA-144, 2026-10-19).** A Tier 1
 placeholder can carry `data-library-subcategory="<situation id>"` (and optionally
 `data-library-entities="Team, Player"`). `gif_library_select.choose_entry()` (wrapped by
 `pick_entry()`, whose `(entry, relaxed)` shape is unchanged) takes the first non-empty pool:
@@ -921,12 +921,21 @@ situation GIF inside its cooldown, then a cooling mood GIF. Never anything alrea
   carry `gif_situation` in Pass 1's schema (`KNOWN_DIVERGENT` re-pinned); `normalize_plan()`
   keeps it only on a Tier 1 seed with a known id, and leaves it absent otherwise, so production,
   whose prompts don't ask for it, gets plans exactly as before.
-- **Promotion is NOT done and is not a plain `promote.py --promote`.** `gif_reference.txt` and
-  `pass2_writer.txt` show as diverged only because lines were edited (4 and 1 prod-only lines,
-  all superseded); review those and use `--allow-delete`. `pass1_story_selector.txt` was already
-  diverged on purpose (the video-tweet policy, see `run_pass1`'s ledger entry), so its SLA-138
-  lines (two schema lines, the `gif_situation` bullet, the index block at the end) must be
-  carried across without the UAT video lines. Waits on Abram.
+- **Promoted to production 2026-10-19 (SLA-144), by hand-merge.** `gif_reference.txt` and
+  `pass2_writer.txt` were taken whole (`promote.py --allow-delete`; their prod-only lines were the
+  superseded category-only wording) and are now identical. `pass1_story_selector.txt` got only
+  the SLA-138 lines (two schema lines, the `gif_situation` bullet, the index block at the end);
+  it stays diverged by the video-tweet policy alone (prod: video only in ATL; UAT: videos
+  pre-filtered for Pass 1B), which must never be copied either way.
+  `test_prod_wiring_dryrun.py` now fails if either production prompt reaches the model without
+  the situation menu filled in, or Pass 1's schema loses `gif_situation`.
+- **The gate was one real UAT run** (frozen 2026-05-21 slate, `--no-highlights`, $1.41): Pass 1
+  named a situation for all 5 Tier 1 seeds and Abram judged **5/5 right** (bar 80%); all 5 were
+  served from their situation pool. GIFs: 4 good, 1 bad, and the bad one was a library
+  mis-tag ("relief GIF", a stranger's facepalm tagged `here_we_go_again` strong), retired.
+  **Pass 2 named no situation for its own 2 extra GIFs**; they fell back to mood (judged solid).
+  Five judgments on one slate is a small sample: the first real issues are the real measure
+  (`gif_history.json` rows carry `library_subcategory`).
 - **The free replay** (`uat/replay_gif_situations.py`, 0 API calls): the 345 library GIFs that
   shipped 09-02..10-14, 300 of them classified into a situation by SLA-133 step 5, re-picked issue
   by issue with their own cooldown history, 200 seeds. Picked GIF tagged with the paragraph's
@@ -960,7 +969,7 @@ added 291 as verified (3 partisan clips from The Democrats' channel left out), t
 - **Replay (200 seeds): situation-aware 58.5% -> 97.7%** (strong fit 57.2%), ceiling 83.3% ->
   100%; mood-only 19.6% -> 17.9% (bigger pools, same moods). Remaining misses are cooldown:
   `dud_performance` 40%, `shell_shocked_loser` 68%, `franchise_meltdown` 85%.
-- **Production reads this file too.** Prod's mood picks take any verified GIF in the category,
+- **Production reads this file too** (and since SLA-144, its situation picks). Prod's mood picks take any verified GIF in the category,
   so merging this branch to `main` puts the 240 new GIFs into production's mood-only picks the
   next morning, situation prompts or not.
 
@@ -1443,6 +1452,14 @@ for …") omitted.
   09-26 a "five-run sixth" of six; 10-06 and 10-07 homers in the wrong inning; 10-19 x3), 0 false,
   58 confirmed. The first pass had 12 false HIGHs, all fixed and tested (see Check 3D above).
 - New `uat/tests/test_mlb_flow.py`; `KNOWN_DIVERGENT["main"]` re-pinned.
+
+**2026-10-19 — Situation-aware GIF selection in production (SLA-144)**
+- Gate: one UAT run, Abram judged 5/5 situations right (bar 80%). Promoted `gif_reference.txt`
+  and `pass2_writer.txt` whole and only the SLA-138 lines of `pass1_story_selector.txt` (the
+  video-tweet sections stay diverged on purpose).
+- `test_prod_wiring_dryrun.py` checks the situation menu reaches Pass 1 and Pass 2 filled in and
+  that the schema carries `gif_situation` (fails against the old prompt).
+- Retired `z23hGvopHu7w4` ("relief GIF"), the one bad pick in the UAT run.
 
 **2026-10-19 — Ten thin GIF situations filled; library 223 -> 514 (SLA-141)**
 - `uat/gif_situation_probe.py` (Giphy search + review page) and
