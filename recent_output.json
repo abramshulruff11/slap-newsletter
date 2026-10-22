@@ -1,5 +1,162 @@
 [
   {
+    "date": "2026-10-22",
+    "story_log": [
+      {
+        "topic_key": "giannis-heat-debut-2026",
+        "title": "Giannis Antetokounmpo debuts for Heat in blowout loss to Timberwolves",
+        "section": "lead",
+        "development": "Miami lost to Minnesota 131-106 per ground truth. Giannis: 10 PTS, 8 REB, 5 AST, 3-12 FG in Heat debut per HaterReport. LaMelo Ball: 29 PTS, 7 REB, 10 AST per StatMuse, screaming after Giannis missed FT per HaterReport. Anthony Edwards cussing out Heat bench all game per HaterReport. Ant-Giannis matchup didn't deliver opening night fireworks — Heat blown out by 25 in Giannis' first game.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "lakers-warriors-opening-night-2026",
+        "title": "Lakers demolish Warriors 127-105 — Walker Kessler perfect 12-12, Luka-Yaxel trash talk",
+        "section": "lead",
+        "development": "Los Angeles beat Golden State 127-105 per ground truth. Walker Kessler: 26 PTS, 9 REB, 2 BLK, 12-12 FG per StatMuse — most PTS in season opener without missed FG in NBA history per StatMuse. Luka Doncic: 28 PTS, 8 REB, 7 AST, 3 STL, +31 per StatMuse — banked halfcourt shot to end first half after Yaxel Lendeborg trash-talked him per ClutchPoints. Yaxel postgame: 'I had a lot of respect for him... watching all the whining and complaining, I lost all respect for him' per ClutchPoints. Steph Curry looks miserable per HaterReport. Lakers blowout win, Kessler's historic debut, Luka-Yaxel beef.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "portland-blazers-opening-night-2026",
+        "title": "Blazers demolish Suns 124-83 — Dame 25, Ja Morant 14 in debut, 41-point blowout",
+        "section": "supporting",
+        "development": "Portland beat Phoenix 124-83 per ground truth. Damian Lillard: 25 PTS, 6 AST, 7-12 FG, 6-10 3PT, +23 in 24 MIN per StatMuse. Ja Morant debut: 14 PTS, 5 REB, 8 AST, 3 STL, 6-8 FG, +33 per StatMuse — third-highest single-game +/- of career per StatMuse. Suns scored 83 points total per BarstoolBigCat. Dame-Ja era begins with statement blowout.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "pacers-pelicans-opening-night-2026",
+        "title": "Pacers edge Pelicans 123-120 — Haliburton 23-12a in return, first win in New Orleans since 2021",
+        "section": "supporting",
+        "development": "Indiana beat New Orleans 123-120 per ground truth — first win at New Orleans since 2021-01-04 per ground truth. Tyrese Haliburton: 23 PTS, 12 AST per StatMuse — has 6th-most 20/10a games over last 5 seasons per StatMuse. Pascal Siakam: 30 PTS, 8 REB, 13-23 FG per StatMuse. Zion bricked shot to send to OT, did practice flick of wrist walking off per HaterReport. Pacers break 5-year drought in NOLA.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "ty-jerome-45-points-grizzlies-2026",
+        "title": "Ty Jerome drops career-high 45 points vs Jazz — first Grizzly in franchise history with 45/5/5 on 65+ FG%",
+        "section": "supporting",
+        "development": "Memphis beat Utah 123-103 per ground truth. Ty Jerome: 45 PTS (career-high), 7 REB, 6 AST, 17-25 FG per StatMuse — first Grizzly in franchise history with 45/5/5 game on 65+ FG% per StatMuse. Dame returns in blowout, Grizzlies guard has career night in Memphis.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "raptors-bulls-blowout-2026",
+        "title": "Raptors demolish Bulls 135-92 — 43-point blowout, Josh Giddey already crashing out",
+        "section": "supporting",
+        "development": "Toronto beat Chicago 135-92 per ground truth. Caleb Wilson debut: 16 PTS, 3 STL, 7-21 FG, -45 per StatMuse — tied for second-worst +/- by Bulls player in a game all-time per StatMuse. W_B_Rick on Josh Giddey after 5 minutes: 'sick and tired of Josh Giddey as my point guard' per W_B_Rick. Bulls demolished in season opener.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "angel-reese-wnba-finals-2026",
+        "title": "Angel Reese dominates Game 3 with 21-12 as Dream take 2-1 lead — Gabby Williams screaming in Valkyries huddle",
+        "section": "supporting",
+        "development": "CONTINUING [Day 2]: Atlanta beat Golden State 97-71 per ground truth. Angel Reese: 21 PTS, 12 REB, 3 STL, 7-12 FG per StatMuse. Dream lead series 2-1. Gabby Williams going off in Valkyries huddle after loss per HaterReport. Valkyries blow 1-0 lead, now face elimination.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "flyers-sabres-oct-21-2026",
+        "title": "Flyers finally win — beat Sabres 3-1 for first win after 0-9 start",
+        "section": "atl",
+        "development": "Philadelphia beat Buffalo 3-1 per ground truth — won at Buffalo, first win there since 2023-11-03 per ground truth. Flyers now 1-9 after 10 games per ground truth. Philadelphia finally gets first win after historic 0-9 start.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "senators-panthers-oct-21-2026",
+        "title": "Senators rout Panthers 5-1 — Ottawa improves to 7-3",
+        "section": "atl",
+        "development": "Ottawa beat Florida 5-1 per ground truth — Senators 7-3 after 10 games, last start this good or better 2016-17 per ground truth. Tim Stützle and Josh Norris scored for Ottawa. Senators hot start continues.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "aaron-glenn-fine-2026",
+        "title": "Aaron Glenn fined $250,000 by NFL for conduct toward referees — 'price of a generational meme'",
+        "section": "atl",
+        "development": "Glenn fined $250,000 by NFL for conduct toward referees per HaterReport. 'The price of a generational meme' per HaterReport. Massive fine for coach's on-field conduct.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "kristaps-porzingis-warriors-trade-2026",
+        "title": "Warriors exploring trades for Kristaps Porziņģis — contemplating future amid health issues",
+        "section": "atl",
+        "development": "Golden State exploring trade routes for Porziņģis per ShamsCharania — seriously contemplating basketball future amid health issues per ShamsCharania, could step away if no breakthrough per ShamsCharania. Warriors released statement saying Porziņģis will not be around team per CBS Sports. Major uncertainty for Warriors center.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "draymond-defends-yaxel-2026",
+        "title": "Draymond defends Yaxel Lendeborg talking trash to Luka — 'go at his ass again'",
+        "section": "atl",
+        "development": "Draymond on Yaxel talking trash to Luka: 'Everybody's gonna be like, Oh man he shouldn't talk sh*t to Luka and I disagree with that sh*t 1000%' per HaterReport — 'Everybody's like the rookie learned his lesson. What he learn? The next time he see him, go at his ass again' per HaterReport. Dray backing rookie's trash talk.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "lamelo-lonzo-travel-2026",
+        "title": "LaMelo on Lonzo saying he got away with travel — 'Even if I'm wrong, I'm right'",
+        "section": "atl",
+        "development": "LaMelo on Lonzo saying he got away with travel: 'He hatin. He hatin. See, I gotta give him a call right now, cause with the family, he know what you supposed to do. Even if I'm wrong, I'm right. That's how it go, I gotta teach that boy' per HaterReport. Brother beef over travel call.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "shaq-walker-kessler-nicknames-2026",
+        "title": "Shaq gives Walker Kessler two nicknames — 'Snowtime Lakers' and 'Milk Chamberlain'",
+        "section": "atl",
+        "development": "Shaq told Kessler to embrace 'Snowtime Lakers' per HaterReport — Lakers' three best players are Luka, Austin Reaves, and Kessler. Also called him 'Milk Chamberlain' per HaterReport. Shaq bestowing nicknames on breakout center.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "bob-huggins-condition-2026",
+        "title": "Bob Huggins' family reveals 'progressive cognitive condition' — affecting Hall of Fame coach's daily life",
+        "section": "atl",
+        "development": "Huggins' family released statement per JonRothstein/CBS Sports — Hall of Fame coach living with progressive cognitive condition affecting daily life per CBS Sports. Prayers for Huggins and family.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "jj-mccarthy-giants-start-2026",
+        "title": "Giants plan to start JJ McCarthy vs Texans in Week 7 — first career start for rookie QB",
+        "section": "atl",
+        "development": "New York will start McCarthy vs Houston in Week 7 per AlbertBreer/AdamSchefter/CBS Sports — first career start for rookie per CBS Sports. Giants turn to McCarthy after Jameis Winston struggles.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "sam-laporta-contract-lions-2026",
+        "title": "Sam LaPorta sounds off about Lions contract situation — 'I break my f-----g back for the team'",
+        "section": "atl",
+        "development": "LaPorta not happy with contract situation per CBS Sports — 'I break my f-----g back for the team' per CBS Sports. Lions TE frustrated with negotiations.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "shohei-ohtani-2027-pitching-2026",
+        "title": "Dodgers 'fully expect' Shohei Ohtani to pitch in 2027 — three paths forward after 2026 injuries",
+        "section": "atl",
+        "development": "Los Angeles says Ohtani will not need surgery per TalkinBaseball/CBS Sports — Dodgers 'fully expect' him to pitch in 2027 per CBS Sports, will return to double duty next year per CBS Sports. Three paths forward for two-way star.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "maryland-coaching-search-2026",
+        "title": "Maryland fires Mike Locksley — Terrapins begin coaching search",
+        "section": "atl",
+        "development": "Locksley fired Wednesday Oct 21 per CBS Sports. InsideMDSports revealed top Maryland coaching candidates per CBS Sports. Terrapins make change.",
+        "is_new": true,
+        "resolved": false
+      }
+    ]
+  },
+  {
     "date": "2026-10-21",
     "story_log": [
       {
@@ -3917,115 +4074,6 @@
         "development": "Wilson: 18 PTS, 10 REB, 2 BLK vs LA per StatMuse — breaks tie with herself for most points in season in franchise history, now 2nd-most in WNBA history per StatMuse. Aces beat Sparks 89-79 per ground truth. Historic scoring season continues.",
         "is_new": true,
         "resolved": true
-      }
-    ]
-  },
-  {
-    "date": "2026-09-22",
-    "story_log": [
-      {
-        "topic_key": "giants-rams-mnf-week-2-2026",
-        "title": "Giants demolished by Rams 28-6 on MNF — Jaxson Dart sprained MCL, Malik Nabers shoulder injury, season spirals after Week 1 optimism",
-        "section": "lead",
-        "development": "Giants lost 28-6 per ground truth. Dart feared to have sprained MCL after being crunched by two Rams defenders per CBS Sports/AdamSchefter/ground truth — grabbed knee in pain, carted off, replaced by Jameis Winston. Nabers left with shoulder injury (returned later) per AdamSchefter/BillBarnwell. Andrew Thomas also went down per Ihartitz. Winston disaster: 111 pass yds (fewest ever in 81 career games with 25+ attempts) per Ihartitz, threw red-zone INT per ghetto_gronk. Week 1 Giants beat Cowboys 28-20, looked physical and optimistic — Week 2 everything fell apart.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "davante-adams-rams-week-2-2026",
-        "title": "Davante Adams turns back clock without Puka Nacua — 8-195-2 on MNF, now third all-time in multi-TD receiving games",
-        "section": "supporting",
-        "development": "Adams vs Giants: 8 REC, 195 YDS, 2 TD per StatMuse/ground truth. Puka Nacua inactive (hip) per CBS Sports/AdamSchefter. Adams now has more multi-TD receiving games than everyone except Rice, Moss, T.O. per StatMuse. 33 games with 100+ REC YDS and 1+ TD (most among active players, 7 ahead of Mike Evans) per StatMuse. Stafford: 22-31, 327 YDS, 4 TD — sixth in NFL history in games with 4+ pass TD per StatMuse. Rams earned A grade for steamrolling Giants per CBS Sports.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "alex-bregman-facial-fractures-2026",
-        "title": "Alex Bregman suffers multiple facial fractures after foul ball strike — hopeful to return in Cubs' playoff run, won't need surgery",
-        "section": "supporting",
-        "development": "Bregman struck by foul ball while in on-deck circle Sunday per JeffPassan/TalkinBaseball. Suffered multiple facial fractures, will not undergo surgery, hopeful to return in postseason per JeffPassan/CBS Sports. Video shows dangerous proximity of on-deck circle per TalkinBaseball. Could force MLB to implement safety measures per TalkinBaseball.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "pete-alonso-orioles-homecoming-2026",
-        "title": "Pete Alonso homers twice vs Mets including 40th of season — gives Orioles lead in 8th, reaches 40 HR milestone in first year with Baltimore",
-        "section": "supporting",
-        "development": "Alonso hit two HRs vs Blue Jays including 40th of season per TalkinBaseball/ground truth — second gave Orioles lead in 8th inning. First 40-HR season with Baltimore. Orioles won 4-3 per ground truth. On pace for 77 targets, 51 receptions, 459 yards, 9 TDs per Ihartitz (sarcastic stat about low volume).",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "mlb-games-sept-21-2026",
-        "title": "MLB Sunday slate: Tigers crush Nationals 9-2 (Torkelson HR), Giants beat Twins 5-2, Dream beat Liberty 95-84, Mercury edge Wings 87-86",
-        "section": "atl",
-        "development": "Tigers demolished Nationals 9-2 per ground truth — Spencer Torkelson crushed HR per TalkinBaseball. Giants beat Twins 5-2 per ground truth. Dream beat Liberty 95-84 per ground truth — double-digit scorers: Canada 19, Reese 18, Bonner 17, Howard 16, Gray 14 per StatMuse, Atlanta 8-2 in last 10. Mercury edged Wings 87-86 per ground truth — Kahleah Copper 31 PTS, game-winner with 2.4 left per StatMuse; Alyssa Thomas 15-11-12 (24th career triple-double) per StatMuse; Paige Bueckers 30-5-7 per StatMuse; Jessica Shepard 17-19-6 per StatMuse.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "zach-ertz-eagles-return-2026",
-        "title": "Zach Ertz returns to Eagles — signed to practice squad after Dallas Goedert MCL sprain, expected to be promoted for MNF vs Bears",
-        "section": "atl",
-        "development": "Eagles signed Ertz to practice squad, expected to be promoted and play Monday night vs Bears per TomPelissero/AdamSchefter. Goedert likely to miss few weeks with sprained MCL per AdamSchefter. Ertz needs 11 more receptions to break Harold Carmichael's franchise record (589 catches) per AdamSchefter. Three-time Pro Bowler played in Philly 2013-21, helped win Super Bowl, spent last two seasons in Washington.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "caleb-williams-hamstring-injury-2026",
-        "title": "Caleb Williams avoided major hamstring injury — tests came back clean, not ruled out for MNF vs Eagles after leaving Bears-Vikings game in tears",
-        "section": "atl",
-        "development": "CONTINUING [Day 2]: Tests confirmed Williams avoided major hamstring injury, team not ruling him out for MNF vs Eagles per TomPelissero. Best-case scenario per TomPelissero. Rehab just getting started per TomPelissero. Massive sigh of relief in Chicago per TomPelissero. Story continues from Sunday's emotional cart-off.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "jayden-daniels-elbow-injury-2026",
-        "title": "Jayden Daniels dislocated left elbow again, will consult specialists — Marcus Mariota to start Week 3 vs Seahawks for Commanders",
-        "section": "atl",
-        "development": "CONTINUING [Day 2]: Daniels underwent imaging, will consult with specialists after dislocating left elbow again per TomPelissero. All signs point to Mariota starting Sunday vs Seahawks per TomPelissero. Story continues from Sunday's injury vs Cowboys.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "kyler-murray-vikings-return-2026",
-        "title": "Kyler Murray clears concussion protocol, named Vikings starter for Week 3 vs Buccaneers — Carson Wentz led 2-0 start in his absence",
-        "section": "atl",
-        "development": "Murray cleared concussion protocol, will return as starter Sunday vs Bucs per TomPelissero. Went down with concussion in season opener per recent history, Wentz stepped in and Vikings started 2-0. QB1 back after two-game absence.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "michael-penix-jr-falcons-week-3-2026",
-        "title": "Falcons announce Michael Penix Jr. as starting QB for Thursday night vs Packers — will make season debut 10 months after last playing",
-        "section": "atl",
-        "development": "Penix gets call for Thursday night vs Packers per CBS Sports — first game in 10 months. Falcons have yet to have a drive reach red zone through first two games per AdamSchefter. Penix fully cleared, timing piece of starting Tua Week 1 per recent history.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "darius-slayton-colts-signing-2026",
-        "title": "Darius Slayton signs with Colts after seven seasons with Giants — reunites with Daniel Jones, Alec Pierce dealing with heel injury",
-        "section": "atl",
-        "development": "Slayton signing with Colts per TomPelissero. Played past seven seasons with Giants, now reunites with Daniel Jones per TomPelissero. Alec Pierce dealing with heel injury per TomPelissero. Indianapolis adds veteran WR depth.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "mookie-betts-aaron-donald-box-2026",
-        "title": "Mookie Betts spending off day in box with Myles Garrett and Aaron Donald's wife Erica during Rams-Giants MNF",
-        "section": "atl",
-        "development": "Betts in suite with Garrett and Erica Donald (Aaron's wife) during MNF per TalkinBaseball. Dodgers off day, Betts watching football. Cross-sport star sighting.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "josh-allen-bills-week-2-2026",
-        "title": "Josh Allen now has more rushing TDs than three entire divisions — 5 pass TD, 4 rush TD through two games, first in NFL history",
-        "section": "atl",
-        "development": "CONTINUING [Day 3]: Allen has more rushing TDs than AFC West, NFC East, NFC West combined per StatMuse — also more passing TDs than AFC North per StatMuse. First player in NFL history with 5+ pass TD and 4+ rush TD in first two games per recent history. Story continues from TNF dominance and Sunday stat drops.",
-        "is_new": false,
-        "resolved": false
       }
     ]
   }
