@@ -16,6 +16,8 @@ Proves, in production code:
   5. the GIF library's category menu is substituted into the writer prompt
      (a literal "{{GIF_LIBRARY_CATEGORIES}}" reaching the model is the bug)
   6. the per-run meme spec stays OUT of the cached system block
+  7. the GIF situation menu is substituted into Pass 1 and the writer, and
+     Pass 1's schema carries gif_situation (SLA-144)
 """
 import os
 import sys
@@ -147,7 +149,11 @@ check("meme library index in Pass 1 system prompt", _has_meme_index(systext), Tr
 check("engines listed", "subject_abandons_sensible_for_funky" in systext, True)
 
 props = p1["tools"][0]["input_schema"]["properties"]["lead_story"]["properties"]
-for field in ("beats", "gif_tier", "meme_template", "meme_subject"):
+# SLA-144: production prompts now ask for a situation; the menu must arrive filled in.
+check("GIF situation index substituted into Pass 1", "{{GIF_SITUATION_INDEX}}" in systext, False)
+check("GIF situation ids actually present in Pass 1", "calm_dominance" in systext, True)
+
+for field in ("beats", "gif_tier", "gif_situation", "meme_template", "meme_subject"):
     check(f"tool schema exposes {field}", field in props, True)
 beat_props = props["beats"]["items"]["properties"]
 check("beat has angle/landing/media",
@@ -184,6 +190,9 @@ check("index is in the CACHED system block (it never changes)",
           for b in p2["system"]), True)
 check("no hand-written caption table survives in the writer prompt",
       "Captions you write" in p2sys, False)
+check("GIF situation index substituted into writer prompt",
+      "{{GIF_SITUATION_INDEX}}" in p2sys, False)
+check("GIF situation ids actually present in the writer prompt", "calm_dominance" in p2sys, True)
 check("GIF categories actually present", "CATEGORY:" in p2sys or "category" in p2sys.lower(), True)
 check("per-run spec NOT in cached system block",
       "### distracted-boyfriend" in p2sys, False)

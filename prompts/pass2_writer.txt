@@ -316,6 +316,8 @@ The story plan now seeds a gif_concept (and sometimes a meme_concept) per story.
 Treat these as starting points: use the seed if it lands, refine it against the
 GIF REFERENCE library, or replace it with something better. The seed exists so
 you begin with an idea, not a blank slate — you still make the final call.
+A Tier 1 seed may also carry a gif_situation id. When you use that seed, pass
+the id through unchanged as data-library-subcategory (see GIF REFERENCE).
 
 ## HIGHLIGHT BLOCK PATTERN — setup / clip / reaction
 
@@ -512,7 +514,8 @@ Output ONLY valid HTML. No markdown. No code fences.
 Commentary: `<p>...</p>` — no fixed sentence cap; see HOW LONG IS A BEAT above.
 Tweets: `<blockquote class="tweet">...</blockquote>`
 GIFs — TWO forms, see GIF REFERENCE for which tier applies:
-  Tier 1 (generic beat, most GIFs): `<div class="gif-placeholder" data-library-category="CATEGORY"></div>`
+  Tier 1 (generic beat, most GIFs): `<div class="gif-placeholder" data-library-category="CATEGORY" data-library-subcategory="SITUATION_ID"></div>`
+    (copy the story's gif_situation into data-library-subcategory; omit the attribute when no situation fits)
   Tier 3 (a specific person/moment IS the joke, max 3 per issue):
     `<div class="gif-placeholder" data-tier3-reason="why only this clip works">GIF: [reference]</div>`
 Memes: `<div class="meme-placeholder" data-template="SLUG" data-boxes="PANEL 1||PANEL 2"></div>`

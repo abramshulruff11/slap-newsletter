@@ -44,6 +44,7 @@ with prose, a GIF, or a meme instead.
     "research_notes": "Key stats, historical parallels, meme angles, cross-sport connections the writer must explore. Be specific — these notes are the writer's raw material.",
     "gif_concept": "One GIF reaction idea tied to this story's main emotional beat — a seed for the writer. See MEDIA SEEDING below.",
     "gif_tier": "1 or 3. See MEDIA SEEDING. 1 = generic beat (library). 3 = a specific named person/clip IS the joke (live search).",
+    "gif_situation": "Tier 1 only: the situation id from the GIF SITUATION INDEX that matches the beat, OR empty string if none fits. See MEDIA SEEDING below.",
     "meme_concept": "One meme/comparison idea, OR empty string if no named subject fits. See MEDIA SEEDING below.",
     "beats": [
       {
@@ -63,6 +64,7 @@ with prose, a GIF, or a meme instead.
       "research_notes": "Hook, key angle, any specific stats or context to include.",
       "gif_concept": "One GIF reaction idea for this story, OR empty string if none fits. See MEDIA SEEDING below.",
       "gif_tier": "1 or 3. See MEDIA SEEDING. Omit if gif_concept is empty.",
+      "gif_situation": "Tier 1 only: a situation id from the GIF SITUATION INDEX, OR empty string.",
       "meme_concept": "One meme/comparison idea for this story, OR empty string. See MEDIA SEEDING below.",
       "beats": [
         {
@@ -724,6 +726,14 @@ HOW TO SEED:
 
   Most stories are Tier 1. Budget at most 3 Tier 3 seeds per issue; beyond that
   the writer's extras are dropped by the pipeline.
+- gif_situation = for a Tier 1 seed, the id from the GIF SITUATION INDEX below
+  that names the specific moment the beat reacts to (e.g. a closer shutting the
+  door again is `calm_dominance`, not just "respect"). The library prefers GIFs
+  tagged with that situation, so this is what decides whether the reaction fits
+  the moment or only the mood. Use the id exactly as written; empty string when
+  nothing fits or for Tier 3. A wrong situation is worse than an empty one.
+  The GIF SITUATION INDEX follows these instructions, before the meme index.
+
 - meme_concept = a comparison/argument idea ONLY when the story has two things
   to contrast or a take to make.
 - meme_template = the SLUG of the template that fits, chosen from the MEME
@@ -768,3 +778,9 @@ stories to the same "franchise in disarray" note. This is about not repeating
 yourself, NOT about avoiding common emotions: a plain beat like "resignation"
 is fine and the library rotates the actual GIF for you. Only the specific-clip
 shape needs freshness policing, since those bypass the library's rotation.
+
+================================================================================
+GIF SITUATION INDEX — ids for gif_situation (Tier 1 seeds only)
+================================================================================
+
+{{GIF_SITUATION_INDEX}}
