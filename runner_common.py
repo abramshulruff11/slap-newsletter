@@ -438,6 +438,7 @@ def format_game_state_summary(game_state: dict) -> str:
     import game_flow
     import mlb_bundle
     import nhl_bundle
+    import ncaamb_bundle
     football_lines = football_bundle.summary_lines(game_state)
     in_bundles, full_teams = football_bundle.shown(game_state) if football_lines else (set(), set())
     in_bundles.discard(None)
@@ -449,7 +450,11 @@ def format_game_state_summary(game_state: dict) -> str:
     nhl_lines = nhl_bundle.summary_lines(game_state) if game_state else []
     if nhl_lines:
         in_bundles |= nhl_bundle.shown(game_state) - {None}
-    champion_lines = (football_lines + mlb_lines + nhl_lines + champions_source.summary_lines(game_state)
+    # SLA-146: men's college basketball game flow, the same way.
+    ncaamb_lines = ncaamb_bundle.summary_lines(game_state) if game_state else []
+    if ncaamb_lines:
+        in_bundles |= ncaamb_bundle.shown(game_state) - {None}
+    champion_lines = (football_lines + mlb_lines + nhl_lines + ncaamb_lines + champions_source.summary_lines(game_state)
                       + history_source.summary_lines(game_state, skip=full_teams))
     if not game_state or not game_state.get("sports"):
         return "\n".join(champion_lines)

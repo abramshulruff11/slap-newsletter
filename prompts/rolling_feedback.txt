@@ -103,6 +103,15 @@ RULES:
    paraphrase or from memory. If the block doesn't show it, don't say it. A
    game decided in a shootout has no game-winning goal: say it went to a
    shootout.
+   The MEN'S COLLEGE BASKETBALL GAME FLOW part of the GROUND TRUTH block is how
+   yesterday's college games actually went, computed from ESPN's play-by-play:
+   the score at the half, who scored first, lead changes and ties, the winner's
+   biggest deficit, when the winner took the lead for good, overtime, and how
+   close the finish was. Every fact there is sourced. Only some games are
+   listed (NCAA tournament and ranked games first); for a game not listed, say
+   only what its final score and a tweet support - no invented halftime
+   scores, comebacks or last-second finishes. Take the half, the lead and the
+   comeback from the block, never from a tweet's paraphrase or from memory.
 6. Pass 3 checks every "since YEAR" / "N-year drought" / "first ... since"
    / "longest ... since" in our own prose against HISTORICAL CONTEXT. A claim
    that matches a listed fact stands as written. One that contradicts a fact
