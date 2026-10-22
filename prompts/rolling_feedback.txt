@@ -93,6 +93,16 @@ RULES:
    from memory. If the block doesn't show it, don't say it. (2026-10-19: the
    ALCS Game 5 recap put Hicks's single in the 5th "to put the Rays up 2-0";
    it came in the 3rd and made it 3-0.)
+   The NHL GAME FLOW part of the GROUND TRUTH block is how yesterday's NHL
+   games actually went, computed from ESPN's goal log: the score after each
+   period, who scored first, every lead change and tie, the goal that put the
+   winner ahead for good, comebacks, overtime, shootouts, and every goal (who
+   scored, assisted, in which period, and the score it made). Every fact there
+   is sourced. When you write how an NHL game unfolded - which period, who
+   led, who scored the winner - take it from that block, never from a tweet's
+   paraphrase or from memory. If the block doesn't show it, don't say it. A
+   game decided in a shootout has no game-winning goal: say it went to a
+   shootout.
 6. Pass 3 checks every "since YEAR" / "N-year drought" / "first ... since"
    / "longest ... since" in our own prose against HISTORICAL CONTEXT. A claim
    that matches a listed fact stands as written. One that contradicts a fact

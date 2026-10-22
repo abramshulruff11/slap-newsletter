@@ -427,20 +427,29 @@ def format_game_state_summary(game_state: dict) -> str:
     score after every scoring half-inning, lead changes, ties, the go-ahead
     for good, each scoring play. Computed from the line score in game_state,
     so nothing extra is fetched.
+
+    NHL games get their game flow the same way (SLA-148, nhl_bundle.py): the
+    score after each period, lead changes, ties, the goal that won it, every
+    goal. Computed from the goal log fetch_sports_data.py stores per game.
     """
     import champions_source
     import football_bundle
     import history_source
+    import game_flow
     import mlb_bundle
+    import nhl_bundle
     football_lines = football_bundle.summary_lines(game_state)
     in_bundles, full_teams = football_bundle.shown(game_state) if football_lines else (set(), set())
     in_bundles.discard(None)
-    # SLA-142: MLB game flow. A game the block shows opens with the same
-    # result and series lines, so it leaves the results list too.
+    # SLA-142 / SLA-148: MLB and NHL game flow. A game a block shows opens with the
+    # same result and series lines, so it leaves the results list too.
     mlb_lines = mlb_bundle.summary_lines(game_state) if game_state else []
     if mlb_lines:
         in_bundles |= mlb_bundle.shown(game_state) - {None}
-    champion_lines = (football_lines + mlb_lines + champions_source.summary_lines(game_state)
+    nhl_lines = nhl_bundle.summary_lines(game_state) if game_state else []
+    if nhl_lines:
+        in_bundles |= nhl_bundle.shown(game_state) - {None}
+    champion_lines = (football_lines + mlb_lines + nhl_lines + champions_source.summary_lines(game_state)
                       + history_source.summary_lines(game_state, skip=full_teams))
     if not game_state or not game_state.get("sports"):
         return "\n".join(champion_lines)
@@ -465,7 +474,7 @@ def format_game_state_summary(game_state: dict) -> str:
         found_any = True
         lines.append(f"{label}:")
         for game in completed:
-            lines.extend("  " + x for x in mlb_bundle.game_result_lines(game))
+            lines.extend("  " + x for x in game_flow.result_lines(game))
         lines.append("")
 
     if not found_any:

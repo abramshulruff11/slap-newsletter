@@ -1451,6 +1451,20 @@ def final_history_check(html: str, game_state: dict, autocut: bool | None = None
                 sec = inject_flag_after_heading(
                     sec, f'\n<!-- ⚠ HISTORY CLAIM LEFT IN BY THE EDITOR [{level}]: "{quoted}" -->')
             report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut})
+        # SLA-148: NHL game-flow claims, the same way. A tweet in the section
+        # carrying one of the sentence's scores sources it.
+        nhl: list = []
+        check_nhl_flow_claims(own_text(sec), game_state, nhl)
+        for level, quoted, sentence, kind, fig in nhl:
+            if level == "confirmed" or re.search(fig, tweets, re.IGNORECASE):
+                continue
+            cut = False
+            if autocut:
+                sec, cut = _cut_sentence(sec, sentence)
+            if not cut:
+                sec = inject_flag_after_heading(
+                    sec, f'\n<!-- ⚠ NHL GAME FLOW CLAIM LEFT IN BY THE EDITOR [{level}]: "{quoted}" -->')
+            report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut, "kind": kind})
         # SLA-117: football rank and record claims, the same way. A tweet in
         # the section carrying the same rank or record sources it.
         football: list = []
@@ -1481,6 +1495,311 @@ def final_history_check(html: str, game_state: dict, autocut: bool | None = None
             report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut, "kind": kind})
         parts.append(sec)
     return "".join(parts), report
+
+
+# ---------------------------------------------------------------------------
+# Check 3E: NHL game-flow claims vs the goal log (SLA-148)
+#
+# Each claim below is checked against nhl_bundle.claim_facts(), the same goal
+# log the NHL GAME FLOW block shows the writer:
+#
+#   a score in a period  "up 2-0 in the second", "tied 2-2 after two",
+#                        "led 3-1 entering the third"
+#   go-ahead / for good  "took the lead in the third", "went ahead for good in OT"
+#   tie                  "tied it in the second"
+#   a scorer's goal      "Stankoven scored in the second": that player scored in
+#                        that period
+#   wire to wire         "never trailed", "led wire to wire"
+#   comebacks            "came back from a two-goal deficit"
+#
+# HIGH only when the sentence ties to exactly one of yesterday's NHL games and
+# the facts contradict it; a claim the facts can't settle is left alone (the
+# SLA-142 rule). Only sections that read as hockey are checked, so "took the
+# lead in the third" about a football game is not.
+# ---------------------------------------------------------------------------
+
+_NHL_GO_AHEAD_RE = re.compile(
+    r"\b(?:took|take|takes|taking|grabbed|grabs|seized|seizes|regained|retook|reclaimed)\s+(?:the|a)\s+lead\b|"
+    r"\bwent\s+ahead\b|\bgo-ahead\b|\bpulled\s+ahead\b|\bmoved\s+ahead\b", re.IGNORECASE)
+_NHL_TIE_RE = re.compile(r"\b(?:tied|ties|knotted|evened|leveled|levelled)\s+(?:it|things|the\s+game|the\s+score)\b|"
+                         r"\btying\s+goal\b", re.IGNORECASE)
+_NHL_WIRE_RE = re.compile(r"\bwire[- ]to[- ]wire\b|\bnever\s+trailed\b|\bled\s+(?:the\s+)?(?:whole|entire)\s+(?:way|game)\b",
+                          re.IGNORECASE)
+_NHL_LEAD_CUE = re.compile(r"\b(?:up|ahead|lead|led|leading|in\s+front)\b", re.IGNORECASE)
+_NHL_TRAIL_CUE = re.compile(r"\b(?:down|behind|trailed|trailing|trail)\b", re.IGNORECASE)
+_NHL_SCORE_PAIR_RE = re.compile(r"(?<![\d-])(\d{1,2})-(\d{1,2})(?![\d-])")
+_NHL_SCORE_CUE = re.compile(r"(?:up|ahead|lead|led|leading|down|behind|trail\w*|tied|tie|ties|make|made|makes|put|"
+                            r"cut|extend\w*|stretch\w*|pull\w*|knot\w*|grab\w*|took|take|opened|jumped|"
+                            r"the\s+score|it\s+was)\b", re.IGNORECASE)
+_NHL_NOT_A_SCORE_AFTER = re.compile(r"^\s*(?:series|in\s+the\s+series|lead\s+in\s+the\s+series|record|win|victory|"
+                                    r"loss|defeat|final|count|edge\s+in\s+the\s+series)\b", re.IGNORECASE)
+_NHL_ELSEWHERE_RE = re.compile(r"\bGame\s+\d\b|\b(?:19|20)\d{2}\b|\blast\s+(?:night'?s?\s+)?(?:week|year|season|time)\b|"
+                               r"\bearlier\s+in\s+the\s+series\b", re.IGNORECASE)
+
+
+def _nhl_ascii(text: str) -> str:
+    import unicodedata
+    return unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
+
+
+def _nhl_num(s: str) -> int:
+    s = s.lower()
+    return _NUM_WORDS[s] if s in _NUM_WORDS else int(s)
+
+
+_NHL_TWO_WORD_NICKS = {"golden knights", "blue jackets", "maple leafs", "red wings"}
+_NHL_SHARED_CITIES = {"new york", "los angeles"}
+_HOCKEY_RE = re.compile(r"\b(?:NHL|Stanley\s+Cup|power[- ]play|shorthanded|empty[- ]net|puck|goalie|goaltender|"
+                        r"shootout|hat\s+trick|shots?\s+on\s+goal|slap\s?shot|wrist\s?shot|backhand|"
+                        r"overtime|periods?|goals?|saves?)\b", re.IGNORECASE)
+_PERIOD_RE = re.compile(
+    r"\b(?:(?:in|during|of|after|through|entering|into|by)\s+(?:the\s+)?(?P<d>[123])(?:st|nd|rd)\b"
+    r"(?!\s*[- ]?(?:place|seed|round|straight|consecutive|time|game|win|loss))"
+    r"|(?P<w>first|second|third)\s+period"
+    r"|(?P<ot>(?:(?P<k>double|triple)[- ]?)?(?:overtime|OT)\b)"
+    r"|(?P<n>[23])OT\b)", re.IGNORECASE)
+_PERIOD_WORDS = {"first": 1, "second": 2, "third": 3}
+_COMEBACK_NHL_RE = re.compile(r"\b(?:came|comes|coming|rallied|rallies|rallying|clawed|fought|climbed)\s+back\s+from\s+"
+                              r"(?:a\s+)?" + _N + r"-goal\s+(?:deficit|hole)|"
+                              r"\berased?\s+(?:a\s+)?" + _N + r"-goal\s+(?:deficit|lead)|"
+                              r"\bfrom\s+" + _N + r"\s+goals\s+down\b", re.IGNORECASE)
+
+
+def _periods_in(sentence: str) -> list[tuple[int, int, str]]:
+    """(period, position, cue) for each period a sentence names. cue is "end"
+    ("after the second"), "enter" ("entering the third") or "in". An overtime
+    mention is the first overtime (4), or the one named (2OT = 5)."""
+    out = []
+    for m in _PERIOD_RE.finditer(sentence):
+        if m.group("d"):
+            p = int(m.group("d"))
+        elif m.group("w"):
+            p = _PERIOD_WORDS[m.group("w").lower()]
+        elif m.group("ot"):
+            k = (m.group("k") or "").lower()
+            p = 3 + {"double": 2, "triple": 3}.get(k, 1)
+        else:
+            p = 3 + int(m.group("n"))
+        lead_word = re.match(r"\s*(\w+)", sentence[max(0, m.start() - 0):]).group(1).lower() if m.group("d") else ""
+        before = sentence[max(0, m.start() - 22):m.start()].lower()
+        if lead_word == "after" or re.search(r"\b(?:after|by\s+the\s+end\s+of)\s+(?:the\s+)?$", before):
+            cue = "end"
+        elif lead_word in ("entering", "into") or re.search(r"\b(?:entering|into)\s+(?:the\s+)?$", before):
+            cue = "enter"
+        else:
+            cue = "in"
+        out.append((p, m.start(), cue))
+    return out
+
+
+def _nearest_period(periods: list[tuple[int, int, str]], pos: int):
+    return min(periods, key=lambda x: abs(x[1] - pos)) if periods else None
+
+
+def _pname(p: int) -> str:
+    return {1: "1st", 2: "2nd", 3: "3rd", 4: "OT"}.get(p, f"{p - 3}OT")
+
+
+def _nhl_claims(sentence: str, f: dict, side: str | None) -> list[tuple[str, str, str]]:
+    """(verdict, what the claim said, the fact) for every game-flow claim in
+    one sentence about NHL game `f`. `side` is the one team the sentence names,
+    or None."""
+    out: list[tuple[str, str, str]] = []
+
+    def abbr(s):
+        return f["teams"][s]["abbr"] or f["teams"][s]["name"]
+
+    def sc(a, h):
+        return f"tied {a}-{h}" if a == h else f"{abbr('away' if a > h else 'home')} {max(a, h)}-{min(a, h)}"
+
+    periods = _periods_in(sentence)
+    end_score: dict[int, tuple[int, int]] = {}
+    cur = (0, 0)
+    for p in range(1, f["periods"] + 1):
+        for g in f["goals"]:
+            if g["period"] == p:
+                cur = (g["away"], g["home"])
+        end_score[p] = cur
+
+    # A score in a period.
+    for m in _NHL_SCORE_PAIR_RE.finditer(sentence):
+        x, y = int(m.group(1)), int(m.group(2))
+        if x + y > 25 or _NHL_NOT_A_SCORE_AFTER.search(sentence[m.end():]) or \
+                re.search(r"\b(?:series|won|beat|beats|final)\s+(?:the\s+\w+\s+)?$", sentence[:m.start()], re.IGNORECASE):
+            continue
+        near = _nearest_period(periods, m.start())
+        if near is None or near[0] > f["periods"]:
+            continue
+        p, _, cue = near
+        pre = sentence[max(0, m.start() - 60):m.start()]
+        if tuple(sorted((x, y))) in f["series_pairs"]:
+            continue                                    # "take a 2-1 lead": the series, not the game
+        if cue == "in" and (tuple(sorted((x, y))) == f["final"] or not _NHL_SCORE_CUE.search(pre)):
+            continue                                    # "beat Colorado 5-3", "1-3 in overtime": not a period score
+        want = None
+        if side and _NHL_LEAD_CUE.search(pre):
+            want = (max(x, y), min(x, y))
+        elif side and _NHL_TRAIL_CUE.search(pre):
+            want = (min(x, y), max(x, y))
+
+        def fits(st, want=want, x=x, y=y):
+            if want is not None:
+                return (st if side == "away" else (st[1], st[0])) == want
+            return sorted(st) == sorted((x, y))
+        if cue == "end":
+            pool = [end_score[p]]
+        elif cue == "enter":
+            pool = [end_score[p - 1]] if p > 1 else [(0, 0)]
+        else:
+            pool = sorted(f["scores"][p])
+        label = {"end": f"after the {_pname(p)}", "enter": f"entering the {_pname(p)}",
+                 "in": f"in the {_pname(p)}"}[cue]
+        if any(fits(st) for st in pool):
+            out.append(("confirm", m.group(0), ""))
+        else:
+            out.append(("contradict", f"{m.group(0)} {label}",
+                        f"the score {label} was " + " / ".join(sc(*st) for st in pool)))
+    # Go-ahead, for good.
+    for m in _NHL_GO_AHEAD_RE.finditer(sentence):
+        near = _nearest_period(periods, m.start())
+        if near is None or re.match(r"\s+(?:a|the)\s+\d", sentence[m.end():]):
+            continue
+        p = near[0]
+        good = bool(re.search(r"\bfor\s+good\b", sentence[m.start():m.end() + 40], re.IGNORECASE))
+        if good:
+            fg = f["for_good"]
+            ok = fg is not None and fg[1] == p and (side is None or fg[0] == side)
+            fact = f"{abbr(fg[0])} took the lead for good in the {_pname(fg[1])}" if fg else "no lead held (shootout)"
+        else:
+            ok = any(i == p and (side is None or s == side) for s, i in f["go_ahead"])
+            ga = [f"{abbr(s)} in the {_pname(i)}" for s, i in f["go_ahead"] if side is None or s == side]
+            fact = ("the lead was taken only " + ", ".join(ga)) if ga else \
+                   f"{abbr(side) if side else 'nobody'} never took the lead"
+        out.append(("confirm" if ok else "contradict", f"{m.group(0)} in the {_pname(p)}", fact))
+    # Tie.
+    for m in _NHL_TIE_RE.finditer(sentence):
+        near = _nearest_period(periods, m.start())
+        if near is None:
+            continue
+        p = near[0]
+        if any(i == p and (side is None or s == side) for s, i in f["ties"]):
+            out.append(("confirm", m.group(0), ""))
+        else:
+            ties = [f"{abbr(s)} in the {_pname(i)}" for s, i in f["ties"] if side is None or s == side]
+            out.append(("contradict", f"{m.group(0)} in the {_pname(p)}",
+                        ("it was tied only by " + ", ".join(ties)) if ties else "the game was never tied by a goal"))
+    # A scorer's goal in a period.
+    if f["roster"] and periods:
+        plain = _nhl_ascii(sentence)
+        for name in f["roster"]:
+            for m in re.finditer(r"\b" + re.escape(name) + r"(?:['’]s)?\b\W{0,2}((?:\s+\S+){0,3}?)\s+"
+                                 r"(?:goal|scored|scores|netted|tallied|buried)\b", plain, re.IGNORECASE):
+                if re.search(r"\b(?:assist\w*|helped|set\s+up|on|after|for|off|against|from|to|by)\b",
+                             m.group(1), re.IGNORECASE):
+                    continue                          # "Hall assisted on Blake's goal"
+                # The period must follow the goal in the same clause ("scored in
+                # the second"), not be named for another reason ("after
+                # trailing 3-1 in the first").
+                after = [x for x in periods if m.end() <= x[1] <= m.end() + 40]
+                if not after:
+                    continue
+                gap = sentence[m.end():after[0][1]]
+                if re.search(r"\b(?:after|trailing|trailed|down|when|while|as|but|and\s+\w+\s+(?:scored|added))\b|\d-\d|[.;]",
+                             gap, re.IGNORECASE):
+                    continue
+                p = after[0][0]
+                mine = [g for g in f["goals"] if g["scorer"] == name]
+                if any(g["period"] == p for g in mine):
+                    out.append(("confirm", name, ""))
+                elif mine:
+                    out.append(("contradict", f"{name.title()} scoring in the {_pname(p)}",
+                                f"{name.title()}'s goal(s) came in the " + ", ".join(
+                                    f"{_pname(g['period'])} ({sc(g['away'], g['home'])})" for g in mine)))
+    # Wire to wire, never trailed.
+    win = f["winner"]
+    m = _NHL_WIRE_RE.search(sentence)
+    if m and not f["shootout"]:
+        who = side or win
+        never_trailed = f["max_deficit"][who] == 0
+        ok = (f["wire_to_wire"] and who == win) if "wire" in m.group(0).lower() else never_trailed
+        out.append(("confirm" if ok else "contradict", m.group(0),
+                    f"{abbr(who)} trailed by as many as {f['max_deficit'][who]}" if not never_trailed
+                    else f"{abbr(who)} did not lead from the first goal on"))
+    for m in _COMEBACK_NHL_RE.finditer(sentence):
+        got = next((g for g in m.groups() if g), None)
+        if got is None:
+            continue
+        n = _nhl_num(got)
+        who = side or win
+        out.append(("confirm" if f["max_deficit"][who] >= n else "contradict", m.group(0),
+                    f"{abbr(who)} trailed by at most {f['max_deficit'][who]}"))
+    return out
+
+
+def check_nhl_flow_claims(own_text: str, game_state: dict, outcomes: list | None = None) -> list[str]:
+    """`own_text`: one section's own prose (no tweets), one block per line.
+    `outcomes`, if given, collects (level, quoted, sentence, kind, figure)
+    for every sentence with a game-flow claim, confirmed ones included."""
+    import nhl_bundle
+    facts = nhl_bundle.claim_facts(game_state or {})
+    if not facts or not _HOCKEY_RE.search(own_text):
+        return []
+    by_name, dup = {}, set()
+    for f in facts:
+        for s in ("away", "home"):
+            n = f["teams"][s]["name"]
+            if n in by_name:
+                dup.add(n)                              # a team can't play twice in a night: ambiguous
+            by_name[n] = (f, s)
+    for n in dup:
+        del by_name[n]
+    if not by_name:
+        return []
+    idx = _alias_index([{"team": n, "sport": "nhl", "opponent": ""} for n in by_name])
+    # Recaps name teams by city ("Nashville tied it ..."); not a city that
+    # two teams or two sports' teams share.
+    for name in by_name:
+        toks = _tokens(name)
+        k = 2 if " ".join(toks[-2:]) in _NHL_TWO_WORD_NICKS else 1
+        city = toks[:-k]
+        if city and " ".join(city) not in _NHL_SHARED_CITIES:
+            idx.setdefault(tuple(city), set()).add(name)
+
+    def games_of(text):
+        return {by_name[n][0]["game_id"]: by_name[n][0] for n in _named(text, idx) if n in by_name}
+
+    section_games = games_of(own_text)
+    flags = []
+    for sentence in _sentences(own_text):
+        if _NHL_ELSEWHERE_RE.search(sentence):
+            continue                                    # another game, another year
+        named = [n for n in _named(sentence, idx) if n in by_name]
+        cands = games_of(sentence) or section_games
+        if len(cands) != 1:
+            continue
+        f = next(iter(cands.values()))
+        sides = {by_name[n][1] for n in named if by_name[n][0] is f}
+        side = next(iter(sides)) if len(sides) == 1 else None
+        results = _nhl_claims(sentence, f, side)
+        if not results:
+            continue
+        quoted = _quote(sentence)
+        bad = [(said, fact) for v, said, fact in results if v == "contradict"]
+        figs = [r"(?<![\d-])" + re.escape(m.group(0)) + r"(?![\d-])" for m in _NHL_SCORE_PAIR_RE.finditer(sentence)]
+        fig = "|".join(figs) or r"(?!x)x"
+        if not bad:
+            if outcomes is not None:
+                outcomes.append(("confirmed", quoted, sentence, "game flow", fig))
+            continue
+        t = f["teams"]
+        why = "; ".join(f"{s} -> but {x}" for s, x in bad).replace('"', "'").replace("--", "-")
+        flags.append(
+            f'\n<!-- FACT FLAG [HIGH]: "{quoted}" contradicts the goal log of {t["away"]["name"]} @ '
+            f'{t["home"]["name"]}: {why} (ESPN; the NHL GAME FLOW block has the full sequence). Correct it '
+            f'to the block, or cut it. -->')
+        if outcomes is not None:
+            outcomes.append(("HIGH", quoted, sentence, "game flow", fig))
+    return flags
 
 
 # ---------------------------------------------------------------------------
@@ -1562,6 +1881,9 @@ def validate_section(heading: str, section_html: str, game_state: dict) -> tuple
     # Same rule: our prose only. Paragraph and heading breaks become line
     # breaks so a heading never runs into the sentence after it.
     flags.extend(check_history_claims(own_text(section_html), game_state))
+
+    # ── CHECK 3E: NHL game-flow claims vs the goal log (SLA-148) ─────────────
+    flags.extend(check_nhl_flow_claims(own_text(section_html), game_state))
 
     # ── CHECK 3C: Football rank and record claims (SLA-117) ──────────────────
     flags.extend(check_football_claims(own_text(section_html), game_state))

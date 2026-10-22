@@ -29,8 +29,8 @@ network), so it runs at prompt-build time and needs no fetch step.
   result line; the count is printed, never silent.
 - **Nothing said twice.** A game the block shows opens with the same result
   (and series) lines YESTERDAY'S GAME RESULTS would print, and is left out
-  of that list. `game_result_lines()` is the one copy of those lines, used
-  for every sport.
+  of that list. `game_flow.result_lines()` is the one copy of those lines, used
+  for every sport (`game_result_lines` here is an alias for it).
 - `claim_facts()` gives claim_validator Check 3D the same facts as data.
 """
 from __future__ import annotations
@@ -38,6 +38,7 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 
+import game_flow
 from history_source import norm, story_text
 
 BUDGET = 4_000
@@ -85,28 +86,7 @@ def nickname(full_name: str) -> str:
     return n.split()[-1] if n else ""
 
 
-def game_result_lines(game: dict) -> list[str]:
-    """The lines YESTERDAY'S GAME RESULTS prints for one completed game, any
-    sport: the result, then the series state for a playoff game. The one copy:
-    format_game_state_summary uses it for the list, and render() opens each
-    MLB bundle with it, so a game moved into the block says the same thing."""
-    home, away = game.get("home_team", "?"), game.get("away_team", "?")
-    hs, as_ = game.get("home_score", 0), game.get("away_score", 0)
-    ot = " (OT)" if game.get("overtime") else ""
-    winner = game.get("winner", "")
-    lines = [f"{away} {as_}, {home} {hs}{ot}" + (f" — {winner} wins" if winner else "")]
-    series = game.get("series")
-    if series:
-        if series.get("series_over"):
-            lines.append(f"  SERIES OVER. {winner} advances. Final: "
-                         f"{series.get('home_wins', 0)}-{series.get('away_wins', 0)}.")
-        else:
-            elim = [n for n, k in ((home, "elimination_game_for_home"), (away, "elimination_game_for_away"))
-                    if series.get(k)]
-            elim_str = f" {', '.join(elim)} eliminated." if elim else ""
-            lines.append(f"  PLAYOFFS — {series.get('summary', '')}. "
-                         f"Next: Game {series.get('next_game_number', '?')}.{elim_str}")
-    return lines
+game_result_lines = game_flow.result_lines     # one copy, in game_flow.py (SLA-148)
 
 
 # ---------------------------------------------------------------------------

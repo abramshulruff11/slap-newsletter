@@ -428,6 +428,9 @@ def main() -> None:
         # SLA-142: MLB game flow puts story games in full the same way.
         import mlb_bundle
         print("  " + mlb_bundle.attach_story(game_state, story_plan))
+        # SLA-148: NHL game flow puts story games in full the same way.
+        import nhl_bundle
+        print("  " + nhl_bundle.attach_story(game_state, story_plan))
         html = G.run_pass2(story_plan, client, game_state, highlight_plan=converted)
         (G.OUTPUT_DIR / "pass2_raw.html").write_text(html, encoding="utf-8")
     else:
