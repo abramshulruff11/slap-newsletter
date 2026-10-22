@@ -67,6 +67,36 @@ two-job split. Beehiiv remains unused (post API is enterprise-only).
 
 ---
 
+## Merging & Branch Hygiene (read before merging anything)
+
+State of play as of 2026-10-22: game-flow bundles for MLB (SLA-142), NHL (SLA-148) and college
+basketball (SLA-146, plus the all-D1 scoreboard fetch SLA-152) are all on `main`. **Open:** SLA-147
+(NBA) is in progress in the worktree `../slap-newsletter-sla147` with NO commits yet; SLA-77
+(playoff brackets) lives in the `slap-sports-db` repo, not here (its first slice is on that repo's
+`sla-81-ncaamb-backfill` branch). The next pipeline run is the first to combine NCAAMB flow with
+the full D1 slate: check run time and prompt size on a heavy college basketball day.
+
+How to land a branch, one at a time:
+1. `git fetch`, then rebase the branch onto `origin/main`. Never merge two branches at once.
+2. Run every `uat/tests/test_*.py` (set `ANTHROPIC_API_KEY=sk-x`), the Node studio suite,
+   `uat/probe_retry.py` and `uat/promote.py`. `test_gif_tagger` fails locally without `httpx2`:
+   known, unrelated, CI passes it.
+3. Push, `gh pr create`, wait for `gh pr checks --watch`, then `gh pr merge --merge`. Never
+   force-push `main`; force-with-lease only on your own branch.
+4. Keep the banned-phrase SYNC PAIR (`pass2_writer.txt` / `editor_prompt.txt`) identical, and keep
+   prod and UAT prompt copies as each branch intended: promote only with `uat/promote.py`.
+5. Only delete a branch after `git merge-base --is-ancestor <branch> origin/main` is true.
+
+Gotchas: there is no shared `game_flow.py`: each sport has its own `<sport>_bundle.py`, so the
+shared hot spots are `fetch_sports_data.py`, `claim_validator.py`, both runners and the prompts.
+Do the work in a worktree (`.claude/worktrees/`), not the main checkout: the main checkout once
+carried a stale index (18 commits behind) that looked like 44 uncommitted files. OneDrive can lock
+`.git/worktrees/*` on removal ("Permission denied"); retry later or delete the folder by hand.
+`git status` hides daily CI output under `archive/` (see the Archive/archive case note). A branch
+with no commits can look "merged"; check for uncommitted work in its worktree before deleting.
+
+---
+
 ## Session Summary Format (for Abram)
 
 Abram doesn't review code directly — he engages at the level of ideas, quality, and trade-offs.
