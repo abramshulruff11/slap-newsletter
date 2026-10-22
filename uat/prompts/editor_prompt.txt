@@ -247,7 +247,9 @@ WHAT COUNTS AS SOURCED — leave these completely alone:
      upset and playoff-win facts, each team's history) from the SLAP sports
      database, and the MLB GAME FLOW bundles (the score after every scoring
      half-inning, lead changes, ties, the go-ahead for good, walk-offs, each
-     scoring play) from ESPN's line score. If it is absent, or silent on this
+     scoring play) from ESPN's line score, and the NHL and MEN'S COLLEGE
+     BASKETBALL GAME FLOW blocks (the score by period or half, lead changes,
+     ties, the go-ahead for good, comebacks, overtime) from ESPN's play log. If it is absent, or silent on this
      particular claim, it does not source the claim.
   3. It carries no specific number, year, title or league placement. A general
      statement is not checkable and is not this check's business.
@@ -350,6 +352,13 @@ scorer or a comeback ("took the lead in the third", "tied it in the second",
 block it cites is right and the sentence is wrong - rewrite the period, score
 or scorer to the block, or cut the clause. Nothing is ever downgraded for
 these: the block either shows the goal or the sentence says less.
+
+A college basketball game-flow flag quotes a sentence about the half, a lead,
+a tie, a comeback or overtime ("led 38-36 at halftime", "took the lead for good
+in the second half", "came back from 15 down", "went to overtime"). [HIGH]:
+the MEN'S COLLEGE BASKETBALL GAME FLOW block it cites is right and the sentence
+is wrong - rewrite the score, half or margin to the block, or cut the clause.
+Nothing is ever downgraded for these.
 
 A football rank, record or standings flag names the rank ("No. 8"), record
 ("4-1", "1-1 in SEC play") or standing ("leads the AFC West", "a game back")
