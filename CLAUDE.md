@@ -155,6 +155,8 @@ slap-newsletter/
 │                                 NBA / college football / college basketball reuse it
 ├── nhl_bundle.py              ← SLA-148: NHL game flow, one bundle per game from the goal log
 │                                 (box_score.agate.goals); summary_lines() renders it under 3.5K
+├── ncaamb_bundle.py           ← SLA-146: men's college basketball game flow per game from ESPN's
+│                                 play-by-play (game["game_flow"]); 4K cap; Pass 3 Check 3F
 ├── run_status.py              ← per-run state on disk, shared across processes
 ├── pipeline_status.py         ← per-STAGE outcomes on top of run_status.json;
 │                                 PIPELINE_STAGES is the declared stage list
@@ -817,6 +819,37 @@ payload into a timeline.
   same function as `mlb_bundle.game_result_lines`; whichever branch merges second should point one at
   the other so there is one copy.
 
+**Men's college basketball gets game flow too (SLA-146, 2026-10-21).** College basketball had no
+box score, so the writer had only final scores. `fetch_sports_data._parse_ncaamb_flow()` keeps the
+score by half (and overtime) plus every scoring play with the running score, under
+`game["game_flow"]` (deliberately NOT `box_score`, so the box score images are untouched).
+`ncaamb_bundle.py` turns it into the MEN'S COLLEGE BASKETBALL GAME FLOW part of every pass's GROUND
+TRUTH on the shared `game_flow.py` core: the score at the half, who scored first, lead changes and
+ties, the winner's biggest deficit and lead, when the winner took the lead for good, overtime, and
+a "decided by N; last basket ..." line for finishes within 3.
+- **One ESPN summary per game, capped.** `MAX_FLOW_FETCHES = 30`, best-ranked games first
+  (`_best_rank`); a Saturday has 100+ games, so the rest stay plain result lines. Compact: ~80 chars
+  of text per play, no per-player data.
+- **Checked, or left out.** Plays must add up to the half scores and the final, or the game's flow is
+  dropped. Over 97 real games on six days (Jan-Apr 2026): 93 usable, 4 dropped, all ESPN play logs
+  that don't sum to ESPN's own half scores.
+- **Cap 4,000 chars:** NCAA tournament and story games in full, then ranked games, then the rest as a
+  flow line, close games first. `attach_story()` runs in both runners after Pass 1.
+- **Pass 3 Check 3F** (`check_ncaamb_flow_claims`): the halftime score, a score "in the second half",
+  "took the lead (for good) in the second half", "tied it", "never trailed" / wire to wire, "came back
+  from a 15-point deficit", and "went to overtime" / "double overtime" against
+  `ncaamb_bundle.claim_facts()`; HIGH only when the sentence ties to exactly one game, and a claim
+  the log can't settle is left alone. Not checked: who scored, clock claims ("with 4 seconds left").
+  A sentence naming both teams has no single "side", so "X never trailed against Y" is checked against
+  the winner only. `final_history_check` re-checks the final draft.
+- **Known limits.** No records, polls or "first since" facts all season (slap-sports-db holds NCAAMB
+  champions only; SLA-81). Ranks are ESPN's `curatedRank`. **Gap 1 is a separate ticket:** the
+  scoreboard still asks for `limit=50` with no `groups=50`, so ESPN returns only the featured slate
+  (7 of 21 games on 2026-03-14); until that lands, most games never reach this bundle. The replay
+  against archived issues was not possible: the archive starts 2026-04-20, after the season.
+  Locked by `uat/tests/test_ncaamb_flow.py` (real games in `uat/fixtures/ncaamb/`, built by
+  `uat/build_ncaamb_fixture.py`).
+
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
 
@@ -1427,6 +1460,14 @@ deprecation, and API rate limits.
 
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
+
+**2026-10-21 — College basketball game flow: halves, lead changes, the go-ahead for good (SLA-146)**
+- The fetch keeps a compact play log for up to 30 games a day (ranked first); `ncaamb_bundle.py` builds
+  the block on `game_flow.py`; both runners attach the story order; Check 3F flags halftime / lead /
+  comeback / overtime claims; RULE 3 and editor Check 8/9 (both prompt copies) treat the block as sourced.
+- 93 of 97 real games had a play log that adds up; the 4 that didn't are dropped to plain results.
+- `uat/tests/test_ncaamb_flow.py`; `test_runner_drift.py` `main` re-pinned.
+- Not done here: the scoreboard fix (Gap 1, own ticket) and database facts (SLA-81).
 
 **2026-10-20 — NHL game flow: goals, lead changes and the go-ahead goal for the writer (SLA-148)**
 - Built the shared `game_flow.py` core and `nhl_bundle.py` on it; the fetch keeps the goal log;

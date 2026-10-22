@@ -1,0 +1,4379 @@
+{
+ "regulation": {
+  "game_id": "401856563",
+  "home_rank": 1,
+  "away_rank": 9,
+  "date": "2026-03-22T23:10Z",
+  "season_year": 2026,
+  "season_type": 3,
+  "week": null,
+  "matchup": "Iowa Hawkeyes @ Florida Gators",
+  "home_team": "Florida Gators",
+  "home_abbr": "FLA",
+  "home_id": "57",
+  "away_team": "Iowa Hawkeyes",
+  "away_abbr": "IOWA",
+  "away_id": "2294",
+  "home_score": 72,
+  "away_score": 73,
+  "winner": "Iowa Hawkeyes",
+  "loser": "Florida Gators",
+  "completed": true,
+  "status": "final",
+  "overtime": false,
+  "playoffs": false,
+  "series": null,
+  "home_records": {
+   "total": "27-8",
+   "home": "14-1",
+   "road": "8-2",
+   "vsconf": "16-2"
+  },
+  "away_records": {
+   "total": "23-12",
+   "home": "15-3",
+   "road": "3-8",
+   "vsconf": "10-10"
+  },
+  "neutral_site": true,
+  "game_flow": {
+   "away_periods": [
+    "33",
+    "40"
+   ],
+   "home_periods": [
+    "31",
+    "41"
+   ],
+   "plays": [
+    {
+     "period": 1,
+     "clock": "19:30",
+     "away": 0,
+     "home": 2,
+     "text": "Boogie Fland makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "19:10",
+     "away": 0,
+     "home": 4,
+     "text": "Xaivian Lee makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "18:27",
+     "away": 2,
+     "home": 4,
+     "text": "Tavion Banks makes driving layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 1,
+     "clock": "18:03",
+     "away": 4,
+     "home": 4,
+     "text": "Bennett Stirtz makes 14-foot turnaround jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "17:19",
+     "away": 6,
+     "home": 4,
+     "text": "Cam Manyawu makes 0-foot tip in layup"
+    },
+    {
+     "period": 1,
+     "clock": "17:05",
+     "away": 6,
+     "home": 7,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "16:16",
+     "away": 6,
+     "home": 9,
+     "text": "Xaivian Lee makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "15:53",
+     "away": 8,
+     "home": 9,
+     "text": "Tavion Banks makes layup (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "15:36",
+     "away": 8,
+     "home": 10,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "15:36",
+     "away": 8,
+     "home": 11,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "15:04",
+     "away": 11,
+     "home": 11,
+     "text": "Alvaro Folgueiras makes 25-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "13:06",
+     "away": 13,
+     "home": 11,
+     "text": "Bennett Stirtz makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "12:58",
+     "away": 13,
+     "home": 12,
+     "text": "Boogie Fland makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:38",
+     "away": 14,
+     "home": 12,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:38",
+     "away": 15,
+     "home": 12,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:01",
+     "away": 17,
+     "home": 12,
+     "text": "Bennett Stirtz makes 13-foot floating jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "10:03",
+     "away": 17,
+     "home": 13,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "9:38",
+     "away": 19,
+     "home": 13,
+     "text": "Tavion Banks makes layup (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "8:21",
+     "away": 21,
+     "home": 13,
+     "text": "Tavion Banks makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "8:11",
+     "away": 23,
+     "home": 13,
+     "text": "Tate Sage makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "7:36",
+     "away": 23,
+     "home": 14,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "7:36",
+     "away": 23,
+     "home": 15,
+     "text": "Alex Condon makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "7:13",
+     "away": 24,
+     "home": 15,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "6:53",
+     "away": 24,
+     "home": 18,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "6:07",
+     "away": 24,
+     "home": 19,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "6:07",
+     "away": 24,
+     "home": 20,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "5:52",
+     "away": 25,
+     "home": 20,
+     "text": "Tavion Banks makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "5:52",
+     "away": 26,
+     "home": 20,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "4:08",
+     "away": 26,
+     "home": 23,
+     "text": "Urban Klavzar makes 29-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "3:49",
+     "away": 28,
+     "home": 23,
+     "text": "Tavion Banks makes driving layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 1,
+     "clock": "3:21",
+     "away": 28,
+     "home": 25,
+     "text": "Alex Condon makes driving layup (Urban Klavzar assists)"
+    },
+    {
+     "period": 1,
+     "clock": "2:54",
+     "away": 29,
+     "home": 25,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "2:54",
+     "away": 30,
+     "home": 25,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "2:13",
+     "away": 31,
+     "home": 25,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "1:59",
+     "away": 31,
+     "home": 27,
+     "text": "Boogie Fland makes 13-foot jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "1:15",
+     "away": 31,
+     "home": 29,
+     "text": "Alex Condon makes 2-foot alley oop dunk (Boogie Fland assists)"
+    },
+    {
+     "period": 1,
+     "clock": "0:35",
+     "away": 31,
+     "home": 31,
+     "text": "Boogie Fland makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "0:08",
+     "away": 33,
+     "home": 31,
+     "text": "Kael Combs makes 7-foot floating jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "19:45",
+     "away": 34,
+     "home": 31,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "19:34",
+     "away": 34,
+     "home": 33,
+     "text": "Xaivian Lee makes layup (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "18:40",
+     "away": 36,
+     "home": 33,
+     "text": "Kael Combs makes layup (Cooper Koch assists)"
+    },
+    {
+     "period": 2,
+     "clock": "18:12",
+     "away": 36,
+     "home": 35,
+     "text": "Alex Condon makes driving layup (Boogie Fland assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:48",
+     "away": 38,
+     "home": 35,
+     "text": "Cam Manyawu makes layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:19",
+     "away": 38,
+     "home": 36,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "17:19",
+     "away": 38,
+     "home": 37,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "16:59",
+     "away": 41,
+     "home": 37,
+     "text": "Tavion Banks makes 25-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 2,
+     "clock": "16:02",
+     "away": 44,
+     "home": 37,
+     "text": "Cooper Koch makes 24-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 2,
+     "clock": "15:24",
+     "away": 46,
+     "home": 37,
+     "text": "Alvaro Folgueiras makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "15:02",
+     "away": 46,
+     "home": 39,
+     "text": "Alex Condon makes 8-foot floating jump shot (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "14:35",
+     "away": 48,
+     "home": 39,
+     "text": "Bennett Stirtz makes 16-foot pullup jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "14:13",
+     "away": 51,
+     "home": 39,
+     "text": "Cooper Koch makes 25-foot three point jumper (Tavion Banks assists)"
+    },
+    {
+     "period": 2,
+     "clock": "13:54",
+     "away": 51,
+     "home": 42,
+     "text": "Thomas Haugh makes 25-foot three point jumper (Boogie Fland assists)"
+    },
+    {
+     "period": 2,
+     "clock": "13:13",
+     "away": 51,
+     "home": 43,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "13:13",
+     "away": 51,
+     "home": 44,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:47",
+     "away": 53,
+     "home": 44,
+     "text": "Kael Combs makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "12:38",
+     "away": 53,
+     "home": 45,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:20",
+     "away": 54,
+     "home": 45,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:20",
+     "away": 55,
+     "home": 45,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:05",
+     "away": 55,
+     "home": 46,
+     "text": "Urban Klavzar makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:05",
+     "away": 55,
+     "home": 47,
+     "text": "Urban Klavzar makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "11:25",
+     "away": 55,
+     "home": 48,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "11:25",
+     "away": 55,
+     "home": 49,
+     "text": "Alex Condon makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "10:41",
+     "away": 55,
+     "home": 51,
+     "text": "Alex Condon makes 3-foot dunk (Urban Klavzar assists)"
+    },
+    {
+     "period": 2,
+     "clock": "9:22",
+     "away": 57,
+     "home": 51,
+     "text": "Cam Manyawu makes 0-foot tip in layup"
+    },
+    {
+     "period": 2,
+     "clock": "8:48",
+     "away": 57,
+     "home": 53,
+     "text": "Alex Condon makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "8:19",
+     "away": 57,
+     "home": 56,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "7:51",
+     "away": 58,
+     "home": 56,
+     "text": "Bennett Stirtz makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "7:40",
+     "away": 58,
+     "home": 58,
+     "text": "Isaiah Brown makes 1-foot dunk (Thomas Haugh assists)"
+    },
+    {
+     "period": 2,
+     "clock": "7:04",
+     "away": 58,
+     "home": 60,
+     "text": "Alex Condon makes 2-foot dunk (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "6:48",
+     "away": 61,
+     "home": 60,
+     "text": "Cooper Koch makes 24-foot three point jumper (Bennett Stirtz assists)"
+    },
+    {
+     "period": 2,
+     "clock": "6:35",
+     "away": 61,
+     "home": 63,
+     "text": "Thomas Haugh makes 26-foot three point jumper (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "5:38",
+     "away": 61,
+     "home": 65,
+     "text": "Thomas Haugh makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "5:12",
+     "away": 62,
+     "home": 65,
+     "text": "Bennett Stirtz makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "5:12",
+     "away": 63,
+     "home": 65,
+     "text": "Bennett Stirtz makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "4:17",
+     "away": 66,
+     "home": 65,
+     "text": "Cooper Koch makes 28-foot three point jumper"
+    },
+    {
+     "period": 2,
+     "clock": "3:23",
+     "away": 66,
+     "home": 66,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "3:23",
+     "away": 66,
+     "home": 67,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "2:42",
+     "away": 66,
+     "home": 69,
+     "text": "Alex Condon makes layup (Thomas Haugh assists)"
+    },
+    {
+     "period": 2,
+     "clock": "2:14",
+     "away": 68,
+     "home": 69,
+     "text": "Tavion Banks makes 1-foot dunk (Alvaro Folgueiras assists)"
+    },
+    {
+     "period": 2,
+     "clock": "1:58",
+     "away": 68,
+     "home": 71,
+     "text": "Xaivian Lee makes layup (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "0:57",
+     "away": 70,
+     "home": 71,
+     "text": "Bennett Stirtz makes 7-foot floating jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "0:08",
+     "away": 70,
+     "home": 72,
+     "text": "Isaiah Brown makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "0:04",
+     "away": 73,
+     "home": 72,
+     "text": "Alvaro Folgueiras makes 22-foot three point jumper (Bennett Stirtz assists)"
+    }
+   ]
+  }
+ },
+ "close": {
+  "game_id": "401856563",
+  "home_rank": 1,
+  "away_rank": 9,
+  "date": "2026-03-22T23:10Z",
+  "season_year": 2026,
+  "season_type": 3,
+  "week": null,
+  "matchup": "Iowa Hawkeyes @ Florida Gators",
+  "home_team": "Florida Gators",
+  "home_abbr": "FLA",
+  "home_id": "57",
+  "away_team": "Iowa Hawkeyes",
+  "away_abbr": "IOWA",
+  "away_id": "2294",
+  "home_score": 72,
+  "away_score": 73,
+  "winner": "Iowa Hawkeyes",
+  "loser": "Florida Gators",
+  "completed": true,
+  "status": "final",
+  "overtime": false,
+  "playoffs": false,
+  "series": null,
+  "home_records": {
+   "total": "27-8",
+   "home": "14-1",
+   "road": "8-2",
+   "vsconf": "16-2"
+  },
+  "away_records": {
+   "total": "23-12",
+   "home": "15-3",
+   "road": "3-8",
+   "vsconf": "10-10"
+  },
+  "neutral_site": true,
+  "game_flow": {
+   "away_periods": [
+    "33",
+    "40"
+   ],
+   "home_periods": [
+    "31",
+    "41"
+   ],
+   "plays": [
+    {
+     "period": 1,
+     "clock": "19:30",
+     "away": 0,
+     "home": 2,
+     "text": "Boogie Fland makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "19:10",
+     "away": 0,
+     "home": 4,
+     "text": "Xaivian Lee makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "18:27",
+     "away": 2,
+     "home": 4,
+     "text": "Tavion Banks makes driving layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 1,
+     "clock": "18:03",
+     "away": 4,
+     "home": 4,
+     "text": "Bennett Stirtz makes 14-foot turnaround jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "17:19",
+     "away": 6,
+     "home": 4,
+     "text": "Cam Manyawu makes 0-foot tip in layup"
+    },
+    {
+     "period": 1,
+     "clock": "17:05",
+     "away": 6,
+     "home": 7,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "16:16",
+     "away": 6,
+     "home": 9,
+     "text": "Xaivian Lee makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "15:53",
+     "away": 8,
+     "home": 9,
+     "text": "Tavion Banks makes layup (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "15:36",
+     "away": 8,
+     "home": 10,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "15:36",
+     "away": 8,
+     "home": 11,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "15:04",
+     "away": 11,
+     "home": 11,
+     "text": "Alvaro Folgueiras makes 25-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "13:06",
+     "away": 13,
+     "home": 11,
+     "text": "Bennett Stirtz makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "12:58",
+     "away": 13,
+     "home": 12,
+     "text": "Boogie Fland makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:38",
+     "away": 14,
+     "home": 12,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:38",
+     "away": 15,
+     "home": 12,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:01",
+     "away": 17,
+     "home": 12,
+     "text": "Bennett Stirtz makes 13-foot floating jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "10:03",
+     "away": 17,
+     "home": 13,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "9:38",
+     "away": 19,
+     "home": 13,
+     "text": "Tavion Banks makes layup (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "8:21",
+     "away": 21,
+     "home": 13,
+     "text": "Tavion Banks makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "8:11",
+     "away": 23,
+     "home": 13,
+     "text": "Tate Sage makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "7:36",
+     "away": 23,
+     "home": 14,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "7:36",
+     "away": 23,
+     "home": 15,
+     "text": "Alex Condon makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "7:13",
+     "away": 24,
+     "home": 15,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "6:53",
+     "away": 24,
+     "home": 18,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "6:07",
+     "away": 24,
+     "home": 19,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "6:07",
+     "away": 24,
+     "home": 20,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "5:52",
+     "away": 25,
+     "home": 20,
+     "text": "Tavion Banks makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "5:52",
+     "away": 26,
+     "home": 20,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "4:08",
+     "away": 26,
+     "home": 23,
+     "text": "Urban Klavzar makes 29-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "3:49",
+     "away": 28,
+     "home": 23,
+     "text": "Tavion Banks makes driving layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 1,
+     "clock": "3:21",
+     "away": 28,
+     "home": 25,
+     "text": "Alex Condon makes driving layup (Urban Klavzar assists)"
+    },
+    {
+     "period": 1,
+     "clock": "2:54",
+     "away": 29,
+     "home": 25,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "2:54",
+     "away": 30,
+     "home": 25,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "2:13",
+     "away": 31,
+     "home": 25,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "1:59",
+     "away": 31,
+     "home": 27,
+     "text": "Boogie Fland makes 13-foot jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "1:15",
+     "away": 31,
+     "home": 29,
+     "text": "Alex Condon makes 2-foot alley oop dunk (Boogie Fland assists)"
+    },
+    {
+     "period": 1,
+     "clock": "0:35",
+     "away": 31,
+     "home": 31,
+     "text": "Boogie Fland makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "0:08",
+     "away": 33,
+     "home": 31,
+     "text": "Kael Combs makes 7-foot floating jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "19:45",
+     "away": 34,
+     "home": 31,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "19:34",
+     "away": 34,
+     "home": 33,
+     "text": "Xaivian Lee makes layup (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "18:40",
+     "away": 36,
+     "home": 33,
+     "text": "Kael Combs makes layup (Cooper Koch assists)"
+    },
+    {
+     "period": 2,
+     "clock": "18:12",
+     "away": 36,
+     "home": 35,
+     "text": "Alex Condon makes driving layup (Boogie Fland assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:48",
+     "away": 38,
+     "home": 35,
+     "text": "Cam Manyawu makes layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:19",
+     "away": 38,
+     "home": 36,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "17:19",
+     "away": 38,
+     "home": 37,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "16:59",
+     "away": 41,
+     "home": 37,
+     "text": "Tavion Banks makes 25-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 2,
+     "clock": "16:02",
+     "away": 44,
+     "home": 37,
+     "text": "Cooper Koch makes 24-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 2,
+     "clock": "15:24",
+     "away": 46,
+     "home": 37,
+     "text": "Alvaro Folgueiras makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "15:02",
+     "away": 46,
+     "home": 39,
+     "text": "Alex Condon makes 8-foot floating jump shot (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "14:35",
+     "away": 48,
+     "home": 39,
+     "text": "Bennett Stirtz makes 16-foot pullup jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "14:13",
+     "away": 51,
+     "home": 39,
+     "text": "Cooper Koch makes 25-foot three point jumper (Tavion Banks assists)"
+    },
+    {
+     "period": 2,
+     "clock": "13:54",
+     "away": 51,
+     "home": 42,
+     "text": "Thomas Haugh makes 25-foot three point jumper (Boogie Fland assists)"
+    },
+    {
+     "period": 2,
+     "clock": "13:13",
+     "away": 51,
+     "home": 43,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "13:13",
+     "away": 51,
+     "home": 44,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:47",
+     "away": 53,
+     "home": 44,
+     "text": "Kael Combs makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "12:38",
+     "away": 53,
+     "home": 45,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:20",
+     "away": 54,
+     "home": 45,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:20",
+     "away": 55,
+     "home": 45,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:05",
+     "away": 55,
+     "home": 46,
+     "text": "Urban Klavzar makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:05",
+     "away": 55,
+     "home": 47,
+     "text": "Urban Klavzar makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "11:25",
+     "away": 55,
+     "home": 48,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "11:25",
+     "away": 55,
+     "home": 49,
+     "text": "Alex Condon makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "10:41",
+     "away": 55,
+     "home": 51,
+     "text": "Alex Condon makes 3-foot dunk (Urban Klavzar assists)"
+    },
+    {
+     "period": 2,
+     "clock": "9:22",
+     "away": 57,
+     "home": 51,
+     "text": "Cam Manyawu makes 0-foot tip in layup"
+    },
+    {
+     "period": 2,
+     "clock": "8:48",
+     "away": 57,
+     "home": 53,
+     "text": "Alex Condon makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "8:19",
+     "away": 57,
+     "home": 56,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "7:51",
+     "away": 58,
+     "home": 56,
+     "text": "Bennett Stirtz makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "7:40",
+     "away": 58,
+     "home": 58,
+     "text": "Isaiah Brown makes 1-foot dunk (Thomas Haugh assists)"
+    },
+    {
+     "period": 2,
+     "clock": "7:04",
+     "away": 58,
+     "home": 60,
+     "text": "Alex Condon makes 2-foot dunk (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "6:48",
+     "away": 61,
+     "home": 60,
+     "text": "Cooper Koch makes 24-foot three point jumper (Bennett Stirtz assists)"
+    },
+    {
+     "period": 2,
+     "clock": "6:35",
+     "away": 61,
+     "home": 63,
+     "text": "Thomas Haugh makes 26-foot three point jumper (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "5:38",
+     "away": 61,
+     "home": 65,
+     "text": "Thomas Haugh makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "5:12",
+     "away": 62,
+     "home": 65,
+     "text": "Bennett Stirtz makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "5:12",
+     "away": 63,
+     "home": 65,
+     "text": "Bennett Stirtz makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "4:17",
+     "away": 66,
+     "home": 65,
+     "text": "Cooper Koch makes 28-foot three point jumper"
+    },
+    {
+     "period": 2,
+     "clock": "3:23",
+     "away": 66,
+     "home": 66,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "3:23",
+     "away": 66,
+     "home": 67,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "2:42",
+     "away": 66,
+     "home": 69,
+     "text": "Alex Condon makes layup (Thomas Haugh assists)"
+    },
+    {
+     "period": 2,
+     "clock": "2:14",
+     "away": 68,
+     "home": 69,
+     "text": "Tavion Banks makes 1-foot dunk (Alvaro Folgueiras assists)"
+    },
+    {
+     "period": 2,
+     "clock": "1:58",
+     "away": 68,
+     "home": 71,
+     "text": "Xaivian Lee makes layup (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "0:57",
+     "away": 70,
+     "home": 71,
+     "text": "Bennett Stirtz makes 7-foot floating jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "0:08",
+     "away": 70,
+     "home": 72,
+     "text": "Isaiah Brown makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "0:04",
+     "away": 73,
+     "home": 72,
+     "text": "Alvaro Folgueiras makes 22-foot three point jumper (Bennett Stirtz assists)"
+    }
+   ]
+  }
+ },
+ "ranked": {
+  "game_id": "401856563",
+  "home_rank": 1,
+  "away_rank": 9,
+  "date": "2026-03-22T23:10Z",
+  "season_year": 2026,
+  "season_type": 3,
+  "week": null,
+  "matchup": "Iowa Hawkeyes @ Florida Gators",
+  "home_team": "Florida Gators",
+  "home_abbr": "FLA",
+  "home_id": "57",
+  "away_team": "Iowa Hawkeyes",
+  "away_abbr": "IOWA",
+  "away_id": "2294",
+  "home_score": 72,
+  "away_score": 73,
+  "winner": "Iowa Hawkeyes",
+  "loser": "Florida Gators",
+  "completed": true,
+  "status": "final",
+  "overtime": false,
+  "playoffs": false,
+  "series": null,
+  "home_records": {
+   "total": "27-8",
+   "home": "14-1",
+   "road": "8-2",
+   "vsconf": "16-2"
+  },
+  "away_records": {
+   "total": "23-12",
+   "home": "15-3",
+   "road": "3-8",
+   "vsconf": "10-10"
+  },
+  "neutral_site": true,
+  "game_flow": {
+   "away_periods": [
+    "33",
+    "40"
+   ],
+   "home_periods": [
+    "31",
+    "41"
+   ],
+   "plays": [
+    {
+     "period": 1,
+     "clock": "19:30",
+     "away": 0,
+     "home": 2,
+     "text": "Boogie Fland makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "19:10",
+     "away": 0,
+     "home": 4,
+     "text": "Xaivian Lee makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "18:27",
+     "away": 2,
+     "home": 4,
+     "text": "Tavion Banks makes driving layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 1,
+     "clock": "18:03",
+     "away": 4,
+     "home": 4,
+     "text": "Bennett Stirtz makes 14-foot turnaround jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "17:19",
+     "away": 6,
+     "home": 4,
+     "text": "Cam Manyawu makes 0-foot tip in layup"
+    },
+    {
+     "period": 1,
+     "clock": "17:05",
+     "away": 6,
+     "home": 7,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "16:16",
+     "away": 6,
+     "home": 9,
+     "text": "Xaivian Lee makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "15:53",
+     "away": 8,
+     "home": 9,
+     "text": "Tavion Banks makes layup (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "15:36",
+     "away": 8,
+     "home": 10,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "15:36",
+     "away": 8,
+     "home": 11,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "15:04",
+     "away": 11,
+     "home": 11,
+     "text": "Alvaro Folgueiras makes 25-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "13:06",
+     "away": 13,
+     "home": 11,
+     "text": "Bennett Stirtz makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "12:58",
+     "away": 13,
+     "home": 12,
+     "text": "Boogie Fland makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:38",
+     "away": 14,
+     "home": 12,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:38",
+     "away": 15,
+     "home": 12,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:01",
+     "away": 17,
+     "home": 12,
+     "text": "Bennett Stirtz makes 13-foot floating jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "10:03",
+     "away": 17,
+     "home": 13,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "9:38",
+     "away": 19,
+     "home": 13,
+     "text": "Tavion Banks makes layup (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "8:21",
+     "away": 21,
+     "home": 13,
+     "text": "Tavion Banks makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "8:11",
+     "away": 23,
+     "home": 13,
+     "text": "Tate Sage makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "7:36",
+     "away": 23,
+     "home": 14,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "7:36",
+     "away": 23,
+     "home": 15,
+     "text": "Alex Condon makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "7:13",
+     "away": 24,
+     "home": 15,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "6:53",
+     "away": 24,
+     "home": 18,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "6:07",
+     "away": 24,
+     "home": 19,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "6:07",
+     "away": 24,
+     "home": 20,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "5:52",
+     "away": 25,
+     "home": 20,
+     "text": "Tavion Banks makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "5:52",
+     "away": 26,
+     "home": 20,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "4:08",
+     "away": 26,
+     "home": 23,
+     "text": "Urban Klavzar makes 29-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "3:49",
+     "away": 28,
+     "home": 23,
+     "text": "Tavion Banks makes driving layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 1,
+     "clock": "3:21",
+     "away": 28,
+     "home": 25,
+     "text": "Alex Condon makes driving layup (Urban Klavzar assists)"
+    },
+    {
+     "period": 1,
+     "clock": "2:54",
+     "away": 29,
+     "home": 25,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "2:54",
+     "away": 30,
+     "home": 25,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "2:13",
+     "away": 31,
+     "home": 25,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "1:59",
+     "away": 31,
+     "home": 27,
+     "text": "Boogie Fland makes 13-foot jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "1:15",
+     "away": 31,
+     "home": 29,
+     "text": "Alex Condon makes 2-foot alley oop dunk (Boogie Fland assists)"
+    },
+    {
+     "period": 1,
+     "clock": "0:35",
+     "away": 31,
+     "home": 31,
+     "text": "Boogie Fland makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "0:08",
+     "away": 33,
+     "home": 31,
+     "text": "Kael Combs makes 7-foot floating jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "19:45",
+     "away": 34,
+     "home": 31,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "19:34",
+     "away": 34,
+     "home": 33,
+     "text": "Xaivian Lee makes layup (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "18:40",
+     "away": 36,
+     "home": 33,
+     "text": "Kael Combs makes layup (Cooper Koch assists)"
+    },
+    {
+     "period": 2,
+     "clock": "18:12",
+     "away": 36,
+     "home": 35,
+     "text": "Alex Condon makes driving layup (Boogie Fland assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:48",
+     "away": 38,
+     "home": 35,
+     "text": "Cam Manyawu makes layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:19",
+     "away": 38,
+     "home": 36,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "17:19",
+     "away": 38,
+     "home": 37,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "16:59",
+     "away": 41,
+     "home": 37,
+     "text": "Tavion Banks makes 25-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 2,
+     "clock": "16:02",
+     "away": 44,
+     "home": 37,
+     "text": "Cooper Koch makes 24-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 2,
+     "clock": "15:24",
+     "away": 46,
+     "home": 37,
+     "text": "Alvaro Folgueiras makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "15:02",
+     "away": 46,
+     "home": 39,
+     "text": "Alex Condon makes 8-foot floating jump shot (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "14:35",
+     "away": 48,
+     "home": 39,
+     "text": "Bennett Stirtz makes 16-foot pullup jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "14:13",
+     "away": 51,
+     "home": 39,
+     "text": "Cooper Koch makes 25-foot three point jumper (Tavion Banks assists)"
+    },
+    {
+     "period": 2,
+     "clock": "13:54",
+     "away": 51,
+     "home": 42,
+     "text": "Thomas Haugh makes 25-foot three point jumper (Boogie Fland assists)"
+    },
+    {
+     "period": 2,
+     "clock": "13:13",
+     "away": 51,
+     "home": 43,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "13:13",
+     "away": 51,
+     "home": 44,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:47",
+     "away": 53,
+     "home": 44,
+     "text": "Kael Combs makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "12:38",
+     "away": 53,
+     "home": 45,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:20",
+     "away": 54,
+     "home": 45,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:20",
+     "away": 55,
+     "home": 45,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:05",
+     "away": 55,
+     "home": 46,
+     "text": "Urban Klavzar makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:05",
+     "away": 55,
+     "home": 47,
+     "text": "Urban Klavzar makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "11:25",
+     "away": 55,
+     "home": 48,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "11:25",
+     "away": 55,
+     "home": 49,
+     "text": "Alex Condon makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "10:41",
+     "away": 55,
+     "home": 51,
+     "text": "Alex Condon makes 3-foot dunk (Urban Klavzar assists)"
+    },
+    {
+     "period": 2,
+     "clock": "9:22",
+     "away": 57,
+     "home": 51,
+     "text": "Cam Manyawu makes 0-foot tip in layup"
+    },
+    {
+     "period": 2,
+     "clock": "8:48",
+     "away": 57,
+     "home": 53,
+     "text": "Alex Condon makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "8:19",
+     "away": 57,
+     "home": 56,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "7:51",
+     "away": 58,
+     "home": 56,
+     "text": "Bennett Stirtz makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "7:40",
+     "away": 58,
+     "home": 58,
+     "text": "Isaiah Brown makes 1-foot dunk (Thomas Haugh assists)"
+    },
+    {
+     "period": 2,
+     "clock": "7:04",
+     "away": 58,
+     "home": 60,
+     "text": "Alex Condon makes 2-foot dunk (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "6:48",
+     "away": 61,
+     "home": 60,
+     "text": "Cooper Koch makes 24-foot three point jumper (Bennett Stirtz assists)"
+    },
+    {
+     "period": 2,
+     "clock": "6:35",
+     "away": 61,
+     "home": 63,
+     "text": "Thomas Haugh makes 26-foot three point jumper (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "5:38",
+     "away": 61,
+     "home": 65,
+     "text": "Thomas Haugh makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "5:12",
+     "away": 62,
+     "home": 65,
+     "text": "Bennett Stirtz makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "5:12",
+     "away": 63,
+     "home": 65,
+     "text": "Bennett Stirtz makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "4:17",
+     "away": 66,
+     "home": 65,
+     "text": "Cooper Koch makes 28-foot three point jumper"
+    },
+    {
+     "period": 2,
+     "clock": "3:23",
+     "away": 66,
+     "home": 66,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "3:23",
+     "away": 66,
+     "home": 67,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "2:42",
+     "away": 66,
+     "home": 69,
+     "text": "Alex Condon makes layup (Thomas Haugh assists)"
+    },
+    {
+     "period": 2,
+     "clock": "2:14",
+     "away": 68,
+     "home": 69,
+     "text": "Tavion Banks makes 1-foot dunk (Alvaro Folgueiras assists)"
+    },
+    {
+     "period": 2,
+     "clock": "1:58",
+     "away": 68,
+     "home": 71,
+     "text": "Xaivian Lee makes layup (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "0:57",
+     "away": 70,
+     "home": 71,
+     "text": "Bennett Stirtz makes 7-foot floating jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "0:08",
+     "away": 70,
+     "home": 72,
+     "text": "Isaiah Brown makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "0:04",
+     "away": 73,
+     "home": 72,
+     "text": "Alvaro Folgueiras makes 22-foot three point jumper (Bennett Stirtz assists)"
+    }
+   ]
+  }
+ },
+ "tournament": {
+  "game_id": "401856563",
+  "home_rank": 1,
+  "away_rank": 9,
+  "date": "2026-03-22T23:10Z",
+  "season_year": 2026,
+  "season_type": 3,
+  "week": null,
+  "matchup": "Iowa Hawkeyes @ Florida Gators",
+  "home_team": "Florida Gators",
+  "home_abbr": "FLA",
+  "home_id": "57",
+  "away_team": "Iowa Hawkeyes",
+  "away_abbr": "IOWA",
+  "away_id": "2294",
+  "home_score": 72,
+  "away_score": 73,
+  "winner": "Iowa Hawkeyes",
+  "loser": "Florida Gators",
+  "completed": true,
+  "status": "final",
+  "overtime": false,
+  "playoffs": false,
+  "series": null,
+  "home_records": {
+   "total": "27-8",
+   "home": "14-1",
+   "road": "8-2",
+   "vsconf": "16-2"
+  },
+  "away_records": {
+   "total": "23-12",
+   "home": "15-3",
+   "road": "3-8",
+   "vsconf": "10-10"
+  },
+  "neutral_site": true,
+  "game_flow": {
+   "away_periods": [
+    "33",
+    "40"
+   ],
+   "home_periods": [
+    "31",
+    "41"
+   ],
+   "plays": [
+    {
+     "period": 1,
+     "clock": "19:30",
+     "away": 0,
+     "home": 2,
+     "text": "Boogie Fland makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "19:10",
+     "away": 0,
+     "home": 4,
+     "text": "Xaivian Lee makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "18:27",
+     "away": 2,
+     "home": 4,
+     "text": "Tavion Banks makes driving layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 1,
+     "clock": "18:03",
+     "away": 4,
+     "home": 4,
+     "text": "Bennett Stirtz makes 14-foot turnaround jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "17:19",
+     "away": 6,
+     "home": 4,
+     "text": "Cam Manyawu makes 0-foot tip in layup"
+    },
+    {
+     "period": 1,
+     "clock": "17:05",
+     "away": 6,
+     "home": 7,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "16:16",
+     "away": 6,
+     "home": 9,
+     "text": "Xaivian Lee makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "15:53",
+     "away": 8,
+     "home": 9,
+     "text": "Tavion Banks makes layup (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "15:36",
+     "away": 8,
+     "home": 10,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "15:36",
+     "away": 8,
+     "home": 11,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "15:04",
+     "away": 11,
+     "home": 11,
+     "text": "Alvaro Folgueiras makes 25-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "13:06",
+     "away": 13,
+     "home": 11,
+     "text": "Bennett Stirtz makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "12:58",
+     "away": 13,
+     "home": 12,
+     "text": "Boogie Fland makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:38",
+     "away": 14,
+     "home": 12,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:38",
+     "away": 15,
+     "home": 12,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:01",
+     "away": 17,
+     "home": 12,
+     "text": "Bennett Stirtz makes 13-foot floating jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "10:03",
+     "away": 17,
+     "home": 13,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "9:38",
+     "away": 19,
+     "home": 13,
+     "text": "Tavion Banks makes layup (Kael Combs assists)"
+    },
+    {
+     "period": 1,
+     "clock": "8:21",
+     "away": 21,
+     "home": 13,
+     "text": "Tavion Banks makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "8:11",
+     "away": 23,
+     "home": 13,
+     "text": "Tate Sage makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "7:36",
+     "away": 23,
+     "home": 14,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "7:36",
+     "away": 23,
+     "home": 15,
+     "text": "Alex Condon makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "7:13",
+     "away": 24,
+     "home": 15,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "6:53",
+     "away": 24,
+     "home": 18,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "6:07",
+     "away": 24,
+     "home": 19,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "6:07",
+     "away": 24,
+     "home": 20,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "5:52",
+     "away": 25,
+     "home": 20,
+     "text": "Tavion Banks makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "5:52",
+     "away": 26,
+     "home": 20,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "4:08",
+     "away": 26,
+     "home": 23,
+     "text": "Urban Klavzar makes 29-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "3:49",
+     "away": 28,
+     "home": 23,
+     "text": "Tavion Banks makes driving layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 1,
+     "clock": "3:21",
+     "away": 28,
+     "home": 25,
+     "text": "Alex Condon makes driving layup (Urban Klavzar assists)"
+    },
+    {
+     "period": 1,
+     "clock": "2:54",
+     "away": 29,
+     "home": 25,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "2:54",
+     "away": 30,
+     "home": 25,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "2:13",
+     "away": 31,
+     "home": 25,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "1:59",
+     "away": 31,
+     "home": 27,
+     "text": "Boogie Fland makes 13-foot jumper (Alex Condon assists)"
+    },
+    {
+     "period": 1,
+     "clock": "1:15",
+     "away": 31,
+     "home": 29,
+     "text": "Alex Condon makes 2-foot alley oop dunk (Boogie Fland assists)"
+    },
+    {
+     "period": 1,
+     "clock": "0:35",
+     "away": 31,
+     "home": 31,
+     "text": "Boogie Fland makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "0:08",
+     "away": 33,
+     "home": 31,
+     "text": "Kael Combs makes 7-foot floating jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "19:45",
+     "away": 34,
+     "home": 31,
+     "text": "Tavion Banks makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "19:34",
+     "away": 34,
+     "home": 33,
+     "text": "Xaivian Lee makes layup (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "18:40",
+     "away": 36,
+     "home": 33,
+     "text": "Kael Combs makes layup (Cooper Koch assists)"
+    },
+    {
+     "period": 2,
+     "clock": "18:12",
+     "away": 36,
+     "home": 35,
+     "text": "Alex Condon makes driving layup (Boogie Fland assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:48",
+     "away": 38,
+     "home": 35,
+     "text": "Cam Manyawu makes layup (Bennett Stirtz assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:19",
+     "away": 38,
+     "home": 36,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "17:19",
+     "away": 38,
+     "home": 37,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "16:59",
+     "away": 41,
+     "home": 37,
+     "text": "Tavion Banks makes 25-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 2,
+     "clock": "16:02",
+     "away": 44,
+     "home": 37,
+     "text": "Cooper Koch makes 24-foot three point jumper (Kael Combs assists)"
+    },
+    {
+     "period": 2,
+     "clock": "15:24",
+     "away": 46,
+     "home": 37,
+     "text": "Alvaro Folgueiras makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "15:02",
+     "away": 46,
+     "home": 39,
+     "text": "Alex Condon makes 8-foot floating jump shot (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "14:35",
+     "away": 48,
+     "home": 39,
+     "text": "Bennett Stirtz makes 16-foot pullup jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "14:13",
+     "away": 51,
+     "home": 39,
+     "text": "Cooper Koch makes 25-foot three point jumper (Tavion Banks assists)"
+    },
+    {
+     "period": 2,
+     "clock": "13:54",
+     "away": 51,
+     "home": 42,
+     "text": "Thomas Haugh makes 25-foot three point jumper (Boogie Fland assists)"
+    },
+    {
+     "period": 2,
+     "clock": "13:13",
+     "away": 51,
+     "home": 43,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "13:13",
+     "away": 51,
+     "home": 44,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:47",
+     "away": 53,
+     "home": 44,
+     "text": "Kael Combs makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "12:38",
+     "away": 53,
+     "home": 45,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:20",
+     "away": 54,
+     "home": 45,
+     "text": "Alvaro Folgueiras makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:20",
+     "away": 55,
+     "home": 45,
+     "text": "Alvaro Folgueiras makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:05",
+     "away": 55,
+     "home": 46,
+     "text": "Urban Klavzar makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "12:05",
+     "away": 55,
+     "home": 47,
+     "text": "Urban Klavzar makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "11:25",
+     "away": 55,
+     "home": 48,
+     "text": "Alex Condon makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "11:25",
+     "away": 55,
+     "home": 49,
+     "text": "Alex Condon makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "10:41",
+     "away": 55,
+     "home": 51,
+     "text": "Alex Condon makes 3-foot dunk (Urban Klavzar assists)"
+    },
+    {
+     "period": 2,
+     "clock": "9:22",
+     "away": 57,
+     "home": 51,
+     "text": "Cam Manyawu makes 0-foot tip in layup"
+    },
+    {
+     "period": 2,
+     "clock": "8:48",
+     "away": 57,
+     "home": 53,
+     "text": "Alex Condon makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "8:19",
+     "away": 57,
+     "home": 56,
+     "text": "Xaivian Lee makes 25-foot three point jumper (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "7:51",
+     "away": 58,
+     "home": 56,
+     "text": "Bennett Stirtz makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "7:40",
+     "away": 58,
+     "home": 58,
+     "text": "Isaiah Brown makes 1-foot dunk (Thomas Haugh assists)"
+    },
+    {
+     "period": 2,
+     "clock": "7:04",
+     "away": 58,
+     "home": 60,
+     "text": "Alex Condon makes 2-foot dunk (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "6:48",
+     "away": 61,
+     "home": 60,
+     "text": "Cooper Koch makes 24-foot three point jumper (Bennett Stirtz assists)"
+    },
+    {
+     "period": 2,
+     "clock": "6:35",
+     "away": 61,
+     "home": 63,
+     "text": "Thomas Haugh makes 26-foot three point jumper (Xaivian Lee assists)"
+    },
+    {
+     "period": 2,
+     "clock": "5:38",
+     "away": 61,
+     "home": 65,
+     "text": "Thomas Haugh makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "5:12",
+     "away": 62,
+     "home": 65,
+     "text": "Bennett Stirtz makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "5:12",
+     "away": 63,
+     "home": 65,
+     "text": "Bennett Stirtz makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "4:17",
+     "away": 66,
+     "home": 65,
+     "text": "Cooper Koch makes 28-foot three point jumper"
+    },
+    {
+     "period": 2,
+     "clock": "3:23",
+     "away": 66,
+     "home": 66,
+     "text": "Thomas Haugh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "3:23",
+     "away": 66,
+     "home": 67,
+     "text": "Thomas Haugh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "2:42",
+     "away": 66,
+     "home": 69,
+     "text": "Alex Condon makes layup (Thomas Haugh assists)"
+    },
+    {
+     "period": 2,
+     "clock": "2:14",
+     "away": 68,
+     "home": 69,
+     "text": "Tavion Banks makes 1-foot dunk (Alvaro Folgueiras assists)"
+    },
+    {
+     "period": 2,
+     "clock": "1:58",
+     "away": 68,
+     "home": 71,
+     "text": "Xaivian Lee makes layup (Alex Condon assists)"
+    },
+    {
+     "period": 2,
+     "clock": "0:57",
+     "away": 70,
+     "home": 71,
+     "text": "Bennett Stirtz makes 7-foot floating jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "0:08",
+     "away": 70,
+     "home": 72,
+     "text": "Isaiah Brown makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "0:04",
+     "away": 73,
+     "home": 72,
+     "text": "Alvaro Folgueiras makes 22-foot three point jumper (Bennett Stirtz assists)"
+    }
+   ]
+  }
+ },
+ "wire": {
+  "game_id": "401856565",
+  "home_rank": 1,
+  "away_rank": 9,
+  "date": "2026-03-23T00:11Z",
+  "season_year": 2026,
+  "season_type": 3,
+  "week": null,
+  "matchup": "Utah State Aggies @ Arizona Wildcats",
+  "home_team": "Arizona Wildcats",
+  "home_abbr": "ARIZ",
+  "home_id": "12",
+  "away_team": "Utah State Aggies",
+  "away_abbr": "USU",
+  "away_id": "328",
+  "home_score": 78,
+  "away_score": 66,
+  "winner": "Arizona Wildcats",
+  "loser": "Utah State Aggies",
+  "completed": true,
+  "status": "final",
+  "overtime": false,
+  "playoffs": false,
+  "series": null,
+  "home_records": {
+   "total": "34-2",
+   "home": "16-1",
+   "road": "9-1",
+   "vsconf": "16-2"
+  },
+  "away_records": {
+   "total": "29-7",
+   "home": "14-1",
+   "road": "7-5",
+   "vsconf": "15-5"
+  },
+  "neutral_site": true,
+  "game_flow": {
+   "away_periods": [
+    "24",
+    "42"
+   ],
+   "home_periods": [
+    "33",
+    "45"
+   ],
+   "plays": [
+    {
+     "period": 1,
+     "clock": "19:37",
+     "away": 0,
+     "home": 3,
+     "text": "Brayden Burries makes 25-foot three point jumper (Motiejus Krivas assists)"
+    },
+    {
+     "period": 1,
+     "clock": "19:06",
+     "away": 2,
+     "home": 3,
+     "text": "Adlan Elamin makes 12-foot jumper"
+    },
+    {
+     "period": 1,
+     "clock": "18:39",
+     "away": 2,
+     "home": 5,
+     "text": "Koa Peat makes 2-foot dunk"
+    },
+    {
+     "period": 1,
+     "clock": "18:07",
+     "away": 2,
+     "home": 6,
+     "text": "Koa Peat makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "18:07",
+     "away": 2,
+     "home": 7,
+     "text": "Koa Peat makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "16:35",
+     "away": 2,
+     "home": 10,
+     "text": "Jaden Bradley makes 24-foot three point jumper (Brayden Burries assists)"
+    },
+    {
+     "period": 1,
+     "clock": "16:15",
+     "away": 4,
+     "home": 10,
+     "text": "MJ Collins Jr. makes 0-foot tip in dunk"
+    },
+    {
+     "period": 1,
+     "clock": "14:57",
+     "away": 7,
+     "home": 10,
+     "text": "MJ Collins Jr. makes 23-foot three point jumper (Mason Falslev assists)"
+    },
+    {
+     "period": 1,
+     "clock": "14:32",
+     "away": 7,
+     "home": 12,
+     "text": "Brayden Burries makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "13:47",
+     "away": 8,
+     "home": 12,
+     "text": "Drake Allen makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "13:28",
+     "away": 8,
+     "home": 13,
+     "text": "Tobe Awaka makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "13:05",
+     "away": 10,
+     "home": 13,
+     "text": "Kolby King makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "12:39",
+     "away": 10,
+     "home": 14,
+     "text": "Tobe Awaka makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "11:51",
+     "away": 10,
+     "home": 16,
+     "text": "Koa Peat makes 14-foot jumper"
+    },
+    {
+     "period": 1,
+     "clock": "11:29",
+     "away": 12,
+     "home": 16,
+     "text": "Garry Clark makes 7-foot floating jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "11:11",
+     "away": 12,
+     "home": 19,
+     "text": "Anthony Dell'Orso makes 23-foot three point jumper (Tobe Awaka assists)"
+    },
+    {
+     "period": 1,
+     "clock": "9:19",
+     "away": 14,
+     "home": 19,
+     "text": "Zach Keller makes layup (Kolby King assists)"
+    },
+    {
+     "period": 1,
+     "clock": "8:44",
+     "away": 16,
+     "home": 19,
+     "text": "Elijah Perryman makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "8:04",
+     "away": 16,
+     "home": 22,
+     "text": "Dwayne Aristode makes 23-foot three point jumper (Brayden Burries assists)"
+    },
+    {
+     "period": 1,
+     "clock": "7:50",
+     "away": 16,
+     "home": 23,
+     "text": "Jaden Bradley makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "7:50",
+     "away": 16,
+     "home": 24,
+     "text": "Jaden Bradley makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "7:17",
+     "away": 16,
+     "home": 25,
+     "text": "Koa Peat makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "7:17",
+     "away": 16,
+     "home": 26,
+     "text": "Koa Peat makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "6:13",
+     "away": 16,
+     "home": 27,
+     "text": "Motiejus Krivas makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "4:11",
+     "away": 18,
+     "home": 27,
+     "text": "Drake Allen makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "2:59",
+     "away": 20,
+     "home": 27,
+     "text": "Mason Falslev makes 11-foot floating jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "1:56",
+     "away": 20,
+     "home": 28,
+     "text": "Koa Peat makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "1:41",
+     "away": 20,
+     "home": 30,
+     "text": "Ivan Kharchenkov makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "1:25",
+     "away": 22,
+     "home": 30,
+     "text": "Garry Clark makes layup (Mason Falslev assists)"
+    },
+    {
+     "period": 1,
+     "clock": "0:58",
+     "away": 22,
+     "home": 32,
+     "text": "Koa Peat makes 7-foot jumper"
+    },
+    {
+     "period": 1,
+     "clock": "0:23",
+     "away": 22,
+     "home": 33,
+     "text": "Jaden Bradley makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "0:05",
+     "away": 24,
+     "home": 33,
+     "text": "Garry Clark makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "19:17",
+     "away": 24,
+     "home": 35,
+     "text": "Jaden Bradley makes 12-foot jumper"
+    },
+    {
+     "period": 2,
+     "clock": "18:44",
+     "away": 27,
+     "home": 35,
+     "text": "Mason Falslev makes 26-foot three point jumper (Adlan Elamin assists)"
+    },
+    {
+     "period": 2,
+     "clock": "18:34",
+     "away": 27,
+     "home": 36,
+     "text": "Motiejus Krivas makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "18:34",
+     "away": 27,
+     "home": 37,
+     "text": "Motiejus Krivas makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "18:05",
+     "away": 27,
+     "home": 40,
+     "text": "Ivan Kharchenkov makes 25-foot three point jumper (Koa Peat assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:31",
+     "away": 30,
+     "home": 40,
+     "text": "Kolby King makes 24-foot three point jumper (Drake Allen assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:21",
+     "away": 30,
+     "home": 42,
+     "text": "Ivan Kharchenkov makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "17:03",
+     "away": 33,
+     "home": 42,
+     "text": "Karson Templin makes 24-foot three point jumper"
+    },
+    {
+     "period": 2,
+     "clock": "16:19",
+     "away": 33,
+     "home": 44,
+     "text": "Koa Peat makes layup"
+    },
+    {
+     "period": 2,
+     "clock": "15:37",
+     "away": 33,
+     "home": 47,
+     "text": "Brayden Burries makes 24-foot three point jumper (Motiejus Krivas assists)"
+    },
+    {
+     "period": 2,
+     "clock": "15:09",
+     "away": 33,
+     "home": 49,
+     "text": "Jaden Bradley makes 17-foot jumper"
+    },
+    {
+     "period": 2,
+     "clock": "14:43",
+     "away": 33,
+     "home": 51,
+     "text": "Brayden Burries makes 10-foot jumper"
+    },
+    {
+     "period": 2,
+     "clock": "14:26",
+     "away": 34,
+     "home": 51,
+     "text": "MJ Collins Jr. makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "14:26",
+     "away": 35,
+     "home": 51,
+     "text": "MJ Collins Jr. makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "13:41",
+     "away": 37,
+     "home": 51,
+     "text": "Garry Clark makes layup (Karson Templin assists)"
+    },
+    {
+     "period": 2,
+     "clock": "12:10",
+     "away": 39,
+     "home": 51,
+     "text": "MJ Collins Jr. makes 11-foot floating jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "11:48",
+     "away": 39,
+     "home": 52,
+     "text": "Brayden Burries makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "11:48",
+     "away": 39,
+     "home": 53,
+     "text": "Brayden Burries makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "11:29",
+     "away": 41,
+     "home": 53,
+     "text": "Elijah Perryman makes 9-foot jumper"
+    },
+    {
+     "period": 2,
+     "clock": "11:06",
+     "away": 41,
+     "home": 54,
+     "text": "Tobe Awaka makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "10:53",
+     "away": 44,
+     "home": 54,
+     "text": "Mason Falslev makes 23-foot three point jumper (Elijah Perryman assists)"
+    },
+    {
+     "period": 2,
+     "clock": "10:24",
+     "away": 44,
+     "home": 55,
+     "text": "Tobe Awaka makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "9:54",
+     "away": 46,
+     "home": 55,
+     "text": "Garry Clark makes layup"
+    },
+    {
+     "period": 2,
+     "clock": "9:54",
+     "away": 47,
+     "home": 55,
+     "text": "Garry Clark makes free throw 1 of 1"
+    },
+    {
+     "period": 2,
+     "clock": "9:19",
+     "away": 47,
+     "home": 56,
+     "text": "Koa Peat makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "8:57",
+     "away": 49,
+     "home": 56,
+     "text": "Garry Clark makes 8-foot jumper"
+    },
+    {
+     "period": 2,
+     "clock": "7:27",
+     "away": 50,
+     "home": 56,
+     "text": "Adlan Elamin makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "7:27",
+     "away": 51,
+     "home": 56,
+     "text": "Adlan Elamin makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "6:55",
+     "away": 51,
+     "home": 58,
+     "text": "Jaden Bradley makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "6:34",
+     "away": 54,
+     "home": 58,
+     "text": "Drake Allen makes 25-foot three point jumper (MJ Collins Jr. assists)"
+    },
+    {
+     "period": 2,
+     "clock": "6:09",
+     "away": 54,
+     "home": 60,
+     "text": "Motiejus Krivas makes 0-foot tip in layup"
+    },
+    {
+     "period": 2,
+     "clock": "5:55",
+     "away": 55,
+     "home": 60,
+     "text": "Adlan Elamin makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "5:55",
+     "away": 56,
+     "home": 60,
+     "text": "Adlan Elamin makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "5:47",
+     "away": 56,
+     "home": 62,
+     "text": "Jaden Bradley makes driving layup (Ivan Kharchenkov assists)"
+    },
+    {
+     "period": 2,
+     "clock": "5:47",
+     "away": 56,
+     "home": 63,
+     "text": "Jaden Bradley makes free throw 1 of 1"
+    },
+    {
+     "period": 2,
+     "clock": "5:03",
+     "away": 59,
+     "home": 63,
+     "text": "Drake Allen makes 25-foot three point jumper (MJ Collins Jr. assists)"
+    },
+    {
+     "period": 2,
+     "clock": "4:41",
+     "away": 59,
+     "home": 65,
+     "text": "Jaden Bradley makes 8-foot floating jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "4:07",
+     "away": 59,
+     "home": 66,
+     "text": "Jaden Bradley makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "3:56",
+     "away": 61,
+     "home": 66,
+     "text": "Drake Allen makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "3:24",
+     "away": 61,
+     "home": 67,
+     "text": "Motiejus Krivas makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "3:24",
+     "away": 61,
+     "home": 68,
+     "text": "Motiejus Krivas makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "3:02",
+     "away": 61,
+     "home": 69,
+     "text": "Motiejus Krivas makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "3:02",
+     "away": 61,
+     "home": 70,
+     "text": "Motiejus Krivas makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "2:51",
+     "away": 64,
+     "home": 70,
+     "text": "MJ Collins Jr. makes 24-foot three point jumper (Drake Allen assists)"
+    },
+    {
+     "period": 2,
+     "clock": "2:18",
+     "away": 64,
+     "home": 73,
+     "text": "Brayden Burries makes 26-foot three point jumper"
+    },
+    {
+     "period": 2,
+     "clock": "1:13",
+     "away": 64,
+     "home": 74,
+     "text": "Brayden Burries makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "0:59",
+     "away": 64,
+     "home": 75,
+     "text": "Ivan Kharchenkov makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "0:59",
+     "away": 64,
+     "home": 76,
+     "text": "Ivan Kharchenkov makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "0:24",
+     "away": 64,
+     "home": 78,
+     "text": "Motiejus Krivas makes 0-foot tip in layup"
+    },
+    {
+     "period": 2,
+     "clock": "0:19",
+     "away": 66,
+     "home": 78,
+     "text": "Karson Templin makes 1-foot dunk (Drake Allen assists)"
+    }
+   ]
+  }
+ },
+ "comeback": {
+  "game_id": "401858354",
+  "home_rank": null,
+  "away_rank": null,
+  "date": "2026-03-23T01:00Z",
+  "season_year": 2026,
+  "season_type": 3,
+  "week": null,
+  "matchup": "Saint Joseph's Hawks @ California Golden Bears",
+  "home_team": "California Golden Bears",
+  "home_abbr": "CAL",
+  "home_id": "25",
+  "away_team": "Saint Joseph's Hawks",
+  "away_abbr": "JOES",
+  "away_id": "2603",
+  "home_score": 75,
+  "away_score": 76,
+  "winner": "Saint Joseph's Hawks",
+  "loser": "California Golden Bears",
+  "completed": true,
+  "status": "final",
+  "overtime": false,
+  "playoffs": false,
+  "series": null,
+  "home_records": {
+   "total": "22-12",
+   "home": "17-5",
+   "road": "4-6",
+   "vsconf": "9-9"
+  },
+  "away_records": {
+   "total": "24-11",
+   "home": "13-3",
+   "road": "8-7",
+   "vsconf": "13-5"
+  },
+  "neutral_site": false,
+  "game_flow": {
+   "away_periods": [
+    "33",
+    "43"
+   ],
+   "home_periods": [
+    "41",
+    "34"
+   ],
+   "plays": [
+    {
+     "period": 1,
+     "clock": "18:59",
+     "away": 2,
+     "home": 0,
+     "text": "Dasear Haskins makes 1-foot dunk"
+    },
+    {
+     "period": 1,
+     "clock": "17:53",
+     "away": 5,
+     "home": 0,
+     "text": "Jaiden Glover-Toscano makes 23-foot three point jumper (Derek Simpson assists)"
+    },
+    {
+     "period": 1,
+     "clock": "17:08",
+     "away": 7,
+     "home": 0,
+     "text": "Dasear Haskins makes 0-foot tip in layup"
+    },
+    {
+     "period": 1,
+     "clock": "16:55",
+     "away": 7,
+     "home": 3,
+     "text": "DeJuan Campbell makes 23-foot three point jumper"
+    },
+    {
+     "period": 1,
+     "clock": "16:13",
+     "away": 9,
+     "home": 3,
+     "text": "Justice Ajogbor makes layup (Dasear Haskins assists)"
+    },
+    {
+     "period": 1,
+     "clock": "14:56",
+     "away": 9,
+     "home": 5,
+     "text": "Milos Ilic makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "14:20",
+     "away": 12,
+     "home": 5,
+     "text": "Jaiden Glover-Toscano makes 25-foot three point jumper"
+    },
+    {
+     "period": 1,
+     "clock": "14:00",
+     "away": 12,
+     "home": 8,
+     "text": "Dai Dai Ames makes 25-foot three point jumper (Milos Ilic assists)"
+    },
+    {
+     "period": 1,
+     "clock": "13:41",
+     "away": 14,
+     "home": 8,
+     "text": "Dasear Haskins makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "13:09",
+     "away": 16,
+     "home": 8,
+     "text": "Derek Simpson makes 11-foot floating jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "12:53",
+     "away": 16,
+     "home": 9,
+     "text": "Semetri Carr makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "12:37",
+     "away": 16,
+     "home": 10,
+     "text": "Dai Dai Ames makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "11:37",
+     "away": 16,
+     "home": 13,
+     "text": "Sammie Yeanay makes 23-foot three point jumper (Justin Pippen assists)"
+    },
+    {
+     "period": 1,
+     "clock": "10:44",
+     "away": 16,
+     "home": 16,
+     "text": "Semetri Carr makes 23-foot three point jumper (Justin Pippen assists)"
+    },
+    {
+     "period": 1,
+     "clock": "10:27",
+     "away": 19,
+     "home": 16,
+     "text": "Jaiden Glover-Toscano makes 24-foot three point jumper (Khaafiq Myers assists)"
+    },
+    {
+     "period": 1,
+     "clock": "10:15",
+     "away": 19,
+     "home": 18,
+     "text": "Lee Dort makes 1-foot dunk"
+    },
+    {
+     "period": 1,
+     "clock": "9:29",
+     "away": 19,
+     "home": 20,
+     "text": "Semetri Carr makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "9:17",
+     "away": 20,
+     "home": 20,
+     "text": "Anthony Finkley makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "9:17",
+     "away": 21,
+     "home": 20,
+     "text": "Anthony Finkley makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "8:51",
+     "away": 21,
+     "home": 22,
+     "text": "Lee Dort makes 4-foot turnaround jump shot (Justin Pippen assists)"
+    },
+    {
+     "period": 1,
+     "clock": "8:03",
+     "away": 23,
+     "home": 22,
+     "text": "Jaiden Glover-Toscano makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "7:44",
+     "away": 23,
+     "home": 24,
+     "text": "Justin Pippen makes 15-foot pullup jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "6:37",
+     "away": 24,
+     "home": 24,
+     "text": "Dasear Haskins makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "6:23",
+     "away": 26,
+     "home": 24,
+     "text": "Justice Ajogbor makes 0-foot tip in layup"
+    },
+    {
+     "period": 1,
+     "clock": "6:09",
+     "away": 26,
+     "home": 27,
+     "text": "Justin Pippen makes 25-foot three point jumper"
+    },
+    {
+     "period": 1,
+     "clock": "5:35",
+     "away": 26,
+     "home": 28,
+     "text": "Justin Pippen makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "5:35",
+     "away": 26,
+     "home": 29,
+     "text": "Justin Pippen makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "4:06",
+     "away": 28,
+     "home": 29,
+     "text": "Justice Ajogbor makes 0-foot dunk (Derek Simpson assists)"
+    },
+    {
+     "period": 1,
+     "clock": "3:13",
+     "away": 28,
+     "home": 32,
+     "text": "Nolan Dorsey makes 23-foot three point jumper (Dai Dai Ames assists)"
+    },
+    {
+     "period": 1,
+     "clock": "2:23",
+     "away": 28,
+     "home": 35,
+     "text": "Chris Bell makes 23-foot three point jumper (Semetri Carr assists)"
+    },
+    {
+     "period": 1,
+     "clock": "1:57",
+     "away": 31,
+     "home": 35,
+     "text": "Derek Simpson makes 23-foot three point jumper (Austin Williford assists)"
+    },
+    {
+     "period": 1,
+     "clock": "1:32",
+     "away": 31,
+     "home": 37,
+     "text": "Chris Bell makes 15-foot turnaround jump shot"
+    },
+    {
+     "period": 1,
+     "clock": "1:04",
+     "away": 33,
+     "home": 37,
+     "text": "Dasear Haskins makes 0-foot tip in layup"
+    },
+    {
+     "period": 1,
+     "clock": "0:27",
+     "away": 33,
+     "home": 39,
+     "text": "Sammie Yeanay makes 0-foot tip in layup"
+    },
+    {
+     "period": 1,
+     "clock": "0:00",
+     "away": 33,
+     "home": 41,
+     "text": "Dai Dai Ames makes 13-foot jumper"
+    },
+    {
+     "period": 2,
+     "clock": "19:39",
+     "away": 33,
+     "home": 42,
+     "text": "Lee Dort makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "19:05",
+     "away": 33,
+     "home": 44,
+     "text": "Lee Dort makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "18:20",
+     "away": 33,
+     "home": 47,
+     "text": "Chris Bell makes 25-foot three point jumper (Justin Pippen assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:33",
+     "away": 35,
+     "home": 47,
+     "text": "Dasear Haskins makes layup"
+    },
+    {
+     "period": 2,
+     "clock": "16:43",
+     "away": 35,
+     "home": 50,
+     "text": "Dai Dai Ames makes 25-foot three point jumper"
+    },
+    {
+     "period": 2,
+     "clock": "16:00",
+     "away": 35,
+     "home": 52,
+     "text": "Dai Dai Ames makes 13-foot turnaround jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "15:47",
+     "away": 36,
+     "home": 52,
+     "text": "Jaiden Glover-Toscano makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "15:25",
+     "away": 36,
+     "home": 55,
+     "text": "Chris Bell makes 26-foot three point jumper (Nolan Dorsey assists)"
+    },
+    {
+     "period": 2,
+     "clock": "15:05",
+     "away": 38,
+     "home": 55,
+     "text": "Jaiden Glover-Toscano makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "14:39",
+     "away": 40,
+     "home": 55,
+     "text": "Jaiden Glover-Toscano makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "14:16",
+     "away": 40,
+     "home": 58,
+     "text": "Chris Bell makes 25-foot three point jumper (Justin Pippen assists)"
+    },
+    {
+     "period": 2,
+     "clock": "14:01",
+     "away": 42,
+     "home": 58,
+     "text": "Justice Ajogbor makes layup (Khaafiq Myers assists)"
+    },
+    {
+     "period": 2,
+     "clock": "13:34",
+     "away": 42,
+     "home": 61,
+     "text": "Chris Bell makes 27-foot three point jumper"
+    },
+    {
+     "period": 2,
+     "clock": "13:21",
+     "away": 44,
+     "home": 61,
+     "text": "Jaiden Glover-Toscano makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "13:21",
+     "away": 45,
+     "home": 61,
+     "text": "Jaiden Glover-Toscano makes free throw 1 of 1"
+    },
+    {
+     "period": 2,
+     "clock": "12:43",
+     "away": 47,
+     "home": 61,
+     "text": "Dasear Haskins makes 1-foot dunk"
+    },
+    {
+     "period": 2,
+     "clock": "12:18",
+     "away": 47,
+     "home": 63,
+     "text": "Dai Dai Ames makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "12:18",
+     "away": 47,
+     "home": 64,
+     "text": "Dai Dai Ames makes free throw 1 of 1"
+    },
+    {
+     "period": 2,
+     "clock": "12:00",
+     "away": 50,
+     "home": 64,
+     "text": "Khaafiq Myers makes 25-foot three point jumper (Anthony Finkley assists)"
+    },
+    {
+     "period": 2,
+     "clock": "11:35",
+     "away": 50,
+     "home": 66,
+     "text": "Dai Dai Ames makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "10:21",
+     "away": 51,
+     "home": 66,
+     "text": "Jaden Smith makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "10:21",
+     "away": 52,
+     "home": 66,
+     "text": "Jaden Smith makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "9:42",
+     "away": 54,
+     "home": 66,
+     "text": "Jaden Smith makes layup"
+    },
+    {
+     "period": 2,
+     "clock": "9:20",
+     "away": 54,
+     "home": 68,
+     "text": "Lee Dort makes layup"
+    },
+    {
+     "period": 2,
+     "clock": "8:44",
+     "away": 56,
+     "home": 68,
+     "text": "Dasear Haskins makes layup (Jaden Smith assists)"
+    },
+    {
+     "period": 2,
+     "clock": "8:13",
+     "away": 56,
+     "home": 70,
+     "text": "Chris Bell makes 1-foot dunk"
+    },
+    {
+     "period": 2,
+     "clock": "7:56",
+     "away": 59,
+     "home": 70,
+     "text": "Jaden Smith makes 23-foot three point jumper (Derek Simpson assists)"
+    },
+    {
+     "period": 2,
+     "clock": "6:54",
+     "away": 61,
+     "home": 70,
+     "text": "Dasear Haskins makes 1-foot dunk"
+    },
+    {
+     "period": 2,
+     "clock": "6:29",
+     "away": 63,
+     "home": 70,
+     "text": "Derek Simpson makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "5:47",
+     "away": 63,
+     "home": 72,
+     "text": "Chris Bell makes 0-foot dunk"
+    },
+    {
+     "period": 2,
+     "clock": "4:57",
+     "away": 66,
+     "home": 72,
+     "text": "Jaiden Glover-Toscano makes 24-foot three pointer (Derek Simpson assists)"
+    },
+    {
+     "period": 2,
+     "clock": "4:11",
+     "away": 68,
+     "home": 72,
+     "text": "Jaiden Glover-Toscano makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "3:47",
+     "away": 68,
+     "home": 74,
+     "text": "Chris Bell makes 14-foot jumper (Dai Dai Ames assists)"
+    },
+    {
+     "period": 2,
+     "clock": "3:04",
+     "away": 70,
+     "home": 74,
+     "text": "Justice Ajogbor makes 1-foot dunk"
+    },
+    {
+     "period": 2,
+     "clock": "2:30",
+     "away": 73,
+     "home": 74,
+     "text": "Austin Williford makes 24-foot three point jumper (Derek Simpson assists)"
+    },
+    {
+     "period": 2,
+     "clock": "2:10",
+     "away": 73,
+     "home": 75,
+     "text": "Justin Pippen makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "1:50",
+     "away": 76,
+     "home": 75,
+     "text": "Derek Simpson makes 23-foot three point jumper (Dasear Haskins assists)"
+    }
+   ]
+  }
+ },
+ "ot": {
+  "game_id": "401856525",
+  "home_rank": 7,
+  "away_rank": 10,
+  "date": "2026-03-20T16:15Z",
+  "season_year": 2026,
+  "season_type": 3,
+  "week": null,
+  "matchup": "Santa Clara Broncos @ Kentucky Wildcats",
+  "home_team": "Kentucky Wildcats",
+  "home_abbr": "UK",
+  "home_id": "96",
+  "away_team": "Santa Clara Broncos",
+  "away_abbr": "SCU",
+  "away_id": "2541",
+  "home_score": 89,
+  "away_score": 84,
+  "winner": "Kentucky Wildcats",
+  "loser": "Santa Clara Broncos",
+  "completed": true,
+  "status": "final",
+  "overtime": true,
+  "playoffs": false,
+  "series": null,
+  "home_records": {
+   "total": "22-13",
+   "home": "14-4",
+   "road": "4-6",
+   "vsconf": "10-8"
+  },
+  "away_records": {
+   "total": "26-9",
+   "home": "14-1",
+   "road": "8-3",
+   "vsconf": "15-3"
+  },
+  "neutral_site": true,
+  "game_flow": {
+   "away_periods": [
+    "31",
+    "42",
+    "11"
+   ],
+   "home_periods": [
+    "29",
+    "44",
+    "16"
+   ],
+   "plays": [
+    {
+     "period": 1,
+     "clock": "19:22",
+     "away": 0,
+     "home": 2,
+     "text": "Malachi Moreno makes 0-foot tip in layup"
+    },
+    {
+     "period": 1,
+     "clock": "19:04",
+     "away": 0,
+     "home": 5,
+     "text": "Denzel Aberdeen makes 27-foot three point jumper (Andrija Jelavic assists)"
+    },
+    {
+     "period": 1,
+     "clock": "18:37",
+     "away": 2,
+     "home": 5,
+     "text": "Jake Ensminger makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "18:24",
+     "away": 2,
+     "home": 8,
+     "text": "Otega Oweh makes 23-foot three point jumper (Malachi Moreno assists)"
+    },
+    {
+     "period": 1,
+     "clock": "17:56",
+     "away": 4,
+     "home": 8,
+     "text": "Brenton Knapper makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "16:44",
+     "away": 6,
+     "home": 8,
+     "text": "Elijah Mahi makes 14-foot jumper"
+    },
+    {
+     "period": 1,
+     "clock": "16:10",
+     "away": 8,
+     "home": 8,
+     "text": "Sash Gavalyugov makes 6-foot jumper"
+    },
+    {
+     "period": 1,
+     "clock": "15:10",
+     "away": 8,
+     "home": 10,
+     "text": "Otega Oweh makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "14:20",
+     "away": 11,
+     "home": 10,
+     "text": "Christian Hammond makes 25-foot three point jumper (Thierry Darlan assists)"
+    },
+    {
+     "period": 1,
+     "clock": "12:28",
+     "away": 11,
+     "home": 12,
+     "text": "Brandon Garrison makes layup (Otega Oweh assists)"
+    },
+    {
+     "period": 1,
+     "clock": "12:01",
+     "away": 11,
+     "home": 14,
+     "text": "Brandon Garrison makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "11:35",
+     "away": 13,
+     "home": 14,
+     "text": "Jake Ensminger makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "11:20",
+     "away": 13,
+     "home": 16,
+     "text": "Brandon Garrison makes layup"
+    },
+    {
+     "period": 1,
+     "clock": "10:07",
+     "away": 16,
+     "home": 16,
+     "text": "Elijah Mahi makes 24-foot three point jumper (Brenton Knapper assists)"
+    },
+    {
+     "period": 1,
+     "clock": "9:38",
+     "away": 16,
+     "home": 18,
+     "text": "Mouhamed Dioubate makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "8:27",
+     "away": 16,
+     "home": 20,
+     "text": "Otega Oweh makes driving layup"
+    },
+    {
+     "period": 1,
+     "clock": "8:14",
+     "away": 18,
+     "home": 20,
+     "text": "Allen Graves makes 10-foot floating jump shot (Sash Gavalyugov assists)"
+    },
+    {
+     "period": 1,
+     "clock": "7:26",
+     "away": 18,
+     "home": 21,
+     "text": "Malachi Moreno makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "6:56",
+     "away": 18,
+     "home": 23,
+     "text": "Denzel Aberdeen makes 1-foot dunk"
+    },
+    {
+     "period": 1,
+     "clock": "5:40",
+     "away": 21,
+     "home": 23,
+     "text": "Sash Gavalyugov makes 24-foot three point jumper"
+    },
+    {
+     "period": 1,
+     "clock": "5:30",
+     "away": 21,
+     "home": 26,
+     "text": "Mouhamed Dioubate makes 23-foot three point jumper (Otega Oweh assists)"
+    },
+    {
+     "period": 1,
+     "clock": "5:09",
+     "away": 23,
+     "home": 26,
+     "text": "Bukky Oboye makes layup (Sash Gavalyugov assists)"
+    },
+    {
+     "period": 1,
+     "clock": "4:04",
+     "away": 24,
+     "home": 26,
+     "text": "Elijah Mahi makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "4:04",
+     "away": 25,
+     "home": 26,
+     "text": "Elijah Mahi makes free throw 2 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "3:39",
+     "away": 26,
+     "home": 26,
+     "text": "Christian Hammond makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "2:29",
+     "away": 26,
+     "home": 29,
+     "text": "Denzel Aberdeen makes 23-foot three point jumper (Brandon Garrison assists)"
+    },
+    {
+     "period": 1,
+     "clock": "1:49",
+     "away": 29,
+     "home": 29,
+     "text": "Elijah Mahi makes 24-foot three point jumper"
+    },
+    {
+     "period": 1,
+     "clock": "1:04",
+     "away": 30,
+     "home": 29,
+     "text": "Jake Ensminger makes free throw 1 of 2"
+    },
+    {
+     "period": 1,
+     "clock": "1:04",
+     "away": 31,
+     "home": 29,
+     "text": "Jake Ensminger makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "19:45",
+     "away": 31,
+     "home": 30,
+     "text": "Otega Oweh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "19:45",
+     "away": 31,
+     "home": 31,
+     "text": "Otega Oweh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "19:16",
+     "away": 33,
+     "home": 31,
+     "text": "Elijah Mahi makes 14-foot turnaround jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "18:48",
+     "away": 35,
+     "home": 31,
+     "text": "Bukky Oboye makes 1-foot dunk"
+    },
+    {
+     "period": 2,
+     "clock": "18:26",
+     "away": 35,
+     "home": 32,
+     "text": "Otega Oweh makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "18:26",
+     "away": 35,
+     "home": 33,
+     "text": "Otega Oweh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "18:12",
+     "away": 35,
+     "home": 35,
+     "text": "Collin Chandler makes 0-foot dunk"
+    },
+    {
+     "period": 2,
+     "clock": "17:52",
+     "away": 37,
+     "home": 35,
+     "text": "Bukky Oboye makes layup (Christian Hammond assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:30",
+     "away": 37,
+     "home": 38,
+     "text": "Otega Oweh makes 23-foot three point jumper (Denzel Aberdeen assists)"
+    },
+    {
+     "period": 2,
+     "clock": "17:04",
+     "away": 39,
+     "home": 38,
+     "text": "Christian Hammond makes 10-foot pullup jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "17:04",
+     "away": 40,
+     "home": 38,
+     "text": "Christian Hammond makes free throw 1 of 1"
+    },
+    {
+     "period": 2,
+     "clock": "16:49",
+     "away": 40,
+     "home": 41,
+     "text": "Collin Chandler makes 23-foot three point jumper (Andrija Jelavic assists)"
+    },
+    {
+     "period": 2,
+     "clock": "16:31",
+     "away": 40,
+     "home": 44,
+     "text": "Denzel Aberdeen makes 23-foot three point jumper (Otega Oweh assists)"
+    },
+    {
+     "period": 2,
+     "clock": "16:11",
+     "away": 42,
+     "home": 44,
+     "text": "Christian Hammond makes 10-foot floating jump shot"
+    },
+    {
+     "period": 2,
+     "clock": "15:18",
+     "away": 42,
+     "home": 46,
+     "text": "Otega Oweh makes driving layup (Andrija Jelavic assists)"
+    },
+    {
+     "period": 2,
+     "clock": "13:30",
+     "away": 44,
+     "home": 46,
+     "text": "Jake Ensminger makes layup (Elijah Mahi assists)"
+    },
+    {
+     "period": 2,
+     "clock": "12:56",
+     "away": 44,
+     "home": 48,
+     "text": "Brandon Garrison makes 1-foot dunk"
+    },
+    {
+     "period": 2,
+     "clock": "12:21",
+     "away": 44,
+     "home": 51,
+     "text": "Denzel Aberdeen makes 22-foot three point jumper"
+    },
+    {
+     "period": 2,
+     "clock": "12:03",
+     "away": 47,
+     "home": 51,
+     "text": "Sash Gavalyugov makes 23-foot three point jumper"
+    },
+    {
+     "period": 2,
+     "clock": "11:29",
+     "away": 49,
+     "home": 51,
+     "text": "Elijah Mahi makes driving layup (Sash Gavalyugov assists)"
+    },
+    {
+     "period": 2,
+     "clock": "10:56",
+     "away": 49,
+     "home": 53,
+     "text": "Mouhamed Dioubate makes 6-foot jumper (Collin Chandler assists)"
+    },
+    {
+     "period": 2,
+     "clock": "10:28",
+     "away": 52,
+     "home": 53,
+     "text": "Elijah Mahi makes 25-foot three point step back jumpshot"
+    },
+    {
+     "period": 2,
+     "clock": "9:07",
+     "away": 53,
+     "home": 53,
+     "text": "Allen Graves makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "9:07",
+     "away": 54,
+     "home": 53,
+     "text": "Allen Graves makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "8:54",
+     "away": 54,
+     "home": 55,
+     "text": "Otega Oweh makes layup (Collin Chandler assists)"
+    },
+    {
+     "period": 2,
+     "clock": "8:30",
+     "away": 56,
+     "home": 55,
+     "text": "Sash Gavalyugov makes 17-foot jumper (KJ Cochran assists)"
+    },
+    {
+     "period": 2,
+     "clock": "7:57",
+     "away": 59,
+     "home": 55,
+     "text": "Sash Gavalyugov makes 26-foot three pointer"
+    },
+    {
+     "period": 2,
+     "clock": "7:47",
+     "away": 59,
+     "home": 56,
+     "text": "Mouhamed Dioubate makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "7:47",
+     "away": 59,
+     "home": 57,
+     "text": "Mouhamed Dioubate makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "7:26",
+     "away": 59,
+     "home": 59,
+     "text": "Otega Oweh makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "7:26",
+     "away": 59,
+     "home": 60,
+     "text": "Otega Oweh makes free throw 1 of 1"
+    },
+    {
+     "period": 2,
+     "clock": "7:02",
+     "away": 62,
+     "home": 60,
+     "text": "Jake Ensminger makes 25-foot three point jumper"
+    },
+    {
+     "period": 2,
+     "clock": "6:14",
+     "away": 62,
+     "home": 63,
+     "text": "Kam Williams makes 30-foot three point jumper (Otega Oweh assists)"
+    },
+    {
+     "period": 2,
+     "clock": "5:44",
+     "away": 64,
+     "home": 63,
+     "text": "Allen Graves makes driving layup (Sash Gavalyugov assists)"
+    },
+    {
+     "period": 2,
+     "clock": "5:24",
+     "away": 64,
+     "home": 65,
+     "text": "Mouhamed Dioubate makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "4:48",
+     "away": 64,
+     "home": 67,
+     "text": "Otega Oweh makes driving layup"
+    },
+    {
+     "period": 2,
+     "clock": "3:41",
+     "away": 65,
+     "home": 67,
+     "text": "Allen Graves makes free throw 1 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "3:41",
+     "away": 66,
+     "home": 67,
+     "text": "Allen Graves makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "2:19",
+     "away": 68,
+     "home": 67,
+     "text": "Allen Graves makes layup (Elijah Mahi assists)"
+    },
+    {
+     "period": 2,
+     "clock": "2:03",
+     "away": 68,
+     "home": 68,
+     "text": "Otega Oweh makes free throw 2 of 2"
+    },
+    {
+     "period": 2,
+     "clock": "1:33",
+     "away": 70,
+     "home": 68,
+     "text": "Allen Graves makes layup"
+    },
+    {
+     "period": 2,
+     "clock": "0:09",
+     "away": 70,
+     "home": 70,
+     "text": "Otega Oweh makes layup (Collin Chandler assists)"
+    },
+    {
+     "period": 2,
+     "clock": "0:02",
+     "away": 73,
+     "home": 70,
+     "text": "Allen Graves makes 24-foot three point jumper (Sash Gavalyugov assists)"
+    },
+    {
+     "period": 2,
+     "clock": "0:00",
+     "away": 73,
+     "home": 73,
+     "text": "Otega Oweh makes 32-foot three point jumper"
+    },
+    {
+     "period": 3,
+     "clock": "4:06",
+     "away": 73,
+     "home": 75,
+     "text": "Otega Oweh makes driving layup"
+    },
+    {
+     "period": 3,
+     "clock": "3:46",
+     "away": 76,
+     "home": 75,
+     "text": "Elijah Mahi makes 23-foot three point jumper (Christian Hammond assists)"
+    },
+    {
+     "period": 3,
+     "clock": "3:26",
+     "away": 76,
+     "home": 77,
+     "text": "Mouhamed Dioubate makes 4-foot pullup jump shot"
+    },
+    {
+     "period": 3,
+     "clock": "2:37",
+     "away": 79,
+     "home": 77,
+     "text": "Sash Gavalyugov makes 26-foot three point jumper (Allen Graves assists)"
+    },
+    {
+     "period": 3,
+     "clock": "2:07",
+     "away": 79,
+     "home": 79,
+     "text": "Mouhamed Dioubate makes driving layup"
+    },
+    {
+     "period": 3,
+     "clock": "1:12",
+     "away": 79,
+     "home": 80,
+     "text": "Otega Oweh makes free throw 1 of 2"
+    },
+    {
+     "period": 3,
+     "clock": "1:12",
+     "away": 79,
+     "home": 81,
+     "text": "Otega Oweh makes free throw 2 of 2"
+    },
+    {
+     "period": 3,
+     "clock": "0:52",
+     "away": 79,
+     "home": 83,
+     "text": "Brandon Garrison makes 1-foot dunk (Otega Oweh assists)"
+    },
+    {
+     "period": 3,
+     "clock": "0:31",
+     "away": 79,
+     "home": 84,
+     "text": "Mouhamed Dioubate makes free throw 1 of 2"
+    },
+    {
+     "period": 3,
+     "clock": "0:31",
+     "away": 79,
+     "home": 85,
+     "text": "Mouhamed Dioubate makes free throw 2 of 2"
+    },
+    {
+     "period": 3,
+     "clock": "0:19",
+     "away": 82,
+     "home": 85,
+     "text": "Jake Ensminger makes 23-foot three point jumper"
+    },
+    {
+     "period": 3,
+     "clock": "0:17",
+     "away": 82,
+     "home": 86,
+     "text": "Otega Oweh makes free throw 1 of 2"
+    },
+    {
+     "period": 3,
+     "clock": "0:17",
+     "away": 82,
+     "home": 87,
+     "text": "Otega Oweh makes free throw 2 of 2"
+    },
+    {
+     "period": 3,
+     "clock": "0:05",
+     "away": 82,
+     "home": 89,
+     "text": "Denzel Aberdeen makes 1-foot dunk (Mouhamed Dioubate assists)"
+    },
+    {
+     "period": 3,
+     "clock": "0:02",
+     "away": 83,
+     "home": 89,
+     "text": "Allen Graves makes free throw 1 of 2"
+    },
+    {
+     "period": 3,
+     "clock": "0:02",
+     "away": 84,
+     "home": 89,
+     "text": "Allen Graves makes free throw 2 of 2"
+    }
+   ]
+  }
+ }
+}
