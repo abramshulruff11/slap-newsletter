@@ -51,6 +51,7 @@ ROOT = Path(__file__).resolve().parent
 DRAFT = ROOT / "newsletter_draft.html"
 SUBSTACK = ROOT / "newsletter_substack.html"
 BOX_SCORE_DIR = ROOT / "box_score"
+RAW_CONTENT = ROOT / "raw_content.json"
 
 # Calibrated against the last eight archived issues, which ran 15-22 tweets,
 # 6-10 GIFs and 1-2 memes. These are floors for "something is wrong", not
@@ -197,6 +198,22 @@ def main() -> int:
             f"never reached Substack ({', '.join(_si['failed'][:3])}"
             f"{'...' if len(_si['failed']) > 3 else ''}) — the published issue is "
             f"missing them; the emailed copy is not")
+    # SLA-153: ESPN's six RSS feeds were walled off for seven weeks and the only
+    # trace was a log line. fetch_content.py records per-feed health in
+    # raw_content.json; a degraded supply is shippable (a thinner issue beats
+    # none), so it warns, and the status email carries the warning.
+    try:
+        _nh = (json.loads(RAW_CONTENT.read_text(encoding="utf-8"))
+               .get("news_feed_health") or {})
+    except (OSError, ValueError):
+        _nh = {}
+    if _nh.get("degraded"):
+        _bad = [n for n, v in (_nh.get("feeds") or {}).items()
+                if v not in ("ok", "ok_proxy")]
+        warnings.append(
+            f"headline supply degraded: only {_nh.get('healthy')}/{_nh.get('total')} "
+            f"news feeds returned items (expected >= {_nh.get('min_expected')}); "
+            f"not producing: {', '.join(_bad)}")
     if share < 30 and media:
         warnings.append(f"media share {share:.0f}% — target is 40%")
 

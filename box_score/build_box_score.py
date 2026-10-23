@@ -989,10 +989,19 @@ def _render_sport_inline(sport_key, sport_data, in_playoffs):
     html = _mi_sport_divider(label)
     if in_playoffs:
         if bracket: html += _mi_bracket(bracket)
+        # The March window also covers regular-season and conference-tournament
+        # games, and the full D1 slate is ~150 a day: only real playoff games
+        # get a card; the rest ride in the compact results strip.
+        strip_games = []
+        if sport_key == "ncaamb":
+            strip_games = [g for g in games if not g.get("playoffs")]
+            games = [g for g in games if g.get("playoffs")]
         for g in games:
             if sport_key in ("nba","wnba"): html += _mi_nba_game(g)
             elif sport_key == "mlb":        html += _mi_game(g)
             else:                            html += _mi_generic_game(g)
+        if strip_games:
+            html += _mi_rule("Scores") + _mi_yesterday_strip(strip_games)
     else:
         # Regular season non-MLB: standings (+ scores strip). Leaders only if present.
         if isinstance(standings, list) and standings:

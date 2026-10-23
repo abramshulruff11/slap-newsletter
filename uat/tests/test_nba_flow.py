@@ -8,7 +8,7 @@ SLA-147: NBA game flow from the play-by-play, in three tiers.
   nba_bundle.py  baskets + line score -> one bundle per game, under a cap; names
                  only when every shooter's points match the box score; runs and
                  streaks for headline games
-  Check 3F       a quarter / lead / tie / shooter / run / streak / points claim is
+  Check 3G       a quarter / lead / tie / shooter / run / streak / points claim is
                  confirmed or flagged
   wiring         both runners attach the story order; the block leaves the
                  results list; the prompts treat the block as sourced
@@ -237,7 +237,7 @@ check("a game with no bundle keeps its plain result line",
       "Golden State Warriors 105, Los Angeles Lakers 127" in none_shown.split("## GROUND TRUTH: YESTERDAY'S GAME RESULTS")[1], True)
 
 # --------------------------------------------------------------------------
-print("Check 3F: the claims")
+print("Check 3G: the claims")
 GS = state(OT)
 HEAD = "Knicks and Cavaliers basketball quarter recap.\n"
 
@@ -318,7 +318,7 @@ cv.check_nba_flow_claims(HEAD + "Cleveland led 48-46 at the half against the Kni
                          "Cleveland led 50-46 at the half against the Knicks.", GS, outcomes)
 check("outcomes carry confirmed and HIGH", [o[0] for o in outcomes], ["confirmed", "HIGH"])
 
-print("Check 3F is part of validation, and of the editor re-check")
+print("Check 3G is part of validation, and of the editor re-check")
 html = "<h2>Knicks rally</h2><p>Knicks never trailed against the Cavaliers in a basketball game.</p>"
 fixed, found = cv.final_history_check(html, GS, autocut=False)
 check("final_history_check reports it", [(r["level"], r["kind"]) for r in found], [("HIGH", "game flow")])

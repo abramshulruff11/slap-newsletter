@@ -419,6 +419,9 @@ def _claim_kinds(window: str) -> set[str]:
     return set()
 
 
+_COLLEGE_SPORTS = ("ncaafb", "ncaamb")      # SLA-146: a college team goes by its school
+
+
 def _alias_index(teams: list[dict]) -> dict[tuple, set[str]]:
     """Token sequence -> the teams it names. A pro team goes by its full name
     or its nickname ("Knicks", "Red Sox"); a college by its school
@@ -430,7 +433,8 @@ def _alias_index(teams: list[dict]) -> dict[tuple, set[str]]:
         idx.setdefault(tuple(alias), set()).add(name)
 
     for t in teams:
-        for name, college in ((t["team"], t["sport"] == "ncaafb"), (t.get("opponent") or "", t["sport"] == "ncaafb")):
+        for name, college in ((t["team"], t["sport"] in _COLLEGE_SPORTS),
+                              (t.get("opponent") or "", t["sport"] in _COLLEGE_SPORTS)):
             toks = _tokens(name)
             if not toks:
                 continue
@@ -1465,6 +1469,19 @@ def final_history_check(html: str, game_state: dict, autocut: bool | None = None
                 sec = inject_flag_after_heading(
                     sec, f'\n<!-- ⚠ NHL GAME FLOW CLAIM LEFT IN BY THE EDITOR [{level}]: "{quoted}" -->')
             report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut, "kind": kind})
+        # SLA-146: college basketball game-flow claims, the same way.
+        ncaamb: list = []
+        check_ncaamb_flow_claims(own_text(sec), game_state, ncaamb)
+        for level, quoted, sentence, kind, fig in ncaamb:
+            if level == "confirmed" or re.search(fig, tweets, re.IGNORECASE):
+                continue
+            cut = False
+            if autocut:
+                sec, cut = _cut_sentence(sec, sentence)
+            if not cut:
+                sec = inject_flag_after_heading(
+                    sec, f'\n<!-- ⚠ COLLEGE BASKETBALL GAME FLOW CLAIM LEFT IN BY THE EDITOR [{level}]: "{quoted}" -->')
+            report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut, "kind": kind})
         # SLA-147: NBA game-flow claims, the same way. A tweet in the section
         # carrying one of the sentence's scores, runs or streaks sources it.
         nba: list = []
@@ -1817,7 +1834,232 @@ def check_nhl_flow_claims(own_text: str, game_state: dict, outcomes: list | None
 
 
 # ---------------------------------------------------------------------------
-# Check 3F: NBA game-flow claims vs the play log (SLA-147)
+# Check 3F: men's college basketball game-flow claims vs the play log (SLA-146)
+#
+# Each claim is checked against ncaamb_bundle.claim_facts(), the same play log
+# the COLLEGE BASKETBALL GAME FLOW block shows the writer:
+#
+#   a score at a point   "led 38-36 at halftime", "tied 60-60 in the second half"
+#   go-ahead / for good  "took the lead for good in the second half"
+#   tie                  "tied it in the second half"
+#   wire to wire         "never trailed", "led wire to wire"
+#   comebacks            "came back from a 15-point deficit", "erased a 12-point hole"
+#   overtime             "went to overtime" (it didn't), "double overtime" (it was one)
+#
+# HIGH only when the sentence ties to exactly one of yesterday's games that has
+# a play log and the facts contradict it; anything the log can't settle is left
+# alone, with no LOW (the SLA-142 rule). Only sections that read as basketball
+# are checked, so "took the lead in the second half" about football is not.
+# Not checked: who scored, and clock claims ("with 4 seconds left").
+# ---------------------------------------------------------------------------
+
+_HOOPS_RE = re.compile(r"\b(?:basketball|hoops|NCAA|March\s+Madness|halftime|free\s+throws?|three-pointers?|"
+                       r"buzzer|Elite\s+Eight|Sweet\s+(?:16|Sixteen)|Final\s+Four|rebounds?|dunks?|"
+                       r"overtime|double[- ]overtime)\b", re.IGNORECASE)
+_HOOPS_HALF_END_RE = re.compile(
+    r"\b(?:at|by|into)\s+(?:the\s+)?(?:half|halftime|break|intermission)\b|"
+    r"\bhalftime\s+(?:lead|score|deficit)\b|\bafter\s+(?:the\s+)?first\s+half\b|"
+    r"\b(?:entering|into|coming\s+out\s+of)\s+(?:the\s+)?(?:second\s+half|break|locker)", re.IGNORECASE)
+_HOOPS_IN_RE = re.compile(
+    r"\b(?:in|during|of)\s+(?:the\s+)?(?P<h>first|second)\s+half\b|"
+    r"\b(?:in|during)\s+(?P<ot>(?:(?P<k>double|triple)[- ]?)?(?:overtime|OT)|(?P<n>[23])OT)\b", re.IGNORECASE)
+_HOOPS_OT_RE = re.compile(
+    r"\b(?:went|goes|going|headed|heads|forced|forces|forcing|needed|needs|required|requires|"
+    r"sent\s+(?:it|the\s+game)\s+to)\s+(?:to\s+|into\s+)?(?:an?\s+)?"
+    r"(?:(?P<k>double|triple)[- ]?)?(?:extra\s+session|overtimes?|OT)\b|"
+    r"\b(?P<d>double|triple)[- ]overtime\b|\b(?P<n>[23])OT\b", re.IGNORECASE)
+_COMEBACK_HOOPS_RE = re.compile(
+    r"\b(?:came|comes|coming|rallied|rallies|rallying|clawed|fought|climbed)\s+back\s+from\s+(?:a\s+)?" + _N +
+    r"(?:-point\s+(?:deficit|hole)|\s+(?:points?\s+)?down)|"
+    r"\berased?\s+(?:a\s+)?" + _N + r"-point\s+(?:deficit|hole|lead)|"
+    r"\bfrom\s+" + _N + r"\s+(?:points?\s+)?down\b", re.IGNORECASE)
+
+
+def _hoops_periods(sentence: str) -> list[tuple[int, int, str]]:
+    """(period, position, cue) for each point in the game a sentence names.
+    "end" cues are the half ("at halftime", "entering the second half" = the
+    score after the first half); "in" cues are a half or an overtime."""
+    out = []
+    for m in _HOOPS_HALF_END_RE.finditer(sentence):
+        out.append((1, m.start(), "end"))
+    for m in _HOOPS_IN_RE.finditer(sentence):
+        if m.group("h"):
+            out.append((1 if m.group("h").lower() == "first" else 2, m.start(), "in"))
+        else:
+            k = (m.group("k") or "").lower()
+            out.append((2 + ({"double": 2, "triple": 3}.get(k) or (int(m.group("n")) if m.group("n") else 1)),
+                        m.start(), "in"))
+    return out
+
+
+def _hname(p: int) -> str:
+    return {1: "first half", 2: "second half", 3: "overtime"}.get(p, f"{p - 2}OT")
+
+
+def _hoops_claims(sentence: str, f: dict, side: str | None) -> list[tuple[str, str, str]]:
+    """(verdict, what the claim said, the fact) for every game-flow claim in
+    one sentence about college basketball game `f`. `side` is the one team
+    the sentence names, or None."""
+    out: list[tuple[str, str, str]] = []
+
+    def abbr(s):
+        return f["teams"][s]["abbr"] or f["teams"][s]["name"]
+
+    def sc(a, h):
+        return f"tied {a}-{h}" if a == h else f"{abbr('away' if a > h else 'home')} {max(a, h)}-{min(a, h)}"
+
+    periods = _hoops_periods(sentence)
+    # A score at a point in the game.
+    for m in _NHL_SCORE_PAIR_RE.finditer(sentence):
+        x, y = int(m.group(1)), int(m.group(2))
+        if x + y > 260 or _NHL_NOT_A_SCORE_AFTER.search(sentence[m.end():]) or \
+                re.search(r"\b(?:series|won|beat|beats|final|record|improved?\s+to|moved?\s+to)\s+(?:the\s+\w+\s+)?$",
+                          sentence[:m.start()], re.IGNORECASE):
+            continue
+        near = min(periods, key=lambda q: abs(q[1] - m.start()), default=None)
+        if near is None or abs(near[1] - m.start()) > 70 or near[0] > f["periods"]:
+            continue
+        if sentence[max(0, m.start() - 1):m.start()] == "(" or sentence[m.end():m.end() + 1] == ")":
+            continue                                    # "Iowa (27-6)": a record
+        p, _, cue = near
+        pre = sentence[max(0, m.start() - 60):m.start()]
+        if cue == "in" and (tuple(sorted((x, y))) == f["final"] or not _NHL_SCORE_CUE.search(pre)):
+            continue                                    # "beat Duke 74-70 in the second half"
+        want = None
+        if side and _NHL_LEAD_CUE.search(pre):
+            want = (max(x, y), min(x, y))
+        elif side and _NHL_TRAIL_CUE.search(pre):
+            want = (min(x, y), max(x, y))
+
+        def fits(st, want=want, x=x, y=y):
+            if want is not None:
+                return (st if side == "away" else (st[1], st[0])) == want
+            return sorted(st) == sorted((x, y))
+        pool = [f["half"]] if cue == "end" else sorted(f["scores"][p])
+        label = "at halftime" if cue == "end" else f"in the {_hname(p)}"
+        if any(fits(st) for st in pool):
+            out.append(("confirm", m.group(0), ""))
+        else:
+            out.append(("contradict", f"{m.group(0)} {label}",
+                        f"the score {label} was " + (sc(*pool[0]) if cue == "end" else
+                                                     "one of " + " / ".join(sc(*st) for st in pool[:6]))))
+    # Go-ahead, for good.
+    for m in _NHL_GO_AHEAD_RE.finditer(sentence):
+        near = min([q for q in periods if q[2] == "in"], key=lambda q: abs(q[1] - m.start()), default=None)
+        if near is None or abs(near[1] - m.start()) > 70 or re.match(r"\s+(?:a|the)\s+\d", sentence[m.end():]):
+            continue
+        p = near[0]
+        good = bool(re.search(r"\bfor\s+good\b", sentence[m.start():m.end() + 40], re.IGNORECASE))
+        if good:
+            fg = f["for_good"]
+            ok = fg is not None and fg[1] == p and (side is None or fg[0] == side)
+            fact = f"{abbr(fg[0])} took the lead for good in the {_hname(fg[1])}" if fg else "no lead held"
+        else:
+            ok = any(i == p and (side is None or s == side) for s, i in f["go_ahead"])
+            ga = [f"{abbr(s)} in the {_hname(i)}" for s, i in f["go_ahead"] if side is None or s == side]
+            fact = ("the lead was taken only " + ", ".join(ga)) if ga else \
+                   f"{abbr(side) if side else 'nobody'} never took the lead"
+        out.append(("confirm" if ok else "contradict", f"{m.group(0)} in the {_hname(p)}", fact))
+    # Tie.
+    for m in _NHL_TIE_RE.finditer(sentence):
+        near = min([q for q in periods if q[2] == "in"], key=lambda q: abs(q[1] - m.start()), default=None)
+        if near is None or abs(near[1] - m.start()) > 70:
+            continue
+        p = near[0]
+        if any(i == p and (side is None or s == side) for s, i in f["ties"]):
+            out.append(("confirm", m.group(0), ""))
+        else:
+            ties = [f"{abbr(s)} in the {_hname(i)}" for s, i in f["ties"] if side is None or s == side]
+            out.append(("contradict", f"{m.group(0)} in the {_hname(p)}",
+                        ("it was tied only by " + ", ".join(ties)) if ties else "the game was never tied"))
+    # Wire to wire, never trailed.
+    win = f["winner"]
+    m = _NHL_WIRE_RE.search(sentence)
+    if m:
+        who = side or win
+        never_trailed = f["max_deficit"][who] == 0
+        ok = (f["wire_to_wire"] and who == win) if "wire" in m.group(0).lower() else never_trailed
+        out.append(("confirm" if ok else "contradict", m.group(0),
+                    f"{abbr(who)} trailed by as many as {f['max_deficit'][who]}" if not never_trailed
+                    else f"{abbr(who)} did not lead from the first basket on"))
+    for m in _COMEBACK_HOOPS_RE.finditer(sentence):
+        got = next((g for g in m.groups() if g), None)
+        if got is None:
+            continue
+        n = _nhl_num(got)
+        who = side or win
+        out.append(("confirm" if f["max_deficit"][who] >= n else "contradict", m.group(0),
+                    f"{abbr(who)} trailed by at most {f['max_deficit'][who]}"))
+    # Overtime.
+    ot = f["periods"] - 2
+    for m in _HOOPS_OT_RE.finditer(sentence):
+        k = (m.group("k") or m.group("d") or "").lower()
+        need = {"double": 2, "triple": 3}.get(k) or (int(m.group("n")) if m.group("n") else 1)
+        out.append(("confirm" if ot >= need else "contradict", m.group(0),
+                    "it ended in regulation" if ot == 0 else f"it went to {ot} overtime(s)"))
+    return out
+
+
+def check_ncaamb_flow_claims(own_text: str, game_state: dict, outcomes: list | None = None) -> list[str]:
+    """`own_text`: one section's own prose (no tweets), one block per line.
+    `outcomes`, if given, collects (level, quoted, sentence, kind, figure)
+    for every sentence with a game-flow claim, confirmed ones included."""
+    import ncaamb_bundle
+    facts = ncaamb_bundle.claim_facts(game_state or {})
+    if not facts or not _HOOPS_RE.search(own_text):
+        return []
+    by_name, dup = {}, set()
+    for f in facts:
+        for s in ("away", "home"):
+            n = f["teams"][s]["name"]
+            if n in by_name:
+                dup.add(n)                              # a team can't play twice in a night: ambiguous
+            by_name[n] = (f, s)
+    for n in dup:
+        del by_name[n]
+    if not by_name:
+        return []
+    idx = _alias_index([{"team": n, "sport": "ncaamb", "opponent": ""} for n in by_name])
+
+    def games_of(text):
+        return {by_name[n][0]["game_id"]: by_name[n][0] for n in _named(text, idx) if n in by_name}
+
+    section_games = games_of(own_text)
+    flags = []
+    for sentence in _sentences(own_text):
+        if _NHL_ELSEWHERE_RE.search(sentence):
+            continue                                    # another game, another year
+        named = [n for n in _named(sentence, idx) if n in by_name]
+        cands = games_of(sentence) or section_games
+        if len(cands) != 1:
+            continue
+        f = next(iter(cands.values()))
+        sides = {by_name[n][1] for n in named if by_name[n][0] is f}
+        side = next(iter(sides)) if len(sides) == 1 else None
+        results = _hoops_claims(sentence, f, side)
+        if not results:
+            continue
+        quoted = _quote(sentence)
+        bad = [(said, fact) for v, said, fact in results if v == "contradict"]
+        figs = [r"(?<![\d-])" + re.escape(m.group(0)) + r"(?![\d-])" for m in _NHL_SCORE_PAIR_RE.finditer(sentence)]
+        fig = "|".join(figs) or r"(?!x)x"
+        if not bad:
+            if outcomes is not None:
+                outcomes.append(("confirmed", quoted, sentence, "game flow", fig))
+            continue
+        t = f["teams"]
+        why = "; ".join(f"{a} -> but {b}" for a, b in bad).replace('"', "'").replace("--", "-")
+        flags.append(
+            f'\n<!-- FACT FLAG [HIGH]: "{quoted}" contradicts the play log of {t["away"]["name"]} @ '
+            f'{t["home"]["name"]}: {why} (ESPN; the COLLEGE BASKETBALL GAME FLOW block has the full flow). '
+            f'Correct it to the block, or cut it. -->')
+        if outcomes is not None:
+            outcomes.append(("HIGH", quoted, sentence, "game flow", fig))
+    return flags
+
+
+# ---------------------------------------------------------------------------
+# Check 3G: NBA game-flow claims vs the play log (SLA-147)
 #
 # Each claim below is checked against nba_bundle.claim_facts(), the same
 # baskets the NBA GAME FLOW block shows the writer:
@@ -1884,7 +2126,7 @@ _NBA_ELSEWHERE_RE = re.compile(r"\bGame\s+\d\b|\b(?:19|20)\d{2}\b|\blast\s+(?:ni
 _NBA_HALF_RE = re.compile(r"\b(?:first|second)[- ]half\b", re.IGNORECASE)
 _NBA_NICKS2 = {"trail blazers"}
 _NBA_SHARED_CITIES = {"new york", "los angeles"}
-_HOOPS_RE = re.compile(r"\b(?:NBA|basketball|quarter|halftime|at\s+the\s+half|first\s+half|second\s+half|three-pointers?|"
+_NBA_HOOPS_RE = re.compile(r"\b(?:NBA|basketball|quarter|halftime|at\s+the\s+half|first\s+half|second\s+half|three-pointers?|"
                        r"3-pointers?|dunks?|free\s+throws?|buzzer|layups?|rebounds?|point\s+guard|buckets?|hoops|"
                        r"jumpers?|and-one|triple-double|go-ahead\s+three|fourth\s+quarter|Q[1-4])\b", re.IGNORECASE)
 _NBA_COMEBACK_RE = re.compile(
@@ -2291,7 +2533,7 @@ def check_nba_flow_claims(own_text: str, game_state: dict, outcomes: list | None
     for every sentence with a game-flow claim, confirmed ones included."""
     import nba_bundle
     facts = nba_bundle.claim_facts(game_state or {})
-    if not facts or not _HOOPS_RE.search(own_text):
+    if not facts or not _NBA_HOOPS_RE.search(own_text):
         return []
     by_name, dup = {}, set()
     for f in facts:
@@ -2440,7 +2682,10 @@ def validate_section(heading: str, section_html: str, game_state: dict) -> tuple
     # ── CHECK 3E: NHL game-flow claims vs the goal log (SLA-148) ─────────────
     flags.extend(check_nhl_flow_claims(own_text(section_html), game_state))
 
-    # ── CHECK 3F: NBA game-flow claims vs the play log (SLA-147) ─────────────
+    # ── CHECK 3F: college basketball game-flow claims vs the play log (SLA-146)
+    flags.extend(check_ncaamb_flow_claims(own_text(section_html), game_state))
+
+    # ── CHECK 3G: NBA game-flow claims vs the play log (SLA-147) ─────────────
     flags.extend(check_nba_flow_claims(own_text(section_html), game_state))
 
     # ── CHECK 3C: Football rank and record claims (SLA-117) ──────────────────

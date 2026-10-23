@@ -67,6 +67,36 @@ two-job split. Beehiiv remains unused (post API is enterprise-only).
 
 ---
 
+## Merging & Branch Hygiene (read before merging anything)
+
+State of play as of 2026-10-22: game-flow bundles for MLB (SLA-142), NHL (SLA-148) and college
+basketball (SLA-146, plus the all-D1 scoreboard fetch SLA-152) are all on `main`. **Open:** SLA-147
+(NBA) is in progress in the worktree `../slap-newsletter-sla147` with NO commits yet; SLA-77
+(playoff brackets) lives in the `slap-sports-db` repo, not here (its first slice is on that repo's
+`sla-81-ncaamb-backfill` branch). The next pipeline run is the first to combine NCAAMB flow with
+the full D1 slate: check run time and prompt size on a heavy college basketball day.
+
+How to land a branch, one at a time:
+1. `git fetch`, then rebase the branch onto `origin/main`. Never merge two branches at once.
+2. Run every `uat/tests/test_*.py` (set `ANTHROPIC_API_KEY=sk-x`), the Node studio suite,
+   `uat/probe_retry.py` and `uat/promote.py`. `test_gif_tagger` fails locally without `httpx2`:
+   known, unrelated, CI passes it.
+3. Push, `gh pr create`, wait for `gh pr checks --watch`, then `gh pr merge --merge`. Never
+   force-push `main`; force-with-lease only on your own branch.
+4. Keep the banned-phrase SYNC PAIR (`pass2_writer.txt` / `editor_prompt.txt`) identical, and keep
+   prod and UAT prompt copies as each branch intended: promote only with `uat/promote.py`.
+5. Only delete a branch after `git merge-base --is-ancestor <branch> origin/main` is true.
+
+Gotchas: there is no shared `game_flow.py`: each sport has its own `<sport>_bundle.py`, so the
+shared hot spots are `fetch_sports_data.py`, `claim_validator.py`, both runners and the prompts.
+Do the work in a worktree (`.claude/worktrees/`), not the main checkout: the main checkout once
+carried a stale index (18 commits behind) that looked like 44 uncommitted files. OneDrive can lock
+`.git/worktrees/*` on removal ("Permission denied"); retry later or delete the folder by hand.
+`git status` hides daily CI output under `archive/` (see the Archive/archive case note). A branch
+with no commits can look "merged"; check for uncommitted work in its worktree before deleting.
+
+---
+
 ## Session Summary Format (for Abram)
 
 Abram doesn't review code directly — he engages at the level of ideas, quality, and trade-offs.
@@ -157,6 +187,8 @@ slap-newsletter/
 │                                 (box_score.agate.goals); summary_lines() renders it under 3.5K
 ├── nba_bundle.py              ← SLA-147: NBA game flow in three tiers from the play log
 │                                 (box_score.agate.plays, with shooters); renders under 6K
+├── ncaamb_bundle.py           ← SLA-146: men's college basketball game flow per game from ESPN's
+│                                 play-by-play (game["game_flow"]); 4K cap; Pass 3 Check 3F
 ├── run_status.py              ← per-run state on disk, shared across processes
 ├── pipeline_status.py         ← per-STAGE outcomes on top of run_status.json;
 │                                 PIPELINE_STAGES is the declared stage list
@@ -847,7 +879,7 @@ into the NBA GAME FLOW part of every pass's GROUND TRUTH, through the same `game
   regular-season slate (2026-10-21) renders in full at 5,848, one headline game in full and the
   rest as summaries; the archive's playoff days average 1,874 (max 3,793). A heavier slate drops the
   least dramatic games to a flow line, then to their plain result line, and says how many.
-- **Pass 3 Check 3F** (`check_nba_flow_claims`): a score or margin at a point ("led 52-48 at the
+- **Pass 3 Check 3G** (`check_nba_flow_claims`): a score or margin at a point ("led 52-48 at the
   half", "up 12 entering the fourth"), go-ahead / for good / tie in a quarter, a shooter's basket
   ("Brunson hit the go-ahead three", "Haliburton's game-winner", "Shamet's game-tying three": the
   basket must exist, in that quarter, worth that much), runs ("a 14-0 run", "an 11-2 run": a stretch
@@ -867,6 +899,37 @@ into the NBA GAME FLOW part of every pass's GROUND TRUTH, through the same `game
   borrowed from `nhl_bundle.py` (one copy, imported); a shared `render()` for all sports is the
   obvious next consolidation. Locked by `uat/tests/test_nba_flow.py` (real games in
   `uat/fixtures/nba/`, built by `uat/build_nba_fixture.py`).
+
+**Men's college basketball gets game flow too (SLA-146, 2026-10-21).** College basketball had no
+box score, so the writer had only final scores. `fetch_sports_data._parse_ncaamb_flow()` keeps the
+score by half (and overtime) plus every scoring play with the running score, under
+`game["game_flow"]` (deliberately NOT `box_score`, so the box score images are untouched).
+`ncaamb_bundle.py` turns it into the MEN'S COLLEGE BASKETBALL GAME FLOW part of every pass's GROUND
+TRUTH on the shared `game_flow.py` core: the score at the half, who scored first, lead changes and
+ties, the winner's biggest deficit and lead, when the winner took the lead for good, overtime, and
+a "decided by N; last basket ..." line for finishes within 3.
+- **One ESPN summary per game, capped.** `MAX_FLOW_FETCHES = 30`, best-ranked games first
+  (`_best_rank`); a Saturday has 100+ games, so the rest stay plain result lines. Compact: ~80 chars
+  of text per play, no per-player data.
+- **Checked, or left out.** Plays must add up to the half scores and the final, or the game's flow is
+  dropped. Over 97 real games on six days (Jan-Apr 2026): 93 usable, 4 dropped, all ESPN play logs
+  that don't sum to ESPN's own half scores.
+- **Cap 4,000 chars:** NCAA tournament and story games in full, then ranked games, then the rest as a
+  flow line, close games first. `attach_story()` runs in both runners after Pass 1.
+- **Pass 3 Check 3F** (`check_ncaamb_flow_claims`): the halftime score, a score "in the second half",
+  "took the lead (for good) in the second half", "tied it", "never trailed" / wire to wire, "came back
+  from a 15-point deficit", and "went to overtime" / "double overtime" against
+  `ncaamb_bundle.claim_facts()`; HIGH only when the sentence ties to exactly one game, and a claim
+  the log can't settle is left alone. Not checked: who scored, clock claims ("with 4 seconds left").
+  A sentence naming both teams has no single "side", so "X never trailed against Y" is checked against
+  the winner only. `final_history_check` re-checks the final draft.
+- **Known limits.** No records, polls or "first since" facts all season (slap-sports-db holds NCAAMB
+  champions only; SLA-81). Ranks are ESPN's `curatedRank`. **Gap 1 is a separate ticket:** the
+  scoreboard still asks for `limit=50` with no `groups=50`, so ESPN returns only the featured slate
+  (7 of 21 games on 2026-03-14); until that lands, most games never reach this bundle. The replay
+  against archived issues was not possible: the archive starts 2026-04-20, after the season.
+  Locked by `uat/tests/test_ncaamb_flow.py` (real games in `uat/fixtures/ncaamb/`, built by
+  `uat/build_ncaamb_fixture.py`).
 
 **Calendar beats hierarchy:** Tier 1 sports calendar events (NBA Playoffs, Super Bowl, Masters,
 etc.) override the NFL-first hierarchy in Pass 1. Check the calendar before selecting the lead.
@@ -1348,6 +1411,12 @@ unstaged, which breaks `git pull --rebase`.
   is job-level in `daily-newsletter.yml`. `game_state.json` carries a `fetch_health` block and
   `check_game_state.py` (continue-on-error step) fails loudly on a blocked fetch. Offline test:
   `uat/tests/test_proxy_fallback.py`. Full review: `docs/code_review_2026-09-04.md`.
+- **Spoofed-browser UAs rot (news feeds FIXED 2026-10-22, SLA-153; sports data still exposed):** the
+  8/24 ESPN RSS outage was a hardcoded Chrome UA aging into an AWS WAF "outdated browser" rule.
+  `fetch_content.py` news feeds no longer claim Chrome (`NEWS_UA_LADDER`, below), but
+  `fetch_sports_data.py` still pins Chrome/124 in `_UA_LIST` / `_browser_headers`. That path is
+  verified working (`site.api.espn.com` is a different origin and its 403-retry covers it) but is
+  the same class of time bomb. If sports data starts failing, check the UA version first.
 - **`game_state.json` freshness — guard added (see above):** `fetch_sports_data.py` always stamps the file
   with today's date, even if every ESPN call silently fails (each is wrapped in try/except
   returning empty). A today-stamped but *hollow* file degrades silently — the newsletter loses its
@@ -1482,7 +1551,7 @@ for …") omitted.
 **2026-10-22 — NBA game flow: baskets, shooters, runs and streaks for the writer (SLA-147)**
 - `nba_bundle.py` on the shared `game_flow.py`; the fetch keeps every basket with its shooter; three
   tiers (every game a summary, headline games get runs and streaks); both runners attach the story
-  order; Check 3F confirms or flags quarter / lead / tie / shooter / run / streak / points claims;
+  order; Check 3G confirms or flags quarter / lead / tie / shooter / run / streak / points claims;
   RULE 3 and editor Check 9 (both prompt copies) treat the block as sourced.
 - **Found while building it:** ESPN's running score is stale on some plays (4 of 11 games on the
   2026-10-21 slate), so the fetch tallies the score from the point values instead. Also: ESPN had no
@@ -1490,6 +1559,13 @@ for …") omitted.
 - Replay over the archive: 65 games, 12 claims confirmed, 1 HIGH (a real error that shipped), after
   fixing 2 false alarms the replay found.
 - `uat/tests/test_nba_flow.py`; `test_runner_drift.py` `main` re-pinned.
+**2026-10-21 — College basketball game flow: halves, lead changes, the go-ahead for good (SLA-146)**
+- The fetch keeps a compact play log for up to 30 games a day (ranked first); `ncaamb_bundle.py` builds
+  the block on `game_flow.py`; both runners attach the story order; Check 3F flags halftime / lead /
+  comeback / overtime claims; RULE 3 and editor Check 8/9 (both prompt copies) treat the block as sourced.
+- 93 of 97 real games had a play log that adds up; the 4 that didn't are dropped to plain results.
+- `uat/tests/test_ncaamb_flow.py`; `test_runner_drift.py` `main` re-pinned.
+- Not done here: the scoreboard fix (Gap 1, own ticket) and database facts (SLA-81).
 
 **2026-10-20 — NHL game flow: goals, lead changes and the go-ahead goal for the writer (SLA-148)**
 - Built the shared `game_flow.py` core and `nhl_bundle.py` on it; the fetch keeps the goal log;
@@ -1501,6 +1577,28 @@ for …") omitted.
   final), block max 3,447 / mean 2,196 chars, 0 HIGH after fixing 5 false alarms the replay found.
 - `uat/tests/test_nhl_flow.py`; `test_runner_drift.py` `main` re-pinned.
 - Next in the SLA-143 order: NBA (SLA-147, done 2026-10-22) and college football (SLA-145) reuse `game_flow.py`.
+
+**2026-10-22 — Headline supply: UA ladder, proxy last, health in the status email (SLA-153)**
+- Rescued from a month-old uncommitted worktree (branch `claude/loving-brahmagupta-cc56d6`) and
+  reconciled with the 9/4 proxy fallback. Root cause of 8/24: `espn.com/espn/rss/*` sits behind AWS
+  WAF Bot Control, which challenges a UA claiming a STALE Chrome build with HTTP 202 + an empty JS
+  challenge body that feedparser parses into zero entries. Chrome <= 139 was challenged; Firefox,
+  Safari, curl, feedparser's default and no UA were never. 202 is a success code, so nothing flagged
+  it. (The 7/15-9/4 outage this file already records was the same wall.)
+- `fetch_one_news_feed()`: walks `NEWS_UA_LADDER` (an honest non-Chrome UA first, never claims
+  Chrome) past a bot wall, then tries the proxy LAST, with the ladder UA (a frozen Chrome through the
+  proxy would meet the same WAF). Labels: `ok` / `ok_proxy` / `blocked` / `empty` / `error`.
+  `BROWSER_UA` is Nitter-only now. `python-requests/*` is separately 403'd: don't use a stock library UA.
+- Health: `news_feed_health` in `raw_content.json` (per-feed labels, healthy count,
+  `MIN_HEALTHY_NEWS_FEEDS = 5` of 7, `degraded`). Measured on entries the FEED returned, not
+  headlines surviving the 24h filter, so an out-of-season feed is healthy.
+- `verify_run.py` WARNS on a degraded supply, which reaches the SLA-52 status email. It does not fail
+  the run and does not move the verdict (a thinner issue beats none; warnings never downgrade).
+  Deliberately NOT a workflow `::warning::` annotation: the email is the one notification channel.
+- `generate_newsletter.run_pass1` (both runners) drops `news_feed_health` from Pass 1's payload so it
+  is never mistaken for story material; `KNOWN_DIVERGENT["run_pass1"]` re-pinned.
+- New `uat/tests/test_news_feeds.py` (ladder walks a 202, proxy last, blocked/empty/error, 6-of-7
+  ESPN feeds dead = degraded, one flaky feed = fine, verify_run warns without failing).
 
 **2026-10-19 — MLB game flow reaches the writer; Pass 3 checks inning claims (SLA-142)**
 - Spike: ESPN already held every MLB game's line score and scoring plays; nothing read them but

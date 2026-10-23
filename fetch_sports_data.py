@@ -467,11 +467,19 @@ def parse_game(event: dict) -> dict | None:
 # ESPN API fetchers
 # ---------------------------------------------------------------------------
 
+# Men's college basketball: without groups=50 ESPN returns only the featured /
+# Top-25 slate (5 of 54 games on 2026-01-21, 7 of 21 on 2026-03-14). 50 is the
+# Division I group; a heavy March day is ~150 games, so the limit is generous.
+SCOREBOARD_QUERY = {
+    "mens-college-basketball": "&groups=50&limit=300",
+}
+
+
 def fetch_scoreboard(sport: str, league: str, target_date: date) -> list[dict]:
     """Fetch all games for a given date. Returns list of parsed game dicts."""
     url = (
         f"{ESPN_BASE}/{sport}/{league}/scoreboard"
-        f"?dates={format_date(target_date)}&limit=50"
+        f"?dates={format_date(target_date)}{SCOREBOARD_QUERY.get(league, '&limit=50')}"
     )
     data = fetch_url(url)
     if not data:
@@ -1390,6 +1398,38 @@ def _parse_football_box(summary: dict) -> dict:
     return result
 
 
+def _parse_ncaamb_flow(summary: dict) -> dict | None:
+    """Men's college basketball game flow (SLA-146): the score by half (and
+    overtime) plus every scoring play with the running score, kept compact.
+
+    Not a box score: it is stored under game["game_flow"], never "box_score",
+    so the box score images are untouched. ESPN's play-by-play carries
+    awayScore/homeScore AFTER each play and scoringPlay true on made shots and
+    free throws (61-86 per game). Returns None when either half is missing.
+    """
+    periods = _parse_period_scores(summary)
+    if periods["count"] < 2 or "-" in periods["away_periods"] + periods["home_periods"]:
+        return None
+    plays = []
+    for play in summary.get("plays") or []:
+        play = play or {}
+        if not play.get("scoringPlay"):
+            continue
+        period = (play.get("period") or {}).get("number")
+        away, home = play.get("awayScore"), play.get("homeScore")
+        if not isinstance(period, int) or away is None or home is None:
+            continue
+        plays.append({
+            "period": period,
+            "clock":  (play.get("clock") or {}).get("displayValue", ""),
+            "away":   away,
+            "home":   home,
+            "text":   (play.get("text") or "")[:80],
+        })
+    return {"away_periods": periods["away_periods"], "home_periods": periods["home_periods"],
+            "plays": plays}
+
+
 def parse_box_score(summary: dict, sport_key: str) -> dict:
     """Dispatch to the correct sport parser."""
     if sport_key == "nba" or sport_key == "wnba":
@@ -1667,6 +1707,12 @@ CFB_REQUIRE_BOTH_RANKED = False
 # extra ESPN summary request through the proxy; this bounds a runaway slate.
 MAX_FOOTBALL_BOX_FETCHES = 16
 
+# SLA-146: men's college basketball has no box scores, only game flow, which
+# costs one ESPN summary per game. A Saturday is 100+ games, so the cap keeps
+# the best ones (ranked first, via _best_rank) and the rest stay result lines.
+FLOW_SPORTS = {"ncaamb"}
+MAX_FLOW_FETCHES = 30
+
 
 def fetch_cfb_rankings() -> list[dict]:
     """
@@ -1925,6 +1971,31 @@ def main() -> None:
                 time.sleep(0.25)
         if box_count:
             print(f"    {box_count} box score(s) fetched")
+
+        # SLA-146: game flow (halves + scoring timeline) for sports with no
+        # box score. Ranked games first; a parser surprise costs one game.
+        if key in FLOW_SPORTS:
+            todo = [g for g in yesterday_games if g.get("completed") and g.get("game_id")]
+            todo.sort(key=_best_rank)
+            if len(todo) > MAX_FLOW_FETCHES:
+                print(f"    Capping game flow at {MAX_FLOW_FETCHES} (slate had {len(todo)})")
+                todo = todo[:MAX_FLOW_FETCHES]
+            flow_count = 0
+            for game in todo:
+                summary = fetch_game_summary(sport, league, game["game_id"])
+                if summary:
+                    try:
+                        flow = _parse_ncaamb_flow(summary)
+                    except Exception as exc:
+                        print(f"    ✗ game flow failed for {game.get('matchup', game['game_id'])}: "
+                              f"{type(exc).__name__}: {exc}")
+                        flow = None
+                    if flow:
+                        game["game_flow"] = flow
+                        flow_count += 1
+                time.sleep(0.25)
+            if flow_count:
+                print(f"    {flow_count} game flow(s) fetched")
 
         # League leaders
         leaders = fetch_league_leaders(sport, league, key)

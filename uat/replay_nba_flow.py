@@ -1,7 +1,7 @@
 """
 Run:  python -X utf8 uat/replay_nba_flow.py [--from 2026-04-20] [--to 2026-10-19] [--show HIGH]
 
-SLA-147: replays Pass 3's NBA game-flow check (Check 3F) over archived issues.
+SLA-147: replays Pass 3's NBA game-flow check (Check 3G) over archived issues.
 For each issue date it rebuilds the previous day's NBA games exactly as the
 fetch step does (scoreboard, then each game's ESPN summary through
 parse_box_score, so the play log is the production one), then runs

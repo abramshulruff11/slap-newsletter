@@ -45,7 +45,7 @@ UAT = REPO / "uat" / "generate_newsletter_uat.py"
 # pinned: touch either copy and this test fails until you have looked at the
 # counterpart and deliberately re-recorded the hash.
 KNOWN_DIVERGENT = {
-    "run_pass1": dict(prod="79188849f3bf", uat="f4e2c934a86e", reason=(
+    "run_pass1": dict(prod="8f3a13cac82a", uat="dbec20f73d3b", reason=(
         "Bidirectional, and the two now hold DIFFERENT video policies on "
         "purpose. Prod (2026-09-04): video tweets are tagged by fetch_content, "
         "marked for Pass 1 in the payload, and removed from the headliners by "
@@ -77,7 +77,7 @@ KNOWN_DIVERGENT = {
     "pre_edit": dict(prod="5b2c136f2496", uat="73360843476a", reason=(
         "Small drift in both directions; not yet reconciled."
     )),
-    "main": dict(prod="3533ae54e7f0", uat="0e25f4ba71c9", reason=(
+    "main": dict(prod="b971665d3530", uat="0e25f4ba71c9", reason=(
         "Not real drift. UAT's entry point is run_uat.py, so its main() is a "
         "5-line stub. Expected to stay divergent permanently. (2026-09-04: prod "
         "now strips HTML comments from the published Substack file. Nothing to "
@@ -108,9 +108,9 @@ KNOWN_DIVERGENT = {
         "prod's main() calls mlb_bundle.attach_story next to it; run_uat.py does the "
         "same at the same call site. 2026-10-20 (SLA-148): prod's main() also calls "
         "nhl_bundle.attach_story right after it; run_uat.py does the same at its own "
-        "Pass 2 call site, and test_nhl_flow.py checks both. 2026-10-22 (SLA-147): "
-        "prod's main() also calls nba_bundle.attach_story right after it; run_uat.py "
-        "does the same, and test_nba_flow.py checks both.)"
+        "Pass 2 call site, and test_nhl_flow.py checks both. 2026-10-21 (SLA-146): both runners also call "
+        "ncaamb_bundle.attach_story right after it, and test_ncaamb_flow.py checks both. 2026-10-22 (SLA-147): "
+        "both runners also call nba_bundle.attach_story right after that, and test_nba_flow.py checks both.)"
     )),
 }
 

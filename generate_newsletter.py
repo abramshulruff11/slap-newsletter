@@ -275,6 +275,9 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         return d
 
     raw_slim = dict(raw)
+    # Operational metadata, not content -- keep it out of the prompt so the story
+    # selector never sees fetch bookkeeping as something to write about.
+    raw_slim.pop("news_feed_health", None)
     raw_slim["news_headlines"] = [_slim_item(h) for h in raw.get("news_headlines", [])]
     raw_slim["tweets"]         = [_slim_tweet(t) for t in raw.get("tweets", [])]
 
@@ -1288,6 +1291,9 @@ def main() -> None:
     # SLA-147: NBA game flow, the same way.
     import nba_bundle
     print("  " + nba_bundle.attach_story(game_state, story_plan))
+    # SLA-146: men's college basketball game flow, the same way.
+    import ncaamb_bundle
+    print("  " + ncaamb_bundle.attach_story(game_state, story_plan))
 
     draft_html    = run_pass2(story_plan, client, game_state, degraded=degraded)
 

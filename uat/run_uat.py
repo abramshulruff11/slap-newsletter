@@ -434,6 +434,9 @@ def main() -> None:
         # SLA-147: NBA game flow, the same way.
         import nba_bundle
         print("  " + nba_bundle.attach_story(game_state, story_plan))
+        # SLA-146: men's college basketball game flow, the same way.
+        import ncaamb_bundle
+        print("  " + ncaamb_bundle.attach_story(game_state, story_plan))
         html = G.run_pass2(story_plan, client, game_state, highlight_plan=converted)
         (G.OUTPUT_DIR / "pass2_raw.html").write_text(html, encoding="utf-8")
     else:
