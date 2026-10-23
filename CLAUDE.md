@@ -185,6 +185,8 @@ slap-newsletter/
 │                                 NBA / college football / college basketball reuse it
 ├── nhl_bundle.py              ← SLA-148: NHL game flow, one bundle per game from the goal log
 │                                 (box_score.agate.goals); summary_lines() renders it under 3.5K
+├── nba_bundle.py              ← SLA-147: NBA game flow in three tiers from the play log
+│                                 (box_score.agate.plays, with shooters); renders under 6K
 ├── ncaamb_bundle.py           ← SLA-146: men's college basketball game flow per game from ESPN's
 │                                 play-by-play (game["game_flow"]); 4K cap; Pass 3 Check 3F
 ├── run_status.py              ← per-run state on disk, shared across processes
@@ -849,6 +851,55 @@ payload into a timeline.
   same function as `mlb_bundle.game_result_lines`; whichever branch merges second should point one at
   the other so there is one copy.
 
+**NBA games get game flow in three tiers, with shooters (SLA-147, 2026-10-22).** Same idea as the
+NHL, one step further. `fetch_sports_data._parse_nba_plays()` keeps every made shot and free throw
+under `box_score.agate.plays` (period, clock, seconds left, scoring side, points, shooter and id,
+assister, ESPN's text) from the summary the fetch already requested, and `nba_bundle.py` turns it
+into the NBA GAME FLOW part of every pass's GROUND TRUTH, through the same `game_flow.py`.
+- **Tier 1, stored: every basket.** **Tier 2, every game:** score after each quarter, biggest
+  leads, lead changes and ties, the basket that put the winner ahead for good and who hit it,
+  the winner's biggest deficit, the final minute of a close game with each shooter, overtime, and
+  each side's top scorer by half ("Brunson 38: 14 first half, 22 second half, 2 OT"). **Tier 3,
+  headline games only** (every playoff game, and any game a selected story names, by the same
+  story matching as the NHL): top two scorers per side by quarter, every final-minute basket, team
+  runs of 10+ unanswered ("NY 12-0, Q1 4:33 to 2:44") and individual streaks of 10+ straight
+  points. `attach_story()` runs in both runners after Pass 1.
+- **ESPN's running score is wrong on some plays; the points are right.** On the 2026-10-21 slate
+  4 of 11 games had an `awayScore`/`homeScore` that stalled or went backwards mid-game (CHI @ TOR
+  had 16 bad plays). The spike had verified only the playoff slate and called the running score
+  usable. Point value plus scoring team, summed, reproduce every quarter of every game checked (15
+  of 15) and the final. So the fetch tallies the score itself, sorted by period and clock, and
+  ignores ESPN's. Those four games are in the test fixture on purpose.
+- **Checked, or left out.** The baskets must add up to the line score quarter by quarter and to the
+  final, or the game's flow is dropped (plain result line). **Names are a second gate:** each
+  shooter's points from the play log must equal the box score's, by athlete id; if any disagree
+  (or the game was stored without ids), the game keeps its quarter and lead flow and loses every
+  name (`shooters_ok`). Two players sharing a surname in one game are not attributable by Pass 3.
+- **Cap 6,000 chars** (the spike guessed 4K before shooters and sequences existed). A real 11-game
+  regular-season slate (2026-10-21) renders in full at 5,848, one headline game in full and the
+  rest as summaries; the archive's playoff days average 1,874 (max 3,793). A heavier slate drops the
+  least dramatic games to a flow line, then to their plain result line, and says how many.
+- **Pass 3 Check 3G** (`check_nba_flow_claims`): a score or margin at a point ("led 52-48 at the
+  half", "up 12 entering the fourth"), go-ahead / for good / tie in a quarter, a shooter's basket
+  ("Brunson hit the go-ahead three", "Haliburton's game-winner", "Shamet's game-tying three": the
+  basket must exist, in that quarter, worth that much), runs ("a 14-0 run", "an 11-2 run": a stretch
+  where the side scored that much while the other scored at most that), "12 straight points" (a
+  player's or a team's), a player's points in a quarter or half, "outscored them 28-12 in the
+  third", "led by as many as 20", comebacks, wire to wire. HIGH only when the sentence ties to exactly
+  one game and a player is only ever named when `shooters_ok`.
+- **Replayed over the archive** (`uat/replay_nba_flow.py`, 65 games 2026-04-20 to 06-14): 13 claims, 12
+  confirmed, 1 HIGH, and that one is a real shipped error (2026-05-02: "down 24 at halftime" about a
+  game that was 60-38, down 22). The first pass had 2 false HIGHs, both "outscored them 28-15 ..."
+  read as a game score; fixed and locked. It also showed the writer's real phrasing is exactly what
+  the shooter and run checks target ("McCollum hit the go-ahead floater", "a 24-0 run spanning
+  halftime", "the Knicks went on a 44-11 run"). 4 games had no data at ESPN at all (no line score,
+  no plays) and stay plain result lines.
+- **Known limits.** Misses, rebounds, turnovers and fouls are not stored (nothing reads them);
+  assists are kept only as the name in ESPN's text and are not checked; no season stats (SLA-106). The render and story-matching helpers are
+  borrowed from `nhl_bundle.py` (one copy, imported); a shared `render()` for all sports is the
+  obvious next consolidation. Locked by `uat/tests/test_nba_flow.py` (real games in
+  `uat/fixtures/nba/`, built by `uat/build_nba_fixture.py`).
+
 **Men's college basketball gets game flow too (SLA-146, 2026-10-21).** College basketball had no
 box score, so the writer had only final scores. `fetch_sports_data._parse_ncaamb_flow()` keeps the
 score by half (and overtime) plus every scoring play with the running score, under
@@ -1449,7 +1500,7 @@ Requires `.env` with: `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`, `YOUTUBE_API_KEY`, `
 | `daily-newsletter.yml` | `17 6 * * *` UTC (2:17 AM EDT) + dispatch | Full pipeline → email → Substack draft |
 | `publish-substack.yml` | every 30 min, 11:30–20:00 UTC + dispatch | Publishes today's draft at the first slot past 12:30 PM ET (time-gated in-job) |
 | `substack-ci-test.yml` | manual only | Substack connectivity check; creates and deletes a throwaway draft |
-| `tests.yml` | push + PR + dispatch | The offline suites (33 Python + 1 Node) + the retry drill, 0 API calls |
+| `tests.yml` | push + PR + dispatch | The offline suites (35 Python + 1 Node) + the retry drill, 0 API calls |
 
 Live secrets (Settings → Secrets → Actions): `ANTHROPIC_API_KEY`, `GIPHY_API_KEY`,
 `YOUTUBE_API_KEY`, `IMGFLIP_USERNAME`, `IMGFLIP_PASSWORD`, `GMAIL_ADDRESS`, `GMAIL_PASSWORD`,
@@ -1497,6 +1548,17 @@ deprecation, and API rate limits.
 Most recent first. Daily auto-commits ("SLAP newsletter output for …" / "Substack draft handoff
 for …") omitted.
 
+**2026-10-22 — NBA game flow: baskets, shooters, runs and streaks for the writer (SLA-147)**
+- `nba_bundle.py` on the shared `game_flow.py`; the fetch keeps every basket with its shooter; three
+  tiers (every game a summary, headline games get runs and streaks); both runners attach the story
+  order; Check 3G confirms or flags quarter / lead / tie / shooter / run / streak / points claims;
+  RULE 3 and editor Check 9 (both prompt copies) treat the block as sourced.
+- **Found while building it:** ESPN's running score is stale on some plays (4 of 11 games on the
+  2026-10-21 slate), so the fetch tallies the score from the point values instead. Also: ESPN had no
+  data at all for 4 archived playoff games.
+- Replay over the archive: 65 games, 12 claims confirmed, 1 HIGH (a real error that shipped), after
+  fixing 2 false alarms the replay found.
+- `uat/tests/test_nba_flow.py`; `test_runner_drift.py` `main` re-pinned.
 **2026-10-21 — College basketball game flow: halves, lead changes, the go-ahead for good (SLA-146)**
 - The fetch keeps a compact play log for up to 30 games a day (ranked first); `ncaamb_bundle.py` builds
   the block on `game_flow.py`; both runners attach the story order; Check 3F flags halftime / lead /
@@ -1514,7 +1576,7 @@ for …") omitted.
 - Replay over the archive: 266 games, 4 unusable goal logs (ESPN's own line score disagrees with its
   final), block max 3,447 / mean 2,196 chars, 0 HIGH after fixing 5 false alarms the replay found.
 - `uat/tests/test_nhl_flow.py`; `test_runner_drift.py` `main` re-pinned.
-- Next in the SLA-143 order: NBA (SLA-147) and college football (SLA-145) reuse `game_flow.py`.
+- Next in the SLA-143 order: NBA (SLA-147, done 2026-10-22) and college football (SLA-145) reuse `game_flow.py`.
 
 **2026-10-22 — Headline supply: UA ladder, proxy last, health in the status email (SLA-153)**
 - Rescued from a month-old uncommitted worktree (branch `claude/loving-brahmagupta-cc56d6`) and

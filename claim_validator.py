@@ -1482,6 +1482,20 @@ def final_history_check(html: str, game_state: dict, autocut: bool | None = None
                 sec = inject_flag_after_heading(
                     sec, f'\n<!-- ⚠ COLLEGE BASKETBALL GAME FLOW CLAIM LEFT IN BY THE EDITOR [{level}]: "{quoted}" -->')
             report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut, "kind": kind})
+        # SLA-147: NBA game-flow claims, the same way. A tweet in the section
+        # carrying one of the sentence's scores, runs or streaks sources it.
+        nba: list = []
+        check_nba_flow_claims(own_text(sec), game_state, nba)
+        for level, quoted, sentence, kind, fig in nba:
+            if level == "confirmed" or re.search(fig, tweets, re.IGNORECASE):
+                continue
+            cut = False
+            if autocut:
+                sec, cut = _cut_sentence(sec, sentence)
+            if not cut:
+                sec = inject_flag_after_heading(
+                    sec, f'\n<!-- ⚠ NBA GAME FLOW CLAIM LEFT IN BY THE EDITOR [{level}]: "{quoted}" -->')
+            report.append({"level": level, "section": heading, "sentence": quoted, "cut": cut, "kind": kind})
         # SLA-117: football rank and record claims, the same way. A tweet in
         # the section carrying the same rank or record sources it.
         football: list = []
@@ -2045,6 +2059,547 @@ def check_ncaamb_flow_claims(own_text: str, game_state: dict, outcomes: list | N
 
 
 # ---------------------------------------------------------------------------
+# Check 3G: NBA game-flow claims vs the play log (SLA-147)
+#
+# Each claim below is checked against nba_bundle.claim_facts(), the same
+# baskets the NBA GAME FLOW block shows the writer:
+#
+#   a score at a point    "led 52-48 at the half", "up 12 entering the fourth"
+#   go-ahead / for good   "took the lead in the third", "went ahead for good"
+#   tie                   "tied it in the fourth"
+#   a shooter's basket    "Brunson hit the go-ahead three", "Haliburton's
+#                         game-winner", "Doncic's game-tying free throws"
+#   runs and streaks      "a 14-0 run", "an 11-2 run", "scored 12 straight points"
+#   a scorer's points     "Edwards had 21 in the first half"
+#   a quarter's score     "outscored them 28-12 in the third"
+#   leads and deficits    "led by as many as 20", "came back from 17 down"
+#   wire to wire          "never trailed", "led wire to wire"
+#
+# HIGH only when the sentence ties to exactly one of yesterday's NBA games and
+# the facts contradict it; a claim the facts can't settle is left alone (the
+# SLA-142 rule). A shooter is only ever named when the play log's points for
+# every player matched the box score (nba_bundle `named`). Only sections that
+# read as basketball are checked.
+# ---------------------------------------------------------------------------
+
+_NBA_WORDS = {"first": 1, "second": 2, "third": 3, "fourth": 4}
+_NBA_NOT_PERIOD_AFTER = r"(?!\s*[- ]?(?:place|seed|round|straight|consecutive|time|game|win|loss|inning|half|options?))"
+_NBA_PERIOD_RES = [
+    # "in the third quarter", "entering the fourth quarter", "Q3", "3rd quarter"
+    re.compile(r"\b(?P<pre>(?:in|during|of|after|through|entering|into|by|to\s+(?:open|start)|midway\s+through|"
+               r"heading\s+into|going\s+into|late\s+in|early\s+in)\s+(?:the\s+)?)?"
+               r"(?P<q>first|second|third|fourth|[1-4](?:st|nd|rd|th)|q[1-4])(?:\s+quarter)\b", re.IGNORECASE),
+    # "entering the fourth", "in the third" (no "quarter")
+    re.compile(r"\b(?P<pre>entering|into|heading\s+into|going\s+into|in|after|through)\s+the\s+"
+               r"(?P<q>first|second|third|fourth)\b" + _NBA_NOT_PERIOD_AFTER + r"(?!\s+quarter)", re.IGNORECASE),
+    # "after three quarters", "through two quarters"
+    re.compile(r"\b(?P<pre>after|through)\s+(?P<n>one|two|three)\s+quarters?\b", re.IGNORECASE),
+    # halftime
+    re.compile(r"\b(?P<pre>at|by|before|after|into|heading\s+into|going\s+into|entering)\s+(?:the\s+)?"
+               r"(?P<h>half(?:time)?|break|intermission)\b", re.IGNORECASE),
+    # overtime
+    re.compile(r"\b(?P<pre>in|during|into|to|after|forcing|forced|forces|force|sending|sent|send|pushing|pushed|"
+               r"pushes|push)?\s*(?:(?P<k>double|triple)[- ]?)?"
+               r"(?P<ot>overtime|OT)\b|\b(?P<m>[2-4])OT\b", re.IGNORECASE),
+]
+_NBA_GO_AHEAD_RE = re.compile(
+    r"\b(?:took|take|takes|taking|grabbed|grabs|seized|seizes|regained|retook|reclaimed)\s+(?:the|a)\s+lead\b|"
+    r"\bwent\s+ahead\b|\bpulled\s+ahead\b|\bmoved\s+ahead\b|"
+    r"\b(?:ahead|in\s+front|up)\s+for\s+good\b|\bthe\s+lead\s+for\s+good\b", re.IGNORECASE)
+_NBA_TIE_RE = re.compile(r"\b(?:tied|ties|knotted|evened|leveled|levelled)\s+(?:it|things|the\s+game|the\s+score)\b|"
+                         r"\btying\s+(?:basket|bucket|three|shot)\b", re.IGNORECASE)
+_NBA_WIRE_RE = re.compile(r"\bwire[- ]to[- ]wire\b|\bnever\s+trailed\b|\bled\s+(?:the\s+)?(?:whole|entire)\s+(?:way|game)\b",
+                          re.IGNORECASE)
+_NBA_PAIR_RE = re.compile(r"(?<![\d-])(\d{2,3})-(\d{2,3})(?![\d-])")
+_NBA_SCORE_CUE = re.compile(r"(?:up|ahead|lead|led|leading|down|behind|trail\w*|tied|tie|ties|make|made|makes|put|"
+                            r"cut|extend\w*|stretch\w*|pull\w*|knot\w*|grab\w*|took|take|opened|jumped|"
+                            r"the\s+score|it\s+was|scored)\b", re.IGNORECASE)
+_NBA_NOT_SCORE_BEFORE = re.compile(r"(?:improved?|fell|moved|dropped|record|to|at|from|series|won|beat|beats|final|"
+                                   r"went|are|is|now)\s+(?:to\s+|the\s+\w+\s+)?$", re.IGNORECASE)
+_NBA_NOT_A_SCORE_BEFORE = re.compile(
+    r"outscor\w*|won\s+the\s+\w+\s+(?:quarter|half)|won\s+the\s+(?:quarter|half)|closed|ran\s+off|went\s+on|"
+    r"rattled\s+off|\bover\s+the\s+(?:final|last|next)|\bin\s+the\s+(?:final|last)\s+\d", re.IGNORECASE)
+_NBA_NOT_SCORE_AFTER = re.compile(r"^\s*\)?\s*(?:series|record|on\s+the\s+season|this\s+season|in\s+conference|"
+                                  r"win|victory|loss|defeat|final|mark|clip|shooting)\b", re.IGNORECASE)
+_NBA_ELSEWHERE_RE = re.compile(r"\bGame\s+\d\b|\b(?:19|20)\d{2}\b|\blast\s+(?:night'?s?\s+)?(?:week|year|season|time)\b|"
+                               r"\bearlier\s+in\s+the\s+series\b|\bin\s+Game\b", re.IGNORECASE)
+_NBA_HALF_RE = re.compile(r"\b(?:first|second)[- ]half\b", re.IGNORECASE)
+_NBA_NICKS2 = {"trail blazers"}
+_NBA_SHARED_CITIES = {"new york", "los angeles"}
+_NBA_HOOPS_RE = re.compile(r"\b(?:NBA|basketball|quarter|halftime|at\s+the\s+half|first\s+half|second\s+half|three-pointers?|"
+                       r"3-pointers?|dunks?|free\s+throws?|buzzer|layups?|rebounds?|point\s+guard|buckets?|hoops|"
+                       r"jumpers?|and-one|triple-double|go-ahead\s+three|fourth\s+quarter|Q[1-4])\b", re.IGNORECASE)
+_NBA_COMEBACK_RE = re.compile(
+    r"\b(?:came|comes|coming|rallied|rallies|rallying|clawed|fought|climbed|bounced|erased|erases|overcame|overcomes)\s+"
+    r"(?:back\s+)?(?:from\s+)?(?:a\s+|an\s+)?(?:(?P<n>\d{1,2})-point|(?P<d>double-digit))\s+(?:deficit|hole)|"
+    r"\bfrom\s+(?P<n2>\d{1,2})\s+down\b", re.IGNORECASE)
+_NBA_AS_MANY_RE = re.compile(
+    r"\b(?P<dir>led|lead(?:ing)?|up|ahead|trailed|trailing|trail|down|behind)\s+(?:by\s+)?as\s+many\s+as\s+(?P<n>\d{1,2})\b|"
+    r"\bbiggest\s+(?P<dir2>lead|deficit)\s+(?:was\s+|of\s+)(?P<n2>\d{1,2})\b", re.IGNORECASE)
+_NBA_MARGIN_RE = re.compile(
+    r"\b(?P<dir>up|ahead|led|leading|lead|down|behind|trailed|trailing|trails)\s+(?:by\s+)?(?P<n>\d{1,2})\b"
+    r"(?!\s*(?:-|–|games?|wins?|losses|seed|percent|%|years?|minutes?|seconds?|\d))", re.IGNORECASE)
+_NBA_RUN_RE = re.compile(r"\b(?P<a>\d{1,2})-(?P<b>\d{1,2})\s+(?:run|burst|spurt|stretch|surge|blitz|tear)\b", re.IGNORECASE)
+_NBA_OUTSCORED_RE = re.compile(
+    r"\b(?:outscor\w+|won\s+the\s+(?:first|second|third|fourth)\s+quarter|won\s+the\s+(?:quarter|period))\b"
+    r"[^.;]{0,50}?(?P<a>\d{1,3})-(?P<b>\d{1,3})(?=\s+(?:in|during|over)\s+(?:the\s+)?"
+    r"(?:first|second|third|fourth|overtime|OT)\b)", re.IGNORECASE)
+_NBA_STRAIGHT_RE = re.compile(r"\b(?P<n>\d{1,2})\s+(?:straight|consecutive|unanswered)\s+points?\b", re.IGNORECASE)
+_NBA_SHOT_CUE_RE = re.compile(
+    r"\b(?P<kind>go-ahead|game-winning|game-winner|game-tying|game-tier|tying)\s*"
+    r"(?P<what>three(?:-pointers?)?|3-pointers?|triples?|baskets?|buckets?|jumpers?|layups?|dunks?|free\s+throws?|"
+    r"shots?|tip-in|floaters?|scores?)?", re.IGNORECASE)
+_NBA_SHOT_VERB = re.compile(r"\b(?:hit|hits|made|makes|sank|sinks|drained|drains|knocked|knocks|buried|buries|"
+                            r"converted|banked|nailed|splashed|swished|delivered|delivers|connected|had|with)\b",
+                            re.IGNORECASE)
+_NBA_PTS_VERB = re.compile(r"\b(?:scored|scores|had|has|poured|dropped|drops|put\s+up|added|adds|tallied|netted|"
+                           r"erupted|finished|piled|totaled|managed|dished)\b", re.IGNORECASE)
+
+
+def _nba_period_from(m: re.Match) -> int | None:
+    g = m.groupdict()
+    if g.get("q"):
+        q = g["q"].lower()
+        return _NBA_WORDS.get(q) or int(re.sub(r"\D", "", q))
+    if g.get("n"):
+        return {"one": 1, "two": 2, "three": 3}[g["n"].lower()]
+    if g.get("h"):
+        return 2
+    if g.get("ot") or g.get("m"):
+        return 4 + {"double": 2, "triple": 3}.get((g.get("k") or "").lower(), 1) if g.get("ot") else 4 + int(g["m"])
+    return None
+
+
+def _nba_periods_in(sentence: str) -> list[tuple[int, int, str, int]]:
+    """(period, start, cue, end) for each period a sentence names. cue is
+    "end" ("after the third quarter", "at the half"), "enter" ("entering the
+    fourth") or "in". Overtime is the first one (5), or the one named."""
+    out, seen = [], set()
+    for rx in _NBA_PERIOD_RES:
+        for m in rx.finditer(sentence):
+            p = _nba_period_from(m)
+            if p is None:
+                continue
+            pre = re.sub(r"\s+the$", "", (m.groupdict().get("pre") or "").strip().lower())
+            h = m.groupdict().get("h")
+            if h or m.groupdict().get("n"):
+                cue = "enter" if pre in ("into", "heading into", "going into", "entering") else "end"
+            elif pre in ("after", "through", "by"):
+                cue = "end"
+            elif pre in ("entering", "into", "heading into", "going into", "to", "forcing", "forced", "forces", "force",
+                         "sending", "sent", "send", "pushing", "pushed", "pushes", "push"):
+                cue = "enter"
+            else:
+                cue = "in"
+            key = (p, m.start() // 4)
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append((p, m.start(), cue, m.end()))
+    return sorted(out, key=lambda x: x[1])
+
+
+def _nba_pname(p: int) -> str:
+    return {1: "first quarter", 2: "second quarter", 3: "third quarter", 4: "fourth quarter", 5: "overtime"}.get(
+        p, f"{p - 4}OT")
+
+
+def _nba_period_points(f: dict, p: int) -> tuple[int, int]:
+    """(away, home) points scored IN period p."""
+    start = f["end_score"][p - 1] if p > 1 else (0, 0)
+    end = f["end_score"][p]
+    return end[0] - start[0], end[1] - start[1]
+
+
+def _nba_claims(sentence: str, f: dict, side: str | None) -> list[tuple[str, str, str]]:
+    """(verdict, what the claim said, the fact) for every game-flow claim in
+    one sentence about NBA game `f`. `side` is the one team the sentence names,
+    or None."""
+    out: list[tuple[str, str, str]] = []
+
+    def abbr(s):
+        return f["teams"][s]["abbr"] or f["teams"][s]["name"]
+
+    def sc(a, h):
+        return f"tied {a}-{h}" if a == h else f"{abbr('away' if a > h else 'home')} {max(a, h)}-{min(a, h)}"
+
+    def surname_of(k):
+        return k.title()
+
+    periods = [x for x in _nba_periods_in(sentence) if x[0] <= f["periods"]]
+    winner = f["winner"]
+
+    # A score at a point in the game ("led 52-48 at the half").
+    for m in _NBA_PAIR_RE.finditer(sentence):
+        x, y = int(m.group(1)), int(m.group(2))
+        pre = sentence[max(0, m.start() - 60):m.start()]
+        if _NBA_NOT_SCORE_BEFORE.search(pre) or _NBA_NOT_A_SCORE_BEFORE.search(pre) or \
+                _NBA_NOT_SCORE_AFTER.search(sentence[m.end():]) or \
+                re.match(r"\s+(?:over|in)\s+the\s+(?:final|last|next)\b", sentence[m.end():], re.IGNORECASE) or \
+                tuple(sorted((x, y))) == f["final"] and not periods:
+            continue
+        if tuple(sorted((x, y))) in f["series_pairs"]:
+            continue
+        near = min(periods, key=lambda z: abs(z[1] - m.start())) if periods else None
+        if near is None or abs(near[1] - m.start()) > 70:
+            continue
+        halves = [h.start() for h in _NBA_HALF_RE.finditer(sentence)]
+        if any(abs(h - m.start()) < abs(near[1] - m.start()) for h in halves):
+            continue                                    # "the second half 48-46": a half, not this period
+        p, _, cue, _e = near
+        if cue in ("in", "enter") and tuple(sorted((x, y))) == f["final"]:
+            continue                                    # the final score, named near a period
+        if cue == "in" and not _NBA_SCORE_CUE.search(pre):
+            continue
+        want = None
+        if side and re.search(r"\b(?:up|ahead|lead|led|leading|in\s+front)\b", pre, re.IGNORECASE):
+            want = (max(x, y), min(x, y))
+        elif side and re.search(r"\b(?:down|behind|trailed|trailing|trail)\b", pre, re.IGNORECASE):
+            want = (min(x, y), max(x, y))
+
+        def fits(st, want=want, x=x, y=y):
+            if want is not None:
+                return (st if side == "away" else (st[1], st[0])) == want
+            return sorted(st) == sorted((x, y))
+        if cue == "end":
+            pool = [f["end_score"][p]]
+        elif cue == "enter":
+            pool = [f["end_score"][p - 1]] if p > 1 else [(0, 0)]
+        else:
+            pool = sorted(f["scores"][p])
+        label = {"end": f"after the {_nba_pname(p)}", "enter": f"entering the {_nba_pname(p)}",
+                 "in": f"in the {_nba_pname(p)}"}[cue]
+        if any(fits(st) for st in pool):
+            out.append(("confirm", m.group(0), ""))
+        else:
+            out.append(("contradict", f"{m.group(0)} {label}",
+                        f"the score {label} was " + " / ".join(sc(*st) for st in pool)))
+    # A margin at a point in the game ("up 12 at the half").
+    for m in _NBA_MARGIN_RE.finditer(sentence):
+        n = int(m.group("n"))
+        cands = [x for x in periods if x[2] in ("end", "enter") and 0 <= x[1] - m.end() <= 45]
+        if not cands:
+            continue
+        p, _, cue, _e = cands[0]
+        if re.search(r"[.;]", sentence[m.end():cands[0][1]]):
+            continue
+        st = f["end_score"][p] if cue == "end" else (f["end_score"][p - 1] if p > 1 else (0, 0))
+        lead_side = "away" if st[0] > st[1] else "home" if st[1] > st[0] else None
+        margin = abs(st[0] - st[1])
+        d = m.group("dir").lower()
+        leading = d in ("up", "ahead", "led", "leading", "lead")
+        label = f"{'after' if cue == 'end' else 'entering'} the {_nba_pname(p)}"
+        if side:
+            ok = margin == n and lead_side == (side if leading else ("home" if side == "away" else "away"))
+        else:
+            ok = margin == n
+        if ok:
+            out.append(("confirm", m.group(0), ""))
+        else:
+            out.append(("contradict", f"{m.group(0)} {label}", f"the score {label} was {sc(*st)}"))
+    # Go-ahead, for good.
+    in_periods = [x for x in periods if x[2] == "in"]
+    for m in _NBA_GO_AHEAD_RE.finditer(sentence):
+        near = min(in_periods, key=lambda z: abs(z[1] - m.start())) if in_periods else None
+        if near is None or abs(near[1] - m.start()) > 60 or re.match(r"\s+(?:a|the)\s+\d", sentence[m.end():]):
+            continue
+        p = near[0]
+        good = bool(re.search(r"\bfor\s+good\b", sentence[m.start():m.end() + 40], re.IGNORECASE))
+        if good:
+            fg = f["for_good"]
+            ok = fg is not None and fg["period"] == p and (side is None or fg["side"] == side)
+            fact = f"{abbr(fg['side'])} took the lead for good in the {_nba_pname(fg['period'])}" if fg else "no lead held"
+        else:
+            ok = any(g["period"] == p and (side is None or g["side"] == side) for g in f["go_ahead"])
+            ga = sorted({f"{abbr(g['side'])} in the {_nba_pname(g['period'])}" for g in f["go_ahead"]
+                         if side is None or g["side"] == side})
+            fact = ("the lead was taken only " + ", ".join(ga)) if ga else \
+                   f"{abbr(side) if side else 'nobody'} never took the lead"
+        out.append(("confirm" if ok else "contradict", f"{m.group(0)} in the {_nba_pname(p)}", fact))
+    # Tie.
+    for m in _NBA_TIE_RE.finditer(sentence):
+        near = min(in_periods, key=lambda z: abs(z[1] - m.start())) if in_periods else None
+        if near is None or abs(near[1] - m.start()) > 60:
+            continue
+        p = near[0]
+        if any(i == p and (side is None or s == side) for s, i in f["ties"]):
+            out.append(("confirm", m.group(0), ""))
+        else:
+            ties = sorted({f"{abbr(s)} in the {_nba_pname(i)}" for s, i in f["ties"] if side is None or s == side})
+            out.append(("contradict", f"{m.group(0)} in the {_nba_pname(p)}",
+                        ("it was tied only by " + ", ".join(ties)) if ties else "the game was never tied by a basket"))
+    # Wire to wire, never trailed.
+    m = _NBA_WIRE_RE.search(sentence)
+    if m:
+        who = side or winner
+        never_trailed = f["max_deficit"][who] == 0
+        ok = (f["wire_to_wire"] and who == winner) if "wire" in m.group(0).lower() else never_trailed
+        out.append(("confirm" if ok else "contradict", m.group(0),
+                    f"{abbr(who)} trailed by as many as {f['max_deficit'][who]}" if not never_trailed
+                    else f"{abbr(who)} did not lead from the first basket on"))
+    # Comebacks.
+    for m in _NBA_COMEBACK_RE.finditer(sentence):
+        n = m.group("n") or m.group("n2")
+        n = int(n) if n else 10                          # "double-digit"
+        who = side or winner
+        out.append(("confirm" if f["max_deficit"][who] >= n else "contradict", m.group(0),
+                    f"{abbr(who)} trailed by at most {f['max_deficit'][who]}"))
+    # "led by as many as N", "trailed by as many as N".
+    for m in _NBA_AS_MANY_RE.finditer(sentence):
+        d = (m.group("dir") or m.group("dir2") or "").lower()
+        n = int(m.group("n") or m.group("n2"))
+        lead = d in ("led", "lead", "leading", "up", "ahead")
+        who = side
+        if who is None:
+            continue                                    # which team? the sentence doesn't say
+        key = "max_lead" if lead else "max_deficit"
+        if f[key][who] < n:
+            out.append(("contradict", m.group(0), f"{abbr(who)}'s biggest {'lead' if lead else 'deficit'} was {f[key][who]}"))
+        else:
+            out.append(("confirm", m.group(0), ""))
+    # Runs: "a 14-0 run", "an 11-2 run".
+    for m in _NBA_RUN_RE.finditer(sentence):
+        a, b = int(m.group("a")), int(m.group("b"))
+        if a < b or a < 6:
+            continue
+        sides = [side] if side else ["away", "home"]
+        import nba_bundle
+        ok = any(nba_bundle.best_window(f["_events"], s, a, b) for s in sides)
+        if ok:
+            out.append(("confirm", m.group(0), ""))
+        elif side:
+            best = max((r["pts"] for r in f["runs"] if r["side"] == side), default=0)
+            out.append(("contradict", m.group(0), f"{abbr(side)}'s best unanswered run was {best}-0"))
+    # A period's points: "outscored them 28-12 in the third".
+    for m in _NBA_OUTSCORED_RE.finditer(sentence):
+        near = [x for x in periods if x[1] >= m.end() - 1 and x[1] - m.end() <= 25]
+        if not near:
+            continue
+        p = near[0][0]
+        a, h = _nba_period_points(f, p)
+        said = (int(m.group("a")), int(m.group("b")))
+        if sorted(said) == sorted((a, h)):
+            out.append(("confirm", m.group(0), ""))
+        else:
+            out.append(("contradict", f"{m.group(0)} in the {_nba_pname(p)}",
+                        f"the {_nba_pname(p)} was {abbr('away')} {a}, {abbr('home')} {h}"))
+    # Straight points: a player's or a team's.
+    for m in _NBA_STRAIGHT_RE.finditer(sentence):
+        n = int(m.group("n"))
+        lead_in = sentence[max(0, m.start() - 70):m.start()]
+        plain = _nba_ascii(lead_in)
+        who = None
+        for name in f["points"]:
+            for nm in re.finditer(r"\b" + _nba_name_pat(name) + r"(?:['’]s)?\b", plain, re.IGNORECASE):
+                gap = plain[nm.end():]
+                if re.search(r"[.;]", gap):
+                    continue
+                if who is None or nm.end() > who[1]:
+                    who = (name, nm.end())
+        if who is not None:
+            name = who[0]
+            best = max((s["pts"] for s in f["streaks"] if s["shooter"] == name), default=0)
+            out.append(("confirm" if best >= n else "contradict", f"{name.title()} {m.group(0)}",
+                        f"{name.title()}'s longest streak of his team's points was {best}"))
+        elif side:
+            import nba_bundle
+            ok = nba_bundle.best_window(f["_events"], side, n, 0)
+            best = max((r["pts"] for r in f["runs"] if r["side"] == side), default=0)
+            out.append(("confirm" if ok else "contradict", m.group(0), f"{abbr(side)}'s best unanswered run was {best}"))
+    return out + _nba_shooter_claims(sentence, f, side, periods, abbr, sc)
+
+
+def _nba_name_pat(name: str) -> str:
+    """A normalized surname ("gilgeousalexander", "oneale") as a pattern that
+    also reads "Gilgeous-Alexander" and "O'Neale"."""
+    return "['’-]?".join(re.escape(ch) for ch in name)
+
+
+def _nba_ascii(text: str) -> str:
+    import unicodedata
+    return unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
+
+
+def _nba_shooter_claims(sentence: str, f: dict, side, periods, abbr, sc) -> list[tuple[str, str, str]]:
+    """Claims that name a player: his go-ahead / game-winning / game-tying
+    basket, and the points he scored in a period or half. Only when the play
+    log's shooters matched the box score (f["named"])."""
+    out: list[tuple[str, str, str]] = []
+    if not f["named"] or not f["points"]:
+        return out
+    plain = _nba_ascii(sentence)
+    roster = list(f["points"])
+
+    def owner(pos_start: int, pos_end: int, window: int = 70):
+        """The roster surname a phrase belongs to: the nearest name before it
+        with no sentence break between (and possessive or a verb to link), or
+        one right after it ("a go-ahead three from Haliburton")."""
+        best = None
+        for name in roster:
+            for nm in re.finditer(r"\b" + _nba_name_pat(name) + r"(?:['’]s)?\b", plain, re.IGNORECASE):
+                if nm.end() <= pos_start and pos_start - nm.end() <= window:
+                    gap = plain[nm.end():pos_start]
+                    if re.search(r"[.;!?]", gap) or any(o != name and re.search(r"\b" + _nba_name_pat(o) + r"\b", gap, re.IGNORECASE)
+                                                       for o in roster):
+                        continue
+                    if plain[nm.end() - 2:nm.end()] in ("'s", "’s") or _NBA_SHOT_VERB.search(gap) or \
+                            _NBA_PTS_VERB.search(gap):
+                        if best is None or nm.end() > best[1]:
+                            best = (name, nm.end())
+                elif nm.start() >= pos_end and nm.start() - pos_end <= 25:
+                    gap = plain[pos_end:nm.start()]
+                    if re.search(r"\b(?:from|by|off|courtesy\s+of)\b\s*(?:\w+\s+){0,2}$", gap, re.IGNORECASE):
+                        if best is None:
+                            best = (name, nm.start())
+        return best[0] if best else None
+
+    for m in _NBA_SHOT_CUE_RE.finditer(plain):
+        kind = m.group("kind").lower().replace("game-tier", "game-tying")
+        what = (m.group("what") or "").lower()
+        name = owner(m.start(), m.end())
+        if not name:
+            continue
+        side_of = f["sides"].get(name)
+        if kind == "go-ahead":
+            evs = [g for g in f["go_ahead"] if g["shooter"] == name]
+        elif kind in ("game-winning", "game-winner"):
+            fg = f["for_good"]
+            evs = [fg] if fg and fg["shooter"] == name else []
+        else:                                            # game-tying, tying
+            evs = [g for g in f["tie_baskets"] if g["shooter"] == name]
+        near_p = next((x for x in periods if 0 <= x[1] - m.end() <= 45 and x[2] == "in"), None)
+        wrong_p = None
+        if near_p is not None and evs:
+            right = [g for g in evs if g["period"] == near_p[0]]
+            if not right:
+                wrong_p = ", ".join(sorted({_nba_pname(g["period"]) for g in evs}))
+            evs = right
+        want_pts = 3 if re.match(r"(three|3|triple)", what) else 1 if what.startswith("free") else None
+        had_kind = bool(evs)                             # he made one of this kind, whatever its value
+        if want_pts:
+            evs = [g for g in evs if g["pts"] == want_pts]
+        quoted = f"{name.title()} {m.group(0)}".strip()
+        if evs:
+            out.append(("confirm", quoted, ""))
+            continue
+        if wrong_p:
+            fact = f"{name.title()}'s {kind} basket came in the {wrong_p}"
+        elif kind == "go-ahead":
+            who = sorted({f"{(g['shooter'] or '?').title()} ({g['pts']}-pt, {_nba_pname(g['period'])})"
+                          for g in f["go_ahead"] if g["side"] == side_of})[:6]
+            fact = f"{name.title()} made no such basket; {abbr(side_of)}'s go-ahead baskets: " + (", ".join(who) or "none")
+        elif kind in ("game-winning", "game-winner"):
+            fg = f["for_good"]
+            fact = (f"the basket that put {abbr(fg['side'])} ahead for good was {(fg['shooter'] or '?').title()}'s "
+                    f"{'three' if fg['pts'] == 3 else 'free throw' if fg['pts'] == 1 else 'basket'} in the "
+                    f"{_nba_pname(fg['period'])}") if fg else "no lead was held"
+        else:
+            who = sorted({(g['shooter'] or '?').title() for g in f["tie_baskets"]})
+            fact = f"{name.title()} never tied it; the game was tied by " + (", ".join(who) or "no basket")
+        if want_pts and had_kind and not wrong_p:
+            fact = f"{name.title()}'s {kind} basket was not a {'three' if want_pts == 3 else 'free throw'}"
+        out.append(("contradict", quoted, fact))
+    # Points by period or half: "Edwards had 21 in the first half".
+    pts_res = [
+        re.compile(r"\b(?P<n>\d{1,2})\s+(?:points?\s+)?(?:in|during|over)\s+(?:the\s+)?(?P<w>first|second|third|fourth)\s+"
+                   r"(?P<u>half|quarter)\b", re.IGNORECASE),
+        re.compile(r"\b(?P<n>\d{1,2})\s+(?P<w>first|second|third|fourth)-(?P<u>half|quarter)\s+points\b", re.IGNORECASE),
+    ]
+    for rx in pts_res:
+        for m in rx.finditer(plain):
+            name = owner(m.start(), m.end(), 90)
+            if not name:
+                continue
+            gap_names = [o for o in roster if o != name and re.search(r"\b" + _nba_name_pat(o) + r"\b", plain, re.IGNORECASE)]
+            if gap_names:
+                continue                                 # two players in the sentence: whose points?
+            n, w, u = int(m.group("n")), m.group("w").lower(), m.group("u").lower()
+            if u == "half":
+                if w not in ("first", "second"):
+                    continue
+                ps = (1, 2) if w == "first" else (3, 4)
+            else:
+                ps = (_NBA_WORDS[w],)
+            got = sum(f["points"][name].get(p, 0) for p in ps)
+            said = f"{name.title()} {n} in the {w} {u}"
+            out.append(("confirm" if got == n else "contradict", said,
+                        "" if got == n else f"{name.title()} scored {got} in the {w} {u}"))
+    return out
+
+
+def check_nba_flow_claims(own_text: str, game_state: dict, outcomes: list | None = None) -> list[str]:
+    """`own_text`: one section's own prose (no tweets), one block per line.
+    `outcomes`, if given, collects (level, quoted, sentence, kind, figure)
+    for every sentence with a game-flow claim, confirmed ones included."""
+    import nba_bundle
+    facts = nba_bundle.claim_facts(game_state or {})
+    if not facts or not _NBA_HOOPS_RE.search(own_text):
+        return []
+    by_name, dup = {}, set()
+    for f in facts:
+        f["_events"] = f["events"]
+        for s in ("away", "home"):
+            n = f["teams"][s]["name"]
+            if n in by_name:
+                dup.add(n)                              # a team can't play twice in a night: ambiguous
+            by_name[n] = (f, s)
+    for n in dup:
+        del by_name[n]
+    if not by_name:
+        return []
+    idx = _alias_index([{"team": n, "sport": "nba", "opponent": ""} for n in by_name])
+    # Recaps name teams by city ("Portland pulled ahead ..."), and "Blazers"
+    # alone is the Trail Blazers; not a city two teams share.
+    for name in by_name:
+        toks = _tokens(name)
+        k = 2 if " ".join(toks[-2:]) in _NBA_NICKS2 else 1
+        city = toks[:-k]
+        if city and " ".join(city) not in _NBA_SHARED_CITIES:
+            idx.setdefault(tuple(city), set()).add(name)
+        if k == 2:
+            idx.setdefault((toks[-1],), set()).add(name)
+
+    def games_of(text):
+        return {by_name[n][0]["game_id"]: by_name[n][0] for n in _named(text, idx) if n in by_name}
+
+    section_games = games_of(own_text)
+    flags = []
+    for sentence in _sentences(own_text):
+        if _NBA_ELSEWHERE_RE.search(sentence):
+            continue                                    # another game, another year
+        named = [n for n in _named(sentence, idx) if n in by_name]
+        cands = games_of(sentence) or section_games
+        if len(cands) != 1:
+            continue
+        f = next(iter(cands.values()))
+        sides = {by_name[n][1] for n in named if by_name[n][0] is f}
+        side = next(iter(sides)) if len(sides) == 1 else None
+        results = _nba_claims(sentence, f, side)
+        if not results:
+            continue
+        quoted = _quote(sentence)
+        bad = [(said, fact) for v, said, fact in results if v == "contradict"]
+        figs = [r"(?<![\d-])" + re.escape(m.group(0)) + r"(?![\d-])" for m in _NBA_PAIR_RE.finditer(sentence)]
+        figs += [r"\b" + re.escape(m.group(0)) for m in _NBA_RUN_RE.finditer(sentence)]
+        figs += [r"\b" + re.escape(m.group("n")) + r"\s+(?:straight|consecutive|unanswered)"
+                 for m in _NBA_STRAIGHT_RE.finditer(sentence)]
+        fig = "|".join(figs) or r"(?!x)x"
+        if not bad:
+            if outcomes is not None:
+                outcomes.append(("confirmed", quoted, sentence, "game flow", fig))
+            continue
+        t = f["teams"]
+        why = "; ".join(f"{s} -> but {x}" for s, x in bad).replace('"', "'").replace("--", "-")
+        flags.append(
+            f'\n<!-- FACT FLAG [HIGH]: "{quoted}" contradicts the play-by-play of {t["away"]["name"]} @ '
+            f'{t["home"]["name"]}: {why} (ESPN; the NBA GAME FLOW block has the full sequence). Correct it '
+            f'to the block, or cut it. -->')
+        if outcomes is not None:
+            outcomes.append(("HIGH", quoted, sentence, "game flow", fig))
+    return flags
+
+
+# ---------------------------------------------------------------------------
 # Section validator
 # ---------------------------------------------------------------------------
 
@@ -2129,6 +2684,9 @@ def validate_section(heading: str, section_html: str, game_state: dict) -> tuple
 
     # ── CHECK 3F: college basketball game-flow claims vs the play log (SLA-146)
     flags.extend(check_ncaamb_flow_claims(own_text(section_html), game_state))
+
+    # ── CHECK 3G: NBA game-flow claims vs the play log (SLA-147) ─────────────
+    flags.extend(check_nba_flow_claims(own_text(section_html), game_state))
 
     # ── CHECK 3C: Football rank and record claims (SLA-117) ──────────────────
     flags.extend(check_football_claims(own_text(section_html), game_state))

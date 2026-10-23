@@ -353,6 +353,13 @@ block it cites is right and the sentence is wrong - rewrite the period, score
 or scorer to the block, or cut the clause. Nothing is ever downgraded for
 these: the block either shows the goal or the sentence says less.
 
+An NBA game-flow flag quotes a sentence about a quarter, a lead, a tie, a
+shooter's basket, a run or a player's points ("led 52-48 at the half",
+"Brunson hit the game-winning three", "a 14-0 run", "Edwards had 21 in the
+first half", "never trailed"). [HIGH]: the NBA GAME FLOW block it cites is
+right and the sentence is wrong - rewrite the quarter, score, shooter or
+number to the block, or cut the clause. Nothing is ever downgraded for these:
+the block either shows the basket or the sentence says less.
 A college basketball game-flow flag quotes a sentence about the half, a lead,
 a tie, a comeback or overtime ("led 38-36 at halftime", "took the lead for good
 in the second half", "came back from 15 down", "went to overtime"). [HIGH]:

@@ -103,6 +103,18 @@ RULES:
    paraphrase or from memory. If the block doesn't show it, don't say it. A
    game decided in a shootout has no game-winning goal: say it went to a
    shootout.
+   The NBA GAME FLOW part of the GROUND TRUTH block is how yesterday's NBA
+   games actually went, computed from ESPN's play-by-play: the score after
+   each quarter, who scored first, every lead change and tie, the basket that
+   put the winner ahead for good and who hit it, the winner's biggest
+   deficit, the finish, each side's top scorers by half and, for the games
+   your stories cover, the runs ("NY 12-0, Q1 4:33 to 2:44") and streaks
+   ("Brunson, 11 straight points"). Every fact there is sourced. When you
+   write how an NBA game unfolded - which quarter, who led, who hit the
+   go-ahead or game-winning shot, how big the run was - take it from that
+   block, never from a tweet's paraphrase or from memory. A basket's shooter
+   is only ever named when the block names him; if the block doesn't show it,
+   don't say it.
    The MEN'S COLLEGE BASKETBALL GAME FLOW part of the GROUND TRUTH block is how
    yesterday's college games actually went, computed from ESPN's play-by-play:
    the score at the half, who scored first, lead changes and ties, the winner's

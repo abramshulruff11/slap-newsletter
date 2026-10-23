@@ -827,6 +827,7 @@ def _parse_nba_box(summary: dict) -> dict:
                 ath = ae.get("athlete", {})
                 players.append({
                     "name":    ath.get("shortName", ath.get("displayName", "?")),
+                    "id":      ath.get("id"),
                     "pos":     ath.get("position", {}).get("abbreviation", ""),
                     "starter": ae.get("starter", False),
                     "stats":   stats,
@@ -846,8 +847,86 @@ def _parse_nba_box(summary: dict) -> dict:
         "away_periods":   periods["away_periods"],
         "home_periods":   periods["home_periods"],
     }
+    # SLA-147: every scoring play with its shooter and the running score, for
+    # nba_bundle.py. Costs no extra request: the summary is already here.
+    result["agate"] = {"plays": _parse_nba_plays(summary)}
 
     return result
+
+
+_NBA_SHOOTER_RE = re.compile(r"^\s*(.+?)\s+makes\b")
+_NBA_ASSIST_RE = re.compile(r"\(([^()]+?)\s+assists\)")
+
+
+def _parse_nba_plays(summary: dict) -> list[dict]:
+    """Every made shot and free throw in order, from ESPN's play-by-play.
+
+    ESPN has no top-level scoringPlays for basketball; the baskets are the
+    plays with scoringPlay true, each carrying the period and clock, its point
+    value, the scoring team and participants (the shooter first, then the
+    assister on an assisted field goal). The shooter's name is read from the
+    play text ("Walker Kessler makes ..."), which is how ESPN writes it; the
+    athlete ids are kept beside it. Misses, rebounds and fouls are not kept:
+    nothing downstream reads them.
+
+    **The running score is ours, not ESPN's.** The awayScore/homeScore on a
+    play is stale on some plays (2026-10-21: 4 of 11 games had a score that
+    stalled or went backwards mid-game). The point values and the scoring team
+    are right: summed they reproduce every quarter's line score and the final
+    in all 15 games checked. So `away`/`home` here are tallied from `pts` by
+    `side`, in game order.
+    """
+    side_of: dict[str, str] = {}
+    comps = (summary.get("header") or {}).get("competitions") or [{}]
+    for c in comps[0].get("competitors") or []:
+        ha = (c.get("homeAway") or "").lower()
+        if ha in ("home", "away") and c.get("id") is not None:
+            side_of[str(c["id"])] = ha
+
+    def clock_secs(c: str) -> float:
+        c = (c or "").strip()
+        try:
+            if ":" in c:
+                mm, ss = c.split(":")
+                return int(mm) * 60 + float(ss)
+            return float(c)
+        except ValueError:
+            return 0.0
+
+    raw = []
+    for i, p in enumerate(summary.get("plays") or []):
+        p = p or {}
+        period = (p.get("period") or {}).get("number")
+        side = side_of.get(str((p.get("team") or {}).get("id")))
+        pts = p.get("scoreValue")
+        if not p.get("scoringPlay") or not isinstance(period, int) or side is None or not isinstance(pts, int) or pts <= 0:
+            continue
+        raw.append((period, -clock_secs((p.get("clock") or {}).get("displayValue", "")), i, p, side))
+    raw.sort(key=lambda x: x[:3])                      # period, clock running down, then feed order
+
+    plays: list[dict] = []
+    tally = {"away": 0, "home": 0}
+    for period, key_secs, _, p, side in raw:
+        pts = p["scoreValue"]
+        tally[side] += pts
+        text = p.get("text") or ""
+        parts = [((x or {}).get("athlete") or {}).get("id") for x in (p.get("participants") or [])]
+        m, a = _NBA_SHOOTER_RE.match(text), _NBA_ASSIST_RE.search(text)
+        plays.append({
+            "period":  period,
+            "clock":   (p.get("clock") or {}).get("displayValue", ""),
+            "secs":    -key_secs,
+            "side":    side,
+            "away":    tally["away"],
+            "home":    tally["home"],
+            "pts":     pts,
+            "type":    (p.get("type") or {}).get("text", ""),
+            "shooter": m.group(1).strip() if m else "",
+            "shooter_id": parts[0] if parts else None,
+            "assist":  a.group(1).strip() if a else "",
+            "text":    text,
+        })
+    return plays
 
 
 def _parse_mlb_agate(summary: dict, away_abbr: str, home_abbr: str) -> dict:

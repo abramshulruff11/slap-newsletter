@@ -431,6 +431,9 @@ def main() -> None:
         # SLA-148: NHL game flow puts story games in full the same way.
         import nhl_bundle
         print("  " + nhl_bundle.attach_story(game_state, story_plan))
+        # SLA-147: NBA game flow, the same way.
+        import nba_bundle
+        print("  " + nba_bundle.attach_story(game_state, story_plan))
         # SLA-146: men's college basketball game flow, the same way.
         import ncaamb_bundle
         print("  " + ncaamb_bundle.attach_story(game_state, story_plan))
