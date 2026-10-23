@@ -1,5 +1,30 @@
 [
   {
+    "date": "2026-10-23",
+    "slug": "gus-fring-we-are-not-the-same",
+    "boxes": [
+      "BREWERS: WIN A WORLD SERIES WITH A $143M PAYROLL",
+      "RAYS: WIN A WORLD SERIES WITH A $98M PAYROLL",
+      "WE ARE THE SAME"
+    ]
+  },
+  {
+    "date": "2026-10-23",
+    "slug": "this-is-fine",
+    "boxes": [
+      "DOWN 27 AT HALFTIME IN LEBRON'S HOME DEBUT",
+      "WE'RE STILL BUILDING CHEMISTRY"
+    ]
+  },
+  {
+    "date": "2026-10-23",
+    "slug": "pawn-stars-best-i-can-do",
+    "boxes": [
+      "A PRO BOWL RB UNDER CONTRACT, HAND HIM OVER FOR A SECOND",
+      "BEST I CAN DO IS A FIFTH AND A BACKUP LONG SNAPPER"
+    ]
+  },
+  {
     "date": "2026-10-22",
     "slug": "hide-the-pain-harold",
     "boxes": [
@@ -500,34 +525,6 @@
     "boxes": [
       "ATLANTA FALCONS FANS AFTER TWO SCORELESS WEEKS",
       "FALCONS FANS WHO WATCHED THE COUSINS ERA"
-    ]
-  },
-  {
-    "date": "2026-09-24",
-    "slug": "two-buttons",
-    "boxes": [
-      "RE-SIGN WITH THE TEAM THAT WASTED YOUR PRIME",
-      "LEAVE THE ONLY FRANCHISE YOU'VE EVER KNOWN",
-      "VLAD GUERRERO JR."
-    ]
-  },
-  {
-    "date": "2026-09-23",
-    "slug": "buff-doge-vs-cheems",
-    "boxes": [
-      "ELI MANNING 2004-2019",
-      "GIANTS QB ROOM 2020-2026",
-      "STARTED 210 STRAIGHT GAMES, NEVER MISSED ONE TO INJURY",
-      "JAXSON DART LASTED TWO GAMES BEFORE THE MRI"
-    ]
-  },
-  {
-    "date": "2026-09-22",
-    "slug": "panik-kalm-panik",
-    "boxes": [
-      "WEEK 1 DART BEATS THE COWBOYS",
-      "WEEK 1 POSTGAME PLAYOFF TALK",
-      "WEEK 2 EVERYONE ON THE CART"
     ]
   }
 ]

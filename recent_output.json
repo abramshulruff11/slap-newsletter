@@ -1,5 +1,178 @@
 [
   {
+    "date": "2026-10-23",
+    "story_log": [
+      {
+        "topic_key": "rays-brewers-world-series-2026",
+        "title": "World Series begins: Rays-Brewers Game 1 — Nick Martinez surprise starter, Jacob Misiorowski for Brewers",
+        "section": "lead",
+        "development": "CONTINUING [Day 16, TIER 1 WORLD SERIES GAME 1]: Tampa Bay will start Nick Martinez (not ace Drew Rasmussen) in Game 1 per TalkinBaseball — curveball decision announced Thursday. Milwaukee starts Jacob Misiorowski per CBS Sports. First World Series between two teams that have never won title in 100+ years (last: Phillies-Royals 1980) per recent history. Freddy Peralta named ALCS MVP per recent history. Brewers swept Dodgers 4-0 per recent history. Rays beat Guardians 4-2 per recent history. Game 1 is Friday Oct 23 in Milwaukee. One of these teams will win first championship in franchise history.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "sixers-cavs-opening-night-2026",
+        "title": "Cavaliers demolish 76ers 124-79 in LeBron's home debut — Sixers booed at halftime, down 27, blown out by 45 in Philly",
+        "section": "lead",
+        "development": "CONTINUING [Day 2]: Cleveland demolished Philadelphia per ClutchPoints/HaterReport — Cavs led by 27 at halftime per HaterReport, Sixers booed by own fans before half per HaterReport, final margin 45 points. LeBron's Sixers home debut a disaster — daughter Zhuri watching courtside on her 12th birthday per ClutchPoints. Donovan Mitchell drilled buzzer-beating triple to end first quarter per ClutchPoints. Cavs ended first quarter on 22-7 run, led by 17 after one per ClutchPoints. Donovan Mitchell and Cavs made statement in first half per ClutchPoints. Allen Iverson in house for Sixers' opener per ClutchPoints. LeBron and Joel Embiid's new handshake per HaterReport. Sixers 0-2 to open season.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "patriots-bears-tnf-week-7-2026",
+        "title": "Patriots at Bears Thursday Night Football Week 7 — Mike Ditka moment of silence, Caleb Williams returns",
+        "section": "supporting",
+        "development": "New England at Chicago on TNF Week 7. Bears held moment of silence for late Mike Ditka per ClutchPoints. Luther Burden III huge gain for Bears per ClutchPoints. Christian Gonzalez active for Patriots per AdamSchefter. BarstoolBigCat streaming live from Gambling Cave. Caleb Williams expected to start for Bears after injury per recent history. TNF matchup between 4-2 teams.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "trump-lebron-anthem-2026",
+        "title": "Trump criticizes LeBron for not standing still during national anthem — says 76ers star 'disrespecting the U.S.' during warmups",
+        "section": "supporting",
+        "development": "President Donald Trump accused LeBron of disrespecting U.S. after 76ers star appeared to continue warmups during anthem per ESPN/HaterReport. HaterReport: 'Donald Trump CALLS OUT LeBron James for shooting jumpers and working on his golf swing during the National Anthem.' Video shows LeBron moving during anthem. Political controversy on LeBron's second day as Sixer.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "lamelo-ball-travel-call-2026",
+        "title": "NBA refs confirm LaMelo Ball's double stepback was a travel — 'he takes four steps', league made it clear move was not legal",
+        "section": "supporting",
+        "development": "Association that represents NBA referees confirmed LaMelo took two steps too many, traveled in widely-seen clip from Wednesday night's win over Miami per ESPN/CBS Sports. League made clear Ball's unique footwork was not legal move per CBS Sports. 'He takes four steps' per CBS Sports. Double stepback ruled illegal.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "colts-fire-ballard-2026",
+        "title": "Colts fire GM Chris Ballard — several teams interested in trading for Jonathan Taylor as Indy mulls next moves",
+        "section": "supporting",
+        "development": "Indianapolis fired GM Chris Ballard per ESPN. As Colts plot next moves, several teams would be open to potential trade for Jonathan Taylor per ESPN/AdamSchefter. No indication yet whether Colts ready to unload players before trade deadline per ESPN. Major front office shakeup.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "chauncey-billups-gambling-case-2026",
+        "title": "Co-defendant in NBA gambling case denies Chauncey Billups gave him info — Eric Earnest pleads guilty to conspiracy to commit wire fraud",
+        "section": "atl",
+        "development": "Eric Earnest pleaded guilty to conspiracy to commit wire fraud Thursday but denied receiving inside information from former NBA player and coach Chauncey Billups per ESPN. Billups' name in gambling scandal but co-defendant denies connection.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "yaxel-lendeborg-luka-beef-2026",
+        "title": "Warriors rookie Yaxel Lendeborg says he 'lost all respect' for Luka — Stephen A applauds calling out crying to refs",
+        "section": "atl",
+        "development": "CONTINUING [Day 3]: Lendeborg said it was 'interesting first game for me' after defending Luka in professional debut per ESPN. Posted on IG after game per HaterReport. Stephen A Smith applauded Lendeborg calling out Luka for crying to refs per HaterReport — 'He's saying if you're so great, quit whining to the officials. Just go out there and bust my ass. Stop whining to the officials looking to them for help' per HaterReport. Rookie-superstar beef continues.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "clippers-ballmer-suspension-2026",
+        "title": "Clippers dedicate opening win to banned Steve Ballmer — rout Kings 121-96 without owner",
+        "section": "atl",
+        "development": "Los Angeles routed Sacramento 121-96 per ESPN. Clippers determined to stay together in absence of banned owner Steve Ballmer per ESPN. Darius Garland: 30 PTS, 11-19 FG, first Clipper with 30 PT season opener since Paul George 2020 per StatMuse. Darius Acuff Jr. debut: 12 PTS, 5-24 FG, 0-7 3PT per StatMuse — only VJ Edgecombe had more FGA by rookie in season-opener in last 30 seasons per StatMuse. Cameraman got sick of watching Acuff shoot 5-24 and looked for something else to watch per HaterReport. Clippers win without Ballmer.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "tyrese-haliburton-return-2026",
+        "title": "Tyrese Haliburton leads Pacers' gritty opening-night win in return from Achilles tear — emotional debut after 2025 Finals injury",
+        "section": "atl",
+        "development": "Emotional Haliburton made long-awaited return from Achilles tear he suffered in Game 7 of 2025 NBA Finals per ESPN — led Pacers to gritty season-opening win over Pelicans per ESPN. Wore denim/leather jacket similar to Triple H when he returned from torn quad per ESPN — avid WWE fan. Haliburton back after lengthy rehab.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "lakers-warriors-opening-night-2026",
+        "title": "Lakers blow out Warriors 127-105 — Walker Kessler perfect 12-12 in debut, Luka 28-8-7 in dominant showing",
+        "section": "atl",
+        "development": "CONTINUING [Day 2]: Los Angeles demolished Golden State 127-105 per ground truth. Walker Kessler: 26 PTS, 9 REB, 2 BLK, 12-12 FG per StatMuse — most PTS in season opener without missed FG in NBA history per StatMuse. Luka Doncic: 28 PTS, 8 REB, 7 AST, 3 STL, +31 per StatMuse. Lakers' ceiling 'even higher' per ESPN. Kristaps Porziņģis controversy ongoing per recent history. Warriors loss quiet end of incredible LeBron-Steph era per ESPN.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "timberwolves-heat-blowout-2026",
+        "title": "Timberwolves demolish Giannis' Heat 131-106 on opening night — Ant-Melo backcourt debuts, Giannis 10-8-5 on 3-12 shooting",
+        "section": "atl",
+        "development": "CONTINUING [Day 2]: Minnesota demolished Miami 131-106 per ground truth. Giannis Antetokounmpo Heat debut: 10 PTS, 8 REB, 5 AST, 3-12 FG per HaterReport. LaMelo Ball: 29 PTS, 7 REB, 10 AST per StatMuse — screaming after Giannis missed FT per HaterReport. Anthony Edwards cussing out Heat bench all game per HaterReport. Ant-Melo era debuts with statement win per ESPN. Giannis says new-look Heat 'got to trust each other more' per ESPN. Heat blown out in Giannis' first game.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "stephen-vogt-mariners-rumors-2026",
+        "title": "Stephen Vogt shuns Mariners rumors, says he'll manage Guardians in '27 — dispels speculation about future",
+        "section": "atl",
+        "development": "Guardians manager Stephen Vogt dispelled speculation about his future per ESPN — will return next season to chase elusive World Series title per ESPN. Eliminated by Rays in ALCS per recent history. Vogt staying in Cleveland.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "baker-mayfield-injury-return-2026",
+        "title": "Baker Mayfield expected to start vs Panthers — barring setbacks, Bucs QB returns from thumb injury",
+        "section": "atl",
+        "development": "Mayfield expects to return from thumb injury, barring setbacks, and play when Buccaneers face Panthers on Sunday per ESPN. Tampa Bay gets QB back.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "marlon-humphrey-lamar-jackson-defense-2026",
+        "title": "Ravens CB Marlon Humphrey displeased with 'slander' against Lamar Jackson — voices displeasure over criticism of QB",
+        "section": "atl",
+        "development": "Ravens cornerback Marlon Humphrey voiced displeasure over what he called 'slander' against quarterback Lamar Jackson per ESPN. Humphrey defends franchise QB.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "nhl-fighting-increase-2026",
+        "title": "NHL fighting is up — 34 games with fights through 120 games, up from 25-26 last two seasons",
+        "section": "atl",
+        "development": "Through 120 games, there were 34 games with one or more fights per ESPN — up over last two seasons (25 and 26) per ESPN. Fighting increase getting noticed.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "shohei-ohtani-2027-pitching-2026",
+        "title": "Dodgers 'fully expect' Shohei Ohtani to pitch in 2027 — no surgery needed, will return to double duty next year",
+        "section": "atl",
+        "development": "CONTINUING [Day 3]: Ohtani will not require surgery to treat any ailment from past season per ESPN — Andrew Friedman said 'I fully expect him to pitch next year' per ESPN. Dodgers swept in NLCS per recent history. Ohtani returns to two-way role in 2027.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "kurt-suzuki-angels-fired-2026",
+        "title": "Kurt Suzuki out as Angels manager after one season — John Mozeliak won't return as full-time GM in 2027",
+        "section": "atl",
+        "development": "After just one season, Kurt Suzuki will not return as Angels manager per ESPN. John Mozeliak said he will not serve as full-time GM in 2027 per ESPN. Los Angeles shakeup.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "brian-cashman-yankees-extension-2026",
+        "title": "Yankees reach new contract with Brian Cashman — Steinbrenner blames offense for early playoff exit",
+        "section": "atl",
+        "development": "Yankees GM Brian Cashman reached deal to stay in post he's held since 1998 per ESPN. Owner Hal Steinbrenner blamed players for early playoff exit per ESPN. Cashman signed, front office stable.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "aaron-boone-yankees-culture-2026",
+        "title": "Aaron Boone spurns calls for culture change — says Yankees clubhouse remains a 'strength' despite criticism",
+        "section": "atl",
+        "development": "Yankees manager Aaron Boone says he has no plans to call out players publicly more often despite recent criticisms of club's culture per ESPN. Clubhouse remains 'strength' per ESPN. Boone defends approach.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "todd-benzinger-death-2026",
+        "title": "Todd Benzinger dies at 63 — member of Reds' 1990 World Series championship team",
+        "section": "atl",
+        "development": "Todd Benzinger, member of Reds' 1990 World Series championship team, died at 63 per ESPN. Cincinnati mourns former player.",
+        "is_new": true,
+        "resolved": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-22",
     "story_log": [
       {
@@ -3956,123 +4129,6 @@
         "section": "atl",
         "development": "CONTINUING [Day 2]: Dart to undergo season-ending knee surgery on damaged meniscus, MCL and PCL per ESPN/AdamSchefter — meniscus is main issue per Schefter. John Harbaugh left open possibility Dart could return if Giants land in playoffs per AlbertBreer (timetable usually 4-6 months from meniscus repair, would be early end). Jameis Winston takes over. Giants' Week 1 dream now nightmare.",
         "is_new": false,
-        "resolved": true
-      }
-    ]
-  },
-  {
-    "date": "2026-09-23",
-    "story_log": [
-      {
-        "topic_key": "jaxson-dart-knee-injury-giants-2026",
-        "title": "Giants QB Jaxson Dart likely out for season with knee injury — Jameis Winston takes over, crushing blow after Week 1 optimism",
-        "section": "lead",
-        "development": "MRI revealed Dart's knee injury significantly worse than initial sprained MCL diagnosis — now facing possibility of season-ending surgery per ESPN/Schefter/Pelissero. Dart grabbed knee in pain after hit by two Rams defenders MNF, carted off, replaced by Winston. Winston goes 1-16 in Week 3. Giants were 1-0 after Dart's 23-29, 230 yds, 3 TD debut vs Cowboys — now season spirals.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "kawhi-leonard-raptors-extension-2026",
-        "title": "Kawhi Leonard signs $115M extension with Raptors, takes discount to help roster — expects to finish career in Toronto",
-        "section": "supporting",
-        "development": "Kawhi agreed to 2yr/$115M extension plus player option for 2028-29 per Shams — took $11M less than max, waived $7.45M trade kicker to give Raptors flexibility. Now locked in through 2029-30. Expects to finish career in Toronto per Shams. Trade from Clippers finalized two weeks ago.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "rays-clinch-al-east-2026",
-        "title": "Rays clinch AL East for first time since 2021 — Drew Rasmussen dominant, Yankees' Aaron Judge still sidelined for Wild Card",
-        "section": "supporting",
-        "development": "Tampa Bay clinched AL East after beating Yankees 6-1 per ground truth — first division title since 2021. Rasmussen no-hit Yankees into 7th inning per TalkinBaseball. Yankees announced Judge will NOT be available for Wild Card series next week per ESPN/AdamSchefter. Tampa back on top.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "caitlin-clark-fever-lynx-sept-22-2026",
-        "title": "Caitlin Clark drops 27-9-7 with 4 steals as Fever beat Lynx for first time since rookie season — Indiana gets revenge",
-        "section": "supporting",
-        "development": "Clark: 27 PTS, 9 AST, 7 REB, 4 STL vs Minnesota per StatMuse/ESPN — first win vs Lynx since rookie season per StatMuse. Indiana blew 29-point lead, Lynx cut to single digits, but Fever held on 96-77 per ground truth. Kelsey Mitchell extended 20-point streak to 27 games. Big win heading into playoffs.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "cubs-marlins-extra-innings-sept-22-2026",
-        "title": "Cubs and Marlins go to 11th inning in playoff-clinching drama — both teams survive bases-loaded jams, Cubs still haven't clinched",
-        "section": "atl",
-        "development": "Cubs-Marlins went to 11th inning per TalkinBaseball/BarstoolBigCat. Marlins escaped bases-loaded jam in 10th per TalkinBaseball, Cubs survived bases-loaded jam in 11th per TalkinBaseball. BarstoolBigCat: 'End this! We're running out of pitchers and we didn't really have any to begin with!' Cubs trying to clinch playoff spot, game ongoing.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "white-sox-royals-murakami-homer-sept-22-2026",
-        "title": "Munetaka Murakami hits 33rd HR to extend White Sox lead over Royals 14-11 — Chicago wins wild shootout",
-        "section": "atl",
-        "development": "Murakami smacked 33rd HR of season to extend White Sox lead per ClutchPoints — Chicago beat Kansas City 14-11 per ground truth. Wild high-scoring game.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "alex-bregman-facial-fractures-2026",
-        "title": "Alex Bregman arrives at ballpark with facial fractures, won't need surgery — hopes to return in Cubs' playoff run",
-        "section": "atl",
-        "development": "CONTINUING [Day 3]: Bregman arrived at ballpark after suffering multiple facial fractures Sunday per JomboyMedia/CubsCreator — won't undergo surgery, hopeful to return in postseason per recent history (CBS Sports/JeffPassan Sept 22). Video shows him walking into stadium. Tough scene but recovery underway.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "dodgers-padres-sept-22-2026",
-        "title": "Dodgers demolish Padres 7-0 — Tommy Edman deep HR, Will Smith 10th homer, Shohei Ohtani expected back Wednesday",
-        "section": "atl",
-        "development": "Los Angeles destroyed San Diego 7-0 per ground truth. Tommy Edman crushed deep solo shot per ClutchPoints, Will Smith hit 10th HR of season per TalkinBaseball. CBS Sports: Ohtani expected to come off IL Wednesday as Dodgers ramp up for postseason — has been out since Sept 7 with multiple injuries. Dodgers rolling.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "astros-mariners-alvarez-100-rbis-2026",
-        "title": "Yordan Alvarez drives in 100th RBI of season to give Astros lead over Mariners — reaches century mark for second straight year",
-        "section": "atl",
-        "development": "Alvarez knocked in 100th RBI to put Houston ahead vs Seattle per ClutchPoints. Second straight season with 100+ RBI. Astros won 7-0 per ground truth. Yordan continues dominant campaign.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "athletics-angels-walkoff-sept-22-2026",
-        "title": "Carlos Cortes crushes go-ahead 2-run HR in 8th to put A's in front over Angels — Oakland wins 9-7",
-        "section": "atl",
-        "development": "Cortes delivered go-ahead 2-run shot in 8th inning per TalkinBaseball. Athletics beat Angels 9-7 per ground truth. Late-inning heroics.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "phillies-brewers-zack-wheeler-2026",
-        "title": "Zack Wheeler strikes out first 7 batters vs Brewers, sets Phillies franchise record — eventually wins 6-4",
-        "section": "atl",
-        "development": "Wheeler set Phillies franchise record by striking out first seven batters of game per TalkinBaseball. Finished with 11 SO per StatMuse. Also became 96th player in MLB history to throw 2,000 career strikeouts per TalkinBaseball. Philadelphia beat Milwaukee 6-4 per ground truth. Dominant Wheeler night.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "nationals-tigers-cj-abrams-30-100-2026",
-        "title": "CJ Abrams hits two HRs vs Tigers — first Nat with 30 HR and 100 RBI in season since Juan Soto in 2019",
-        "section": "atl",
-        "development": "Abrams hit 2 HR, drove in 3 runs vs Detroit per StatMuse — first Nationals player with 30+ HR and 100+ RBI in season since Soto in 2019 per StatMuse. Washington beat Tigers 3-1 per ground truth. Career year.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "valkyries-fire-overtime-sept-22-2026",
-        "title": "Portland Fire beat Golden State Valkyries 90-82 in OT — Carla Leite clutch and-1, Gabby Williams attacks to tie, Bridget Carleton rallies from 17-0 deficit",
-        "section": "atl",
-        "development": "Fire beat Valkyries 90-82 in OT per ground truth. Carleton hit wing three to tie 40-40 after Portland trailed 17-0 per ClutchPoints. Leite delivered clutch and-1 to give Fire 77-75 lead late per ClutchPoints. Williams attacked downhill to tie at 77 and force OT per ClutchPoints. Wild comeback and overtime finish.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "aces-sparks-aja-wilson-scoring-record-2026",
-        "title": "A'ja Wilson breaks own single-season scoring record with 18 points vs Sparks — now 2nd-most in WNBA history",
-        "section": "atl",
-        "development": "Wilson: 18 PTS, 10 REB, 2 BLK vs LA per StatMuse — breaks tie with herself for most points in season in franchise history, now 2nd-most in WNBA history per StatMuse. Aces beat Sparks 89-79 per ground truth. Historic scoring season continues.",
-        "is_new": true,
         "resolved": true
       }
     ]
