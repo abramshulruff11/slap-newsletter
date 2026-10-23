@@ -431,12 +431,18 @@ def format_game_state_summary(game_state: dict) -> str:
     NHL games get their game flow the same way (SLA-148, nhl_bundle.py): the
     score after each period, lead changes, ties, the goal that won it, every
     goal. Computed from the goal log fetch_sports_data.py stores per game.
+
+    NBA games get theirs too (SLA-147, nba_bundle.py): the score after each
+    quarter, lead changes, ties, who hit the basket that won it, top scorers
+    by half, and for story games the runs and streaks. Computed from the
+    play log fetch_sports_data.py stores per game.
     """
     import champions_source
     import football_bundle
     import history_source
     import game_flow
     import mlb_bundle
+    import nba_bundle
     import nhl_bundle
     football_lines = football_bundle.summary_lines(game_state)
     in_bundles, full_teams = football_bundle.shown(game_state) if football_lines else (set(), set())
@@ -449,7 +455,10 @@ def format_game_state_summary(game_state: dict) -> str:
     nhl_lines = nhl_bundle.summary_lines(game_state) if game_state else []
     if nhl_lines:
         in_bundles |= nhl_bundle.shown(game_state) - {None}
-    champion_lines = (football_lines + mlb_lines + nhl_lines + champions_source.summary_lines(game_state)
+    nba_lines = nba_bundle.summary_lines(game_state) if game_state else []
+    if nba_lines:
+        in_bundles |= nba_bundle.shown(game_state) - {None}
+    champion_lines = (football_lines + mlb_lines + nhl_lines + nba_lines + champions_source.summary_lines(game_state)
                       + history_source.summary_lines(game_state, skip=full_teams))
     if not game_state or not game_state.get("sports"):
         return "\n".join(champion_lines)

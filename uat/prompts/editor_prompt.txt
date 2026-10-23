@@ -351,6 +351,14 @@ block it cites is right and the sentence is wrong - rewrite the period, score
 or scorer to the block, or cut the clause. Nothing is ever downgraded for
 these: the block either shows the goal or the sentence says less.
 
+An NBA game-flow flag quotes a sentence about a quarter, a lead, a tie, a
+shooter's basket, a run or a player's points ("led 52-48 at the half",
+"Brunson hit the game-winning three", "a 14-0 run", "Edwards had 21 in the
+first half", "never trailed"). [HIGH]: the NBA GAME FLOW block it cites is
+right and the sentence is wrong - rewrite the quarter, score, shooter or
+number to the block, or cut the clause. Nothing is ever downgraded for these:
+the block either shows the basket or the sentence says less.
+
 A football rank, record or standings flag names the rank ("No. 8"), record
 ("4-1", "1-1 in SEC play") or standing ("leads the AFC West", "a game back")
 it is about. [HIGH]: the game data it quotes is right and the sentence is

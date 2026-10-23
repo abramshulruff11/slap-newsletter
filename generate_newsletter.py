@@ -1285,6 +1285,9 @@ def main() -> None:
     # SLA-148: NHL game flow puts story games in full the same way.
     import nhl_bundle
     print("  " + nhl_bundle.attach_story(game_state, story_plan))
+    # SLA-147: NBA game flow, the same way.
+    import nba_bundle
+    print("  " + nba_bundle.attach_story(game_state, story_plan))
 
     draft_html    = run_pass2(story_plan, client, game_state, degraded=degraded)
 
