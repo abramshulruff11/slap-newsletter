@@ -3,6 +3,115 @@
     "date": "2026-10-23",
     "story_log": [
       {
+        "topic_key": "sixers-cavs-comeback-2026",
+        "title": "76ers complete historic 29-point comeback to stun Cavaliers 114-106 — Tyrese Maxey 32 points, LeBron home debut disaster turns to triumph",
+        "section": "lead",
+        "development": "CONTINUING [Day 2]: Philadelphia erased 29-point deficit to beat Cleveland 114-106 per ground truth/ClutchPoints — franchise's biggest comeback in play-by-play era (1996-97) per ClutchPoints. Down 69-40 at half, booed by own fans per ClutchPoints/HaterReport. Maxey: 32 PTS (15 first half, 17 second half) per ground truth, led comeback. LeBron: Also 32 PTS per ESPN — home debut started as disaster, ended in euphoria. Donovan Mitchell: 32 PTS for Cavs per ground truth. Sixers took lead for good 96-95 on Embiid basket Q4 6:54 per ground truth. One lead change, three ties per ground truth. Sixers now 1-1, Cavs 0-2 per ground truth.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "thunder-nuggets-opening-night-2026",
+        "title": "Thunder dominate Nuggets 96-84 — SGA's 141-game 20-point streak ends by choice, Jokic 5-19 shooting in statement win",
+        "section": "lead",
+        "development": "CONTINUING [Day 2]: Oklahoma City beat Denver 96-84 per ground truth. Shai Gilgeous-Alexander asked out with 17 points per ClutchPoints/ESPN — ended historic 141-game regular-season streak of 20+ points per ClutchPoints/ESPN. 'Just another reason on list why I admire him' per Mark Daigneault. Jalen Williams: 21 PTS (10 first half, 11 second half) per ground truth. Nikola Jokic: 13 PTS, 5-19 FG per NBAMemes/ground truth. Aaron Gordon 20 PTS for Denver per ground truth. OKC took lead for good 64-62 on Mitchell basket Q3 2:06 per ground truth. Thunder now 2-0, Nuggets 0-2 per ground truth.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "bears-patriots-tnf-week-7-2026",
+        "title": "Bears hold off Patriots 30-24 on Thursday Night Football — Caleb Williams 22-33/308/2TD, Cairo Santos redeems miss with 58-yard game-sealer",
+        "section": "supporting",
+        "development": "CONTINUING [Day 2, RESOLVED]: Chicago beat New England 30-24 per ground truth. Caleb Williams: 22-33, 308 YDS, 2 TD, 0 INT per ClutchPoints/ESPN. Luther Burden III: 4 REC, 130 YDS, 1 TD per ClutchPoints — 17 targets this season, caught every single one per SleeperHQ. Cairo Santos missed FG to go up two possessions Q4 per ClutchPoints, then drilled 58-yarder to seal win per ClutchPoints/ESPN. Cole Kmet carted off with knee injury Q4 per AlbertBreer/ESPN. Bears controlled Q4: 12:21 possession, 24 plays to Pats' 8, 110 yards to 36 per AlbertBreer. Bears now 5-2, 2nd in NFC North, 1 game back per ground truth. Patriots 4-3, 2nd in AFC East, 1.5 games back per ground truth.",
+        "is_new": false,
+        "resolved": true
+      },
+      {
+        "topic_key": "marshall-faulk-parkinsons-2026",
+        "title": "Hall of Fame RB Marshall Faulk reveals Parkinson's diagnosis — Southern coach says 'I want to help as many people as I can'",
+        "section": "supporting",
+        "development": "Faulk revealed Parkinson's diagnosis in podcast appearance Wednesday per ESPN — 'I want to help as many people as I can' per ESPN. Hall of Fame running back and current Southern coach going public with illness. Faulk discussing condition openly to help others.",
+        "is_new": true,
+        "resolved": false
+      },
+      {
+        "topic_key": "colts-fire-ballard-taylor-trade-2026",
+        "title": "Colts fire GM Chris Ballard — several teams interested in trading for Jonathan Taylor as Indy mulls next moves",
+        "section": "supporting",
+        "development": "CONTINUING [Day 2]: Indianapolis fired GM Chris Ballard per ESPN. Several teams would be open to potential trade for Jonathan Taylor per ESPN/AdamSchefter. No indication yet whether Colts ready to unload players before trade deadline per ESPN. Major front office shakeup, Taylor trade speculation intensifies.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "rays-brewers-world-series-2026",
+        "title": "World Series Game 1 Friday: Rays vs Brewers — Nick Martinez surprise starter for Tampa Bay, Misiorowski for Milwaukee",
+        "section": "supporting",
+        "development": "CONTINUING [Day 17, TIER 1 WORLD SERIES GAME 1]: Tampa Bay will start Nick Martinez (not ace Drew Rasmussen) in Game 1 per ESPN/TalkinBaseball — curveball decision announced Thursday. Milwaukee starts Jacob Misiorowski per CBS Sports. First World Series between two teams that have never won title in 100+ years (last: Phillies-Royals 1980) per ESPN. Freddy Peralta named ALCS MVP per recent history. Brewers swept Dodgers 4-0 per recent history. Rays beat Guardians 4-2 per recent history. Game 1 is Friday Oct 23 in Milwaukee. One of these teams will win first championship in franchise history.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "oilers-hurricanes-mcdavid-shootout-2026",
+        "title": "Oilers rally from 4-2 down, tie Hurricanes 5-5 in shootout — McDavid 3 points, Edmonton wins shootout after wild comeback",
+        "section": "atl",
+        "development": "Carolina and Edmonton tied 5-5 after OT per ground truth, Edmonton won shootout per ground truth. Oilers down 4-2 after 2nd per ground truth, rallied with 3 goals in 3rd per ground truth. McDavid: 1 goal, 2 assists (3 points) per ground truth — scored 3rd 0:26 Q3, tied it 4-4 Q3 2:51, tied it 5-5 Q3 18:32 per ground truth. Draisaitl: 2 goals, 1 assist per ground truth. Oilers 8-2 after 10 games per ground truth. Hurricanes defending champs. Wild 5-5 comeback wins shootout.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "maple-leafs-rangers-thriller-2026",
+        "title": "Maple Leafs edge Rangers 5-4 — Toronto wins after trading leads four times, go-ahead goal with 0:28 left",
+        "section": "atl",
+        "development": "Toronto beat New York Rangers 5-4 per ground truth. Lead changed hands four times per ground truth — TOR 1-0, NYR tied 1-1, TOR 2-1, NYR tied 2-2, NYR 3-2, TOR tied 3-3, TOR 4-3, NYR tied 4-4, TOR took lead for good 5-4 Q3 19:32 per ground truth. Back-and-forth thriller ends with late Toronto winner.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "stars-jets-ot-thriller-2026",
+        "title": "Stars complete comeback to beat Jets 3-2 in OT — Dallas ties it with 2:00 left, wins in OT",
+        "section": "atl",
+        "development": "Dallas beat Winnipeg 3-2 in OT per ground truth. Jets led 2-1 after Q2 per ground truth. Stars tied it 2-2 Q3 18:00, then won it OT 3:47 per ground truth. Dallas comeback complete in extra time.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "luther-burden-bears-breakout-2026",
+        "title": "Luther Burden III: 4 catches, 130 yards, 1 TD — Bears WR has caught all 17 targets this season",
+        "section": "atl",
+        "development": "Burden: 4 REC, 130 YDS, 1 TD per ClutchPoints. Caleb Williams has targeted him 17 times this season, he has caught every single one per SleeperHQ. Perfect catch rate through Week 7. Burden breakout night on TNF.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "cooper-black-panthers-debut-2026",
+        "title": "Panthers debut 6-9 goalie Cooper Black — tallest goalie in NHL history, breaks record set by four 6-7 goalies",
+        "section": "atl",
+        "development": "Cooper Black listed 6-9 per ESPN — 2 inches taller than goalies who previously held mark (Ben Bishop, Ivan Fedotov, Mads Sogaard, Mikko Koskinen) per ESPN. Tallest goalie in NHL history debuts for Florida. Record-breaking height.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "nhl-fighting-up-2026",
+        "title": "NHL fighting is up — 34 games with fights through 120 games, up from 25-26 last two seasons",
+        "section": "atl",
+        "development": "CONTINUING [Day 2]: Through 120 games, 34 games had one or more fights per ESPN — up over last two seasons (25 and 26) per ESPN. Fighting increase getting noticed. Uptick in on-ice altercations early this season.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "app-state-jmu-ot-thriller-2026",
+        "title": "App State ends James Madison's undefeated start with OT win — James London 40-yard FG in OT, only 5 unbeaten FBS teams remain",
+        "section": "atl",
+        "development": "Appalachian State beat James Madison 34-31 in OT per ground truth. James London kicked 40-yard FG in OT to give App State win per ESPN — leaves just five unbeaten teams in FBS per ESPN. JMU's perfect season ends on the road. Sun Belt After Dark delivers.",
+        "is_new": true,
+        "resolved": true
+      }
+    ]
+  },
+  {
+    "date": "2026-10-23",
+    "story_log": [
+      {
         "topic_key": "rays-brewers-world-series-2026",
         "title": "World Series begins: Rays-Brewers Game 1 — Nick Martinez surprise starter, Jacob Misiorowski for Brewers",
         "section": "lead",
@@ -4036,99 +4145,6 @@
         "section": "atl",
         "development": "Frog spotted at Yankee Stadium per JomboyMedia. Random wildlife appearance.",
         "is_new": true,
-        "resolved": true
-      }
-    ]
-  },
-  {
-    "date": "2026-09-24",
-    "story_log": [
-      {
-        "topic_key": "blue-jays-eliminated-playoffs-2026",
-        "title": "Blue Jays swept by Orioles, eliminated from playoff contention — Vlad era ends with no postseason for second time in three years",
-        "section": "lead",
-        "development": "Baltimore swept Toronto in doubleheader (4-2 in both games per ground truth), officially eliminating Blue Jays from playoff contention per TalkinBaseball. Pete Alonso called teammates back onto field to salute Baltimore crowd after final home game per TalkinBaseball. Vlad era: missed playoffs 2026, lost WS 2025, missed 2024, lost ALWC 2023/2022, missed 2021/2020/2019 per StatMuse. Eight years, one pennant, no ring.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "astros-mariners-al-west-race-2026",
-        "title": "AL West race tied at 78-80 — Mariners walk off Astros, both teams neck-and-neck with four games left",
-        "section": "supporting",
-        "development": "Josh Naylor walked off Astros for Seattle per TalkinBaseball — Mariners and Astros now both 78-80, tied atop AL West, Houston holds tiebreaker per TalkinBaseball. Yainer Diaz hit go-ahead triple in 10th, then Naylor ended it per TalkinBaseball. AL West title coming down to final weekend.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "cubs-marlins-playoff-push-sept-2026",
-        "title": "Cubs lose to Marlins 2-1 — playoff hopes hanging by thread as Kevin Gausman injured on comebacker",
-        "section": "supporting",
-        "development": "CONTINUING [Day 3]: Miami beat Chicago 2-1 per ground truth. Gausman made incredible play on comebacker but left game, hope he's okay per BarstoolBigCat. 'That was the moment. Fuck' per BarstoolBigCat after Cubs failed to score late. Cubs-Marlins went 11 innings two days ago, now Cubs losing ground in three-way wild card tie.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "lonzo-ball-retirement-2026",
-        "title": "Lonzo Ball announces retirement at 28 after career-altering knee injury — injuries robbed his potential",
-        "section": "supporting",
-        "development": "Lonzo announced retirement at 28 due to career-altering knee injury per NBAMemes. 'Injuries really robbed Lonzo's potential. He was supposed to be one of greats 😣' per NBAMemes. Three years of rehab couldn't save career that started with so much promise.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "ken-jeong-athletics-minority-owner-2026",
-        "title": "Ken Jeong joins Korean-led Team 61 as A's minority owner — 'This is a victory for Major League Baseball. This is a victory for Korea.'",
-        "section": "atl",
-        "development": "Jeong joined SportsCenter to discuss becoming A's minority owner with Korean-led group Team 61 per SportsCenter. 'To me this is a victory for Major League Baseball. This is a victory for Korea' per SportsCenter. Actor and comedian now part of Oakland ownership.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "ravens-cowboys-rio",
-        "title": "Ravens and Cowboys head to Rio for Sunday's international game — Lamar Jackson comments on field conditions after criticism",
-        "section": "atl",
-        "development": "First-ever Rio De Janeiro game Ravens-Cowboys broadcasts on CBS Sunday per CBS Sports. Lamar commented on Rio field ahead of game after conditions drew criticism per CBS Sports. 'Lamar with a bar 🔥 Ravens vs. Cowboys will be played in Rio this Sunday 🇧🇷' per SportsCenter.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "yankees-judge-wild-card-2026",
-        "title": "Yankees planning for Aaron Judge to miss Wild Card Series — three-time MVP pushing to play, but team expects him out",
-        "section": "atl",
-        "development": "CONTINUING [Day 2]: Judge told jorgecastillo he intends to play in wild card series next week per JeffPassan/ESPN. But Yankees planning for him to miss it per CBS Sports (from Sept 23) — Judge says he's preparing to play, but body and team may say otherwise per CBS Sports. Judge pushing to return, team being cautious.",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "ben-rice-40-homers-2026",
-        "title": "Ben Rice hits 40th and 41st home runs of season — Yankees catcher reaches milestone with two-homer game vs Rays",
-        "section": "atl",
-        "development": "Rice hit 40th HR (leadoff shot) per TalkinBaseball, then added 41st later in game per TalkinBaseball — first time in career reaching 40 HR per TalkinBaseball. Juan Soto also went deep (27th of year) per TalkinBaseball. Yankees rolled Rays per ground truth (9-2).",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "dream-liberty-wnba-playoffs-sept-24-2026",
-        "title": "Dream demolish Liberty 83-65 to secure top-four playoff seed — Allisha Gray 24 points, Atlanta finishes season on five-game win streak",
-        "section": "atl",
-        "development": "Atlanta destroyed New York 83-65 per ground truth. Allisha Gray: 24 PTS, 4 REB, 5 AST, 3 STL, +21 per StatMuse. Dream finish season on five-game win streak per StatMuse. Sabrina Ionescu assessed Flagrant 1 after inadvertent elbow on Angel Reese, Reese left with face injury per ClutchPoints. Atlanta locks in top-four seed.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "flau-jae-johnson-storm-losing-season-2026",
-        "title": "Flau'jae Johnson sets Storm rookie scoring record with 626 points despite historic losing season — passes Breanna Stewart",
-        "section": "atl",
-        "development": "Johnson now has most PTS by Storm rookie all-time with 626, passing Breanna Stewart (621) and Sue Bird (461) per StatMuse. Elite company despite Seattle's worst season in franchise history. Dallas beat Seattle 103-91 per ground truth. CBS Sports profiled how Johnson flourished through adversity.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "jaxson-dart-knee-injury-giants-2026",
-        "title": "Jaxson Dart's season officially over — will undergo knee surgery, could return if Giants make playoffs",
-        "section": "atl",
-        "development": "CONTINUING [Day 2]: Dart to undergo season-ending knee surgery on damaged meniscus, MCL and PCL per ESPN/AdamSchefter — meniscus is main issue per Schefter. John Harbaugh left open possibility Dart could return if Giants land in playoffs per AlbertBreer (timetable usually 4-6 months from meniscus repair, would be early end). Jameis Winston takes over. Giants' Week 1 dream now nightmare.",
-        "is_new": false,
         "resolved": true
       }
     ]

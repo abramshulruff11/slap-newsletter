@@ -1,6 +1,22 @@
 [
   {
     "date": "2026-10-23",
+    "slug": "first-time",
+    "boxes": [
+      "CAVS FANS AFTER BLOWING A 29-POINT LEAD",
+      "PHILLY FANS AFTER WATCHING EVERY SIXERS PLAYOFF RUN"
+    ]
+  },
+  {
+    "date": "2026-10-23",
+    "slug": "drake",
+    "boxes": [
+      "PLAY 4 MORE MINUTES AND LOCK IN GAME 142 OF THE STREAK",
+      "SIT DOWN, REST THE LEGS, LET THE RECORD DIE"
+    ]
+  },
+  {
+    "date": "2026-10-23",
     "slug": "gus-fring-we-are-not-the-same",
     "boxes": [
       "BREWERS: WIN A WORLD SERIES WITH A $143M PAYROLL",
@@ -508,23 +524,6 @@
       "MAKE THE PLAYOFFS UNDER .500",
       "GET HOME FIELD AT 80-82",
       "FIRST SUB-.500 CHAMPIONS IN MLB HISTORY"
-    ]
-  },
-  {
-    "date": "2026-09-26",
-    "slug": "panik-kalm-panik",
-    "boxes": [
-      "DBACKS ARE HOT AGAIN",
-      "WE STILL LEAD THE WILD CARD",
-      "IT'S 1.5 GAMES AND THEY HAVE THE TIEBREAKER"
-    ]
-  },
-  {
-    "date": "2026-09-25",
-    "slug": "first-time",
-    "boxes": [
-      "ATLANTA FALCONS FANS AFTER TWO SCORELESS WEEKS",
-      "FALCONS FANS WHO WATCHED THE COUSINS ERA"
     ]
   }
 ]
