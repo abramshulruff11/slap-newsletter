@@ -23,7 +23,7 @@ database, no network), so it runs at prompt-build time.
 - **The block is lean on purpose.** A game has 60-90 scoring plays; only the
   turning points are shown (the first basket, the lead changes' count, the
   biggest swing, the go-ahead for good, the last basket), never every shot.
-- **The cap is 4,000 characters** for the whole block: NCAA tournament games
+- **The cap is 5,500 characters** for the whole block: NCAA tournament games
   and games a story names get the full bundle, then ranked games, then the
   rest as one flow line, close games first. A game the cap cut keeps its
   plain result line; the count is printed, never silent.
@@ -42,7 +42,7 @@ import re
 import game_flow
 from history_source import norm, story_text
 
-BUDGET = 4_000
+BUDGET = 5_500                  # 4,000 cut 4 of 17 ranked games on a heavy Saturday (2026-02-21)
 BIG_DEFICIT = 8                 # a deficit worth printing
 CLOSE_MARGIN = 3                # "decided by" is only said for a finish this close
 
