@@ -1360,6 +1360,12 @@ unstaged, which breaks `git pull --rebase`.
   is job-level in `daily-newsletter.yml`. `game_state.json` carries a `fetch_health` block and
   `check_game_state.py` (continue-on-error step) fails loudly on a blocked fetch. Offline test:
   `uat/tests/test_proxy_fallback.py`. Full review: `docs/code_review_2026-09-04.md`.
+- **Spoofed-browser UAs rot (news feeds FIXED 2026-10-22, SLA-153; sports data still exposed):** the
+  8/24 ESPN RSS outage was a hardcoded Chrome UA aging into an AWS WAF "outdated browser" rule.
+  `fetch_content.py` news feeds no longer claim Chrome (`NEWS_UA_LADDER`, below), but
+  `fetch_sports_data.py` still pins Chrome/124 in `_UA_LIST` / `_browser_headers`. That path is
+  verified working (`site.api.espn.com` is a different origin and its 403-retry covers it) but is
+  the same class of time bomb. If sports data starts failing, check the UA version first.
 - **`game_state.json` freshness — guard added (see above):** `fetch_sports_data.py` always stamps the file
   with today's date, even if every ESPN call silently fails (each is wrapped in try/except
   returning empty). A today-stamped but *hollow* file degrades silently — the newsletter loses its
@@ -1509,6 +1515,28 @@ for …") omitted.
   final), block max 3,447 / mean 2,196 chars, 0 HIGH after fixing 5 false alarms the replay found.
 - `uat/tests/test_nhl_flow.py`; `test_runner_drift.py` `main` re-pinned.
 - Next in the SLA-143 order: NBA (SLA-147) and college football (SLA-145) reuse `game_flow.py`.
+
+**2026-10-22 — Headline supply: UA ladder, proxy last, health in the status email (SLA-153)**
+- Rescued from a month-old uncommitted worktree (branch `claude/loving-brahmagupta-cc56d6`) and
+  reconciled with the 9/4 proxy fallback. Root cause of 8/24: `espn.com/espn/rss/*` sits behind AWS
+  WAF Bot Control, which challenges a UA claiming a STALE Chrome build with HTTP 202 + an empty JS
+  challenge body that feedparser parses into zero entries. Chrome <= 139 was challenged; Firefox,
+  Safari, curl, feedparser's default and no UA were never. 202 is a success code, so nothing flagged
+  it. (The 7/15-9/4 outage this file already records was the same wall.)
+- `fetch_one_news_feed()`: walks `NEWS_UA_LADDER` (an honest non-Chrome UA first, never claims
+  Chrome) past a bot wall, then tries the proxy LAST, with the ladder UA (a frozen Chrome through the
+  proxy would meet the same WAF). Labels: `ok` / `ok_proxy` / `blocked` / `empty` / `error`.
+  `BROWSER_UA` is Nitter-only now. `python-requests/*` is separately 403'd: don't use a stock library UA.
+- Health: `news_feed_health` in `raw_content.json` (per-feed labels, healthy count,
+  `MIN_HEALTHY_NEWS_FEEDS = 5` of 7, `degraded`). Measured on entries the FEED returned, not
+  headlines surviving the 24h filter, so an out-of-season feed is healthy.
+- `verify_run.py` WARNS on a degraded supply, which reaches the SLA-52 status email. It does not fail
+  the run and does not move the verdict (a thinner issue beats none; warnings never downgrade).
+  Deliberately NOT a workflow `::warning::` annotation: the email is the one notification channel.
+- `generate_newsletter.run_pass1` (both runners) drops `news_feed_health` from Pass 1's payload so it
+  is never mistaken for story material; `KNOWN_DIVERGENT["run_pass1"]` re-pinned.
+- New `uat/tests/test_news_feeds.py` (ladder walks a 202, proxy last, blocked/empty/error, 6-of-7
+  ESPN feeds dead = degraded, one flaky feed = fine, verify_run warns without failing).
 
 **2026-10-19 — MLB game flow reaches the writer; Pass 3 checks inning claims (SLA-142)**
 - Spike: ESPN already held every MLB game's line score and scoring plays; nothing read them but

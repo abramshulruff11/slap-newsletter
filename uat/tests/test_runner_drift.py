@@ -45,7 +45,7 @@ UAT = REPO / "uat" / "generate_newsletter_uat.py"
 # pinned: touch either copy and this test fails until you have looked at the
 # counterpart and deliberately re-recorded the hash.
 KNOWN_DIVERGENT = {
-    "run_pass1": dict(prod="79188849f3bf", uat="f4e2c934a86e", reason=(
+    "run_pass1": dict(prod="8f3a13cac82a", uat="dbec20f73d3b", reason=(
         "Bidirectional, and the two now hold DIFFERENT video policies on "
         "purpose. Prod (2026-09-04): video tweets are tagged by fetch_content, "
         "marked for Pass 1 in the payload, and removed from the headliners by "

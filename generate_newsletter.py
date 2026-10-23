@@ -275,6 +275,9 @@ def run_pass1(raw: dict, recent_output: list, client: anthropic.Anthropic, game_
         return d
 
     raw_slim = dict(raw)
+    # Operational metadata, not content -- keep it out of the prompt so the story
+    # selector never sees fetch bookkeeping as something to write about.
+    raw_slim.pop("news_feed_health", None)
     raw_slim["news_headlines"] = [_slim_item(h) for h in raw.get("news_headlines", [])]
     raw_slim["tweets"]         = [_slim_tweet(t) for t in raw.get("tweets", [])]
 

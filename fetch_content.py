@@ -101,12 +101,39 @@ TWITTER_HANDLES = [
 
 NITTER_BASE = "https://nitter.net"
 
-# Browser UA — ESPN 403s feedparser's default agent (same fix as
-# fetch_sports_data.py, where non-browser UAs get blocked).
+# Browser UA for Nitter. Keep this one browser-shaped -- nitter mirrors are the
+# case that actually wants it. NEWS_UA_LADDER below is deliberately NOT this.
 BROWSER_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 )
+
+# espn.com/espn/rss/* sits behind AWS WAF Bot Control on CloudFront, and its
+# rule set flags a User-Agent claiming a STALE Chrome build as a spoofed bot.
+# Measured 2026-08-24: every Chrome UA <= 139 got HTTP 202 + `x-amzn-waf-action:
+# challenge` and an empty body (a JS challenge page feedparser silently parses
+# into zero entries); Chrome >= 140 got 200. Non-Chrome UAs -- Firefox, Safari,
+# curl, feedparser's own default, even no UA at all -- were never challenged.
+#
+# So the browser UA above was ACTIVELY causing this: it froze at Chrome/124 and
+# rotted into the challenge bucket, silently cutting all six ESPN feeds and
+# leaving the newsletter on CBS-only headline supply. Chasing the current Chrome
+# version would just re-arm the same time bomb every year, so the ladder leads
+# with an honest non-browser UA and never claims Chrome at all.
+#
+# (`python-requests/...` is separately hard-blocked with a 403, so "any
+# non-browser UA" is not the rule -- don't swap these for a stock library UA.)
+NEWS_UA_LADDER = [
+    "SLAP-Newsletter/1.0",
+    "feedparser/6.0 +https://github.com/kurtmckee/feedparser/",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0",
+]
+
+# If fewer than this many of the NEWS_FEEDS return a parseable feed, headline
+# supply is compromised the same way MIN_HEALTHY_HANDLES covers tweets. Sized so
+# that losing all six ESPN feeds (the 2026-08-24 outage) trips it while routine
+# single-feed flakiness does not.
+MIN_HEALTHY_NEWS_FEEDS = 5
 
 # CBS's feed injects affiliate/betting spam. Headlines whose title or
 # description contains any of these (case-insensitive) are dropped.
@@ -241,34 +268,94 @@ def _blocked_feed(feed) -> bool:
 
 
 def _parse_feed_via_proxy(url: str):
-    """Fetch the feed body through PROXY_URL and parse it. None when unavailable."""
-    resp = proxy_session.get_via_proxy(url, timeout=20, headers={"User-Agent": BROWSER_UA})
+    """Fetch the feed body through PROXY_URL and parse it. None when unavailable.
+
+    Sends the honest ladder UA, not BROWSER_UA: a frozen Chrome build is what
+    ESPN's WAF challenges, and the proxy changes the IP, not the verdict."""
+    resp = proxy_session.get_via_proxy(url, timeout=20,
+                                       headers={"User-Agent": NEWS_UA_LADDER[0]})
     if resp is None or resp.status_code != 200:
         return None
     feed = feedparser.parse(resp.content)
     return feed if feed.entries else None
 
 
+def fetch_one_news_feed(url: str) -> tuple[list, str]:
+    """Fetch one news feed: walk NEWS_UA_LADDER past bot walls, then the proxy.
+
+    Returns (entries, status_label), label one of:
+      ok         -- a direct fetch returned at least one entry
+      ok_proxy   -- every direct UA was walled; the proxy got the feed
+      blocked    -- walled on every UA and the proxy did not help (or is unset)
+      empty      -- parsed cleanly but the feed itself carries no items
+      error      -- transport failure or unparseable body on every attempt
+
+    "ok" means the FEED had items, not that any are recent: an out-of-season
+    feed (ESPN College Basketball in August) legitimately returns stale items,
+    so the 24h filter belongs to the caller and is not part of the health signal.
+    """
+    last_label = "error"
+    for ua in NEWS_UA_LADDER:
+        try:
+            feed = feedparser.parse(url, agent=ua)
+        except Exception:
+            last_label = "error"
+            continue
+        if feed.entries:
+            return feed.entries, "ok"
+        if _blocked_feed(feed):
+            last_label = "blocked"
+            continue
+        if not feed.bozo:
+            # Parsed cleanly, no items, no block signal: a genuinely empty feed.
+            # Another UA will not change that.
+            return [], "empty"
+        last_label = "error"
+
+    via_proxy = _parse_feed_via_proxy(url)
+    if via_proxy is not None:
+        return via_proxy.entries, "ok_proxy"
+    return [], last_label
+
+
+# Populated by fetch_news() so main() can persist per-feed health into
+# raw_content.json. A line in a CI log is easy to scroll past; this is what makes
+# a degraded run auditable after the fact, and what verify_run.py reads.
+NEWS_FEED_HEALTH: dict[str, str] = {}
+
+
+def news_feed_health_summary() -> dict:
+    """The per-feed labels plus the verdict, in the shape raw_content.json stores."""
+    feeds = dict(NEWS_FEED_HEALTH)
+    healthy = sum(1 for v in feeds.values() if v in ("ok", "ok_proxy"))
+    return {
+        "feeds": feeds,
+        "healthy": healthy,
+        "total": len(feeds),
+        "min_expected": MIN_HEALTHY_NEWS_FEEDS,
+        "degraded": bool(feeds) and healthy < MIN_HEALTHY_NEWS_FEEDS,
+    }
+
+
 def fetch_news() -> list[dict]:
     headlines = []
     dropped_spam = 0
+    NEWS_FEED_HEALTH.clear()
     for source_name, url in NEWS_FEEDS.items():
-        feed = feedparser.parse(url, agent=BROWSER_UA)
-        # Surface silent feed failures — ESPN was returning zero entries
-        # and nobody noticed because feedparser fails quietly.
-        if _blocked_feed(feed):
-            via_proxy = _parse_feed_via_proxy(url)
-            if via_proxy is not None:
-                print(f"  {source_name}: blocked directly (HTTP "
-                      f"{getattr(feed, 'status', '?')}), {len(via_proxy.entries)} "
-                      f"entries via proxy")
-                feed = via_proxy
-        if feed.bozo or not feed.entries:
-            print(f"  ⚠ {source_name}: {len(feed.entries)} entries "
-                  f"(bozo={feed.bozo}, status={getattr(feed, 'status', '?')})")
+        entries, label = fetch_one_news_feed(url)
+        NEWS_FEED_HEALTH[source_name] = label
+        # Surface silent feed failures -- ESPN returned zero entries for seven
+        # weeks and nobody noticed because feedparser fails quietly.
+        if label == "ok":
+            print(f"  {source_name}: {len(entries)} entries")
+        elif label == "ok_proxy":
+            print(f"  {source_name}: blocked directly on {len(NEWS_UA_LADDER)} "
+                  f"user-agent(s), {len(entries)} entries via proxy")
         else:
-            print(f"  {source_name}: {len(feed.entries)} entries")
-        for entry in feed.entries:
+            print(f"  ⚠ {source_name}: 0 entries ({label}) -- tried "
+                  f"{len(NEWS_UA_LADDER)} user-agent(s)"
+                  f"{' + proxy' if label == 'blocked' else ''}")
+        for entry in entries:
             pub_dt = entry_published_dt(entry)
             if not is_within_last_24h(pub_dt):
                 continue
@@ -285,6 +372,19 @@ def fetch_news() -> list[dict]:
             })
     if dropped_spam:
         print(f"  -- dropped {dropped_spam} betting/promo headline(s)")
+
+    summary = news_feed_health_summary()
+    if summary["degraded"]:
+        bad = ", ".join(f"{n} ({v})" for n, v in summary["feeds"].items()
+                        if v not in ("ok", "ok_proxy"))
+        print(f"  !! WARNING: only {summary['healthy']} of {summary['total']} news "
+              f"feed(s) returned a feed (expected >= {MIN_HEALTHY_NEWS_FEEDS}). "
+              f"Not producing: {bad}. Story selection will skew toward whichever "
+              f"outlets got through.")
+        if any(v == "blocked" for v in summary["feeds"].values()):
+            print("  !! A feed was BLOCKED by a bot wall. If these are the ESPN "
+                  "feeds, NEWS_UA_LADDER likely needs a new entry -- see the "
+                  "comment above it.")
     return headlines
 
 
@@ -537,6 +637,9 @@ def main() -> None:
     output = {
         "news_headlines": headlines,
         "tweets":         tweets,
+        # Fetch bookkeeping, not content: verify_run.py reads it, and
+        # generate_newsletter keeps it out of the Pass 1 prompt.
+        "news_feed_health": news_feed_health_summary(),
     }
 
     output_path = "raw_content.json"
