@@ -188,7 +188,7 @@ slap-newsletter/
 ├── nba_bundle.py              ← SLA-147: NBA game flow in three tiers from the play log
 │                                 (box_score.agate.plays, with shooters); renders under 6K
 ├── ncaamb_bundle.py           ← SLA-146: men's college basketball game flow per game from ESPN's
-│                                 play-by-play (game["game_flow"]); 4K cap; Pass 3 Check 3F
+│                                 play-by-play (game["game_flow"]); 5.5K cap; Pass 3 Check 3F
 ├── run_status.py              ← per-run state on disk, shared across processes
 ├── pipeline_status.py         ← per-STAGE outcomes on top of run_status.json;
 │                                 PIPELINE_STAGES is the declared stage list
@@ -914,7 +914,7 @@ a "decided by N; last basket ..." line for finishes within 3.
 - **Checked, or left out.** Plays must add up to the half scores and the final, or the game's flow is
   dropped. Over 97 real games on six days (Jan-Apr 2026): 93 usable, 4 dropped, all ESPN play logs
   that don't sum to ESPN's own half scores.
-- **Cap 4,000 chars:** NCAA tournament and story games in full, then ranked games, then the rest as a
+- **Cap 5,500 chars** (raised from 4,000 on 2026-10-23: on 2026-01-31 and 02-21, 138-148 games a day, 4,000 showed only 13 games and cut up to 4 of 14-17 ranked games): NCAA tournament and story games in full, then ranked games, then the rest as a
   flow line, close games first. `attach_story()` runs in both runners after Pass 1.
 - **Pass 3 Check 3F** (`check_ncaamb_flow_claims`): the halftime score, a score "in the second half",
   "took the lead (for good) in the second half", "tied it", "never trailed" / wire to wire, "came back
