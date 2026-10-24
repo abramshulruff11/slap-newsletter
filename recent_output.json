@@ -1,5 +1,122 @@
 [
   {
+    "date": "2026-10-24",
+    "story_log": [
+      {
+        "topic_key": "rays-brewers-world-series-2026",
+        "title": "Brewers beat Rays 3-2 in World Series Game 1 — wild 9th inning, overturned double play, first WS win since 1982",
+        "section": "lead",
+        "development": "CONTINUING [Day 18, TIER 1 WORLD SERIES GAME 1]: Milwaukee beat Tampa Bay 3-2 per ground truth. Wild 9th inning: Rays loaded bases, game-ending double play overturned on replay review, Trevor Megill closed it out per JeffPassan/ESPN. Milwaukee's first World Series win in 44 years (last: 1982) per TalkinBaseball. Jacob Misiorowski: 5.0 IP, 4 H, 1 ER, set postseason record with 103.5 MPH pitch per ESPN/TalkinBaseball. William Contreras threw out runners in back-to-back innings per TalkinBaseball. Rays aggressive baserunning backfired twice — Victor Mesa Jr. caught stealing third to end threat per TalkinBaseball. Chourio RBI single in 7th made it 3-1 per ground truth. Series: MIL 1-0, Game 2 Saturday.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "grizzlies-warriors-comeback-2026",
+        "title": "Grizzlies complete stunning 17-0 run to beat Warriors 111-108 — Cam Boozer 25-13-6, Ty Jerome 28, Warriors blow 12-point lead in final 3:47",
+        "section": "lead",
+        "development": "Memphis erased 12-point deficit in final 3:47 per ground truth/ClutchPoints — went on 17-0 run per ClutchPoints/SportsCenter. Warriors led 106-94 with 3:47 left per ground truth. Cam Boozer: 25 PTS, 13 REB, 6 AST per StatMuse — go-ahead basket with 0:20.1 left per ground truth. Ty Jerome: 28 PTS (8 first half, 20 second half) per ground truth — averaging 36.5 PPG to start season per StatMuse. Memphis's first win at Golden State since 2021-10-28 per ground truth. Steph Curry: 'There's losses and then there's ways that you lose like tonight that kind of sting a little bit more' per ClutchPoints. Warriors imploded down stretch per ESPN.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "tatum-celtics-knicks-opener-2026",
+        "title": "Jayson Tatum drops 36 to beat Knicks 107-103 — denies 'beef' with Jaylen Brown after trade, 'This isn't Shaq and Kobe'",
+        "section": "supporting",
+        "development": "Boston beat New York 107-103 per ground truth. Tatum: 36 PTS (11 first half, 25 second half), 9 REB, 7 AST, 3 STL per ground truth — took over in 4th per SportsCenter/KevinOConnor. Spent postgame news conference addressing speculation about relationship with former teammate Jaylen Brown after Brown's trade to Philadelphia per ESPN — 'This ain't no f*cking Shaq and Kobe. There's no beef' per ClutchPoints. Karl-Anthony Towns: 22 PTS (12 first half, 10 second half) per ground truth. Jalen Brunson: 21 PTS total per ground truth. Celtics 1-0, Knicks 0-1 per ground truth.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "rockets-spurs-amen-block-2026",
+        "title": "Amen Thompson blocks 7'4 Wemby at rim to win game 114-110 — 6'7 guard's game-winning block caps Rockets' comeback",
+        "section": "supporting",
+        "development": "Houston beat San Antonio 114-110 per ground truth. Amen Thompson (6'7): 20 PTS, 10 REB, 2 STL, 2 BLK per StatMuse — blocked Wembanyama's (7'4) game-winning attempt at rim per SportsCenter/ClutchPoints. Kevin Durant: 'Twin is just a freak athlete. It's insane how he got up that quick to block that shot against a 7'5 guy, being 6'7' per HaterReport. Alperen Sengun: 29 PTS, 7 REB, 7 AST per StatMuse — now 6-5 against Wemby all-time per StatMuse. Wemby: 25 PTS, 13 REB, 2 BLK, couldn't finish over Amen per StatMuse. Sengun frying Wemby in 4th quarter per HaterReport.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "cooper-flagg-injury-pacers-2026",
+        "title": "Mavericks' Cooper Flagg exits after hard foul by Aaron Nesmith — shoulder injury, scuffle ensues after flagrant",
+        "section": "supporting",
+        "development": "Flagg did not play in second half after landing hard on left shoulder per ESPN — Aaron Nesmith tried to block shot from behind to prevent breakaway dunk per ESPN. Nesmith called for Flagg 1 per ESPN. Double technicals given to Nesmith and Naji Marshall after play per ESPN. Dallas beat Indiana 121-105 per ground truth. Kyrie Irving: 24 PTS, 8-15 FG, 5-10 3PT per StatMuse — first 20-point game for Mavs in almost 600 days per StatMuse. Reigning Rookie of Year hurt in blowout win.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "fever-front-office-shakeup-2026",
+        "title": "Fever fire GM Amber Cox, president Kelly Krauskopf steps down — front office shakeup, Stephanie White expected to return as coach",
+        "section": "supporting",
+        "development": "Indiana fired GM Amber Cox per ESPN — hours after team announced president Kelly Krauskopf stepped down per ESPN. Expectation is Stephanie White will remain as coach per ESPN. Fever eliminated in first round of playoffs per CBS Sports. Major organizational changes as Fever try to build championship team around Caitlin Clark per CBS Sports. Kelsey Mitchell (co-star) is unrestricted free agent per CBS Sports.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "hawks-hornets-blowout-2026",
+        "title": "Hawks demolish Hornets 128-81 — 47-point blowout, Dyson Daniels 7 steals leads Atlanta",
+        "section": "atl",
+        "development": "Atlanta beat Charlotte 128-81 per ground truth — biggest lead 49 points per ground truth. Dyson Daniels: 7 STL (!!), 11 PTS, 9 REB, +32 per StatMuse — nobody has more 7+ STL games over last 15 seasons per StatMuse. Jalen Johnson: 19 PTS (13 first half, 6 second half) per ground truth. Tyler Herro: 34 PTS, 5 REB, 5 3P for Bucks per StatMuse — only Kareem averages more PPG for Bucks per StatMuse. Hawks blowout win opens season.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "giannis-heat-start-2026",
+        "title": "Giannis' Heat fall to 0-2 after 128-111 blowout loss to Bulls — 'can't believe he picked the Heat'",
+        "section": "atl",
+        "development": "CONTINUING [Day 3]: Chicago beat Milwaukee 132-125 per ground truth (game from Oct 23), Detroit beat Miami 128-111 per ground truth (game from Oct 24). Giannis: 36 PTS per ESPN — giving him 71 through first two games per ESPN. Bulls rallied from 15 down per ground truth. Heat 0-2 to start season. HaterReport: 'Two games, two BLOWOUT losses. Giannis really can't believe he picked the Heat.' Heat struggling early.",
+        "is_new": false,
+        "resolved": false
+      },
+      {
+        "topic_key": "sabonis-triple-double-portland-2026",
+        "title": "Domantas Sabonis posts 27-19-10 triple-double on 81.8% shooting — first since Wilt with those numbers on 75+ FG%",
+        "section": "atl",
+        "development": "Portland beat Sacramento 128-120 per ground truth. Sabonis: 27 PTS, 19 REB, 10 AST, 9-11 FG per StatMuse — first player with those numbers in a game on 75+ FG% since Wilt per StatMuse. Deni Avdija: 26 PTS, 6 REB, 6 AST per StatMuse — only Dame has more 20/5/5 games for Portland since 2010 per StatMuse. Kings lose despite Acuff Jr. 33 points.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "knicks-phishing-email-2026",
+        "title": "MSG admits fault for Knicks championship ring phishing email — 'unfortunate mistake' sent to employees",
+        "section": "atl",
+        "development": "Madison Square Garden spokesman admitted fault that employees in Knicks business operations and at arena received phishing email posing as opportunity to claim NBA championship ring per ESPN — called incident 'an unfortunate mistake' per ESPN. Embarrassing security lapse for defending champions.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "college-football-week-8-friday-2026",
+        "title": "Week 8 college football Friday night — Duke edges Virginia 19-16, UConn beats UMass 35-16, Stanford stuns NC State 31-28",
+        "section": "atl",
+        "development": "Duke beat Virginia 19-16 per ground truth (Fri 2026-10-23, at Virginia). UConn beat Massachusetts 35-16 per ground truth (Fri 2026-10-23, at UConn). Stanford beat NC State 31-28 per ground truth (Fri 2026-10-23, at Stanford) — Stanford improves to 4-0 in program history in ACC conference home games that kick off at 7 PM PT or later, 3-14 in all other ACC games per RedditCFB. Army beat Tulsa 38-35, Wyoming beat Air Force 28-14 per ground truth. Friday night action kicks off Week 8.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "dale-brown-death-2026",
+        "title": "Dale Brown dies at 90 — LSU's winningest basketball coach, led Tigers to two Final Fours",
+        "section": "atl",
+        "development": "Brown died at age 90 per ESPN — coached LSU to two Final Four appearances per ESPN, players included Shaquille O'Neal and Mahmoud Abdul-Rauf per ESPN. Winningest coach in LSU history. College basketball mourns legend.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "nhl-oct-23-2026",
+        "title": "NHL action Oct 23 — Canadiens beat Blackhawks 4-1, Avalanche rout Lightning 6-3",
+        "section": "atl",
+        "development": "Montreal beat Chicago 4-1 per ground truth — Jake Evans 2 goals (from Dach/Beck, from Guhle) per ground truth. Colorado beat Tampa Bay 6-3 per ground truth — Avalanche led wire to wire per ground truth, MacKinnon 1 goal 3 assists per ground truth. Regular season continues.",
+        "is_new": true,
+        "resolved": true
+      },
+      {
+        "topic_key": "nba-opening-night-oct-23-2026",
+        "title": "NBA Oct 23 games — Raptors beat Wizards 112-102, Pistons rout Heat 128-111, Timberwolves beat Magic 115-93",
+        "section": "atl",
+        "development": "Toronto beat Washington 112-102 per ground truth — Scottie Barnes 28 PTS, 14 REB, 5 AST, 2 STL, 2 BLK per StatMuse. Detroit beat Miami 128-111 per ground truth — John Collins 23 PTS, 7 REB, 9-15 FG, 5-6 3P per StatMuse. Minnesota beat Orlando 115-93 per ground truth. Regular season continues.",
+        "is_new": true,
+        "resolved": true
+      }
+    ]
+  },
+  {
     "date": "2026-10-23",
     "story_log": [
       {
@@ -3988,163 +4105,6 @@
         "section": "atl",
         "development": "CONTINUING [Day 2]: Vlad issued apology for comments about contract per CBS Sports/JomboyMedia. First year of massive deal has been major disappointment per CBS Sports. Blue Jays eliminated from playoffs, Vlad era: 8 years, one pennant, no ring per recent history.",
         "is_new": false,
-        "resolved": true
-      }
-    ]
-  },
-  {
-    "date": "2026-09-25",
-    "story_log": [
-      {
-        "topic_key": "falcons-packers-tnf-week-3-2026",
-        "title": "Falcons demolish Packers 35-14 on TNF — Michael Penix Jr. returns, Bijan Robinson dominates, Matt LaFleur on hot seat",
-        "section": "lead",
-        "development": "CONTINUING [Day 3]: Atlanta crushed Green Bay 35-14 per ground truth. Penix season debut: 18-25, 256 YDS, 1 TD/1 INT per StatMuse. Bijan: 29 CAR, 194 rush yds (Packers allowed only 17 total), 50 rec yds, 2 TD per StatMuse. Drake London: 9-194 per StatMuse. Falcons scored 4 TD tonight vs 1 in Weeks 1+2 combined. Packers 7 of last 8 losses, LaFleur under fire.",
-        "is_new": false,
-        "resolved": true
-      },
-      {
-        "topic_key": "bob-pettit-death-2026",
-        "title": "Bob Pettit, NBA's first MVP and Hall of Famer, dies at 93",
-        "section": "lead",
-        "development": "Pettit died at 93 per CBS Sports. Won NBA's first MVP award in 1956, first player to eclipse 20,000 points in league history per CBS Sports. Two-time NBA champion with Hawks. 11-time All-Star, four-time All-NBA First Team.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "wnba-playoffs-2026-bracket-set",
-        "title": "WNBA playoff bracket set after final day drama — Golden State rallies for No. 2 seed, Kelsey Mitchell's 27-game streak ends",
-        "section": "supporting",
-        "development": "Playoff matchups set per CBS Sports: (1) Minnesota vs (8) New York, (2) Golden State vs (7) Dallas, (3) Las Vegas vs (6) Indiana, (4) Atlanta vs (5) Washington. Valkyries rallied for No. 2 seed after beating Sparks 76-75 per ground truth. Mitchell's historic 20-PT streak ends at 27 games (7 PTS vs Minnesota per StatMuse). Nneka Ogwumike final regular season game.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "guardians-clinch-playoffs-2026",
-        "title": "Guardians clinch playoff berth with 1-0 shutout of Red Sox — could break MLB's longest World Series drought",
-        "section": "supporting",
-        "development": "Cleveland clinched playoff berth after beating Boston 1-0 per ground truth/CBS Sports. Angel Martinez solo HR only run per TalkinBaseball. CBS Sports: Guardians could break MLB's longest World Series drought (last won 1948) — weak AL, strong pitching staff make them October surprise candidate.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "brewers-100-wins-phillies-2026",
-        "title": "Brewers clinch No. 1 overall seed, reach 100 wins for first time in franchise history",
-        "section": "supporting",
-        "development": "Milwaukee clinched MLB's No. 1 overall seed per TalkinBaseball. First 100-win season in franchise history per TalkinBaseball/StatMuse. Jake Bauers 8th-inning go-ahead hit vs Phillies per TalkinBaseball. Beat Philadelphia 5-1 per ground truth. Historic season milestone.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "padres-clinch-playoffs-2026",
-        "title": "Padres clinch playoff berth behind Tyler Glasnow's dominant no-hit bid through 5.1 innings",
-        "section": "supporting",
-        "development": "San Diego clinched playoff berth per TalkinBaseball after beating Dodgers 4-2 per ground truth. Glasnow no-hit bid through 5.1 innings, 10 SO per ClutchPoints. Padres finally broke through in 6th per TalkinBaseball. Back to postseason.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "lucas-spence-three-homers-astros-2026",
-        "title": "Lucas Spence hits first three career home runs in same game for Astros — all three came tonight vs Athletics",
-        "section": "atl",
-        "development": "Spence hit his first three career MLB homers all in one game vs Oakland per TalkinBaseball/JomboyMedia/CespedesBBQ. Two-homer game in 7th per TalkinBaseball, then added third per JomboyMedia. Astros won 7-5 per ground truth. Wild MLB debut for power.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "vlad-guerrero-jr-contract-comments-2026",
-        "title": "Vladimir Guerrero Jr. contract comments weren't a great look — 'I want to be paid what I'm worth'",
-        "section": "atl",
-        "development": "Vlad's comments about contract 'weren't a great look' per TalkinBaseball. Blue Jays eliminated from playoffs yesterday (Vlad era: 8 years, one pennant, no ring per recent history). Now pushing for big extension publicly.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "cubs-clinch-playoffs-2026",
-        "title": "Cubs clinch playoff berth with 2-1 win over Marlins — Pete Crow-Armstrong's 40th stolen base cements 40/40 club",
-        "section": "atl",
-        "development": "Chicago clinched playoff berth per ESPN after beating Miami 2-1 per ground truth. PCA hit 40th SB per ESPN/JomboyMedia — 7th player in MLB history in 40/40 club (first since Ohtani 2024) per ESPN. Wrigley erupted per JomboyMedia. Cubs back in postseason.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "dodgers-first-round-bye-2026",
-        "title": "Dodgers secure first-round bye in postseason after Brewers clinch No. 1 seed",
-        "section": "atl",
-        "development": "Los Angeles secured first-round bye per TalkinBaseball. Will rest during Wild Card round. Postseason path set.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "ja-marr-chase-celebration-fine-appeal-2026",
-        "title": "Ja'Marr Chase plans to appeal NFL celebration fine, calls for NFLPA to fight for players' money",
-        "section": "atl",
-        "development": "Chase and Tee Higgins among several players fined for Week 2 celebrations per CBS Sports. Chase plans to appeal, calls for NFLPA to fight per CBS Sports. 'People's Elbow' celebration per PatMcAfeeShow. NFL crackdown on beer-drinking celebrations.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "elly-de-la-cruz-30-homers-2026",
-        "title": "Elly De La Cruz crushes 30th home run of season for Reds",
-        "section": "atl",
-        "development": "De La Cruz hit 30th HR of season per TalkinBaseball. Reached milestone in Reds' 7-6 win over Braves per ground truth. Career-high power year.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "gary-sanchez-lebron-wristband-brewers-2026",
-        "title": "Gary Sanchez is huge LeBron fan, so Brewers photoshopped his face onto LeBron's body for wristband",
-        "section": "atl",
-        "development": "Brewers photoshopped Sanchez's face onto LeBron's body, put it on his wristband per JomboyMedia. Sanchez is huge LeBron fan. Creative team gesture.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "steve-alford-retirement-nevada-2026",
-        "title": "Nevada's Steve Alford to retire after 2026-27 season, concluding prolific 36-year coaching career",
-        "section": "atl",
-        "development": "Alford will retire after this season per CBS Sports/JonRothstein. Won over 700 games at college level per CBS Sports. 36-year coaching career ending.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "trump-miami-headset-controversy-2026",
-        "title": "Steve Sarkisian says Trump's departure disrupted Miami's headsets in CFP title game — sources differ on timing",
-        "section": "atl",
-        "development": "Sark said Trump departure from National Title Game disrupted Miami headset communications during crucial late-game drive per CBS Sports/HaterReport. 'You get no warning, it just cuts out' per HaterReport. Sources confirmed Miami briefly lost communication but disputed whether it happened on final drive per CBS Sports. All said it lasted only a play or two, didn't decide Indiana's win.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "roddy-gayle-eligibility-michigan-2026",
-        "title": "Michigan basketball gets massive win — Roddy Gayle awarded fifth year by judge in critical court case",
-        "section": "atl",
-        "development": "Gayle won court case, awarded fifth year of eligibility per CBS Sports. Huge for Wolverines, potentially sign of things to come for other cases next month per CBS Sports. Judge ruled in his favor.",
-        "is_new": true,
-        "resolved": true
-      },
-      {
-        "topic_key": "jaguars-travis-hunter-usage-2026",
-        "title": "Jaguars prepare to boost Travis Hunter's offensive usage after quiet two-game start",
-        "section": "atl",
-        "development": "Liam Coen provided interesting commentary on two-way player after Week 2 loss to Denver per CBS Sports. Jags looking to increase Hunter's offensive snaps. Adjustments coming for 2025 No. 1 pick.",
-        "is_new": true,
-        "resolved": false
-      },
-      {
-        "topic_key": "steve-sarkisian-trump-miami-headset-controversy-2026",
-        "title": "Sarkisian says Trump departure disrupted Miami headsets — sources dispute timing",
-        "section": "atl",
-        "development": "DUPLICATE — already logged above as trump-miami-headset-controversy-2026",
-        "is_new": false,
-        "resolved": false
-      },
-      {
-        "topic_key": "frog-yankee-stadium-2026",
-        "title": "Frog sighting at Yankee Stadium",
-        "section": "atl",
-        "development": "Frog spotted at Yankee Stadium per JomboyMedia. Random wildlife appearance.",
-        "is_new": true,
         "resolved": true
       }
     ]
